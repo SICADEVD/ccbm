@@ -250,7 +250,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBwIB5W5-fA6oy7iWfPbYYO8qgpZQaFzgQ"
+            android:value="API_KEY"
             />
 
         <provider
