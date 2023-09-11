@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.cartographies.FarmDelimiterActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeToolbarContainerFarmDelimiter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:visibility="visible"
+            android:background="@color/white"
+            android:layout_alignParentTop="true"
+            android:id="@+id/relativeToolbarFarmDelimiter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageBackFarmDelimiter"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_back_black" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/clickCloseMappingParcelle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageMapTypeFarmDelimiter"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/ic_tiles" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:background="@color/black"
+            android:layout_alignParentTop="true"
+            android:id="@+id/relativeToolbarActionFarmDelimiter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_marginStart="@dimen/_5sdp"
+                android:id="@+id/imageLogoFarmDelimiter"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageMapTypeActionFarmDelimiter"
+                android:padding="@dimen/_8sdp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_tiles"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageCancelFarmDelimiter"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/imageMapTypeActionFarmDelimiter"
+                android:padding="@dimen/_7sdp"
+                app:srcCompat="@drawable/ic_cancel_mapping" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:visibility="gone"
+                android:id="@+id/imageEditFarmDelimiter"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@+id/imageCancelFarmDelimiter"
+                android:padding="@dimen/_5sdp"
+                app:srcCompat="@drawable/ic_edit_black" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_above="@+id/relativeActionMarkerBottomContainerFarmDelimiter"
+        android:layout_below="@+id/relativeToolbarContainerFarmDelimiter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/googleMapsFarmDelimiter"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMenuFarmDelimiter"
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:contentDescription="TODO"
+            android:gravity="end|bottom"
+            android:src="@android:drawable/ic_input_add"
+            app:elevation="@dimen/_5sdp"
+            app:fabCustomSize="@dimen/_45sdp" />
+
+        <LinearLayout
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            app:elevation="@dimen/_5sdp"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:id="@+id/linearSurfaceMappingContainerFarmDelimiter"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="@dimen/_90sdp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:id="@+id/fabSurfaceFarmDelimiter"
+                android:gravity="end|bottom"
+                app:backgroundTint="@color/white"
+                android:src="@drawable/ic_surface"
+                app:elevation="@dimen/_5sdp"
+                app:fabCustomSize="@dimen/_45sdp" />
+
+            <Space
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_1sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:padding="@dimen/_5sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surface"
+                android:background="@color/white"
+                android:textSize="@dimen/_15ssp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            app:elevation="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:id="@+id/linearDistanceMappingContainerFarmDelimiter"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="@dimen/_150sdp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                app:backgroundTint="@color/white"
+                android:gravity="end|bottom"
+                android:id="@+id/fabDistanceFarmDelimiter"
+                android:src="@drawable/ic_distance"
+                app:elevation="@dimen/_5sdp"
+                app:fabCustomSize="@dimen/_45sdp" />
+
+            <Space
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_1sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:padding="@dimen/_5sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance"
+                android:background="@color/white"
+                android:textSize="@dimen/_15ssp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/linearSnippetInfosFarmDelimiter"
+        android:background="@color/bottom_bar_bg"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:orientation="vertical"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titulaire: "
+                android:textSize="@dimen/_9ssp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelOwnerFarmDelimiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BOKA DIDIER CEDRIC"
+                android:textSize="@dimen/_9ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Périmetre: "
+                android:textSize="@dimen/_9ssp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelDistanceFarmDelimiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0m"
+                android:textSize="@dimen/_9ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearSurfaceInfosContainerFarmDelimiter"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surface: "
+                android:textSize="@dimen/_9ssp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelSurfaceFarmDelimiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0ha"
+                android:textSize="@dimen/_9ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lat: "
+                android:textSize="@dimen/_9ssp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelLatFarmDelimiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textSize="@dimen/_9ssp"
+                android:textColor="@color/black"/>
+
+            <Space
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_1sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lng: "
+                android:textSize="@dimen/_9ssp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelLngFarmDelimiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textSize="@dimen/_9ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/relativeActionMarkerBottomContainerFarmDelimiter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp">
+
+        <RelativeLayout
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:visibility="gone"
+            android:id="@+id/linearActionMarkerBottomFarmDelimiter"
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:layout_height="@dimen/_45sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imagePreviousMarkerFarmDelimiter"
+                android:padding="@dimen/_4sdp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_previous_marker"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageNextMarkerFarmDelimiter"
+                android:padding="@dimen/_6sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_next_marker"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageSaveWorkFarmDelimiter"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_save_work"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/_5sdp"
+                android:id="@+id/imageDeleteMarkerFarmDelimiter"
+                android:layout_toEndOf="@+id/imageSaveWorkFarmDelimiter"
+                android:layout_toStartOf="@+id/imageNextMarkerFarmDelimiter"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/ic_delete_marker"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageUndoMarkerFarmDelimiter"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/imageSaveWorkFarmDelimiter"
+                android:layout_toEndOf="@+id/imagePreviousMarkerFarmDelimiter"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_undo_marker" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:visibility="gone"
+            android:id="@+id/linearActionGPSMarkerBottomFarmDelimiter"
+            android:layout_width="match_parent"
+            android:background="@color/black"
+            android:layout_height="@dimen/_45sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imagePreviousMarkerGPSFarmDelimiter"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:visibility="invisible"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_4sdp"
+                android:src="@drawable/ic_previous_marker" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:visibility="invisible"
+                android:id="@+id/imageNextMarkerGPSFarmDelimiter"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_6sdp"
+                android:src="@drawable/ic_next_marker" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageStartTrackGPSFarmDelimiter"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:padding="@dimen/_2sdp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_start_gps_mapping" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageSaveMarkerGPSFarmDelimiter"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/imageNextMarkerGPSFarmDelimiter"
+                android:layout_toEndOf="@+id/imageStartTrackGPSFarmDelimiter"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_save_work" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imagePlaceMarkerGPSFarmDelimiter"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/imageStartTrackGPSFarmDelimiter"
+                android:layout_toEndOf="@+id/imagePreviousMarkerGPSFarmDelimiter"
+                android:padding="@dimen/_5sdp"
+                android:src="@drawable/ic_mark_active" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/cardPopupMenuMapsTypeFarmDelimiter"
+        app:elevation="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearPopupMenuMapsTypeFarmDelimiter"
+            android:background="@color/white"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:weightSum="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearOrdinaireTypeMappingContainerFarmDelimiter"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_ordinaire_black"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ordinaire"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSatelliteTypeMappingContainerFarmDelimiter"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_satellite_black"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Satellite"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearTerrainTypeMappingContainerFarmDelimiter"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_terrain_black"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terrain"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- group_header_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_38sdp"
+    android:orientation="horizontal"
+    android:background="?android:attr/selectableItemBackground"
+    android:gravity="center_vertical">
+
+    <!-- Icon for the group header (optional) -->
+    <ImageView
+        android:id="@+id/ic_main_group"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:src="@drawable/ic_profile_producteur"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_8sdp" />
+
+    <!-- Text for the group header (e.g., "Products") -->
+    <TextView
+        android:id="@+id/groupTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Products"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="?android:textColorPrimary"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp" />
+
+</LinearLayout>

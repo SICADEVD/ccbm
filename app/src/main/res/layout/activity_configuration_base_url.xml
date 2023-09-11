@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ConfigurationBaseUrlActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_30sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_logo"
+                android:layout_width="@dimen/_170sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textindicatif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:text="Saisir votre code !"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+             <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:textAllCaps="true"
+                    android:id="@+id/inputCode"
+                    android:layout_width="@dimen/_150sdp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:autoText="false"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_background"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:maxLength="7"
+                    android:singleLine="true"
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold"
+                    tools:text="SCO-001" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_37sdp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCodeCheck"
+                style="@style/ButtonStyle.Submit"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_horizontal"
+                android:text="CONTINUER"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_13ssp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

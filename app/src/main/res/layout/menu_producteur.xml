@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Button 1: Add -->
+    <LinearLayout
+        android:id="@+id/menu_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:onClick="onMenuItemClick">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_add_black"
+            android:layout_gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajouter nouveau"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <!-- Button 2: Edit -->
+    <LinearLayout
+        android:id="@+id/menu_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:onClick="onMenuItemClick">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_edit_black"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/_2sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voir la liste existante"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <!-- Button 3: Draft -->
+    <LinearLayout
+        android:id="@+id/menu_draft"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:onClick="onMenuItemClick">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_drafts_black"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/_1sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voir le brouillon"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+    <!-- Button 4: Sync -->
+    <LinearLayout
+        android:id="@+id/menu_sync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:onClick="onMenuItemClick">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_sync_black"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Données envoyées"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+</LinearLayout>

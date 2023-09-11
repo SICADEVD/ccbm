@@ -1,0 +1,219 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">CCB</string>
+    <string name="last_synchronisation_date">Dernère synchronisation à %1$s</string>
+
+    <string-array name="YesOrNo">
+        <item>oui</item>
+        <item>non</item>
+    </string-array>
+
+    <string-array name="bank_paiement">
+        <item>Virement bancaire</item>
+        <item>Mobile Money</item>
+        <item>Aucun</item>
+    </string-array>
+
+    <string-array name="operateur">
+        <item>Orange</item>
+        <item>MTN</item>
+        <item>Moov</item>
+        <item>Wave</item>
+    </string-array>
+
+    <string-array name="type_produit">
+        <item>Ordinaire</item>
+        <item>Certifie</item>
+    </string-array>
+
+    <string-array name="recentWork">
+        <item>Le défrichage à la machette</item>
+        <item>Le port de charge lourde</item>
+        <item>Manipulation de Produits Agrochimiques</item>
+        <item>Les défrichages</item>
+        <item>Le bucheronnage</item>
+        <item>Production de Charbons</item>
+        <item>La Trouaison</item>
+        <item>La chasse aux gibiers avec une arme</item>
+        <item>Recolte avec Machette ou objets Tranchants</item>
+        <item>Brulage des parcelles</item>
+        <item>L’Abattage des arbres</item>
+        <item>La conduite d’engins motorisé</item>
+        <item>Aucun</item>
+    </string-array>
+
+    <string-array name="recentWorkLight">
+        <item>Aider à mesurer les distance entre les plants</item>
+        <item>Laver les fèves</item>
+        <item>Extraire les fèves a la main après ecabossage</item>
+        <item>Remplir les sacs ou les remplir avec un récipient</item>
+        <item>Couvrir les bâches</item>
+        <item>Decortiquer les graines</item>
+        <item>Preparer les germoirs pour les pépinières</item>
+        <item>Semer les graines</item>
+        <item>Repiquer et mettre en terre les boutures</item>
+        <item>Recolter les fruits, légumes, cabosses</item>
+        <item>Ramasser les bois de chauffage</item>
+        <item>Déposer les boutures sur les buttes</item>
+        <item>Trier et étaler les fèves, les céréales</item>
+        <item>Decortiquer et égrainer Manuellement</item>
+        <item>Aucun</item>
+    </string-array>
+
+    <string-array name="recentWorkLieu">
+        <item>Champs familiale</item>
+        <item>Contrat</item>
+        <item>Société</item>
+        <item>A la maison</item>
+    </string-array>
+
+    <string-array name="schoolLevel">
+        <item>Maternelle</item>
+        <item>Primaire</item>
+        <item>1er Cycle</item>
+        <item>2nd Cycle</item>
+    </string-array>
+
+    <string-array name="schoolLevelFull">
+        <item>Primaire</item>
+        <item>1er Cycle</item>
+        <item>2nd Cycle</item>
+        <item>Superieure</item>
+    </string-array>
+
+    <string-array name="noSchoolRaison">
+        <item>Manque d’argent</item>
+        <item>Parent décédé</item>
+        <item>Ecole éloignée</item>
+        <item>Maladie</item>
+        <item>Manque d’extrait</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="maternelleLevel">
+        <item>Petite section</item>
+        <item>Moyen section</item>
+        <item>Grande section</item>
+    </string-array>
+
+    <string-array name="moyenDeplacement">
+        <item>Moyen de deplacement</item>
+        <item>A vélo</item>
+        <item>A pieds</item>
+        <item>A moto</item>
+        <item>Transport en commun</item>
+    </string-array>
+
+    <string-array name="primaireLevel">
+        <item tools:ignore="Typos">CP1</item>
+        <item tools:ignore="Typos">CP2</item>
+        <item tools:ignore="Typos">CE1</item>
+        <item tools:ignore="Typos">CE2</item>
+        <item tools:ignore="Typos">CM1</item>
+        <item tools:ignore="Typos">CM2</item>
+    </string-array>
+
+    <string-array name="oneCycleLevel">
+        <item>6eme</item>
+        <item>5eme</item>
+        <item>4eme</item>
+        <item>3eme</item>
+    </string-array>
+
+
+    <string-array name="twoCycleLevel">
+        <item>1ere</item>
+        <item>2nd</item>
+        <item>Terminale</item>
+    </string-array>
+
+    <string-array name="parentAffiliation">
+        <item>Fils</item>
+        <item>Neveu/Niece</item>
+        <item>Frere/Soeur</item>
+        <item>Cousine</item>
+        <item>Autre, précisez</item>
+    </string-array>
+
+    <string-array name="dayMarket">
+        <item>Lundi</item>
+        <item>Mardi</item>
+        <item>Mercredi</item>
+        <item>Jeudi</item>
+        <item>Vendredi</item>
+        <item>Samedi</item>
+        <item>Dimande</item>
+    </string-array>
+
+    <string-array name="declarationType">
+        <item>Verbale</item>
+        <item>GPS</item>
+    </string-array>
+
+    <string-array name="lowMediumHigh">
+        <item>Faible</item>
+        <item>Moyen</item>
+        <item>Elevé</item>
+    </string-array>
+
+    <string-array name="fullyPoor">
+        <item>Assez</item>
+        <item>Moins</item>
+    </string-array>
+
+    <string-array name="statuPaiement">
+        <item>Impaye</item>
+        <item>Paye</item>
+    </string-array>
+
+    <string-array name="typeCentre">
+        <item>Publique</item>
+        <item>Privé</item>
+    </string-array>
+
+    <string-array name="status">
+        <item>Certifie</item>
+        <item>Candidat</item>
+    </string-array>
+
+    <string-array name="genre">
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
+
+    <string-array name="genre_membre">
+        <item>Masculin</item>
+        <item>Feminin</item>
+    </string-array>
+
+    <string name="kml_template">
+        "
+        <kml xmlns="http://www.opengis.net/kml/2.2">
+            <Document>
+                <Style id="AREA_FF00FF00">
+                    <LineStyle>
+                        <color>FF00FF00</color>
+                        <width>2</width>
+                    </LineStyle>
+                    <PolyStyle>
+        <color>8000FF00</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+                </Style>
+                <Placemark>
+      <name>pele</name>
+      <description>pele</description>
+      <styleUrl>#AREA_FF00FF00</styleUrl>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>-4.103448204696178,5.332139884203548,0.0 -4.103544093668461,5.331762661503881,0.0 -4.102777652442455,5.331500274604411,0.0 -4.102490320801735,5.33120650796814,0.0 -4.102131240069866,5.331470897947108,0.0 -4.101636707782745,5.331913550611551,0.0 -4.102218747138977,5.332749782715225,0.0 -4.103177636861801,5.3335506282806815,0.0 -4.103448204696178,5.332139884203548,0.0 </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+            </Document>
+        </kml>"
+    </string>
+
+</resources>

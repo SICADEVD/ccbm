@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activities.POSDashboardActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeToolbarContainer"
+        android:paddingStart="@dimen/_27sdp"
+        android:paddingEnd="@dimen/_27sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_37sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_menu_black" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_7sdp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_bell_black" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:layout_height="@dimen/_110sdp"
+        android:background="@color/bottom_bar_bg">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:id="@+id/cardPosContainer"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_80sdp">
+
+                <RelativeLayout
+                    android:background="@drawable/circle_green_shape"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/_7sdp"
+                        app:srcCompat="@drawable/ic_performances_menu" />
+
+                </RelativeLayout>
+
+                <Space
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Performances"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10ssp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            app:cardElevation="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            android:layout_toStartOf="@+id/cardPosContainer"
+            android:layout_centerVertical="true"
+            android:id="@+id/cardPerformanceContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_80sdp">
+
+                <RelativeLayout
+                    android:background="@drawable/circle_blue_shape"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/_7sdp"
+                        app:srcCompat="@drawable/ic_pos_menu" />
+
+                </RelativeLayout>
+
+                <Space
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Point de vente"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10ssp"/>
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:cardElevation="@dimen/_5sdp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/cardPosContainer"
+            android:id="@+id/cardRefundContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/_90sdp"
+                android:layout_height="@dimen/_80sdp">
+
+                <RelativeLayout
+                    android:background="@drawable/circle_purple_shape"
+                    android:layout_width="@dimen/_37sdp"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/_7sdp"
+                        app:srcCompat="@drawable/ic_refunds_menu" />
+
+                </RelativeLayout>
+
+                <Space
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_5sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rechargements"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10ssp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:paddingStart="@dimen/_25sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textAllCaps="true"
+            android:background="@color/et_bg"
+            android:maxLines="1"
+            android:layout_width="match_parent"
+            android:hint="Rechercher PDV"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_height="@dimen/_35sdp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/light_brown"/>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/_20sdp"
+                android:paddingStart="@dimen/_25sdp"
+                android:paddingEnd="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:id="@+id/viewSeparatorMiddle"
+                    android:layout_centerInParent="true"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/viewSeparatorMiddle">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.5"
+                        android:background="@drawable/bg_green" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="TDA"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:text="73,51%"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/viewSeparatorMiddle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp">
+
+                    <View
+                        android:alpha="0.5"
+                        android:background="@drawable/bg_green"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_centerVertical="true"
+                        android:textStyle="bold"
+                        android:textColor="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TDR"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_13ssp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="36%"/>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"/>
+
+            <LinearLayout
+                android:background="@color/et_bg"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_55sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_20ssp"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="12 452 567 400"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="ERecharge C2C"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_15sdp"/>
+
+            <LinearLayout
+                android:background="@color/et_bg"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_55sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_20ssp"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="8 500 437 900"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:text="ERecharge C2S"
+                    android:textSize="@dimen/_10ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_25sdp"/>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelPDVTitle"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_20ssp"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Points\nde vente"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_40ssp"
+                            android:layout_gravity="end"
+                            android:textColor="@color/orange"
+                            android:layout_width="wrap_content"
+                            android:gravity="end"
+                            android:layout_height="@dimen/_37sdp"
+                            android:text="5110"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="end|top"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:text="PDV Total"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <LinearLayout
+                    android:layout_weight="10"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/linearPDVRuptureContainer"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/bg_orange"
+                        android:gravity="center_vertical|end"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:gravity="end"
+                            android:text="20"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_20ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:gravity="end"
+                            android:text="PDV rupture"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_weight="0.5"/>
+
+                    <LinearLayout
+                        android:id="@+id/linearPDVSeuilContainer"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/bg_purple"
+                        android:gravity="center_vertical|end"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:gravity="end"
+                            android:text="10"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_20ssp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:gravity="end"
+                            android:text="PDV rupture"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_weight="0.5"/>
+
+                    <LinearLayout
+                        android:id="@+id/linearPDVTrafficContainer"
+                        android:gravity="center_vertical|end"
+                        android:background="@drawable/bg_green"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="@dimen/_37sdp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/_20ssp"
+                            android:textColor="@color/black"
+                            android:gravity="end"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="20"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:text="PDV rupture"
+                            android:textSize="@dimen/_10ssp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:text="LOCALISER MES PDV"
+                android:backgroundTint="@color/orange"
+                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginEnd="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

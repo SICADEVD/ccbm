@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activities.infospresenters.ProducteurPreviewActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECAPITULATIF PRODUCTEUR"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_below="@+id/linealToolbar"
+        android:id="@+id/divider_ban"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:background="@drawable/rounded_cardview_with_border"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_height="@dimen/_200sdp">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Localité"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelLocaliteProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Code producteur : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCodeProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Peter-07"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nom"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNomProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="BOKA"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Prenom(s) producteur"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPrenomProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Kadjo Serge DidierDidier Didier Didier Cedric"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sexe"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelSexeProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Homme"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Date naissance"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNaissanceProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="22-12-2022"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nationnalité"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNationnaliteProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Guinéen"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contact n°1"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelContactOneProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="01010101010"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contact n°2"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelContactTwoProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="0202020202"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Type de pieces"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPieceProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="CNI"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Numero piece"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPieceNumProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="098765432 PO"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Statut"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelStatutCertificationProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Certifie"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Année certification"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelAnneeCertificationProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:inputType="phone"
+                    android:textStyle="bold"
+                    android:maxLength="4"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="2002"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Niveau étude"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelEtudeProdPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="BEPC"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pieces fournies"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_13ssp"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageProfileProdPreview"
+                        android:background="@drawable/rounded_background"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_suivi_parcel"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_80sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageRectoProdPreview"
+                        android:background="@drawable/rounded_background"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:src="@drawable/ic_suivi_parcel"
+                        android:layout_height="@dimen/_80sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageVersoProdPreview"
+                        android:background="@drawable/rounded_background"
+                        android:src="@drawable/ic_suivi_parcel"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/_80sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imageSignatureProdPreview"
+                        android:background="@drawable/rounded_background"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/_80sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveProdPreview"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ENREGISTRER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/ic_save_work"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#924A3D</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#924A3D</color>
+    <color name="purple_light">#B082DE</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="colorPrimary">#e8670b</color>
+    <color name="colorPrimaryDark">#fff27123</color>
+    <color name="colorAccent">#ff58595b</color>
+    <color name="fragment_bg">#ffeeeeee</color>
+    <color name="step_bg">#fffcfbfa</color>
+    <color name="et_bg">#fff4efea</color>
+    <color name="header_bg">#ffa4a4a5</color>
+    <color name="divider">#ffa4a4a5</color>
+    <color name="bottom_bar_bg">#fff1f1f1</color>
+    <color name="reset_color">#ffdadada</color>
+    <color name="submit_color">#fff27123</color>
+    <color name="text_color">#ff58595b</color>
+    <color name="order_item_state">#ffcdcdcd</color>
+    <color name="sale_order_selected">#fff3e0c7</color>
+    <color name="sale_option">#eaeaeb</color>
+    <color name="gray">#88898c</color>
+    <color name="white_color">#ffffff</color>
+    <color name="orange">#e8670b</color>
+    <color name="orange_light">#D39568</color>
+
+    <color name="dialog_bg">#ff3d3e3f</color>
+    <color name="close_dialog_bg">#ffee1c25</color>
+    <color name="dark_gray">#3d3e3f</color>
+    <color name="btn_bg">#ffdfdad6</color>
+    <color name="splash_green">#59595b</color>
+    <color name="detail_bg_1">#e6e4e2</color>
+    <color name="detail_bg_2">#f5f4f4</color>
+    <color name="light_brown">#cecac6</color>
+    <color name="rect_stroke">#ffffdeaf</color>
+    <color name="rect_bg">#fffffbf8</color>
+    <color name="orange_bar">#faa60f</color>
+    <color name="red_title">#ff4500</color>
+    <color name="noir">#000000</color>
+    <color name="green">#00A984</color>
+    <color name="green_2">#00DA93</color>
+    <color name="green_3">#12EB96</color>
+    <color name="new_grey">#707070</color>
+    <color name="bggreen">#4CAF50</color>
+    <color name="cyan">#00BCD4</color>
+    <color name="blue">#2196F3</color>
+    <color name="green_4">#07ff47</color>
+    <color name="violet">#9C27B0</color>
+    <color name="pink">#E91E63</color>
+    <color name="yellow">#CDDC39</color>
+    <color name="purple_simple">#673AB7</color>
+    <color name="blue_pur">#4634ff</color>
+    <color name="dark_brown">#858585</color>
+    <color name="brown_logo">#A67169</color>
+</resources>

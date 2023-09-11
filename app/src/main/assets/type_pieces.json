@@ -1,0 +1,21 @@
+[{
+        "id": "4",
+        "nom": "Attestation"
+    },
+    {
+        "id": "2",
+        "nom": "Carte Consulaire"
+    },
+    {
+        "id": "1",
+        "nom": "CNI"
+    },
+    {
+        "id": "5",
+        "nom": "Extrait de naissance"
+    },
+    {
+        "id": "3",
+        "nom": "Passeport"
+    }
+]

@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    tools:context=".activities.forms.ProducteurMenageActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FICHE MENAGE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="visible"
+            android:src="@drawable/baseline_send_and_archive_white" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_30sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Localite *"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/selectLocaliteMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Producteur *"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/selectProducteurMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Quartier"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editQuartierMenage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="Qaurtier" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Source d'energie du menage"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEnergieMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearBoisParSemaineContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Combien de bois par semaine"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editNbreBoisSemaineMenage"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Comment gérez-vous les ordures ménagères ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectOrdureMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Pratiquez-vous la séparation des déchets ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectDechetYesNoMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:entries="@array/YesOrNo"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Comment gérez-vous l’eau de toilette ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEauToiletteMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Comment gérez-vous l’eau de vaisselle ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEauVaisselleMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Existe-t-il un WC pour le menage ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectWCYesNoMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:entries="@array/YesOrNo"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Ou procurez-vous de l'eau potable ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEauPotableMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Vous traitez vous-même vos champs ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectTraitementYesNoMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:entries="@array/YesOrNo"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearTypeMachinePulContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Avec quel type de machine ?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/selectMachinePulMenage"
+                            android:layout_width="match_parent"
+                            android:entries="@array/YesOrNo"
+                            android:layout_height="@dimen/_37sdp"
+                            android:spinnerMode="dialog" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearAtomisateurContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Votre atomisateur est-il en bon etat ?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/selectAtomisateurYesNoMenage"
+                            android:layout_width="match_parent"
+                            android:entries="@array/YesOrNo"
+                            android:layout_height="@dimen/_37sdp"
+                            android:spinnerMode="dialog" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearMachinePulKeeperContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Où gardez-vous cette machine ?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/selectMachineKeeperMenage"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:spinnerMode="dialog" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearChampsNoNumberContainerMenage"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Donnez son numero de telepone"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editChampsNoNumeroMenage"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Donnez le nom du traiteur"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editTraiteurMenage"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        tools:text="10" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:id="@+id/linearTraiteYourselfFarmEquipmentYesNoContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Avez-vous des Equipements de Protection Individuel ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEquipementProtectionYesNoMenage"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:entries="@array/YesOrNo"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Votre partenaire fait une activté qui produit de l'argent ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectFemmeActiviteYesNoMenage"
+                        android:layout_width="match_parent"
+                        android:entries="@array/YesOrNo"
+                        android:layout_height="@dimen/_37sdp"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearFemmeActiviteContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Quelle est l'activité?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editFemmeActiviteMenage"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        tools:text="Qaurtier" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Superficie du cacao de votre partenaire ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editSuperficieCacaoMenage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="Qaurtier" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearDonCacaoFemmeYesNoContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Peux-tu donner une partie de ton cacao à ta partenaire ?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/selectDonCacaoYesNoMenage"
+                            android:layout_width="match_parent"
+                            android:entries="@array/YesOrNo"
+                            android:layout_height="@dimen/_37sdp"
+                            android:spinnerMode="dialog" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearDonCacaoFemmeSuperficieContainerMenage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3.5"
+                        android:text="Combien d'hectare ?"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editDonSuperficieCacaoMenage"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_37sdp"
+                        android:layout_weight="6.5"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal"
+                        android:digits="0123456789."
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        tools:text="Qaurtier" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickCancelMenage"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/divider"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ANNULER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_cancel_send_white"
+                    app:iconGravity="start" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveMenage"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="VÉRIFIER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_schedule_send_prev_white"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

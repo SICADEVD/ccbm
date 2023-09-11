@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.MenusActionRedirectionActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseMenuAction"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MENU "
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftProducteur"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_draft" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:gravity="center"
+        android:padding="@dimen/_25sdp">
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/linearAddContentMenuAction"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/border_shape"
+            android:backgroundTint="@color/brown_logo"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_37sdp"
+                        app:srcCompat="@drawable/ic_add_all_white" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="AJOUTER\nUN CONTENU"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/linearUpdateContentMenuAction"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/border_shape"
+            android:backgroundTint="@color/purple_simple"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_37sdp"
+                        app:srcCompat="@drawable/ic_edit_white" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="MODIFIER\nUN CONTENU"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <View
+                    android:visibility="gone"
+                    android:alpha="0.2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/linearUnsyncDatasMenuAction"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/border_shape"
+            android:backgroundTint="@color/purple_simple"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_37sdp"
+                        android:scaleType="fitXY"
+                        app:srcCompat="@drawable/ic_menu_white" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DONNEES A\nSYNCHRONISER"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:background="@drawable/border_shape"
+                    android:backgroundTint="@color/blue"
+                    android:id="@+id/labelUnsyncDatasCountCountenuAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="200" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/linearSeeDraftsMenuAction"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/border_shape"
+            android:backgroundTint="@color/brown_logo"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_37sdp"
+                        app:srcCompat="@drawable/ic_draft" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_5sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VOIR\nLES BROUILLONS"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:background="@drawable/border_shape"
+                    android:backgroundTint="@color/red_title"
+                    android:id="@+id/labelSeeDraftsCountenuAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="200" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </GridLayout>
+
+</LinearLayout>

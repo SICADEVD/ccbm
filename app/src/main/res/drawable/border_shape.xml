@@ -1,0 +1,23 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Shadow Shape -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/_16sdp" />
+            <solid android:color="#D1D1D1" /> <!-- Shadow color -->
+        </shape>
+    </item>
+
+    <!-- Main Shape -->
+    <item android:right="@dimen/shadow_size"
+        android:left="@dimen/shadow_size"
+        android:top="@dimen/shadow_size"
+        android:bottom="@dimen/shadow_size">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/_16sdp" />
+            <stroke
+                android:width="@dimen/_3sdp"
+                android:color="@color/btn_bg" />
+        </shape>
+    </item>
+</layer-list>

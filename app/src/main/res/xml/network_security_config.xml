@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+    <!--<domain-config cleartextTrafficPermitted="true">
+        &lt;!&ndash;<domain includeSubdomains="true">projccb.ci</domain>&ndash;&gt; &lt;!&ndash;PROD&ndash;&gt;
+    </domain-config>-->
+</network-security-config>

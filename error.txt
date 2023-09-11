@@ -1,0 +1,675 @@
+2022-06-22 18:45:23.999 32316-32316/? I/anouanze.mobil: Late-enabling -Xcheck:jni
+2022-06-22 18:45:24.041 32316-32316/? I/anouanze.mobil: Unquickening 22 vdex files!
+2022-06-22 18:45:24.060 32316-32316/? D/ActivityThread: setConscryptValidator
+2022-06-22 18:45:24.060 32316-32316/? D/ActivityThread: setConscryptValidator - put
+2022-06-22 18:45:24.167 32316-32316/? W/anouanze.mobil: DexFile /data/data/sicadevd.mobile/code_cache/.studio/instruments-88564b4d.jar is in boot class path but is not in a known location
+2022-06-22 18:45:24.179 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;-><clinit>()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.179 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;-><init>()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.180 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ApplicationLoaders;->gApplicationLoaders:Landroid/app/ApplicationLoaders; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.180 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ApplicationLoaders;->mLoaders:Landroid/util/ArrayMap; (greylist, linking, allowed)
+2022-06-22 18:45:24.180 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ApplicationLoaders;->mSystemLibsCacheMap:Ljava/util/Map; (blacklist, linking, allowed)
+2022-06-22 18:45:24.180 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->createAndCacheNonBootclasspathSystemClassLoader(Landroid/content/pm/SharedLibraryInfo;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.180 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/SharedLibraryInfo;->getPath()Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.181 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/SharedLibraryInfo;->getDependencies()Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.181 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ApplicationLoaders$CachedClassLoader;->loader:Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.181 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->getClassLoader(Ljava/lang/String;IZLjava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.182 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders$CachedClassLoader;-><init>(Landroid/app/ApplicationLoaders$1;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.182 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ApplicationLoaders$CachedClassLoader;->sharedLibraries:Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.183 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/Trace;->traceBegin(JLjava/lang/String;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.183 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/os/ClassLoaderFactory;->createClassLoader(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;IZLjava/lang/String;Ljava/util/List;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.183 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/Trace;->traceEnd(J)V (greylist, linking, allowed)
+2022-06-22 18:45:24.184 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/GraphicsEnvironment;->getInstance()Landroid/os/GraphicsEnvironment; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.184 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/GraphicsEnvironment;->setLayerPaths(Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.184 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/os/ClassLoaderFactory;->createClassLoader(Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/util/List;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.184 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->getDefault()Landroid/app/ApplicationLoaders; (greylist, linking, allowed)
+2022-06-22 18:45:24.184 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->sharedLibrariesEquals(Ljava/util/List;Ljava/util/List;)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.185 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->addNative(Ljava/lang/ClassLoader;Ljava/util/Collection;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.185 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/BaseDexClassLoader;->addNativePath(Ljava/util/Collection;)V (greylist-max-o,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.185 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->addPath(Ljava/lang/ClassLoader;Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.185 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/BaseDexClassLoader;->addDexPath(Ljava/lang/String;)V (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.185 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->createAndCacheNonBootclasspathSystemClassLoaders([Landroid/content/pm/SharedLibraryInfo;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.186 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->createAndCacheWebViewClassLoader(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/ClassLoader; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.186 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->getCachedNonBootclasspathSystemLib(Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/util/List;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.186 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->getClassLoader(Ljava/lang/String;IZLjava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/String;)Ljava/lang/ClassLoader; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.187 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->getClassLoaderWithSharedLibraries(Ljava/lang/String;IZLjava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/util/List;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.187 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationLoaders;->getSharedLibraryClassLoaderWithSharedLibraries(Ljava/lang/String;IZLjava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/util/List;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.187 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;-><clinit>()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.187 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->EMPTY_STACK_TRACE:[Ljava/lang/StackTraceElement; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.187 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->SUBCLASS_IMPLEMENTATION_PERMISSION:Ljava/lang/RuntimePermission; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->lock:Ljava/lang/Object; (greylist, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->daemon:Z (greylist, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->stillborn:Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->threadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap; (greylist, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->inheritableThreadLocals:Ljava/lang/ThreadLocal$ThreadLocalMap; (greylist, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->systemDaemon:Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->started:Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->blockerLock:Ljava/lang/Object; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.188 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->nextThreadNum()I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.189 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->init(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;J)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.192 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;-><init>(Ljava/lang/Runnable;Ljava/security/AccessControlContext;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.192 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->init(Ljava/lang/ThreadGroup;Ljava/lang/Runnable;Ljava/lang/String;JLjava/security/AccessControlContext;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;-><init>(Ljava/lang/ThreadGroup;Ljava/lang/String;IZ)V (greylist, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->group:Ljava/lang/ThreadGroup; (greylist, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/ThreadGroup;->addUnstarted()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->name:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->priority:I (greylist, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->init2(Ljava/lang/Thread;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->nextThreadID()J (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.193 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->tid:J (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.194 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->auditSubclass(Ljava/lang/Class;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.194 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread$1;-><init>(Ljava/lang/Class;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.194 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->exit()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.194 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/ThreadGroup;->threadTerminated(Ljava/lang/Thread;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.194 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->target:Ljava/lang/Runnable; (greylist, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->inheritedAccessControlContext:Ljava/security/AccessControlContext; (greylist, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->blocker:Lsun/nio/ch/Interruptible; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->uncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/ThreadGroup;->systemThreadGroup:Ljava/lang/ThreadGroup; (greylist, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->defaultUncaughtExceptionHandler:Ljava/lang/Thread$UncaughtExceptionHandler; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->getNativeTid()I (blacklist, linking, allowed)
+2022-06-22 18:45:24.195 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->getUncaughtExceptionPreHandler()Ljava/lang/Thread$UncaughtExceptionHandler; (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.196 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->uncaughtExceptionPreHandler:Ljava/lang/Thread$UncaughtExceptionHandler; (greylist, linking, allowed)
+2022-06-22 18:45:24.196 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->stackSize:J (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.196 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->contextClassLoader:Ljava/lang/ClassLoader; (greylist, linking, allowed)
+2022-06-22 18:45:24.196 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/ThreadLocal;->createInheritedMap(Ljava/lang/ThreadLocal$ThreadLocalMap;)Ljava/lang/ThreadLocal$ThreadLocalMap; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.197 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->interrupt0()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.197 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->isCCLOverridden(Ljava/lang/Class;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.197 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread$Caches;->subclassAuditsQueue:Ljava/lang/ref/ReferenceQueue; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.197 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread$Caches;->subclassAudits:Ljava/util/concurrent/ConcurrentMap; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.197 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->processQueue(Ljava/lang/ref/ReferenceQueue;Ljava/util/concurrent/ConcurrentMap;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.197 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread$WeakClassKey;-><init>(Ljava/lang/Class;Ljava/lang/ref/ReferenceQueue;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.198 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->nativeCreate(Ljava/lang/Thread;JZ)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.198 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->nativeGetStatus(Z)I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.198 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->threadSeqNumber:J (greylist, linking, allowed)
+2022-06-22 18:45:24.198 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->threadInitNumber:I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.199 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->setNativeName(Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.199 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->setPriority0(I)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.199 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->setUncaughtExceptionPreHandler(Ljava/lang/Thread$UncaughtExceptionHandler;)V (greylist-max-o,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.199 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->sleep(Ljava/lang/Object;JI)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.200 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->blockedOn(Lsun/nio/ch/Interruptible;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.200 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->dispatchUncaughtException(Ljava/lang/Throwable;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.201 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/VMStack;->getThreadStackTrace(Ljava/lang/Thread;)[Ljava/lang/StackTraceElement; (greylist, linking, allowed)
+2022-06-22 18:45:24.201 32316-32316/? W/anouanze.mobil: Accessing hidden field Llibcore/util/EmptyArray;->STACK_TRACE_ELEMENT:[Ljava/lang/StackTraceElement; (blacklist, linking, allowed)
+2022-06-22 18:45:24.201 32316-32316/? W/anouanze.mobil: Accessing hidden method Lsun/nio/ch/Interruptible;->interrupt(Ljava/lang/Thread;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.202 32316-32316/? W/anouanze.mobil: Accessing hidden field Ljava/lang/Thread;->nativePeer:J (greylist, linking, allowed)
+2022-06-22 18:45:24.203 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/RuntimeHooks;->getThreadPrioritySetter()Ldalvik/system/ThreadPrioritySetter; (blacklist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.203 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/ThreadPrioritySetter;->setPriority(II)V (blacklist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.203 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/Thread;->setSystemDaemon(Z)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.203 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/ThreadGroup;->add(Ljava/lang/Thread;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.203 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/ThreadGroup;->threadStartFailed(Ljava/lang/Thread;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.204 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;-><init>(Ljava/lang/ClassLoader;Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.204 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/DexPathList;->definingContext:Ljava/lang/ClassLoader; (greylist, linking, allowed)
+2022-06-22 18:45:24.204 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->splitPaths(Ljava/lang/String;Z)Ljava/util/List; (greylist, linking, allowed)
+2022-06-22 18:45:24.204 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/DexPathList;->nativeLibraryDirectories:Ljava/util/List; (greylist, linking, allowed)
+2022-06-22 18:45:24.205 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/DexPathList;->systemNativeLibraryDirectories:Ljava/util/List; (greylist, linking, allowed)
+2022-06-22 18:45:24.205 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->getAllNativeLibraryDirectories()Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.205 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->makePathElements(Ljava/util/List;)[Ldalvik/system/DexPathList$NativeLibraryElement; (greylist, linking, allowed)
+2022-06-22 18:45:24.205 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/DexPathList;->nativeLibraryPathElements:[Ldalvik/system/DexPathList$NativeLibraryElement; (greylist, linking, allowed)
+2022-06-22 18:45:24.205 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;-><init>(Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/lang/String;Ljava/io/File;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.205 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;-><init>(Ljava/lang/ClassLoader;Ljava/lang/String;Ljava/lang/String;Ljava/io/File;Z)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.206 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->splitDexPath(Ljava/lang/String;)Ljava/util/List; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.206 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->makeDexElements(Ljava/util/List;Ljava/io/File;Ljava/util/List;Ljava/lang/ClassLoader;Z)[Ldalvik/system/DexPathList$Element; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.206 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/DexPathList;->dexElements:[Ldalvik/system/DexPathList$Element; (greylist, linking, allowed)
+2022-06-22 18:45:24.206 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/DexPathList;->dexElementsSuppressedExceptions:[Ljava/io/IOException; (greylist, linking, allowed)
+2022-06-22 18:45:24.207 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->concat(Ljava/lang/Class;[Ljava/lang/Object;[Ljava/lang/Object;)[Ljava/lang/Object; (blacklist, linking, allowed)
+2022-06-22 18:45:24.207 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->lambda$initByteBufferDexPath$0(Ljava/nio/ByteBuffer;)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.207 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->loadDexFile(Ljava/io/File;Ljava/io/File;Ljava/lang/ClassLoader;[Ldalvik/system/DexPathList$Element;)Ldalvik/system/DexFile; (greylist, linking, allowed)
+2022-06-22 18:45:24.207 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;-><init>(Ljava/io/File;Ljava/lang/ClassLoader;[Ldalvik/system/DexPathList$Element;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.208 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->optimizedPathFor(Ljava/io/File;Ljava/io/File;)Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.208 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;->loadDex(Ljava/lang/String;Ljava/lang/String;ILjava/lang/ClassLoader;[Ldalvik/system/DexPathList$Element;)Ldalvik/system/DexFile; (greylist, linking, allowed)
+2022-06-22 18:45:24.208 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->makeDexElements(Ljava/util/List;Ljava/io/File;Ljava/util/List;Ljava/lang/ClassLoader;)[Ldalvik/system/DexPathList$Element; (greylist, linking, allowed)
+2022-06-22 18:45:24.208 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$Element;-><init>(Ljava/io/File;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.209 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$Element;-><init>(Ldalvik/system/DexFile;Ljava/io/File;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.209 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;->setTrusted()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.209 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/System;->logE(Ljava/lang/String;Ljava/lang/Throwable;)V (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.209 32316-32316/? W/anouanze.mobil: Accessing hidden method Ljava/lang/System;->logW(Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.210 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->makeInMemoryDexElements([Ljava/nio/ByteBuffer;Ljava/util/List;)[Ldalvik/system/DexPathList$Element; (greylist, linking, allowed)
+2022-06-22 18:45:24.210 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;-><init>([Ljava/nio/ByteBuffer;Ljava/lang/ClassLoader;[Ldalvik/system/DexPathList$Element;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.210 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$Element;-><init>(Ldalvik/system/DexFile;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.210 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->makePathElements(Ljava/util/List;Ljava/io/File;Ljava/util/List;)[Ldalvik/system/DexPathList$Element; (greylist, linking, allowed)
+2022-06-22 18:45:24.211 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$NativeLibraryElement;-><init>(Ljava/io/File;Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.211 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$NativeLibraryElement;-><init>(Ljava/io/File;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.212 32316-32316/? W/anouanze.mobil: Accessing hidden field Llibcore/io/Libcore;->os:Llibcore/io/Os; (greylist, linking, allowed)
+2022-06-22 18:45:24.212 32316-32316/? W/anouanze.mobil: Accessing hidden method Llibcore/io/Os;->stat(Ljava/lang/String;)Landroid/system/StructStat; (greylist, linking, allowed)
+2022-06-22 18:45:24.212 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->addDexPath(Ljava/lang/String;Ljava/io/File;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.212 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->addDexPath(Ljava/lang/String;Ljava/io/File;Z)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.213 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->addNativePath(Ljava/util/Collection;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.213 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->findClass(Ljava/lang/String;Ljava/util/List;)Ljava/lang/Class; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.213 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$Element;->findClass(Ljava/lang/String;Ljava/lang/ClassLoader;Ljava/util/List;)Ljava/lang/Class; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.214 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->findLibrary(Ljava/lang/String;)Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.214 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$NativeLibraryElement;->findNativeLibrary(Ljava/lang/String;)Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.214 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->findResource(Ljava/lang/String;)Ljava/net/URL; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.214 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$Element;->findResource(Ljava/lang/String;)Ljava/net/URL; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.214 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->findResources(Ljava/lang/String;)Ljava/util/Enumeration; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.215 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->getDexPaths()Ljava/util/List; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.215 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList$Element;->access$000(Ldalvik/system/DexPathList$Element;)Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.215 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->getNativeLibraryDirectories()Ljava/util/List; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.215 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexPathList;->initByteBufferDexPath([Ljava/nio/ByteBuffer;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.216 32316-32316/? W/anouanze.mobil: Accessing hidden field Ldalvik/system/-$$Lambda$DexPathList$_CyMypnZmV6ArWiPOPB4EkAIeUc;->INSTANCE:Ldalvik/system/-$$Lambda$DexPathList$_CyMypnZmV6ArWiPOPB4EkAIeUc; (blacklist, linking, allowed)
+2022-06-22 18:45:24.216 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;->isBackedByOatFile()Z (greylist, linking, allowed)
+2022-06-22 18:45:24.216 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;->verifyInBackground(Ljava/lang/ClassLoader;Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.217 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/DexFile;->getClassLoaderContext(Ljava/lang/ClassLoader;[Ldalvik/system/DexPathList$Element;)Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.217 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;-><clinit>()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.217 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;-><init>(Landroid/app/ActivityThread;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.217 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;-><init>()V (greylist, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mDisplayAdjustments:Landroid/view/DisplayAdjustments; (greylist, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mReceivers:Landroid/util/ArrayMap; (greylist, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mUnregisteredReceivers:Landroid/util/ArrayMap; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mServices:Landroid/util/ArrayMap; (greylist-max-p, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mUnboundServices:Landroid/util/ArrayMap; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mActivityThread:Landroid/app/ActivityThread; (greylist, linking, allowed)
+2022-06-22 18:45:24.218 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mApplicationInfo:Landroid/content/pm/ApplicationInfo; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mPackageName:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mAppDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mResDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mSplitAppDirs:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mSplitResDirs:[Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mSplitClassLoaderNames:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mOverlayDirs:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mDataDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mDataDirFile:Ljava/io/File; (greylist-max-p, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mDeviceProtectedDataDirFile:Ljava/io/File; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mCredentialProtectedDataDirFile:Ljava/io/File; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mLibDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mBaseClassLoader:Ljava/lang/ClassLoader; (greylist, linking, allowed)
+2022-06-22 18:45:24.219 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mSecurityViolation:Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.220 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mIncludeCode:Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.220 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mRegisterPackage:Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.220 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mResources:Landroid/content/res/Resources; (greylist, linking, allowed)
+2022-06-22 18:45:24.220 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mDefaultClassLoader:Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.220 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->createAppFactory(Landroid/content/pm/ApplicationInfo;Ljava/lang/ClassLoader;)Landroid/app/AppComponentFactory; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.220 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mAppComponentFactory:Landroid/app/AppComponentFactory; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.221 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mClassLoader:Ljava/lang/ClassLoader; (greylist, linking, allowed)
+2022-06-22 18:45:24.221 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;-><init>(Landroid/app/ActivityThread;Landroid/content/pm/ApplicationInfo;Landroid/content/res/CompatibilityInfo;Ljava/lang/ClassLoader;ZZZ)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.221 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->setApplicationInfo(Landroid/content/pm/ApplicationInfo;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.221 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;->setCompatibilityInfo(Landroid/content/res/CompatibilityInfo;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.222 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->access$000(Landroid/app/LoadedApk;)[Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.222 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mSplitNames:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.222 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->access$100(Landroid/app/LoadedApk;Ljava/util/List;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.222 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->createOrUpdateClassLoaderLocked(Ljava/util/List;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.222 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->access$200(Landroid/app/LoadedApk;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->access$300(Landroid/app/LoadedApk;)[Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->access$400(Landroid/app/LoadedApk;)[Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->access$500(Landroid/app/LoadedApk;)[Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->adjustNativeLibraryPaths(Landroid/content/pm/ApplicationInfo;)Landroid/content/pm/ApplicationInfo; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->primaryCpuAbi:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->secondaryCpuAbi:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/VMRuntime;->getRuntime()Ldalvik/system/VMRuntime; (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.223 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/VMRuntime;->vmInstructionSet()Ljava/lang/String; (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.224 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/VMRuntime;->getInstructionSet(Ljava/lang/String;)Ljava/lang/String; (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.224 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->secondaryNativeLibraryDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.224 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->allowThreadDiskReads()Landroid/os/StrictMode$ThreadPolicy; (blacklist, linking, allowed)
+2022-06-22 18:45:24.224 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->appendApkLibPathIfNeeded(Ljava/lang/String;Landroid/content/pm/ApplicationInfo;Ljava/util/List;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.225 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->appendSharedLibrariesLibPathsIfNeeded(Ljava/util/List;Landroid/content/pm/ApplicationInfo;Ljava/util/Set;Ljava/util/List;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.225 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/SharedLibraryInfo;->getAllCodePaths()Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.225 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->canAccessDataDir()Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.225 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ActivityThread;->currentPackageName()Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.226 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->setThreadPolicy(Landroid/os/StrictMode$ThreadPolicy;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.226 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I (greylist, linking, allowed)
+2022-06-22 18:45:24.226 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/AppComponentFactory;->DEFAULT:Landroid/app/AppComponentFactory; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.227 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ActivityThread;->getPackageManager()Landroid/content/pm/IPackageManager; (greylist, linking, allowed)
+2022-06-22 18:45:24.227 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/IPackageManager;->notifyPackageUse(Ljava/lang/String;I)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.227 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ActivityManager;->getService()Landroid/app/IActivityManager; (greylist, linking, allowed)
+2022-06-22 18:45:24.227 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/IActivityManager;->addPackageDependency(Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.227 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->isSystemApp()Z (blacklist,test-api, linking, allowed)
+2022-06-22 18:45:24.228 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->isUpdatedSystemApp()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.228 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->getCodePath()Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.228 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->isVendor()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.228 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->isProduct()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.228 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/sysprop/VndkProperties;->product_vndk_version()Ljava/util/Optional; (blacklist, linking, allowed)
+2022-06-22 18:45:24.228 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->makePaths(Landroid/app/ActivityThread;ZLandroid/content/pm/ApplicationInfo;Ljava/util/List;Ljava/util/List;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.229 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getAppDir()Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.229 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ActivityThread;->getGpuDebugApp()Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.229 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/IPackageManager;->getApplicationInfo(Ljava/lang/String;II)Landroid/content/pm/ApplicationInfo; (greylist, linking, allowed)
+2022-06-22 18:45:24.230 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ActivityThread;->getCoreSettings()Landroid/os/Bundle; (blacklist, linking, allowed)
+2022-06-22 18:45:24.230 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/GraphicsEnvironment;->getDebugLayerPathsFromSettings(Landroid/os/Bundle;Landroid/content/pm/IPackageManager;Ljava/lang/String;Landroid/content/pm/ApplicationInfo;)Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.230 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->sharedLibraryInfos:Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.230 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->createSharedLibrariesLoaders(Ljava/util/List;ZLjava/lang/String;Ljava/lang/String;)Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.230 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->classLoaderName:Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.231 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ActivityThread;->isSystem()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.231 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->setupJitProfileSupport()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.232 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/util/Slog;->e(Ljava/lang/String;Ljava/lang/String;)I (greylist, linking, allowed)
+2022-06-22 18:45:24.232 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->createSharedLibraryLoader(Landroid/content/pm/SharedLibraryInfo;ZLjava/lang/String;Ljava/lang/String;)Ljava/lang/ClassLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.232 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getLibrariesFor(Ljava/lang/String;)[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.233 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getProcessDisplayId()I (blacklist, linking, allowed)
+2022-06-22 18:45:24.233 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getServiceDispatcherCommon(Landroid/content/ServiceConnection;Landroid/content/Context;Landroid/os/Handler;Ljava/util/concurrent/Executor;I)Landroid/app/IServiceConnection; (blacklist, linking, allowed)
+2022-06-22 18:45:24.233 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;-><init>(Landroid/content/ServiceConnection;Landroid/content/Context;Ljava/util/concurrent/Executor;I)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.233 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->getIServiceConnection()Landroid/app/IServiceConnection; (greylist, linking, allowed)
+2022-06-22 18:45:24.234 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;-><init>(Landroid/content/ServiceConnection;Landroid/content/Context;Landroid/os/Handler;I)V (greylist, linking, allowed)
+2022-06-22 18:45:24.234 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->validate(Landroid/content/Context;Landroid/os/Handler;Ljava/util/concurrent/Executor;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.234 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->initializeJavaContextClassLoader()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.234 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/PackageManager;->getPackageInfoAsUserCached(Ljava/lang/String;II)Landroid/content/pm/PackageInfo; (blacklist, linking, allowed)
+2022-06-22 18:45:24.235 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$WarningContextClassLoader;-><init>(Landroid/app/LoadedApk$1;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.235 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->makePaths(Landroid/app/ActivityThread;Landroid/content/pm/ApplicationInfo;Ljava/util/List;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.235 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->requestsIsolatedSplitLoading()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.235 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentationPackageName:Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentationAppDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentationSplitAppDirs:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentationLibDir:Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentedAppDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentedSplitAppDirs:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentedLibDir:Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.236 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/VMRuntime;->is64BitAbi(Ljava/lang/String;)Z (greylist,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.237 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->rewriteRValues(Ljava/lang/ClassLoader;Ljava/lang/String;I)V (greylist, linking, allowed)
+2022-06-22 18:45:24.237 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->resourceDirs:[Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.238 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/FileUtils;->newFileOrNull(Ljava/lang/String;)Ljava/io/File; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.238 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->splitClassLoaderNames:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.238 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/ArrayUtils;->isEmpty([Ljava/lang/Object;)Z (greylist, linking, allowed)
+2022-06-22 18:45:24.238 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/pm/ApplicationInfo;->splitDependencies:Landroid/util/SparseArray; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.238 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$SplitDependencyLoaderImpl;-><init>(Landroid/app/LoadedApk;Landroid/util/SparseArray;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.239 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mSplitLoader:Landroid/app/LoadedApk$SplitDependencyLoaderImpl; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.239 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/DexLoadReporter;->getInstance()Landroid/app/DexLoadReporter; (blacklist, linking, allowed)
+2022-06-22 18:45:24.239 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/BaseDexClassLoader;->setReporter(Ldalvik/system/BaseDexClassLoader$Reporter;)V (greylist-max-o,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.239 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/dex/ArtManager;->getCurrentProfilePath(Ljava/lang/String;ILjava/lang/String;)Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.239 32316-32316/? W/anouanze.mobil: Accessing hidden method Ldalvik/system/VMRuntime;->registerAppInfo(Ljava/lang/String;[Ljava/lang/String;)V (greylist-max-o,core-platform-api, linking, allowed)
+2022-06-22 18:45:24.240 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/DexLoadReporter;->registerAppDataDir(Ljava/lang/String;Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.240 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->forgetReceiverDispatcher(Landroid/content/Context;Landroid/content/BroadcastReceiver;)Landroid/content/IIntentReceiver; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.240 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;->setUnregisterLocation(Ljava/lang/RuntimeException;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.241 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk$ReceiverDispatcher;->mForgotten:Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.241 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;->getIIntentReceiver()Landroid/content/IIntentReceiver; (greylist, linking, allowed)
+2022-06-22 18:45:24.241 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;->getUnregisterLocation()Ljava/lang/RuntimeException; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.241 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->forgetServiceDispatcher(Landroid/content/Context;Landroid/content/ServiceConnection;)Landroid/app/IServiceConnection; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.241 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->doForget()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.242 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->getFlags()I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.242 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->setUnbindLocation(Ljava/lang/RuntimeException;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.242 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->getUnbindLocation()Ljava/lang/RuntimeException; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.242 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getAppFactory()Landroid/app/AppComponentFactory; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.242 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getApplication()Landroid/app/Application; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.242 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/LoadedApk;->mApplication:Landroid/app/Application; (greylist, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getApplicationInfo()Landroid/content/pm/ApplicationInfo; (greylist, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getAssets()Landroid/content/res/AssetManager; (greylist, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getResources()Landroid/content/res/Resources; (greylist, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getClassLoader()Ljava/lang/ClassLoader; (greylist, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo; (greylist, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;->getCompatibilityInfo()Landroid/content/res/CompatibilityInfo; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.243 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getCredentialProtectedDataDirFile()Ljava/io/File; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.244 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getDataDir()Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.244 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getDataDirFile()Ljava/io/File; (greylist, linking, allowed)
+2022-06-22 18:45:24.244 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getDeviceProtectedDataDirFile()Ljava/io/File; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.244 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getLibDir()Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.244 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getOverlayDirs()[Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.244 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getPackageName()Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.245 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getReceiverDispatcher(Landroid/content/BroadcastReceiver;Landroid/content/Context;Landroid/os/Handler;Landroid/app/Instrumentation;Z)Landroid/content/IIntentReceiver; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.245 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;-><init>(Landroid/content/BroadcastReceiver;Landroid/content/Context;Landroid/os/Handler;Landroid/app/Instrumentation;Z)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.245 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;->validate(Landroid/content/Context;Landroid/os/Handler;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.245 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getResDir()Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.246 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getSplitPaths(Ljava/lang/String;)[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.246 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getInstance()Landroid/app/ResourcesManager; (greylist, linking, allowed)
+2022-06-22 18:45:24.246 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getResources(Landroid/os/IBinder;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Ljava/lang/ClassLoader;Ljava/util/List;Ljava/lang/String;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.246 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getServiceDispatcher(Landroid/content/ServiceConnection;Landroid/content/Context;Landroid/os/Handler;I)Landroid/app/IServiceConnection; (greylist, linking, allowed)
+2022-06-22 18:45:24.247 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getServiceDispatcher(Landroid/content/ServiceConnection;Landroid/content/Context;Ljava/util/concurrent/Executor;I)Landroid/app/IServiceConnection; (blacklist, linking, allowed)
+2022-06-22 18:45:24.247 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getSplitAppDirs()[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.247 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getSplitClassLoader(Ljava/lang/String;)Ljava/lang/ClassLoader; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.247 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$SplitDependencyLoaderImpl;->getClassLoaderForSplit(Ljava/lang/String;)Ljava/lang/ClassLoader; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.247 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$SplitDependencyLoaderImpl;->getSplitPathsForSplit(Ljava/lang/String;)[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.247 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getSplitResDirs()[Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.248 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->getTargetSdkVersion()I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.248 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->installSystemApplicationInfo(Landroid/content/pm/ApplicationInfo;Ljava/lang/ClassLoader;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.248 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->isSecurityViolation()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.248 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->lookupServiceDispatcher(Landroid/content/ServiceConnection;Landroid/content/Context;)Landroid/app/IServiceConnection; (greylist, linking, allowed)
+2022-06-22 18:45:24.248 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->makeApplication(ZLandroid/app/Instrumentation;)Landroid/app/Application; (greylist, linking, allowed)
+2022-06-22 18:45:24.249 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/AssetManager;->getAssignedPackageIdentifiers(ZZ)Landroid/util/SparseArray; (blacklist, linking, allowed)
+2022-06-22 18:45:24.249 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ContextImpl;->createAppContext(Landroid/app/ActivityThread;Landroid/app/LoadedApk;)Landroid/app/ContextImpl; (greylist, linking, allowed)
+2022-06-22 18:45:24.249 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ContextImpl;->getOpPackageNameForDebug()Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.250 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ContextImpl;->getBasePackageNameForDebug()Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.250 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ContextImpl;->mPackageInfo:Landroid/app/LoadedApk; (greylist, linking, allowed)
+2022-06-22 18:45:24.250 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I (greylist, linking, allowed)
+2022-06-22 18:45:24.250 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/security/net/config/NetworkSecurityConfigProvider;->handleNewApplication(Landroid/content/Context;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.250 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mInstrumentation:Landroid/app/Instrumentation; (greylist, linking, allowed)
+2022-06-22 18:45:24.250 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ContextImpl;->setOuterContext(Landroid/content/Context;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.251 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ActivityThread;->mAllApplications:Ljava/util/ArrayList; (greylist, linking, allowed)
+2022-06-22 18:45:24.251 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->removeContextRegistrations(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.251 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/StrictMode;->vmRegistrationLeaksEnabled()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.252 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;->getIntentReceiver()Landroid/content/BroadcastReceiver; (greylist, linking, allowed)
+2022-06-22 18:45:24.252 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/IntentReceiverLeaked;-><init>(Ljava/lang/String;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.252 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ReceiverDispatcher;->getLocation()Landroid/app/IntentReceiverLeaked; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.252 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/StrictMode;->onIntentReceiverLeaked(Ljava/lang/Throwable;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.252 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/IActivityManager;->unregisterReceiver(Landroid/content/IIntentReceiver;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.253 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->getServiceConnection()Landroid/content/ServiceConnection; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.253 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ServiceConnectionLeaked;-><init>(Ljava/lang/String;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.253 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk$ServiceDispatcher;->getLocation()Landroid/app/ServiceConnectionLeaked; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.253 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/StrictMode;->onServiceConnectionLeaked(Ljava/lang/Throwable;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.254 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/IActivityManager;->unbindService(Landroid/app/IServiceConnection;)Z (greylist, linking, allowed)
+2022-06-22 18:45:24.254 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->setCompatibilityInfo(Landroid/content/res/CompatibilityInfo;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.254 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->setOverlayDirs([Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.255 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/LoadedApk;->updateApplicationInfo(Landroid/content/pm/ApplicationInfo;Ljava/util/List;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.255 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->getLoaders()Ljava/util/List; (blacklist, linking, allowed)
+2022-06-22 18:45:24.256 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;-><clinit>()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.256 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->IS_NOSHIP_BUILD:Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.256 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;-><init>()V (greylist, linking, allowed)
+2022-06-22 18:45:24.256 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mResConfiguration:Landroid/content/res/Configuration; (greylist, linking, allowed)
+2022-06-22 18:45:24.256 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mResourceImpls:Landroid/util/ArrayMap; (greylist, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mResourceReferences:Ljava/util/ArrayList; (greylist, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mResourcesReferencesQueue:Ljava/lang/ref/ReferenceQueue; (blacklist, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mLoadedApkAssets:Landroid/util/LruCache; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mCachedApkAssets:Landroid/util/ArrayMap; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mActivityResourceReferences:Ljava/util/WeakHashMap; (greylist, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mAdjustedDisplays:Landroid/util/ArrayMap; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.257 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager$UpdateHandler;-><init>(Landroid/app/ResourcesManager;Landroid/app/ResourcesManager$1;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.258 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mUpdateCallbacks:Landroid/app/ResourcesManager$UpdateHandler; (blacklist, linking, allowed)
+2022-06-22 18:45:24.258 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mDPResHash:I (blacklist, linking, allowed)
+2022-06-22 18:45:24.258 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mDPImplHash:I (blacklist, linking, allowed)
+2022-06-22 18:45:24.258 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->CAPACITY_LOG:I (blacklist, linking, allowed)
+2022-06-22 18:45:24.258 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mFormatter:Ljava/time/format/DateTimeFormatter; (blacklist, linking, allowed)
+2022-06-22 18:45:24.258 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mSavedLogs:Landroid/app/ResourcesManager$EvictingArrayQueue; (blacklist, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->access$200(Landroid/app/ResourcesManager;Landroid/content/res/ResourcesImpl;)Landroid/content/res/ResourcesKey; (blacklist, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->findKeyForResourceImplLocked(Landroid/content/res/ResourcesImpl;)Landroid/content/res/ResourcesKey; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->access$300(Landroid/app/ResourcesManager;Landroid/content/res/ResourcesKey;)Landroid/content/res/ResourcesImpl; (blacklist, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->findOrCreateResourcesImplForKeyLocked(Landroid/content/res/ResourcesKey;)Landroid/content/res/ResourcesImpl; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->access$400(Landroid/app/ResourcesManager;)Landroid/util/ArrayMap; (blacklist, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->access$500(Landroid/app/ResourcesManager;Landroid/util/ArrayMap;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->redirectResourcesToNewImplLocked(Landroid/util/ArrayMap;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.259 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->adjustConfigForDexDisplayIfNeeded(Landroid/content/res/Configuration;ILandroid/view/DisplayAdjustments;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.260 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getAdjustedDisplay(ILandroid/view/DisplayAdjustments;)Landroid/view/Display; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.260 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->adjustTab(I)Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.260 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyConfigurationToResourcesLocked(Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Landroid/content/res/Configuration;Landroid/content/res/ResourcesKey;Landroid/content/res/ResourcesImpl;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.260 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesKey;->hasOverrideConfiguration()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.260 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mOverrideConfiguration:Landroid/content/res/Configuration; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.261 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesImpl;->getDisplayAdjustments()Landroid/view/DisplayAdjustments; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.261 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;-><init>(Landroid/view/DisplayAdjustments;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.261 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mDisplayId:I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.261 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;->setConfiguration(Landroid/content/res/Configuration;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.261 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getDisplayMetrics(ILandroid/view/DisplayAdjustments;)Landroid/util/DisplayMetrics; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.261 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyNonDefaultDisplayMetricsToConfiguration(Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.262 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesImpl;->updateConfiguration(Landroid/content/res/Configuration;Landroid/util/DisplayMetrics;Landroid/content/res/CompatibilityInfo;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.262 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyNonDefaultDisplayMetricsToConfiguration(Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;I)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.262 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Configuration;->resetScreenLayout(I)I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.262 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Configuration;->reduceScreenLayout(III)I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.262 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/Configuration;->compatScreenWidthDp:I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.263 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/Configuration;->compatScreenHeightDp:I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.263 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/Configuration;->compatSmallestScreenWidthDp:I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.263 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->buildLogString(Ljava/lang/String;)Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.263 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->cleanupReferences(Ljava/util/ArrayList;Ljava/lang/ref/ReferenceQueue;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.264 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/-$$Lambda$ResourcesManager$JPMYJ3O5qlFN-c1356pr2ximEb0;-><init>(Ljava/util/HashSet;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.264 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/ArrayUtils;->unstableRemoveIf(Ljava/util/ArrayList;Ljava/util/function/Predicate;)I (blacklist, linking, allowed)
+2022-06-22 18:45:24.264 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->countLiveReferences(Ljava/util/Collection;)I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.264 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createResources(Landroid/os/IBinder;Landroid/content/res/ResourcesKey;Ljava/lang/ClassLoader;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.265 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/os/Debug;->getCallers(I)Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.265 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/util/Slog;->i(Ljava/lang/String;Ljava/lang/String;)I (greylist, linking, allowed)
+2022-06-22 18:45:24.265 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mCompatInfo:Landroid/content/res/CompatibilityInfo; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.265 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createResourcesForActivityLocked(Landroid/os/IBinder;Ljava/lang/ClassLoader;Landroid/content/res/ResourcesImpl;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.266 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createResourcesLocked(Ljava/lang/ClassLoader;Landroid/content/res/ResourcesImpl;Landroid/content/res/CompatibilityInfo;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.266 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getOrCreateActivityResourcesStructLocked(Landroid/os/IBinder;)Landroid/app/ResourcesManager$ActivityResources; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.266 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager$ActivityResources;->activityResources:Ljava/util/ArrayList; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.266 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager$ActivityResources;->activityResourcesQueue:Ljava/lang/ref/ReferenceQueue; (blacklist, linking, allowed)
+2022-06-22 18:45:24.266 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/CompatibilityInfo;->needsCompatResources()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.266 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/CompatResources;-><init>(Ljava/lang/ClassLoader;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.267 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->setImpl(Landroid/content/res/ResourcesImpl;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.267 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->setCallbacks(Landroid/content/res/Resources$UpdateCallbacks;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.267 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;-><init>(Ljava/lang/ClassLoader;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.267 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createResourcesImpl(Landroid/content/res/ResourcesKey;)Landroid/content/res/ResourcesImpl; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.267 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;-><init>(Landroid/content/res/Configuration;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.268 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createAssetManager(Landroid/content/res/ResourcesKey;)Landroid/content/res/AssetManager; (greylist, linking, allowed)
+2022-06-22 18:45:24.268 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->generateConfig(Landroid/content/res/ResourcesKey;Landroid/util/DisplayMetrics;)Landroid/content/res/Configuration; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.268 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesImpl;-><init>(Landroid/content/res/AssetManager;Landroid/util/DisplayMetrics;Landroid/content/res/Configuration;Landroid/view/DisplayAdjustments;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.268 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->hasInvalidOverlayPath:Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.269 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->findResourcesImplForKeyLocked(Landroid/content/res/ResourcesKey;)Landroid/content/res/ResourcesImpl; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.269 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->getImpl()Landroid/content/res/ResourcesImpl; (greylist, linking, allowed)
+2022-06-22 18:45:24.270 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->save(Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.270 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->findResourcesForActivityLocked(Landroid/os/IBinder;Landroid/content/res/ResourcesKey;Ljava/lang/ClassLoader;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.270 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->getClassLoader()Ljava/lang/ClassLoader; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.271 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesImpl;->getAssets()Landroid/content/res/AssetManager; (greylist, linking, allowed)
+2022-06-22 18:45:24.271 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/AssetManager;->isUpToDate()Z (greylist, linking, allowed)
+2022-06-22 18:45:24.271 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->generateConfig(Landroid/content/res/ResourcesKey;Landroid/util/DisplayMetrics;Landroid/view/DisplayAdjustments;)Landroid/content/res/Configuration; (blacklist, linking, allowed)
+2022-06-22 18:45:24.271 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getConfiguration()Landroid/content/res/Configuration; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.272 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/hardware/display/DisplayManagerGlobal;->getInstance()Landroid/hardware/display/DisplayManagerGlobal; (greylist, linking, allowed)
+2022-06-22 18:45:24.272 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/hardware/display/DisplayManagerGlobal;->getCompatibleDisplay(ILandroid/view/DisplayAdjustments;)Landroid/view/Display; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.272 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getImplHashList()Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.273 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->sResourcesManager:Landroid/app/ResourcesManager; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.273 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager$ActivityResources;-><init>(Landroid/app/ResourcesManager$1;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.273 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getResourcesHashList()Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.274 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->isApkAssetsCached(Ljava/lang/String;ZZ)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.274 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager$ApkKey;-><init>(Ljava/lang/String;ZZ)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.274 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->lambda$cleanupReferences$0(Ljava/util/HashSet;Ljava/lang/ref/WeakReference;)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.274 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->loadApkAssets(Ljava/lang/String;ZZ)Landroid/content/res/ApkAssets; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.275 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->loadApkAssets(Ljava/lang/String;ZZZ)Landroid/content/res/ApkAssets; (blacklist, linking, allowed)
+2022-06-22 18:45:24.275 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ApkAssets;->isUpToDate()Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.275 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->overlayPathToIdmapPath(Ljava/lang/String;)Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.275 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ApkAssets;->loadOverlayFromPath(Ljava/lang/String;I)Landroid/content/res/ApkAssets; (blacklist, linking, allowed)
+2022-06-22 18:45:24.276 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ApkAssets;->loadFromPath(Ljava/lang/String;I)Landroid/content/res/ApkAssets; (blacklist, linking, allowed)
+2022-06-22 18:45:24.276 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->rebaseActivityOverrideConfig(Landroid/content/res/Resources;Landroid/content/res/Configuration;Landroid/content/res/Configuration;I)Landroid/content/res/ResourcesKey; (blacklist, linking, allowed)
+2022-06-22 18:45:24.276 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/Configuration;->EMPTY:Landroid/content/res/Configuration; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.276 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Configuration;->generateDelta(Landroid/content/res/Configuration;Landroid/content/res/Configuration;)Landroid/content/res/Configuration; (greylist, linking, allowed)
+2022-06-22 18:45:24.276 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mResDir:Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mSplitResDirs:[Ljava/lang/String; (greylist, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mOverlayDirs:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mLibDirs:[Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mLoaders:[Landroid/content/res/loader/ResourcesLoader; (blacklist, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/content/res/ResourcesKey;->mPackageName:Ljava/lang/String; (blacklist, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesKey;-><init>(Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;[Landroid/content/res/loader/ResourcesLoader;Ljava/lang/String;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->rebaseKeyForActivity(Landroid/os/IBinder;Landroid/content/res/ResourcesKey;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.277 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager$ActivityResources;->overrideConfig:Landroid/content/res/Configuration; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.278 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager$EvictingArrayQueue;->add(Ljava/lang/Object;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.278 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->updateActivityResources(Landroid/content/res/Resources;Landroid/content/res/ResourcesKey;Z)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.279 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->updateResourcesForSamsungThemeChange(Landroid/content/res/Configuration;I)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.279 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/IPackageManager;->getPackageInfo(Ljava/lang/String;II)Landroid/content/pm/PackageInfo; (greylist, linking, allowed)
+2022-06-22 18:45:24.280 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->appendLibAssetForMainAssetPath(Ljava/lang/String;Ljava/lang/String;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.280 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->appendLibAssetsForMainAssetPath(Ljava/lang/String;[Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.280 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/ArrayUtils;->appendElement(Ljava/lang/Class;[Ljava/lang/Object;Ljava/lang/Object;)[Ljava/lang/Object; (greylist, linking, allowed)
+2022-06-22 18:45:24.281 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyCompatConfigurationLocked(ILandroid/content/res/Configuration;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.281 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager;->mResCompatibilityInfo:Landroid/content/res/CompatibilityInfo; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.281 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/CompatibilityInfo;->supportsScreen()Z (greylist, linking, allowed)
+2022-06-22 18:45:24.281 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/CompatibilityInfo;->applyToConfiguration(ILandroid/content/res/Configuration;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.281 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyConfigurationToResources(Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.282 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyConfigurationToResourcesLocked(Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Landroid/view/DisplayAdjustments;)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.282 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyConfigurationToResourcesLocked(Landroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.282 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Configuration;->isOtherSeqNewer(Landroid/content/res/Configuration;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.282 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getDisplayMetrics()Landroid/util/DisplayMetrics; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.282 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/DisplayAdjustments;->adjustGlobalAppMetrics(Landroid/util/DisplayMetrics;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.283 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->updateSystemConfiguration(Landroid/content/res/Configuration;Landroid/util/DisplayMetrics;Landroid/content/res/CompatibilityInfo;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.283 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ApplicationPackageManager;->configurationChanged()V (greylist, linking, allowed)
+2022-06-22 18:45:24.283 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->applyNewResourceDirsLocked(Landroid/content/pm/ApplicationInfo;[Ljava/lang/String;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.283 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/pm/ApplicationInfo;->getBaseCodePath()Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.283 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/ArrayUtils;->cloneOrNull([Ljava/lang/Object;)[Ljava/lang/Object; (blacklist, linking, allowed)
+2022-06-22 18:45:24.284 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/ArrayUtils;->contains([Ljava/lang/Object;Ljava/lang/Object;)Z (greylist, linking, allowed)
+2022-06-22 18:45:24.284 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/AssetManager$Builder;-><init>()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.285 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/AssetManager$Builder;->addApkAssets(Landroid/content/res/ApkAssets;)Landroid/content/res/AssetManager$Builder; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.285 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/AssetManager$Builder;->addLoader(Landroid/content/res/loader/ResourcesLoader;)Landroid/content/res/AssetManager$Builder; (blacklist, linking, allowed)
+2022-06-22 18:45:24.285 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/AssetManager$Builder;->build()Landroid/content/res/AssetManager; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.286 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createBaseTokenResources(Landroid/os/IBinder;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Ljava/lang/ClassLoader;Ljava/util/List;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.286 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->createBaseTokenResources(Landroid/os/IBinder;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Ljava/lang/ClassLoader;Ljava/util/List;Ljava/lang/String;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.286 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->updateResourcesForActivity(Landroid/os/IBinder;Landroid/content/res/Configuration;IZ)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.287 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->dump(Ljava/lang/String;Ljava/io/PrintWriter;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.287 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/IndentingPrintWriter;-><init>(Ljava/io/Writer;Ljava/lang/String;)V (greylist, linking, allowed)
+2022-06-22 18:45:24.287 32316-32316/? W/anouanze.mobil: Accessing hidden method Lcom/android/internal/util/IndentingPrintWriter;->increaseIndent()Lcom/android/internal/util/IndentingPrintWriter; (greylist, linking, allowed)
+2022-06-22 18:45:24.288 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager$EvictingArrayQueue;->dump(Ljava/io/PrintWriter;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.288 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getAdjustedDisplay(ILandroid/content/res/Resources;)Landroid/view/Display; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.288 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/hardware/display/DisplayManagerGlobal;->getCompatibleDisplay(ILandroid/content/res/Resources;)Landroid/view/Display; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.288 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/view/DisplayAdjustments;->DEFAULT_DISPLAY_ADJUSTMENTS:Landroid/view/DisplayAdjustments; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.289 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->getResources(Landroid/os/IBinder;Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;ILandroid/content/res/Configuration;Landroid/content/res/CompatibilityInfo;Ljava/lang/ClassLoader;Ljava/util/List;)Landroid/content/res/Resources; (blacklist, linking, allowed)
+2022-06-22 18:45:24.289 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->invalidatePath(Ljava/lang/String;)V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.290 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesKey;->isPathReferenced(Ljava/lang/String;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.290 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ResourcesImpl;->flushLayoutCache()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.290 32316-32316/? W/anouanze.mobil: Accessing hidden field Landroid/app/ResourcesManager$ApkKey;->path:Ljava/lang/String; (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.290 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/ApkAssets;->close()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.291 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->isSameResourcesOverrideConfig(Landroid/os/IBinder;Landroid/content/res/Configuration;)Z (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.291 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Configuration;->diffPublicOnly(Landroid/content/res/Configuration;)I (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.291 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->leaveLogCurrentState()V (blacklist, linking, allowed)
+2022-06-22 18:45:24.291 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->overrideTokenDisplayAdjustments(Landroid/os/IBinder;Ljava/util/function/Consumer;)Z (blacklist, linking, allowed)
+2022-06-22 18:45:24.291 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Resources;->overrideDisplayAdjustments(Ljava/util/function/Consumer;)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.292 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager;->setDisplayPolicyResources(Landroid/content/res/Resources;I)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.292 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/app/ResourcesManager$EvictingArrayQueue;-><init>(Landroid/app/ResourcesManager;I)V (blacklist, linking, allowed)
+2022-06-22 18:45:24.292 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/content/res/Configuration;->unset()V (greylist-max-o, linking, allowed)
+2022-06-22 18:45:24.295 32316-32316/? W/anouanze.mobil: Redefining intrinsic method java.lang.Thread java.lang.Thread.currentThread(). This may cause the unexpected use of the original definition of java.lang.Thread java.lang.Thread.currentThread()in methods that have already been compiled.
+2022-06-22 18:45:24.295 32316-32316/? W/anouanze.mobil: Redefining intrinsic method boolean java.lang.Thread.interrupted(). This may cause the unexpected use of the original definition of boolean java.lang.Thread.interrupted()in methods that have already been compiled.
+2022-06-22 18:45:24.311 32316-32316/? D/ActivityThread: handleBindApplication()++ app=sicadevd.mobile
+2022-06-22 18:45:24.381 32316-32316/? I/anouanze.mobil: The ClassLoaderContext is a special shared library.
+2022-06-22 18:45:25.941 32316-32316/? D/LoadedApk: LoadedApk::makeApplication() appContext=android.app.ContextImpl@a6810aa appContext.mOpPackageName=sicadevd.mobile appContext.mBasePackageName=sicadevd.mobile appContext.mPackageInfo=android.app.LoadedApk@df149b
+2022-06-22 18:45:25.942 32316-32316/? D/NetworkSecurityConfig: No Network Security Config specified, using platform default
+2022-06-22 18:45:26.017 32316-32316/? D/NetworkSecurityConfig: No Network Security Config specified, using platform default
+2022-06-22 18:45:26.077 32316-32332/? W/System: A resource failed to call close.
+2022-06-22 18:45:26.077 32316-32332/? W/System: A resource failed to call close.
+2022-06-22 18:45:26.137 32316-32316/? I/FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+2022-06-22 18:45:26.236 32316-32316/? I/FirebaseCrashlytics: Initializing Firebase Crashlytics 18.2.6 for sicadevd.mobile
+2022-06-22 18:45:26.246 32316-32341/? I/DynamiteModule: Considering local module com.google.android.gms.measurement.dynamite:55 and remote module com.google.android.gms.measurement.dynamite:74
+2022-06-22 18:45:26.246 32316-32341/? I/DynamiteModule: Selected remote version of com.google.android.gms.measurement.dynamite, version >= 74
+2022-06-22 18:45:26.287 32316-32341/? W/System: ClassLoader referenced unknown path:
+2022-06-22 18:45:26.555 32316-32316/? I/FirebaseInitProvider: FirebaseApp initialization successful
+2022-06-22 18:45:26.584 32316-32349/? D/TransportRuntime.JobInfoScheduler: Scheduling upload for context TransportContext(cct, HIGHEST, MSRodHRwczovL2NyYXNobHl0aWNzcmVwb3J0cy1wYS5nb29nbGVhcGlzLmNvbS92MS9maXJlbG9nL2xlZ2FjeS9iYXRjaGxvZ1xBSXphU3lCcnBTWVQ0RkZMMDlyZUhKaTZIOUZZZGVpU25VVE92Mk0=) with jobId=1949249803 in 1000ms(Backend next call timestamp 1655922495288). Attempt 1
+2022-06-22 18:45:26.665 32316-32347/? I/FA: App measurement initialized, version: 65003
+2022-06-22 18:45:26.665 32316-32347/? I/FA: To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+2022-06-22 18:45:26.666 32316-32347/? I/FA: To enable faster debug mode event logging run:
+      adb shell setprop debug.firebase.analytics.app sicadevd.mobile
+2022-06-22 18:45:26.666 32316-32347/? D/FA: Debug-level message logging enabled
+2022-06-22 18:45:26.688 32316-32316/? D/WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+2022-06-22 18:45:26.805 32316-32316/? I/TetheringManager: registerTetheringEventCallback:sicadevd.mobile
+2022-06-22 18:45:26.807 32316-32316/? D/ConnectivityManager: ConnectivityManager() mContext=android.app.Application@f368379 getOpPackageName()=sicadevd.mobile getBasePackageName()=sicadevd.mobile getPackageName()=sicadevd.mobile
+2022-06-22 18:45:27.003 32316-32316/? D/ActivityThread: handleBindApplication() -- skipGraphicsSupport=false
+2022-06-22 18:45:27.399 32316-32316/? I/DecorView: [INFO] isPopOver=false, config=true
+2022-06-22 18:45:27.399 32316-32316/? I/DecorView: updateCaptionType >> DecorView@7cd04c2[], isFloating=false, isApplication=true, hasWindowDecorCaption=false, hasWindowControllerCallback=true
+2022-06-22 18:45:27.400 32316-32316/? D/DecorView: setCaptionType = 0, this = DecorView@7cd04c2[]
+2022-06-22 18:45:27.514 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+2022-06-22 18:45:27.517 32316-32316/? W/anouanze.mobil: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+2022-06-22 18:45:27.832 32316-32332/? W/System: A resource failed to call end.
+2022-06-22 18:45:28.412 32316-32347/? I/FA: Tag Manager is not found and thus will not be used
+2022-06-22 18:45:28.435 32316-32316/? D/InputTransport: Input channel constructed: 'df72dfa', fd=78
+2022-06-22 18:45:28.444 32316-32316/? I/ViewRootImpl@72b1ef4[SplashActivity]: setView = com.android.internal.policy.DecorView@7cd04c2 TM=true
+2022-06-22 18:45:28.466 32316-32316/? I/ViewRootImpl@72b1ef4[SplashActivity]: stopped(true) old=false
+2022-06-22 18:45:28.540 32316-32316/? I/SurfaceControl: assignNativeObject: nativeObject = 0 Surface(name=null)/@0xf4e2d24 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1810 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995
+2022-06-22 18:45:28.544 32316-32316/? I/SurfaceControl: assignNativeObject: nativeObject = 0 Surface(name=null)/@0xadc4242 / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995
+2022-06-22 18:45:28.548 32316-32316/? I/ViewRootImpl@72b1ef4[SplashActivity]: Relayout returned: old=(0,0,720,1520) new=(0,0,720,1520) req=(0,0)8 dur=29 res=0x1 s={false 0} ch=false fn=-1
+2022-06-22 18:45:28.681 32316-32347/? D/FA: Connected to remote service
+2022-06-22 18:45:28.811 32316-32349/? D/TransportRuntime.SQLiteEventStore: Storing event with priority=HIGHEST, name=FIREBASE_CRASHLYTICS_REPORT for destination cct
+2022-06-22 18:45:28.843 32316-32349/? D/TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, HIGHEST, MSRodHRwczovL2NyYXNobHl0aWNzcmVwb3J0cy1wYS5nb29nbGVhcGlzLmNvbS92MS9maXJlbG9nL2xlZ2FjeS9iYXRjaGxvZ1xBSXphU3lCcnBTWVQ0RkZMMDlyZUhKaTZIOUZZZGVpU25VVE92Mk0=) is already scheduled. Returning...
+2022-06-22 18:45:28.869 32316-32349/? D/TransportRuntime.SQLiteEventStore: Storing event with priority=HIGHEST, name=FIREBASE_CRASHLYTICS_REPORT for destination cct
+2022-06-22 18:45:28.900 32316-32349/? D/TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, HIGHEST, MSRodHRwczovL2NyYXNobHl0aWNzcmVwb3J0cy1wYS5nb29nbGVhcGlzLmNvbS92MS9maXJlbG9nL2xlZ2FjeS9iYXRjaGxvZ1xBSXphU3lCcnBTWVQ0RkZMMDlyZUhKaTZIOUZZZGVpU25VVE92Mk0=) is already scheduled. Returning...
+2022-06-22 18:45:30.573 32316-32316/sicadevd.mobile I/DecorView: [INFO] isPopOver=false, config=true
+2022-06-22 18:45:30.573 32316-32316/sicadevd.mobile I/DecorView: updateCaptionType >> DecorView@73f0102[], isFloating=false, isApplication=true, hasWindowDecorCaption=false, hasWindowControllerCallback=true
+2022-06-22 18:45:30.573 32316-32316/sicadevd.mobile D/DecorView: setCaptionType = 0, this = DecorView@73f0102[]
+2022-06-22 18:45:30.627 32316-32316/sicadevd.mobile D/ScrollView: initGoToTop
+2022-06-22 18:45:30.896 32316-32339/sicadevd.mobile I/anouanze.mobil: Waiting for a blocking GC ProfileSaver
+2022-06-22 18:45:30.937 32316-32339/sicadevd.mobile I/anouanze.mobil: WaitForGcToComplete blocked ProfileSaver on ClassLinker for 41.402ms
+2022-06-22 18:45:30.947 32316-32330/sicadevd.mobile I/anouanze.mobil: WaitForGcToComplete blocked RunEmptyCheckpoint on ProfileSaver for 10.072ms
+2022-06-22 18:45:31.157 32316-32316/sicadevd.mobile D/InputTransport: Input channel constructed: '7c3e2b9', fd=86
+2022-06-22 18:45:31.160 32316-32316/sicadevd.mobile I/ViewRootImpl@ef9ad6a[DashboardAgentActivity]: setView = com.android.internal.policy.DecorView@73f0102 TM=true
+2022-06-22 18:45:31.201 32316-32316/sicadevd.mobile W/anouanze.mobil: Accessing hidden field Landroid/view/inputmethod/InputMethodManager;->mCurRootView:Landroid/view/ViewRootImpl; (blacklist, reflection, allowed)
+2022-06-22 18:45:31.206 32316-32330/sicadevd.mobile I/anouanze.mobil: Background concurrent copying GC freed 5769(505KB) AllocSpace objects, 5(164KB) LOS objects, 49% free, 12MB/24MB, paused 224us total 106.661ms
+2022-06-22 18:45:31.206 32316-32316/sicadevd.mobile I/ViewRootImpl@72b1ef4[SplashActivity]: dispatchDetachedFromWindow
+2022-06-22 18:45:31.213 32316-32316/sicadevd.mobile D/InputTransport: Input channel destroyed: 'df72dfa', fd=78
+2022-06-22 18:45:31.215 32316-32316/sicadevd.mobile I/ViewRootImpl@ef9ad6a[DashboardAgentActivity]: stopped(true) old=false
+2022-06-22 18:45:31.237 32316-32316/sicadevd.mobile E/LocationListener.kt: onLocationChanged: CALLED 8
+2022-06-22 18:45:31.237 32316-32316/sicadevd.mobile E/LocationListener.kt: onLocationChanged: CALLED 8
+2022-06-22 18:45:31.238 32316-32316/sicadevd.mobile E/GpsService.kt: initializeLocationManager
+2022-06-22 18:45:31.267 32316-32374/sicadevd.mobile W/anouanze.mobil: Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (greylist, reflection, allowed)
+2022-06-22 18:45:31.277 32316-32316/sicadevd.mobile I/SurfaceControl: assignNativeObject: nativeObject = 0 Surface(name=null)/@0xc9f982f / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1810 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995
+2022-06-22 18:45:31.278 32316-32316/sicadevd.mobile I/SurfaceControl: assignNativeObject: nativeObject = 0 Surface(name=null)/@0x3ac4e3c / android.view.SurfaceControl.readFromParcel:1117 android.view.IWindowSession$Stub$Proxy.relayout:1820 android.view.ViewRootImpl.relayoutWindow:9005 android.view.ViewRootImpl.performTraversals:3360 android.view.ViewRootImpl.doTraversal:2618 android.view.ViewRootImpl$TraversalRunnable.run:9971 android.view.Choreographer$CallbackRecord.run:1010 android.view.Choreographer.doCallbacks:809 android.view.Choreographer.doFrame:744 android.view.Choreographer$FrameDisplayEventReceiver.run:995
+2022-06-22 18:45:31.281 32316-32316/sicadevd.mobile I/ViewRootImpl@ef9ad6a[DashboardAgentActivity]: Relayout returned: old=(0,0,720,1520) new=(0,0,720,1520) req=(0,0)8 dur=15 res=0x1 s={false 0} ch=false fn=-1
+2022-06-22 18:45:31.462 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: --> POST https://cemoi.sicadevd.com/api/apilivraison
+2022-06-22 18:45:31.463 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: Content-Type: application/json; charset=UTF-8
+2022-06-22 18:45:31.463 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: Content-Length: 406
+2022-06-22 18:45:31.463 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: {"userid":"20","campagnes_id":"1","campagneNom":"Campagne 2021-2022","dateLivre":"2022-06-21","nomDelegue":"20","delegueNom":"KOUAME CARMEL","id":0,"localiteNom":"PAULYBROUSSE 002","magasinsections_id":"","magasinSectionLabel":"","nombreSacs":"3","parcelles_id":"1","parcelleNom":"CACAO (2012)","producteurNom":"KOUADIO WILLIAM","producteurs_id":"14","quantiteLivre":"3","typeProduit":"Preference","uid":1}
+2022-06-22 18:45:31.463 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: --> END POST (406-byte body)
+2022-06-22 18:45:32.702 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <-- 500 https://cemoi.sicadevd.com/api/apilivraison (1238ms)
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: cache-control: no-cache, private
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: date: Wed, 22 Jun 2022 18:45:33 GMT
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: x-ratelimit-limit: 60
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: x-ratelimit-remaining: 57
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: access-control-allow-origin: *
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: vary: Accept-Encoding
+2022-06-22 18:45:32.703 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: content-type: text/html; charset=UTF-8
+2022-06-22 18:45:32.704 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: server: Apache
+2022-06-22 18:45:32.707 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <!DOCTYPE html>
+2022-06-22 18:45:32.707 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <html lang="en">
+2022-06-22 18:45:32.707 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     <head>
+2022-06-22 18:45:32.707 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <meta charset="utf-8">
+2022-06-22 18:45:32.707 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <meta name="viewport" content="width=device-width, initial-scale=1">
+2022-06-22 18:45:32.707 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <title>Server Error</title>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <!-- Fonts -->
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <link rel="preconnect" href="https://fonts.gstatic.com">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <style>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}code{font-family:monospace,monospace;font-size:1em}[hidden]{display:none}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5}*,:after,:before{box-sizing:border-box;border:0 solid #e2e8f0}a{color:inherit;text-decoration:inherit}code{font-family:Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}svg,video{display:block;vertical-align:middle}video{max-width:100%;height:auto}.bg-white{--bg-opacity:1;background-color:#fff;background-color:rgba(255,255,255,var(--bg-opacity))}.bg-gray-100{--bg-opacity:1;background-color:#f7fafc;background-color:rgba(247,250,252,var(--bg-opacity))}.border-gray-200{--border-opacity:1;border-color:#edf2f7;border-color:rgba(237,242,247,var(--border-opacity))}.border-gray-400{--border-opacity:1;border-color:#cbd5e0;border-color:rgba(203,213,224,var(--border-opacity))}.border-t{border-top-width:1px}.border-r{border-right-width:1px}.flex{display:flex}.grid{display:grid}.hidden{display:none}.items-center{align-items:center}.justify-center{justify-content:center}.font-semibold{font-weight:600}.h-5{height:1.25rem}.h-8{height:2rem}.h-16{height:4rem}.text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.leading-7{line-height:1.75rem}.mx-auto{margin-left:auto;margin-right:auto}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mr-2{margin-right:.5rem}.ml-2{margin-left:.5rem}.mt-4{margin-top:1rem}.ml-4{margin-left:1rem}.mt-8{margin-top:2rem}.ml-12{margin-left:3rem}.-mt-px{margin-top:-1px}.max-w-xl{max-width:36rem}.max-w-6xl{max-width:72rem}.min-h-screen{min-height:100vh}.overflow-hidden{overflow:hidden}.p-6{padding:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pt-8{padding-top:2rem}.fixed{position:fixed}.relative{position:relative}.top-0{top:0}.right-0{right:0}.shadow{box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)}.text-center{text-align:center}.text-gray-200{--text-opacity:1;color:#edf2f7;color:rgba(237,242,247,var(--text-opacity))}.text-gray-300{--text-opacity:1;color:#e2e8f0;color:rgba(226,232,240,var(--text-opacity))}.text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.text-gray-500{--text-opacity:1;color:#a0aec0;color:rgba(160,174,192,var(--text-opacity))}.text-gray-600{--text-opacity:1;color:#718096;color:rgba(113,128,150,var(--text-opacity))}.text-gray-700{--text-opacity:1;color:#4a5568;color:rgba(74,85,104,var(--text-opacity))}.text-gray-900{--text-opacity:1;color:#1a202c;color:rgba(26,32,44,var(--text-opacity))}.uppercase{text-transform:uppercase}.underline{text-decoration:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.tracking-wider{letter-spacing:.05em}.w-5{width:1.25rem}.w-8{width:2rem}.w-auto{width:auto}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@-webkit-keyframes spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes  spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@-webkit-keyframes ping{0%{transform:scale(1);opacity:1}75%,to{transform:scale(2);opacity:0}}@keyframes  ping{0%{transform:scale(1);opacity:1}75%,to{transform:scale(2);opacity:0}}@-webkit-keyframes pulse{0%,to{opacity:1}50%{opacity:.5}}@keyframes  pulse{0%,to{opacity:1}50%{opacity:.5}}@-webkit-keyframes bounce{0%,to{transform:translateY(-25%);-webkit-animation-timing-function:cubic-bezier(.8,0,1,1);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:translateY(0);-webkit-animation-timing-function:cubic-bezier(0,0,.2,1);animation-timing-function:cubic-bezier(0,0,.2,1)}}@keyframes  bounce{0%,to{transform:translateY(-25%);-webkit-animation-timing-function:cubic-
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: bezier(.8,0,1,1);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:translateY(0);-webkit-animation-timing-function:cubic-bezier(0,0,.2,1);animation-timing-function:cubic-bezier(0,0,.2,1)}}@media (min-width:640px){.sm\:rounded-lg{border-radius:.5rem}.sm\:block{display:block}.sm\:items-center{align-items:center}.sm\:justify-start{justify-content:flex-start}.sm\:justify-between{justify-content:space-between}.sm\:h-20{height:5rem}.sm\:ml-0{margin-left:0}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-0{padding-top:0}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width:768px){.md\:border-t-0{border-top-width:0}.md\:border-l{border-left-width:1px}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (prefers-color-scheme:dark){.dark\:bg-gray-800{--bg-opacity:1;background-color:#2d3748;background-color:rgba(45,55,72,var(--bg-opacity))}.dark\:bg-gray-900{--bg-opacity:1;background-color:#1a202c;background-color:rgba(26,32,44,var(--bg-opacity))}.dark\:border-gray-700{--border-opacity:1;border-color:#4a5568;border-color:rgba(74,85,104,var(--border-opacity))}.dark\:text-white{--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}.dark\:text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}}
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         </style>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <style>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             body {
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                 font-family: 'Nunito', sans-serif;
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             }
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         </style>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     </head>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     <body class="antialiased">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                 <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                     <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                         500                    </div>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                     <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                         Server Error                    </div>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                 </div>
+2022-06-22 18:45:32.708 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             </div>
+2022-06-22 18:45:32.709 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         </div>
+2022-06-22 18:45:32.709 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     </body>
+2022-06-22 18:45:32.709 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: </html>
+2022-06-22 18:45:32.709 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <-- END HTTP (6615-byte body)
+2022-06-22 18:45:32.763 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: --> POST https://cemoi.sicadevd.com/api/apilivraison
+2022-06-22 18:45:32.763 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: Content-Type: application/json; charset=UTF-8
+2022-06-22 18:45:32.763 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: Content-Length: 406
+2022-06-22 18:45:32.764 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: {"userid":"20","campagnes_id":"1","campagneNom":"Campagne 2021-2022","dateLivre":"2022-06-21","nomDelegue":"20","delegueNom":"KOUAME CARMEL","id":0,"localiteNom":"PAULYBROUSSE 002","magasinsections_id":"","magasinSectionLabel":"","nombreSacs":"3","parcelles_id":"1","parcelleNom":"CACAO (2012)","producteurNom":"KOUADIO WILLIAM","producteurs_id":"14","quantiteLivre":"3","typeProduit":"Preference","uid":1}
+2022-06-22 18:45:32.764 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: --> END POST (406-byte body)
+2022-06-22 18:45:33.177 32316-32347/sicadevd.mobile D/FA: Application going to the background
+2022-06-22 18:45:33.282 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <-- 500 https://cemoi.sicadevd.com/api/apilivraison (518ms)
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: cache-control: no-cache, private
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: date: Wed, 22 Jun 2022 18:45:34 GMT
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: x-ratelimit-limit: 60
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: x-ratelimit-remaining: 56
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: access-control-allow-origin: *
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: vary: Accept-Encoding
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: content-type: text/html; charset=UTF-8
+2022-06-22 18:45:33.283 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: server: Apache
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <!DOCTYPE html>
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <html lang="en">
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     <head>
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <meta charset="utf-8">
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <meta name="viewport" content="width=device-width, initial-scale=1">
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <title>Server Error</title>
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <!-- Fonts -->
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <link rel="preconnect" href="https://fonts.gstatic.com">
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <style>
+2022-06-22 18:45:33.288 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}code{font-family:monospace,monospace;font-size:1em}[hidden]{display:none}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5}*,:after,:before{box-sizing:border-box;border:0 solid #e2e8f0}a{color:inherit;text-decoration:inherit}code{font-family:Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}svg,video{display:block;vertical-align:middle}video{max-width:100%;height:auto}.bg-white{--bg-opacity:1;background-color:#fff;background-color:rgba(255,255,255,var(--bg-opacity))}.bg-gray-100{--bg-opacity:1;background-color:#f7fafc;background-color:rgba(247,250,252,var(--bg-opacity))}.border-gray-200{--border-opacity:1;border-color:#edf2f7;border-color:rgba(237,242,247,var(--border-opacity))}.border-gray-400{--border-opacity:1;border-color:#cbd5e0;border-color:rgba(203,213,224,var(--border-opacity))}.border-t{border-top-width:1px}.border-r{border-right-width:1px}.flex{display:flex}.grid{display:grid}.hidden{display:none}.items-center{align-items:center}.justify-center{justify-content:center}.font-semibold{font-weight:600}.h-5{height:1.25rem}.h-8{height:2rem}.h-16{height:4rem}.text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.leading-7{line-height:1.75rem}.mx-auto{margin-left:auto;margin-right:auto}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mr-2{margin-right:.5rem}.ml-2{margin-left:.5rem}.mt-4{margin-top:1rem}.ml-4{margin-left:1rem}.mt-8{margin-top:2rem}.ml-12{margin-left:3rem}.-mt-px{margin-top:-1px}.max-w-xl{max-width:36rem}.max-w-6xl{max-width:72rem}.min-h-screen{min-height:100vh}.overflow-hidden{overflow:hidden}.p-6{padding:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pt-8{padding-top:2rem}.fixed{position:fixed}.relative{position:relative}.top-0{top:0}.right-0{right:0}.shadow{box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)}.text-center{text-align:center}.text-gray-200{--text-opacity:1;color:#edf2f7;color:rgba(237,242,247,var(--text-opacity))}.text-gray-300{--text-opacity:1;color:#e2e8f0;color:rgba(226,232,240,var(--text-opacity))}.text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.text-gray-500{--text-opacity:1;color:#a0aec0;color:rgba(160,174,192,var(--text-opacity))}.text-gray-600{--text-opacity:1;color:#718096;color:rgba(113,128,150,var(--text-opacity))}.text-gray-700{--text-opacity:1;color:#4a5568;color:rgba(74,85,104,var(--text-opacity))}.text-gray-900{--text-opacity:1;color:#1a202c;color:rgba(26,32,44,var(--text-opacity))}.uppercase{text-transform:uppercase}.underline{text-decoration:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.tracking-wider{letter-spacing:.05em}.w-5{width:1.25rem}.w-8{width:2rem}.w-auto{width:auto}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@-webkit-keyframes spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes  spin{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@-webkit-keyframes ping{0%{transform:scale(1);opacity:1}75%,to{transform:scale(2);opacity:0}}@keyframes  ping{0%{transform:scale(1);opacity:1}75%,to{transform:scale(2);opacity:0}}@-webkit-keyframes pulse{0%,to{opacity:1}50%{opacity:.5}}@keyframes  pulse{0%,to{opacity:1}50%{opacity:.5}}@-webkit-keyframes bounce{0%,to{transform:translateY(-25%);-webkit-animation-timing-function:cubic-bezier(.8,0,1,1);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:translateY(0);-webkit-animation-timing-function:cubic-bezier(0,0,.2,1);animation-timing-function:cubic-bezier(0,0,.2,1)}}@keyframes  bounce{0%,to{transform:translateY(-25%);-webkit-animation-timing-function:cubic-
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: bezier(.8,0,1,1);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:translateY(0);-webkit-animation-timing-function:cubic-bezier(0,0,.2,1);animation-timing-function:cubic-bezier(0,0,.2,1)}}@media (min-width:640px){.sm\:rounded-lg{border-radius:.5rem}.sm\:block{display:block}.sm\:items-center{align-items:center}.sm\:justify-start{justify-content:flex-start}.sm\:justify-between{justify-content:space-between}.sm\:h-20{height:5rem}.sm\:ml-0{margin-left:0}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-0{padding-top:0}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width:768px){.md\:border-t-0{border-top-width:0}.md\:border-l{border-left-width:1px}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (prefers-color-scheme:dark){.dark\:bg-gray-800{--bg-opacity:1;background-color:#2d3748;background-color:rgba(45,55,72,var(--bg-opacity))}.dark\:bg-gray-900{--bg-opacity:1;background-color:#1a202c;background-color:rgba(26,32,44,var(--bg-opacity))}.dark\:border-gray-700{--border-opacity:1;border-color:#4a5568;border-color:rgba(74,85,104,var(--border-opacity))}.dark\:text-white{--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}.dark\:text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}}
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         </style>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <style>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             body {
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                 font-family: 'Nunito', sans-serif;
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             }
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         </style>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     </head>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     <body class="antialiased">
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                 <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                     <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                         500                    </div>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                     <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                         Server Error                    </div>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:                 </div>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:             </div>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:         </div>
+2022-06-22 18:45:33.289 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient:     </body>
+2022-06-22 18:45:33.290 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: </html>
+2022-06-22 18:45:33.290 32316-32374/sicadevd.mobile I/okhttp.OkHttpClient: <-- END HTTP (6615-byte body)
+2022-06-22 18:45:33.324 32316-32316/sicadevd.mobile D/AndroidRuntime: Shutting down VM
+2022-06-22 18:45:33.328 32316-32316/sicadevd.mobile E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: sicadevd.mobile, PID: 32316
+    android.app.RemoteServiceException: Context.startForegroundService() did not then call Service.startForeground(): ServiceRecord{decbb6f u0 sicadevd.mobile/.services.SynchronisationIntentService}
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2250)
+        at android.os.Handler.dispatchMessage(Handler.java:106)
+        at android.os.Looper.loop(Looper.java:246)
+        at android.app.ActivityThread.main(ActivityThread.java:8625)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:602)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1130)
+2022-06-22 18:45:33.548 32316-32349/sicadevd.mobile D/TransportRuntime.SQLiteEventStore: Storing event with priority=HIGHEST, name=FIREBASE_CRASHLYTICS_REPORT for destination cct
+2022-06-22 18:45:33.570 32316-32349/sicadevd.mobile D/TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, HIGHEST, MSRodHRwczovL2NyYXNobHl0aWNzcmVwb3J0cy1wYS5nb29nbGVhcGlzLmNvbS92MS9maXJlbG9nL2xlZ2FjeS9iYXRjaGxvZ1xBSXphU3lCcnBTWVQ0RkZMMDlyZUhKaTZIOUZZZGVpU25VVE92Mk0=) is already scheduled. Returning...
+2022-06-22 18:45:33.636 32316-32316/sicadevd.mobile I/Process: Sending signal. PID: 32316 SIG: 9

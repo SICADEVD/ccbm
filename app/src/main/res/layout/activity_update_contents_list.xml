@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.lists.UpdateContentsListActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleUpdateContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LES MODIFICATIONS"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="visible"
+            android:id="@+id/imageSearchUpdate"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_10sdp"
+            app:srcCompat="@drawable/ic_loupe" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/recyclerListUpdateContent"
+            android:layout_margin="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linearEmptyContainerUpdate"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageEmptyUpdateContent"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                app:srcCompat="@drawable/ic_parcel"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textSize="@dimen/_12ssp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aucune donnée à modifier"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLoaderContainerUpdateContent"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ProgressBar
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:id="@+id/linearSearchContainerUpdate"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:weightSum="3"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editSearchUpdate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="2.75"
+                android:background="@drawable/rounded_background"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="Recherche par nom ..."
+                android:imeOptions="actionDone"
+                android:inputType="textCapCharacters"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textAllCaps="true"
+                android:textSize="@dimen/_13ssp"
+                tools:text="2020" />
+            
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageCloseSearchUpdate"
+                android:layout_width="0dp"
+                android:layout_weight="0.25"
+                android:layout_height="@dimen/_30sdp"
+                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.infospresenters.SuiviParcellePreviewActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECAPITULATIF SUIVI PARCELLE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_below="@+id/linealToolbar"
+        android:id="@+id/divider_ban"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:background="@drawable/rounded_cardview_with_border"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_height="@dimen/_200sdp">
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Producteur"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelProducteurNomSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parcelle"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelParcelleNomSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Campagne"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCampagneSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de cours d'eau: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceCoursEauSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de pente: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresencePenteSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Arbre à ombrage"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNbreArbreOmbrageSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Arbre à ombrage"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/white"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelArbreOmbrageListSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Variété arbre ombrage souhaitée: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelOmbrageSouhaiteeSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre de sauvageons observé: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNombreSauvageonsSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Beneficiaire d'arbre agro-forestier: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelBenefAgroSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Activité de Taille: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelActiviteTailleuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Activité d'engourmandage: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelActiviteEngourmandSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Activité de désherbage manuel: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelActiviteDesherbageManuelSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Activité de recolte sanitaire: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelActiviteRecolteSanitaireSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de Bio Agresseurs: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceBioAgresseursSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de pourriture de brune: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresencePourritureSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence d'insectes ravageurs: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceInsecteRavageurSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de fourmis rouge: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceFormisRougeSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence d'araignées: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceAraigneeSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de ver de terres: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceVerDeTerreuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de mantes religieuses: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceManteReligieuseSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Insecticide utilisé: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelInsecticideUtiliseSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fongicide utilisé: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelFongicideUtiliseSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Herbicule utilisé: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelHernicalUtiliseSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Intrant utilisé: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelIntrantUtiliseSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Presence de ShodenShoot: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPresenceSholenSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre désherbage manuel: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labeNombreDesherbageSuiviPreview"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="FIELD CONNECT"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveSuiviPreview"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ENREGISTRER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/ic_save_work"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+

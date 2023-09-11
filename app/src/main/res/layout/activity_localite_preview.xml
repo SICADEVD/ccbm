@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.infospresenters.LocalitePreviewActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECAPITULATIF LOCALITE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:background="@drawable/rounded_cardview_with_border"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_height="@dimen/_200sdp">
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Localité "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNomLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Type "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelTypeLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sous-prefecture "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelSousPrefectureLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Population estimée"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelPopulationLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Centre de santé"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCentreSanteYesNoLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearCentreSanteYesContainerLocalitePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KM du centre le plus proche"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCentreSanteYesDistanceLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nom centre du sante"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCentreSanteNomLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Précense écoles primaires"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelEcoleYesNoLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:id="@+id/linearEcoleYesLocalitePreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nombres écoles"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelEcoleYesNombreLocalitePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="LOCALITE"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Écoles: "
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelEcoleYesNomsLocalitePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="LOCALITE"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearEcoleNoLocalitePreview"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="KM ecole la plus proche"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelEcoleNoDistanceLocalitePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="LOCALITE"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nom de l'ecole"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelEcoleNoNomLocalitePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="LOCALITE"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Source d'eaux"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelSourceEauLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearSourceEauEtatLocalitePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pompe en etat: "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelSourceEauEtatLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Présence d'éléctricité"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelElectriciteYesNoLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Présence de marché"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelMarketYesNoLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearMarketYesLocalitePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Présence de marché"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelMarketDayLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Endroit pour dechets"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelDechetYesNoLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre comité main d'oeuvre"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNbreComiteLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre d'association de femmes"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNbreFemmeLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre d'association de jeunes"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelNbreJeuneLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Latitude"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelLatitudeLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Longitude"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelLongitudeLocalitePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="LOCALITE"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveLocalitePreview"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ENREGISTRER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/ic_save_work"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

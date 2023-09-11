@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearProducteurContainer"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:weightSum="4"
+    android:padding="@dimen/_5sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelQuestionInspectionPreview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Localité :"
+        android:textSize="@dimen/_12ssp"
+        android:layout_weight="2.5"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelResponseInspectionPreview"
+        android:gravity="center_vertical"
+        android:layout_width="0dp"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"
+        android:text="LOCALITE"
+        android:layout_weight="1.5"/>
+
+
+
+</LinearLayout>

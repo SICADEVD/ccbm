@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.infospresenters.MenagePreviewActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECAPITULATIF MENAGE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:background="@drawable/rounded_cardview_with_border"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_height="@dimen/_200sdp">
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Code producteur : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCodeProducteurMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="XXX-XXXX-XXXX-XXX"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Producteur : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelProducteurMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Localité : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelLocaliteMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Quartier : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelQuartierMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Source energie : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelEnergieMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearEnergieBoisWeekCountContainerMenagePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Combien de bois en semaine : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelEnergieBoisWeekCountMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Où vous jetez les ordures : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelOrdureLieuMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vous separez les dechets "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelSeparationDechetYesNoMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comment vous gerez l'eau des toilettes"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelGestionEauMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comment vous gerez l'eau des vaiselles"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelGestionVaisselleMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Il existe un WC pour le menage"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelWCYesNoMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comment vous trouvez l'eau portable"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labellieuEauPortableMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vous traitez vos champs vous meme"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelTraiterChampsMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/linearTraiteYourselfFarmYesContainerMenagePreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Avec quel type de machine: "
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelTraiteYourselfMachineMenagePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="Promduceur"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/linearTraiteChampsMachineAtomisateurStatusContainerMenagePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="L'atomisateur est en bon état : "
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelTraiteChampsMachineAtomisateurStatusMenagePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="Promduceur"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearTraiteYourselfFarmEquipmentYesNoContainerMenagePreview"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Equipement de protection"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelEquipementProtectionMenagePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="Promduceur"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearTraitYourselfFarmNoContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nom de la personne qui traite vos champs"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelTraitYourselfFarmNoOtherNameMenagePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:text="Promduceur"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Numéro de la personne"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1.5"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelTraitYourselfFarmNoOtherNumberMenagePreview"
+                        android:gravity="center_vertical"
+                        android:layout_width="0dp"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_height="match_parent"
+                        android:text="Promduceur"
+                        android:layout_weight="2.5"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--<LinearLayout
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Avez vous une machine de pulverisation"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelMachinePulverisationMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>-->
+
+
+            <!--<LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vous empruntez une machine"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelEmpruntMachineMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>-->
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ta femme fait une activité rentable"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelFemmeActiviteYesNoMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearFemmeActiviteYesContainerMenagePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Activité de votre femme"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelFemmeActiviteYesNomMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Superficie cacao de ta femme"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelFemmeCacaoSuperficieMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearFemmeCacaoHectarUnderZeroContainerMenagePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Peux-tu donner une partie de ton champs à ta femme"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelProducteurFemmeDonChampsYesNoMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearProducteurFemmeDonChampsYesHectarContainerMenagePreview"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Combien d'hectars"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelProducteurFemmeDonChampsYesHectarMenagePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveMenagePreview"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ENREGISTRER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/ic_save_work"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

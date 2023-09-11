@@ -1,0 +1,237 @@
+LOCALITE
+Existe -t-il un centre de santé ?
+CAS 1 : Si OUI alors Nom de ce centre de santé
+CAS 2 : Si NON alors
+- Type de centre de santé => Publique ou Prive
+- A Combien de km du Village se situe le centre de santé le plus proche ?
+- Nom de ce centre de santé
+
+Existe-t-il un marché dans la localité ?
+CAS 1 : Si OUI alors Quel est le jour du marché ?
+CAS 2 : Si NON alors
+- A combien de km se trouve le marché le plus proche ?
+- Quel est le jour du marché ?
+
+NB : Merci de corriger également les libellés des questions
+
+Quand je clique sur Enregistrer et que je confirme le Resumé ne disparait pas pour donner place à nouveau au formulaire d'enregistrement
+disons faire revenir sur la page d'accueil
+
+MENAGE
+Vous traitez vous-même vos champs ?
+CAS 1 : Si OUI Alors
+- Quel type de machine ?
+            Si Atomiseur alors L'Atomiseur est-il en bon état?
+- Où gardez-vous cette machine ?
+CAS 2 : Si NON alors
+- Donnez le nom de la personne qui traite vos champs
+- Donnez son numéro de téléphone
+
+Ta femme fait une activité qui produit de l'argent ?
+CAS 1 : Si OUI alors Quelle Activité ?
+CAS 2 : Si NON alors pas d’action supplémentaire
+
+Superficie Cacao de ta femme(ha)
+CAS 1 : Si 0 alors
+- Es-tu prêt à donner une partie de ton champ à ta femme ?
+        Si OUI Combien d'hectare ?
+CAS 2 : Si NON alors pas d’action supplémentaire
+
+NB : Le résumé n’a pas encore été intégré
+
+
+PARCELLE
+La valeur de la Surface doit être en hectar(ha) et non en m²
+Il faut également activité la possibilité d'exporter la parcelle mappée en .KML et .GPX
+
+
+
+Formule en mots
+
+Par multiplication
+
+Nombre de mètre carré multiplié(x) par 0.0001, égal(=): Nombre de Hectare
+
+Par division
+
+Nombre de mètre carré divisé(/) par 10000, égal(=): Nombre de Hectare
+
+Exemple de calcul
+
+Par multiplication
+
+112 m2(s) * 0.0001 = 0.0112 ha(s)
+
+Par division
+
+112 m2(s) / 10000 = 0.0112 ha(s)
+
+
+Bonsoir Didier, juste une modification pour la LIVRAISON:
+- on change le Producteur par Parcelle concernée =>Provient de la liste des parcelles
+- Magasin de section => Provient de la liste des magasins des Délégués obtenu à partir de l'API : https://fieldconnect.sicadevd.com/api/getmagasinsection
+{
+    "userid" : "51"
+}
+
+"menu": [
+        "LOCALITES",             /   ✅
+        "PRODUCTEURS",           /   ✅
+        "PARCELLES",             /   ✅
+        "MENAGES",               /   ✅
+        "LIVRAISONS",            /   ✅
+        "SUIVIPARCELLES",        /   ✅
+        "SUIVIFORMATIONS",       /
+        "SUIVIAPPLICATIONS",     /
+        "ESTIMATIONS",           /
+        "EVALUATIONS",           /
+        "SSRTECLMRS"             /
+    ],
+
+
+M. Julius KOUME, [01.04.22 23:24]
+utilise cet API qui permet de charger les contenus lors de la configuration
+
+M. Julius KOUME, [01.04.22 23:24]
+https://fieldconnect.sicadevd.com/api/getlistedatas
+
+M. Julius KOUME, [01.04.22 23:25]
+avec pour valeur possible:
+
+M. Julius KOUME, [01.04.22 23:25]
+lien_parente
+
+M. Julius KOUME, [01.04.22 23:25]
+niveaux_etudes
+
+M. Julius KOUME, [01.04.22 23:25]
+moyens_transport
+
+M. Julius KOUME, [01.04.22 23:25]
+arret_ecole
+
+M. Julius KOUME, [01.04.22 23:25]
+travaux_dangereux
+
+M. Julius KOUME, [01.04.22 23:25]
+lieux_travaux
+
+M. Julius KOUME, [01.04.22 23:25]
+travaux_legers
+
+M. Julius KOUME, [01.04.22 23:26]
+https://fieldconnect.sicadevd.com/api/getlistedatas
+{
+    "table" : "lien_parente"
+}
+
+
+LOCALITE
+Existe -t-il un centre de santé ?
+CAS 1 : Si OUI alors Nom de ce centre de santé
+CAS 2 : Si NON alors
+- Type de centre de santé => Publique ou Prive
+- A Combien de km du Village se situe le centre de santé le plus proche ?
+- Nom de ce centre de santé
+
+Existe-t-il un marché dans la localité ?
+CAS 1 : Si OUI alors Quel est le jour du marché ?
+CAS 2 : Si NON alors
+- A combien de km se trouve le marché le plus proche ?
+- Quel est le jour du marché ?
+
+
+
+
+
+
+
+
+✅ MENAGE c'est OK sauf que le résumé n'est pas complet
+
+- PARCELLE c'est OK sauf l'enregistrement en KML ou GPX et aussi afficher la superficie en Ha pendant le mapping
+
+- SUIVI PARCELLE
+  As-tu bénéficié d’arbres agro-forestiers l’an dernier ? / ✅
+  Si OUI alors Donner leur type et le nombre  / ✅
+  On peut entrer plusieurs types et nombre donc faire en sorte qu'on clique sur Ajouter  / ✅
+
+  La question INTRANT UTILISE est en réalité 3 questions:
+  Intrant NPK Utilisé l'année dernière => Nombre de sacs utilisé de NPK / ✅
+  Intrant Fiente Utilisé l'année dernière => Nombre de sacs utilisé de Fiente / ✅
+  Intrant Composte Utilisé l'année dernière => Nombre de sacs utilisé de Composte / ✅
+
+  Question sauté:
+  Présence d’insectes parasites ou ravageurs ? => Oui ou Non / ✅
+
+  Citez les animaux que vous rencontrez dans les champs : / ✅
+  Rien ne se passe quand on clique sur le bouton VALIDER / ✅
+
+- ENQUETE SSRTE
+  L'age de l'enfant doit être compris entre 3 et 17 ans, donc je ne sais pas si c'est possible de bloquer le calendrier. / ✅
+  Lien de parenté avec le producteur Si Autre alors Donnez l'Autre lien de parenté / ✅
+  Date de l’enquete Le calendrier doit s'arreter à la date du jour présent / ✅
+  J'ai enregistré mais ca reste bloqué. Il doit sûrement avoir un souci ✅
+
+- SUIVI FORMATION
+  Question sautée
+  Type de formations c'est à partir de la liste qu'on doit avoir la liste des themes / ✅
+  Les visiteurs ne viennent pas / ✅
+
+- CALCUL D'ESTIMATION
+  Le calendrier doit se limiter à la date du jour présent / ✅
+
+- SUIVI APPLICATION
+  Matières actives : Rien ne se passe quand on clique sur Valider au lieu d'ajouter ce qui a été saisi / ✅
+  Question sautée Nom de(s) insecte(s) cible(s) ou parasite(s) cible(s) : On doit pouvoir ajouter plusieurs insectes / ✅
+  La Photo de la zone tampon et Photo de la douche n'ont pas été enregistré. C'est comme si ca n'a pas été transmis
+  L'enregistrement s'effectue sans souci mais le numéro en haut de SUIVI APPLICATION reste toujours à 1
+
+- LIVRAISON
+  La liste des Magasins de section du délégué est venu plusieurs fois lors de la configuration.
+
+- FONCTIONNEMENT DE L'APPLICATION
+  L'action retour (Icon de retour) ne fonctionne pas sur SSRTE-CLMRS, SUIVI APPLICATION
+  Je vais tester également le mode offline car sur la version 1 de l'app on a constaté des doublons cotés Livraison,
+  Parcelle, .. quand les données sont saisies en offline puis après on envoi quand la connexion est là.
+
+  j'ai également constaté que bien vrai que la LIVRAISON s'enregistre sans souci, il y a un information concernant le magasin de section qui ne va pas or j'en ai besoin pour faire d'autres actions
+
+  {
+  "parcelles_id" : "504",
+  "campagnes_id" : "1",
+  "nomDelegue" : "51",
+  "magasinsections_id" : "7",
+  "quantiteLivre" : "459",
+  "nombreSacs" : "45",
+  "dateLivre" : "2022-04-01",
+  "userid" : 51,
+  "uid" : 35
+  }
+
+  Au remarques très important concernant la PARCELLE : lorsque le type de déclaration est verbale, l'enregistrement ne se fait pas. Il faut voir ce côté
+
+SSRTE:
+✅ Dans SSRTE ça synchronise mais le numéro reste au lieu de revenir à 0
+
+ÉVALUATION
+✅ Remplace le nom de la rubrique ÉVALUATION par INSPECTION
+
+PARCELLE
+✅ Le mapping par GPS se plante quand on bouge / Je n'ai pas pu reproduire le scenario
+
+SSRTE question de logique
+Question: Va t il à l'école ?
+Si non alors les questions suivantes :
+✅ As tu été à l'école dans le passé?
+✅ Quel niveau as tu atteint ?
+✅ Pourquoi ne vas tu plus à l'école où arrêté ..?
+✅ Si la réponse est Oui alors les questions mentionné ci-dessus se cache pour laisser place à ce qui se fait actuellement dans OUI là
+
+SUIVI FORMATION
+✅ Je n'ai toujours pas la liste des thèmes de formations quand je sélectionne le type
+
+
+
+On me dit “Qu’est Ce que Je pense d’elle?”
+Perso Je l aime bien car pour Ce qui connaisse l’histoire avec 2PAC, save qu elle a vraiment fait de son Possible pour Essayer de Le faire Sortir de la Rue, Pas pour L’Ecarter de Ses potes mais Elle avait just peur pour Sa vie. Je dis pas que 2PAC etait un Delinquent hein… Loin de Là….il luttait pour La Cause des #Pauvre Et Surtout  contre L’ #Injustice à une certaine Epoque ( J’adore des Gens comme ca). Tout Comme  #Sankara est une Reference en  #AFRiC, #2PAC est aussi une Grande REFERENCE aux USA 🇺🇸. #Jada pour moi n’est pas une mauvaise #Femme  Elle a fait Ce qu elle pouvait pour PAC Mais Malheureusement Dieu avait envoyé PAC pour une Mission Precise. En Ce qui concerne Sa relation avec #Smith , #Will a un peu trop forcé Et comme elle n avait pas le choix, elle se disait certainement que la donne pouvait changer. #Will etait celebre Depuis tres Jeune, Les meufs lui couraient après il pouvait trouvé une qui est mieux pour lui pour Eviter, Ce qui lui arrive Aujourdhui. Dans toute leur histoire, Chacun est #Fautif… Je vois des #Africain Choqué Lorsqu ils ont appris cette histoire de #Relation_Libre entre Les 2. Ecoutez: Y a rien de Choquant, La vie des #Americain_Noirs Et La vie des #Africain  est Entierement opposé, C’est 2 mondes Differents ceux qui savent vous le Confirmeront. Si  Eux ca les Derangent pas en quoi ca doit nous deranger🤷🏽‍♂️? Laissons les Vivre leur vie, Reglons Nos Compte avec la France 🇫🇷 et certains Presidents #Pions pour une Afrique Meilleur

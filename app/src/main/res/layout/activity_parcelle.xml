@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.forms.ParcelleActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FICHE PARCELLE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="visible"
+            android:src="@drawable/baseline_send_and_archive_white" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_30sdp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Localite *"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectLocaliteParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearProducteurContainerParcelle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Producteur *"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <!--<androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectProducteurParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />-->
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:spinnerMode="dialog"
+                                android:id="@+id/selectProducteurParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:id="@+id/linearProducteurNotFoundInfosContainerParcelle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Producteur *"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editProducteurNotFoundInfosParcelle"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:clickable="false"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="HEVEA" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Culture de la parcelle *"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNomParcelle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="HEVEA" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Type de déclaration superficiee *"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:entries="@array/declarationType"
+                                android:id="@+id/selectDeclarationTypeParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/linearCodeContainerParcelle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Code parcelle"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editCodeParcelle"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:hint="00-XX-AAA"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Superficie de la parcelle (ha)"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editSuperficieParcelle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberDecimal"
+                            android:digits="0123456789."
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="HEVEA" />
+
+                    </LinearLayout>
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Latitude"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editLatParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint=""
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Longitude"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editLongParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp"
+                                android:hint=""/>
+
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/clickLatLongParcelle"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:layout_height="@dimen/_30sdp"
+                            android:padding="@dimen/_5sdp"
+                            app:srcCompat="@drawable/ic_marker_black" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Année parcelle"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editAnneParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/rounded_background"
+                                android:editable="false"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:hint="JJ-MM-AAAA"
+                                android:inputType="textCapCharacters"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@drawable/ic_date_calendar" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearWayPointsMappingParcelle"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Waypoints\n(liste des coordonnées gps du mapping)"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editWayPointsParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="HEVEA" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/clickToMappingParcelle"
+                android:layout_width="@dimen/_110sdp"
+                android:textSize="@dimen/_9sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:textAllCaps="false"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/submit_button_bg"
+                android:text="Cliquer pour mapper"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearMapsParcelle"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textSize="@dimen/_13ssp"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mapper la parcelle"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:srcCompat="@drawable/ic_map"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickCancelParcelle"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/divider"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ANNULER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_cancel_send_white"
+                    app:iconGravity="start" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveParcelle"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="VÉRIFIER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_schedule_send_prev_white"
+                    app:iconGravity="start" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

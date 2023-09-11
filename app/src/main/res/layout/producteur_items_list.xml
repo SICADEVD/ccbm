@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearProducteurContainerItem"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CODE : "/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelProducteurCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="APO-12"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelProducteurNom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="DON"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <Space
+                android:layout_width="@dimen/_5sdp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelProducteurPrenoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="JOE"
+                android:textSize="@dimen/_15ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgSynced"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        tools:src="@drawable/ic_sync_donz"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/linearProducteurContainerItem"
+        android:layout_marginBottom="@dimen/_minus5sdp"/>
+
+</RelativeLayout>

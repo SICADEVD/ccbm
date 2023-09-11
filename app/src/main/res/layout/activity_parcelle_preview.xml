@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.infospresenters.ParcellePreviewActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECAPITULATIF PARCELLE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:background="@drawable/rounded_cardview_with_border"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_height="@dimen/_200sdp">
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Producteur : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelProducteurParcellePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Promduceur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Culture parcelle : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelCultueParcellePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Peter-07"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Type déclaration : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelDeclarationParcellePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="GPS"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Supeficie : "
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelSupeficieParcellePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Peter-07"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_13ssp"
+                    android:text="Lagitude/Longitude : "
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelLatLngParcellePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Peter-07"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_13ssp"
+                    android:text="Année : "
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelAnneeParcellePreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="2022"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_13ssp"
+                    android:text="Way Points : "
+                    android:minLines="3"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/labelWayPointsParcellePreview"
+                    android:gravity="top"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:minLines="1"
+                    android:textColor="@color/black"
+                    android:layout_height="match_parent"
+                    android:text="Peter-  07 0707 07"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:id="@+id/linearActionExportContainerParcellePreview"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/clickKmlParcellePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/submit_button_bg"
+                    android:text="EXPORT KML"
+                    android:textColor="@color/white" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/clickGpxParcellePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/submit_button_bg"
+                    android:text="EXPORT GPX"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveParcellePreview"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ENREGISTRER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/ic_save_work"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

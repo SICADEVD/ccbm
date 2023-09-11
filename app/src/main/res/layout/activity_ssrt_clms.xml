@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.forms.SsrtClmsActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FICHE SSRTE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="visible"
+            android:src="@drawable/baseline_send_and_archive_white" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:scrollHorizontally="true"
+        android:id="@+id/labelInfosScrollerSsrt"
+        android:freezesText="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:singleLine="true"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:ellipsize="marquee"
+        android:textSize="@dimen/_12ssp"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/black"
+        android:text="Seul les personnes de 3 à 17ans partageant le même repas et la même maison du producteur sont concernées par cette enquête. Commencer du plus grand au plus petit"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_5sdp" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:text="Localité *"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6.5"
+            android:background="@drawable/rounded_background">
+
+            <Space
+                android:layout_width="@dimen/_5sdp"
+                android:layout_height="@dimen/_10sdp" />
+
+            <!--<com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:spinnerMode="dialog"
+                android:id="@+id/selTestSsrt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_37sdp"/>-->
+
+            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:id="@+id/multipleItemSelectionSpinner"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_30sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Localité *"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectLocaliteSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Producteur *"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectProducteurSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Nom du membre"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editMembreNomlSsrt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="Qaurtier" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Prenoms du membre"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editMembrePrenomlSsrt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="Qaurtier" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Genre *"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectSexeSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:entries="@array/genre_membre"
+                        android:spinnerMode="dialog" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Date de naissance"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editDateNaissancelSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_background"
+                        android:editable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:hint="JJ-MM-AAAA"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_date_calendar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Lien de parenté avec le producteur*"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectLienParentSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:id="@+id/linearAutreLienParentContainerSsrte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Saisir l'autre lien"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:textAllCaps="true"
+                    android:id="@+id/editAutreLienParentSsrt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:hint=""
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/_13ssp"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Va-t-il à l'école ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:id="@+id/selectSchoolStatusSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSchoolLevelContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Quel est le niveau ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:entries="@array/schoolLevel"
+                        android:id="@+id/selectSchoolLevelSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearClasseLevelContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Quel est la classe ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectClasseLevelSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSchoolInPlaceYesNoContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Ton école est-elle située dans le village ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:id="@+id/selectSchoolInPlaceYesNoSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearVillageDistanceContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="À Combien de Km du village est-elle située ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editVillageDistanceSsrt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:imeOptions="actionDone"
+                    android:inputType="phone"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="Qaurtier" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSchoolNameContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Donne le nom de cette école ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editSchoolNameSsrt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapWords"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/_13ssp"
+                    tools:text="Qaurtier" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearMoyenDeplacementContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Comment te rends-tu dans cette école ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:entries="@array/moyenDeplacement"
+                        android:id="@+id/selectMoyenDeplacementSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearDejaScolariseContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="A tu été à l’école par le passé ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:id="@+id/selectDejaScolariseSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearNiveauEtudeAtteintContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Quelle niveau d’étude as-tu atteint ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:spinnerMode="dialog"
+                        android:entries="@array/schoolLevelFull"
+                        android:id="@+id/selectNiveauEtudeAtteintSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearNoSchoolRaisonContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+<!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
+<!--                        app:hintText="Choisir la raison"-->
+<!--                        android:id="@+id/selectNoSchoolRaisonSsrt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"/>-->
+
+                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:id="@+id/selectNoSchoolRaisonSsrt"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/linearRecentWorkContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Au cours de ces 2 dernières années lequel de ces travaux a tu effectués ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+<!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
+<!--                        app:hintText="Selectionnez les travaux"-->
+<!--                        android:id="@+id/selectRecentWorkSsrt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"/>-->
+
+                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:id="@+id/selectRecentWorkSsrt"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearRecentWorkLieuContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Ou a tu effectué ces travaux ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+<!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
+<!--                        app:hintText="Selectionnez les lieux"-->
+<!--                        android:id="@+id/selectRecentWorkLieuSsrt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"/>-->
+
+                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:id="@+id/selectRecentWorkLieuSsrt"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearRecentWorkLightContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Au cours de ces 2 dernières années lequel de ces travaux a tu effectués ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+<!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
+<!--                        app:hintText="Selectionnez les travaux"-->
+<!--                        android:id="@+id/selectRecentWorkLightSsrt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"/>-->
+
+                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:id="@+id/selectRecentWorkLightSsrt"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearRecentWorkLieuLightContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Ou a tu effectué ces travaux ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+<!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
+<!--                        app:hintText="Selectionnez les lieux"-->
+<!--                        android:id="@+id/selectRecentWorkLieuLightSsrt"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"/>-->
+
+                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:id="@+id/selectRecentWorkLieuLightSsrt"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearDateEnqueteContainerSsrt"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Date de l'enquete"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editDateEnqueteSsrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_background"
+                        android:editable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:hint="JJ-MM-AAAA"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_date_calendar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickCancelSsrt"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/divider"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ANNULER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_cancel_send_white"
+                    app:iconGravity="start" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickReviewEnqueteSsrt"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="VÉRIFIER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_schedule_send_prev_white"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

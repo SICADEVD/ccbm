@@ -1,0 +1,13 @@
+[{
+        "id": "1",
+        "nom": "Campement"
+    },
+    {
+        "id": "2",
+        "nom": "Village"
+    },
+    {
+        "id": "0",
+        "nom": "Ville"
+    }
+]

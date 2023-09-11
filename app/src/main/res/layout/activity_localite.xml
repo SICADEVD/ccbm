@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.forms.LocaliteActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FICHE LOCALITE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="visible"
+            android:src="@drawable/baseline_send_and_archive_white" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_30sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Nom de\nla localite *"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editNomLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="LOCALITE"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Type de\nlocalite *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectTypeLocalite"
+                        android:spinnerMode="dialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Nom de la\nsous-prefecture *"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editSousPrefectureLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="SOUS_PREFECTURE"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Population estimée\ndans la localité"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editPopulationLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="POPULATION ESTIME"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="phone"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Existe-t-il un\ncentre de santé ? *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectCentreYesNoLocalite"
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearCentreKmContainerLocalite"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_weight="3.5"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="Combien de Km est situé le centre le plus proche?"/>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editCentreKmLocalite"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:textSize="@dimen/_13ssp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        tools:text="KM CENTRE DE SANTE"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:textAllCaps="true"
+                        android:inputType="phone"
+                        android:layout_width="0dp"
+                        android:layout_weight="6.5"
+                        android:layout_height="@dimen/_37sdp"
+                        android:background="@drawable/rounded_background"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearCentreSanteNoTypeContainerLocalite"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Type de centre de santé ?"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectCentreSanteNoTypeLocalite"
+                        android:spinnerMode="dialog"
+                        android:entries="@array/typeCentre"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:id="@+id/linearCentreSanteYesNomContainerLocalite"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Nom de ce\ncentre de santé"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editNomCentreSanteLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="NOM DE CENTRE DE SANTE"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Y'a-t-il une\nécole primaire ? *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectEcoleYesNoLocalite"
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/linearNbreEcoleContainerLocalite"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:weightSum="10"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="3.5"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:text="Combien \nd'ecoles primaires"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreEcolesLocalite"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:textSize="@dimen/_13ssp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            tools:text="COMBIEN D'ECOLES"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:textAllCaps="true"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:weightSum="10"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:text="Nom de l'ecole à ajouter"/>
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editNomCustomEcoleLocalite"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:ellipsize="end"
+                                android:imeOptions="actionDone"
+                                android:textAllCaps="true"
+                                android:inputType="textCapWords"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"/>
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_5sdp"/>
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/clickAddEcoleLocalite"
+                            android:layout_width="@dimen/_100sdp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/submit_button_bg"
+                            android:text="ENREGISTRER"
+                            android:textColor="@color/white"
+                            android:layout_weight="1"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            tools:listitem="@layout/school_items_list"
+                            tools:itemCount="3"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/recyclerEcolesListLocalite"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/black"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearEcoleDistanceContainerLocalite"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:weightSum="10"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="3.5"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:text="Combien de Km est situé l'école la plus proche ?"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editEcoleDistanceLocalite"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:textSize="@dimen/_13ssp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            tools:text="COMBIEN KM L'ECOLE"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:textAllCaps="true"
+                            android:inputType="phone"
+                            android:layout_width="0dp"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_weight="3.5"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="Nom de cette école primaire publique"/>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editNomEcoleLocalite"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:imeOptions="actionDone"
+                        tools:text="NOM ECOLE PRIMAIRE"
+                        android:ellipsize="end"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_width="0dp"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:layout_weight="6.5"
+                        android:layout_height="@dimen/_37sdp"
+                        android:background="@drawable/rounded_background"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Source d'eaux potable ? *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectSourceEauLocalite"
+                        android:spinnerMode="dialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearEtatPompeContainerLocalite"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_weight="3.5"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="La pompe est en bon état ?"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="6.5"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp"/>
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/selectEtatPompeYesNoLocalite"
+                            android:spinnerMode="dialog"
+                            android:entries="@array/YesOrNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Existe-t-il l’éclairage public dans la localité ? *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectCieYesNoLocalite"
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:id="@+id/linearMarketYesNoContainerLocalite"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Existe-t-il un marché dans la localité ? *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectMarketYesNoLocalite"
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearMarketDayContainerLocalite"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_weight="3.5"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="Quel est le jour du marché ?"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="6.5"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp"/>
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/selectMarketDayLocalite"
+                            android:spinnerMode="dialog"
+                            android:entries="@array/dayMarket"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/linearMarketDistanceContainerLocalite"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"/>
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_weight="3.5"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="A combien de km se trouve le marché le plus proche ?"/>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editMarketDistanceLocalite"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:imeOptions="actionDone"
+                        tools:text="1000"
+                        android:ellipsize="end"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_width="0dp"
+                        android:inputType="phone"
+                        android:layout_weight="6.5"
+                        android:layout_height="@dimen/_37sdp"
+                        android:background="@drawable/rounded_background"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Endroit pour déchets ? *"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/selectDechetYesyNoLocalite"
+                        android:spinnerMode="dialog"
+                        android:entries="@array/YesOrNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Nombre de comite\nde main d'oeuvre"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editNbreComiteLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="LOCALITE"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="phone"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Nombre d'association\nde femmes"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editNbreAssoFemmeLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="LOCALITE"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="phone"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="Nombre d'association\nde jeunes"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editNbreAssoJeuneLocalite"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="LOCALITE"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="match_parent"
+                    android:inputType="phone"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"/>
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingLeft="@dimen/_12sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Latitude"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editLatLocalite"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:hint="Latitude"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:digits="0123456789"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingLeft="@dimen/_12sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Longitude"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/editLongLocalite"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_13ssp"
+                        android:hint="Longitude"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageLocationLocalite"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/_30sdp"
+                    android:padding="@dimen/_5sdp"
+                    app:srcCompat="@drawable/ic_marker_black" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickCancelLocalite"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/divider"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ANNULER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_cancel_send_white"
+                    app:iconGravity="start" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickSaveLocalite"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="VÉRIFIER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_schedule_send_prev_white"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

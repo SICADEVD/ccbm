@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.forms.UniteAgricoleProducteurActivity">
+
+    <RelativeLayout
+        android:background="@color/brown_logo"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@mipmap/ic_launcher_trans" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FICHE INFOS PRODUCTEUR"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftBtn"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="visible"
+            android:src="@drawable/baseline_send_and_archive_white" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_30sdp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations Personnelles"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:id="@+id/linearLocaliteContainerUniteAgricole"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Localite *"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectLocaliteUniteAgricole"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Producteur* "
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectProducteurInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Code producteur"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editCodeInfosProducteur"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp"
+                    android:editable="false"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:background="@drawable/rounded_background"
+                    android:ellipsize="end"
+                    android:hint="0.0"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapCharacters|textNoSuggestions"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_15sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations Culturales"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Avez-vous des\nforêts ou jacheres ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectJachereInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:entries="@array/YesOrNo"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/linearForetYesSuperficieContainerInfosProducteur"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quelle est la superficie ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editForetYesSuperficieInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:hint="0.0"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberDecimal"
+                            android:digits="0123456789."
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Avez-vous d'autres cultures ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectCulturesInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:entries="@array/YesOrNo"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearCultureContainerInfosProducteur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_5sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_4sdp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="5">
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:textAllCaps="true"
+                                        android:id="@+id/editCultureInfosProducteur"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="3.25"
+                                        android:background="@drawable/rounded_background"
+                                        android:ellipsize="end"
+                                        android:hint="Culture"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="textCapCharacters|textNoSuggestions"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="CACAO" />
+
+                                    <Space
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="0.25" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:textAllCaps="true"
+                                        android:id="@+id/editSuperficeInfosProducteur"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="1.5"
+                                        android:background="@drawable/rounded_background"
+                                        android:ellipsize="end"
+                                        android:hint="Superficie"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="numberDecimal"
+                                        android:digits="0123456789."
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="1 200" />
+
+                                </LinearLayout>
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_5sdp" />
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/clickAddFarmInfosProducteur"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_25sdp"
+                                    android:layout_gravity="end"
+                                    android:background="@drawable/submit_button_bg"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:text="Ajouter"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_9ssp" />
+
+                            </LinearLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_5sdp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerCultureInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/culture_items_list" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.5dp"
+                                android:background="@color/dark_gray" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Combien de travailleurs avez-vous ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreTravailleursInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="22" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Nombre de\ntravailleurs permanents ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreTravailleursPermanentsInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="22" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Nombre de\ntravailleurs non permanent ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreTravailleursNonPermanentInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="22" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_15sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations Menages"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Nombre d’enfants de 5 à 17ans présents dans le ménage ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreUnder18InfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="12" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Parmi ces enfants, combien sont scolarisés ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreScolariseInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="19" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Parmi les scolarisés, combien n’ont pas d’extrait de naissance ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editNbreExtraitInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="phone"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="19" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Citez les 2 maladies plus fréquentes chez les enfants"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/linearOmbrageContainerSuivi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/_4sdp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="5">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="2"
+                                        android:text="Maladie 1"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold"
+                                        android:layout_marginEnd="@dimen/_5sdp"/>
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:textAllCaps="true"
+                                        android:id="@+id/editMaladieOneInfosProducteur"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="3"
+                                        android:background="@drawable/rounded_background"
+                                        android:ellipsize="end"
+                                        android:hint="Maladie 1"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="textCapWords"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="1 200" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="5">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="2"
+                                        android:text="Maladie 2"
+                                        android:textColor="@color/black"
+                                        android:textStyle="bold"
+                                        android:layout_marginEnd="@dimen/_5sdp"/>
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:textAllCaps="true"
+                                        android:id="@+id/editMaladieTwoInfosProducteur"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="3"
+                                        android:background="@drawable/rounded_background"
+                                        android:ellipsize="end"
+                                        android:hint="Maladie 2"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="textCapWords"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="1 200" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quand une personne est blessée à la maison, que fais-tu ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectBlesseeInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quel type de documents de tes champs possèdes-tu ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectPaperInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Comment gères-tu tes reçus d’achat ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectTicketInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_15sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations Bancaires"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="As-tu un Compte Mobile Money ? "
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectMoneyInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:entries="@array/YesOrNo"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearMoneyYesOperateurContainerProducteur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_5sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="10">
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3.5"
+                                android:text="Quel est l\'opérateur ?"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6.5"
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/selectMobileMoneyYesOperateurInfosProducteur"
+                                    android:layout_width="match_parent"
+                                    android:entries="@array/operateur"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:spinnerMode="dialog" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/linearMobileMoneyYesNumberContainerInfosProducteur"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Numéro du Compte Mobile Money"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editMobileYesNumberInfosProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:hint="Numero"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Accepterais tu qu’on paye ton cacao par ces moyens ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectBuyInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:entries="@array/bank_paiement"
+                                android:layout_height="@dimen/_35sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="As-tu un compte\ndans une banque ?"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectBanqueInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:entries="@array/YesOrNo"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickCancelInfosProducteur"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/divider"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="ANNULER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_cancel_send_white"
+                    app:iconGravity="start" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clickReviewInfosProducteur"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/brown_logo"
+                    android:elevation="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:text="VÉRIFIER"
+                    app:cornerRadius="50dp"
+                    app:icon="@drawable/baseline_schedule_send_prev_white"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

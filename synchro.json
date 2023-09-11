@@ -1,0 +1,184 @@
+[
+  {
+    "label": "SYNCHRONISATION LOCALITE",
+    "api": "/apilocalite",
+    "datas": {
+      "cooperatives_id": "1",
+      "sources_eaux_id": "Pompe Hydraulique Villageoise",
+      "type_localites_id": "Campement",
+      "nom": "BAZALILIE",
+      "sousprefecture": "DIVO",
+      "population": "302",
+      "centresante": "oui",
+      "kmCentresante": "1 km",
+      "nomCentresante": "Maternite de BAZALILIE",
+      "ecole": "nom",
+      "nombrecole": "4",
+      "kmEcoleproche": "2 km",
+      "nomEcoleproche": "EPP BAZALILIE",
+      "deversementDechets": "oui",
+      "comiteMainOeuvre": "4",
+      "associationFemmes": "3",
+      "associationJeunes": "8",
+      "etatpompehydrau": "oui",
+      "electricite": "oui"
+    }
+  },
+
+
+  {
+    "label": "SYNCHRONISATION PRODUCTEUR",
+    "api": "/apiproducteur",
+    "datas": {
+      "localites_id": "1",
+      "nationalites_id": "Ivoirienne",
+      "type_pieces_id": "CNI",
+      "codeProd": "ABI-0001",
+      "nom": "N'ZI",
+      "prenoms": "AMENAN RUTH",
+      "sexe": "Femme",
+      "dateNaiss": "2006-10-25",
+      "phone1": "0709919404",
+      "phone2": "0686759840",
+      "numPiece": "XXXXXXXXXXXXXX",
+      "niveaux_id": "Secondaire 1er cycle",
+      "foretsjachere": "non",
+      "superficie": "3 ha",
+      "autresCultures": "non",
+      "typeculture": [
+        "Riz",
+        "Banane",
+        "Igname"
+      ],
+      "superficieculture": [
+        "1 ha",
+        "3 ha",
+        "600 m2"
+      ],
+      "age18": "4",
+      "persEcole": "3",
+      "scolarisesExtrait": "4",
+      "travailleurs": "6",
+      "personneBlessee": "HOPITAL",
+      "papiersChamps": "oui",
+      "gardePapiersChamps": "maison",
+      "recuAchat": "oui",
+      "mobileMoney": "oui",
+      "numeroCompteMM": "0709919404",
+      "compteBanque": "OUI",
+      "etat": "0"
+    }
+  },
+
+
+
+  {
+    "label": "SYNCHRONISATION MENAGE",
+    "api": "/apimenage",
+    "datas": {
+      "producteurs_id" : "1",
+      "quartier" : "DJOULABOUGOU",
+      "sources_energies_id" : "Bois de chauffe",
+      "boisChauffe" : "10",
+      "ordures_menageres_id" : "Poubelle de Maison",
+      "separationMenage" : "oui",
+      "eauxToillette" : "Air Libre",
+      "eauxVaisselle" : "Air Libre",
+      "wc" : "oui",
+      "sources_eaux_id" : "Marigot",
+      "machine" : "non",
+      "type_machines_id" : "FECA FECA",
+      "garde_machines_id" : "Dans la maison",
+      "equipements" : "oui",
+      "traitementChamps" : "non",
+      "nomPersonneTraitant" : "KOFFI NESTOR",
+      "empruntMachine" : "oui",
+      "gardeEmpruntMachine" : "Dans un magasin à la maison",
+      "activiteFemme" : "oui",
+      "nomActiviteFemme" : "FABRICATION ATTIEKE",
+      "superficieCacaoFemme" : "0",
+      "champFemme" : "oui",
+      "nombreHectareFemme" : "2 ha"
+    }
+  },
+
+
+  {
+    "label": "SYNCHRONISATION SUIVI PARCELLE",
+    "api": "/apisuiviparcelle",
+    "datas": {
+      "producteurs_id" : "1",
+      "parcelles_id" : "2",
+      "varietes_cacao_id" : "Mercedes",
+      "existeCoursEaux" : "oui",
+      "cours_eaux_id" : "Marigot",
+      "pente" : "oui",
+      "varietesOmbrage" : ["Iroko","Baobab"],
+      "nombreOmbrage" : ["15","25"],
+      "varieteAbres" : "Iroko",
+      "nombreSauvageons" : "15",
+      "activiteTaille" : "Moyen",
+      "activiteEgourmandage" : "Moyen",
+      "activiteDesherbageManuel" : "Moyen",
+      "activiteRecolteSanitaire" : "Moyen",
+      "intrant" : "NPK",
+      "nombresacs" : "18",
+      "presenceBioAgresseur" : "Assez",
+      "presenceInsectesRavageurs" : "Assez",
+      "presenceFourmisRouge" : "Assez",
+      "presenceAraignee" : "Assez",
+      "presenceVerTerre" : "Assez",
+      "presenceMenteReligieuse" : "Assez",
+      "nomInsecticide" : "XXXXXXXXXXXXXXXX",
+      "nombreInsecticide" : "13",
+      "nomFongicide" : "XXXXXXXXXXXXXXXX",
+      "nombreFongicide" : "15",
+      "nomHerbicide" : "XXXXXXXXXXXXXXXX",
+      "nombreHerbicide" : "15",
+      "nombreDesherbage" : "10",
+      "dateVisite" : "2021-12-23"
+    }
+  },
+
+
+  {
+    "label": "SYNCHRONISATION PARCELLE",
+    "api": "/apiparcelle",
+    "datas": {
+      "producteurs_id" : "1",
+      "anneeCreation" : "2013",
+      "culture" : "Cacao",
+      "superficie" : "4 ha",
+      "latitude" : "5.3610883",
+      "longitude" : "-4.0796022"
+    }
+  },
+
+
+
+  {
+    "label": "SYNCHRONISATION LIVRAISON",
+    "api": "/apilivraison",
+    "datas": {
+      "producteurs_id" : "1",
+      "quantiteLivre" : "26789",
+      "nombreSacs" : "167",
+      "dateLivre" : "20/12/2021",
+      "nomDelegue" : "KONAN ERNEST"
+    }
+  },
+
+
+  {
+    "label": "SYNCHRONISATION SUIVI FORMATION",
+    "api": "/apisuiviformation",
+    "datas": {
+      "localites_id": "3",
+      "lieu_formations_id": "Place Publique",
+      "theme": "Les techniques pulverisation du Cacao",
+      "producteurs_id":["1", "2", "3", "4", "5"],
+      "dateFormation": "2021-12-24",
+      "users_id": 1
+    }
+  }
+]

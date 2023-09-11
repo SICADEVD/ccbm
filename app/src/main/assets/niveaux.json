@@ -1,0 +1,25 @@
+[{
+        "id": "6",
+        "nom": "Aucun"
+    },
+    {
+        "id": "5",
+        "nom": "Ecole professionnelle"
+    },
+    {
+        "id": "1",
+        "nom": "Primaire (Minimum CE1)"
+    },
+    {
+        "id": "2",
+        "nom": "Secondaire 1er cycle"
+    },
+    {
+        "id": "3",
+        "nom": "Secondaire 2e cycle"
+    },
+    {
+        "id": "4",
+        "nom": "Supérieur"
+    }
+]

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingStart="@dimen/_10sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearParcelleContainerItem"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_10ssp"
+                android:text="Producteur : "/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelProducteurParcelle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="BOKA KADJO SERGE DIDIER CEDRIC"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom Parcelle : "
+                android:gravity="bottom"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"/>
+
+            <Space
+                android:layout_width="@dimen/_5sdp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelParcelleNom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                tools:text="HEVEA"
+                android:textStyle="bold"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_20sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Superficie"
+                android:gravity="bottom"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"/>
+
+            <Space
+                android:layout_width="@dimen/_5sdp"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelSuperficeParcelle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                tools:text="1.89 Km"
+                android:textStyle="bold"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgSyncedParcelle"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        tools:src="@drawable/ic_sync_donz"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/linearParcelleContainerItem"
+        android:layout_marginBottom="@dimen/_minus5sdp"/>
+
+</RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_present"
+    android:backgroundTint="@color/brown_logo"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/_2sdp"
+    android:paddingTop="@dimen/_2sdp"
+    android:paddingRight="@dimen/_2sdp"
+    android:paddingBottom="@dimen/_2sdp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:weightSum="10">
+
+    <ImageView
+        android:layout_weight="2"
+        android:id="@+id/imageAccount"
+        android:layout_width="50dp"
+        android:layout_height="@dimen/_50sdp"
+        android:contentDescription="logo account"
+        android:paddingTop="@dimen/_2sdp"
+        app:srcCompat="@drawable/baseline_account_circle_white" />
+
+    <LinearLayout
+        android:layout_weight="6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:text="Connectée…"
+            android:textColor="@color/green"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_2sdp" />
+
+        <TextView
+            android:id="@+id/titleAccount"
+            android:paddingLeft="@dimen/_8sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_extrabold"
+            android:textSize="@dimen/_12ssp"
+            tools:text="Koudio Mano" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_weight="2"
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/imgProfileDashboardNDrawer"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/ic_shutdown" />
+</LinearLayout>

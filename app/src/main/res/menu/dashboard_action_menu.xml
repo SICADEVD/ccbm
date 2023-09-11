@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/ic_add_all_black"
+        android:id="@+id/addDashboardMenu"
+        android:title="Ajouter un contenu"/>
+
+    <item
+        android:icon="@drawable/ic_edit_black"
+        android:id="@+id/updateDashboardMenu"
+        android:title="Modifier un contenu"/>
+
+    <item
+        android:icon="@drawable/ic_ssrt_black"
+        android:visible="true"
+        android:id="@+id/draftsDashboardMenu"
+        android:title="Voir les brouillons"/>
+
+</menu>

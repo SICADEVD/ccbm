@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="@dimen/_5sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_25sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/_10sdp"
+                android:text="Producteur" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/_10sdp"
+                android:text="Parcelle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="@dimen/_10sdp"
+                android:text="Quantité" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelLivraisModProducteurItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/_10sdp"
+                tools:text="HEVEA" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelLivraisModParcelleItem"
+                android:layout_width="0dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/_10sdp"
+                tools:text="HEVEA" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/labelLivraisModQuantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/_10sdp"
+                tools:text="1 024" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/deleteInfoLivraisSModItem"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_delete_red" />
+
+</RelativeLayout>

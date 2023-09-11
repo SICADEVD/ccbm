@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/border_shape_focus" android:state_enabled="true"  android:state_focused="true">
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.2"
+                android:valueType="floatType"
+                android:duration="100"
+                />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.2"
+                android:valueType="floatType"
+                android:duration="100"
+                />
+        </set>
+    </item>
+
+    <!-- Default state (unfocused) -->
+    <item android:drawable="@drawable/border_shape" android:state_focused="false" >
+        <set>
+            <objectAnimator
+                android:propertyName="scaleX"
+                android:valueTo="1.0"
+                android:valueType="floatType"
+                android:duration="100"
+                />
+            <objectAnimator
+                android:propertyName="scaleY"
+                android:valueTo="1.0"
+                android:valueType="floatType"
+                android:duration="100"
+                />
+        </set>
+    </item>
+</selector>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SettingsActivity">
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PARENTS"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:id="@+id/selectParentModify"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            android:spinnerMode="dropdown" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textAllCaps="true"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:inputType="textNoSuggestions"
+            android:background="@drawable/rounded_background"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:id="@+id/inputNomParent"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textAllCaps="true"
+            android:inputType="textNoSuggestions"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:background="@drawable/rounded_background"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:id="@+id/inputPrenomsParent"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/clickSaveParent"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_width="@dimen/_200sdp"
+            android:text="Save Parent"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="@color/brown_logo"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/black"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/viewDivider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHILDREN"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:id="@+id/selectParent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_37sdp"
+            android:spinnerMode="dropdown" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textAllCaps="true"
+            android:inputType="textNoSuggestions"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:background="@drawable/rounded_background"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:id="@+id/inputNom"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:textAllCaps="true"
+            android:inputType="textNoSuggestions"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_37sdp"
+            android:background="@drawable/rounded_background"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:id="@+id/inputPrenoms"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:text="Save Child"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:id="@+id/clickSaveChild"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="@color/brown_logo"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
