@@ -215,5 +215,6 @@
             </Document>
         </kml>"
     </string>
+    <string name="precision_hint">Précision</string>
 
 </resources>
