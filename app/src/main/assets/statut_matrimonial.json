@@ -1,0 +1,25 @@
+[{
+  "id": "1",
+  "nom": "Celibataire"
+},
+  {
+    "id": "2",
+    "nom": "Fiancé"
+  },
+  {
+    "id": "3",
+    "nom": "Marié (mariage civil)"
+  },
+  {
+    "id": "4",
+    "nom": "Mariage réligieux"
+  },
+  {
+    "id": "5",
+    "nom": "Divorcé"
+  },
+  {
+    "id": "6",
+    "nom": "Veuf(ve)"
+  }
+]

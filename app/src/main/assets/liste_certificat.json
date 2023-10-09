@@ -1,0 +1,17 @@
+[{
+  "id": "1",
+  "nom": "Rainforest"
+},
+  {
+    "id": "2",
+    "nom": "Fairtrade"
+  },
+  {
+    "id": "3",
+    "nom": "BIO"
+  },
+  {
+    "id": "4",
+    "nom": "Autre"
+  }
+]

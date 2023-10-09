@@ -87,7 +87,7 @@ android:textColor="@color/text_color_white"
             android:layout_above="@+id/linearSynchronisationContainerLivraisons"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            tools:itemCount="10"
+            tools:itemCount="2"
             tools:listitem="@layout/livraison_items_list" />
 
         <LinearLayout
