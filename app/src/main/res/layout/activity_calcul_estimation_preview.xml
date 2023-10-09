@@ -9,7 +9,7 @@
     tools:context=".activities.infospresenters.CalculEstimationPreviewActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF ESTIMATION"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -78,6 +79,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Localité :"
@@ -85,12 +87,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelLocaliteNomEstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -105,6 +108,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Campagne :"
@@ -112,12 +116,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCampagneNomEstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -132,6 +137,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Producteur :"
@@ -139,12 +145,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelProducteurNomEstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -159,6 +166,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Parcelle :"
@@ -166,12 +174,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelParclelleNomEstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -186,6 +195,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Superficie :"
@@ -193,12 +203,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSuperficieEstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -213,6 +224,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds A1 :"
@@ -220,12 +232,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedA1EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -240,6 +253,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds A2 :"
@@ -247,12 +261,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedA2EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -267,6 +282,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds A3:"
@@ -274,12 +290,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedA3EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -298,6 +315,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds B1:"
@@ -305,12 +323,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedB1EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -325,6 +344,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds B2:"
@@ -332,12 +352,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedB2EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -352,6 +373,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds B3:"
@@ -359,12 +381,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedB3EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -384,6 +407,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds C1:"
@@ -391,12 +415,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedC1EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -413,6 +438,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds C2:"
@@ -420,12 +446,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedC2EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -442,6 +469,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comptage pieds C3:"
@@ -449,12 +477,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPiedC3EstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -471,6 +500,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Date d'estimation:"
@@ -478,12 +508,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDateEstimationPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -509,7 +540,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"

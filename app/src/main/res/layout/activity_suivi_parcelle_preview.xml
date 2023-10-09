@@ -9,7 +9,7 @@
     tools:context=".activities.infospresenters.SuiviParcellePreviewActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF SUIVI PARCELLE"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -80,6 +81,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Producteur"
@@ -87,15 +89,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelProducteurNomSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -108,6 +111,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Parcelle"
@@ -115,15 +119,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelParcelleNomSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -136,6 +141,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Campagne"
@@ -143,15 +149,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCampagneSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -164,6 +171,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de cours d'eau: "
@@ -171,15 +179,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceCoursEauSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -192,6 +201,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de pente: "
@@ -199,27 +209,30 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresencePenteSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Arbre à ombrage"
@@ -227,21 +240,23 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNbreArbreOmbrageSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -249,35 +264,39 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Arbre à ombrage"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/white"
+                    
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelArbreOmbrageListSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_10ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Variété arbre ombrage souhaitée: "
@@ -285,15 +304,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelOmbrageSouhaiteeSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -305,6 +325,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nombre de sauvageons observé: "
@@ -312,15 +333,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNombreSauvageonsSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -332,6 +354,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Beneficiaire d'arbre agro-forestier: "
@@ -339,15 +362,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelBenefAgroSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -359,6 +383,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Activité de Taille: "
@@ -366,15 +391,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelActiviteTailleuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -386,6 +412,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Activité d'engourmandage: "
@@ -393,15 +420,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelActiviteEngourmandSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -413,6 +441,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Activité de désherbage manuel: "
@@ -420,15 +449,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelActiviteDesherbageManuelSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -440,6 +470,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Activité de recolte sanitaire: "
@@ -447,15 +478,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelActiviteRecolteSanitaireSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -467,6 +499,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de Bio Agresseurs: "
@@ -474,15 +507,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceBioAgresseursSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -494,6 +528,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de pourriture de brune: "
@@ -501,15 +536,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresencePourritureSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -521,6 +557,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence d'insectes ravageurs: "
@@ -528,15 +565,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceInsecteRavageurSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -548,6 +586,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de fourmis rouge: "
@@ -555,15 +594,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceFormisRougeSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -575,6 +615,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence d'araignées: "
@@ -582,15 +623,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceAraigneeSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -602,6 +644,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de ver de terres: "
@@ -609,15 +652,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceVerDeTerreuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -629,6 +673,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de mantes religieuses: "
@@ -636,15 +681,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceManteReligieuseSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -656,6 +702,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Insecticide utilisé: "
@@ -663,15 +710,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelInsecticideUtiliseSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -683,6 +731,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Fongicide utilisé: "
@@ -690,15 +739,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelFongicideUtiliseSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -710,6 +760,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Herbicule utilisé: "
@@ -717,15 +768,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelHernicalUtiliseSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -737,6 +789,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Intrant utilisé: "
@@ -744,15 +797,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelIntrantUtiliseSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -764,6 +818,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Presence de ShodenShoot: "
@@ -771,15 +826,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPresenceSholenSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -791,6 +847,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nombre désherbage manuel: "
@@ -798,15 +855,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labeNombreDesherbageSuiviPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -830,7 +888,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"

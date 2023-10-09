@@ -10,9 +10,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.EditText
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
+import ci.projccb.mobile.adapters.ExpandableListAdapter
+
 import ci.projccb.mobile.adapters.FeatureAdapter
 import ci.projccb.mobile.broadcasts.LoopAlarmReceiver
 import ci.projccb.mobile.models.AgentModel
@@ -358,7 +360,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         bindDatas(agentModel = agentLogged)
 
         // .setNavigationItemSelectedListener(this)
-
+        Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.white)
         imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Deconnexion ?")
@@ -403,6 +405,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             dialog.show()
         }
 
+        Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.white)
         imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Voulez-vous quitter ?")
@@ -433,6 +436,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             drawer_layout.openDrawer(GravityCompat.START);
         }
 
+        Commons.modifyIcColor(this@DashboardAgentActivity, linearSync, R.color.white)
         linearSync.setOnClickListener {
             var message = "Mettre à jour la base de données... ?"
 
@@ -547,7 +551,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "producteur")!!,
                         type = "PRODUCTEUR",
                         //image = R.drawable.producteurc,
-                        icon = R.drawable.ic_farmer_b,
+                        icon = R.drawable.ic_farmer,
                         canAdd = true,
                         canEdit = true,
                         canViewUpdate = true,
@@ -559,7 +563,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                             ?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "infos_producteur")!!,
                         type = "INFOS_PRODUCTEUR",
-                        icon = R.drawable.ic_profile_producteur_b,
+                        icon = R.drawable.ic_profile_producteur,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -576,7 +580,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "parcelle")!!,
                         type = "PARCELLE",
                         //image = R.drawable.parcelles,
-                        icon = R.drawable.ic_parcel_b,
+                        icon = R.drawable.ic_parcel,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -592,7 +596,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "menage")!!,
                         type = "MENAGE",
                         //image = R.drawable.menage,
-                        icon = R.drawable.ic_menage_b,
+                        icon = R.drawable.ic_menage,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -608,7 +612,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_application")!!,
                         type = "SUIVI_APPLICATION",
                         placeholder = R.drawable.suiviapplication,
-                        icon = R.drawable.ic_applicateurs_b,
+                        icon = R.drawable.ic_applicateurs,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -624,7 +628,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "inspection")!!,
                         type = "INSPECTION",
                         //image = R.drawable.evaluation,
-                        icon = R.drawable.baseline_elevator_black,
+                        icon = R.drawable.baseline_elevator,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -640,7 +644,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
                         type = "CALCUL_ESTIMATION",
                         //image = R.drawable.estimations,
-                        icon = R.drawable.ic_suivi_parcel_b,
+                        icon = R.drawable.ic_suivi_parcel,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -656,7 +660,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_parcelle")!!,
                         type = "SUIVI_PARCELLE",
                         //image = R.drawable.suiviparcelle,
-                        icon = R.drawable.ic_suivi_parcel_b,
+                        icon = R.drawable.ic_suivi_parcel,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -672,7 +676,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")!!,
                         type = "FORMATION",
                         //image = R.drawable.formation,
-                        icon = R.drawable.ic_formation_b,
+                        icon = R.drawable.ic_formation,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -688,7 +692,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "ssrte")!!,
                         type = "SSRTE",
                         //image = R.drawable.ssrte,
-                        icon = R.drawable.baseline_follow_black,
+                        icon = R.drawable.baseline_follow,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -704,7 +708,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
                         type = "LIVRAISON",
                         //image = R.drawable.livraison,
-                        icon = R.drawable.ic_shipped_b,
+                        icon = R.drawable.ic_shipped,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -727,6 +731,7 @@ class DashboardAgentActivity : AppCompatActivity(),
     private fun setNavViewItems() {
 
         var expandableLV = expandable_navigation1.init(this@DashboardAgentActivity)
+        val listHeaders = mutableListOf<HeaderModel>()
         listOfFeatures.forEach {
             val featured = HeaderModel(it.title, it.icon, true)
                 .addChildModel(ChildModel("AJOUTER"))
@@ -734,11 +739,16 @@ class DashboardAgentActivity : AppCompatActivity(),
             if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
             if(it.canViewUpdate) featured.addChildModel(ChildModel("LISTE MODIFIABLE"))
             if(it.canViewSync) featured.addChildModel(ChildModel("DONNEES ENVOYEES"))
+            listHeaders.add(featured)
             expandableLV.addHeaderModel(featured)
         }
 
+//        val tvmain = this.findViewById<ImageView>(com.techatmosphere.R.id.icon_menu)
+//        Commons.modifyIcColor(this@DashboardAgentActivity, tvmain, R.color.text_color_white)
+
         expandableLV.build()
-            .addOnGroupClickListener(OnGroupClickListener { parent, v, groupPosition, id ->
+        //expandableLV.setAdapter(ExpandableListAdapter(this, listHeaders))
+        expandableLV.addOnGroupClickListener(OnGroupClickListener { parent, v, groupPosition, id ->
                 expandable_navigation1.setSelected(groupPosition)
                 //drawer_layout.closeDrawer(GravityCompat.START)
                 false
@@ -800,7 +810,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 false
             })
 
-        expandable_navigation1.setSelected(0)
+        if(listOfFeatures.size > 0) expandable_navigation1.setSelected(0)
 
     }
 

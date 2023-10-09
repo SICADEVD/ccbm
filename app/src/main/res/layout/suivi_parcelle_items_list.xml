@@ -24,18 +24,20 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_10ssp"
                 android:text="Producteur : "/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelProducteurSuivi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="BOKA KADJO SERGE DIDIER CEDRIC"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/black"
+                
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -47,18 +49,20 @@
             android:layout_height="@dimen/_20sdp">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Parcelle : "
                 android:gravity="bottom"
                 android:textSize="@dimen/_12ssp"
-                android:textColor="@color/black"/>
+                />
 
             <Space
                 android:layout_width="@dimen/_5sdp"
                 android:layout_height="wrap_content"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelSuiviNom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +70,7 @@
                 tools:text="HEVEA"
                 android:textStyle="bold"
                 android:textSize="@dimen/_12ssp"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 
@@ -82,18 +86,20 @@
                 android:layout_height="@dimen/_20sdp">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Superficie"
                     android:gravity="bottom"
                     android:textSize="@dimen/_11ssp"
-                    android:textColor="@color/black"/>
+                    />
 
                 <Space
                     android:layout_width="@dimen/_5sdp"
                     android:layout_height="wrap_content"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSuperficeSuivi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +107,7 @@
                     tools:text="1.89 Km"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"/>
+                    />
 
             </LinearLayout>
 
@@ -116,18 +122,20 @@
                 android:layout_height="@dimen/_20sdp">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Visite"
                     android:gravity="bottom"
                     android:textSize="@dimen/_11ssp"
-                    android:textColor="@color/black"/>
+                    />
 
                 <Space
                     android:layout_width="@dimen/_5sdp"
                     android:layout_height="wrap_content"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDateVisiteSuivi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -135,7 +143,7 @@
                     tools:text="12-12-2021"
                     android:textStyle="bold"
                     android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/black"/>
+                    />
 
             </LinearLayout>
 

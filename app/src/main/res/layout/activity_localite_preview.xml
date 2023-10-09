@@ -9,7 +9,7 @@
     tools:context=".activities.infospresenters.LocalitePreviewActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF LOCALITE"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -78,6 +79,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Localité "
@@ -85,12 +87,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNomLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -105,6 +108,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Type "
@@ -112,12 +116,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelTypeLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -132,6 +137,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sous-prefecture "
@@ -139,12 +145,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSousPrefectureLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -159,6 +166,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Population estimée"
@@ -166,12 +174,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPopulationLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -186,6 +195,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Centre de santé"
@@ -193,12 +203,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCentreSanteYesNoLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -214,6 +225,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="KM du centre le plus proche"
@@ -221,12 +233,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCentreSanteYesDistanceLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -241,6 +254,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nom centre du sante"
@@ -248,12 +262,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCentreSanteNomLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -268,6 +283,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Précense écoles primaires"
@@ -275,12 +291,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelEcoleYesNoLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -289,6 +306,7 @@
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:orientation="vertical"
                 android:id="@+id/linearEcoleYesLocalitePreview"
                 android:layout_width="match_parent"
@@ -302,6 +320,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Nombres écoles"
@@ -309,12 +328,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/labelEcoleYesNombreLocalitePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="match_parent"
                         android:text="LOCALITE"
                         android:layout_weight="2.5"/>
@@ -329,6 +349,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Écoles: "
@@ -336,12 +357,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/labelEcoleYesNomsLocalitePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="match_parent"
                         android:text="LOCALITE"
                         android:layout_weight="2.5"/>
@@ -364,6 +386,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="KM ecole la plus proche"
@@ -371,12 +394,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/labelEcoleNoDistanceLocalitePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="match_parent"
                         android:text="LOCALITE"
                         android:layout_weight="2.5"/>
@@ -391,6 +415,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Nom de l'ecole"
@@ -398,12 +423,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/labelEcoleNoNomLocalitePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="match_parent"
                         android:text="LOCALITE"
                         android:layout_weight="2.5"/>
@@ -420,6 +446,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Source d'eaux"
@@ -427,12 +454,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSourceEauLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -441,6 +469,7 @@
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:id="@+id/linearSourceEauEtatLocalitePreview"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="match_parent"
@@ -449,6 +478,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Pompe en etat: "
@@ -456,12 +486,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSourceEauEtatLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -476,6 +507,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Présence d'éléctricité"
@@ -483,12 +515,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelElectriciteYesNoLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -503,6 +536,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Présence de marché"
@@ -510,12 +544,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelMarketYesNoLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -524,6 +559,7 @@
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:id="@+id/linearMarketYesLocalitePreview"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="match_parent"
@@ -532,6 +568,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Présence de marché"
@@ -539,12 +576,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelMarketDayLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -559,6 +597,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Endroit pour dechets"
@@ -566,12 +605,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDechetYesNoLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -586,6 +626,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nombre comité main d'oeuvre"
@@ -593,12 +634,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNbreComiteLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -613,6 +655,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nombre d'association de femmes"
@@ -620,12 +663,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNbreFemmeLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -640,6 +684,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nombre d'association de jeunes"
@@ -647,12 +692,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNbreJeuneLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -667,6 +713,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Latitude"
@@ -674,12 +721,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelLatitudeLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -694,6 +742,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Longitude"
@@ -701,12 +750,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelLongitudeLocalitePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="LOCALITE"
                     android:layout_weight="2.5"/>
@@ -732,7 +782,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"

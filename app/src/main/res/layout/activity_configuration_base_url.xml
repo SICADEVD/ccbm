@@ -29,13 +29,13 @@
                 android:layout_height="@dimen/_20sdp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/textindicatif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"
                 android:text="Saisir votre code !"
-                android:textColor="@android:color/black"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 

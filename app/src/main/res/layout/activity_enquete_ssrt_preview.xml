@@ -9,7 +9,7 @@
     tools:context=".activities.infospresenters.EnqueteSsrtPreviewActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF SSRTE-CLTMS"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -78,6 +79,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Localité :"
@@ -85,12 +87,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
                     android:id="@+id/labelLocaliteNomEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -104,6 +107,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Producteur :"
@@ -111,12 +115,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelProducteurEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -130,6 +135,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nom du membre :"
@@ -137,12 +143,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelNomMembreEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -156,6 +163,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Prenom du membre :"
@@ -163,12 +171,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelPrenomMembreEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -182,6 +191,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sexe du membre :"
@@ -189,12 +199,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelSexeMembreEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -208,6 +219,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Date de naissance :"
@@ -215,12 +227,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelNaissanceMembreEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -234,6 +247,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Lien de parenté :"
@@ -241,12 +255,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelLienParenteEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -260,6 +275,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Va-t-il l'école : "
@@ -267,12 +283,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelSchoolStatutEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -292,6 +309,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Niveau : "
@@ -299,12 +317,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolLevelEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -318,6 +337,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Classe : "
@@ -325,12 +345,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolClasseEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -344,6 +365,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Ecole situé dans le village : "
@@ -351,12 +373,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolVillageStatutEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -371,6 +394,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Combien de Km du village est-elle situéé : "
@@ -378,12 +402,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolVillageDistanceEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -405,6 +430,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="A tu été à l’école par le passé ? "
@@ -412,12 +438,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolStatutNoOlderEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -432,6 +459,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Quelle niveau d’étude as-tu  atteint ? "
@@ -439,12 +467,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolStatutNoOlderLevelEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -459,6 +488,7 @@
                     android:weightSum="4">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Pourquoi ne vas-tu pas à l’école ou arrêté l’école ? "
@@ -466,12 +496,13 @@
                         android:layout_weight="1.5"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                         android:id="@+id/labelSchoolStatutNoOlderRaisonEnquetePreview"
                         android:gravity="center_vertical"
                         android:layout_width="0dp"
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
+                        
                         android:layout_height="wrap_content"
                         android:layout_weight="2.5"/>
 
@@ -487,6 +518,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Travaux dangereux effectués 2 dernieres années"
@@ -494,12 +526,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelTravauxDangereuxEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -513,6 +546,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Ou les avez-vous effectués: "
@@ -520,12 +554,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelTravauxDangereuxLieuEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -539,6 +574,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Travaux legers effectués 2 dernieres années"
@@ -546,12 +582,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelTravauxLegerEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -565,6 +602,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Ou les avez-vous effectués"
@@ -572,12 +610,13 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelTravauxDangereuxLegerLieuEnquetePreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"/>
 
@@ -603,7 +642,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     app:cornerRadius="50dp"

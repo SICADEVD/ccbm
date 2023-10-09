@@ -9,7 +9,7 @@
     tools:context=".activities.forms.ParcelleActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE PARCELLE"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -102,11 +103,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Localite *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -136,11 +138,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Producteur *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -174,15 +177,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
+            tools:visibility="visible"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Producteur *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -215,11 +220,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Culture de la parcelle *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -271,11 +277,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Type de déclaration superficiee *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -307,15 +314,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
+            tools:visibility="visible"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Code parcelle"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -346,11 +355,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Superficie de la parcelle (ha)"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
@@ -388,11 +398,12 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:text="Latitude"
-                                android:textColor="@color/black"
+                                
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -419,11 +430,12 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:text="Longitude"
-                                android:textColor="@color/black"
+                                
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -464,11 +476,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Année parcelle"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
 
@@ -519,11 +532,12 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Waypoints\n(liste des coordonnées gps du mapping)"
-                                android:textColor="@color/black"
+                                
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -563,10 +577,11 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:background="@drawable/submit_button_bg"
                 android:text="Cliquer pour mapper"
-                android:textColor="@color/white" />
+                 />
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:id="@+id/linearMapsParcelle"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
@@ -575,8 +590,9 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mapper la parcelle"/>
@@ -622,7 +638,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="VÉRIFIER"

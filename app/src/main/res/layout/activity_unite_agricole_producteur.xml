@@ -9,7 +9,7 @@
     tools:context=".activities.forms.UniteAgricoleProducteurActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE INFOS PRODUCTEUR"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -108,12 +109,13 @@
                             android:background="@color/dark_gray" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations Personnelles"
-                            android:textColor="@color/black"
+                            
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -135,11 +137,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Localite *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -168,11 +171,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Producteur* "
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -200,22 +204,25 @@
 
             <Space
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp" />
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
                     android:text="Code producteur"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -274,12 +281,13 @@
                             android:background="@color/dark_gray" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations Culturales"
-                            android:textColor="@color/black"
+                            
                             android:textSize="@dimen/_13ssp"
                             android:textStyle="bold" />
 
@@ -302,11 +310,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Avez-vous des\nforêts ou jacheres ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -331,6 +340,7 @@
 
                     <LinearLayout
                         android:visibility="gone"
+            tools:visibility="visible"
                         android:id="@+id/linearForetYesSuperficieContainerInfosProducteur"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
@@ -339,11 +349,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Quelle est la superficie ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -375,11 +386,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Avez-vous d'autres cultures ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -407,7 +419,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="gone"
+            tools:visibility="visible">
 
                         <Space
                             android:layout_width="match_parent"
@@ -484,7 +497,7 @@
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
                                     android:text="Ajouter"
-                                    android:textColor="@color/white"
+                                    
                                     android:textSize="@dimen/_9ssp" />
 
                             </LinearLayout>
@@ -521,11 +534,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Combien de travailleurs avez-vous ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -555,11 +569,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Nombre de\ntravailleurs permanents ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -589,11 +604,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Nombre de\ntravailleurs non permanent ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -651,12 +667,13 @@
                             android:background="@color/dark_gray" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations Menages"
-                            android:textColor="@color/black"
+                            
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -679,11 +696,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Nombre d’enfants de 5 à 17ans présents dans le ménage ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -713,11 +731,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Parmi ces enfants, combien sont scolarisés ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -747,11 +766,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Parmi les scolarisés, combien n’ont pas d’extrait de naissance ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -775,10 +795,11 @@
                         android:layout_height="@dimen/_10sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Citez les 2 maladies plus fréquentes chez les enfants"
-                        android:textColor="@color/black"
+                        
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -807,11 +828,12 @@
                                     android:weightSum="5">
 
                                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="2"
                                         android:text="Maladie 1"
-                                        android:textColor="@color/black"
+                                        
                                         android:textStyle="bold"
                                         android:layout_marginEnd="@dimen/_5sdp"/>
 
@@ -848,11 +870,12 @@
                                     android:weightSum="5">
 
                                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="2"
                                         android:text="Maladie 2"
-                                        android:textColor="@color/black"
+                                        
                                         android:textStyle="bold"
                                         android:layout_marginEnd="@dimen/_5sdp"/>
 
@@ -891,11 +914,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Quand une personne est blessée à la maison, que fais-tu ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -928,11 +952,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Quel type de documents de tes champs possèdes-tu ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -965,11 +990,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Comment gères-tu tes reçus d’achat ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1030,12 +1056,13 @@
                             android:background="@color/dark_gray" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations Bancaires"
-                            android:textColor="@color/black"
+                            
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -1058,11 +1085,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="As-tu un Compte Mobile Money ? "
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1103,11 +1131,12 @@
 
 
                             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3.5"
                                 android:text="Quel est l\'opérateur ?"
-                                android:textColor="@color/black"
+                                
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -1135,6 +1164,7 @@
 
                     <LinearLayout
                         android:visibility="gone"
+            tools:visibility="visible"
                         android:id="@+id/linearMobileMoneyYesNumberContainerInfosProducteur"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
@@ -1143,11 +1173,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Numéro du Compte Mobile Money"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1178,11 +1209,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Accepterais tu qu’on paye ton cacao par ces moyens ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1216,11 +1248,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="As-tu un compte\ndans une banque ?"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1281,7 +1314,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="VÉRIFIER"

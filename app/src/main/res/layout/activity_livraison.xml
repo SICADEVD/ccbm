@@ -9,7 +9,7 @@
     tools:context=".activities.forms.LivraisonActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -33,15 +33,16 @@
                 android:layout_width="@dimen/_48sdp"
                 android:layout_height="@dimen/_48sdp"
                 android:layout_gravity="center_horizontal"
-                app:srcCompat="@mipmap/ic_launcher_trans" />
+                app:srcCompat="@drawable/fav_bandama" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="FICHE LIVRAISON"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -102,6 +103,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_10sdp"
+                        android:textColor="@color/text_color_white"
                         android:text="Information Expéditeur">
 
                     </TextView>
@@ -117,11 +119,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Nom du Délégué*"/>
 
@@ -156,11 +159,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Nom*"/>
 
@@ -192,11 +196,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Contact*"/>
 
@@ -228,11 +233,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Email*"/>
 
@@ -264,11 +270,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Adresse*"/>
 
@@ -323,6 +330,7 @@
                         android:textSize="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_white"
                         android:text="Information Destinataire">
 
                     </TextView>
@@ -338,11 +346,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Selectionner un magasin de section*"/>
 
@@ -377,11 +386,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Nom*"/>
 
@@ -413,11 +423,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Contact*"/>
 
@@ -449,11 +460,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Email*"/>
 
@@ -485,11 +497,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Adresse*"/>
 
@@ -525,11 +538,12 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:paddingLeft="@dimen/_12sdp"
                     android:textSize="@dimen/_10sdp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:text="Choix de la localité*"/>
 
@@ -580,6 +594,7 @@
                         android:textSize="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_white"
                         android:text="Information de Livraison">
 
                     </TextView>
@@ -595,11 +610,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Choix du producteur"/>
 
@@ -633,11 +649,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Choix de la parcelle"/>
 
@@ -671,11 +688,12 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:text="Choix du type de parcelle"/>
 
@@ -710,10 +728,11 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold"
                             android:textSize="@dimen/_10sdp"
                             android:text="Numéro de scellé *"/>
@@ -754,10 +773,11 @@
                             android:layout_height="wrap_content">
 
                             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                 android:layout_width="wrap_content"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
+    
                                 android:textStyle="bold"
                                 android:text="Quantité"/>
 
@@ -790,10 +810,11 @@
                             android:layout_height="wrap_content">
 
                             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                                 android:layout_width="wrap_content"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
+    
                                 android:textStyle="bold"
                                 android:text="Résultat(FCFA)"/>
 
@@ -831,7 +852,7 @@
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:text="Ajouter"
-                            android:textColor="@color/white"
+                            
                             android:textSize="@dimen/_9ssp" />
 
                     <Space
@@ -860,10 +881,11 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:paddingLeft="@dimen/_12sdp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:textSize="@dimen/_10sdp"
                     android:text="Réduction(%)"/>
@@ -901,6 +923,7 @@
                     android:weightSum="2">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -908,6 +931,7 @@
                         android:text="Sous-total(FCFA)" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -923,23 +947,25 @@
                     android:weightSum="2">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/tvSousTotal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/black"
+                        
                         android:textStyle="bold"
                         tools:text="950" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/tvTotalReduce"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/black"
+                        
                         android:textStyle="bold"
                         tools:text="1 0245.4" />
 
@@ -958,10 +984,11 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:paddingLeft="@dimen/_12sdp"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:textSize="@dimen/_10sdp"
                     android:text="Status de paiement*"/>
@@ -998,12 +1025,13 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
                     android:textSize="@dimen/_10sdp"
                     android:text="Date estimée de livraison"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -1070,7 +1098,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="VÉRIFIER"

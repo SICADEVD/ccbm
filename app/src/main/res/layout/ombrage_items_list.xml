@@ -21,12 +21,14 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Variete"
                 android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
@@ -41,21 +43,23 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelOmbrageItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="HEVEA"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                
                 android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 tools:text="1 0245.4"
                 android:id="@+id/nombreOmbrageItem"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                
                 android:layout_weight="1"
                 android:gravity="end"/>
 

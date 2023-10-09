@@ -9,7 +9,7 @@
     tools:context=".activities.MenusActionRedirectionActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MENU "
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -55,6 +56,7 @@
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
             android:visibility="gone"
+            tools:visibility="visible"
             android:src="@drawable/ic_draft" />
 
     </RelativeLayout>
@@ -78,7 +80,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="@dimen/_5sdp"
             android:background="@drawable/border_shape"
-            android:backgroundTint="@color/brown_logo"
+            android:backgroundTint="@color/ccb_green"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -102,11 +104,12 @@
                         android:layout_height="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="AJOUTER\nUN CONTENU"
-                        android:textColor="@color/white" />
+                         />
 
                 </LinearLayout>
 
@@ -147,16 +150,18 @@
                         android:layout_height="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="MODIFIER\nUN CONTENU"
-                        android:textColor="@color/white" />
+                         />
 
                 </LinearLayout>
 
                 <View
                     android:visibility="gone"
+            tools:visibility="visible"
                     android:alpha="0.2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -199,15 +204,17 @@
                         android:layout_height="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DONNEES A\nSYNCHRONISER"
-                        android:textColor="@color/white" />
+                         />
 
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:background="@drawable/border_shape"
                     android:backgroundTint="@color/blue"
                     android:id="@+id/labelUnsyncDatasCountCountenuAction"
@@ -223,7 +230,7 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:text="0"
-                    android:textColor="@color/white"
+                    
                     android:textStyle="bold"
                     tools:text="200" />
 
@@ -239,7 +246,7 @@
             android:layout_columnWeight="1"
             android:layout_margin="@dimen/_5sdp"
             android:background="@drawable/border_shape"
-            android:backgroundTint="@color/brown_logo"
+            android:backgroundTint="@color/ccb_green"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -263,15 +270,17 @@
                         android:layout_height="@dimen/_5sdp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="VOIR\nLES BROUILLONS"
-                        android:textColor="@color/white" />
+                         />
 
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:background="@drawable/border_shape"
                     android:backgroundTint="@color/red_title"
                     android:id="@+id/labelSeeDraftsCountenuAction"
@@ -287,7 +296,7 @@
                     android:paddingStart="@dimen/_5sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:text="0"
-                    android:textColor="@color/white"
+                    
                     android:textStyle="bold"
                     tools:text="200" />
 

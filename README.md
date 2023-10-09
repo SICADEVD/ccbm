@@ -1,2 +1,2 @@
-# ccbm
-This project is make for CCB
+# projetccb
+Pour le projet CCb

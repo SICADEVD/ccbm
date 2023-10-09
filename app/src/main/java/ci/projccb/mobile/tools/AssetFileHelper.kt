@@ -21,6 +21,7 @@ import ci.projccb.mobile.models.TypeLocaliteModel
 import ci.projccb.mobile.models.TypeMachineModel
 import ci.projccb.mobile.models.TypePieceModel
 import ci.projccb.mobile.models.TypeProduitModel
+import ci.projccb.mobile.repositories.datas.CommonData
 import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -53,6 +54,11 @@ class AssetFileHelper {
             "sources_energies",
             "type_machines",
             "notations",
+            "liste_certificat",
+            "liste_variete",
+            "lieu_habite",
+            "statut_matrimonial",
+            "type_membre",
         );
 
 
@@ -78,6 +84,11 @@ class AssetFileHelper {
            *         17 = "sources_energies",
            *         18 = "type_machines",
            *         19 = "notations",
+           *         20 = "liste_certificat",
+           *         21 = "liste_variete",
+           *         22 = "lieu_habite",
+           *         23 = "statut_matrimonial",
+           *         24 = "type_membre",
         */
         fun getListDataFromAsset(position: Int = 0, context: Activity): MutableList<*>? {
             val typer : Type? = when(position) {
@@ -101,6 +112,11 @@ class AssetFileHelper {
                 17 -> object : TypeToken<MutableList<SourceEnergieModel>>() {}.type
                 18 -> object : TypeToken<MutableList<TypeMachineModel>>() {}.type
                 19 -> object : TypeToken<MutableList<NotationModel>>() {}.type
+                20 -> object : TypeToken<MutableList<CommonData>>() {}.type
+                21 -> object : TypeToken<MutableList<CommonData>>() {}.type
+                22 -> object : TypeToken<MutableList<CommonData>>() {}.type
+                23 -> object : TypeToken<MutableList<CommonData>>() {}.type
+                24 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 else -> {
                     null
                 }

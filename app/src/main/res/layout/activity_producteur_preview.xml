@@ -9,7 +9,7 @@
     tools:context=".activities.infospresenters.ProducteurPreviewActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF PRODUCTEUR"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -73,6 +74,7 @@
 
             <LinearLayout
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,6 +82,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Localité"
@@ -87,15 +90,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelLocaliteProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -108,6 +112,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Code producteur : "
@@ -115,13 +120,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCodeProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="Peter-07"
                     android:layout_weight="2.5"/>
@@ -136,6 +142,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nom"
@@ -143,13 +150,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNomProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:gravity="center_vertical"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="BOKA"
                     android:layout_weight="2.5"/>
@@ -164,6 +172,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Prenom(s) producteur"
@@ -171,13 +180,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPrenomProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="Kadjo Serge DidierDidier Didier Didier Cedric"
                     android:layout_weight="2.5"/>
@@ -192,6 +202,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sexe"
@@ -200,13 +211,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSexeProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="Homme"
                     android:layout_weight="2.5"/>
@@ -221,6 +233,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Date naissance"
@@ -229,13 +242,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNaissanceProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="22-12-2022"
                     android:layout_weight="2.5"/>
@@ -250,6 +264,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nationnalité"
@@ -258,13 +273,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelNationnaliteProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="Guinéen"
                     android:layout_weight="2.5"/>
@@ -279,6 +295,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Contact n°1"
@@ -287,13 +304,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelContactOneProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="01010101010"
                     android:layout_weight="2.5"/>
@@ -308,6 +326,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Contact n°2"
@@ -316,13 +335,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelContactTwoProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="0202020202"
                     android:layout_weight="2.5"/>
@@ -337,6 +357,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Type de pieces"
@@ -345,13 +366,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPieceProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="CNI"
                     android:layout_weight="2.5"/>
@@ -366,6 +388,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Numero piece"
@@ -374,13 +397,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelPieceNumProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="098765432 PO"
                     android:layout_weight="2.5"/>
@@ -395,6 +419,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Statut"
@@ -403,13 +428,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelStatutCertificationProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="Certifie"
                     android:layout_weight="2.5"/>
@@ -424,6 +450,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Année certification"
@@ -432,6 +459,7 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelAnneeCertificationProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
@@ -440,7 +468,7 @@
                     android:inputType="phone"
                     android:textStyle="bold"
                     android:maxLength="4"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="2002"
                     android:layout_weight="2.5"/>
@@ -455,6 +483,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Niveau étude"
@@ -463,13 +492,14 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelEtudeProdPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    
                     android:layout_height="match_parent"
                     android:text="BEPC"
                     android:layout_weight="2.5"/>
@@ -483,6 +513,7 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pieces fournies"
@@ -553,7 +584,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"

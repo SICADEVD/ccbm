@@ -149,7 +149,7 @@ class AuthentificationActivity : AppCompatActivity() {
                                 val roles = agentResponseBody?.menu
                                 val agentModel = agentResponseBody?.results
 
-                                //roles?.addAll(arrayOf(
+//                                roles?.addAll(arrayOf(
 //                                    "LIVRAISON",
 //                                    "PRODUCTEUR",
 //                                    "PARCELLE",

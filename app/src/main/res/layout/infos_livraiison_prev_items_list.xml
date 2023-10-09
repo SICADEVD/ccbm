@@ -9,6 +9,7 @@
     android:weightSum="4">
 
     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Titre"
@@ -21,12 +22,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="2.5">
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:id="@+id/labelTextPrev"
             android:paddingStart="@dimen/_5sdp"
             android:gravity="center_vertical|left"
             android:layout_width="wrap_content"
             android:textSize="@dimen/_13ssp"
-            android:textColor="@color/black"
+            
             android:textStyle="bold"
             android:maxLines="3"
             android:layout_height="wrap_content"

@@ -28,17 +28,19 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Thème: "
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelThemeFormations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ENSEBLE CULTIVONS"
-                android:textColor="@color/black"
+                
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
@@ -55,17 +57,19 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date: "
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelDateFormations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12-12-2021"
-                android:textColor="@color/black"
+                
                 android:textSize="@dimen/_12ssp"/>
 
         </LinearLayout>
@@ -81,17 +85,19 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lieu: "
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLieuFormations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Dans le jardin"
-                android:textColor="@color/black"
+                
                 android:textSize="@dimen/_12ssp"/>
 
         </LinearLayout>

@@ -14,17 +14,19 @@
 
         <!--text view for displaying course name-->
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:id="@+id/idTVCourseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Que voulez-vous faire ?"
-            android:textColor="@color/black"
+            
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
         <!--text view for displaying course tracks-->
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:id="@+id/labelSharingDialog"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
@@ -32,17 +34,18 @@
             android:layout_below="@id/idTVCourseName"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Partager le fichier"
-            android:textColor="@color/black"
+            
             android:textSize="@dimen/_15ssp" />
 
         <!--text view for displaying course duration-->
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:id="@+id/labelSavingDialog"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:gravity="center_vertical"
             android:text="Enregistrer dans le telephone"
-            android:textColor="@color/black"
+            
             android:textSize="@dimen/_15ssp" />
 
     </LinearLayout>

@@ -10,7 +10,7 @@
     tools:context=".activities.forms.FormationActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -37,12 +37,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE FORMATION"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -102,11 +103,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Localité *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -145,11 +147,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Campagne *"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -203,11 +206,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Type de formation"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -240,11 +244,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Theme"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -268,6 +273,7 @@
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:visibility="gone"
+            tools:visibility="visible"
                             android:id="@+id/editThemeFormation"
                             android:layout_width="0dp"
                             android:layout_height="@dimen/_37sdp"
@@ -296,11 +302,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Lieu de\nla formation"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -339,11 +346,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Liste de présence"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -378,7 +386,8 @@
 <!--                android:orientation="horizontal"-->
 <!--                android:weightSum="10">-->
 
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
+<!--                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"-->
 <!--                    android:layout_width="0dp"-->
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_weight="3.5"-->
@@ -447,11 +456,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Visiteurs\n(Séparer les noms par des virgules)"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -480,11 +490,12 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Photo formation"
-                            android:textColor="@color/black"
+
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -519,11 +530,11 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
                     android:text="Date de la formation"
-                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -590,7 +601,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="VÉRIFIER"

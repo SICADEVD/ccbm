@@ -9,7 +9,7 @@
     tools:context=".activities.lists.FormationsListActivity">
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -36,12 +36,12 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="LES FORMATIONS"
-                android:textColor="@color/white"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -49,6 +49,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/imgAddFormations"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
@@ -72,6 +73,7 @@
 
         <ProgressBar
             android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/loaderFormationss"
             android:layout_centerInParent="true"
             android:layout_width="@dimen/_35sdp"
@@ -89,6 +91,7 @@
 
         <LinearLayout
             android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/linearEmptyContainerFormationsList"
             android:gravity="center"
             android:layout_centerInParent="true"
@@ -104,6 +107,7 @@
                 app:srcCompat="@drawable/ic_formation" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_11ssp"
@@ -127,6 +131,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLastSynchronisationFormations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

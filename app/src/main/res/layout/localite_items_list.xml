@@ -24,17 +24,19 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TYPE : "/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLocaliteType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="APO-12"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/black"
+                
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -46,11 +48,12 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nom : "
                 android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"
+                
                 android:textStyle="bold"/>
 
             <Space
@@ -58,12 +61,13 @@
                 android:layout_height="wrap_content"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLocaliteNom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="JOE"
                 android:textSize="@dimen/_15ssp"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 

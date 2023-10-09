@@ -18,10 +18,11 @@
             android:layout_height="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PARENTS"
-            android:textColor="@color/black"
+            
             android:textStyle="bold" />
 
         <Space
@@ -81,7 +82,7 @@
             android:textColor="@color/white"
             android:layout_height="@dimen/_45sdp"
             android:background="@android:drawable/btn_default"
-            android:backgroundTint="@color/brown_logo"/>
+            android:backgroundTint="@color/ccb_green"/>
 
     </LinearLayout>
 
@@ -104,10 +105,11 @@
             android:layout_height="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CHILDREN"
-            android:textColor="@color/black"
+            
             android:textStyle="bold" />
 
         <Space
@@ -168,7 +170,7 @@
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_45sdp"
             android:background="@android:drawable/btn_default"
-            android:backgroundTint="@color/brown_logo"/>
+            android:backgroundTint="@color/ccb_green"/>
 
     </LinearLayout>
 

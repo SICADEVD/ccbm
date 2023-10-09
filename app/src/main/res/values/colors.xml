@@ -17,7 +17,7 @@
     <color name="step_bg">#fffcfbfa</color>
     <color name="et_bg">#fff4efea</color>
     <color name="header_bg">#ffa4a4a5</color>
-    <color name="divider">#ffa4a4a5</color>
+    <color name="divider">@color/ccb_gris</color>
     <color name="bottom_bar_bg">#fff1f1f1</color>
     <color name="reset_color">#ffdadada</color>
     <color name="submit_color">#fff27123</color>
@@ -38,6 +38,10 @@
     <color name="detail_bg_1">#e6e4e2</color>
     <color name="detail_bg_2">#f5f4f4</color>
     <color name="light_brown">#cecac6</color>
+    <color name="ccb_light_green">#a4da22</color>
+    <color name="ccb_green">#056526</color>
+    <color name="ccb_orange">#ffc06b</color>
+    <color name="ccb_gris">#868585</color>
     <color name="rect_stroke">#ffffdeaf</color>
     <color name="rect_bg">#fffffbf8</color>
     <color name="orange_bar">#faa60f</color>
@@ -58,4 +62,9 @@
     <color name="blue_pur">#4634ff</color>
     <color name="dark_brown">#858585</color>
     <color name="brown_logo">#A67169</color>
+    <color name="text_color_white">#FFFFFF</color>
+    <color name="text_color_title_white">#F1EFEF</color>
+    <color name="ccb_gris_transparent">#41DCDCDC</color>
+
+    <color name="navigation_item_color">#F4F4F4</color>
 </resources>

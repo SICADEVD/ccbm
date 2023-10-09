@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "ci.projccb.mobile"
         minSdkVersion 21
-        versionCode 6
+        versionCode 8
         versionName "CCB-v1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -136,7 +136,8 @@ dependencies {
     implementation 'co.zsmb:materialdrawer-kt:3.0.0'
 
     //expandle menu
-    implementation("com.github.nirwannursabda:expandable-navigation:0.1.2")
+    //implementation project(":expandablenavigation")
+   implementation("com.github.nirwannursabda:expandable-navigation:0.1.2")
 
 }
 

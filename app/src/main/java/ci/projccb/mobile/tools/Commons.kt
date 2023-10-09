@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.util.Base64
 import androidx.appcompat.app.AppCompatActivity
 import ci.projccb.mobile.services.SynchronisationIntentService
@@ -15,12 +17,15 @@ import kotlin.math.pow
 import android.media.MediaPlayer
 import android.os.Build
 import android.text.InputFilter
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.DashboardAgentActivity
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.activities.forms.InspectionActivity
@@ -44,7 +49,6 @@ import ci.projccb.mobile.repositories.datas.CommonData
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_menus_action_redirection.linearUpdateContentMenuAction
 import org.json.JSONException
 import java.io.*
 import java.math.RoundingMode
@@ -354,6 +358,26 @@ class Commons {
                     }
                 }
             }
+        }
+
+        fun modifyIcColor(
+            dashboardAgentActivity: Activity,
+            imgProfileDashboard: AppCompatImageView,
+            white: Int
+        ) {
+            val color = ContextCompat.getColor(dashboardAgentActivity, white)
+            val colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+            imgProfileDashboard.colorFilter = colorFilter
+        }
+
+        fun modifyIcColor(
+            dashboardAgentActivity: Context,
+            imgProfileDashboard: ImageView,
+            white: Int
+        ) {
+            val color = ContextCompat.getColor(dashboardAgentActivity, white)
+            val colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+            imgProfileDashboard.colorFilter = colorFilter
         }
 
     }

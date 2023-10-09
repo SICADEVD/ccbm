@@ -24,6 +24,8 @@ object Constants {
     const val TABLE_INTRANT                     =                   "intrant"
     const val TABLE_AGENT                       =                   "agent"
     const val TABLE_AGENT_STAFF                 =                   "concernes"
+    const val TABLE_SECTION                 =                   "sections"
+    const val TABLE_PROGRAMME                 =                   "programmes"
     const val TABLE_GARDE_MARCHINES             =                   "garde_machine"
     const val TABLE_LIEU_FORMATIONS             =                   "lieu_formation"
     const val TABLE_NATIONALITES                =                   "nationalite"

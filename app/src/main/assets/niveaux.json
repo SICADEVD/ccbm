@@ -1,25 +1,22 @@
-[{
-        "id": "6",
-        "nom": "Aucun"
-    },
-    {
-        "id": "5",
-        "nom": "Ecole professionnelle"
-    },
+[
     {
         "id": "1",
-        "nom": "Primaire (Minimum CE1)"
+        "nom": "Primaire"
     },
     {
         "id": "2",
-        "nom": "Secondaire 1er cycle"
+        "nom": "Collège (6e à 3ème)"
     },
     {
         "id": "3",
-        "nom": "Secondaire 2e cycle"
+        "nom": "Lycée (2nde à Tle)"
     },
     {
         "id": "4",
-        "nom": "Supérieur"
+        "nom": "Supérieur (BAC et Plus)"
+    },
+    {
+        "id": "5",
+        "nom": "Aucun"
     }
 ]

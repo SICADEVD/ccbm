@@ -110,9 +110,12 @@ interface ApiService {
     fun getTypeThemesFormations(): Call<MutableList<TypeFormationModel>>
 
     @POST("getstaff")
-        fun getStaff(@Body table: CommonData): Call<MutableList<ConcernesModel>>
+    fun getStaff(@Body table: CommonData): Call<MutableList<ConcernesModel>>
 
+    @POST("getsections")
+    fun getSections(@Body table: CommonData): Call<MutableList<SectionModel>>
 
-    // endregion
+    @POST("getprogrammes")
+    fun getProgrammes(): Call<MutableList<ProgrammeModel>>
 
 }

@@ -10,7 +10,7 @@
 
 
     <RelativeLayout
-        android:background="@color/brown_logo"
+        android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -37,12 +37,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF SUIVI APPLICATIONS"
-                android:textColor="@color/white"
+                
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -80,6 +81,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Applicateur"
@@ -87,15 +89,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelApplicateurNomSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -109,6 +112,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Localité: "
@@ -116,15 +120,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelLocaliteNomSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -137,6 +142,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Producteur: "
@@ -144,15 +150,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelProducteurNomSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -165,6 +172,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Campagne: "
@@ -172,15 +180,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCampagneNomSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -193,6 +202,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Culture pulvérisée: "
@@ -200,15 +210,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelCultureNomSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -221,6 +232,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Superficie pulvérisée: "
@@ -228,15 +240,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelSuperficieSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -249,6 +262,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nom commercial du Produit: "
@@ -256,15 +270,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelProduitNomSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -277,6 +292,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dégré de dangerosité: "
@@ -284,15 +300,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDegreDangerositeSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -305,6 +322,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Raison de l'application: "
@@ -312,15 +330,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelRaisonApplicationSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -333,6 +352,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Délai de réentrée: "
@@ -340,15 +360,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDelaiReentreSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -361,6 +382,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Zone tampon: "
@@ -368,15 +390,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelTamponYesNoSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -390,6 +413,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Image tampon: "
@@ -402,7 +426,7 @@
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_weight="1.5"/>
@@ -418,6 +442,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Douche pour applicatuer: "
@@ -425,15 +450,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDoucheApplicateurYesNoSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -446,6 +472,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Douche photo: "
@@ -458,7 +485,7 @@
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_weight="1.5"/>
@@ -473,6 +500,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Date application: "
@@ -480,15 +508,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelDateApplicationSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -501,6 +530,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Heure debut application: "
@@ -508,15 +538,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelHeureDebutApplicationSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -529,6 +560,7 @@
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Heure fin application: "
@@ -536,15 +568,16 @@
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:id="@+id/labelHeureFinApplicationSuiviApplicationPreview"
                     android:paddingStart="@dimen/_5sdp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
-                    android:textColor="@color/black"
+                    
                     android:textStyle="bold"
                     android:layout_height="match_parent"
-                    android:text="FIELD CONNECT"
+                    android:text="PRJ CCB"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
@@ -569,7 +602,7 @@
                     android:layout_weight="2"
                     android:background="@drawable/submit_button_bg"
                     android:text="ENREGISTRER"
-                    android:textColor="@color/white" />
+                     />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/clickSaveApplicationSuiviPreview"
@@ -579,7 +612,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/brown_logo"
+                    android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"

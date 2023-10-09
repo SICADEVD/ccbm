@@ -19,12 +19,13 @@
                 android:src="@drawable/ic_profile_producteur" />
 
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:layout_centerVertical="true"
             android:id="@+id/labelProducteurPresence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="TOURE LAMINE"
-            android:textColor="@color/black"
+            
             android:textSize="@dimen/_13ssp"/>
 
     </LinearLayout>

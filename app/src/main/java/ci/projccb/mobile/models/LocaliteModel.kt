@@ -19,6 +19,7 @@ data class LocaliteModel (
     @Expose @SerializedName("id") val id: Int? = 0,
     @Expose @SerializedName("nom") val nom: String? = "",
     @Expose @SerializedName("cooperatives_id") val cooperativeId: String? = "",
+    @Expose @SerializedName("section_id") val sectionId: String? = "",
     @Expose @SerializedName("sources_eaux_id") val source: String? = "",
     @Expose @SerializedName("type_localites_id") val type: String? = "",
     @Expose @SerializedName("typeproduit") val typeProduit: String? = "",

@@ -55,14 +55,16 @@
             map:mapType="satellite"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:textColor="@color/text_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:gravity="center"
             android:singleLine="true"
             android:visibility="gone"
+            tools:visibility="visible"
             android:text="Délimitez la parcelle, veuillez vous rassurer d'aligner les points pour plus de précision."
-            android:textColor="@color/white" />
+             />
 
         <LinearLayout
             android:layout_width="@dimen/_50sdp"
@@ -188,18 +190,20 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Titulaire: "
                     android:textSize="@dimen/_9ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color"
                     android:id="@+id/labelDelimiterOwner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BOKA DIDIER CEDRIC"
                     android:textSize="@dimen/_9ssp"
-                    android:textColor="@color/black"/>
+                    />
 
             </LinearLayout>
 
@@ -209,18 +213,20 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Metre: "
                     android:textSize="@dimen/_9ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color"
                     android:id="@+id/labelDelimiterDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0m"
                     android:textSize="@dimen/_9ssp"
-                    android:textColor="@color/black"/>
+                    />
 
             </LinearLayout>
 
@@ -230,18 +236,20 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Surface: "
                     android:textSize="@dimen/_9ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color"
                     android:id="@+id/labelDelimiterSurface"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0m\u00B2"
                     android:textSize="@dimen/_9ssp"
-                    android:textColor="@color/black"/>
+                    />
 
             </LinearLayout>
 
@@ -259,7 +267,7 @@
             android:layout_width="match_parent"
             android:background="@drawable/submit_button_bg"
             android:text="ENREGISTRER"
-            android:textColor="@color/white"
+            android:textColor="@color/text_color_white"
             android:layout_height="match_parent"/>
 
     </LinearLayout>

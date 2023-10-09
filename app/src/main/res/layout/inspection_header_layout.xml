@@ -8,10 +8,11 @@
     android:padding="@dimen/_10sdp">
 
     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
         android:id="@+id/labelHeaderInspectionItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        
         tools:text="Header View"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"/>

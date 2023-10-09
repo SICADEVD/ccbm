@@ -79,6 +79,7 @@
                     android:layout_height="@dimen/_5sdp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Performances"
@@ -124,6 +125,7 @@
                     android:layout_height="@dimen/_5sdp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Point de vente"
@@ -170,6 +172,7 @@
                     android:layout_height="@dimen/_5sdp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rechargements"
@@ -196,7 +199,7 @@
             android:layout_width="match_parent"
             android:hint="Rechercher PDV"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
+            
             android:textSize="@dimen/_12sdp"
             android:paddingStart="@dimen/_10sdp"
             android:layout_height="@dimen/_35sdp"/>
@@ -243,15 +246,17 @@
                         android:background="@drawable/bg_green" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:text="TDA"
-                        android:textColor="@color/green"
+                        
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -259,7 +264,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:text="73,51%"
-                        android:textColor="@color/black"
+                        
                         android:textSize="@dimen/_13ssp"
                         android:textStyle="bold" />
 
@@ -278,22 +283,24 @@
                         android:layout_height="match_parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_centerVertical="true"
                         android:textStyle="bold"
-                        android:textColor="@color/green"
+                        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TDR"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:textStyle="bold"
                         android:textSize="@dimen/_13ssp"
-                        android:textColor="@color/black"
+                        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="36%"/>
@@ -319,16 +326,18 @@
                 android:layout_height="@dimen/_55sdp">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textStyle="bold"
                     android:textSize="@dimen/_20ssp"
-                    android:textColor="@color/black"
+                    
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="12 452 567 400"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -356,16 +365,18 @@
                 android:layout_height="@dimen/_55sdp">
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textStyle="bold"
                     android:textSize="@dimen/_20ssp"
-                    android:textColor="@color/black"
+                    
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="8 500 437 900"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -395,11 +406,12 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                         android:id="@+id/labelPDVTitle"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textStyle="bold"
                         android:textSize="@dimen/_20ssp"
-                        android:textColor="@color/black"
+                        
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Points\nde vente"/>
@@ -410,16 +422,18 @@
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:textStyle="bold"
                             android:textSize="@dimen/_40ssp"
                             android:layout_gravity="end"
-                            android:textColor="@color/orange"
+
                             android:layout_width="wrap_content"
                             android:gravity="end"
                             android:layout_height="@dimen/_37sdp"
                             android:text="5110"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -455,17 +469,19 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:gravity="end"
                             android:text="20"
-                            android:textColor="@color/black"
+                            
                             android:textSize="@dimen/_20ssp"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -494,17 +510,19 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:gravity="end"
                             android:text="10"
-                            android:textColor="@color/black"
+                            
                             android:textSize="@dimen/_20ssp"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -532,17 +550,19 @@
                         android:layout_height="@dimen/_37sdp">
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
                             android:textStyle="bold"
                             android:textSize="@dimen/_20ssp"
-                            android:textColor="@color/black"
+                            
                             android:gravity="end"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="20"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="end"

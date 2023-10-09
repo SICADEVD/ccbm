@@ -5,7 +5,7 @@
     android:layout_height="@dimen/_80sdp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_present"
-    android:backgroundTint="@color/brown_logo"
+    android:backgroundTint="@color/ccb_green"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/_2sdp"

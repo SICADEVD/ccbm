@@ -48,6 +48,7 @@
 
         <RelativeLayout
             android:visibility="gone"
+            tools:visibility="visible"
             android:background="@color/black"
             android:layout_alignParentTop="true"
             android:id="@+id/relativeToolbarActionFarmDelimiter"
@@ -84,6 +85,7 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:visibility="gone"
+            tools:visibility="visible"
                 android:id="@+id/imageEditFarmDelimiter"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
@@ -130,6 +132,7 @@
             android:orientation="horizontal"
             app:elevation="@dimen/_5sdp"
             android:visibility="gone"
+            tools:visibility="visible"
             android:gravity="center_vertical"
             android:layout_marginStart="@dimen/_10sdp"
             android:id="@+id/linearSurfaceMappingContainerFarmDelimiter"
@@ -152,6 +155,7 @@
                 android:layout_height="@dimen/_1sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:padding="@dimen/_5sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -168,6 +172,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:visibility="gone"
+            tools:visibility="visible"
             android:layout_marginStart="@dimen/_10sdp"
             android:id="@+id/linearDistanceMappingContainerFarmDelimiter"
             android:layout_width="wrap_content"
@@ -189,6 +194,7 @@
                 android:layout_height="@dimen/_1sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:padding="@dimen/_5sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,6 +208,7 @@
 
     <LinearLayout
         android:visibility="gone"
+            tools:visibility="visible"
         android:id="@+id/linearSnippetInfosFarmDelimiter"
         android:background="@color/bottom_bar_bg"
         android:layout_marginTop="@dimen/_50sdp"
@@ -217,18 +224,20 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Titulaire: "
                 android:textSize="@dimen/_9ssp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelOwnerFarmDelimiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BOKA DIDIER CEDRIC"
                 android:textSize="@dimen/_9ssp"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 
@@ -238,18 +247,20 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Périmetre: "
                 android:textSize="@dimen/_9ssp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelDistanceFarmDelimiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0m"
                 android:textSize="@dimen/_9ssp"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 
@@ -260,58 +271,65 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Surface: "
                 android:textSize="@dimen/_9ssp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelSurfaceFarmDelimiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0ha"
                 android:textSize="@dimen/_9ssp"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 
         <LinearLayout
             android:visibility="gone"
+            tools:visibility="visible"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lat: "
                 android:textSize="@dimen/_9ssp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLatFarmDelimiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0"
                 android:textSize="@dimen/_9ssp"
-                android:textColor="@color/black"/>
+                />
 
             <Space
                 android:layout_width="@dimen/_10sdp"
                 android:layout_height="@dimen/_1sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lng: "
                 android:textSize="@dimen/_9ssp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLngFarmDelimiter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.0"
                 android:textSize="@dimen/_9ssp"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 
@@ -320,6 +338,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:visibility="gone"
+            tools:visibility="visible"
         android:layout_alignParentBottom="true"
         android:id="@+id/relativeActionMarkerBottomContainerFarmDelimiter"
         android:layout_width="match_parent"
@@ -329,6 +348,7 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/linearActionMarkerBottomFarmDelimiter"
             android:layout_width="match_parent"
             android:background="@color/black"
@@ -386,6 +406,7 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/linearActionGPSMarkerBottomFarmDelimiter"
             android:layout_width="match_parent"
             android:background="@color/black"
@@ -446,6 +467,7 @@
 
     <androidx.cardview.widget.CardView
         android:visibility="gone"
+            tools:visibility="visible"
         android:layout_alignParentEnd="true"
         android:id="@+id/cardPopupMenuMapsTypeFarmDelimiter"
         app:elevation="@dimen/_20sdp"
@@ -476,6 +498,7 @@
                     android:src="@drawable/ic_ordinaire_black"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ordinaire"
@@ -500,6 +523,7 @@
                     android:src="@drawable/ic_satellite_black"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Satellite"
@@ -524,6 +548,7 @@
                     android:src="@drawable/ic_terrain_black"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Terrain"

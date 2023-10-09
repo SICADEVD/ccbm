@@ -21,26 +21,32 @@
             android:weightSum="3">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="@dimen/_10sdp"
+
                 android:text="Producteur" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="@dimen/_10sdp"
+
                 android:text="Parcelle" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="@dimen/_10sdp"
+
                 android:text="Quantité" />
 
         </LinearLayout>
@@ -51,33 +57,36 @@
             android:weightSum="3">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLivraisModProducteurItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/black"
+
                 android:textStyle="bold"
                 android:textSize="@dimen/_10sdp"
                 tools:text="HEVEA" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLivraisModParcelleItem"
                 android:layout_width="0dp"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/black"
+
                 android:textStyle="bold"
                 android:textSize="@dimen/_10sdp"
                 tools:text="HEVEA" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelLivraisModQuantity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/black"
+
                 android:textStyle="bold"
                 android:textSize="@dimen/_10sdp"
                 tools:text="1 024" />

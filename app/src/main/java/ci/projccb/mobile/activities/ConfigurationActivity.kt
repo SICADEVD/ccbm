@@ -77,6 +77,8 @@ class ConfigurationActivity : AppCompatActivity() {
     var recuDao: RecuDao? = null
     var delegueDao: DelegueDao? = null
     var concernesDao: ConcernesDao? = null
+    var programmesDao: ProgrammesDao? = null
+    var sectionsDao: SectionsDao? = null
     var agentModel: AgentModel? = null
     var agentID: Int = 0
     var oneIssue = false
@@ -620,6 +622,85 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Délégué")
+                //getTypeThemeFormations()
+                getSections()
+            }
+
+        }
+    }
+
+    suspend fun getSections() {
+        withContext(IO) {
+            val dataUpdate = async {
+                sectionsDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getSections(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID) ))
+                    var responseData: Response<MutableList<SectionModel>> = clientData.execute()
+                    val dataList: MutableList<SectionModel>? = responseData.body()
+
+                    dataList?.map {
+                        val data = SectionModel(
+                            id = it.id,
+                            cooperativesId = it.cooperativesId,
+                            libelle = it.libelle,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        sectionsDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Section, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Sections")
+                getProgrammes()
+            }
+
+        }
+    }
+
+    suspend fun getProgrammes() {
+        withContext(IO) {
+            val dataUpdate = async {
+                programmesDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getProgrammes()
+                    var responseData: Response<MutableList<ProgrammeModel>> = clientData.execute()
+                    val dataList: MutableList<ProgrammeModel>? = responseData.body()
+
+                    dataList?.map {
+                        val data = ProgrammeModel(
+                            id = it.id,
+                            uid = 0,
+                            libelle = "${it.libelle}",
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        programmesDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Programme, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Programmes")
                 getTypeThemeFormations()
             }
 
@@ -2415,6 +2496,8 @@ class ConfigurationActivity : AppCompatActivity() {
         typeDocuDocumentDao = database?.typeDocumentDao()
         typeProduitDao = database?.typeProduitDao()
         concernesDao = database?.concernesDao()
+        programmesDao = database?.programmesDao()
+        sectionsDao = database?.sectionsDao()
 
         if (intent != null) {
             agentID = intent.getIntExtra(Constants.AGENT_ID, 0)

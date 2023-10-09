@@ -38,6 +38,7 @@
                 android:layout_height="@dimen/_5sdp" />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/feature_tv_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +48,7 @@
                 android:padding="@dimen/_2sdp"
                 android:textSize="@dimen/_26ssp"
                 android:fontFamily="@font/montserrat_extrabold"
-                android:textColor="@color/white" />
+                 />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_marginVertical="@dimen/_2sdp"
@@ -58,6 +59,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:visibility="gone"
+            tools:visibility="visible"
                     android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_marginRight="@dimen/_8sdp"
                     android:background="@drawable/border_shape_selector"
@@ -72,6 +74,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:visibility="gone"
+            tools:visibility="visible"
                     android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_marginRight="@dimen/_8sdp"
                     android:background="@drawable/border_shape_selector"
@@ -86,6 +89,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:visibility="gone"
+            tools:visibility="visible"
                     android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_marginRight="@dimen/_8sdp"
                     android:background="@drawable/border_shape_selector"
@@ -100,6 +104,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:visibility="gone"
+            tools:visibility="visible"
                     android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_marginRight="@dimen/_8sdp"
                     android:background="@drawable/border_shape_selector"
@@ -117,6 +122,7 @@
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:background="@drawable/border_shape"
             android:fontFamily="@font/montserrat_medium"
             android:backgroundTint="@color/blue"
@@ -133,11 +139,12 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:text="0"
-            android:textColor="@color/white"
+            
             android:textStyle="bold"
             tools:text="1 701" />
 
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:background="@drawable/border_shape"
             android:backgroundTint="@color/red_title"
             android:fontFamily="@font/montserrat_medium"
@@ -154,7 +161,7 @@
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
             android:text="0"
-            android:textColor="@color/white"
+            
             android:textStyle="bold"
             tools:text="1 701" />
 

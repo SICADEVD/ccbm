@@ -32,12 +32,13 @@
             app:srcCompat="@mipmap/ic_launcher_trans" />
 
         <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
             android:id="@+id/labelConfig"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_medium"
             android:text="Configuration en cours…"
-            android:textColor="@color/black"
+
             android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

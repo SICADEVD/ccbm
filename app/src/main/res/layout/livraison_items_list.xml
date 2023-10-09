@@ -12,6 +12,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/labelTitleLivraison"
@@ -20,7 +21,7 @@
         android:text="LIVRAISON"
         android:textStyle="bold"
         android:textSize="@dimen/_15ssp"
-        android:textColor="@color/black"/>
+        />
 
     <LinearLayout
         android:id="@+id/linearNombreContainer"
@@ -35,18 +36,20 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/_12ssp"
                 android:layout_height="wrap_content"
                 android:text="Nombre de sacs: "
-                android:textColor="@color/black"/>
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelNombreSacsLivraison"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="21"
-                android:textColor="@color/black"/>
+                />
 
 
         </LinearLayout>
@@ -61,18 +64,20 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/_12ssp"
                 android:layout_height="wrap_content"
                 android:text="Volume livré: "
-                android:textColor="@color/black"/>
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelVolumeLivreLivraison"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="28"
-                android:textColor="@color/black"/>
+                />
 
         </LinearLayout>
 
@@ -99,20 +104,22 @@
         android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/_9ssp"
                 android:layout_height="wrap_content"
                 android:text="Date: "
-                android:textColor="@color/black"/>
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
                 android:id="@+id/labelDateLivraison"
                 android:layout_width="wrap_content"
                 android:textStyle="bold"
                 android:textSize="@dimen/_8ssp"
                 android:layout_height="wrap_content"
                 tools:text="21-12-2021"
-                android:textColor="@color/black"/>
+                />
 
     </LinearLayout>
 
