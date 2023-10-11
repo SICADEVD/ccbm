@@ -18,6 +18,7 @@
         <item>MTN</item>
         <item>Moov</item>
         <item>Wave</item>
+        <item>Push</item>
     </string-array>
 
     <string-array name="type_produit">
@@ -57,6 +58,13 @@
         <item>Trier et étaler les fèves, les céréales</item>
         <item>Decortiquer et égrainer Manuellement</item>
         <item>Aucun</item>
+    </string-array>
+
+    <string-array name="bank_list">
+        <item>Advans</item>
+        <item>Coopec</item>
+        <item>Microcred</item>
+        <item>Autre</item>
     </string-array>
 
     <string-array name="recentWorkLieu">
