@@ -588,7 +588,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="gone"
-                tools:visibility="visible">
+                    tools:visibility="visible">
 
                     <Space
                         android:layout_width="match_parent"
@@ -601,7 +601,7 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
