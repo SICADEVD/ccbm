@@ -7,6 +7,27 @@
         <item>non</item>
     </string-array>
 
+    <string-array name="InsectQuantifie">
+        <item>Assez</item>
+        <item>Moins</item>
+    </string-array>
+
+    <string-array name="listeInsectes">
+        <item>Mirides</item>
+        <item>Punaise</item>
+        <item>Foreurs</item>
+        <item>Chenilles</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="typeIntrant">
+        <item>Insecticide</item>
+        <item>Fongicide</item>
+        <item>Nematicide</item>
+        <item>Herbicide</item>
+        <item>Autre</item>
+    </string-array>
+
     <string-array name="bank_paiement">
         <item>Virement bancaire</item>
         <item>Mobile Money</item>
@@ -142,6 +163,12 @@
         <item>Autre, précisez</item>
     </string-array>
 
+    <string-array name="IntrantList">
+        <item>NPK/(BioFertilisant)</item>
+        <item>Dechets animaux/(BioFertilisant)</item>
+        <item>Compost/(BioFertilisant)</item>
+    </string-array>
+
     <string-array name="dayMarket">
         <item>Lundi</item>
         <item>Mardi</item>
@@ -164,8 +191,10 @@
     </string-array>
 
     <string-array name="fullyPoor">
-        <item>Assez</item>
-        <item>Moins</item>
+        <item>Faible</item>
+        <item>Moyen</item>
+        <item>Elevé</item>
+        <item>Inexistant</item>
     </string-array>
 
     <string-array name="statuPaiement">

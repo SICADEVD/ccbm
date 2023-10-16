@@ -21,22 +21,45 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/libelle"
                 android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Activité" />
+                android:text="Variété" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:textColor="@color/text_color_white"
-                android:id="@+id/valuetext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Quantité" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:id="@+id/labelOperateurItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                tools:text="Akassia" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:id="@+id/numeroItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textStyle="bold"
-                tools:text="Hevea" />
+                tools:text="25" />
 
         </LinearLayout>
 

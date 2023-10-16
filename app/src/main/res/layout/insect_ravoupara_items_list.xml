@@ -9,11 +9,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:paddingEnd="@dimen/_25sdp"
+        android:paddingStart="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_25sdp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,29 +21,54 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/libelle"
                 android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Activité" />
+                android:text="Nom insecte"
+                android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:textColor="@color/text_color_white"
-                android:id="@+id/valuetext"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="Quantifié"
                 android:layout_weight="1"
-                android:gravity="end"
+                android:gravity="end"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:id="@+id/labelOmbrageItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="HEVEA"
                 android:textStyle="bold"
-                tools:text="Hevea" />
+
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                tools:text="Assez"
+                android:id="@+id/nombreOmbrageItem"
+                android:textStyle="bold"
+
+                android:layout_weight="1"
+                android:gravity="end"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/deleteCultureItem"
+        android:id="@+id/deleteOmbrageItem"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_alignParentEnd="true"
