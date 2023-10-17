@@ -1,0 +1,191 @@
+[
+  {
+    "id": "1",
+    "nom": "Abalé",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "2",
+    "nom": "Acajou bassam",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "3",
+    "nom": "Akpi",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "4",
+    "nom": "Aloma",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "5",
+    "nom": "Emien",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "6",
+    "nom": "Fraké",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "7",
+    "nom": "Framiré",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "8",
+    "nom": "Fromager",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "9",
+    "nom": "Hysope",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "10",
+    "nom": "Kapokier",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "11",
+    "nom": "Koya",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "12",
+    "nom": "Kplé",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "13",
+    "nom": "Makoré",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "14",
+    "nom": "Mirabellier",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "15",
+    "nom": "Petit cola",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "16",
+    "nom": "Tiama",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "17",
+    "nom": "Colatier",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "18",
+    "nom": "Dédé",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "19",
+    "nom": "Kpangba",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "20",
+    "nom": "Iroko",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "21",
+    "nom": "Aiélé",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "22",
+    "nom": "Ako",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "23",
+    "nom": "Faux muscadier",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "24",
+    "nom": "Loloti",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "25",
+    "nom": "Ngouechebi",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "26",
+    "nom": "Noisetier d'Afrique",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  },
+  {
+    "id": "27",
+    "nom": "Poivre africain",
+    "created_at": "0000-00-00 00:00:00",
+    "updated_at": "0000-00-00 00:00:00",
+    "deleted_at": null
+  }
+]

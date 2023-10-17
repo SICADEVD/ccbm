@@ -59,6 +59,7 @@ class AssetFileHelper {
             "lieu_habite",
             "statut_matrimonial",
             "type_membre",
+            "arbre_ombrage",
         );
 
 
@@ -89,6 +90,7 @@ class AssetFileHelper {
            *         22 = "lieu_habite",
            *         23 = "statut_matrimonial",
            *         24 = "type_membre",
+           *         25 = "arbre_ombrage",
         */
         fun getListDataFromAsset(position: Int = 0, context: Activity): MutableList<*>? {
             val typer : Type? = when(position) {
@@ -117,6 +119,7 @@ class AssetFileHelper {
                 22 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 23 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 24 -> object : TypeToken<MutableList<CommonData>>() {}.type
+                25 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 else -> {
                     null
                 }
