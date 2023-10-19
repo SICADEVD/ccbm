@@ -12,6 +12,11 @@
         <item>Moins</item>
     </string-array>
 
+    <string-array name="cible_formation">
+        <item>Staff</item>
+        <item>Membre</item>
+    </string-array>
+
     <string-array name="listeInsectes">
         <item>Mirides</item>
         <item>Punaise</item>

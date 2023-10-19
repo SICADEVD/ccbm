@@ -109,13 +109,13 @@ android:textColor="@color/text_color_white"
                             android:background="@color/dark_gray" />
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations Personnelles"
-                            
+                            android:textColor="@color/text_color_white"
+
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -129,7 +129,7 @@ android:textColor="@color/text_color_white"
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp"/>
+                        android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -138,11 +138,11 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Section *"
+                            android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -165,20 +165,20 @@ android:textColor="@color/text_color_white"
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
                         android:id="@+id/linearLocaliteContainerUniteAgricole"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Localite *"
+                            android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
 
@@ -208,11 +208,11 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Producteur* "
+                            android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
 

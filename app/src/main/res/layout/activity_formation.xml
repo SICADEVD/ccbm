@@ -100,6 +100,78 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations sur localité"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Section *"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectSectionProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -174,6 +246,45 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Pilier *"
+
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:id="@+id/editPilierFormation"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:layout_weight="6.5"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -198,6 +309,125 @@ android:textColor="@color/text_color_white"
                     android:background="@drawable/rounded_cardview_with_border_brown"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations sur la formation"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="La cible"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectCibleFormation"
+                                android:entries="@array/cible_formation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Lieu de la formation"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/selectLieuFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                            <!--<com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:spinnerMode="dialog"
+                                android:id="@+id/selectLieuFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"/>-->
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -244,11 +474,52 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Theme"
+                            android:text="Module de la formation"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
+                            <!--                        android:id="@+id/selectThemeFormation"-->
+                            <!--                        android:layout_width="match_parent"-->
+                            <!--                        app:hintText="Choisir les themes"-->
+                            <!--                        android:layout_height="@dimen/_37sdp"/>-->
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:id="@+id/selectModuleFormation"
+                                />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Theme de la formation"
 
                             android:textStyle="bold" />
 
@@ -271,29 +542,12 @@ android:textColor="@color/text_color_white"
 
                         </LinearLayout>
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:visibility="gone"
-            tools:visibility="visible"
-                            android:id="@+id/editThemeFormation"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_37sdp"
-                            android:layout_weight="6.5"
-                            android:background="@drawable/rounded_background"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:imeOptions="actionDone"
-                            android:inputType="textCapCharacters|textNoSuggestions"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
-                            tools:text="BOKA" />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
 
                     </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -306,7 +560,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Lieu de\nla formation"
+                            android:text="Liste de présence (producteurs)"
 
                             android:textStyle="bold" />
 
@@ -319,55 +573,11 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectLieuFormation"
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                            <!--<com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectLieuFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>-->
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Liste de présence"
-
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/selectListePresenceFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
+                                />
 
                             <!--<com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:spinnerMode="dialog"
@@ -430,7 +640,6 @@ android:textColor="@color/text_color_white"-->
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:minHeight="@dimen/_50sdp"
                         android:orientation="vertical">
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -438,7 +647,7 @@ android:textColor="@color/text_color_white"-->
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="4"
+                            tools:itemCount="1"
                             tools:listitem="@layout/producteur_presence_items_list">
 
                         </androidx.recyclerview.widget.RecyclerView>
@@ -450,6 +659,7 @@ android:textColor="@color/text_color_white"-->
                         android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
@@ -479,40 +689,41 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:visibility="gone"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="top"-->
+<!--                        android:orientation="vertical">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Photo formation"
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Photo formation"-->
 
-                            android:textStyle="bold" />
+<!--                            android:textStyle="bold" />-->
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imagePhotoFormation"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_100sdp"
-                            android:layout_weight="6.5"
-                            android:src="@drawable/ic_picture_black"
-                            android:padding="@dimen/_10sdp"
-                            android:background="@drawable/background_present"
-                            android:inputType="text|textMultiLine"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:gravity="start|top"
-                            android:textSize="@dimen/_13ssp" />
+<!--                        <androidx.appcompat.widget.AppCompatImageView-->
+<!--                            android:id="@+id/imagePhotoFormation"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_100sdp"-->
+<!--                            android:layout_weight="6.5"-->
+<!--                            android:src="@drawable/ic_picture_black"-->
+<!--                            android:padding="@dimen/_10sdp"-->
+<!--                            android:background="@drawable/background_present"-->
+<!--                            android:inputType="text|textMultiLine"-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingEnd="@dimen/_10sdp"-->
+<!--                            android:gravity="start|top"-->
+<!--                            android:textSize="@dimen/_13ssp" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                 </LinearLayout>
 
@@ -523,49 +734,316 @@ android:textColor="@color/text_color_white"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp" />
 
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
 
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_12sdp"
-                    android:text="Date de la formation"
-                    android:textStyle="bold" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_37sdp">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/editDateFormation"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rounded_background"
-                        android:editable="false"
-                        android:ellipsize="end"
-                        android:focusable="false"
-                        android:hint="JJ-MM-AAAA"
-                        android:inputType="textCapCharacters"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_35sdp"
-                        android:layout_height="@dimen/_35sdp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/ic_date_calendar" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
 
-                </RelativeLayout>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations sur la date"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold" />
 
-            </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Date de debut de la formation"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editDateDebuFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/rounded_background"
+                                android:editable="false"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:hint="JJ-MM-AAAA"
+                                android:inputType="textCapCharacters"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@drawable/ic_date_calendar" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Date de fin de la formation"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editDateFinFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/rounded_background"
+                                android:editable="false"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:hint="JJ-MM-AAAA"
+                                android:inputType="textCapCharacters"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@drawable/ic_date_calendar" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Durée de formation ?"
+
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editDureeFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/rounded_background"
+                                android:editable="false"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:hint="HH-MM"
+                                android:inputType="textCapCharacters"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@drawable/ic_time_black" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Photo de la formation"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_present">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imagePhotoFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_10sdp"
+                                android:src="@drawable/meet_format_align_right" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Rapport de la formation"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_100sdp"
+                            android:layout_marginStart="@dimen/_2sdp"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_present">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imageRapportFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_10sdp"
+                                android:src="@drawable/document_scanner" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="Observations"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textAllCaps="true"
+                                android:id="@+id/editObservationFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_80sdp"
+                                android:background="@drawable/background_present"
+                                android:ellipsize="end"
+                                android:hint="Précisez…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <Space
                 android:layout_width="match_parent"
