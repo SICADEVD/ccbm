@@ -163,8 +163,9 @@
     <string-array name="parentAffiliation">
         <item>Fils</item>
         <item>Neveu/Niece</item>
-        <item>Frere/Soeur</item>
+        <item>Frère/Soeur</item>
         <item>Cousine</item>
+        <item>Protegé ou tuteur</item>
         <item>Autre, précisez</item>
     </string-array>
 
