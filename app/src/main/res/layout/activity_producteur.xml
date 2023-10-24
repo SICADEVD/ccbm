@@ -242,10 +242,6 @@ android:textColor="@color/text_color_white"
 
                 </LinearLayout>
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -281,10 +277,6 @@ android:textColor="@color/text_color_white"
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
 
                 <LinearLayout
                     android:visibility="gone"
@@ -322,10 +314,6 @@ android:textColor="@color/text_color_white"
                         tools:text="" />
 
                 </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -400,10 +388,6 @@ android:textColor="@color/text_color_white"
                         tools:text="" />
 
                 </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -605,10 +589,6 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="gone">
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1458,7 +1438,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:text="Photo profil *" />
+                            android:text="Photo de profile *" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/imagePhotoProfilProducteur"
@@ -1469,65 +1449,65 @@ android:textColor="@color/text_color_white"
 
                     </RelativeLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_100sdp"
-                        android:layout_marginStart="@dimen/_2sdp"
-                        android:layout_marginEnd="@dimen/_2sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_present">
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_100sdp"-->
+<!--                        android:layout_marginStart="@dimen/_2sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_2sdp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/background_present">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:text="Piece recto" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--    android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_alignParentTop="true"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:text="Piece recto" />-->
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imagePhotoRectoProducteur"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:padding="@dimen/_10sdp"
-                            android:src="@drawable/ic_piece_recto" />
+<!--                        <androidx.appcompat.widget.AppCompatImageView-->
+<!--                            android:id="@+id/imagePhotoRectoProducteur"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:padding="@dimen/_10sdp"-->
+<!--                            android:src="@drawable/ic_piece_recto" />-->
 
-                    </RelativeLayout>
+<!--                    </RelativeLayout>-->
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_100sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_2sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/background_present">
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_100sdp"-->
+<!--                        android:layout_marginStart="@dimen/_5sdp"-->
+<!--                        android:layout_marginEnd="@dimen/_2sdp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/background_present">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:text="Piece verso" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--    android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_alignParentTop="true"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:text="Piece verso" />-->
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imagePhotoVersoProducteur"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:padding="@dimen/_12sdp"
-                            android:src="@drawable/ic_piece_verso" />
+<!--                        <androidx.appcompat.widget.AppCompatImageView-->
+<!--                            android:id="@+id/imagePhotoVersoProducteur"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_centerHorizontal="true"-->
+<!--                            android:padding="@dimen/_12sdp"-->
+<!--                            android:src="@drawable/ic_piece_verso" />-->
 
-                    </RelativeLayout>
+<!--                    </RelativeLayout>-->
 
                 </LinearLayout>
 
@@ -1536,45 +1516,45 @@ android:textColor="@color/text_color_white"
                     android:layout_height="@dimen/_10sdp" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:background="@drawable/background_present"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/_20sdp"-->
+<!--                    android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                    android:background="@drawable/background_present"-->
+<!--                    android:orientation="vertical">-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:text="Signature *" />
+<!--                    <androidx.appcompat.widget.AppCompatTextView-->
+<!--    android:textColor="@color/text_color_white"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="@dimen/_10sdp"-->
+<!--                        android:text="Signature *" />-->
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_1sdp"
-                        android:background="@color/gray" />
+<!--                    <View-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_1sdp"-->
+<!--                        android:background="@color/gray" />-->
 
-                    <com.github.gcacace.signaturepad.views.SignaturePad
-                        android:id="@+id/signatureProducteur"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_140sdp"
-                        app:penColor="@android:color/black" />
+<!--                    <com.github.gcacace.signaturepad.views.SignaturePad-->
+<!--                        android:id="@+id/signatureProducteur"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_140sdp"-->
+<!--                        app:penColor="@android:color/black" />-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
-                        android:id="@+id/labelSignatureClearProducteur"
-                        android:background="@drawable/rounded_cardview_with_border_brown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:padding="@dimen/_4sdp"
-                        android:text="Effacer" />
+<!--                    <androidx.appcompat.widget.AppCompatTextView-->
+<!--    android:textColor="@color/text_color_white"-->
+<!--                        android:id="@+id/labelSignatureClearProducteur"-->
+<!--                        android:background="@drawable/rounded_cardview_with_border_brown"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_5sdp"-->
+<!--                        android:padding="@dimen/_4sdp"-->
+<!--                        android:text="Effacer" />-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
             </LinearLayout>
 

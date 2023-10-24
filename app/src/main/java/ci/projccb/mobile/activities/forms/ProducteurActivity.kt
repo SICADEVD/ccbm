@@ -15,10 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -35,14 +33,14 @@ import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.applyFilters
 import ci.projccb.mobile.tools.Commons.Companion.encodeFileToBase64Binary
-import ci.projccb.mobile.tools.Commons.Companion.getAllEditTextViews
-import ci.projccb.mobile.tools.Commons.Companion.getAllSpinnerViews
+import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews
 import ci.projccb.mobile.tools.Commons.Companion.loadShakeAnimation
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.github.gcacace.signaturepad.views.SignaturePad.OnSignedListener
 import id.zelory.compressor.Compressor
@@ -51,6 +49,7 @@ import id.zelory.compressor.constraint.quality
 import kotlinx.android.synthetic.main.activity_producteur.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -58,7 +57,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.lang.reflect.Field
 
 
 @SuppressWarnings("ALL")
@@ -148,7 +146,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
             )
 
-        setListenerForSpinner(this, "Choix de la section !", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.", spinner = selectSectionProducteur, listIem = sectionList?.map { it.libelle }
+        setListenerForSpinner(this, "Choix de la section !", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if(sectionList?.size!! > 0) false else true,
+            spinner = selectSectionProducteur, listIem = sectionList?.map { it.libelle }
             ?.toList() ?: listOf(),
             onChanged = {
 
@@ -172,6 +172,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         )
         //LogUtils.d(localitesListi)
         setListenerForSpinner(this, "Choix du programme !", "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if(programmeListi?.size!! > 0) false else true,
             spinner = selectProgramProducteur, listIem = programmeListi?.map { it.libelle }
             ?.toList() ?: listOf(), onChanged = {
 
@@ -191,6 +192,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
         setListenerForSpinner(this, "Choix de la localité !", "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if(localitesListi?.size!! > 0) false else true,
             spinner = selectLocaliteProducteur, listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
@@ -429,10 +431,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Niveau etude non renseigné")
 //            return
 //        }
-        /*if (FileUtils.getLength(profilPhotoPath).toInt() == 0) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Photo de profil non renseignée")
-            return
-        }*/
+//            if (FileUtils.getLength(profilPhotoPath).toInt() == 0) {
+//                ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Photo de profil non renseignée")
+//                return
+//            }
 
 //        if (FileUtils.getLength(signaturePath).toInt() == 0) {
 //            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Signature non renseignée")
@@ -450,13 +452,49 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         //val producteurModel = getProducteurObjet()
 
-        var producteurModel = getSetupProducteurModel(ProducteurModel(uid = 0, id = 0,))
-        LogUtils.d(producteurModel.toString())
+        var itemList = getSetupProducteurModel(ProducteurModel(uid = 0, id = 0,), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>("Année certification *",
+            "Code producteur",
+            "En tant que:",
+            "Numéro de téléphone",
+            "N° de la pièce CMU",
+            "N° de carte de sécurité sociale")
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.second) == false){
+                message = "Le champ intitulé : `${field.first}` est vide !"
+                isMissing = true
+                break
+            }
+        }
 
-//        val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
-//        intentProducteurPreview.putExtra("preview", producteurModel)
-//        intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
-//        startActivity(intentProducteurPreview)
+        if(isMissing){
+            showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return
+        }
+
+        val producteur = itemList.first.apply {
+            photo = profilPhotoPath ?: ""
+        }
+
+        val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
+        intentProducteurPreview.putExtra("preview", producteur)
+        val mapEntries: List<MapEntry> = allField.map { MapEntry(it.first, it.second) }
+        intentProducteurPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
+        intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
+        startActivity(intentProducteurPreview)
     }
 
     private fun getProducteurObjet(): ProducteurModel {
@@ -498,7 +536,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             consentement = "Oui",
             rectoPath = rectoPhotoPath ?: "",
             versoPath = versoPhotoPath ?: "",
-            picturePath = profilPhotoPath ?: "",
+            photo = profilPhotoPath ?: "",
             esignaturePath = signaturePath ?: "",
         )
     }
@@ -667,34 +705,34 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                         imagePhotoProfilProducteur.setImageURI(bundleData)
                     }
                 }
-                1 -> {
-                    val options = BitmapFactory.Options()
-                    options.inSampleSize = 8
-
-                    if (bundleData == null) {
-                        imagePhotoRectoProducteur.setImageBitmap(BitmapFactory.decodeFile(rectoPhotoPath, options))
-                    } else {
-                        options.inJustDecodeBounds = true
-                        options.inPurgeable = true
-                        rectoPhotoPath = UriUtils.uri2File(bundleData).path
-                        LogUtils.e(TAG, rectoPhotoPath)
-                        imagePhotoRectoProducteur.setImageURI(bundleData)
-                    }
-                }
-                2 -> {
-                    val options = BitmapFactory.Options()
-                    options.inSampleSize = 8
-
-                    if (bundleData == null) {
-                        imagePhotoVersoProducteur.setImageBitmap(BitmapFactory.decodeFile(versoPhotoPath, options))
-                    } else {
-                        options.inJustDecodeBounds = true
-                        options.inPurgeable = true
-                        versoPhotoPath = UriUtils.uri2File(bundleData).path
-                        LogUtils.e(TAG, versoPhotoPath)
-                        imagePhotoVersoProducteur.setImageURI(bundleData)
-                    }
-                }
+//                1 -> {
+//                    val options = BitmapFactory.Options()
+//                    options.inSampleSize = 8
+//
+//                    if (bundleData == null) {
+//                        imagePhotoRectoProducteur.setImageBitmap(BitmapFactory.decodeFile(rectoPhotoPath, options))
+//                    } else {
+//                        options.inJustDecodeBounds = true
+//                        options.inPurgeable = true
+//                        rectoPhotoPath = UriUtils.uri2File(bundleData).path
+//                        LogUtils.e(TAG, rectoPhotoPath)
+//                        imagePhotoRectoProducteur.setImageURI(bundleData)
+//                    }
+//                }
+//                2 -> {
+//                    val options = BitmapFactory.Options()
+//                    options.inSampleSize = 8
+//
+//                    if (bundleData == null) {
+//                        imagePhotoVersoProducteur.setImageBitmap(BitmapFactory.decodeFile(versoPhotoPath, options))
+//                    } else {
+//                        options.inJustDecodeBounds = true
+//                        options.inPurgeable = true
+//                        versoPhotoPath = UriUtils.uri2File(bundleData).path
+//                        LogUtils.e(TAG, versoPhotoPath)
+//                        imagePhotoVersoProducteur.setImageURI(bundleData)
+//                    }
+//                }
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -868,15 +906,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     }
 
-    fun getSetupProducteurModel(prodModel: ProducteurModel): ProducteurModel {
+    fun getSetupProducteurModel(
+        prodModel: ProducteurModel,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<ProducteurModel, MutableList<Pair<String, String>>> {
         LogUtils.d(prodModel.nom)
         val mainLayout = findViewById<ViewGroup>(R.id.layout_producteur)
-        getAllEditTextViews(mainLayout, prodModel)
-        getAllSpinnerViews(mainLayout, prodModel)
-        return prodModel
-//        val dynamicPropertyName = "name_property" // Change this to the property name you want to access
-//        val dynamicPropertyValue = sectionModel::class.memberProperties.find { it.name == dynamicPropertyName }?.get(sectionModel)
-//        println("$dynamicPropertyName: $dynamicPropertyValue")
+        getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
     }
 
 
@@ -1115,7 +1152,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //            }
 //        }
 
-        signatureProducteur.setOnSignedListener(this)
+        //signatureProducteur.setOnSignedListener(this)
 
         /*clickAddFarm.setOnClickListener {
             if (editCultureProducteur.text.toString().isEmpty() || editSuperficeProducteur.text.toString().isEmpty()) {
@@ -1160,7 +1197,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         clickSaveProducteur.setOnClickListener {
-            Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
+            //Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
             collectDatas()
         }
 
@@ -1173,19 +1210,19 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             dialogPickerPhoto()
         }
 
-        imagePhotoRectoProducteur.setOnClickListener {
-            whichPhoto = 1
-            dialogPickerPhoto()
-        }
-
-        imagePhotoVersoProducteur.setOnClickListener {
-            whichPhoto = 2
-            dialogPickerPhoto()
-        }
-
-        labelSignatureClearProducteur.setOnClickListener {
-            signatureProducteur.clear()
-        }
+//        imagePhotoRectoProducteur.setOnClickListener {
+//            whichPhoto = 1
+//            dialogPickerPhoto()
+//        }
+//
+//        imagePhotoVersoProducteur.setOnClickListener {
+//            whichPhoto = 2
+//            dialogPickerPhoto()
+//        }
+//
+//        labelSignatureClearProducteur.setOnClickListener {
+//            signatureProducteur.clear()
+//        }
 
         imageDraftProducteur.setOnClickListener {
             draftProducteur(draftedDataProducteur ?: DataDraftedModel(uid = 0))

@@ -67,7 +67,7 @@ data class ProducteurModel(
     @Expose @SerializedName("copiecarteversoPath") var versoPath: String? = "",
     @Expose @SerializedName("copiecarteverso") var verso: String? = "",
     @Expose @SerializedName("picture") var picture: String? = "",
-    @Expose @SerializedName("picturePath") var picturePath: String? = "",
+    @Expose @SerializedName("photo") var photo: String? = "",
     @Expose @SerializedName("esignature") var esignature: String? = "",
     @Expose @SerializedName("esignaturePath") var esignaturePath: String? = "",
     var origin: String? = "local",

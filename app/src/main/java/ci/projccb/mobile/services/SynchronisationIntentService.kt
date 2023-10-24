@@ -126,10 +126,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
 
-                if (!producteur.picturePath.isNullOrEmpty()) producteur.picture = Commons.convertPathBase64(producteur.picturePath, 1)
-                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
-                if (!producteur.versoPath.isNullOrEmpty()) producteur.verso = Commons.convertPathBase64(producteur.versoPath, 1)
-                if (!producteur.esignaturePath.isNullOrEmpty()) producteur.esignature = Commons.convertPathBase64(producteur.esignaturePath, 3)
+                if (!producteur.photo.isNullOrEmpty()) producteur.picture = Commons.convertPathBase64(producteur.photo, 1)
+//                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
+//                if (!producteur.versoPath.isNullOrEmpty()) producteur.verso = Commons.convertPathBase64(producteur.versoPath, 1)
+//                if (!producteur.esignaturePath.isNullOrEmpty()) producteur.esignature = Commons.convertPathBase64(producteur.esignaturePath, 3)
 
                 producteur.producteursCultures?.map { culture ->
                     producteur.typeculture?.add(culture.label!!)
@@ -151,7 +151,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     localite = null
                     mobileMoney = null
                     paperGuards = null
-                    picturePath = null
+                    photo = null
                     rectoPath = null
                     versoPath = null
                     recuAchat = null

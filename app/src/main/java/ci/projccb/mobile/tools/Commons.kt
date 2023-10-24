@@ -10,6 +10,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.media.MediaPlayer
 import android.os.Build
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.InputFilter
 import android.util.Base64
 import android.view.View
@@ -21,10 +23,12 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
@@ -96,6 +100,12 @@ class Commons {
             mpAudio?.start()
         }
 
+        fun addItemsToList(keyI: String, valueI: String, livraisonItemsListPrev: MutableList<Map<String, String>> ) {
+            val item = mutableMapOf<String,String>()
+            item.put(keyI, valueI)
+            livraisonItemsListPrev.add(item)
+        }
+
 //        fun setListenerForSpinner(context:Context, spinner:AppCompatSpinner, listIem: List<String?> = mutableListOf(), itemChanged:String? = null, currentVal:String? = null, onChanged:((value:String) -> Unit), onSelected:((value:Int) -> Unit)){
 //
 //            if(listIem.size > 0) spinner.adapter = ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
@@ -121,24 +131,28 @@ class Commons {
 //                }
 //            }
 //        }
-        fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
+        fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, isEmpty:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
 
             if(spinner is SearchableSpinner) (spinner as SearchableSpinner).setTitle(title)
             if(listIem.size > 0) {
                 spinner.adapter =
                     ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
             }else{
-                LogUtils.d(listIem)
-                MainScope().launch {
-                    showMessage(
-                        message,
-                        context,
-                        finished = isKill,
-                        callback = {},
-                        positive = "Compris !",
-                        deconnec = false,
-                        showNo = false
-                    )
+                if(isEmpty){
+                    spinner.adapter =
+                        ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
+                    LogUtils.d(listIem)
+                    MainScope().launch {
+                        showMessage(
+                            message,
+                            context,
+                            finished = isKill,
+                            callback = {},
+                            positive = "Compris !",
+                            deconnec = false,
+                            showNo = false
+                        )
+                    }
                 }
             }
             spinner.onItemSelectedListener = object : OnItemSelectedListener{
@@ -179,14 +193,46 @@ class Commons {
             }
         }
 
-        fun getAllEditTextViews(viewGroup: ViewGroup, prodModel: ProducteurModel, isTakeHide:Boolean = false): ProducteurModel {
+        fun getAllTitleAndValueViews(
+            viewGroup: ViewGroup,
+            prodModel: ProducteurModel,
+            isTakeHide: Boolean = false,
+            mutableListOf: MutableList<Pair<String, String>>,
+            currTextView:String? = null
+        ): ProducteurModel {
             val childCount = viewGroup.childCount
+            var canModifTitle = true
+            var currTextViewIn = currTextView
             for (i in 0 until childCount) {
                 val childView = viewGroup.getChildAt(i)
-                if (childView is AppCompatEditText) {
+
+                val childViewClassName = childView::class.java.simpleName
+                //LogUtils.d(childViewClassName)
+                if (childViewClassName.contains("AppCompatTextView", ignoreCase = true) && childView.tag == null) {
+                    currTextViewIn = (childView as TextView).text.toString()
+                    //LogUtils.d(childViewClassName+ " "+ currTextView)
+                }
+
+                if ( (childView is Spinner) && childView.tag != null) {
+                    var value = ""
+                    childView.selectedItem?.let {
+                        value = it as String
+                    }
+                    //LogUtils.d("Spinner ${value} "+ childView::class.java.simpleName)
+                    val producteurModelClass = prodModel.javaClass
+                    val memberProperty = producteurModelClass.declaredFields.find { it.name == childView.tag }
+                    memberProperty?.let {
+                        it.isAccessible = true
+                        it.set(prodModel, value)
+                        mutableListOf.add(Pair(currTextViewIn.toString(), value))
+                    }
+                } else if ( childView is AppCompatEditText && childView.tag != null ) {
                     // You've found an EditText with the specified tag, get its value
                     val editText = childView as AppCompatEditText
                     val value = editText.text.toString()
+                    //LogUtils.d("AppCompatEditText ${value} "+ childView::class.java.simpleName)
+//                    val paired = mutableListOf.get(countField)
+
 
                     // Use reflection to set the property value dynamically
                     val producteurModelClass = prodModel.javaClass
@@ -194,34 +240,17 @@ class Commons {
                     memberProperty?.let {
                         it.isAccessible = true
                         it.set(prodModel, value)
+                        mutableListOf.add(Pair(currTextViewIn.toString(), value))
                     }
+                    //countField++
                 } else if (childView is ViewGroup) {
                     // If it's a ViewGroup, recursively call this method
-                    if(childView.visibility == View.VISIBLE && isTakeHide == false) getAllEditTextViews(childView, prodModel)
-                }
-            }
-            return prodModel
-        }
-
-        fun getAllSpinnerViews(viewGroup: ViewGroup, prodModel: ProducteurModel, isTakeHide:Boolean = false): ProducteurModel {
-            val childCount = viewGroup.childCount
-            for (i in 0 until childCount) {
-                val childView = viewGroup.getChildAt(i)
-                if (childView is AppCompatSpinner || childView is SearchableSpinner || childView is Spinner) {
-                    // You've found an EditText with the specified tag, get its value
-                    val spinner = childView as Spinner
-                    val value = spinner.selectedItem as String
-
-                    // Use reflection to set the property value dynamically
-                    val producteurModelClass = prodModel.javaClass
-                    val memberProperty = producteurModelClass.declaredFields.find { it.name == spinner.tag }
-                    memberProperty?.let {
-                        it.isAccessible = true
-                        it.set(prodModel, value)
-                    }
-                } else if (childView is ViewGroup) {
-                    // If it's a ViewGroup, recursively call this method
-                    if(childView.visibility == View.VISIBLE && isTakeHide == false) getAllEditTextViews(childView, prodModel)
+                    if(childView.visibility == View.VISIBLE && isTakeHide == false) getAllTitleAndValueViews(
+                        childView,
+                        prodModel,
+                        mutableListOf = mutableListOf,
+                        currTextView = currTextViewIn
+                    )
                 }
             }
             return prodModel
@@ -521,4 +550,30 @@ class Commons {
 
     }
 
+}
+
+data class MapEntry(val key: String, val value: String) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: ""
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(key)
+        parcel.writeString(value)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MapEntry> {
+        override fun createFromParcel(parcel: Parcel): MapEntry {
+            return MapEntry(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MapEntry?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
