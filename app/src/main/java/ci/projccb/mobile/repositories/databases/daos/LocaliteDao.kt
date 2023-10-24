@@ -24,6 +24,10 @@ interface LocaliteDao {
     fun getLocalite(id: Int): LocaliteModel
 
     @Transaction
+    @Query("SELECT * FROM localite WHERE sectionId = :id")
+    fun getLocaliteBySection(id: Int): MutableList<LocaliteModel>
+
+    @Transaction
     @Update
     fun update(localite: LocaliteModel)
 

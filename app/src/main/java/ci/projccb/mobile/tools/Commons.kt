@@ -8,24 +8,25 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.util.Base64
-import androidx.appcompat.app.AppCompatActivity
-import ci.projccb.mobile.services.SynchronisationIntentService
-import java.lang.Math.log10
-import java.text.DecimalFormat
-import kotlin.math.pow
 import android.media.MediaPlayer
 import android.os.Build
 import android.text.InputFilter
+import android.util.Base64
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import ci.projccb.mobile.R
-import ci.projccb.mobile.activities.DashboardAgentActivity
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.activities.forms.InspectionActivity
@@ -45,13 +46,21 @@ import ci.projccb.mobile.activities.lists.ParcellesListActivity
 import ci.projccb.mobile.activities.lists.ProducteursListActivity
 import ci.projccb.mobile.activities.lists.SuiviPacellesListActivity
 import ci.projccb.mobile.activities.lists.UpdateContentsListActivity
+import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.repositories.datas.CommonData
+import ci.projccb.mobile.services.SynchronisationIntentService
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import java.io.*
+import java.lang.Math.log10
 import java.math.RoundingMode
+import java.text.DecimalFormat
+import kotlin.math.pow
 
 
 class Commons {
@@ -87,6 +96,136 @@ class Commons {
             mpAudio?.start()
         }
 
+//        fun setListenerForSpinner(context:Context, spinner:AppCompatSpinner, listIem: List<String?> = mutableListOf(), itemChanged:String? = null, currentVal:String? = null, onChanged:((value:String) -> Unit), onSelected:((value:Int) -> Unit)){
+//
+//            if(listIem.size > 0) spinner.adapter = ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
+//            spinner.onItemSelectedListener = object : OnItemSelectedListener{
+//                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                    val selectedItem: String = p0?.getItemAtPosition(p2).toString()
+//                    selectedItem.let {
+//                        if(it.equals(itemChanged, ignoreCase = true)) onSelected.invoke(View.VISIBLE)
+//                        else  onSelected.invoke(View.GONE)
+//                    }
+//                    onChanged.invoke(selectedItem)
+//                }
+//
+//                override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//                }
+//            }
+//            currentVal?.let {
+//                var curr = 0
+//                for (item in listIem){
+//                    if (it.equals(item)) spinner.setSelection(curr)
+//                    curr++
+//                }
+//            }
+//        }
+        fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
+
+            if(spinner is SearchableSpinner) (spinner as SearchableSpinner).setTitle(title)
+            if(listIem.size > 0) {
+                spinner.adapter =
+                    ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
+            }else{
+                LogUtils.d(listIem)
+                MainScope().launch {
+                    showMessage(
+                        message,
+                        context,
+                        finished = isKill,
+                        callback = {},
+                        positive = "Compris !",
+                        deconnec = false,
+                        showNo = false
+                    )
+                }
+            }
+            spinner.onItemSelectedListener = object : OnItemSelectedListener{
+                override fun onItemSelected(p0:  AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    val selectedItem: String = p0?.getItemAtPosition(p2).toString()
+                    selectedItem.let {
+                        itemChanged?.let { changedText ->
+                            if(changedText.size == 1){
+                                if(changedText.get(0).second.equals(it, ignoreCase = true)) {
+                                    onSelected.invoke(changedText.get(0).first, View.VISIBLE)
+                                }else onSelected.invoke(changedText.get(0).first, View.GONE)
+                            }else{
+                                var isFind = false
+                                for (item in changedText){
+                                    if(item.second.equals(it, ignoreCase = true)) {
+                                        onSelected.invoke(item.first, View.VISIBLE)
+                                        isFind = true
+                                    }
+                                }
+                                if(isFind == false) onSelected.invoke(0, View.GONE)
+                            }
+
+                        }
+                    }
+                    onChanged.invoke(p2)
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                }
+            }
+            currentVal?.let {
+                var curr = 0
+                for (item in listIem){
+                    if (it.equals(item)) spinner.setSelection(curr)
+                    curr++
+                }
+            }
+        }
+
+        fun getAllEditTextViews(viewGroup: ViewGroup, prodModel: ProducteurModel, isTakeHide:Boolean = false): ProducteurModel {
+            val childCount = viewGroup.childCount
+            for (i in 0 until childCount) {
+                val childView = viewGroup.getChildAt(i)
+                if (childView is AppCompatEditText) {
+                    // You've found an EditText with the specified tag, get its value
+                    val editText = childView as AppCompatEditText
+                    val value = editText.text.toString()
+
+                    // Use reflection to set the property value dynamically
+                    val producteurModelClass = prodModel.javaClass
+                    val memberProperty = producteurModelClass.declaredFields.find { it.name == editText.tag }
+                    memberProperty?.let {
+                        it.isAccessible = true
+                        it.set(prodModel, value)
+                    }
+                } else if (childView is ViewGroup) {
+                    // If it's a ViewGroup, recursively call this method
+                    if(childView.visibility == View.VISIBLE && isTakeHide == false) getAllEditTextViews(childView, prodModel)
+                }
+            }
+            return prodModel
+        }
+
+        fun getAllSpinnerViews(viewGroup: ViewGroup, prodModel: ProducteurModel, isTakeHide:Boolean = false): ProducteurModel {
+            val childCount = viewGroup.childCount
+            for (i in 0 until childCount) {
+                val childView = viewGroup.getChildAt(i)
+                if (childView is AppCompatSpinner || childView is SearchableSpinner || childView is Spinner) {
+                    // You've found an EditText with the specified tag, get its value
+                    val spinner = childView as Spinner
+                    val value = spinner.selectedItem as String
+
+                    // Use reflection to set the property value dynamically
+                    val producteurModelClass = prodModel.javaClass
+                    val memberProperty = producteurModelClass.declaredFields.find { it.name == spinner.tag }
+                    memberProperty?.let {
+                        it.isAccessible = true
+                        it.set(prodModel, value)
+                    }
+                } else if (childView is ViewGroup) {
+                    // If it's a ViewGroup, recursively call this method
+                    if(childView.visibility == View.VISIBLE && isTakeHide == false) getAllEditTextViews(childView, prodModel)
+                }
+            }
+            return prodModel
+        }
 
         fun releaseDraftSound() {
             if (mpAudio != null) {
@@ -313,7 +452,7 @@ class Commons {
             when (actionMenu.uppercase()) {
                 "ADD" -> {
                     when (fromMenu.uppercase()) {
-                        "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", activity, finished = true, callback = {}, positive = "OKAY", deconnec = false, showNo = false) // ActivityUtils.startActivity(LocaliteActivity::class.java)
+                        "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", activity, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false) // ActivityUtils.startActivity(LocaliteActivity::class.java)
                         "PRODUCTEUR" -> ActivityUtils.startActivity(ProducteurActivity::class.java)
                         "INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(
                             UniteAgricoleProducteurActivity::class.java)
@@ -343,7 +482,7 @@ class Commons {
 
                 "DATAS" -> {
                     when (fromMenu.uppercase()) {
-                        "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", activity, finished = true, callback = {}, positive = "OKAY", deconnec = false, showNo = false) //ActivityUtils.startActivity(LocalitesListActivity::class.java)
+                        "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", activity, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false) //ActivityUtils.startActivity(LocalitesListActivity::class.java)
                         "PRODUCTEUR" -> ActivityUtils.startActivity(ProducteursListActivity::class.java)
                         //"INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                         "MENAGE" -> ActivityUtils.startActivity(MenageresListActivity::class.java)

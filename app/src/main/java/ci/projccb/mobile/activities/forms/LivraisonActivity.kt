@@ -136,39 +136,39 @@ class LivraisonActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
 
             localiteIdSelected = ""
             localiteSelected = ""
-            selectLocaliteLivraison?.adapter = null
+            //selectLocaliteLivraison?.adapter = null
             return
         }
 
         val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-        selectLocaliteLivraison!!.adapter = localiteAdapter
+        //selectLocaliteLivraison!!.adapter = localiteAdapter
 
-        selectLocaliteLivraison.setTitle("Choisir la localite")
+        //selectLocaliteLivraison.setTitle("Choisir la localite")
 
-        selectLocaliteLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val locality = localitesList!![position]
-                localiteSelected = locality.nom!!
-
-                localiteIdSelected = if (locality.isSynced) {
-                    locality.id!!.toString()
-                } else {
-                    locality.uid.toString()
-                }
-
-                setupProducteurSelection(localiteIdSelected)
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectLocaliteLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val locality = localitesList!![position]
+//                localiteSelected = locality.nom!!
+//
+//                localiteIdSelected = if (locality.isSynced) {
+//                    locality.id!!.toString()
+//                } else {
+//                    locality.uid.toString()
+//                }
+//
+//                setupProducteurSelection(localiteIdSelected)
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -317,7 +317,7 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         val livraisonDrafted = ApiClient.gson.fromJson(draftedDataLivraison?.datas, LivraisonModel::class.java)
-        selectProducteurList.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+        //selectProducteurList.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
 
         if (livraisonDrafted != null) {
             provideDatasSpinnerSelection(
@@ -327,28 +327,28 @@ class LivraisonActivity : AppCompatActivity() {
             )
         }
 
-        selectProducteurList.setTitle("Choisir du producteur")
-        selectProducteurList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val producteur = producteursList!![position]
-                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
-
-                producteurId = if (producteur.isSynced) {
-                    producteur.id!!.toString()
-                } else {
-                    producteur.uid.toString()
-                }
-
-                if(!producteurId.isNullOrBlank()){
-                    editQuantity.isEnabled = true
-                }
-
-                setupParcellesProducteurSelection(producteurId)
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectProducteurList.setTitle("Choisir du producteur")
+//        selectProducteurList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val producteur = producteursList!![position]
+//                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
+//
+//                producteurId = if (producteur.isSynced) {
+//                    producteur.id!!.toString()
+//                } else {
+//                    producteur.uid.toString()
+//                }
+//
+//                if(!producteurId.isNullOrBlank()){
+//                    editQuantity.isEnabled = true
+//                }
+//
+//                setupParcellesProducteurSelection(producteurId)
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
     fun setListener(){
@@ -410,7 +410,7 @@ class LivraisonActivity : AppCompatActivity() {
                 finished = false,
                 callback = {},
                 deconnec =    false,
-                positive = "OKAY",
+                positive = "Compris !",
                 showNo = false
             )
             return
@@ -423,7 +423,7 @@ class LivraisonActivity : AppCompatActivity() {
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "OKAY",
+                positive = "Compris !",
                 showNo = false
             )
             return
@@ -436,7 +436,7 @@ class LivraisonActivity : AppCompatActivity() {
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "OKAY",
+                positive = "Compris !",
                 showNo = false
             )
             return
@@ -449,7 +449,7 @@ class LivraisonActivity : AppCompatActivity() {
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "OKAY",
+                positive = "Compris !",
                 showNo = false
             )
             return
@@ -462,7 +462,7 @@ class LivraisonActivity : AppCompatActivity() {
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "OKAY",
+                positive = "Compris !",
                 showNo = false
             )
             return
@@ -475,7 +475,7 @@ class LivraisonActivity : AppCompatActivity() {
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "OKAY",
+                positive = "Compris !",
                 showNo = false
             )
             return
@@ -507,7 +507,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         selectStaffList.setSelection(0)
         selectParcelleLivraison.setSelection(0)
-        selectLocaliteLivraison.setSelection(0)
+        //selectLocaliteLivraison.setSelection(0)
     }
 
     fun getLivraisonObjet(): LivraisonModel {
@@ -678,14 +678,14 @@ class LivraisonActivity : AppCompatActivity() {
 
     fun setupTypeProducteurParcrelleSelection() {
         try {
-            selectTypeProducteurParcrelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                    typeProducteurParcrelle = resources.getStringArray(R.array.type_produit)[position]
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-                }
-            }
+//            selectTypeProducteurParcrelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                    typeProducteurParcrelle = resources.getStringArray(R.array.type_produit)[position]
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>) {
+//                }
+//            }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)

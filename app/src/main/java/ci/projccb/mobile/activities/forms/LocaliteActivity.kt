@@ -86,7 +86,7 @@ class LocaliteActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
@@ -131,7 +131,7 @@ class LocaliteActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )

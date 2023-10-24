@@ -147,7 +147,7 @@ class CalculEstimationActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )

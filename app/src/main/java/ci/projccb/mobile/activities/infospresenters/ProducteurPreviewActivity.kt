@@ -45,11 +45,11 @@ class ProducteurPreviewActivity : AppCompatActivity() {
                     labelNomProdPreview.text = producteur.nom
                     labelPrenomProdPreview.text = producteur.prenoms
                     labelSexeProdPreview.text = producteur.sexeProducteur
-                    labelNaissanceProdPreview.text = producteur.naissance
-                    labelNationnaliteProdPreview.text = producteur.nationalite
-                    labelContactOneProdPreview.text = producteur.phoneOne
-                    labelContactTwoProdPreview.text = producteur.phoneTwo ?: ""
-                    labelPieceNumProdPreview.text = producteur.pieceNumber
+//                    labelNaissanceProdPreview.text = producteur.naissance
+//                    labelNationnaliteProdPreview.text = producteur.nationalite
+//                    labelContactOneProdPreview.text = producteur.phoneOne
+//                    labelContactTwoProdPreview.text = producteur.phoneTwo ?: ""
+//                    labelPieceNumProdPreview.text = producteur.pieceNumber
                     labelPieceProdPreview.text = producteur.piece
                     labelEtudeProdPreview.text = producteur.etude
 

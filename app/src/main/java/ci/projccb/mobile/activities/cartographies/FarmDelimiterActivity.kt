@@ -459,7 +459,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     finished = false,
                     callback = {},
                     context = this,
-                    positive = "Okay",
+                    positive = "Compris !",
                     deconnec = false,
                     showNo = false
                 )

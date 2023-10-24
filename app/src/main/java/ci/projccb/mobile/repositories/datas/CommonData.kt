@@ -4,8 +4,8 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class CommonData (
-    @Expose val id: Int? = null,
-    @Expose val nom: String? = null,
+    @Expose var id: Int? = null,
+    @Expose var nom: String? = null,
     @Expose val table: String? = null,
     @Expose val codeapp: String? = null,
     @Expose @SerializedName("role_name") val role: String? = null,

@@ -68,7 +68,7 @@ interface ApiService {
     fun getApplicateurs(@Body table: CommonData): Call<MutableList<ApplicateurModel>>
 
     @POST("getlocalite")
-    fun getLocalites(@Body table: CommonData): Call<MutableList<CommonData>>
+    fun getLocalites(@Body table: CommonData): Call<MutableList<LocaliteModel>>
 
     @POST("getdomain")
     fun getDomaine(@Body table: CommonData): Call<CommonResponse>

@@ -102,9 +102,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 sourceEnergie = arrayEnergies[position]
 
                 if (sourceEnergie.uppercase().contains("BOIS")) {
-                    linearBoisParSemaineContainerMenage.visibility = View.VISIBLE
+                    //linearBoisParSemaineContainerMenage.visibility = View.VISIBLE
                 } else {
-                    linearBoisParSemaineContainerMenage.visibility = View.GONE
+                    //linearBoisParSemaineContainerMenage.visibility = View.GONE
                     boisSemaine = ""
                 }
             }
@@ -128,16 +128,16 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         val orduresAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayOrdures)
-        selectOrdureMenage!!.adapter = orduresAdapter
+        //selectOrdureMenage!!.adapter = orduresAdapter
 
-        selectOrdureMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                ordureMenager = arrayOrdures[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectOrdureMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                ordureMenager = arrayOrdures[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -154,16 +154,16 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         val toilettesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayToilettes)
-        selectEauToiletteMenage!!.adapter = toilettesAdapter
+        //selectEauToiletteMenage!!.adapter = toilettesAdapter
 
-        selectEauToiletteMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                toiletteEau = arrayToilettes[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectEauToiletteMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                toiletteEau = arrayToilettes[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -176,32 +176,32 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
 
             localiteId = ""
             localiteNom = ""
-            selectLocaliteMenage?.adapter = null
+            //selectLocaliteMenage?.adapter = null
         } else {
             val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-            selectLocaliteMenage!!.adapter = localiteAdapter
+            //selectLocaliteMenage!!.adapter = localiteAdapter
 
-            selectLocaliteMenage.setTitle("Choisir la localite")
-            selectLocaliteMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                    val locality = localitesList!![position]
-                    localiteNom = locality.nom!!
-
-                    localiteId = if (locality.isSynced) locality.id!!.toString() else locality.uid.toString()
-
-                    setupProducteurSelection(localiteId)
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-                }
-            }
+//            selectLocaliteMenage.setTitle("Choisir la localite")
+//            selectLocaliteMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                    val locality = localitesList!![position]
+//                    localiteNom = locality.nom!!
+//
+//                    localiteId = if (locality.isSynced) locality.id!!.toString() else locality.uid.toString()
+//
+//                    setupProducteurSelection(localiteId)
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>) {
+//                }
+//            }
         }
     }
 
@@ -219,16 +219,16 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         val vaissellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayVaisselles)
-        selectEauVaisselleMenage!!.adapter = vaissellesAdapter
-
-        selectEauVaisselleMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                vaisselleEau = arrayVaisselles[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectEauVaisselleMenage!!.adapter = vaissellesAdapter
+//
+//        selectEauVaisselleMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                vaisselleEau = arrayVaisselles[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -245,17 +245,17 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         val sourceEauAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arraySourceEau)
-        selectEauPotableMenage!!.adapter = sourceEauAdapter
-
-        selectEauPotableMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                eauPotable = arraySourceEau[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-
-            }
-        }
+//        selectEauPotableMenage!!.adapter = sourceEauAdapter
+//
+//        selectEauPotableMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                eauPotable = arraySourceEau[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//            }
+//        }
     }
 
 
@@ -291,9 +291,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 machinePulverisation = arrayTypeMachines[position]
 
                 if (machinePulverisation.uppercase().contains("FECA")) {
-                    linearAtomisateurContainerMenage.visibility = View.GONE
+                    //linearAtomisateurContainerMenage.visibility = View.GONE
                 } else {
-                    linearAtomisateurContainerMenage.visibility = View.VISIBLE
+                    //linearAtomisateurContainerMenage.visibility = View.VISIBLE
                 }
             }
 
@@ -375,39 +375,39 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun setupDechetYesNoSelection() {
-        selectDechetYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                dechetYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectDechetYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                dechetYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
     fun setupTraitementProtectionYesNoSelection() {
-        selectEquipementProtectionYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                equipementProtectionYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectEquipementProtectionYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                equipementProtectionYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
     fun setupWCYesNoSelection() {
-        selectWCYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                wcYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-
-            }
-        }
+//        selectWCYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                wcYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//            }
+//        }
     }
 
 
@@ -454,22 +454,22 @@ class ProducteurMenageActivity : AppCompatActivity() {
                     "oui" -> {
                         linearTypeMachinePulContainerMenage.visibility = View.VISIBLE
                         linearMachinePulKeeperContainerMenage.visibility = View.VISIBLE
-                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.VISIBLE
-                        linearChampsNoNumberContainerMenage.visibility = View.GONE
+//                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.VISIBLE
+//                        linearChampsNoNumberContainerMenage.visibility = View.GONE
                     }
                     "non" -> {
                         linearTypeMachinePulContainerMenage.visibility = View.GONE
                         linearMachinePulKeeperContainerMenage.visibility = View.GONE
-                        linearAtomisateurContainerMenage.visibility = View.GONE
-                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.GONE
-                        linearChampsNoNumberContainerMenage.visibility = View.VISIBLE
+//                        linearAtomisateurContainerMenage.visibility = View.GONE
+//                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.GONE
+//                        linearChampsNoNumberContainerMenage.visibility = View.VISIBLE
                     }
                     else -> {
-                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.GONE
+                        //linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.GONE
                         linearTypeMachinePulContainerMenage.visibility = View.GONE
                         linearMachinePulKeeperContainerMenage.visibility = View.GONE
-                        linearAtomisateurContainerMenage.visibility = View.GONE
-                        linearChampsNoNumberContainerMenage.visibility = View.GONE
+//                        linearAtomisateurContainerMenage.visibility = View.GONE
+//                        linearChampsNoNumberContainerMenage.visibility = View.GONE
                     }
                 }
             }
@@ -489,13 +489,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
                 when (femmeActiviteYesNo.uppercase()) {
                     "OUI" -> {
-                        linearFemmeActiviteContainerMenage.visibility = View.VISIBLE
+                        //linearFemmeActiviteContainerMenage.visibility = View.VISIBLE
                     }
                     "NON" -> {
-                        linearFemmeActiviteContainerMenage.visibility = View.GONE
+                        //linearFemmeActiviteContainerMenage.visibility = View.GONE
                     }
                     else -> {
-                        linearFemmeActiviteContainerMenage.visibility = View.GONE
+                        //linearFemmeActiviteContainerMenage.visibility = View.GONE
                     }
                 }
             }
@@ -572,10 +572,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         quartierNom = editQuartierMenage.text?.trim().toString()
-        femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
+        //femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
         donFemmeCacaoSuperficie = editDonSuperficieCacaoMenage.text?.trim().toString()
 
-        traitementHolderNom = editTraiteurMenage.text?.trim().toString()
+        //traitementHolderNom = editTraiteurMenage.text?.trim().toString()
         femmeActivite = editFemmeActiviteMenage.text?.trim().toString()
 
 
@@ -597,7 +597,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         return  ProducteurMenageModel(
             uid = 0,
             activiteFemme = femmeActivite,
-            boisChauffe = editNbreBoisSemaineMenage.text?.trim().toString(),
+            //boisChauffe = editNbreBoisSemaineMenage.text?.trim().toString(),
             sources_energies_id = sourceEnergie,
             ordures_menageres_id = ordureMenager,
             separationMenage = dechetYesNo,
@@ -618,7 +618,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             nomActiviteFemme = femmeActivite,
             superficieCacaoFemme = femmeCacaoSuperficie,
             nombreHectareFemme = donFemmeCacaoSuperficie,
-            numeroPersonneTraitant = editChampsNoNumeroMenage.text.toString().trim(),
+            //numeroPersonneTraitant = editChampsNoNumeroMenage.text.toString().trim(),
             quartier = quartierNom,
             producteurs_id = producteurId,
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
@@ -637,16 +637,16 @@ class ProducteurMenageActivity : AppCompatActivity() {
         sourceEnergie = ""
         selectEnergieMenage.setSelection(0)
         ordureMenager = ""
-        selectOrdureMenage.setSelection(0)
+        //selectOrdureMenage.setSelection(0)
         dechetYesNo = ""
-        selectDechetYesNoMenage.setSelection(0)
+        //selectDechetYesNoMenage.setSelection(0)
         eauPotable = ""
         toiletteEau = ""
         vaisselleEau = ""
-        selectEauToiletteMenage.setSelection(0)
+        //selectEauToiletteMenage.setSelection(0)
         //selectEauVaisselleMenage.setSelection(0)
-        selectEauPotableMenage.setSelection(0)
-        selectWCYesNoMenage.setSelection(0)
+        //selectEauPotableMenage.setSelection(0)
+        //selectWCYesNoMenage.setSelection(0)
         wcYesNo = ""
         machinePulverisation = ""
         machineEmpruntKeeper = ""
@@ -675,10 +675,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     fun draftMenage(draftModel: DataDraftedModel?) {
         quartierNom = editQuartierMenage.text?.trim().toString()
-        femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
+        //femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
         donFemmeCacaoSuperficie = editDonSuperficieCacaoMenage.text?.trim().toString()
 
-        traitementHolderNom = editTraiteurMenage.text?.trim().toString()
+        //traitementHolderNom = editTraiteurMenage.text?.trim().toString()
         femmeActivite = editFemmeActiviteMenage.text?.trim().toString()
 
 
@@ -734,12 +734,12 @@ class ProducteurMenageActivity : AppCompatActivity() {
             }?.let {
                 localitesDatas.addAll(it)
             }
-            selectLocaliteMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-            provideDatasSpinnerSelection(
-                selectLocaliteMenage,
-                menageUndrafted.localiteNom,
-                localitesDatas
-            )
+            //selectLocaliteMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
+//            provideDatasSpinnerSelection(
+//                selectLocaliteMenage,
+//                menageUndrafted.localiteNom,
+//                localitesDatas
+//            )
 
             // Producteur
             /*val producteursLists = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -779,19 +779,19 @@ class ProducteurMenageActivity : AppCompatActivity() {
             }?.let {
                 orduresDatas.addAll(it)
             }
-            selectOrdureMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, orduresDatas)
-            provideDatasSpinnerSelection(
-                selectOrdureMenage,
-                menageUndrafted.ordures_menageres_id,
-                orduresDatas
-            )
+            //selectOrdureMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, orduresDatas)
+//            provideDatasSpinnerSelection(
+//                selectOrdureMenage,
+//                menageUndrafted.ordures_menageres_id,
+//                orduresDatas
+//            )
 
             // Dechets
-            provideStringSpinnerSelection(
-                selectDechetYesNoMenage,
-                menageUndrafted.separationMenage,
-                resources.getStringArray(R.array.YesOrNo)
-            )
+//            provideStringSpinnerSelection(
+//                selectDechetYesNoMenage,
+//                menageUndrafted.separationMenage,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
 
             // Eaux
             val eausLists = CcbRoomDatabase.getDatabase(this)?.eauUseeDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -801,26 +801,26 @@ class ProducteurMenageActivity : AppCompatActivity() {
             }?.let {
                 eausDatas.addAll(it)
             }
-            selectEauToiletteMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, eausDatas)
-            selectEauVaisselleMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, eausDatas)
+//            selectEauToiletteMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, eausDatas)
+//            selectEauVaisselleMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, eausDatas)
 
-            provideDatasSpinnerSelection(
-                selectEauToiletteMenage,
-                menageUndrafted.eauxToillette,
-                eausDatas
-            )
+//            provideDatasSpinnerSelection(
+//                selectEauToiletteMenage,
+//                menageUndrafted.eauxToillette,
+//                eausDatas
+//            )
 
-            provideDatasSpinnerSelection(
-                selectEauVaisselleMenage,
-                menageUndrafted.eauxVaisselle,
-                eausDatas
-            )
+//            provideDatasSpinnerSelection(
+//                selectEauVaisselleMenage,
+//                menageUndrafted.eauxVaisselle,
+//                eausDatas
+//            )
 
-            provideStringSpinnerSelection(
-                selectWCYesNoMenage,
-                menageUndrafted.wc,
-                resources.getStringArray(R.array.YesOrNo)
-            )
+//            provideStringSpinnerSelection(
+//                selectWCYesNoMenage,
+//                menageUndrafted.wc,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
 
             // Eaux portable
             val potablesLists = CcbRoomDatabase.getDatabase(this)?.sourceEauDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -830,12 +830,12 @@ class ProducteurMenageActivity : AppCompatActivity() {
             }?.let {
                 potablesDatas.addAll(it)
             }
-            selectEauPotableMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, potablesDatas)
-            provideDatasSpinnerSelection(
-                selectEauPotableMenage,
-                menageUndrafted.sources_eaux_id,
-                potablesDatas
-            )
+            //selectEauPotableMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, potablesDatas)
+//            provideDatasSpinnerSelection(
+//                selectEauPotableMenage,
+//                menageUndrafted.sources_eaux_id,
+//                potablesDatas
+//            )
 
             // champs traiteur
             provideStringSpinnerSelection(
@@ -882,11 +882,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
             ) */// Todo fix atomisateur etat
 
             // Equipement
-            provideStringSpinnerSelection(
-                selectEquipementProtectionYesNoMenage,
-                menageUndrafted.equipements,
-                resources.getStringArray(R.array.YesOrNo)
-            )
+//            provideStringSpinnerSelection(
+//                selectEquipementProtectionYesNoMenage,
+//                menageUndrafted.equipements,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
 
             // femme activite
             provideStringSpinnerSelection(
@@ -901,12 +901,12 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 resources.getStringArray(R.array.YesOrNo)
             )
 
-            editChampsNoNumeroMenage.setText(menageUndrafted.numeroPersonneTraitant)
-            editTraiteurMenage.setText(menageUndrafted.nomPersonneTraitant)
+//            editChampsNoNumeroMenage.setText(menageUndrafted.numeroPersonneTraitant)
+//            editTraiteurMenage.setText(menageUndrafted.nomPersonneTraitant)
             editQuartierMenage.setText(menageUndrafted.quartier)
-            editNbreBoisSemaineMenage.setText(menageUndrafted.boisChauffe)
+            //editNbreBoisSemaineMenage.setText(menageUndrafted.boisChauffe)
             editFemmeActiviteMenage.setText(menageUndrafted.nomActiviteFemme)
-            editSuperficieCacaoMenage.setText(menageUndrafted.superficieCacaoFemme)
+            //editSuperficieCacaoMenage.setText(menageUndrafted.superficieCacaoFemme)
         } catch (ex: Exception) {
             throw Exception(ex)
         }
@@ -919,27 +919,27 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         prodMenagereDao = CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
 
-        editSuperficieCacaoMenage.doAfterTextChanged {
-            try {
-                setupDonFemmeYesNoSelection()
-                if (it.toString().isEmpty()) {
-                    linearDonCacaoFemmeYesNoContainerMenage.visibility = View.GONE
-                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
-                } else {
-                    /*if (data.contains(",")) {
-                        data = data.replace(',', '.')
-                    }*/
-                    if (it.toString().trim().toDouble() == 0.0) {
-                        linearDonCacaoFemmeYesNoContainerMenage.visibility = View.VISIBLE
-                    } else {
-                        linearDonCacaoFemmeYesNoContainerMenage.visibility = View.GONE
-                        linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
-                    }
-                }
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
+//        editSuperficieCacaoMenage.doAfterTextChanged {
+//            try {
+//                setupDonFemmeYesNoSelection()
+//                if (it.toString().isEmpty()) {
+//                    linearDonCacaoFemmeYesNoContainerMenage.visibility = View.GONE
+//                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
+//                } else {
+//                    /*if (data.contains(",")) {
+//                        data = data.replace(',', '.')
+//                    }*/
+//                    if (it.toString().trim().toDouble() == 0.0) {
+//                        linearDonCacaoFemmeYesNoContainerMenage.visibility = View.VISIBLE
+//                    } else {
+//                        linearDonCacaoFemmeYesNoContainerMenage.visibility = View.GONE
+//                        linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
+//                    }
+//                }
+//            } catch (ex: Exception) {
+//                ex.printStackTrace()
+//            }
+//        }
 
         editDonSuperficieCacaoMenage.doAfterTextChanged {
             try {

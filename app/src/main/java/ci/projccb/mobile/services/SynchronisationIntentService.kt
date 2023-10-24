@@ -124,7 +124,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 //reform producteur
                 //producteur.localitesId
 
-                producteur.naissance = Commons.convertDate(producteur.naissance, true)
+                producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
 
                 if (!producteur.picturePath.isNullOrEmpty()) producteur.picture = Commons.convertPathBase64(producteur.picturePath, 1)
                 if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)

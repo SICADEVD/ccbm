@@ -110,7 +110,7 @@ class FormationActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
@@ -385,7 +385,7 @@ class FormationActivity : AppCompatActivity() {
 
     private fun getFormationObjet(): FormationModel {
         return FormationModel(
-            dateFormation = editDateFormation.text?.trim().toString(),
+//            dateFormation = editDateFormation.text?.trim().toString(),
             lieuFormationsId = lieu,
             isSynced = false,
             typeFormationId = typeFormationId,
@@ -410,8 +410,8 @@ class FormationActivity : AppCompatActivity() {
     fun clearFields() {
         setAll()
 
-        editDateFormation.text = null
-        editThemeFormation.text = null
+//        editDateFormation.text = null
+//        editThemeFormation.text = null
         editVisiteursFormation.text = null
 
         selectLocaliteFormation.setSelection(0)
@@ -422,7 +422,7 @@ class FormationActivity : AppCompatActivity() {
         producteursList?.clear()
         producteurPresenceAda?.notifyDataSetChanged()
 
-        editThemeFormation.requestFocus()
+//        editThemeFormation.requestFocus()
     }
 
 
@@ -546,7 +546,7 @@ class FormationActivity : AppCompatActivity() {
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
             )
@@ -665,7 +665,7 @@ class FormationActivity : AppCompatActivity() {
         editVisiteursFormation.setText(formationDrafted.visiteurs)
 
         // Date formation
-        editDateFormation.setText(formationDrafted.dateFormation)
+        //editDateFormation.setText(formationDrafted.dateFormation)
     }
 
 
@@ -731,20 +731,20 @@ class FormationActivity : AppCompatActivity() {
         formationDao = CcbRoomDatabase.getDatabase(applicationContext)?.formationDao()
         producteurDao = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
 
-        editDateFormation.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-                editDateFormation.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
-                dateNaissance = editDateFormation.text?.toString()!!
-            }, year, month, dayOfMonth)
-
-            datePickerDialog!!.datePicker.maxDate = Date().time
-            datePickerDialog?.show()
-        }
+//        editDateFormation.setOnClickListener {
+//            datePickerDialog = null
+//            val calendar: Calendar = Calendar.getInstance()
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = calendar.get(Calendar.MONTH)
+//            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+//            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+//                editDateFormation.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
+//                dateNaissance = editDateFormation.text?.toString()!!
+//            }, year, month, dayOfMonth)
+//
+//            datePickerDialog!!.datePicker.maxDate = Date().time
+//            datePickerDialog?.show()
+//        }
 
         producteursSelectedList = mutableListOf()
         producteurPresenceAda = ProducteurPresenceAdapter(producteursSelectedList)

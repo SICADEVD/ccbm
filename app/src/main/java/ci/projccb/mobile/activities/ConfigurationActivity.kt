@@ -141,13 +141,14 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     val clientLocalite = ApiClient.apiService.getLocalites(CommonData(userid = agentID, table = "localites"))
-                    val responseLocalites: Response<MutableList<CommonData>> = clientLocalite.execute()
-                    val localitesList: MutableList<CommonData>? = responseLocalites.body()
+                    val responseLocalites: Response<MutableList<LocaliteModel>> = clientLocalite.execute()
+                    val localitesList: MutableList<LocaliteModel>? = responseLocalites.body()
 
                     localitesList?.map {
                         val localite = LocaliteModel(
                             id = it.id,
                             nom = it.nom,
+                            sectionId = it.sectionId,
                             uid = 0,
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
@@ -1815,7 +1816,7 @@ class ConfigurationActivity : AppCompatActivity() {
 //                            localitesId = producteurUpdate.localitesId,
 //                            nom = producteurUpdate.nom.toString(),
 //                            prenoms = producteurUpdate.prenoms.toString(),
-//                            naissance = producteurUpdate.dateNaiss.toString(),
+//                            dateNaiss = producteurUpdate.dateNaiss.toString(),
 //                            nationalite = producteurUpdate.nationalitesId.toString(),
 //                            phoneOne = producteurUpdate.phone1.toString(),
 //                            phoneTwo = producteurUpdate.phone2.toString(),
@@ -2003,7 +2004,7 @@ class ConfigurationActivity : AppCompatActivity() {
                     producteur.typeculture = mutableListOf()
                     producteur.superficieculture = mutableListOf()
 
-                    producteur.naissance = Commons.convertDate(producteur.naissance, true)
+                    producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
 
                     producteur.producteursCultures?.map { culture ->
                         producteur.typeculture?.add(culture.label!!)

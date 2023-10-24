@@ -12,16 +12,16 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.Gravity
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.widget.doAfterTextChanged
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.ProducteurPreviewActivity
 import ci.projccb.mobile.adapters.CultureProducteurAdapter
@@ -35,9 +35,12 @@ import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.applyFilters
 import ci.projccb.mobile.tools.Commons.Companion.encodeFileToBase64Binary
+import ci.projccb.mobile.tools.Commons.Companion.getAllEditTextViews
+import ci.projccb.mobile.tools.Commons.Companion.getAllSpinnerViews
 import ci.projccb.mobile.tools.Commons.Companion.loadShakeAnimation
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
+import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.*
@@ -55,6 +58,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.lang.reflect.Field
 
 
 @SuppressWarnings("ALL")
@@ -92,10 +96,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     var prenomsProducteur = ""
     var dateNaissance = ""
     var nationaliteSelected = ""
-    var phoneOne = ""
+    var phone1 = ""
     var phoneTwo = ""
     var typePieceSelected = ""
-    var pieceNumber = ""
+    var numPiece = ""
     var personneBlesseeSelected = ""
     var jachereYesNo = ""
     var statutCertification = ""
@@ -132,46 +136,79 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     val REQUEST_IMAGE_PICKED = 2
     var fromAction = ""
 
+    val sectionCommon = CommonData();
+    val localiteCommon = CommonData();
+    val programmeCommon = CommonData();
 
-    fun setupLocaliteSelection() {
-        localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
-        localitesList = localiteDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        if (localitesList?.size == 0) {
-            showMessage(
-                "La liste des Localités semble vide, veuillez procéder à la synchronisation des données svp.",
-                this,
-                finished = true,
-                callback = {},
-                positive = "OKAY",
-                deconnec = false,
-                showNo = false
-
+    fun setupSectionSelection() {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList =
+            sectionDao?.getAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
             )
-            return
-        }
 
-        val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-        selectLocaliteProducteur!!.adapter = localiteAdapter
+        setListenerForSpinner(this, "Choix de la section !", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.", spinner = selectSectionProducteur, listIem = sectionList?.map { it.libelle }
+            ?.toList() ?: listOf(),
+            onChanged = {
 
-        selectLocaliteProducteur.setTitle("Choisir la localite")
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
 
-        selectLocaliteProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val locality = localitesList!![position]
-                localiteSelected = locality.nom!!
+                setLocaliteSpinner(sectionCommon.id!!)
 
-                if (locality.isSynced) {
-                    localiteIdSelected = locality.id!!.toString()
-                } else {
-                    localiteIdSelected = locality.uid.toString()
-                }
-            }
+            }, onSelected = { itemId, visibility ->
 
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+            })
     }
+
+    private fun setProgrammeSpinner(id: Int?) {
+
+        var programmesDao = CcbRoomDatabase.getDatabase(applicationContext)?.programmesDao();
+        var programmeListi = programmesDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+        //LogUtils.d(localitesListi)
+        setListenerForSpinner(this, "Choix du programme !", "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectProgramProducteur, listIem = programmeListi?.map { it.libelle }
+            ?.toList() ?: listOf(), onChanged = {
+
+            val programme = programmeListi!![it]
+            programmeCommon.nom = programme.libelle!!
+            programmeCommon.id = programme.id!!
+
+        }, onSelected = { itemId, visibility ->
+
+        })
+
+    }
+
+    private fun setLocaliteSpinner(id: Int) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        setListenerForSpinner(this, "Choix de la localité !", "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectLocaliteProducteur, listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    setProgrammeSpinner(localiteCommon.id)
+                }
+
+
+            }, onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -189,7 +226,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
             )
@@ -302,11 +339,11 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 anneeCertification = ""
                 if (position == 0) {
-                    linearCodeContainerProducteur.visibility = VISIBLE
-                    linearAnneeCertificationProducteur.visibility = VISIBLE
+//                    linearCodeContainerProducteur.visibility = VISIBLE
+//                    linearAnneeCertificationProducteur.visibility = VISIBLE
                 } else {
-                    linearAnneeCertificationProducteur.visibility = GONE
-                    linearCodeContainerProducteur.visibility = GONE
+//                    linearAnneeCertificationProducteur.visibility = GONE
+//                    linearCodeContainerProducteur.visibility = GONE
                 }
 
                 statutCertification = resources.getStringArray(R.array.status)[position]
@@ -347,94 +384,97 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun collectDatas() {
-        nomProducteur = editNomProducteur.text.toString().trim()
-        prenomsProducteur = editPrenomsProducteur.text.toString().trim()
-        phoneOne = editTelOneProducteur.text.toString().trim()
-        phoneTwo = editTelTwoProducteur.text.toString().trim()
+//        nomProducteur = editNomProducteur.text.toString().trim()
+//        prenomsProducteur = editPrenomsProducteur.text.toString().trim()
+//        phone1 = editTelOneProducteur.text.toString().trim()
+        //phoneTwo = editTelTwoProducteur.text.toString().trim()
 
-        pieceNumber = editPieceProducteur.text.toString().trim()
+//        numPiece = editPieceProducteur.text.toString().trim()
 
-        if (localiteSelected.isEmpty()) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Localité non renseignée")
-            return
-        }
-        if (nomProducteur.isEmpty()) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Nom non renseigné")
-            return
-        }
-        if (prenomsProducteur.isEmpty()) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Prenoms non renseigné")
-            return
-        }
-        if (selectNationaliteProducteur.selectedItemPosition == 0) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Nationalité non renseignée")
-            return
-        }
-        if (dateNaissance.isEmpty()) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Date de naissance non renseignée")
-            return
-        }
+//        if (localiteSelected.isEmpty()) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Localité non renseignée")
+//            return
+//        }
+//        if (nomProducteur.isEmpty()) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Nom non renseigné")
+//            return
+//        }
+//        if (prenomsProducteur.isEmpty()) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Prenoms non renseigné")
+//            return
+//        }
+//        if (selectNationaliteProducteur.selectedItemPosition == 0) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Nationalité non renseignée")
+//            return
+//        }
+//        if (dateNaissance.isEmpty()) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Date de naissance non renseignée")
+//            return
+//        }
 
-        /*if (phoneOne.isEmpty()) {
+        /*if (phone1.isEmpty()) {
             ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Contact n°1 non renseigné")
             return
         }*/
 
-        if (selectPieceProducteur.selectedItemPosition == 0) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Type de piece non renseigné")
-            return
-        }
-        if (pieceNumber.isEmpty()) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("numero piece non renseigné")
-            return
-        }
-        if (selectEtudeProducteur.selectedItemPosition == 0) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Niveau etude non renseigné")
-            return
-        }
+//        if (selectPieceProducteur.selectedItemPosition == 0) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Type de piece non renseigné")
+//            return
+//        }
+//        if (numPiece.isEmpty()) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("numero piece non renseigné")
+//            return
+//        }
+//        if (selectEtudeProducteur.selectedItemPosition == 0) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Niveau etude non renseigné")
+//            return
+//        }
         /*if (FileUtils.getLength(profilPhotoPath).toInt() == 0) {
             ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Photo de profil non renseignée")
             return
         }*/
 
-        if (FileUtils.getLength(signaturePath).toInt() == 0) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Signature non renseignée")
-            return
-        }
-        if (statutCertification.contains("statut", ignoreCase = true)) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Statut non renseigné")
-            return
-        }
+//        if (FileUtils.getLength(signaturePath).toInt() == 0) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Signature non renseignée")
+//            return
+//        }
+//        if (statutCertification.contains("statut", ignoreCase = true)) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Statut non renseigné")
+//            return
+//        }
 
-        if (statutCertification.lowercase().startsWith("certifie", ignoreCase = true) && editAnneeCertificationProducteur.text.toString().isEmpty()) {
-            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Année de certification non renseignée")
-            return
-        }
+//        if (statutCertification.lowercase().startsWith("certifie", ignoreCase = true) && editAnneeCertificationProducteur.text.toString().isEmpty()) {
+//            ToastUtils.make().setGravity(Gravity.CENTER, 0, 0).setTextColor(R.color.red_title).show("Année de certification non renseignée")
+//            return
+//        }
 
-        val producteurModel = getProducteurObjet()
+        //val producteurModel = getProducteurObjet()
 
-        val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
-        intentProducteurPreview.putExtra("preview", producteurModel)
-        intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
-        startActivity(intentProducteurPreview)
+        var producteurModel = getSetupProducteurModel(ProducteurModel(uid = 0, id = 0,))
+        LogUtils.d(producteurModel.toString())
+
+//        val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
+//        intentProducteurPreview.putExtra("preview", producteurModel)
+//        intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
+//        startActivity(intentProducteurPreview)
     }
 
     private fun getProducteurObjet(): ProducteurModel {
         return ProducteurModel(
             uid = 0,
             id = 0,
-            codeProd = editCodeProducteur.text?.trim().toString(),
+            //codeProd = editCodeProducteur.text?.trim().toString(),
             localitesId = localiteIdSelected.toInt().toString(),
             nom = nomProducteur,
             prenoms = prenomsProducteur,
-            naissance = dateNaissance,
+            dateNaiss = dateNaissance,
             nationalite = nationaliteSelected,
-            phoneOne = phoneOne,
-            phoneTwo = phoneTwo,
+            phone1 = phone1,
+            phone2 = phoneTwo,
             piece = typePieceSelected,
-            pieceNumber = pieceNumber,
+            numPiece = numPiece,
             statutCertification = statutCertification,
-            anneeCertification = editAnneeCertificationProducteur.text.toString().trim(),
+            //anneeCertification = editAnneeCertificationProducteur.text.toString().trim(),
             hasForest = jachereYesNo,
             forestSuperficy = jachereSuperficie,
             hasOtherFarms = cultureYesNo,
@@ -465,14 +505,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun clearFields() {
-        setAll()
+        setAllSelection()
 
-        editCodeProducteur.text = null
+        //editCodeProducteur.text = null
         editNomProducteur.text = null
         editPrenomsProducteur.text = null
         editNaissanceProducteur.text = null
         editTelOneProducteur.text = null
-        editTelTwoProducteur.text = null
+        //editTelTwoProducteur.text = null
         editPieceProducteur.text = null
         //editNbreTravailleursProducteur.text = null
         //editNbreUnder18Producteur.text = null
@@ -667,20 +707,176 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     }
 
 
-    fun setAll() {
-        setupLocaliteSelection()
+    fun setAllSelection() {
+        setupTitreSelection()
 
-        setupNationaliteSelection()
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectCertifProducteur,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
 
-        setupTypePieceSelection()
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerAutreCertifProducteur.visibility = visibility
+                }
+            })
 
-        setupEtudesSelection()
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = spinnerVarieteProducteur,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = (AssetFileHelper.getListDataFromAsset(21, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
 
-        setupSexeSelection()
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerAutreVarieteProducteur.visibility = visibility
+                }
+            })
 
-        setupConsentementSelection()
+        setupSectionSelection()
 
-        setupStatutCertificationSelection()
+        setListenerForSpinner(this, "Choix du lieu","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectHabitationProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectStatutProducteur,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            listIem = resources.getStringArray(R.array.status)
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    linearAnneeCertificationProducteur.visibility = visibility
+                    linearCodeContainerProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectSexeProducteur,
+            listIem = resources.getStringArray(R.array.genre)
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectStatutMatProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectNationaliteProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectNationaliteProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectProcheProducteur,
+            listIem = listOf(),
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1) {
+                    containerEntantqueProducteur.visibility = visibility
+                    containerMembreNumProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEtudeProducteur,
+            listIem = resources.getStringArray(R.array.niveauEtude).toList(),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectPieceProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectCarteCMUProducteur,
+            listIem = resources.getStringArray(R.array.YesOrNo).toList(),
+            itemChanged = listOf(Pair(1, "Oui")),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1) containerNumPieceCMUProducteur.visibility = visibility
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeCarteCSSProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom },
+            itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                containerNumCarteCSSProducteur.visibility = visibility
+            })
+
+//        setupNationaliteSelection()
+//
+//        setupTypePieceSelection()
+//
+//        setupEtudesSelection()
+//
+//        setupSexeSelection()
+//
+//        setupConsentementSelection()
+//
+//        setupStatutCertificationSelection()
+    }
+
+    private fun setupTitreSelection() {
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTitreDUProducteur,
+            itemChanged = arrayListOf(Pair(1, "Planté-partager")),
+            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>)?.map { it.nom }
+            ?.toList() ?: listOf(), onChanged = {
+
+        }, onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerPrecisionTitreProducteur.visibility = visibility
+                }
+        })
+
+    }
+
+    fun getSetupProducteurModel(prodModel: ProducteurModel): ProducteurModel {
+        LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_producteur)
+        getAllEditTextViews(mainLayout, prodModel)
+        getAllSpinnerViews(mainLayout, prodModel)
+        return prodModel
+//        val dynamicPropertyName = "name_property" // Change this to the property name you want to access
+//        val dynamicPropertyValue = sectionModel::class.memberProperties.find { it.name == dynamicPropertyName }?.get(sectionModel)
+//        println("$dynamicPropertyName: $dynamicPropertyValue")
     }
 
 
@@ -723,10 +919,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     fun undraftedDatas(draftedData: DataDraftedModel) {
         val producteurDrafted = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
 
-        if (producteurDrafted.codeProdApp?.isNotEmpty() == true) {
-            linearCodeContainerProducteur.visibility = VISIBLE
-            editCodeProducteur.setText(producteurDrafted.codeProdApp ?: "")
-        }
+//        if (producteurDrafted.codeProdApp?.isNotEmpty() == true) {
+//            linearCodeContainerProducteur.visibility = VISIBLE
+//            editCodeProducteur.setText(producteurDrafted.codeProdApp ?: "")
+//        }
 
         // Consentement
         provideStringSpinnerSelection(
@@ -809,14 +1005,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             etudesDatas
         )
 
-        editAnneeCertificationProducteur.setText(producteurDrafted.anneeCertification ?: "0")
-        editCodeProducteur.setText(producteurDrafted.codeProd)
+        //editAnneeCertificationProducteur.setText(producteurDrafted.anneeCertification ?: "0")
+        //editCodeProducteur.setText(producteurDrafted.codeProd)
         editNomProducteur.setText(producteurDrafted.nom)
         editPrenomsProducteur.setText(producteurDrafted.prenoms)
-        editNaissanceProducteur.setText(producteurDrafted.naissance)
-        editTelOneProducteur.setText(producteurDrafted.phoneOne)
-        editTelTwoProducteur.setText(producteurDrafted.phoneTwo)
-        editPieceProducteur.setText(producteurDrafted.pieceNumber)
+        editNaissanceProducteur.setText(producteurDrafted.dateNaiss)
+        editTelOneProducteur.setText(producteurDrafted.phone1)
+        //editTelTwoProducteur.setText(producteurDrafted.phoneTwo)
+        editPieceProducteur.setText(producteurDrafted.numPiece)
 
         LogUtils.e(TAG, "from $fromAction")
     }
@@ -881,41 +1077,43 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         producteurDao = CcbRoomDatabase.getDatabase(this)?.producteurDoa()
-        setAll()
 
-        editNaissanceProducteur.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-                editNaissanceProducteur.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
-                dateNaissance = editNaissanceProducteur.text?.toString()!!
-            }, year, month, dayOfMonth)
+        setAllSelection()
 
-            datePickerDialog!!.datePicker.maxDate = 1104534000000
-            datePickerDialog?.show()
+        setAllClickListener()
+
+        setOtherListener()
+
+        setImageObject()
+
+        addFilterToItem()
+
+        if (intent.getStringExtra("from") != null) {
+            fromAction = intent.getStringExtra("from") ?: ""
+            draftedDataProducteur = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
+            undraftedDatas(draftedDataProducteur!!)
         }
+    }
 
-        editAnneeCertificationProducteur.doAfterTextChanged {
-            val textFiedl = it?.toString()
-
-            if (textFiedl.toString().length == 4) {
-                if (textFiedl.toString().trim().toInt() < 1960) {
-                    showMessage(
-                        "La date ne doit pas etre inferieur à 1960",
-                        this,
-                        finished = false,
-                        {},
-                        "OK",
-                        deconnec = false,
-                        showNo = false
-                    )
-                    return@doAfterTextChanged
-                }
-            }
-        }
+    private fun setOtherListener() {
+//        editAnneeCertificationProducteur.doAfterTextChanged {
+//            val textFiedl = it?.toString()
+//
+//            if (textFiedl.toString().length == 4) {
+//                if (textFiedl.toString().trim().toInt() < 1960) {
+//                    showMessage(
+//                        "La date ne doit pas etre inferieur à 1960",
+//                        this,
+//                        finished = false,
+//                        {},
+//                        "OK",
+//                        deconnec = false,
+//                        showNo = false
+//                    )
+//                    return@doAfterTextChanged
+//                }
+//            }
+//        }
 
         signatureProducteur.setOnSignedListener(this)
 
@@ -932,6 +1130,34 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 editSuperficeProducteur.text.toString().trim(), SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
             addCultureProducteur(cultureProducteur)
         }*/
+    }
+
+    private fun addFilterToItem() {
+        applyFilters(editTelOneProducteur)
+        //applyFilters(editTelTwoProducteur)
+    }
+
+    private fun setImageObject() {
+        whichPhoto = 3
+        createImageFile()
+    }
+
+    private fun setAllClickListener() {
+
+        editNaissanceProducteur.setOnClickListener {
+            datePickerDialog = null
+            val calendar: Calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+                editNaissanceProducteur.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
+                dateNaissance = editNaissanceProducteur.text?.toString()!!
+            }, year, month, dayOfMonth)
+
+            datePickerDialog!!.datePicker.maxDate = 1104534000000
+            datePickerDialog?.show()
+        }
 
         clickSaveProducteur.setOnClickListener {
             Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
@@ -965,12 +1191,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             draftProducteur(draftedDataProducteur ?: DataDraftedModel(uid = 0))
         }
 
-        whichPhoto = 3
-        createImageFile()
-
-        applyFilters(editTelOneProducteur)
-        applyFilters(editTelTwoProducteur)
-
         editAnneeCertificationProducteur.setOnClickListener {
             datePickerDialog = null
             val calendar: Calendar = Calendar.getInstance()
@@ -990,11 +1210,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             datePickerDialog?.show()
         }
 
-        if (intent.getStringExtra("from") != null) {
-            fromAction = intent.getStringExtra("from") ?: ""
-            draftedDataProducteur = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
-            undraftedDatas(draftedDataProducteur!!)
-        }
     }
 
     override fun itemSelected(position: Int, item: CultureProducteurModel) {

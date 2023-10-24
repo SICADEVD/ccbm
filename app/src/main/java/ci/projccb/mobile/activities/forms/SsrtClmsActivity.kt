@@ -13,7 +13,9 @@ import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatSpinner
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner.OnMultipleItemsSelectedListener
 import ci.projccb.mobile.activities.infospresenters.EnqueteSsrtPreviewActivity
 import ci.projccb.mobile.models.*
@@ -83,36 +85,36 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
 
             localiteId = ""
             localiteNom = ""
-            selectLocaliteSsrt?.adapter = null
+            //selectLocaliteSsrt?.adapter = null
         } else {
             val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-            selectLocaliteSsrt!!.adapter = localiteAdapter
-            selectLocaliteSsrt.setTitle("Choisir la localite")
-
-            selectLocaliteSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                    val locality = localitesList!![position]
-                    localiteNom = locality.nom!!
-
-                    localiteId = if (locality.isSynced) {
-                        locality.id!!.toString()
-                    } else {
-                        locality.uid.toString()
-                    }
-
-                    setupProducteurSelection(localiteId)
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-                }
-            }
+//            selectLocaliteSsrt!!.adapter = localiteAdapter
+//            selectLocaliteSsrt.setTitle("Choisir la localite")
+//
+//            selectLocaliteSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                    val locality = localitesList!![position]
+//                    localiteNom = locality.nom!!
+//
+//                    localiteId = if (locality.isSynced) {
+//                        locality.id!!.toString()
+//                    } else {
+//                        locality.uid.toString()
+//                    }
+//
+//                    setupProducteurSelection(localiteId)
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>) {
+//                }
+//            }
         }
     }
 
@@ -151,14 +153,14 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
 
             producteurId = ""
             producteurNom = ""
-            selectProducteurSsrt.adapter = null
+            //selectProducteurSsrt.adapter = null
         } else {
             producteursList?.map {
                 CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
@@ -167,32 +169,32 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             }
 
             val ssrteDraftedLocal = ApiClient.gson.fromJson(draftedSsrteModel?.datas, EnqueteSsrtModel::class.java)
-            selectProducteurSsrt!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+            //selectProducteurSsrt!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
 
             if (ssrteDraftedLocal != null) {
-                provideDatasSpinnerSelection(
-                    selectProducteurSsrt,
-                    ssrteDraftedLocal.producteurNom,
-                    producteursDatas
-                )
+//                provideDatasSpinnerSelection(
+//                    selectProducteurSsrt,
+//                    ssrteDraftedLocal.producteurNom,
+//                    producteursDatas
+//                )
             }
 
-            selectProducteurSsrt.setTitle("Choisir le producteur")
-            selectProducteurSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                    val producteur = producteursList!![position]
-                    producteurNom = "${producteur.nom} ${producteur.prenoms}"
-
-                    producteurId = if (producteur.isSynced) {
-                        producteur.id!!.toString()
-                    } else {
-                        producteur.uid.toString()
-                    }
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-                }
-            }
+            //selectProducteurSsrt.setTitle("Choisir le producteur")
+//            selectProducteurSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                    val producteur = producteursList!![position]
+//                    producteurNom = "${producteur.nom} ${producteur.prenoms}"
+//
+//                    producteurId = if (producteur.isSynced) {
+//                        producteur.id!!.toString()
+//                    } else {
+//                        producteur.uid.toString()
+//                    }
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>) {
+//                }
+//            }
         }
     }
 
@@ -419,7 +421,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         var listSelectRecentWorkLieu = mutableListOf<Int>()
 
-        val multiSelectSpinner = selectRecentWorkLieuSsrt
+        val multiSelectSpinner = MultiSelectSpinner(this)//selectRecentWorkLieuSsrt
         multiSelectSpinner.setTitle("Selectionnez les lieux")
         multiSelectSpinner.setItems(travauxDangereuxResourcesLieu)
         //multiSelectSpinner.hasNoneOption(true)
@@ -503,7 +505,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //        }
         var listSelectLegersLieu = mutableListOf<Int>()
 
-        val multiSelectSpinner = selectRecentWorkLieuLightSsrt
+        val multiSelectSpinner = MultiSelectSpinner(this)//selectRecentWorkLieuLightSsrt
         multiSelectSpinner.setTitle("Selectionnez les lieux")
         multiSelectSpinner.setItems(travauxLegersLieuResources)
         //multiSelectSpinner.hasNoneOption(true)
@@ -821,12 +823,12 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         }?.let {
             localitesDatas.addAll(it)
         }
-        selectLocaliteSsrt.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-        provideDatasSpinnerSelection(
-            selectLocaliteSsrt,
-            ssrteDrafted.localiteNom,
-            localitesDatas
-        )
+//        selectLocaliteSsrt.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
+//        provideDatasSpinnerSelection(
+//            selectLocaliteSsrt,
+//            ssrteDrafted.localiteNom,
+//            localitesDatas
+//        )
 
         // Parents
         val parentsList = CcbRoomDatabase.getDatabase(this)?.lienParenteDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())

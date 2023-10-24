@@ -191,7 +191,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 this,
                 finished = false,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
 
@@ -248,7 +248,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 this,
                 finished = true,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
 

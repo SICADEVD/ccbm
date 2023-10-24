@@ -249,14 +249,14 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
 
     fun clearCultureProducteurFields() {
-        editVarieteOmbrageSuivi.text = null
-        editVarieteOmbrageNombreSuivi.text = null
+//        editVarieteOmbrageSuivi.text = null
+//        editVarieteOmbrageNombreSuivi.text = null
     }
 
 
     fun clearArbresFields() {
-        editArbreNombreSuivi.text = null
-        editAgroArbreSuivi.text = null
+//        editArbreNombreSuivi.text = null
+//        editAgroArbreSuivi.text = null
     }
 
 
@@ -275,9 +275,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         try {
             ombragesList = mutableListOf()
             ombrageAdapter = OmbrageAdapter(ombragesList)
-            recyclerVarieteOmbrageSuiviParcelle.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerVarieteOmbrageSuiviParcelle.adapter = ombrageAdapter
+//            recyclerVarieteOmbrageSuiviParcelle.layoutManager =
+//                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//            recyclerVarieteOmbrageSuiviParcelle.adapter = ombrageAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -289,8 +289,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         try {
             arbresList = mutableListOf()
             arbreAdapter = OmbrageAdapter(arbresList)
-            recyclerArbreAgroSuiviParcelle.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerArbreAgroSuiviParcelle.adapter = arbreAdapter
+//            recyclerArbreAgroSuiviParcelle.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//            recyclerArbreAgroSuiviParcelle.adapter = arbreAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -336,7 +336,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     this,
                     finished = false,
                     callback = {},
-                    positive = "OKAY",
+                    positive = "Compris !",
                     deconnec = false,
                     showNo = false
 
@@ -411,26 +411,26 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             val campagneAdapter =
                 ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList!!)
-            selectCampagneOfSuiviParcelle!!.adapter = campagneAdapter
-
-            selectCampagneOfSuiviParcelle.setTitle("Choisir la campagne")
-
-            selectCampagneOfSuiviParcelle.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        val campagne = campagnesList!![position]
-                        campagneNom = campagne.campagnesNom!!
-                        campagneId = campagne.id.toString()
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectCampagneOfSuiviParcelle!!.adapter = campagneAdapter
+//
+//            selectCampagneOfSuiviParcelle.setTitle("Choisir la campagne")
+//
+//            selectCampagneOfSuiviParcelle.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        val campagne = campagnesList!![position]
+//                        campagneNom = campagne.campagnesNom!!
+//                        campagneId = campagne.id.toString()
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -440,21 +440,21 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupCourEauYesNoSelection() {
         try {
-            selectCoursEauYesNoSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                        courEauYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-
-                        if (courEauYesNo == "oui") {
-                            linearCoursEauContainerSuivi.visibility = View.VISIBLE
-                        } else {
-                            linearCoursEauContainerSuivi.visibility = View.GONE
-                        }
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectCoursEauYesNoSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                        courEauYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                        if (courEauYesNo == "oui") {
+//                            linearCoursEauContainerSuivi.visibility = View.VISIBLE
+//                        } else {
+//                            linearCoursEauContainerSuivi.visibility = View.GONE
+//                        }
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -464,20 +464,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupPenteYesNoSelection() {
         try {
-            selectPenteYesNoSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        penteYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectPenteYesNoSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        penteYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -510,34 +510,34 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupBenefAgroForestierYesNoSelection() {
         try {
-            selectBeneficiareAgroOfSuiviParcelle.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        agroForestierYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-
-                        when (agroForestierYesNo) {
-                            "oui" -> {
-                                linearArbreAgroContainerSuivi.visibility = View.VISIBLE
-                            }
-                            "non" -> {
-                                arbresList?.clear()
-                                linearArbreAgroContainerSuivi.visibility = View.GONE
-                            }
-                            else -> {
-                                arbresList?.clear()
-                                linearArbreAgroContainerSuivi.visibility = View.GONE
-                            }
-                        }
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectBeneficiareAgroOfSuiviParcelle.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        agroForestierYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                        when (agroForestierYesNo) {
+//                            "oui" -> {
+//                                linearArbreAgroContainerSuivi.visibility = View.VISIBLE
+//                            }
+//                            "non" -> {
+//                                arbresList?.clear()
+//                                linearArbreAgroContainerSuivi.visibility = View.GONE
+//                            }
+//                            else -> {
+//                                arbresList?.clear()
+//                                linearArbreAgroContainerSuivi.visibility = View.GONE
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -547,19 +547,19 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupTailleSelection() {
         try {
-            selectTailleSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    adapterView: AdapterView<*>,
-                    view: View,
-                    position: Int,
-                    l: Long
-                ) {
-                    activiteTaille = resources.getStringArray(R.array.lowMediumHigh)[position]
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-                }
-            }
+//            selectTailleSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    adapterView: AdapterView<*>,
+//                    view: View,
+//                    position: Int,
+//                    l: Long
+//                ) {
+//                    activiteTaille = resources.getStringArray(R.array.lowMediumHigh)[position]
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>) {
+//                }
+//            }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -569,21 +569,21 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupEgourmandageSelection() {
         try {
-            selectEgourmandageSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        activiteEgourmandage =
-                            resources.getStringArray(R.array.lowMediumHigh)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectEgourmandageSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        activiteEgourmandage =
+//                            resources.getStringArray(R.array.lowMediumHigh)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -593,21 +593,21 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupDesherbageSelection() {
         try {
-            selectDesherbageManuelSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        activiteDesherbage =
-                            resources.getStringArray(R.array.lowMediumHigh)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectDesherbageManuelSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        activiteDesherbage =
+//                            resources.getStringArray(R.array.lowMediumHigh)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -617,21 +617,21 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupSanitaireSelection() {
         try {
-            selectRecolteSanitaireSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        activiteSanitaire =
-                            resources.getStringArray(R.array.lowMediumHigh)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectRecolteSanitaireSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        activiteSanitaire =
+//                            resources.getStringArray(R.array.lowMediumHigh)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -656,23 +656,23 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             val courEauAdapter =
                 ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayCourEau)
-            selectCoursEauSuivi!!.adapter = courEauAdapter
-
-            selectCoursEauSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        courEau = arrayCourEau[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-
-                    }
-                }
+//            selectCoursEauSuivi!!.adapter = courEauAdapter
+//
+//            selectCoursEauSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        courEau = arrayCourEau[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -682,20 +682,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupBioSelection() {
         try {
-            selectAgresseurSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        preseceBio = resources.getStringArray(R.array.fullyPoor)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectAgresseurSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        preseceBio = resources.getStringArray(R.array.fullyPoor)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -705,30 +705,30 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupInsectesSelection() {
         try {
-            selectInsecteSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        presenceInsecte = resources.getStringArray(R.array.YesOrNo)[position]
-
-                        when (presenceInsecte) {
-                            "oui" -> {
-                                linearPresenceInsecteRavageurOfSuiviParcelle.visibility =
-                                    View.VISIBLE
-                            }
-                            else -> {
-                                linearPresenceInsecteRavageurOfSuiviParcelle.visibility = View.GONE
-                            }
-                        }
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectInsecteSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        presenceInsecte = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                        when (presenceInsecte) {
+//                            "oui" -> {
+//                                linearPresenceInsecteRavageurOfSuiviParcelle.visibility =
+//                                    View.VISIBLE
+//                            }
+//                            else -> {
+//                                linearPresenceInsecteRavageurOfSuiviParcelle.visibility = View.GONE
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -746,7 +746,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     this,
                     finished = true,
                     callback = {},
-                    positive = "OKAY",
+                    positive = "Compris !",
                     deconnec = false,
                     showNo = false
 
@@ -754,21 +754,21 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 return
             } else {
                 val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-                selectLocaliteSuiviParcelle!!.adapter = localiteAdapter
-
-                selectLocaliteSuiviParcelle.setTitle("Choisir la localite")
-                selectLocaliteSuiviParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected( adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                        val locality = localitesList!![position]
-                        localiteNom = locality.nom ?: ""
-                        localiteId = if (locality.isSynced) locality.id!!.toString() else locality.uid.toString()
-
-                        setupProducteursSelection(localiteId)
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//                selectLocaliteSuiviParcelle!!.adapter = localiteAdapter
+//
+//                selectLocaliteSuiviParcelle.setTitle("Choisir la localite")
+//                selectLocaliteSuiviParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected( adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                        val locality = localitesList!![position]
+//                        localiteNom = locality.nom ?: ""
+//                        localiteId = if (locality.isSynced) locality.id!!.toString() else locality.uid.toString()
+//
+//                        setupProducteursSelection(localiteId)
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -869,9 +869,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         nombreHerbicide = editHerbicideNombreSuivi.text?.trim().toString()
 
         nombreDesherbageAnnuel = editDesherbageManuelSuivi.text?.trim().toString()
-        arbreVariete = editVarieteArbreSuivi.text?.trim().toString()
+        //arbreVariete = editVarieteArbreSuivi.text?.trim().toString()
 
-        nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
+        //nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
 
 
         if (producteurId.isEmpty()) {
@@ -880,7 +880,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
 
@@ -953,11 +953,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
             presenceShooter = selectSwollenSuivi.selectedItem?.toString(),//swollestShoot,
             arbreAgroForestierStringify = ApiClient.gson.toJson(arbreAdapter?.getOmbragesAdded()),
             intrantNPK = "intrantNPK",
-            nombresacsNPK = editIntrantNPKSuivi.text.toString().trim(),
+            //nombresacsNPK = editIntrantNPKSuivi.text.toString().trim(),
             intrantFiente = "intrantFiente",
-            nombresacsFiente = editIntrantFienteSuivi.text.toString(),
+            //nombresacsFiente = editIntrantFienteSuivi.text.toString(),
             intrantComposte = "intrantComposte",
-            nombresacsComposte = editNombreComposteSuivi.text.toString(),
+            //nombresacsComposte = editNombreComposteSuivi.text.toString(),
             insectesParasitesTemp = ApiClient.gson.toJson(insecteAdapter?.getInsectesAdded()),
             animauxRencontresStringify = ApiClient.gson.toJson(animauxList)
         )
@@ -973,10 +973,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
         editHerbicideNomSuivi.text  = null
         editHerbicideNombreSuivi.text   = null
         editDesherbageManuelSuivi.text  = null
-        editVarieteArbreSuivi.text  = null
-        editNbreSauvageonsSuivi.text    = null
-        editDateSuivi.text    = null
-        editVarieteArbreSuivi.text    = null
+        //editVarieteArbreSuivi.text  = null
+//        editNbreSauvageonsSuivi.text    = null
+//        editDateSuivi.text    = null
+//        editVarieteArbreSuivi.text    = null
         editInsecticeNomSuivi.text    = null
         editInsecticeNombreSuivi.text    = null
         editFongicideNomSuivi.text    = null
@@ -984,18 +984,18 @@ class SuiviParcelleActivity : AppCompatActivity() {
         editHerbicideNomSuivi.text    = null
         editHerbicideNombreSuivi.text    = null
         editDesherbageManuelSuivi.text    = null
-        editDateSuivi.text    = null
+//        editDateSuivi.text    = null
 
         selectProducteurSuivi.setSelection(0)
         selectParcelleSuivi.setSelection(0)
-        selectCoursEauYesNoSuivi.setSelection(0)
-        selectPenteYesNoSuivi.setSelection(0)
-        selectTailleSuivi.setSelection(0)
-        selectEgourmandageSuivi.setSelection(0)
-        selectDesherbageManuelSuivi.setSelection(0)
-        selectRecolteSanitaireSuivi.setSelection(0)
-        selectAgresseurSuivi.setSelection(0)
-        selectInsecteSuivi.setSelection(0)
+//        selectCoursEauYesNoSuivi.setSelection(0)
+//        selectPenteYesNoSuivi.setSelection(0)
+//        selectTailleSuivi.setSelection(0)
+//        selectEgourmandageSuivi.setSelection(0)
+//        selectDesherbageManuelSuivi.setSelection(0)
+//        selectRecolteSanitaireSuivi.setSelection(0)
+//        selectAgresseurSuivi.setSelection(0)
+//        selectInsecteSuivi.setSelection(0)
         selectFourmisSuivi.setSelection(0)
         selectAraigneeSuivi.setSelection(0)
         selectVerDeTerreSuivi.setSelection(0)
@@ -1036,7 +1036,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         nomHerbicide = ""
         nombreDesherbageAnnuel = ""
 
-        editVarieteArbreSuivi.requestFocus()
+        //editVarieteArbreSuivi.requestFocus()
 
     }
 
@@ -1052,9 +1052,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         nombreHerbicide = editHerbicideNombreSuivi.text?.trim().toString()
 
         nombreDesherbageAnnuel = editDesherbageManuelSuivi.text?.trim().toString()
-        arbreVariete = editVarieteArbreSuivi.text?.trim().toString()
+        //arbreVariete = editVarieteArbreSuivi.text?.trim().toString()
 
-        nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
+        //nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
 
         val suiviParcelleDraft = getSuiviParcelleObjet()
 
@@ -1105,12 +1105,12 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }?.let {
             localitesDatas.addAll(it)
         }
-        selectLocaliteSuiviParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-        provideDatasSpinnerSelection(
-            selectLocaliteSuiviParcelle,
-            suiviParcelleDrafted.localiteNom,
-            localitesDatas
-        )
+//        selectLocaliteSuiviParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
+//        provideDatasSpinnerSelection(
+//            selectLocaliteSuiviParcelle,
+//            suiviParcelleDrafted.localiteNom,
+//            localitesDatas
+//        )
 
         // Campagne
         val campagnesLists = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()
@@ -1120,26 +1120,26 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }?.let {
             campagnesDatas.addAll(it)
         }
-        selectCampagneOfSuiviParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesDatas)
-        provideDatasSpinnerSelection(
-            selectCampagneOfSuiviParcelle,
-            suiviParcelleDrafted.campagneNom,
-            campagnesDatas
-        )
+//        selectCampagneOfSuiviParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesDatas)
+//        provideDatasSpinnerSelection(
+//            selectCampagneOfSuiviParcelle,
+//            suiviParcelleDrafted.campagneNom,
+//            campagnesDatas
+//        )
 
         // cours d'eaux
-        provideStringSpinnerSelection(
-            selectCoursEauSuivi,
-            suiviParcelleDrafted.existeCoursEaux,
-            resources.getStringArray(R.array.YesOrNo)
-        )
+//        provideStringSpinnerSelection(
+//            selectCoursEauSuivi,
+//            suiviParcelleDrafted.existeCoursEaux,
+//            resources.getStringArray(R.array.YesOrNo)
+//        )
 
         // Pente
-        provideStringSpinnerSelection(
-            selectPenteYesNoSuivi,
-            suiviParcelleDrafted.pente,
-            resources.getStringArray(R.array.YesOrNo)
-        )
+//        provideStringSpinnerSelection(
+//            selectPenteYesNoSuivi,
+//            suiviParcelleDrafted.pente,
+//            resources.getStringArray(R.array.YesOrNo)
+//        )
 
         // Ombrage
         val ombragesType = object : TypeToken<MutableList<OmbrageVarieteModel>>(){}.type
@@ -1148,15 +1148,15 @@ class SuiviParcelleActivity : AppCompatActivity() {
         ombrageAdapter?.notifyDataSetChanged()
 
         // Variete arbres
-        editVarieteArbreSuivi.setText(suiviParcelleDrafted.varieteAbres)
-        editNbreSauvageonsSuivi.setText(suiviParcelleDrafted.nombreSauvageons)
+//        editVarieteArbreSuivi.setText(suiviParcelleDrafted.varieteAbres)
+//        editNbreSauvageonsSuivi.setText(suiviParcelleDrafted.nombreSauvageons)
 
         // Agro yes no
-        provideStringSpinnerSelection(
-            selectBeneficiareAgroOfSuiviParcelle,
-            suiviParcelleDrafted.arbresAgroForestiersYesNo,
-            resources.getStringArray(R.array.YesOrNo)
-        )
+//        provideStringSpinnerSelection(
+//            selectBeneficiareAgroOfSuiviParcelle,
+//            suiviParcelleDrafted.arbresAgroForestiersYesNo,
+//            resources.getStringArray(R.array.YesOrNo)
+//        )
 
         // Arbres agros
         val arbresType = object : TypeToken<MutableList<OmbrageVarieteModel>>(){}.type
@@ -1165,48 +1165,48 @@ class SuiviParcelleActivity : AppCompatActivity() {
         arbreAdapter?.notifyDataSetChanged()
 
         // Taille
-        provideStringSpinnerSelection(
-            selectTailleSuivi,
-            suiviParcelleDrafted.activiteTaille,
-            resources.getStringArray(R.array.lowMediumHigh)
-        )
-
-        // Engourmandage
-        provideStringSpinnerSelection(
-            selectEgourmandageSuivi,
-            suiviParcelleDrafted.activiteEgourmandage,
-            resources.getStringArray(R.array.lowMediumHigh)
-        )
-
-        // Desherbage manuel
-        provideStringSpinnerSelection(
-            selectDesherbageManuelSuivi,
-            suiviParcelleDrafted.activiteDesherbageManuel,
-            resources.getStringArray(R.array.lowMediumHigh)
-        )
+//        provideStringSpinnerSelection(
+//            selectTailleSuivi,
+//            suiviParcelleDrafted.activiteTaille,
+//            resources.getStringArray(R.array.lowMediumHigh)
+//        )
+//
+//        // Engourmandage
+//        provideStringSpinnerSelection(
+//            selectEgourmandageSuivi,
+//            suiviParcelleDrafted.activiteEgourmandage,
+//            resources.getStringArray(R.array.lowMediumHigh)
+//        )
+//
+//        // Desherbage manuel
+//        provideStringSpinnerSelection(
+//            selectDesherbageManuelSuivi,
+//            suiviParcelleDrafted.activiteDesherbageManuel,
+//            resources.getStringArray(R.array.lowMediumHigh)
+//        )
 
         // Recolte sanitaire
-        provideStringSpinnerSelection(
-            selectRecolteSanitaireSuivi,
-            suiviParcelleDrafted.activiteRecolteSanitaire,
-            resources.getStringArray(R.array.lowMediumHigh)
-        )
-
-        // Intarnt NPK
-        editIntrantNPKSuivi.setText(suiviParcelleDrafted.nombresacsNPK)
-
-        // Intarnt Fiente
-        editIntrantFienteSuivi.setText(suiviParcelleDrafted.nombresacsFiente)
-
-        // Intarnt Compost
-        editNombreComposteSuivi.setText(suiviParcelleDrafted.nombresacsComposte)
-
-        // Bio agresseur
-        provideStringSpinnerSelection(
-            selectAgresseurSuivi,
-            suiviParcelleDrafted.presenceBioAgresseur,
-            resources.getStringArray(R.array.fullyPoor)
-        )
+//        provideStringSpinnerSelection(
+//            selectRecolteSanitaireSuivi,
+//            suiviParcelleDrafted.activiteRecolteSanitaire,
+//            resources.getStringArray(R.array.lowMediumHigh)
+//        )
+//
+//        // Intarnt NPK
+//        editIntrantNPKSuivi.setText(suiviParcelleDrafted.nombresacsNPK)
+//
+//        // Intarnt Fiente
+//        editIntrantFienteSuivi.setText(suiviParcelleDrafted.nombresacsFiente)
+//
+//        // Intarnt Compost
+//        editNombreComposteSuivi.setText(suiviParcelleDrafted.nombresacsComposte)
+//
+//        // Bio agresseur
+//        provideStringSpinnerSelection(
+//            selectAgresseurSuivi,
+//            suiviParcelleDrafted.presenceBioAgresseur,
+//            resources.getStringArray(R.array.fullyPoor)
+//        )
 
         // Pourriture
         provideStringSpinnerSelection(
@@ -1216,11 +1216,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
         )
 
         // Insecte
-        provideStringSpinnerSelection(
-            selectInsecteSuivi,
-            suiviParcelleDrafted.presenceInsectesRavageurs,
-            resources.getStringArray(R.array.YesOrNo)
-        )
+//        provideStringSpinnerSelection(
+//            selectInsecteSuivi,
+//            suiviParcelleDrafted.presenceInsectesRavageurs,
+//            resources.getStringArray(R.array.YesOrNo)
+//        )
 
         // insectes list
         val insectesType = object : TypeToken<MutableList<InsecteRavageurModel>>(){}.type
@@ -1283,7 +1283,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         // Nombre desherbage
         editDesherbageManuelSuivi.setText(suiviParcelleDrafted.nombreDesherbage)
-        editDateSuivi.setText(suiviParcelleDrafted.dateVisite)
+        //editDateSuivi.setText(suiviParcelleDrafted.dateVisite)
     }
 
 
@@ -1293,20 +1293,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         suiviParcelleDao = CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()
 
-        editDateSuivi.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-                editDateSuivi.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
-                dateSuivi = editDateSuivi.text?.toString()!!
-            }, year, month, dayOfMonth)
-
-            datePickerDialog!!.datePicker.maxDate = Date().time
-            datePickerDialog?.show()
-        }
+//        editDateSuivi.setOnClickListener {
+//            datePickerDialog = null
+//            val calendar: Calendar = Calendar.getInstance()
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = calendar.get(Calendar.MONTH)
+//            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+//            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+//                editDateSuivi.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
+//                dateSuivi = editDateSuivi.text?.toString()!!
+//            }, year, month, dayOfMonth)
+//
+//            datePickerDialog!!.datePicker.maxDate = Date().time
+//            datePickerDialog?.show()
+//        }
 
         try {
             setupBioSelection()
@@ -1362,67 +1362,67 @@ class SuiviParcelleActivity : AppCompatActivity() {
             finish()
         }
 
-        clickAddOmbrage.setOnClickListener {
-            try {
-                if (editVarieteOmbrageSuivi.text.toString()
-                        .isEmpty() || editVarieteOmbrageNombreSuivi.text.toString().isEmpty()
-                ) {
-                    Commons.showMessage("Renseignez une culture, svp !", this, callback = {})
-                    return@setOnClickListener
-                }
+//        clickAddOmbrage.setOnClickListener {
+//            try {
+//                if (editVarieteOmbrageSuivi.text.toString()
+//                        .isEmpty() || editVarieteOmbrageNombreSuivi.text.toString().isEmpty()
+//                ) {
+//                    Commons.showMessage("Renseignez une culture, svp !", this, callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                val ombrageVariete = OmbrageVarieteModel(
+//                    0,
+//                    editVarieteOmbrageSuivi.text.toString().trim(),
+//                    editVarieteOmbrageNombreSuivi.text.toString().trim()
+//                )
+//                addOmbrageVariete(ombrageVariete)
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
 
-                val ombrageVariete = OmbrageVarieteModel(
-                    0,
-                    editVarieteOmbrageSuivi.text.toString().trim(),
-                    editVarieteOmbrageNombreSuivi.text.toString().trim()
-                )
-                addOmbrageVariete(ombrageVariete)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        clickAddAgroArbreSuiviParcelle.setOnClickListener {
-            try {
-                if (editAgroArbreSuivi.text.toString()
-                        .isEmpty() || editArbreNombreSuivi.text.toString().isEmpty()
-                ) {
-                    Commons.showMessage("Renseignez un arbre, svp !", this, callback = {})
-                    return@setOnClickListener
-                }
-
-                val arbreModel = OmbrageVarieteModel(
-                    0,
-                    editAgroArbreSuivi.text.toString().trim(),
-                    editArbreNombreSuivi.text.toString().trim()
-                )
-                addArbreAgro(arbreModel)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        clickSaveInsecteQuantiteOfSuiviParcelle.setOnClickListener {
-            try {
-                if (editInsecteNomOfSuiviParcelle.text.toString().isEmpty()) {
-                    Commons.showMessage("Renseignez un insecte, svp !", this, callback = {})
-                    return@setOnClickListener
-                }
-
-                val insecteModel = InsecteRavageurModel(
-                    uid = 0,
-                    nom = editInsecteNomOfSuiviParcelle.text.toString().trim(),
-                    selectInsecteQuantiteOfSuiviParcelle.selectedItem.toString(),
-                )
-
-                addInsectesParasites(insecteModel)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
+//        clickAddAgroArbreSuiviParcelle.setOnClickListener {
+//            try {
+//                if (editAgroArbreSuivi.text.toString()
+//                        .isEmpty() || editArbreNombreSuivi.text.toString().isEmpty()
+//                ) {
+//                    Commons.showMessage("Renseignez un arbre, svp !", this, callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                val arbreModel = OmbrageVarieteModel(
+//                    0,
+//                    editAgroArbreSuivi.text.toString().trim(),
+//                    editArbreNombreSuivi.text.toString().trim()
+//                )
+//                addArbreAgro(arbreModel)
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
+//
+//        clickSaveInsecteQuantiteOfSuiviParcelle.setOnClickListener {
+//            try {
+//                if (editInsecteNomOfSuiviParcelle.text.toString().isEmpty()) {
+//                    Commons.showMessage("Renseignez un insecte, svp !", this, callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                val insecteModel = InsecteRavageurModel(
+//                    uid = 0,
+//                    nom = editInsecteNomOfSuiviParcelle.text.toString().trim(),
+//                    selectInsecteQuantiteOfSuiviParcelle.selectedItem.toString(),
+//                )
+//
+//                addInsectesParasites(insecteModel)
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
 
         clickSaveAnimauxSuiviParcelle.setOnClickListener {
             try {
@@ -1451,7 +1451,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         applyFilters(editAnimalSuiviParcelle)
-        applyFilters(editBenefAgroNombreOfSuiviParcelle)
+        //applyFilters(editBenefAgroNombreOfSuiviParcelle)
 
         try {
             if (intent.getStringExtra("from") != null) {

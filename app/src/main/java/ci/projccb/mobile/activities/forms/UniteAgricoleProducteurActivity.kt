@@ -88,7 +88,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     this,
                     finished = true,
                     callback = {},
-                    positive = "OKAY",
+                    positive = "Compris !",
                     deconnec = false,
                     showNo = false
 
@@ -223,14 +223,14 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     fun setupOperateursSelection() {
         try {
-            selectMobileMoneyYesOperateurInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                        mobileMoneyYesOperateur = resources.getStringArray(R.array.operateur)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectMobileMoneyYesOperateurInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                        mobileMoneyYesOperateur = resources.getStringArray(R.array.operateur)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -258,7 +258,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     this,
                     finished = false,
                     callback = {},
-                    positive = "OKAY",
+                    positive = "Compris !",
                     deconnec = false,
                     showNo = false
                 )
@@ -311,7 +311,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                             producteurModel.uid.toString()
                         }
 
-                        editCodeInfosProducteur.setText(producteurModel.codeProd)
+                        //editCodeInfosProducteur.setText(producteurModel.codeProd)
                     }
 
                     override fun onNothingSelected(arg0: AdapterView<*>) {
@@ -330,18 +330,18 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 //CcbRoomDatabase.getDatabase(applicationContext)?.persBlesseeDoa()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())!!
 
             val blesseeAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayBlessees)
-            selectBlesseeInfosProducteur!!.adapter = blesseeAdapter
-
-            selectBlesseeInfosProducteur.setTitle("Choisir l'action")
-            selectBlesseeInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                    actionPersonneBlesse = arrayBlessees[position].nom!!
-                }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-
-                }
-            }
+//            selectBlesseeInfosProducteur!!.adapter = blesseeAdapter
+//
+//            selectBlesseeInfosProducteur.setTitle("Choisir l'action")
+//            selectBlesseeInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                    actionPersonneBlesse = arrayBlessees[position].nom!!
+//                }
+//
+//                override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//                }
+//            }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -358,24 +358,24 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             val typeDocumentAdapter =
                 ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayTypeDocuments)
-            selectPaperInfosProducteur!!.adapter = typeDocumentAdapter
-
-            selectPaperInfosProducteur.setTitle("Choisir le type")
-            selectPaperInfosProducteur.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        typeDocuments = arrayTypeDocuments[position].nom!!
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-
-                    }
-                }
+//            selectPaperInfosProducteur!!.adapter = typeDocumentAdapter
+//
+//            selectPaperInfosProducteur.setTitle("Choisir le type")
+//            selectPaperInfosProducteur.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        typeDocuments = arrayTypeDocuments[position].nom!!
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -391,24 +391,24 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             val recuAdapter =
                 ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayRecus)
-            selectTicketInfosProducteur!!.adapter = recuAdapter
-
-            selectTicketInfosProducteur.setTitle("Choisir l'action")
-            selectTicketInfosProducteur.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        gestionRecu = arrayRecus[position].nom!!
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-
-                    }
-                }
+//            selectTicketInfosProducteur!!.adapter = recuAdapter
+//
+//            selectTicketInfosProducteur.setTitle("Choisir l'action")
+//            selectTicketInfosProducteur.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        gestionRecu = arrayRecus[position].nom!!
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -428,14 +428,14 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     ) {
                         if (position == 0) {
                             setupOperateursSelection()
-                            linearMobileMoneyYesNumberContainerInfosProducteur.visibility =
-                                View.VISIBLE
-                            linearMoneyYesOperateurContainerProducteur.visibility = View.VISIBLE
+//                            linearMobileMoneyYesNumberContainerInfosProducteur.visibility =
+//                                View.VISIBLE
+//                            linearMoneyYesOperateurContainerProducteur.visibility = View.VISIBLE
                         } else {
                             mobileMoneyYesNumber = ""
-                            linearMobileMoneyYesNumberContainerInfosProducteur.visibility =
-                                View.GONE
-                            linearMoneyYesOperateurContainerProducteur.visibility = View.GONE
+//                            linearMobileMoneyYesNumberContainerInfosProducteur.visibility =
+//                                View.GONE
+//                            linearMoneyYesOperateurContainerProducteur.visibility = View.GONE
                         }
 
                         mobileMoneyYesNo = resources.getStringArray(R.array.YesOrNo)[position]
@@ -839,13 +839,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }?.let {
                 blessesDatas.addAll(it)
             }
-            selectBlesseeInfosProducteur.adapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, blessesDatas)
-            provideDatasSpinnerSelection(
-                selectBlesseeInfosProducteur,
-                infosProducteurDrafted.personneBlessee,
-                blessesDatas
-            )
+//            selectBlesseeInfosProducteur.adapter =
+//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, blessesDatas)
+//            provideDatasSpinnerSelection(
+//                selectBlesseeInfosProducteur,
+//                infosProducteurDrafted.personneBlessee,
+//                blessesDatas
+//            )
 
             // Documents
             val documentsLists = AssetFileHelper.getListDataFromAsset(10, this@UniteAgricoleProducteurActivity) as MutableList<TypeDocumentModel>?
@@ -857,13 +857,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }?.let {
                 documentsDatas.addAll(it)
             }
-            selectPaperInfosProducteur.adapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, documentsDatas)
-            provideDatasSpinnerSelection(
-                selectPaperInfosProducteur,
-                infosProducteurDrafted.typeDocuments,
-                documentsDatas
-            )
+//            selectPaperInfosProducteur.adapter =
+//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, documentsDatas)
+//            provideDatasSpinnerSelection(
+//                selectPaperInfosProducteur,
+//                infosProducteurDrafted.typeDocuments,
+//                documentsDatas
+//            )
 
             // Recus
             val recusLists = AssetFileHelper.getListDataFromAsset(3, this@UniteAgricoleProducteurActivity) as MutableList<RecuModel>?
@@ -875,20 +875,20 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }?.let {
                 recusDatas.addAll(it)
             }
-            selectTicketInfosProducteur.adapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, recusDatas)
-            provideDatasSpinnerSelection(
-                selectTicketInfosProducteur,
-                infosProducteurDrafted.recuAchat,
-                recusDatas
-            )
-
-            // Mobile operateur
-            provideStringSpinnerSelection(
-                selectMobileMoneyYesOperateurInfosProducteur,
-                infosProducteurDrafted.operateurMM,
-                resources.getStringArray(R.array.operateur)
-            )
+//            selectTicketInfosProducteur.adapter =
+//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, recusDatas)
+//            provideDatasSpinnerSelection(
+//                selectTicketInfosProducteur,
+//                infosProducteurDrafted.recuAchat,
+//                recusDatas
+//            )
+//
+//            // Mobile operateur
+//            provideStringSpinnerSelection(
+//                selectMobileMoneyYesOperateurInfosProducteur,
+//                infosProducteurDrafted.operateurMM,
+//                resources.getStringArray(R.array.operateur)
+//            )
 
             // Maladie enfants
             if (ListConverters.stringToMutableList(infosProducteurDrafted.maladiesenfantsStringify)
@@ -896,8 +896,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             ) {
                 val maladies =
                     ListConverters.stringToMutableList(infosProducteurDrafted.maladiesenfantsStringify)
-                editMaladieOneInfosProducteur.setText(maladies?.first())
-                editMaladieTwoInfosProducteur.setText(maladies?.last())
+//                editMaladieOneInfosProducteur.setText(maladies?.first())
+//                editMaladieTwoInfosProducteur.setText(maladies?.last())
             }
 
             // mobile money yes no
@@ -928,14 +928,14 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 resources.getStringArray(R.array.YesOrNo)
             )
 
-            editNbreTravailleursInfosProducteur.setText(infosProducteurDrafted.travailleurs)
-            editNbreTravailleursPermanentsInfosProducteur.setText(infosProducteurDrafted.travailleurspermanents)
-            editNbreTravailleursNonPermanentInfosProducteur.setText(infosProducteurDrafted.travailleurstemporaires)
-
-            editNbreUnder18InfosProducteur.setText(infosProducteurDrafted.age18)
-            editNbreScolariseInfosProducteur.setText(infosProducteurDrafted.persEcole)
-            editNbreExtraitInfosProducteur.setText(infosProducteurDrafted.scolarisesExtrait)
-            editMobileYesNumberInfosProducteur.setText(infosProducteurDrafted.numeroCompteMM)
+//            editNbreTravailleursInfosProducteur.setText(infosProducteurDrafted.travailleurs)
+//            editNbreTravailleursPermanentsInfosProducteur.setText(infosProducteurDrafted.travailleurspermanents)
+//            editNbreTravailleursNonPermanentInfosProducteur.setText(infosProducteurDrafted.travailleurstemporaires)
+//
+//            editNbreUnder18InfosProducteur.setText(infosProducteurDrafted.age18)
+//            editNbreScolariseInfosProducteur.setText(infosProducteurDrafted.persEcole)
+//            editNbreExtraitInfosProducteur.setText(infosProducteurDrafted.scolarisesExtrait)
+//            editMobileYesNumberInfosProducteur.setText(infosProducteurDrafted.numeroCompteMM)
             editForetYesSuperficieInfosProducteur.setText(infosProducteurDrafted.superficie)
 
             // Cultures
@@ -1026,46 +1026,46 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 jachereYesSuperficie = editable.toString().trim()
             }
 
-            editNbreTravailleursInfosProducteur.doAfterTextChanged { editable ->
-                travailleursNbre =
-                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
-            }
-
-            editNbreTravailleursPermanentsInfosProducteur.doAfterTextChanged { editable ->
-                travailleursPermanentsNbre =
-                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
-            }
-
-            editNbreTravailleursNonPermanentInfosProducteur.doAfterTextChanged { editable ->
-                travailleursNonPermanentsNbre =
-                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
-            }
-
-            editNbreUnder18InfosProducteur.doAfterTextChanged {
-                nbreEnfantUnder18 = if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
-            }
-
-            editNbreScolariseInfosProducteur.doAfterTextChanged {
-                nbreEnfantUnder18Scolarise =
-                    if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
-            }
-
-            editNbreExtraitInfosProducteur.doAfterTextChanged {
-                nbreEnfantUnder18ScolariseExtrait =
-                    if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
-            }
-
-            editMaladieOneInfosProducteur.doAfterTextChanged {
-                enfantMaladieOne = it.toString().trim()
-            }
-
-            editMobileYesNumberInfosProducteur.doAfterTextChanged {
-                mobileMoneyYesNumber = it.toString().trim()
-            }
-
-            editMaladieTwoInfosProducteur.doAfterTextChanged {
-                enfantMaladieTwo = it.toString().trim()
-            }
+//            editNbreTravailleursInfosProducteur.doAfterTextChanged { editable ->
+//                travailleursNbre =
+//                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
+//            }
+//
+//            editNbreTravailleursPermanentsInfosProducteur.doAfterTextChanged { editable ->
+//                travailleursPermanentsNbre =
+//                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
+//            }
+//
+//            editNbreTravailleursNonPermanentInfosProducteur.doAfterTextChanged { editable ->
+//                travailleursNonPermanentsNbre =
+//                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
+//            }
+//
+//            editNbreUnder18InfosProducteur.doAfterTextChanged {
+//                nbreEnfantUnder18 = if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
+//            }
+//
+//            editNbreScolariseInfosProducteur.doAfterTextChanged {
+//                nbreEnfantUnder18Scolarise =
+//                    if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
+//            }
+//
+//            editNbreExtraitInfosProducteur.doAfterTextChanged {
+//                nbreEnfantUnder18ScolariseExtrait =
+//                    if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
+//            }
+//
+//            editMaladieOneInfosProducteur.doAfterTextChanged {
+//                enfantMaladieOne = it.toString().trim()
+//            }
+//
+//            editMobileYesNumberInfosProducteur.doAfterTextChanged {
+//                mobileMoneyYesNumber = it.toString().trim()
+//            }
+//
+//            editMaladieTwoInfosProducteur.doAfterTextChanged {
+//                enfantMaladieTwo = it.toString().trim()
+//            }
 
             clickReviewInfosProducteur.setOnClickListener {
                 collectDatas()
@@ -1092,11 +1092,11 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             setupMoneyYesNoSelection()
             setupBuyMethpdYesNoSelection()
 
-            applyFilters(editNbreUnder18InfosProducteur)
-            applyFilters(editNbreTravailleursInfosProducteur)
-            applyFilters(editNbreTravailleursNonPermanentInfosProducteur)
-            applyFilters(editNbreTravailleursPermanentsInfosProducteur)
-            applyFilters(editNbreScolariseInfosProducteur)
+//            applyFilters(editNbreUnder18InfosProducteur)
+//            applyFilters(editNbreTravailleursInfosProducteur)
+//            applyFilters(editNbreTravailleursNonPermanentInfosProducteur)
+//            applyFilters(editNbreTravailleursPermanentsInfosProducteur)
+//            applyFilters(editNbreScolariseInfosProducteur)
 
             if (intent.getStringExtra("from") != null) {
                 draftedDataInfosProducteur =

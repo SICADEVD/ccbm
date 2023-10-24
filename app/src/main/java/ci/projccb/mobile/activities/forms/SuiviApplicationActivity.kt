@@ -125,21 +125,21 @@ class SuiviApplicationActivity : AppCompatActivity() {
     fun setupApplicateurSelection() {
         val applicateursList = CcbRoomDatabase.getDatabase(this)?.applicateurDao()?.getAll()!!
         val applicateurAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, applicateursList)
-        selectApplicateurSuiviApplication!!.adapter = applicateurAdapter
-
-        selectApplicateurSuiviApplication.setTitle("Choisir l'applicateur")
-
-        selectApplicateurSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-
-                val applicateurModel = applicateursList[position]
-                applicationId = applicateurModel.id.toString()
-                applicationNom = applicateurModel.nom!!
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectApplicateurSuiviApplication!!.adapter = applicateurAdapter
+//
+//        selectApplicateurSuiviApplication.setTitle("Choisir l'applicateur")
+//
+//        selectApplicateurSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//
+//                val applicateurModel = applicateursList[position]
+//                applicationId = applicateurModel.id.toString()
+//                applicationNom = applicateurModel.nom!!
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -152,7 +152,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                "OKAY",
+                "Compris !",
                 false,
                 showNo = false,
             )
@@ -196,8 +196,8 @@ class SuiviApplicationActivity : AppCompatActivity() {
     fun setParasitesList() {
         parasitesList = mutableListOf()
         insecteAdapter = InsecteAdapter(parasitesList!!)
-        recyclerParasiteListSuiviApplication.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerParasiteListSuiviApplication.adapter = insecteAdapter
+//        recyclerParasiteListSuiviApplication.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        recyclerParasiteListSuiviApplication.adapter = insecteAdapter
     }
 
 
@@ -297,51 +297,51 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
 
     fun setupZoneTemponSelection() {
-        selectZoneTampoSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                zoneTamponYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-
-                when (zoneTamponYesNo.uppercase()) {
-                    "OUI" -> {
-                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.VISIBLE
-                    }
-                    "NON" -> {
-                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.GONE
-                    }
-                    else -> {
-                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectZoneTampoSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                zoneTamponYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                when (zoneTamponYesNo.uppercase()) {
+//                    "OUI" -> {
+//                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.VISIBLE
+//                    }
+//                    "NON" -> {
+//                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.GONE
+//                    }
+//                    else -> {
+//                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.GONE
+//                    }
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
     fun setupDoucheYesNoSelection() {
-        selectPresenceDoucheSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                doucheYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-
-                when (doucheYesNo.uppercase()) {
-                    "OUI" -> {
-                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.VISIBLE
-                    }
-                    "NON" -> {
-                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.GONE
-                    }
-                    else -> {
-                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.GONE
-                    }
-                }
-
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+//        selectPresenceDoucheSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                doucheYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                when (doucheYesNo.uppercase()) {
+//                    "OUI" -> {
+//                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.VISIBLE
+//                    }
+//                    "NON" -> {
+//                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.GONE
+//                    }
+//                    else -> {
+//                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.GONE
+//                    }
+//                }
+//
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -368,7 +368,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             degreDangerosite = degreDangerositeLevel,
             delaisReentree = editDelaiProduitJourSuiviApplication.text.toString(),
             heureApplication = editHeureDebutSuiviApplication.text.toString(),
-            heureFinApplication = editHeureFinSuiviApplication.text.toString(),
+            //heureFinApplication = editHeureFinSuiviApplication.text.toString(),
             marqueProduitPulverise = editCommercialProduitSuiviApplication.text.toString(),
             parcellesId = cultureId,
             presenceDouche = doucheYesNo,
@@ -378,7 +378,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             producteurNom = producteurNom,
             campagneNom = campagneNom,
             applicateurNom = applicationNom,
-            raisonApplication = editRaisonApplicationSuiviApplication.text.toString(),
+            //raisonApplication = editRaisonApplicationSuiviApplication.text.toString(),
             superficiePulverisee = editSuperficieSuiviApplication.text.toString(),
             uid = 0,
             photoDouchePath = endphotoDouchePath,
@@ -421,7 +421,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         parasitesList?.add(parasite)
         insecteAdapter?.notifyDataSetChanged()
 
-        editParasiteSuiviApplication.text = null
+        //editParasiteSuiviApplication.text = null
     }
 
 
@@ -573,7 +573,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
                     if (bundleData == null) {
                         endphotoTamponPath = photoTamponPath
-                        imageZoneTamponPhotoSuiviApplication.setImageBitmap(BitmapFactory.decodeFile(photoTamponPath, options))
+                        //imageZoneTamponPhotoSuiviApplication.setImageBitmap(BitmapFactory.decodeFile(photoTamponPath, options))
                     } else {
                         options.inJustDecodeBounds = true
                         options.inPurgeable = true
@@ -581,7 +581,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                         LogUtils.d(photoTamponPath)
                         endphotoTamponPath = photoTamponPath
                         FileUtils.copy(UriUtils.uri2File(bundleData), File(photoTamponPath))
-                        imageZoneTamponPhotoSuiviApplication.setImageURI(bundleData)
+                        //imageZoneTamponPhotoSuiviApplication.setImageURI(bundleData)
                     }
                 }
                 2 -> {
@@ -590,14 +590,14 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
                     if (bundleData == null) {
                         endphotoDouchePath = photoDouchePath
-                        imagePresenceDoucheSuiviApplication.setImageBitmap(BitmapFactory.decodeFile(photoDouchePath, options))
+                        //imagePresenceDoucheSuiviApplication.setImageBitmap(BitmapFactory.decodeFile(photoDouchePath, options))
                     } else {
                         options.inJustDecodeBounds = true
                         options.inPurgeable = true
                         //photoDouchePath = UriUtils.uri2File(bundleData).path
                         endphotoDouchePath = photoDouchePath
                         FileUtils.copy(UriUtils.uri2File(bundleData), File(photoDouchePath))
-                        imagePresenceDoucheSuiviApplication.setImageURI(bundleData)
+                        //imagePresenceDoucheSuiviApplication.setImageURI(bundleData)
                     }
                 }
             }
@@ -670,7 +670,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     context = this,
                     finished = false,
                     callback = {},
-                    positive = "OKAY",
+                    positive = "Compris !",
                     deconnec = false,
                     showNo = false
                 )
@@ -764,13 +764,13 @@ class SuiviApplicationActivity : AppCompatActivity() {
             }?.let {
                 applicateursDatas.addAll(it)
             }
-            selectApplicateurSuiviApplication.adapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, applicateursDatas)
-            provideDatasSpinnerSelection(
-                selectApplicateurSuiviApplication,
-                applicationDrafted.applicateurNom,
-                applicateursDatas
-            )
+//            selectApplicateurSuiviApplication.adapter =
+//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, applicateursDatas)
+//            provideDatasSpinnerSelection(
+//                selectApplicateurSuiviApplication,
+//                applicationDrafted.applicateurNom,
+//                applicateursDatas
+//            )
 
             // Localite
             val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()
@@ -812,18 +812,18 @@ class SuiviApplicationActivity : AppCompatActivity() {
             )
 
             // Tampon
-            provideStringSpinnerSelection(
-                selectZoneTampoSuiviApplication,
-                applicationDrafted.zoneTampons,
-                resources.getStringArray(R.array.YesOrNo)
-            )
-
-            // Douche
-            provideStringSpinnerSelection(
-                selectPresenceDoucheSuiviApplication,
-                applicationDrafted.presenceDouche,
-                resources.getStringArray(R.array.YesOrNo)
-            )
+//            provideStringSpinnerSelection(
+//                selectZoneTampoSuiviApplication,
+//                applicationDrafted.zoneTampons,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
+//
+//            // Douche
+//            provideStringSpinnerSelection(
+//                selectPresenceDoucheSuiviApplication,
+//                applicationDrafted.presenceDouche,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
 
             // Insectes
             val insectesType = object : TypeToken<MutableList<InsecteRavageurModel>>() {}.type
@@ -835,11 +835,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
             insecteAdapter?.notifyDataSetChanged()
 
             editDelaiProduitJourSuiviApplication.setText(applicationDrafted.delaisReentree)
-            editRaisonApplicationSuiviApplication.setText(applicationDrafted.raisonApplication)
+            //editRaisonApplicationSuiviApplication.setText(applicationDrafted.raisonApplication)
 
             editDateSuiviApplication.setText(applicationDrafted.dateApplication)
             editHeureDebutSuiviApplication.setText(applicationDrafted.heureApplication)
-            editHeureFinSuiviApplication.setText(applicationDrafted.heureApplication)
+            //editHeureFinSuiviApplication.setText(applicationDrafted.heureApplication)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -857,23 +857,23 @@ class SuiviApplicationActivity : AppCompatActivity() {
             configTime(editHeureDebutSuiviApplication)
         }
 
-        editHeureFinSuiviApplication.setOnClickListener {
-            configTime(editHeureFinSuiviApplication)
-        }
+//        editHeureFinSuiviApplication.setOnClickListener {
+//            configTime(editHeureFinSuiviApplication)
+//        }
 
         editDateSuiviApplication.setOnClickListener {
             configDate(editDateSuiviApplication)
         }
 
-        imageZoneTamponPhotoSuiviApplication.setOnClickListener {
-            whichPhoto = 1
-            dialogPickerPhoto()
-        }
+//        imageZoneTamponPhotoSuiviApplication.setOnClickListener {
+//            whichPhoto = 1
+//            dialogPickerPhoto()
+//        }
 
-        imagePresenceDoucheSuiviApplication.setOnClickListener {
-            whichPhoto = 2
-            dialogPickerPhoto()
-        }
+//        imagePresenceDoucheSuiviApplication.setOnClickListener {
+//            whichPhoto = 2
+//            dialogPickerPhoto()
+//        }
 
         clickSaveSuiviApplication.setOnClickListener {
             collectDatas()
@@ -899,28 +899,28 @@ class SuiviApplicationActivity : AppCompatActivity() {
             }
         }
 
-        clickSaveParasiteSuiviApplication.setOnClickListener {
-            try {
-                if (editParasiteSuiviApplication.text.toString().isEmpty()) {
-                    Commons.showMessage(
-                        "Renseignez un insecte ou parasite, svp !",
-                        this,
-                        callback = {})
-                    return@setOnClickListener
-                }
-
-                addParasite(
-                    InsecteRavageurModel(
-                        nom = editParasiteSuiviApplication.text.toString(),
-                        uid = 0,
-                        quantite = ""
-                    )
-                )
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
+//        clickSaveParasiteSuiviApplication.setOnClickListener {
+//            try {
+//                if (editParasiteSuiviApplication.text.toString().isEmpty()) {
+//                    Commons.showMessage(
+//                        "Renseignez un insecte ou parasite, svp !",
+//                        this,
+//                        callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                addParasite(
+//                    InsecteRavageurModel(
+//                        nom = editParasiteSuiviApplication.text.toString(),
+//                        uid = 0,
+//                        quantite = ""
+//                    )
+//                )
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
 
         imageDraftBtn.setOnClickListener {
             draftSuiviApplication(draftedDataApplicateur ?: DataDraftedModel(uid = 0))

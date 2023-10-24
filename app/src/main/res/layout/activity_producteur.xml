@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout_producteur"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -158,6 +159,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="consentement"
                             android:id="@+id/selectConsentementProducteur"
                             android:entries="@array/YesOrNo"
                             android:layout_width="match_parent"
@@ -197,6 +199,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="proprietaires"
                             android:id="@+id/selectTitreDUProducteur"
                             android:entries="@array/YesOrNo"
                             android:layout_width="match_parent"
@@ -221,6 +224,7 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="plantePartage"
                         android:id="@+id/editPrecisionTitreProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -267,6 +271,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="certificats"
                             android:id="@+id/selectCertifProducteur"
                             android:entries="@array/YesOrNo"
                             android:layout_width="match_parent"
@@ -300,6 +305,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="autreCertificats"
                         android:id="@+id/editPrecisionAutreCertifProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -335,21 +341,23 @@ android:textColor="@color/text_color_white"
                         android:text="Variété"
                         android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/editVarieteProducteur"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_37sdp"
-                        android:background="@drawable/rounded_background"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters|textNoSuggestions"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
-                        android:hint="@string/precision_hint"
-                        android:textSize="@dimen/_13ssp"
-                        tools:text="" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background">
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="variete"
+                            android:id="@+id/spinnerVarieteProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:spinnerMode="dialog" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -372,10 +380,10 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
                         android:text="Autre Variété"
-
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="autreCertificats"
                         android:id="@+id/editPrecisionAutreVarieteProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -421,6 +429,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:tag="section"
                             android:id="@+id/selectSectionProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -459,6 +468,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:tag="localiteId"
                             android:id="@+id/selectLocaliteProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -497,6 +507,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:tag="programme_id"
                             android:id="@+id/selectProgramProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -534,6 +545,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:tag="habitationProducteur"
                             android:id="@+id/selectHabitationProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -572,6 +584,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="statutCertification"
                             android:id="@+id/selectStatutProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -582,13 +595,16 @@ android:textColor="@color/text_color_white"
 
                 </LinearLayout>
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
                 <LinearLayout
                     android:id="@+id/linearAnneeCertificationProducteur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible">
+                    android:visibility="gone">
 
                     <Space
                         android:layout_width="match_parent"
@@ -598,22 +614,24 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:weightSum="10">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
+                            android:layout_weight="3.5"
                             android:text="Année certification *"
-
+                            android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp">
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_weight="6.5">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="anneeCertification"
                                 android:id="@+id/editAnneeCertificationProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -641,29 +659,34 @@ android:textColor="@color/text_color_white"
 
                 </LinearLayout>
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
                 <LinearLayout
                     android:id="@+id/linearCodeContainerProducteur"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                tools:visibility="visible"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_12sdp"
+                        android:layout_weight="3.5"
                         android:text="Code producteur"
-
+                        android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="codeProd"
                         android:id="@+id/editCodeProducteur"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_37sdp"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_weight="6.5"
                         android:background="@drawable/rounded_background"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
@@ -688,7 +711,7 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
+                        android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
@@ -697,6 +720,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="nom"
                         android:id="@+id/editNomProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -709,7 +733,7 @@ android:textColor="@color/text_color_white"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
                         android:textSize="@dimen/_13ssp"
-                        tools:text="BOKA" />
+                        tools:text="" />
 
                 </LinearLayout>
 
@@ -733,6 +757,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="prenoms"
                         android:id="@+id/editPrenomsProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -777,6 +802,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="sexeProducteur"
                             android:id="@+id/selectSexeProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -816,6 +842,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="statutMatrimonial"
                             android:id="@+id/selectStatutMatProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -855,6 +882,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:tag="nationalite"
                             android:id="@+id/selectNationaliteProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -888,6 +916,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_37sdp">
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="dateNaiss"
                             android:id="@+id/editNaissanceProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -933,6 +962,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="phone1"
                         android:id="@+id/editTelOneProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -978,6 +1008,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="autreMembre"
                             android:id="@+id/selectProcheProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
@@ -1021,7 +1052,9 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="autrePhone"
                             android:id="@+id/selectEntantqueProducteur"
+                            android:entries="@array/typeAutreMembre"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
                             android:spinnerMode="dialog" />
@@ -1053,6 +1086,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="phone2"
                         android:id="@+id/editMembreNumProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -1098,6 +1132,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="etude"
                             android:id="@+id/selectEtudeProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -1136,6 +1171,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="piece"
                             android:id="@+id/selectPieceProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
@@ -1167,6 +1203,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="numPiece"
                         android:id="@+id/editPieceProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -1202,6 +1239,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="num_ccc"
                         android:id="@+id/editCarteCCCProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -1246,6 +1284,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="carteCMU"
                             android:id="@+id/selectCarteCMUProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
@@ -1280,6 +1319,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="numCMU"
                         android:id="@+id/editNumPieceCMUProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
@@ -1324,6 +1364,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="typeCarteSecuriteSociale"
                             android:id="@+id/selectTypeCarteCSSProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
@@ -1356,6 +1397,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="numSecuriteSociale"
                         android:id="@+id/editNumCarteCSSProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"

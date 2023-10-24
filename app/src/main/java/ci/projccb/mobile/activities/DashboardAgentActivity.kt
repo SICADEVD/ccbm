@@ -425,7 +425,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
 
         /*linearLocalite.setOnClickListener {
-            Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "OKAY", deconnec = false, showNo = false)
+            Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false)
             return@setOnClickListener;
             //  val intentLocalite = Intent(this, MenusActionRedirectionActivity::class.java)
             //  intentLocalite.putExtra("from", "localite")

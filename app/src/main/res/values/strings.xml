@@ -129,6 +129,12 @@
         <item>Grande section</item>
     </string-array>
 
+    <string-array name="typeAutreMembre">
+        <item>Membre de famille</item>
+        <item>Délégué</item>
+        <item>Autre</item>
+    </string-array>
+
     <string-array name="moyenDeplacement">
         <item>Moyen de deplacement</item>
         <item>A vélo</item>
@@ -226,6 +232,14 @@
     <string-array name="genre_membre">
         <item>Masculin</item>
         <item>Feminin</item>
+    </string-array>
+
+    <string-array name="niveauEtude">
+        <item>Primaire</item>
+        <item>Collège (6e à 3ème)</item>
+        <item>Lycée (2nde à Tle)</item>
+        <item>Superieur (BAC et Plus)</item>
+        <item>Aucun</item>
     </string-array>
 
     <string name="kml_template">

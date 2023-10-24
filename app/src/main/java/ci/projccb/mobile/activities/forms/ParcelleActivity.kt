@@ -73,7 +73,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
                 this,
                 finished = true,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
 
@@ -102,16 +102,16 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
 
 
     fun setupTyprDeclarationSelection() {
-        selectDeclarationTypeParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                typeDeclaration = resources.getStringArray(R.array.declarationType)[position]
-                disableField()
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-
-            }
-        }
+//        selectDeclarationTypeParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                typeDeclaration = resources.getStringArray(R.array.declarationType)[position]
+//                disableField()
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//            }
+//        }
     }
 
 
@@ -127,7 +127,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
                 this,
                 finished = false,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
 
@@ -148,8 +148,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         if (fromDatas.lowercase().contains("CONTENT", ignoreCase = true)) {
             producteurId = parcelleDraftedLocal.producteurId ?: "0"
             producteurNomPrenoms = parcelleDraftedLocal.producteurNom ?: ""
-            editProducteurNotFoundInfosParcelle.setText(parcelleDraftedLocal.producteurNom)
-            linearProducteurNotFoundInfosContainerParcelle.visibility = VISIBLE
+            //editProducteurNotFoundInfosParcelle.setText(parcelleDraftedLocal.producteurNom)
+            //linearProducteurNotFoundInfosContainerParcelle.visibility = VISIBLE
             linearProducteurContainerParcelle.visibility = GONE
         } else {
             if (parcelleDraftedLocal != null) {
@@ -200,7 +200,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
                 this,
                 finished = false,
                 callback = {},
-                positive = "OKAY",
+                positive = "Compris !",
                 deconnec = false,
                 showNo = false
 
@@ -208,31 +208,31 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
             return
         }
 
-        if (editNomParcelle.text.toString().isEmpty()) {
-            showMessage(
-                message = "Renseignez la culture de la parcelle",
-                context = this,
-                finished = false,
-                callback = {},
-                positive = "OK",
-                deconnec = false,
-                showNo = false
-            )
-            return
-        }
+//        if (editNomParcelle.text.toString().isEmpty()) {
+//            showMessage(
+//                message = "Renseignez la culture de la parcelle",
+//                context = this,
+//                finished = false,
+//                callback = {},
+//                positive = "OK",
+//                deconnec = false,
+//                showNo = false
+//            )
+//            return
+//        }
 
-        if (editAnneParcelle.text.toString().isEmpty()) {
-            showMessage(
-                message = "Renseignez l'année de la parcelle",
-                context = this,
-                finished = false,
-                callback = {},
-                positive = "OK",
-                deconnec = false,
-                showNo = false
-            )
-            return
-        }
+//        if (editAnneParcelle.text.toString().isEmpty()) {
+//            showMessage(
+//                message = "Renseignez l'année de la parcelle",
+//                context = this,
+//                finished = false,
+//                callback = {},
+//                positive = "OK",
+//                deconnec = false,
+//                showNo = false
+//            )
+//            return
+//        }
 
         if (typeDeclaration == "GPS" && wayPoints.isEmpty()) {
             showMessage(
@@ -263,12 +263,12 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         return ParcelleModel(
             producteurId = producteurId,
             producteurNom = producteurNomPrenoms,
-            anneeCreation = editAnneParcelle.text?.trim().toString(),
+            //anneeCreation = editAnneParcelle.text?.trim().toString(),
             latitude = editLatParcelle.text?.trim().toString(),
             longitude = editLongParcelle.text?.trim().toString(),
             typedeclaration = typeDeclaration,
             superficie = editSuperficieParcelle.text?.trim().toString(),
-            culture = editNomParcelle.text?.trim().toString(),
+            //culture = editNomParcelle.text?.trim().toString(),
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
             origin = "local"
         )
@@ -276,8 +276,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
 
 
     fun clearFields() {
-        editAnneParcelle.text = null
-        editNomParcelle.text = null
+//        editAnneParcelle.text = null
+//        editNomParcelle.text = null
 
         editLatParcelle.text = null
         editLongParcelle.text = null
@@ -299,7 +299,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         producteurId = ""
         producteurNomPrenoms = ""
 
-        editNomParcelle.requestFocus()
+        //editNomParcelle.requestFocus()
     }
 
 
@@ -402,8 +402,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         val parcelleDrafted = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
 
         if (parcelleDrafted.codeParc.toString().isNotEmpty()) {
-            linearCodeContainerParcelle.visibility = VISIBLE
-            editCodeParcelle.setText(parcelleDrafted.codeParc ?: "")
+            //linearCodeContainerParcelle.visibility = VISIBLE
+            //editCodeParcelle.setText(parcelleDrafted.codeParc ?: "")
         }
 
         // Localite
@@ -422,17 +422,17 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         )
 
         // Type selection superficie
-        provideStringSpinnerSelection(
-            selectDeclarationTypeParcelle,
-            parcelleDrafted.typedeclaration,
-            resources.getStringArray(R.array.declarationType)
-        )
+        //provideStringSpinnerSelection(
+            //selectDeclarationTypeParcelle,
+            //parcelleDrafted.typedeclaration,
+            //resources.getStringArray(R.array.declarationType)
+        //)
 
-        editNomParcelle.setText(parcelleDrafted.culture)
+        //editNomParcelle.setText(parcelleDrafted.culture)
         editSuperficieParcelle.setText(parcelleDrafted.superficie)
         editLatParcelle.setText(parcelleDrafted.latitude)
         editLongParcelle.setText(parcelleDrafted.longitude)
-        editAnneParcelle.setText(parcelleDrafted.anneeCreation)
+        //editAnneParcelle.setText(parcelleDrafted.anneeCreation)
     }
 
 
@@ -442,24 +442,24 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
 
 
-        editAnneParcelle.doAfterTextChanged {
-            val textFiedl = it?.toString()
-
-            if (textFiedl.toString().length == 4) {
-                if (textFiedl.toString().trim().toInt() < 1960) {
-                    showMessage(
-                        "La date ne doit pas etre inferieur à 1960",
-                        this,
-                        finished = false,
-                        {},
-                        "OK",
-                        deconnec = false,
-                        showNo = false
-                    )
-                    return@doAfterTextChanged
-                }
-            }
-        }
+//        editAnneParcelle.doAfterTextChanged {
+//            val textFiedl = it?.toString()
+//
+//            if (textFiedl.toString().length == 4) {
+//                if (textFiedl.toString().trim().toInt() < 1960) {
+//                    showMessage(
+//                        "La date ne doit pas etre inferieur à 1960",
+//                        this,
+//                        finished = false,
+//                        {},
+//                        "OK",
+//                        deconnec = false,
+//                        showNo = false
+//                    )
+//                    return@doAfterTextChanged
+//                }
+//            }
+//        }
 
         clickCloseBtn.setOnClickListener {
             SPUtils.getInstance().remove(Constants.PREFS_POLYGON_CENTER_LAT,)
@@ -498,20 +498,20 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle) {
         setupTyprDeclarationSelection()
         setupLocaliteSelection()
 
-        editAnneParcelle.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = 0
-            val dayOfMonth = 0
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-                editAnneParcelle.setText("$year")
-            }, year, month, dayOfMonth)
-
-            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
-            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
-            datePickerDialog?.show()
-        }
+//        editAnneParcelle.setOnClickListener {
+//            datePickerDialog = null
+//            val calendar: Calendar = Calendar.getInstance()
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = 0
+//            val dayOfMonth = 0
+//            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+//                editAnneParcelle.setText("$year")
+//            }, year, month, dayOfMonth)
+//
+//            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
+//            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
+//            datePickerDialog?.show()
+//        }
 
         //applyFiltersDec(editSuperficieParcelle, withZero = true)
 
