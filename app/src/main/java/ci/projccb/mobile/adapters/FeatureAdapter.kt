@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.DashboardAgentActivity
@@ -48,10 +49,10 @@ class FeatureAdapter(
         val tv_current_draft : TextView = itemView.findViewById(R.id.tv_current_draft)
         val feature_tv_main : TextView = itemView.findViewById(R.id.feature_tv_main)
 
-        val btn_add : AppCompatImageView = itemView.findViewById(R.id.add_new_item)
-        val btn_edit : AppCompatImageView = itemView.findViewById(R.id.btn_edit)
-        val btn_sync : AppCompatImageView = itemView.findViewById(R.id.btn_sync)
-        val btn_draft : AppCompatImageView = itemView.findViewById(R.id.btn_draft)
+        val btn_add : AppCompatTextView = itemView.findViewById(R.id.btn_add)
+        val btn_edit : AppCompatTextView = itemView.findViewById(R.id.btn_update)
+        val btn_sync : AppCompatTextView = itemView.findViewById(R.id.btn_sync)
+        val btn_draft : AppCompatTextView = itemView.findViewById(R.id.btn_draft)
     }
 
     override fun onCreateViewHolder(

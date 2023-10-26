@@ -187,7 +187,7 @@ class Commons {
             currentVal?.let {
                 var curr = 0
                 for (item in listIem){
-                    if (it.equals(item)) spinner.setSelection(curr)
+                    if (it.equals(item, ignoreCase = true)) spinner.setSelection(curr)
                     curr++
                 }
             }

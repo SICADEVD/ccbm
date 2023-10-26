@@ -23,6 +23,7 @@ import ci.projccb.mobile.tools.Commons.Companion.TAG
 import ci.projccb.mobile.tools.Commons.Companion.applyFilters
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
+import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
@@ -30,6 +31,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.*
 
 class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProducteurModel> {
@@ -972,9 +974,83 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
     }
 
 
+    private fun setLocaliteSpinner(id: Int) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        setListenerForSpinner(this, "Choix de la localité !", "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if(localitesListi?.size!! > 0) false else true,
+            spinner = selectLocaliteUniteAgricole, listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+//                    localiteCommon.nom = localite.nom!!
+//                    localiteCommon.id = localite.id!!
+
+                    setProducteurSpinner(localite.id)
+                }
+
+
+            }, onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    private fun setProducteurSpinner(id: Int?) {
+
+        var producteurDoa = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa();
+        var producteurLis = producteurDoa?.getProducteursByLocalite(
+            localite = id.toString()
+        )
+        //LogUtils.d(localitesListi)
+        setListenerForSpinner(this, "Choix du programme !", "La liste des roducteur semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if(producteurLis?.size!! > 0) false else true,
+            spinner = selectProducteurInfosProducteur, listIem = producteurLis?.map { it.nom+" "+it.prenoms }
+                ?.toList() ?: listOf(), onChanged = {
+
+                val producteurLis = producteurLis!![it]
+//                programmeCommon.nom = programme.libelle!!
+//                programmeCommon.id = programme.id!!
+
+            }, onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupSectionSelection() {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList =
+            sectionDao?.getAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            )
+
+//        setListenerForSpinner(this, "Choix de la section !", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+//            isEmpty = if(sectionList?.size!! > 0) false else true,
+//            spinner = selectSectionInfoProducteur, listIem = sectionList?.map { it.libelle }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                val section = sectionList!![it]
+//                //ogUtils.d(section)
+////                    sectionCommon.nom = section.libelle!!
+////                    sectionCommon.id = section.id!!
+//
+//                setLocaliteSpinner(section.id!!)
+//
+//            }, onSelected = { itemId, visibility ->
+//
+//            })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_unite_agricole_producteur)
+
+        setupSectionSelection()
 
         clickAddFarmInfosProducteur.setOnClickListener {
             try {

@@ -457,15 +457,16 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         var allField = itemList.second
         var isMissing = false
         var message = ""
-        var notNecessaire = listOf<String>("Année certification *",
-            "Code producteur",
-            "En tant que:",
-            "Numéro de téléphone",
-            "N° de la pièce CMU",
-            "N° de carte de sécurité sociale")
+        var notNecessaire = listOf<String>(
+            "Année certification *".lowercase(),
+            "Code producteur".lowercase(),
+            "En tant que:".lowercase(),
+            "Numéro de téléphone".lowercase(),
+            "N° de la pièce CMU".lowercase(),
+            "N° de carte de sécurité sociale".lowercase())
         for (field in allField){
-            if(field.second.isNullOrBlank() && notNecessaire.contains(field.second) == false){
-                message = "Le champ intitulé : `${field.first}` est vide !"
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
                 isMissing = true
                 break
             }
@@ -487,6 +488,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         val producteur = itemList.first.apply {
             photo = profilPhotoPath ?: ""
+            section = sectionCommon.id.toString()
+            localite = localiteCommon.id.toString()
+            programme_id = programmeCommon.id.toString()
         }
 
         val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
@@ -1082,7 +1086,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftProducteur.startAnimation(loadShakeAnimation(this))
+                        //imageDraftProducteur.startAnimation(loadShakeAnimation(this))
                     },
                     positive = "OK",
                     deconnec = false,
@@ -1115,8 +1119,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         producteurDao = CcbRoomDatabase.getDatabase(this)?.producteurDoa()
 
-        setAllSelection()
-
         setAllClickListener()
 
         setOtherListener()
@@ -1129,6 +1131,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             fromAction = intent.getStringExtra("from") ?: ""
             draftedDataProducteur = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
             undraftedDatas(draftedDataProducteur!!)
+        }else{
+            setAllSelection()
         }
     }
 
@@ -1196,10 +1200,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             datePickerDialog?.show()
         }
 
-        clickSaveProducteur.setOnClickListener {
-            //Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
-            collectDatas()
-        }
+//        clickSaveProducteur.setOnClickListener {
+//            //Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
+//            collectDatas()
+//        }
 
         clickCloseProducteur.setOnClickListener {
             finish()
@@ -1224,9 +1228,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //            signatureProducteur.clear()
 //        }
 
-        imageDraftProducteur.setOnClickListener {
-            draftProducteur(draftedDataProducteur ?: DataDraftedModel(uid = 0))
-        }
+//        imageDraftProducteur.setOnClickListener {
+//            draftProducteur(draftedDataProducteur ?: DataDraftedModel(uid = 0))
+//        }
 
         editAnneeCertificationProducteur.setOnClickListener {
             datePickerDialog = null

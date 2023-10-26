@@ -8,6 +8,7 @@ package ci.projccb.mobile.activities
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -59,14 +60,14 @@ class AuthentificationActivity : AppCompatActivity() {
     }
 
 
-//    fun bindDatas() {
-//        inputLogin.text = Editable.Factory.getInstance().newEditable("vianney1")
-//        //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
-//        //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
-//        inputPassword.text = Editable.Factory.getInstance().newEditable("123456")
-//        //  inputPassword.text = Editable.Factory.getInstance().newEditable("fccdi@2022")
-//
-//    }
+    fun bindDatas() {
+        inputLogin.text = Editable.Factory.getInstance().newEditable("caryn")
+        //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
+        //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
+        inputPassword.text = Editable.Factory.getInstance().newEditable("1234567")
+        //  inputPassword.text = Editable.Factory.getInstance().newEditable("fccdi@2022")
+
+    }
 
 
     fun getLoggin(): HttpLoggingInterceptor {
@@ -146,21 +147,13 @@ class AuthentificationActivity : AppCompatActivity() {
                                 showMessage(messageError!! , this@AuthentificationActivity, callback = {})
                             } else {
                                 val agentResponseBody = response.body()
-                                val roles = agentResponseBody?.menu
+                                val roles = arrayListOf<String>()
                                 val agentModel = agentResponseBody?.results
 
-//                                roles?.addAll(arrayOf(
-//                                    "LIVRAISON",
-//                                    "PRODUCTEUR",
-//                                    "PARCELLE",
-//                                    "ESTIMATION",
-//                                    "MENAGE",
-//                                    "PARCELLES",
-//                                    "FORMATION",
-//                                    "APPLICATION",
-//                                    "SSRTECLMRS",
-//                                    "EVALUATION"
-//                                ))
+                                roles?.addAll(arrayOf(
+                                    "PRODUCTEUR",
+                                    "PARCELLE",
+                                ))
 
                                 SPUtils.getInstance().put("menu", GsonUtils.toJson(roles))
                                 agentModel?.isLogged = true
@@ -201,7 +194,7 @@ class AuthentificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentification)
 
-        //bindDatas()
+        bindDatas()
 
         agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
 

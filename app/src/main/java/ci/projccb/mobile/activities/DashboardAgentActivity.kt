@@ -817,10 +817,10 @@ class DashboardAgentActivity : AppCompatActivity(),
     private fun setViewFeatureListing() {
 
         carouselRecyclerview.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
-        carouselRecyclerview.set3DItem(true)
+        //carouselRecyclerview.set3DItem(true)
         carouselRecyclerview.setInfinite(true)
         carouselRecyclerview.setAlpha(true)
-        carouselRecyclerview.setFlat(true)
+        //carouselRecyclerview.setFlat(true)
         carouselRecyclerview.setIsScrollingEnabled(true)
 
 //        carouselRecyclerview.setItemSelectListener(object : CarouselLayoutManager.OnSelected {

@@ -107,7 +107,7 @@
                 android:layout_height="@dimen/_30sdp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Une erreur est survenue pendrant la generation du menu" />
@@ -116,7 +116,7 @@ android:textColor="@color/text_color_white"
 
 
         <ScrollView
-            android:padding="@dimen/_16sdp"
+            android:padding="@dimen/_2sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/simple_divider"
