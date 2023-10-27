@@ -37,6 +37,7 @@ import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.reflect.TypeToken
+import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager
 import com.techatmosphere.expandablenavigation.model.ChildModel
 import com.techatmosphere.expandablenavigation.model.HeaderModel
 import kotlinx.android.synthetic.main.activity_dashboard_agent.*
@@ -823,12 +824,12 @@ class DashboardAgentActivity : AppCompatActivity(),
         //carouselRecyclerview.setFlat(true)
         carouselRecyclerview.setIsScrollingEnabled(true)
 
-//        carouselRecyclerview.setItemSelectListener(object : CarouselLayoutManager.OnSelected {
-//            override fun onItemSelected(position: Int) {
-//                //Cente item
-//                if(position > 0) recyclerViewIndicator.setCurrentPosition(position-1)
-//            }
-//        })
+        carouselRecyclerview.setItemSelectListener(object : CarouselLayoutManager.OnSelected {
+            override fun onItemSelected(position: Int) {
+                LogUtils.d(position)
+                (carouselRecyclerview.adapter as FeatureAdapter).setPositionSelected(position)
+            }
+        })
 
         carouselRecyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

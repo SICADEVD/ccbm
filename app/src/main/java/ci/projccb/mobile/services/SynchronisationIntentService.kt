@@ -112,29 +112,29 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         val producteurDatas = producteurDao.getUnSyncedAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
-
+        LogUtils.json(producteurDatas)
         for (producteur in producteurDatas) {
             try {
                 // deserialize datas producteurs
-                val culturesType = object : TypeToken<MutableList<CultureProducteurModel>>() {}.type
-                producteur.producteursCultures = GsonUtils.fromJson<MutableList<CultureProducteurModel>>(producteur.cultures, culturesType)
-                producteur.typeculture = mutableListOf()
-                producteur.superficieculture = mutableListOf()
+//                val culturesType = object : TypeToken<MutableList<CultureProducteurModel>>() {}.type
+//                producteur.producteursCultures = GsonUtils.fromJson<MutableList<CultureProducteurModel>>(producteur.cultures, culturesType)
+//                producteur.typeculture = mutableListOf()
+//                producteur.superficieculture = mutableListOf()
 
                 //reform producteur
                 //producteur.localitesId
 
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
 
-                if (!producteur.photo.isNullOrEmpty()) producteur.picture = Commons.convertPathBase64(producteur.photo, 1)
+                if (!producteur.photo.isNullOrEmpty()) producteur.photo = Commons.convertPathBase64(producteur.photo, 1)
 //                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
 //                if (!producteur.versoPath.isNullOrEmpty()) producteur.verso = Commons.convertPathBase64(producteur.versoPath, 1)
 //                if (!producteur.esignaturePath.isNullOrEmpty()) producteur.esignature = Commons.convertPathBase64(producteur.esignaturePath, 3)
 
-                producteur.producteursCultures?.map { culture ->
-                    producteur.typeculture?.add(culture.label!!)
-                    producteur.superficieculture?.add(culture.superficie.toString())
-                }
+//                producteur.producteursCultures?.map { culture ->
+//                    producteur.typeculture?.add(culture.label!!)
+//                    producteur.superficieculture?.add(culture.superficie.toString())
+//                }
 
 
                 producteur.apply {
@@ -166,81 +166,85 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
                 val producteurSynced: ProducteurModel? = responseProducteur.body()
 
-                producteurDao.syncData(
-                    id = producteurSynced?.id!!,
-                    synced = true,
-                    localID = producteur.uid
-                )
+                if(responseProducteur.isSuccessful){
 
-                val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
-                    producteur.uid.toString(),
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                )!!
+                    producteurDao.syncData(
+                        id = producteurSynced?.id!!,
+                        synced = true,
+                        localID = producteur.uid
+                    )
 
-                for (prodMenage in producteurMenagesList) {
-                    prodMenage.producteurs_id = producteurSynced.id.toString()
-                    menageDao?.insert(prodMenage)
-                }
+                    val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
+                        producteur.uid.toString(),
+                        SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                    )!!
 
-                val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
-                    producteur.uid.toString(),
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                )!!
+                    for (prodMenage in producteurMenagesList) {
+                        prodMenage.producteurs_id = producteurSynced.id.toString()
+                        menageDao?.insert(prodMenage)
+                    }
 
-                for (parcelle in producteurParcellesList) {
-                    parcelle.producteurId = producteurSynced.id.toString()
-                    parcelleDao?.insert(parcelle)
-                }
+                    val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
+                        producteur.uid.toString(),
+                        SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                    )!!
 
-                val livraisonsList = livraisonDao?.getUnSyncedAll(
-                    agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                )!!
+                    for (parcelle in producteurParcellesList) {
+                        parcelle.producteurId = producteurSynced.id.toString()
+                        parcelleDao?.insert(parcelle)
+                    }
 
-                livraisonsList.map { livraisonModel ->
-                    livraisonModel.producteursId = producteurSynced.id.toString()
-                    livraisonDao?.insert(livraisonModel)
-                }
+                    val livraisonsList = livraisonDao?.getUnSyncedAll(
+                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                    )!!
 
-                val formationsList = formationDao?.getUnSyncedAll(
-                    agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                )!!
+                    livraisonsList.map { livraisonModel ->
+                        livraisonModel.producteursId = producteurSynced.id.toString()
+                        livraisonDao?.insert(livraisonModel)
+                    }
 
-                for (formation in formationsList) {
-                    try {
-                        // deserialize datas producteurs
-                        val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                        formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                        val cleanList = formation.producteursId?.toMutableList()
+                    val formationsList = formationDao?.getUnSyncedAll(
+                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                    )!!
 
-                        var positionLoop = 0
-                        var positionFound: Int
+                    for (formation in formationsList) {
+                        try {
+                            // deserialize datas producteurs
+                            val producteursType = object : TypeToken<MutableList<String>>() {}.type
+                            formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
+                            val cleanList = formation.producteursId?.toMutableList()
 
-                        formation.producteursId?.map {
-                            val producteurId = it.split("-")[0]
-                            val typeId = it.split("-")[1]
+                            var positionLoop = 0
+                            var positionFound: Int
 
-                            if (typeId == "uid") {
-                                if (producteurId.toInt() == producteurSynced.uid) {
-                                    positionFound = positionLoop
-                                    cleanList?.removeAt(positionFound)
-                                    cleanList?.add("${producteurSynced.id}-id")
+                            formation.producteursId?.map {
+                                val producteurId = it.split("-")[0]
+                                val typeId = it.split("-")[1]
+
+                                if (typeId == "uid") {
+                                    if (producteurId.toInt() == producteurSynced.uid) {
+                                        positionFound = positionLoop
+                                        cleanList?.removeAt(positionFound)
+                                        cleanList?.add("${producteurSynced.id}-id")
+                                    }
                                 }
+
+                                positionLoop += 1
                             }
 
-                            positionLoop += 1
+                            formation.producteursId = mutableListOf()
+                            formation.producteursId = cleanList
+                            formation.producteursIdStringify = GsonUtils.toJson(cleanList)
+
+                            formationDao?.insert(formation)
+                        } catch (uhex: UnknownHostException) {
+                            FirebaseCrashlytics.getInstance().recordException(uhex)
+                        } catch (ex: Exception) {
+                            LogUtils.e(ex.message)
+                            FirebaseCrashlytics.getInstance().recordException(ex)
                         }
-
-                        formation.producteursId = mutableListOf()
-                        formation.producteursId = cleanList
-                        formation.producteursIdStringify = GsonUtils.toJson(cleanList)
-
-                        formationDao?.insert(formation)
-                    } catch (uhex: UnknownHostException) {
-                        FirebaseCrashlytics.getInstance().recordException(uhex)
-                    } catch (ex: Exception) {
-                        LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
                     }
+
                 }
 
             } catch (uhex: UnknownHostException) {

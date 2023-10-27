@@ -37,6 +37,7 @@ import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews
 import ci.projccb.mobile.tools.Commons.Companion.loadShakeAnimation
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
+import ci.projccb.mobile.tools.Commons.Companion.setAllValueOfTextViews
 import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
@@ -139,15 +140,15 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     val programmeCommon = CommonData();
 
 
-    fun setupSectionSelection() {
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null) {
         var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
-        var sectionList =
-            sectionDao?.getAll(
+        var sectionList = sectionDao?.getAll(
                 agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
             )
 
         setListenerForSpinner(this, "Choix de la section !", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(sectionList?.size!! > 0) false else true,
+            currentVal = currVal,
             spinner = selectSectionProducteur, listIem = sectionList?.map { it.libelle }
             ?.toList() ?: listOf(),
             onChanged = {
@@ -157,14 +158,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 sectionCommon.nom = section.libelle!!
                 sectionCommon.id = section.id!!
 
-                setLocaliteSpinner(sectionCommon.id!!)
+                setLocaliteSpinner(sectionCommon.id!!, currVal1)
 
             }, onSelected = { itemId, visibility ->
 
             })
     }
 
-    private fun setProgrammeSpinner(id: Int?) {
+    private fun setProgrammeSpinner(currVal2:String? = null) {
 
         var programmesDao = CcbRoomDatabase.getDatabase(applicationContext)?.programmesDao();
         var programmeListi = programmesDao?.getAll(
@@ -173,6 +174,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         //LogUtils.d(localitesListi)
         setListenerForSpinner(this, "Choix du programme !", "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(programmeListi?.size!! > 0) false else true,
+            currentVal = currVal2,
             spinner = selectProgramProducteur, listIem = programmeListi?.map { it.libelle }
             ?.toList() ?: listOf(), onChanged = {
 
@@ -186,13 +188,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     }
 
-    private fun setLocaliteSpinner(id: Int) {
+    private fun setLocaliteSpinner(id: Int, currVal1:String? = null) {
 
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
         setListenerForSpinner(this, "Choix de la localité !", "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(localitesListi?.size!! > 0) false else true,
+            currentVal = currVal1,
             spinner = selectLocaliteProducteur, listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
@@ -201,7 +204,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    setProgrammeSpinner(localiteCommon.id)
+                    //setProgrammeSpinner(localiteCommon.id)
                 }
 
 
@@ -253,7 +256,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     }
 
 
-    fun setupNationaliteSelection() {
+    fun setupNationaliteSelection(currVal:String? = null) {
         val arrayNationalites: MutableList<String>? = mutableListOf()
         //nationaliteDao = CcbRoomDatabase.getDatabase(applicationContext)?.nationaliteDoa();
         //val nationaliteype = object : TypeToken<MutableList<NationaliteModel>>() {}.type
@@ -450,7 +453,30 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //            return
 //        }
 
-        //val producteurModel = getProducteurObjet()
+        val producteurModelItem = getProducteurObjet()
+
+        if(producteurModelItem == null) return
+
+        val producteur = producteurModelItem?.first.apply {
+            this?.apply {
+                photo = profilPhotoPath ?: ""
+                section = sectionCommon.id.toString()
+                localitesId = localiteCommon.id.toString()
+                programme_id = programmeCommon.id.toString()
+                isSynced = false
+                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            }
+        }
+
+        val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
+        intentProducteurPreview.putExtra("preview", producteur)
+        val mapEntries: List<MapEntry>? = producteurModelItem?.second?.map { MapEntry(it.first, it.second) }
+        intentProducteurPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
+        intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
+        startActivity(intentProducteurPreview)
+    }
+
+    private fun getProducteurObjet(): Pair<ProducteurModel, MutableList<Pair<String, String>>>? {
 
         var itemList = getSetupProducteurModel(ProducteurModel(uid = 0, id = 0,), mutableListOf<Pair<String,String>>())
         //LogUtils.d(.toString())
@@ -483,66 +509,52 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 showNo = false
             )
 
-            return
+            return null
         }
 
-        val producteur = itemList.first.apply {
-            photo = profilPhotoPath ?: ""
-            section = sectionCommon.id.toString()
-            localite = localiteCommon.id.toString()
-            programme_id = programmeCommon.id.toString()
-        }
+        return itemList
 
-        val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
-        intentProducteurPreview.putExtra("preview", producteur)
-        val mapEntries: List<MapEntry> = allField.map { MapEntry(it.first, it.second) }
-        intentProducteurPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
-        intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
-        startActivity(intentProducteurPreview)
-    }
-
-    private fun getProducteurObjet(): ProducteurModel {
-        return ProducteurModel(
-            uid = 0,
-            id = 0,
-            //codeProd = editCodeProducteur.text?.trim().toString(),
-            localitesId = localiteIdSelected.toInt().toString(),
-            nom = nomProducteur,
-            prenoms = prenomsProducteur,
-            dateNaiss = dateNaissance,
-            nationalite = nationaliteSelected,
-            phone1 = phone1,
-            phone2 = phoneTwo,
-            piece = typePieceSelected,
-            numPiece = numPiece,
-            statutCertification = statutCertification,
-            //anneeCertification = editAnneeCertificationProducteur.text.toString().trim(),
-            hasForest = jachereYesNo,
-            forestSuperficy = jachereSuperficie,
-            hasOtherFarms = cultureYesNo,
-            etude = etude,
-            under18Count = nbreUnder18,
-            under18SchooledCount = under18School,
-            under18SchooledNoPaperCount = under18Extrait,
-            farmersCount = nbreTravailleurs,
-            blessed = personneBlesseeSelected,
-            sexeProducteur = sexeProducteur,
-            hasFarmsPapers = paperYesNo,
-            paperGuards = paperGuard,
-            recuAchat = ticketHandlerSelected,
-            hasMobileMoney = moneyYesNo,
-            mobileMoney = moneyMobile,
-            banqueAccount = bankAccountYesNo,
-            isSynced = false,
-            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-            cultures = GsonUtils.toJson(cultureProducteurs),
-            origin = "local",
-            consentement = "Oui",
-            rectoPath = rectoPhotoPath ?: "",
-            versoPath = versoPhotoPath ?: "",
-            photo = profilPhotoPath ?: "",
-            esignaturePath = signaturePath ?: "",
-        )
+//        return ProducteurModel(
+//            uid = 0,
+//            id = 0,
+//            //codeProd = editCodeProducteur.text?.trim().toString(),
+//            localitesId = localiteIdSelected.toInt().toString(),
+//            nom = nomProducteur,
+//            prenoms = prenomsProducteur,
+//            dateNaiss = dateNaissance,
+//            nationalite = nationaliteSelected,
+//            phone1 = phone1,
+//            phone2 = phoneTwo,
+//            piece = typePieceSelected,
+//            numPiece = numPiece,
+//            statutCertification = statutCertification,
+//            //anneeCertification = editAnneeCertificationProducteur.text.toString().trim(),
+//            hasForest = jachereYesNo,
+//            forestSuperficy = jachereSuperficie,
+//            hasOtherFarms = cultureYesNo,
+//            etude = etude,
+//            under18Count = nbreUnder18,
+//            under18SchooledCount = under18School,
+//            under18SchooledNoPaperCount = under18Extrait,
+//            farmersCount = nbreTravailleurs,
+//            blessed = personneBlesseeSelected,
+//            sexeProducteur = sexeProducteur,
+//            hasFarmsPapers = paperYesNo,
+//            paperGuards = paperGuard,
+//            recuAchat = ticketHandlerSelected,
+//            hasMobileMoney = moneyYesNo,
+//            mobileMoney = moneyMobile,
+//            banqueAccount = bankAccountYesNo,
+//            isSynced = false,
+//            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+//            cultures = GsonUtils.toJson(cultureProducteurs),
+//            origin = "local",
+//            consentement = "Oui",
+//            rectoPath = rectoPhotoPath ?: "",
+//            versoPath = versoPhotoPath ?: "",
+//            photo = profilPhotoPath ?: "",
+//            esignaturePath = signaturePath ?: "",
+//        )
     }
 
 
@@ -750,7 +762,18 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun setAllSelection() {
-        setupTitreSelection()
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTitreDUProducteur,
+            itemChanged = arrayListOf(Pair(1, "Planté-partager")),
+            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerPrecisionTitreProducteur.visibility = visibility
+                }
+            })
 
         setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectCertifProducteur,
@@ -777,6 +800,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
 
         setupSectionSelection()
+        setProgrammeSpinner()
 
         setListenerForSpinner(this, "Choix du lieu","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectHabitationProducteur,
@@ -808,7 +832,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Choix de votre statut", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectStatutMatProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
@@ -818,21 +842,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectNationaliteProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectNationaliteProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
-                ?.toList() ?: listOf(), onChanged = {
-
-            }, onSelected = { itemId, visibility ->
-            })
-
-        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Avez vous des proches", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectProcheProducteur,
             listIem = listOf(),
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -845,7 +861,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 }
             })
 
-        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Votre niveau d'etude ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectEtudeProducteur,
             listIem = resources.getStringArray(R.array.niveauEtude).toList(),
             onChanged = {
@@ -853,7 +869,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Quel type de pièce ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectPieceProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
             onChanged = {
@@ -896,17 +912,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     private fun setupTitreSelection() {
 
-        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectTitreDUProducteur,
-            itemChanged = arrayListOf(Pair(1, "Planté-partager")),
-            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>)?.map { it.nom }
-            ?.toList() ?: listOf(), onChanged = {
 
-        }, onSelected = { itemId, visibility ->
-                if(itemId == 1){
-                    containerPrecisionTitreProducteur.visibility = visibility
-                }
-        })
 
     }
 
@@ -914,10 +920,20 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         prodModel: ProducteurModel,
         mutableListOf: MutableList<Pair<String, String>>
     ): Pair<ProducteurModel, MutableList<Pair<String, String>>> {
-        LogUtils.d(prodModel.nom)
+        //LogUtils.d(prodModel.nom)
         val mainLayout = findViewById<ViewGroup>(R.id.layout_producteur)
         getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
         return Pair(prodModel, mutableListOf)
+    }
+
+    fun passSetupProducteurModel(
+        prodModel: ProducteurModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_producteur)
+        prodModel?.let {
+            setAllValueOfTextViews(mainLayout, prodModel)
+        }
     }
 
 
@@ -960,109 +976,270 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     fun undraftedDatas(draftedData: DataDraftedModel) {
         val producteurDrafted = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
 
+        LogUtils.json(producteurDrafted)
+        passSetupProducteurModel(producteurDrafted)
 //        if (producteurDrafted.codeProdApp?.isNotEmpty() == true) {
 //            linearCodeContainerProducteur.visibility = VISIBLE
 //            editCodeProducteur.setText(producteurDrafted.codeProdApp ?: "")
 //        }
 
         // Consentement
-        provideStringSpinnerSelection(
-            selectConsentementProducteur,
-            producteurDrafted.consentement,
-            resources.getStringArray(R.array.YesOrNo)
-        )
+//        provideStringSpinnerSelection(
+//            selectConsentementProducteur,
+//            producteurDrafted.consentement,
+//            resources.getStringArray(R.array.YesOrNo)
+//        )
 
         // Localite
-        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val localitesDatas: MutableList<CommonData> = mutableListOf()
-        localitesLists?.map {
-            CommonData(id = it.id, nom = it.nom)
-        }?.let {
-            localitesDatas.addAll(it)
-        }
-        selectLocaliteProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-        provideDatasSpinnerSelection(
-            selectLocaliteProducteur,
-            producteurDrafted.localite,
-            localitesDatas
-        )
+//        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//        val localitesDatas: MutableList<CommonData> = mutableListOf()
+//        localitesLists?.map {
+//            CommonData(id = it.id, nom = it.nom)
+//        }?.let {
+//            localitesDatas.addAll(it)
+//        }
+//        selectLocaliteProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
+//        provideDatasSpinnerSelection(
+//            selectLocaliteProducteur,
+//            producteurDrafted.localite,
+//            localitesDatas
+//        )
 
         // Statut Certification
-        provideStringSpinnerSelection(
-            selectStatutProducteur,
-            producteurDrafted.statutCertification,
-            resources.getStringArray(R.array.status)
-        )
+//        provideStringSpinnerSelection(
+//            selectStatutProducteur,
+//            producteurDrafted.statutCertification,
+//            resources.getStringArray(R.array.status)
+//        )
 
         //  Genre
-        provideStringSpinnerSelection(
-            selectSexeProducteur,
-            producteurDrafted.sexeProducteur,
-            resources.getStringArray(R.array.genre)
-        )
+//        provideStringSpinnerSelection(
+//            selectSexeProducteur,
+//            producteurDrafted.sexeProducteur,
+//            resources.getStringArray(R.array.genre)
+//        )
 
         // Nationalie // Todo fix (selection of n-1 datas)
-        val nationalitesLists = CcbRoomDatabase.getDatabase(this)?.nationaliteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val nationalitesDatas: MutableList<CommonData> = mutableListOf()
-        nationalitesLists?.map {
-            CommonData(id = it.id, nom = it.nom)
-        }?.let {
-            nationalitesDatas.addAll(it)
-        }
-        selectNationaliteProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, nationalitesDatas)
-        provideDatasSpinnerSelection(
-            selectNationaliteProducteur,
-            producteurDrafted.nationalite,
-            nationalitesDatas
-        )
+//        val nationalitesLists = CcbRoomDatabase.getDatabase(this)?.nationaliteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//        val nationalitesDatas: MutableList<CommonData> = mutableListOf()
+//        nationalitesLists?.map {
+//            CommonData(id = it.id, nom = it.nom)
+//        }?.let {
+//            nationalitesDatas.addAll(it)
+//        }
+//        selectNationaliteProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, nationalitesDatas)
+//        provideDatasSpinnerSelection(
+//            selectNationaliteProducteur,
+//            producteurDrafted.nationalite,
+//            nationalitesDatas
+//        )
 
         // Piece // Todo fix (selection of n-1 datas)
-        val piecesLists = CcbRoomDatabase.getDatabase(this)?.typePieceDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val piecesDatas: MutableList<CommonData> = mutableListOf()
-        piecesLists?.map {
-            CommonData(id = it.id, nom = it.nom)
-        }?.let {
-            piecesDatas.addAll(it)
-        }
-        selectPieceProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, piecesDatas)
-        provideDatasSpinnerSelection(
-            selectPieceProducteur,
-            producteurDrafted.piece,
-            piecesDatas
-        )
+//        val piecesLists = CcbRoomDatabase.getDatabase(this)?.typePieceDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//        val piecesDatas: MutableList<CommonData> = mutableListOf()
+//        piecesLists?.map {
+//            CommonData(id = it.id, nom = it.nom)
+//        }?.let {
+//            piecesDatas.addAll(it)
+//        }
+//        selectPieceProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, piecesDatas)
+//        provideDatasSpinnerSelection(
+//            selectPieceProducteur,
+//            producteurDrafted.piece,
+//            piecesDatas
+//        )
 
         // Etude // Todo fix (selection of n-1 datas)
-        val etudesLists = CcbRoomDatabase.getDatabase(this)?.niveauDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val etudesDatas: MutableList<CommonData> = mutableListOf()
-        etudesLists?.map {
-            CommonData(id = it.id, nom = it.nom)
-        }?.let {
-            etudesDatas.addAll(it)
-        }
-        selectEtudeProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, etudesDatas)
-        provideDatasSpinnerSelection(
-            selectEtudeProducteur,
-            producteurDrafted.etude,
-            etudesDatas
-        )
+//        val etudesLists = CcbRoomDatabase.getDatabase(this)?.niveauDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//        val etudesDatas: MutableList<CommonData> = mutableListOf()
+//        etudesLists?.map {
+//            CommonData(id = it.id, nom = it.nom)
+//        }?.let {
+//            etudesDatas.addAll(it)
+//        }
+//        selectEtudeProducteur.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, etudesDatas)
+//        provideDatasSpinnerSelection(
+//            selectEtudeProducteur,
+//            producteurDrafted.etude,
+//            etudesDatas
+//        )
 
         //editAnneeCertificationProducteur.setText(producteurDrafted.anneeCertification ?: "0")
         //editCodeProducteur.setText(producteurDrafted.codeProd)
-        editNomProducteur.setText(producteurDrafted.nom)
-        editPrenomsProducteur.setText(producteurDrafted.prenoms)
-        editNaissanceProducteur.setText(producteurDrafted.dateNaiss)
-        editTelOneProducteur.setText(producteurDrafted.phone1)
-        //editTelTwoProducteur.setText(producteurDrafted.phoneTwo)
-        editPieceProducteur.setText(producteurDrafted.numPiece)
+//        editNomProducteur.setText(producteurDrafted.nom)
+//        editPrenomsProducteur.setText(producteurDrafted.prenoms)
+//        editNaissanceProducteur.setText(producteurDrafted.dateNaiss)
+//        editTelOneProducteur.setText(producteurDrafted.phone1)
+//        //editTelTwoProducteur.setText(producteurDrafted.phoneTwo)
+//        editPieceProducteur.setText(producteurDrafted.numPiece)
+//
+//        LogUtils.e(TAG, "from $fromAction")
 
-        LogUtils.e(TAG, "from $fromAction")
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTitreDUProducteur,
+            itemChanged = arrayListOf(Pair(1, "Planté-partager")),
+            currentVal = producteurDrafted.proprietaires,
+            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerPrecisionTitreProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectCertifProducteur,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            currentVal = producteurDrafted.certificats,
+            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerAutreCertifProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = spinnerVarieteProducteur,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            currentVal = producteurDrafted.variete,
+            listIem = (AssetFileHelper.getListDataFromAsset(21, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerAutreVarieteProducteur.visibility = visibility
+                }
+            })
+
+        setupSectionSelection(producteurDrafted.section, producteurDrafted.localitesId)
+        setProgrammeSpinner(producteurDrafted.programme_id)
+
+        setListenerForSpinner(this, "Choix du lieu","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectHabitationProducteur,
+            currentVal = producteurDrafted.habitationProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectStatutProducteur,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            currentVal = producteurDrafted.statutCertification,
+            listIem = resources.getStringArray(R.array.status)
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    linearAnneeCertificationProducteur.visibility = visibility
+                    linearCodeContainerProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectSexeProducteur,
+            currentVal = producteurDrafted.sexeProducteur,
+            listIem = resources.getStringArray(R.array.genre)
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectStatutMatProducteur,
+            currentVal = producteurDrafted.statutMatrimonial,
+            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+
+
+            })
+
+        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectNationaliteProducteur,
+            listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
+                ?.toList() ?: listOf(), onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectProcheProducteur,
+            listIem = listOf(),
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            currentVal = producteurDrafted.autreMembre,
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1) {
+                    containerEntantqueProducteur.visibility = visibility
+                    containerMembreNumProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEtudeProducteur,
+            currentVal = producteurDrafted.etude,
+            listIem = resources.getStringArray(R.array.niveauEtude).toList(),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectPieceProducteur,
+            currentVal = producteurDrafted.piece,
+            listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectCarteCMUProducteur,
+            currentVal = producteurDrafted.carteCMU,
+            listIem = resources.getStringArray(R.array.YesOrNo).toList(),
+            itemChanged = listOf(Pair(1, "Oui")),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1) containerNumPieceCMUProducteur.visibility = visibility
+            })
+
+        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeCarteCSSProducteur,
+            currentVal = producteurDrafted.typeCarteSecuriteSociale,
+            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom },
+            itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                containerNumCarteCSSProducteur.visibility = visibility
+            })
+
     }
 
 
     fun draftProducteur(draftModel: DataDraftedModel?) {
-        val producteurDraft = getProducteurObjet()
 
-        producteurDraft.localite = localiteSelected
+        val producteurModelItem = getProducteurObjet()
+
+        if(producteurModelItem == null) return
+
+        val producteurDraft = producteurModelItem?.first.apply {
+            this?.apply {
+                photo = profilPhotoPath ?: ""
+                section = sectionCommon.id.toString()
+                localitesId = localiteCommon.id.toString()
+                programme_id = programmeCommon.id.toString()
+            }
+        }
 
         LogUtils.json(producteurDraft)
 
@@ -1086,7 +1263,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        //imageDraftProducteur.startAnimation(loadShakeAnimation(this))
+                        imageDraftProducteur.startAnimation(loadShakeAnimation(this))
                     },
                     positive = "OK",
                     deconnec = false,
@@ -1200,10 +1377,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             datePickerDialog?.show()
         }
 
-//        clickSaveProducteur.setOnClickListener {
-//            //Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
-//            collectDatas()
-//        }
+        clickSaveProducteur.setOnClickListener {
+            //Commons.convertBitmap2File(signatureProducteur.signatureBitmap, signaturePath)
+            collectDatas()
+        }
 
         clickCloseProducteur.setOnClickListener {
             finish()
@@ -1228,9 +1405,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //            signatureProducteur.clear()
 //        }
 
-//        imageDraftProducteur.setOnClickListener {
-//            draftProducteur(draftedDataProducteur ?: DataDraftedModel(uid = 0))
-//        }
+        imageDraftProducteur.setOnClickListener {
+            draftProducteur(draftedDataProducteur ?: DataDraftedModel(uid = 0))
+        }
 
         editAnneeCertificationProducteur.setOnClickListener {
             datePickerDialog = null

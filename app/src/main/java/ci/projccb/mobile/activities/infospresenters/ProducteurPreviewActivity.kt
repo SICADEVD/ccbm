@@ -109,30 +109,30 @@ class ProducteurPreviewActivity : AppCompatActivity() {
 //                        loadFileToBitmap3(producteur.esignaturePath)
 //                    }
 //
-//                    clickSaveProdPreview.setOnClickListener {
-//                        try {
-//                            showMessage(
-//                                "Etes-vous sur de vouloir faire ce enregistrement ?",
-//                                this,
-//                                showNo = true,
-//                                callback = {
-//                                    CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.insert(producteur)
-//                                    draftDao?.completeDraft(draftID)
-//                                    synchronisation(type = "producteur", this)
-//                                    showMessage(
-//                                        "Producteur enregistré avec succes !",
-//                                        this,
-//                                        finished = true,
-//                                        callback = {})
-//                                },
-//                                finished = false
-//                            )
-//
-//                            ActivityUtils.finishActivity(ProducteurActivity::class.java)
-//                        } catch (ex: Exception) {
-//                            showMessage("Echec enregistreent !", this, callback = {})
-//                        }
-//                    }
+                    clickSavePreview.setOnClickListener {
+                        try {
+                            showMessage(
+                                "Etes-vous sur de vouloir faire cet enregistrement ?",
+                                this,
+                                showNo = true,
+                                callback = {
+                                    CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.insert(producteur)
+                                    draftDao?.completeDraft(draftID)
+                                    synchronisation(type = "producteur", this)
+                                    showMessage(
+                                        "Producteur enregistré avec succès !",
+                                        this,
+                                        finished = true,
+                                        callback = {})
+                                },
+                                finished = false
+                            )
+
+                            ActivityUtils.finishActivity(ProducteurActivity::class.java)
+                        } catch (ex: Exception) {
+                            showMessage("Echec d'enrégistrement !", this, callback = {})
+                        }
+                    }
 //
 //                    clickCloseBtn.setOnClickListener {
 //                        finish()

@@ -34,7 +34,7 @@ data class ProducteurModel(
     @SerializedName("statutMatrimonial") @Expose var statutMatrimonial: String? = "",
     @SerializedName("sexe") @Expose var sexeProducteur: String? = "",
     @SerializedName("phone1") @Expose var phone1: String? = "",
-    @SerializedName("phone2") @Expose var phone2: String? = "",
+    @SerializedName("phone2") @Expose var phoneMembre: String? = "",
     @SerializedName("autreMembre") @Expose var autreMembre: String? = "",
     @SerializedName("autrePhone") @Expose var autrePhone: String? = "",
     @SerializedName(value="type_piece", alternate = ["type_pieces_id"]) @Expose var piece: String? = "",

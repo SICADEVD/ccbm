@@ -147,13 +147,13 @@ class AuthentificationActivity : AppCompatActivity() {
                                 showMessage(messageError!! , this@AuthentificationActivity, callback = {})
                             } else {
                                 val agentResponseBody = response.body()
-                                val roles = arrayListOf<String>()
+                                val roles = agentResponseBody?.menu //arrayListOf<String>()
                                 val agentModel = agentResponseBody?.results
 
-                                roles?.addAll(arrayOf(
-                                    "PRODUCTEUR",
-                                    "PARCELLE",
-                                ))
+//                                roles?.addAll(arrayOf(
+//                                    "PRODUCTEUR",
+//                                    "PARCELLE",
+//                                ))
 
                                 SPUtils.getInstance().put("menu", GsonUtils.toJson(roles))
                                 agentModel?.isLogged = true

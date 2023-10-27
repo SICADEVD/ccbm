@@ -256,6 +256,42 @@ class Commons {
             return prodModel
         }
 
+        fun setAllValueOfTextViews(
+            viewGroup: ViewGroup,
+            prodModel: ProducteurModel
+        ): ProducteurModel {
+            val childCount = viewGroup.childCount
+            for (i in 0 until childCount) {
+                val childView = viewGroup.getChildAt(i)
+
+                val childViewClassName = childView::class.java.simpleName
+                //LogUtils.d(childViewClassName)
+                if (childViewClassName.contains("AppCompatTextView", ignoreCase = true) && childView.tag == null) {
+                    //currTextViewIn = (childView as TextView).text.toString()
+                    //LogUtils.d(childViewClassName+ " "+ currTextView)
+                }
+
+                if ( childView is AppCompatEditText && childView.tag != null ) {
+                    // You've found an EditText with the specified tag, get its value
+                    val editText = childView as AppCompatEditText
+
+                    val producteurModelClass = prodModel.javaClass
+                    val memberProperty = producteurModelClass.declaredFields.find { it.name == editText.tag }
+                    memberProperty?.let {
+                        it.isAccessible = true
+                        val propertyValue = it.get(prodModel)
+                        editText.setText("$propertyValue")
+                    }
+                    //countField++
+                } else if (childView is ViewGroup) {
+                    // If it's a ViewGroup, recursively call this method
+                    if(childView.visibility == View.VISIBLE) setAllValueOfTextViews(
+                        childView, prodModel)
+                }
+            }
+            return prodModel
+        }
+
         fun releaseDraftSound() {
             if (mpAudio != null) {
                 if (mpAudio!!.isPlaying) {

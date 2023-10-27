@@ -7,6 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_1sdp"
     android:layout_gravity="center_horizontal"
+    android:id="@+id/mainerScroll"
+    android:alpha=".1"
     app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="25dp"
     app:cardElevation="8dp"
@@ -69,6 +71,8 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_add"
+                        android:visibility="gone"
+                        tools:visibility="gone"
                         android:background="@drawable/border_shape_selector"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
@@ -86,6 +90,8 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_update"
+                        android:visibility="gone"
+                        tools:visibility="gone"
                         android:background="@drawable/border_shape_selector"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
@@ -125,6 +131,8 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_sync"
+                        android:visibility="gone"
+                        tools:visibility="gone"
                         android:background="@drawable/border_shape_selector"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
@@ -142,6 +150,8 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_draft"
+                        android:visibility="gone"
+                        tools:visibility="gone"
                         android:background="@drawable/border_shape_selector"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"

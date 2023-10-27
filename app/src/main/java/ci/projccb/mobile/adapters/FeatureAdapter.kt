@@ -1,8 +1,6 @@
 package ci.projccb.mobile.adapters
 
 import android.app.Activity
-import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -10,32 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
-import ci.projccb.mobile.activities.DashboardAgentActivity
-import ci.projccb.mobile.activities.forms.CalculEstimationActivity
-import ci.projccb.mobile.activities.forms.FormationActivity
-import ci.projccb.mobile.activities.forms.InspectionActivity
-import ci.projccb.mobile.activities.forms.LivraisonActivity
-import ci.projccb.mobile.activities.forms.ParcelleActivity
-import ci.projccb.mobile.activities.forms.ProducteurActivity
-import ci.projccb.mobile.activities.forms.ProducteurMenageActivity
-import ci.projccb.mobile.activities.forms.SsrtClmsActivity
-import ci.projccb.mobile.activities.forms.SuiviApplicationActivity
-import ci.projccb.mobile.activities.forms.SuiviParcelleActivity
-import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
-import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
-import ci.projccb.mobile.activities.lists.FormationsListActivity
-import ci.projccb.mobile.activities.lists.LivraisonsListActivity
-import ci.projccb.mobile.activities.lists.MenageresListActivity
-import ci.projccb.mobile.activities.lists.ParcellesListActivity
-import ci.projccb.mobile.activities.lists.ProducteursListActivity
-import ci.projccb.mobile.activities.lists.SuiviPacellesListActivity
-import ci.projccb.mobile.activities.lists.UpdateContentsListActivity
 import ci.projccb.mobile.models.FeatureModel
-import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.redirectMenu
-import com.blankj.utilcode.util.ActivityUtils
 import com.squareup.picasso.Picasso
 
 class FeatureAdapter(
@@ -43,7 +20,15 @@ class FeatureAdapter(
     private var listOfFeatures: MutableList<FeatureModel>
 ):
     RecyclerView.Adapter<FeatureAdapter.FeatureViewHolder>() {
+
+    private var selectedItem = -1
+
+    fun setPositionSelected(value:Int){
+        selectedItem = value
+    }
+
     class FeatureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val mainerScroll : CardView = itemView.findViewById(R.id.mainerScroll)
         val image_current : AppCompatImageView = itemView.findViewById(R.id.image_current)
         val tv_current_sync : TextView = itemView.findViewById(R.id.tv_current_sync)
         val tv_current_draft : TextView = itemView.findViewById(R.id.tv_current_draft)
@@ -66,6 +51,11 @@ class FeatureAdapter(
     override fun onBindViewHolder(holder: FeatureAdapter.FeatureViewHolder, position: Int) {
 
         val currentFeature = listOfFeatures.get(position)
+
+        if(selectedItem != -1){
+            val alpha = if (position === selectedItem) 1.0f else 0.1f
+            holder.mainerScroll.alpha = alpha
+        }
 
         holder.tv_current_sync.text = currentFeature.countSync.toString()
         holder.tv_current_draft.text = currentFeature.countDraft.toString()
@@ -105,7 +95,6 @@ class FeatureAdapter(
             }
         }
     }
-
 
 
     fun updateFeature(list: ArrayList<FeatureModel>) {

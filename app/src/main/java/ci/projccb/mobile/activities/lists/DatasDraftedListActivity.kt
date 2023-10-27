@@ -10,6 +10,7 @@ import ci.projccb.mobile.adapters.DataDraftedAdapter
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Constants
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import kotlinx.android.synthetic.main.activity_datas_drafted_list.*
 
@@ -28,10 +29,13 @@ class DatasDraftedListActivity : AppCompatActivity(R.layout.activity_datas_draft
         intent?.let {
             fromGlobalMenu = it.getStringExtra("fromMenu").toString()
 
+            LogUtils.d(fromGlobalMenu)
             val draftedDataList = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getAllByType(
                     SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(),
-                    fromGlobalMenu
+                    fromGlobalMenu.toLowerCase()
                 )
+
+            LogUtils.d(draftedDataList)
 
             val draftedDatasAdapter = DataDraftedAdapter(
                 this,

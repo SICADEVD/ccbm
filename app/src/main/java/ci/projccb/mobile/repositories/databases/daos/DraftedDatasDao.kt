@@ -19,7 +19,7 @@ interface DraftedDatasDao {
     fun getAll(agentID: String?): MutableList<DataDraftedModel>
 
     @Transaction
-    @Query("SELECT * FROM drafted_datas WHERE (agentId = :agentID AND draftCompleted = 0 AND typeDraft = :typeDraft)")
+    @Query("SELECT * FROM drafted_datas WHERE (agentId = :agentID AND draftCompleted = 0 AND typeDraft like :typeDraft)")
     fun getAllByType(agentID: String?, typeDraft: String): MutableList<DataDraftedModel>
 
 
