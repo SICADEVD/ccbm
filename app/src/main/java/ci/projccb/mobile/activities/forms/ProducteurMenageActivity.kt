@@ -1533,7 +1533,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
     }
 
-    private fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
 
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
         var localitesListi = localiteDao?.getLocaliteBySection(id)

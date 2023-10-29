@@ -808,18 +808,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 }
             })
 
-        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = spinnerVarieteProducteur,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(21, this) as MutableList<CommonData>)?.map { it.nom }
-                ?.toList() ?: listOf(), onChanged = {
-
-            }, onSelected = { itemId, visibility ->
-                if(itemId==1){
-                    containerAutreVarieteProducteur.visibility = visibility
-                }
-            })
-
         setupSectionSelection()
         setProgrammeSpinner()
 
@@ -1120,18 +1108,18 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 }
             })
 
-        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = spinnerVarieteProducteur,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            currentVal = producteurDrafted.variete,
-            listIem = (AssetFileHelper.getListDataFromAsset(21, this) as MutableList<CommonData>)?.map { it.nom }
-                ?.toList() ?: listOf(), onChanged = {
-
-            }, onSelected = { itemId, visibility ->
-                if(itemId==1){
-                    containerAutreVarieteProducteur.visibility = visibility
-                }
-            })
+//        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = spinnerVarieteProducteur,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            currentVal = producteurDrafted.variete,
+//            listIem = (AssetFileHelper.getListDataFromAsset(21, this) as MutableList<CommonData>)?.map { it.nom }
+//                ?.toList() ?: listOf(), onChanged = {
+//
+//            }, onSelected = { itemId, visibility ->
+//                if(itemId==1){
+//                    containerAutreVarieteProducteur.visibility = visibility
+//                }
+//            })
 
         setupSectionSelection(producteurDrafted.section, producteurDrafted.localitesId)
         setProgrammeSpinner(producteurDrafted.programme_id)

@@ -4,18 +4,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.ParcelleActivity
+import ci.projccb.mobile.adapters.PreviewItemAdapter
 import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.ExportUtils
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_parcelle_preview.*
+import kotlinx.android.synthetic.main.activity_producteur_preview.recyclerInfoPrev
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -33,15 +37,15 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
     var whichButton = 0
 
 
-    fun collecteDatas() {
-        labelProducteurParcellePreview.text = parcellePoo.producteurNom
-        labelCultueParcellePreview.text = parcellePoo.culture
-        labelDeclarationParcellePreview.text = parcellePoo.typedeclaration
-        labelSupeficieParcellePreview.text = parcellePoo.superficie
-        labelLatLngParcellePreview.text = parcellePoo.latitude?.plus("/").plus(parcellePoo.longitude)
-        labelAnneeParcellePreview.text = parcellePoo.anneeCreation
-        labelWayPointsParcellePreview.text = parcellePoo.wayPointsString
-    }
+//    fun collecteDatas() {
+//        labelProducteurParcellePreview.text = parcellePoo.producteurNom
+//        labelCultueParcellePreview.text = parcellePoo.culture
+//        labelDeclarationParcellePreview.text = parcellePoo.typedeclaration
+//        labelSupeficieParcellePreview.text = parcellePoo.superficie
+//        labelLatLngParcellePreview.text = parcellePoo.latitude?.plus("/").plus(parcellePoo.longitude)
+//        labelAnneeParcellePreview.text = parcellePoo.anneeCreation
+//        labelWayPointsParcellePreview.text = parcellePoo.wayPointsString
+//    }
 
 
     fun buildExport(parcellePo: ParcelleModel, type: Int, action: Int) {
@@ -82,7 +86,28 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
             try {
                 parcellePoo = it.getParcelableExtra("preview")!!
                 draftID = it.getIntExtra("draft_id", 0)
-                collecteDatas()
+                //collecteDatas()
+
+                val parcelleItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
+                val parcelleItemListData = it.getParcelableArrayListExtra<MapEntry>("previewitem")
+
+                parcelleItemListData?.forEach {
+                    if(it.key.isNullOrEmpty()==false){
+                        Commons.addItemsToList(
+                            it.key,
+                            it.value,
+                            parcelleItemsListPrev
+                        )
+                    }
+                }
+//                LogUtils.d(producteurItemListData)
+//                LogUtils.d(producteurItemsListPrev)
+
+                val rvPrevAdapter = PreviewItemAdapter(parcelleItemsListPrev)
+                recyclerInfoPrev.adapter = rvPrevAdapter
+                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -112,7 +137,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
         clickSaveParcellePreview.setOnClickListener {
             try {
                 showMessage(
-                    "Etes-vous sur de vouloir faire ce enregistrement ?",
+                    "Etes-vous sûr de vouloir faire cet enregistrement ?",
                     this,
                     showNo = true,
                     callback = {

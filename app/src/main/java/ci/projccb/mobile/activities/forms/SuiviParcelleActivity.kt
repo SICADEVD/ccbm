@@ -29,6 +29,9 @@ import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.*
 import java.util.*
 
@@ -115,6 +118,151 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     var draftedDataSuiviParcelle: DataDraftedModel? = null
 
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
+//        Commons.setListenerForSpinner(this,
+//            "Choix de la section !",
+//            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+//            isEmpty = if (sectionList?.size!! > 0) false else true,
+//            currentVal = libItem ,
+//            spinner = selectSectionProducteurMenage,
+//            listIem = sectionList?.map { it.libelle }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                val section = sectionList!![it]
+//                //ogUtils.d(section)
+//                sectionCommon.nom = section.libelle!!
+//                sectionCommon.id = section.id!!
+//
+//                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2)
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
+    }
+
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
+//        Commons.setListenerForSpinner(this,
+//            "Choix de la localité !",
+//            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+//            isEmpty = if (localitesListi?.size!! > 0) false else true,
+//            currentVal = libItem,
+//            spinner = selectLocaliteProducteur,
+//            listIem = localitesListi?.map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                localitesListi?.let { list ->
+//                    var localite = list.get(it)
+//                    localiteCommon.nom = localite.nom!!
+//                    localiteCommon.id = localite.id!!
+//
+//                    setupProducteurSelection(localiteCommon.id!!, currVal2)
+//                }
+//
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
+
+    }
+
+    fun setupProducteurSelection(id: Int, currVal2: String? = null) {
+        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = id.toString())
+
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+            }
+        }
+
+//        Commons.setListenerForSpinner(this,
+//            "Choix du producteur !",
+//            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+//            isEmpty = if (producteursList?.size!! > 0) false else true,
+//            currentVal = libItem,
+//            spinner = selectProducteurMenage,
+//            listIem = producteursList?.map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                producteursList?.let { list ->
+//                    var producteur = list.get(it)
+//                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+//                    producteurCommon.id = producteur.id!!
+//
+//                    //setupProducteurSelection(localiteCommon.id, currVal2)
+//                }
+//
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
+
+
+
+//        producteursList?.map {
+//            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
+//        }?.let {
+//            producteursDatas.addAll(it)
+//        }
+//
+//        val menageDraftedLocal = ApiClient.gson.fromJson(draftedDataMenage?.datas, ProducteurMenageModel::class.java)
+//        selectProducteurMenage!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+//
+//        if (menageDraftedLocal != null) {
+//            provideDatasSpinnerSelection(
+//                selectProducteurMenage,
+//                menageDraftedLocal.producteurNomPrenoms,
+//                producteursDatas
+//            )
+//        }
+//
+//        selectProducteurMenage.setTitle("Choisir le producteur")
+//        selectProducteurMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val producteur = producteursList!![position]
+//                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
+//                producteurCode = producteur.codeProd.toString()
+//
+//                producteurId = if (producteur.isSynced) {
+//                    producteur.id.toString()
+//                } else {
+//                    producteur.uid.toString()
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+    }
 
     fun setupParcelleSelection(producteurId: String?) {
         try {

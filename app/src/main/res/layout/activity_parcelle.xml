@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout_parcelle"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -157,6 +158,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="section"
                                 android:id="@+id/selectSectionParcelle"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -195,6 +197,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="localite"
                                 android:id="@+id/selectLocaliteParcelle"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -236,6 +239,7 @@ android:textColor="@color/text_color_white"
                                 android:spinnerMode="dialog" />-->
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="producteurId"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectProducteurParcelle"
                                 android:layout_width="match_parent"
@@ -274,6 +278,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp">
 
                                 <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="anneeCreation"
                                     android:id="@+id/editAnneeCreationParcelle"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -328,6 +333,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="ageMoyenCacao"
                                 android:id="@+id/editAgeCacaoParcelle"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_37sdp"
@@ -341,6 +347,44 @@ android:textColor="@color/text_color_white"
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/_13ssp"
                                 tools:text="1" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Variété"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="variete"
+                                android:id="@+id/spinnerVarieteParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
 
                         </LinearLayout>
 
@@ -377,6 +421,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="parcelleRegenerer"
                                 android:id="@+id/selectParcRegenParcelle"
                                 android:entries="@array/YesOrNo"
                                 android:layout_width="match_parent"
@@ -416,6 +461,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="anneeRegenerer"
                                 android:id="@+id/editNumAnneeRegenParcelle"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_37sdp"
@@ -431,6 +477,51 @@ android:textColor="@color/text_color_white"
                                 tools:text="1" />
 
                         </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerSuperfConcernee"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="0dp"
+                            android:layout_weight="6"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Superficie concernée (ha)"
+
+                            android:textStyle="bold" />
+
+                        <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="superficieConcerne"
+                            android:id="@+id/editSuperficieConcernParcelle"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberDecimal"
+                            android:digits="0123456789."
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="0.0" />
 
                     </LinearLayout>
 
@@ -459,6 +550,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="typeDoc"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectDocumentParcelle"
                                 android:layout_width="match_parent"
@@ -473,9 +565,6 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
-                        android:id="@+id/containerPresentCourEauParcelle"
-                        android:visibility="gone"
-                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -499,7 +588,50 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="presenceCourDeau"
                                 android:id="@+id/selectPresentCourEauParcelle"
+                                android:entries="@array/YesOrNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerCourEauParcelle"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="De quel cour il s'agit ?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="courDeau"
+                                android:id="@+id/selectCourEauParcelle"
                                 android:entries="@array/YesOrNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -540,6 +672,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="existeMesureProtection"
                                 android:id="@+id/selectMesurProtectParcelle"
                                 android:entries="@array/YesOrNo"
                                 android:layout_width="match_parent"
@@ -579,6 +712,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:tag="protection"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectProtectionParcelle"
@@ -619,6 +753,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="existePente"
                                 android:id="@+id/selectYaPenteParcelle"
                                 android:entries="@array/YesOrNo"
                                 android:layout_width="match_parent"
@@ -656,7 +791,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="niveauPente"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectNiveauPente"
@@ -697,6 +833,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="erosion"
                                 android:id="@+id/selectSignErosParcelle"
                                 android:entries="@array/YesOrNo"
                                 android:layout_width="match_parent"
@@ -804,7 +941,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_5sdp" />
 
                             <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/clickAddIntrantListSuiviParcel"
+                                android:id="@+id/clickAddArbreOmbrParcel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/_25sdp"
                                 android:layout_gravity="end"
@@ -981,6 +1118,48 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:layout_weight="10"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:layout_weight="6"
+                            android:text="Type de déclaration superficiee *"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="typedeclaration"
+                                android:id="@+id/selectDeclarationTypeParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:entries="@array/declarationType"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -995,6 +1174,7 @@ android:textColor="@color/text_color_white"
                         <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="superficie"
                             android:id="@+id/editSuperficieParcelle"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -1007,9 +1187,10 @@ android:textColor="@color/text_color_white"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_13ssp"
-                            tools:text="HEVEA" />
+                            tools:text="0.0" />
 
                     </LinearLayout>
+
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
@@ -1036,6 +1217,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="latitude"
                                 android:id="@+id/editLatParcelle"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1068,6 +1250,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="longitude"
                                 android:id="@+id/editLongParcelle"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1120,6 +1303,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="nbCacaoParHectare"
                                 android:id="@+id/editNbrCacaoHecParcelle"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_37sdp"
@@ -1206,10 +1390,11 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text="Waypoints\n(liste des coordonnées gps du mapping)"
-                                
+
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="wayPointsString"
                                 android:id="@+id/editWayPointsParcelle"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1221,7 +1406,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/_13ssp"
-                                tools:text="HEVEA" />
+                                tools:text="WAYPOINT" />
 
                         </LinearLayout>
 

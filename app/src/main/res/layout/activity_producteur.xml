@@ -315,79 +315,41 @@ android:textColor="@color/text_color_white"
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:visibility="gone"-->
+<!--                    tools:visibility="visible"-->
+<!--                    android:id="@+id/containerAutreVarieteProducteur"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="vertical">-->
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:textColor="@color/text_color_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_12sdp"
-                        android:text="Variété"
-                        android:textStyle="bold" />
+<!--                    <androidx.appcompat.widget.AppCompatTextView-->
+<!--                        android:textColor="@color/text_color_white"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingLeft="@dimen/_12sdp"-->
+<!--                        android:text="Autre Variété"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_background">
+<!--                    <androidx.appcompat.widget.AppCompatEditText-->
+<!--                        android:tag="autreCertificats"-->
+<!--                        android:id="@+id/editPrecisionAutreVarieteProducteur"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"-->
+<!--                        android:background="@drawable/rounded_background"-->
+<!--                        android:ellipsize="end"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:imeOptions="actionDone"-->
+<!--                        android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                        android:paddingStart="@dimen/_10sdp"-->
+<!--                        android:paddingEnd="@dimen/_10sdp"-->
+<!--                        android:textAllCaps="true"-->
+<!--                        android:hint="@string/precision_hint"-->
+<!--                        android:textSize="@dimen/_13ssp"-->
+<!--                        tools:text="" />-->
 
-                        <Space
-                            android:layout_width="@dimen/_5sdp"
-                            android:layout_height="@dimen/_10sdp" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:tag="variete"
-                            android:id="@+id/spinnerVarieteProducteur"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:spinnerMode="dialog" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
-
-                <LinearLayout
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:id="@+id/containerAutreVarieteProducteur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:textColor="@color/text_color_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_12sdp"
-                        android:text="Autre Variété"
-                        android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:tag="autreCertificats"
-                        android:id="@+id/editPrecisionAutreVarieteProducteur"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_37sdp"
-                        android:background="@drawable/rounded_background"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters|textNoSuggestions"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
-                        android:hint="@string/precision_hint"
-                        android:textSize="@dimen/_13ssp"
-                        tools:text="" />
-
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
