@@ -1,17 +1,21 @@
 [{
         "id": "3",
-        "nom": "Marigot"
+        "nom": "Puits"
     },
     {
         "id": "1",
-        "nom": "Pompe Hydraulique Villageoise"
+        "nom": "Pompe Hydraulique"
     },
     {
         "id": "4",
-        "nom": "Puits Individuel"
+        "nom": "Au marigot"
     },
     {
         "id": "2",
-        "nom": "SODECI"
+        "nom": "Eau Courante nationale"
+    },
+    {
+        "id": "5",
+        "nom": "Autre"
     }
 ]

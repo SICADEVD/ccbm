@@ -976,8 +976,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     fun undraftedDatas(draftedData: DataDraftedModel) {
         val producteurDrafted = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
 
-        LogUtils.json(producteurDrafted)
-        passSetupProducteurModel(producteurDrafted)
 //        if (producteurDrafted.codeProdApp?.isNotEmpty() == true) {
 //            linearCodeContainerProducteur.visibility = VISIBLE
 //            editCodeProducteur.setText(producteurDrafted.codeProdApp ?: "")
@@ -1222,6 +1220,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
                 containerNumCarteCSSProducteur.visibility = visibility
             })
+
+        LogUtils.json(producteurDrafted)
+        passSetupProducteurModel(producteurDrafted)
 
     }
 

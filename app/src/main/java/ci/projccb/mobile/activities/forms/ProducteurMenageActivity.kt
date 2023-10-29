@@ -22,6 +22,14 @@ import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
+import kotlinx.android.synthetic.main.activity_producteur.containerPrecisionTitreProducteur
+import kotlinx.android.synthetic.main.activity_producteur.linearAnneeCertificationProducteur
+import kotlinx.android.synthetic.main.activity_producteur.linearCodeContainerProducteur
+import kotlinx.android.synthetic.main.activity_producteur.selectHabitationProducteur
+import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
+import kotlinx.android.synthetic.main.activity_producteur.selectSectionProducteur
+import kotlinx.android.synthetic.main.activity_producteur.selectStatutProducteur
+import kotlinx.android.synthetic.main.activity_producteur.selectTitreDUProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.*
 
 class ProducteurMenageActivity : AppCompatActivity() {
@@ -81,6 +89,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
     var donFemmeCacaoSuperficie = ""
     var draftedDataMenage: DataDraftedModel? = null
 
+    val sectionCommon = CommonData();
+    val localiteCommon = CommonData();
+    val programmeCommon = CommonData();
 
     fun setupEnergiesSelection() {
         val arrayEnergies: MutableList<String> = mutableListOf()
@@ -941,45 +952,45 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            }
 //        }
 
-        editDonSuperficieCacaoMenage.doAfterTextChanged {
-            try {
+//        editDonSuperficieCacaoMenage.doAfterTextChanged {
+//            try {
+//
+//            } catch (ex: Exception) {
+//                ex.printStackTrace()
+//            }
+//        }
 
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
 
 
-
-        setupEnergiesSelection()
-
-        setupOrduresSelection()
-
-        setupEauToilettesSelection()
-
-        setupEauVaissellesSelection()
-
-        setupSourceEauxSelection()
-
-        setupTypeMachinesSelection()
-
-        setupLocaliteSelection()
-
-        setupDechetYesNoSelection()
-
-        setupTraitementProtectionYesNoSelection()
-
-        setupWCYesNoSelection()
-
-        setupSelfTraitementYesNoSelection()
-
-        setupFemmeActiviteYesNoSelection()
-
-        setupDonFemmeYesNoSelection()
-
-        setupAtomisateurSelection()
-
-        setupGardeMachinesPulSelection()
+//        setupEnergiesSelection()
+//
+//        setupOrduresSelection()
+//
+//        setupEauToilettesSelection()
+//
+//        setupEauVaissellesSelection()
+//
+//        setupSourceEauxSelection()
+//
+//        setupTypeMachinesSelection()
+//
+//        setupLocaliteSelection()
+//
+//        setupDechetYesNoSelection()
+//
+//        setupTraitementProtectionYesNoSelection()
+//
+//        setupWCYesNoSelection()
+//
+//        setupSelfTraitementYesNoSelection()
+//
+//        setupFemmeActiviteYesNoSelection()
+//
+//        setupDonFemmeYesNoSelection()
+//
+//        setupAtomisateurSelection()
+//
+//        setupGardeMachinesPulSelection()
 
         clickCloseBtn.setOnClickListener {
             finish()
@@ -999,6 +1010,250 @@ class ProducteurMenageActivity : AppCompatActivity() {
         if (intent.getStringExtra("from") != null) {
             draftedDataMenage = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
             undraftedDatas(draftedDataMenage!!)
+        }else{
+            setAllSelection()
         }
     }
+
+    private fun setAllSelection() {
+
+        setupSectionSelection()
+
+        Commons.setListenerForSpinner(this,
+            "Choix le quartier",
+            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectQuartierMenage,
+            listIem = listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix de l'énergie",
+            "La liste des énergies semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEnergieMenage,
+            itemChanged = arrayListOf(Pair(1, "Bois de chauffe")),
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                17,
+                this
+            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerNbreDBoisMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix des ordures",
+            "La liste des ordures ménagères semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectOrdureMenagMenage,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                7,
+                this
+            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Type d'eaux de toilette",
+            "La liste des eaux de toilette semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEauToilMenage,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                1,
+                this
+            ) as MutableList<EauUseeModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Type d'eaux de vaisselle",
+            "La liste des eaux de vaisselle semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEauVaissMenage,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                1,
+                this
+            ) as MutableList<EauUseeModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quelle est la source d'eau ?",
+            "La liste des sources d'eau semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEauPotablMenage,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                16,
+                this
+            ) as MutableList<SourceEauModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Traitez vous vos champs ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTraitementYesNoMenage,
+            itemChanged = arrayListOf(Pair(1, "Oui"), Pair(2, "Non")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearTypeMachinePulContainerMenage.visibility = visibility
+                    containerAtomisateurContainerMenage.visibility = visibility
+                    linearMachinePulKeeperContainerMenage.visibility = visibility
+                }else{
+                    containerNomApplicateurMenage.visibility = visibility
+                    containerTelpApplicateurMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quelle machine est utilisée ?",
+            "La liste des machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectMachinePulMenage,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                18,
+                this
+            ) as MutableList<TypeMachineModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Lieu de la garde machine ?",
+            "La liste des gardes machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectMachineKeeperMenage,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                2,
+                this
+            ) as MutableList<GardeMachineModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Votre femme fait des activités ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFemmeActiviteYesNoMenage,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerFemmeActiviteContainerMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Donnes tu une partie de ton cacao ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectDonCacaoYesNoMenage,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = visibility
+                }
+            })
+
+    }
+
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la section !",
+            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = currVal,
+            spinner = selectSectionProducteurMenage,
+            listIem = sectionList?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setLocaliteSpinner(sectionCommon.id!!, currVal1)
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+    }
+
+    private fun setLocaliteSpinner(id: Int, currVal1:String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        Commons.setListenerForSpinner(this,
+            "Choix de la localité !",
+            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            currentVal = currVal1,
+            spinner = selectLocaliteProducteur,
+            listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    //setProgrammeSpinner(localiteCommon.id)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
 }

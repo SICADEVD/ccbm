@@ -285,7 +285,7 @@ class Commons {
                     //countField++
                 } else if (childView is ViewGroup) {
                     // If it's a ViewGroup, recursively call this method
-                    if(childView.visibility == View.VISIBLE) setAllValueOfTextViews(
+                    setAllValueOfTextViews(
                         childView, prodModel)
                 }
             }
