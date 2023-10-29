@@ -3,10 +3,10 @@ package ci.projccb.mobile.activities.forms
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.MenagePreviewActivity
 import ci.projccb.mobile.models.*
@@ -16,21 +16,17 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_producteur.containerPrecisionTitreProducteur
-import kotlinx.android.synthetic.main.activity_producteur.linearAnneeCertificationProducteur
-import kotlinx.android.synthetic.main.activity_producteur.linearCodeContainerProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectHabitationProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectSectionProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectStatutProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectTitreDUProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.*
+import java.util.ArrayList
 
 class ProducteurMenageActivity : AppCompatActivity() {
 
@@ -91,7 +87,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     val sectionCommon = CommonData();
     val localiteCommon = CommonData();
-    val programmeCommon = CommonData();
+    val producteurCommon = CommonData();
 
     fun setupEnergiesSelection() {
         val arrayEnergies: MutableList<String> = mutableListOf()
@@ -314,44 +310,76 @@ class ProducteurMenageActivity : AppCompatActivity() {
     }
 
 
-    fun setupProducteurSelection(localite: String?) {
-        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = localite)
-        val producteursDatas: MutableList<CommonData> = mutableListOf()
+    fun setupProducteurSelection(id: Int, currVal2: String? = null) {
+        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = id.toString())
 
-        producteursList?.map {
-            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
-        }?.let {
-            producteursDatas.addAll(it)
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+            }
         }
 
-        val menageDraftedLocal = ApiClient.gson.fromJson(draftedDataMenage?.datas, ProducteurMenageModel::class.java)
-        selectProducteurMenage!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+        Commons.setListenerForSpinner(this,
+            "Choix du producteur !",
+            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (producteursList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectProducteurMenage,
+            listIem = producteursList?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
 
-        if (menageDraftedLocal != null) {
-            provideDatasSpinnerSelection(
-                selectProducteurMenage,
-                menageDraftedLocal.producteurNomPrenoms,
-                producteursDatas
-            )
-        }
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    producteurCommon.id = producteur.id!!
 
-        selectProducteurMenage.setTitle("Choisir le producteur")
-        selectProducteurMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val producteur = producteursList!![position]
-                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
-                producteurCode = producteur.codeProd.toString()
-
-                producteurId = if (producteur.isSynced) {
-                    producteur.id.toString()
-                } else {
-                    producteur.uid.toString()
+                    //setupProducteurSelection(localiteCommon.id, currVal2)
                 }
-            }
 
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+
+
+//        producteursList?.map {
+//            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
+//        }?.let {
+//            producteursDatas.addAll(it)
+//        }
+//
+//        val menageDraftedLocal = ApiClient.gson.fromJson(draftedDataMenage?.datas, ProducteurMenageModel::class.java)
+//        selectProducteurMenage!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+//
+//        if (menageDraftedLocal != null) {
+//            provideDatasSpinnerSelection(
+//                selectProducteurMenage,
+//                menageDraftedLocal.producteurNomPrenoms,
+//                producteursDatas
+//            )
+//        }
+//
+//        selectProducteurMenage.setTitle("Choisir le producteur")
+//        selectProducteurMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val producteur = producteursList!![position]
+//                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
+//                producteurCode = producteur.codeProd.toString()
+//
+//                producteurId = if (producteur.isSynced) {
+//                    producteur.id.toString()
+//                } else {
+//                    producteur.uid.toString()
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
     }
 
 
@@ -577,26 +605,43 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-        if (producteursList?.size!! < 1) {
-            showMessage("Aucun producteur enregistré !", this, callback = {})
-            return
+//        if (producteursList?.size!! < 1) {
+//            showMessage("Aucun producteur enregistré !", this, callback = {})
+//            return
+//        }
+//
+//        quartierNom = editQuartierMenage.text?.trim().toString()
+//        //femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
+//        donFemmeCacaoSuperficie = editDonSuperficieCacaoMenage.text?.trim().toString()
+//
+//        //traitementHolderNom = editTraiteurMenage.text?.trim().toString()
+//        femmeActivite = editFemmeActiviteMenage.text?.trim().toString()
+//
+//
+//        val producteurMenageModel = getProducteurMenageObjet()
+//
+//        LogUtils.d("VAR MENAGE ACT : "+producteurMenageModel.equipements)
+
+        val itemModel = getProducteurMenageObjet()
+
+        if(itemModel == null) return
+
+        val producteurMenage = itemModel?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+                producteurs_id = producteurCommon.id.toString()
+                isSynced = false
+                //agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            }
         }
 
-        quartierNom = editQuartierMenage.text?.trim().toString()
-        //femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
-        donFemmeCacaoSuperficie = editDonSuperficieCacaoMenage.text?.trim().toString()
-
-        //traitementHolderNom = editTraiteurMenage.text?.trim().toString()
-        femmeActivite = editFemmeActiviteMenage.text?.trim().toString()
-
-
-        val producteurMenageModel = getProducteurMenageObjet()
-
-        LogUtils.d("VAR MENAGE ACT : "+producteurMenageModel.equipements)
+        val mapEntries: List<MapEntry>? = itemModel?.second?.map { MapEntry(it.first, it.second) }
 
         try {
             val intentMenagePreview = Intent(this, MenagePreviewActivity::class.java)
-            intentMenagePreview.putExtra("preview", producteurMenageModel)
+            intentMenagePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
+            intentMenagePreview.putExtra("preview", producteurMenage)
             intentMenagePreview.putExtra("draft_id", draftedDataMenage?.uid)
             startActivity(intentMenagePreview)
         } catch (ex: Exception) {
@@ -604,39 +649,92 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
     }
 
-    private fun getProducteurMenageObjet(): ProducteurMenageModel {
-        return  ProducteurMenageModel(
-            uid = 0,
-            activiteFemme = femmeActivite,
-            //boisChauffe = editNbreBoisSemaineMenage.text?.trim().toString(),
-            sources_energies_id = sourceEnergie,
-            ordures_menageres_id = ordureMenager,
-            separationMenage = dechetYesNo,
-            eauxToillette = toiletteEau,
-            eauxVaisselle = vaisselleEau,
-            wc = wcYesNo,
-            sources_eaux_id = eauPotable,
-            machine = machinePulverisationYesNo,
-            type_machines_id = machinePulverisation,
-            garde_machines_id = machinePulveKeeper,
-            equipements = equipementProtectionYesNo,
-            producteurNomPrenoms = producteurNomPrenoms,
-            traitementChamps = traitementSelfYesNo,
-            nomPersonneTraitant = traitementHolderNom,
-            empruntMachine = machineEmpruntYesNo,
-            gardeEmpruntMachine = machineEmpruntKeeper,
-            champFemme = femmeActiviteYesNo,
-            nomActiviteFemme = femmeActivite,
-            superficieCacaoFemme = femmeCacaoSuperficie,
-            nombreHectareFemme = donFemmeCacaoSuperficie,
-            //numeroPersonneTraitant = editChampsNoNumeroMenage.text.toString().trim(),
-            quartier = quartierNom,
-            producteurs_id = producteurId,
-            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-            origin = "local",
-            codeProducteur = producteurCode,
-            localiteNom = localiteNom
+    private fun getProducteurMenageObjet(): Pair<ProducteurMenageModel, MutableList<Pair<String, String>>>? {
+//        return  ProducteurMenageModel(
+//            uid = 0,
+//            activiteFemme = femmeActivite,
+//            //boisChauffe = editNbreBoisSemaineMenage.text?.trim().toString(),
+//            sources_energies_id = sourceEnergie,
+//            ordures_menageres_id = ordureMenager,
+//            separationMenage = dechetYesNo,
+//            eauxToillette = toiletteEau,
+//            eauxVaisselle = vaisselleEau,
+//            wc = wcYesNo,
+//            sources_eaux_id = eauPotable,
+//            machine = machinePulverisationYesNo,
+//            type_machines_id = machinePulverisation,
+//            garde_machines_id = machinePulveKeeper,
+//            equipements = equipementProtectionYesNo,
+//            producteurNomPrenoms = producteurNomPrenoms,
+//            traitementChamps = traitementSelfYesNo,
+//            nomPersonneTraitant = traitementHolderNom,
+//            empruntMachine = machineEmpruntYesNo,
+//            gardeEmpruntMachine = machineEmpruntKeeper,
+//            champFemme = femmeActiviteYesNo,
+//            nomActiviteFemme = femmeActivite,
+//            superficieCacaoFemme = femmeCacaoSuperficie,
+//            nombreHectareFemme = donFemmeCacaoSuperficie,
+//            //numeroPersonneTraitant = editChampsNoNumeroMenage.text.toString().trim(),
+//            quartier = quartierNom,
+//            producteurs_id = producteurId,
+//            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+//            origin = "local",
+//            codeProducteur = producteurCode,
+//            localiteNom = localiteNom
+//        )
+        var itemList = getSetupProducteurMenageModel(ProducteurMenageModel(uid = 0,), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>(
+            "Année certification *".lowercase(),
+            "Code producteur".lowercase(),
+            "En tant que:".lowercase(),
+            "Numéro de téléphone".lowercase(),
+            "N° de la pièce CMU".lowercase(),
+            "N° de carte de sécurité sociale".lowercase())
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        if(isMissing){
+            showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return itemList
+    }
+
+    private fun getSetupProducteurMenageModel(producteurMenageModel: ProducteurMenageModel, mutableListOf: MutableList<Pair<String, String>>): Pair<ProducteurMenageModel, MutableList<Pair<String, String>>> {
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_producteur_menage)
+        getAllTitleAndValueViews(mainLayout, producteurMenageModel, false,
+            mutableListOf
         )
+        return Pair(producteurMenageModel, mutableListOf)
+    }
+
+    fun passSetupMenageModel(
+        model: ProducteurMenageModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_producteur_menage)
+        model?.let {
+            Commons.setAllValueOfTextViews(mainLayout, model)
+        }
     }
 
 
@@ -644,7 +742,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         producteurNomPrenoms = ""
         producteurId = ""
         quartierNom = ""
-        editQuartierMenage.text = null
+        //editQuartierMenage.text = null
         sourceEnergie = ""
         selectEnergieMenage.setSelection(0)
         ordureMenager = ""
@@ -679,23 +777,36 @@ class ProducteurMenageActivity : AppCompatActivity() {
         selectFemmeActiviteYesNoMenage.setSelection(0)
         selectDonCacaoYesNoMenage.setSelection(0)
 
-        editQuartierMenage.requestFocus()
+        //editQuartierMenage.requestFocus()
 
     }
 
 
     fun draftMenage(draftModel: DataDraftedModel?) {
-        quartierNom = editQuartierMenage.text?.trim().toString()
+        //quartierNom = editQuartierMenage.text?.trim().toString()
         //femmeCacaoSuperficie = editSuperficieCacaoMenage.text?.trim().toString()
-        donFemmeCacaoSuperficie = editDonSuperficieCacaoMenage.text?.trim().toString()
+        ///donFemmeCacaoSuperficie = editDonSuperficieCacaoMenage.text?.trim().toString()
 
         //traitementHolderNom = editTraiteurMenage.text?.trim().toString()
-        femmeActivite = editFemmeActiviteMenage.text?.trim().toString()
+        //femmeActivite = editFemmeActiviteMenage.text?.trim().toString()
 
 
-        val producteurMenageModelDraft = getProducteurMenageObjet()
+        //val producteurMenageModelDraft = getProducteurMenageObjet()
 
-        LogUtils.d("VAR MENAGE ACT 2 : "+producteurMenageModelDraft.equipements)
+        //LogUtils.d("VAR MENAGE ACT 2 : "+producteurMenageModelDraft.equipements)
+
+        val itemModel = getProducteurMenageObjet()
+
+        if(itemModel == null) return
+
+        val producteurMeangeDraft = itemModel?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+                producteurs_id = producteurCommon.id.toString()
+                isSynced = false
+            }
+        }
 
         showMessage(
             message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
@@ -705,7 +816,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
                     DataDraftedModel(
                         uid = draftModel?.uid ?: 0,
-                        datas = ApiClient.gson.toJson(producteurMenageModelDraft),
+                        datas = ApiClient.gson.toJson(producteurMeangeDraft),
                         typeDraft = "menage",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
@@ -736,15 +847,205 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         //  LogUtils.json(menageUndrafted)
 
-        try {
-            // Localite
-            val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val localitesDatas: MutableList<CommonData> = mutableListOf()
-            localitesLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                localitesDatas.addAll(it)
-            }
+        setupSectionSelection(menageUndrafted.section, menageUndrafted.localite, menageUndrafted.producteurs_id)
+
+        Commons.setListenerForSpinner(this,
+            "Choix le quartier",
+            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectQuartierMenage,
+            currentVal = menageUndrafted.quartier,
+            listIem = listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix de l'énergie",
+            "La liste des énergies semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEnergieMenage,
+            currentVal = menageUndrafted.sources_energies_id,
+            itemChanged = arrayListOf(Pair(1, "Bois de chauffe")),
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                17,
+                this
+            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerNbreDBoisMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix des ordures",
+            "La liste des ordures ménagères semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectOrdureMenagMenage,
+            currentVal = menageUndrafted.ordures_menageres_id,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                7,
+                this
+            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Type d'eaux de toilette",
+            "La liste des eaux de toilette semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEauToilMenage,
+            currentVal = menageUndrafted.eauxToillette,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                1,
+                this
+            ) as MutableList<EauUseeModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Type d'eaux de vaisselle",
+            "La liste des eaux de vaisselle semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEauVaissMenage,
+            currentVal = menageUndrafted.eauxVaisselle,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                1,
+                this
+            ) as MutableList<EauUseeModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quelle est la source d'eau ?",
+            "La liste des sources d'eau semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEauPotablMenage,
+            currentVal = menageUndrafted.sources_eaux_id,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                16,
+                this
+            ) as MutableList<SourceEauModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Traitez vous vos champs ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTraitementYesNoMenage,
+            currentVal = menageUndrafted.traitementChamps,
+            itemChanged = arrayListOf(Pair(1, "Oui"), Pair(2, "Non")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearTypeMachinePulContainerMenage.visibility = visibility
+                    containerAtomisateurContainerMenage.visibility = visibility
+                    linearMachinePulKeeperContainerMenage.visibility = visibility
+                }else{
+                    containerNomApplicateurMenage.visibility = visibility
+                    containerTelpApplicateurMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quelle machine est utilisée ?",
+            "La liste des machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectMachinePulMenage,
+            currentVal = menageUndrafted.type_machines_id,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                18,
+                this
+            ) as MutableList<TypeMachineModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Lieu de la garde machine ?",
+            "La liste des gardes machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectMachineKeeperMenage,
+            currentVal = menageUndrafted.garde_machines_id,
+            listIem = (AssetFileHelper.getListDataFromAsset(
+                2,
+                this
+            ) as MutableList<GardeMachineModel>)?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Votre femme fait des activités ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFemmeActiviteYesNoMenage,
+            currentVal = menageUndrafted.activiteFemme,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerFemmeActiviteContainerMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Donnes tu une partie de ton cacao ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectDonCacaoYesNoMenage,
+            currentVal = menageUndrafted.champFemme,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = visibility
+                }
+            })
+
+        passSetupMenageModel(menageUndrafted)
+
+ //       try {
+//            // Localite
+//            val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val localitesDatas: MutableList<CommonData> = mutableListOf()
+//            localitesLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                localitesDatas.addAll(it)
+//            }
             //selectLocaliteMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
 //            provideDatasSpinnerSelection(
 //                selectLocaliteMenage,
@@ -768,28 +1069,28 @@ class ProducteurMenageActivity : AppCompatActivity() {
             )*/
 
             // energie
-            val energiesLists = CcbRoomDatabase.getDatabase(this)?.sourceEnergieDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val energiesDatas: MutableList<CommonData> = mutableListOf()
-            energiesLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                energiesDatas.addAll(it)
-            }
-            selectEnergieMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, energiesDatas)
-            provideDatasSpinnerSelection(
-                selectEnergieMenage,
-                menageUndrafted.sources_energies_id,
-                energiesDatas
-            )
-
-            // Ordure
-            val orduresLists = CcbRoomDatabase.getDatabase(this)?.ordureMenagereDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val orduresDatas: MutableList<CommonData> = mutableListOf()
-            orduresLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                orduresDatas.addAll(it)
-            }
+//            val energiesLists = CcbRoomDatabase.getDatabase(this)?.sourceEnergieDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val energiesDatas: MutableList<CommonData> = mutableListOf()
+//            energiesLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                energiesDatas.addAll(it)
+//            }
+//            selectEnergieMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, energiesDatas)
+//            provideDatasSpinnerSelection(
+//                selectEnergieMenage,
+//                menageUndrafted.sources_energies_id,
+//                energiesDatas
+//            )
+//
+//            // Ordure
+//            val orduresLists = CcbRoomDatabase.getDatabase(this)?.ordureMenagereDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val orduresDatas: MutableList<CommonData> = mutableListOf()
+//            orduresLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                orduresDatas.addAll(it)
+//            }
             //selectOrdureMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, orduresDatas)
 //            provideDatasSpinnerSelection(
 //                selectOrdureMenage,
@@ -805,13 +1106,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            )
 
             // Eaux
-            val eausLists = CcbRoomDatabase.getDatabase(this)?.eauUseeDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val eausDatas: MutableList<CommonData> = mutableListOf()
-            eausLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                eausDatas.addAll(it)
-            }
+//            val eausLists = CcbRoomDatabase.getDatabase(this)?.eauUseeDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val eausDatas: MutableList<CommonData> = mutableListOf()
+//            eausLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                eausDatas.addAll(it)
+//            }
 //            selectEauToiletteMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, eausDatas)
 //            selectEauVaisselleMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, eausDatas)
 
@@ -834,13 +1135,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            )
 
             // Eaux portable
-            val potablesLists = CcbRoomDatabase.getDatabase(this)?.sourceEauDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val potablesDatas: MutableList<CommonData> = mutableListOf()
-            potablesLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                potablesDatas.addAll(it)
-            }
+//            val potablesLists = CcbRoomDatabase.getDatabase(this)?.sourceEauDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val potablesDatas: MutableList<CommonData> = mutableListOf()
+//            potablesLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                potablesDatas.addAll(it)
+//            }
             //selectEauPotableMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, potablesDatas)
 //            provideDatasSpinnerSelection(
 //                selectEauPotableMenage,
@@ -849,43 +1150,43 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            )
 
             // champs traiteur
-            provideStringSpinnerSelection(
-                selectTraitementYesNoMenage,
-                menageUndrafted.traitementChamps,
-                resources.getStringArray(R.array.YesOrNo)
-            )
-
-            // machine
-            val machinesLists = CcbRoomDatabase.getDatabase(this)?.typeMachineDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val machinesDatas: MutableList<CommonData> = mutableListOf()
-            machinesLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                machinesDatas.addAll(it)
-            }
-            selectMachinePulMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, machinesDatas)
-            provideDatasSpinnerSelection(
-                selectMachinePulMenage,
-                menageUndrafted.type_machines_id,
-                machinesDatas
-            )
-
-            // garde machine
-            val gardeMachinesLists:  MutableList<GardeMachineModel>? =
-                AssetFileHelper.getListDataFromAsset(2, this@ProducteurMenageActivity) as MutableList<GardeMachineModel>?
-                //CcbRoomDatabase.getDatabase(this)?.gardeMachineDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val gardeMachinesDatas: MutableList<CommonData> = mutableListOf()
-            gardeMachinesLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                gardeMachinesDatas.addAll(it)
-            }
-            selectMachineKeeperMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, gardeMachinesDatas)
-            provideDatasSpinnerSelection(
-                selectMachineKeeperMenage,
-                menageUndrafted.garde_machines_id,
-                gardeMachinesDatas
-            )
+//            provideStringSpinnerSelection(
+//                selectTraitementYesNoMenage,
+//                menageUndrafted.traitementChamps,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
+//
+//            // machine
+//            val machinesLists = CcbRoomDatabase.getDatabase(this)?.typeMachineDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val machinesDatas: MutableList<CommonData> = mutableListOf()
+//            machinesLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                machinesDatas.addAll(it)
+//            }
+//            selectMachinePulMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, machinesDatas)
+//            provideDatasSpinnerSelection(
+//                selectMachinePulMenage,
+//                menageUndrafted.type_machines_id,
+//                machinesDatas
+//            )
+//
+//            // garde machine
+//            val gardeMachinesLists:  MutableList<GardeMachineModel>? =
+//                AssetFileHelper.getListDataFromAsset(2, this@ProducteurMenageActivity) as MutableList<GardeMachineModel>?
+//                //CcbRoomDatabase.getDatabase(this)?.gardeMachineDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//            val gardeMachinesDatas: MutableList<CommonData> = mutableListOf()
+//            gardeMachinesLists?.map {
+//                CommonData(id = it.id, nom = it.nom)
+//            }?.let {
+//                gardeMachinesDatas.addAll(it)
+//            }
+//            selectMachineKeeperMenage.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, gardeMachinesDatas)
+//            provideDatasSpinnerSelection(
+//                selectMachineKeeperMenage,
+//                menageUndrafted.garde_machines_id,
+//                gardeMachinesDatas
+//            )
 
             /*provideStringSpinnerSelection(
                 selectAtomisateurYesNoMenage,
@@ -900,27 +1201,27 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            )
 
             // femme activite
-            provideStringSpinnerSelection(
-                selectFemmeActiviteYesNoMenage,
-                menageUndrafted.activiteFemme,
-                resources.getStringArray(R.array.YesOrNo)
-            )
-
-            provideStringSpinnerSelection(
-                selectDonCacaoYesNoMenage,
-                menageUndrafted.champFemme,
-                resources.getStringArray(R.array.YesOrNo)
-            )
+//            provideStringSpinnerSelection(
+//                selectFemmeActiviteYesNoMenage,
+//                menageUndrafted.activiteFemme,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
+//
+//            provideStringSpinnerSelection(
+//                selectDonCacaoYesNoMenage,
+//                menageUndrafted.champFemme,
+//                resources.getStringArray(R.array.YesOrNo)
+//            )
 
 //            editChampsNoNumeroMenage.setText(menageUndrafted.numeroPersonneTraitant)
 //            editTraiteurMenage.setText(menageUndrafted.nomPersonneTraitant)
-            editQuartierMenage.setText(menageUndrafted.quartier)
+            //editQuartierMenage.setText(menageUndrafted.quartier)
             //editNbreBoisSemaineMenage.setText(menageUndrafted.boisChauffe)
-            editFemmeActiviteMenage.setText(menageUndrafted.nomActiviteFemme)
+            //editFemmeActiviteMenage.setText(menageUndrafted.nomActiviteFemme)
             //editSuperficieCacaoMenage.setText(menageUndrafted.superficieCacaoFemme)
-        } catch (ex: Exception) {
-            throw Exception(ex)
-        }
+//        } catch (ex: Exception) {
+//            throw Exception(ex)
+//        }
     }
 
 
@@ -1196,17 +1497,24 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     }
 
-    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null) {
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null) {
         var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
         var sectionList = sectionDao?.getAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
 
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
         Commons.setListenerForSpinner(this,
             "Choix de la section !",
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (sectionList?.size!! > 0) false else true,
-            currentVal = currVal,
+            currentVal = libItem ,
             spinner = selectSectionProducteurMenage,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
@@ -1217,7 +1525,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 sectionCommon.nom = section.libelle!!
                 sectionCommon.id = section.id!!
 
-                setLocaliteSpinner(sectionCommon.id!!, currVal1)
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2)
 
             },
             onSelected = { itemId, visibility ->
@@ -1225,16 +1533,23 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
     }
 
-    private fun setLocaliteSpinner(id: Int, currVal1:String? = null) {
+    private fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
 
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
         Commons.setListenerForSpinner(this,
             "Choix de la localité !",
             "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (localitesListi?.size!! > 0) false else true,
-            currentVal = currVal1,
+            currentVal = libItem,
             spinner = selectLocaliteProducteur,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
@@ -1245,7 +1560,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    //setProgrammeSpinner(localiteCommon.id)
+                    setupProducteurSelection(localiteCommon.id!!, currVal2)
                 }
 
 

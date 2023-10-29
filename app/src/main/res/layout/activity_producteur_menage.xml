@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
+    android:id="@+id/layout_producteur_menage"
     tools:context=".activities.forms.ProducteurMenageActivity">
 
     <RelativeLayout

@@ -65,6 +65,9 @@ import java.lang.Math.log10
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import kotlin.math.pow
+import kotlin.reflect.KClass
+import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews as getAllTitleAndValueViews1
+import ci.projccb.mobile.tools.Commons.Companion.setAllValueOfTextViews as setAllValueOfTextViews1
 
 
 class Commons {
@@ -193,13 +196,13 @@ class Commons {
             }
         }
 
-        fun getAllTitleAndValueViews(
+        fun <T : Any>  getAllTitleAndValueViews(
             viewGroup: ViewGroup,
-            prodModel: ProducteurModel,
+            prodModel: T,
             isTakeHide: Boolean = false,
             mutableListOf: MutableList<Pair<String, String>>,
             currTextView:String? = null
-        ): ProducteurModel {
+        ): T {
             val childCount = viewGroup.childCount
             var canModifTitle = true
             var currTextViewIn = currTextView
@@ -245,21 +248,24 @@ class Commons {
                     //countField++
                 } else if (childView is ViewGroup) {
                     // If it's a ViewGroup, recursively call this method
-                    if(childView.visibility == View.VISIBLE && isTakeHide == false) getAllTitleAndValueViews(
-                        childView,
-                        prodModel,
-                        mutableListOf = mutableListOf,
-                        currTextView = currTextViewIn
-                    )
+                    if(childView.visibility == View.VISIBLE && isTakeHide == false)
+                    {
+                        getAllTitleAndValueViews(
+                            viewGroup = childView,
+                            prodModel = prodModel,
+                            mutableListOf = mutableListOf,
+                            currTextView = currTextViewIn
+                        )
+                    }
                 }
             }
             return prodModel
         }
 
-        fun setAllValueOfTextViews(
+        fun <T : Any>  setAllValueOfTextViews(
             viewGroup: ViewGroup,
-            prodModel: ProducteurModel
-        ): ProducteurModel {
+            prodModel: T
+        ): T {
             val childCount = viewGroup.childCount
             for (i in 0 until childCount) {
                 val childView = viewGroup.getChildAt(i)
@@ -285,8 +291,7 @@ class Commons {
                     //countField++
                 } else if (childView is ViewGroup) {
                     // If it's a ViewGroup, recursively call this method
-                    setAllValueOfTextViews(
-                        childView, prodModel)
+                    setAllValueOfTextViews(childView, prodModel)
                 }
             }
             return prodModel

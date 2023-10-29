@@ -146,9 +146,16 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
             )
 
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
         setListenerForSpinner(this, "Choix de la section !", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(sectionList?.size!! > 0) false else true,
-            currentVal = currVal,
+            currentVal = libItem,
             spinner = selectSectionProducteur, listIem = sectionList?.map { it.libelle }
             ?.toList() ?: listOf(),
             onChanged = {
@@ -172,6 +179,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
         //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            programmeListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
         setListenerForSpinner(this, "Choix du programme !", "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(programmeListi?.size!! > 0) false else true,
             currentVal = currVal2,
@@ -193,6 +207,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
         setListenerForSpinner(this, "Choix de la localité !", "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(localitesListi?.size!! > 0) false else true,
             currentVal = currVal1,
@@ -1221,7 +1242,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 containerNumCarteCSSProducteur.visibility = visibility
             })
 
-        LogUtils.json(producteurDrafted)
+        //LogUtils.json(producteurDrafted)
         passSetupProducteurModel(producteurDrafted)
 
     }
@@ -1242,7 +1263,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }
         }
 
-        LogUtils.json(producteurDraft)
+        //LogUtils.json(producteurDraft)
 
         showMessage(
             message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
