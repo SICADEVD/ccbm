@@ -7,6 +7,12 @@
         <item>non</item>
     </string-array>
 
+    <string-array name="delai_arbre">
+        <item>12 dernier mois</item>
+        <item>Il y a 2ans</item>
+        <item>Au dela de 02 ans</item>
+    </string-array>
+
     <string-array name="InsectQuantifie">
         <item>Assez</item>
         <item>Moins</item>
@@ -121,6 +127,19 @@
         <item>Maladie</item>
         <item>Manque d’extrait</item>
         <item>Autre</item>
+    </string-array>
+
+    <string-array name="varieteArbre">
+        <item>Variete 1</item>
+        <item>Variete 2</item>
+        <item>Variete 3</item>
+        <item>Variete 4</item>
+    </string-array>
+
+    <string-array name="IntrantDesigne">
+        <item>NPK</item>
+        <item>Déchets Animal</item>
+        <item>Compost</item>
     </string-array>
 
     <string-array name="maternelleLevel">

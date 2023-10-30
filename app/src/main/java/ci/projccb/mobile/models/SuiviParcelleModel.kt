@@ -6,6 +6,8 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import ci.projccb.mobile.repositories.datas.ArbreData
+import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Constants
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -35,8 +37,7 @@ data class SuiviParcelleModel(
     @Expose @SerializedName("presenceSwollenShootStringify") var presenceSwollen: String? = "",
     @SerializedName("activiteRecolteSanitaire")
     @Expose var activiteRecolteSanitaire: String? = "",
-    @SerializedName("activiteTaille")
-    @Expose var activiteTaille: String? = "",
+    @SerializedName("activiteTaille") @Expose var activiteTaille: String? = "",
     @SerializedName(value = "cours_eaux", alternate = ["cours_eaux_id"])
     @Expose var coursEauxId: String? = "",
     @SerializedName("dateVisite") @Expose var dateVisite: String? = "",
@@ -67,6 +68,9 @@ data class SuiviParcelleModel(
     @SerializedName("nombreagroforestiersStringify") @Expose var nombreArbreAgroStringify: String? = "",
     @SerializedName("presencePourritureBrune") @Expose var presencePourritureBrune: String? = "",
     @SerializedName("presenceSwollenShoot") @Expose var presenceShooter: String? = "",
+    @Expose var insectesAmisStr: String? = "",
+    @Expose var nombreinsectesAmisStr: String? = "",
+    @Expose var itemsStr: String? = "",
     @SerializedName("nombresacs")
     @Expose var nombresacs: String? = "",
     @SerializedName(value = "parcelle", alternate = ["parcelles_id"]) @Expose var parcellesId: String? = "",
@@ -83,11 +87,17 @@ data class SuiviParcelleModel(
     @SerializedName("presenceMenteReligieuse")
     @Expose var presenceMenteReligieuse: String? = "",
     @Expose var nombresacsNPK: String? = "",
-    @Expose var intrantNPK: String? = "",
+    @Expose var intrantNPK: String? = "NPK",
     @Expose var intrantFiente: String? = "",
     @Expose var nombresacsFiente: String? = "",
-    @Expose var intrantComposte: String? = "",
+    @Expose var intrantDechetAnimal: String? = "Déchet Animal",
+    @Expose var nombresacsDechetAnimal: String? = "",
+    @Expose var intrantComposte: String? = "Composte",
     @Expose var nombresacsComposte: String? = "",
+    @Expose var qteBiofertilisant: String? = "",
+    @Expose var uniteBioFertilisant: String? = "L",
+    @Expose var qteEngraisOrganique: String? = "",
+    @Expose var uniteEngraisOrganique: String? = "L",
     @Expose var animauxRencontresStringify: String? = "",
     @SerializedName("presenceVerTerre")
     @Expose var presenceVerTerre: String? = "",
@@ -100,12 +110,34 @@ data class SuiviParcelleModel(
     @Expose var varieteOmbragesTemp: String? = "",
     @Expose var insectesParasitesTemp: String? = "",
     @Expose var animauxTemp: String? = "",
+    @Expose var section: String? = "",
+    @Expose var parcelle_id: String? = "",
+    @Expose var arbreStr: String? = "",
+    @Expose var recuArbreAgroForestier: String? = "",
+    @Expose var frequencePesticide: String? = "",
+    @Expose var pesticideUtiliseAnne: String? = "",
+    @Expose var autrePesticide: String? = "",
+    @Expose var presenceInsectesParasites: String? = "",
+    @Expose var presenceInsectesParasitesRavageur: String? = "",
+    @Expose var presenceAutreTypeInsecteAmi: String? = "",
+    @Expose var intrantNomListStr: String? = "",
+    @Expose var intrantNbrListStr: String? = "",
+    @Expose var bioferNomListStr: String? = "",
+    @Expose var bioferNbrListStr: String? = "",
 ) : Parcelable {
     @Ignore var ombrages: MutableList<OmbrageVarieteModel>? = null
     @Ignore var insecteAmis: MutableList<InsecteAmisModel>? = null
     @Ignore @Expose(serialize = true, deserialize = false) var insectesParasites: MutableList<InsecteRavageurModel>? = null
     @Ignore @Expose(serialize = true, deserialize = false) var animauxRencontres: MutableList<String>? = mutableListOf()
 
+    @Ignore @Expose(serialize = true, deserialize = false) var intrantNomList: MutableList<String>? = mutableListOf()
+    @Ignore @Expose(serialize = true, deserialize = false) var intrantNbrList: MutableList<String>? = mutableListOf()
+    @Ignore @Expose(serialize = true, deserialize = false) var bioferNomList: MutableList<String>? = mutableListOf()
+    @Ignore @Expose(serialize = true, deserialize = false) var bioferNbrList: MutableList<String>? = mutableListOf()
+    @Ignore @SerializedName("items") @Expose(serialize = true, deserialize = false) var itemsList: MutableList<ArbreData>? = mutableListOf()
+    @Ignore @SerializedName("arbre") @Expose(serialize = true, deserialize = false) var arbreList: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("agroforestiers") @Expose(serialize = true, deserialize = false) var agroForestiers: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("nombreagroforestiers") @Expose(serialize = true, deserialize = false) var nombreArbresAgro: MutableList<String>? = mutableListOf()
+    @Ignore @SerializedName("insectesAmis") @Expose(serialize = true, deserialize = false) var insectesAmisList: MutableList<String>? = mutableListOf()
+    @Ignore @SerializedName("nombreinsectesAmis") @Expose(serialize = true, deserialize = false) var nombreinsectesAmisList: MutableList<String>? = mutableListOf()
 }

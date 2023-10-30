@@ -6,14 +6,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.infospresenters.SuiviParcellePreviewActivity
 import ci.projccb.mobile.adapters.AnimalAdapter
 import ci.projccb.mobile.adapters.InsecteAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -21,17 +24,15 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
-import ci.projccb.mobile.tools.Commons.Companion.applyFilters
-import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
-import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
-import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
-import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
+import kotlinx.android.synthetic.main.activity_parcelle.editQtArbrOmbrParcel
+import kotlinx.android.synthetic.main.activity_parcelle.recyclerArbrOmbrListParcel
+import kotlinx.android.synthetic.main.activity_parcelle.selectArbrOmbrParcel
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.*
 import java.util.*
 
@@ -46,6 +47,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
     }
 
 
+    private var listSelectVarieteArbreList: MutableList<String> = arrayListOf()
     var localitesList: MutableList<LocaliteModel>? = mutableListOf()
     var parcelleDao: ParcelleDao? = null
     var producteurDao: ProducteurDao? = null
@@ -118,195 +120,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     var draftedDataSuiviParcelle: DataDraftedModel? = null
 
-    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null) {
-        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
-        var sectionList = sectionDao?.getAll(
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
 
-        var libItem: String? = null
-        currVal?.let { idc ->
-            sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
-            }
-        }
-
-//        Commons.setListenerForSpinner(this,
-//            "Choix de la section !",
-//            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-//            isEmpty = if (sectionList?.size!! > 0) false else true,
-//            currentVal = libItem ,
-//            spinner = selectSectionProducteurMenage,
-//            listIem = sectionList?.map { it.libelle }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//                val section = sectionList!![it]
-//                //ogUtils.d(section)
-//                sectionCommon.nom = section.libelle!!
-//                sectionCommon.id = section.id!!
-//
-//                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2)
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//
-//            })
-    }
-
-    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
-
-        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
-        var localitesListi = localiteDao?.getLocaliteBySection(id)
-        //LogUtils.d(localitesListi)
-        var libItem: String? = null
-        currVal1?.let { idc ->
-            localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
-            }
-        }
-
-//        Commons.setListenerForSpinner(this,
-//            "Choix de la localité !",
-//            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
-//            isEmpty = if (localitesListi?.size!! > 0) false else true,
-//            currentVal = libItem,
-//            spinner = selectLocaliteProducteur,
-//            listIem = localitesListi?.map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//                localitesListi?.let { list ->
-//                    var localite = list.get(it)
-//                    localiteCommon.nom = localite.nom!!
-//                    localiteCommon.id = localite.id!!
-//
-//                    setupProducteurSelection(localiteCommon.id!!, currVal2)
-//                }
-//
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//
-//            })
-
-    }
-
-    fun setupProducteurSelection(id: Int, currVal2: String? = null) {
-        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = id.toString())
-
-        var libItem: String? = null
-        currVal2?.let { idc ->
-            producteursList?.forEach {
-                if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
-            }
-        }
-
-//        Commons.setListenerForSpinner(this,
-//            "Choix du producteur !",
-//            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
-//            isEmpty = if (producteursList?.size!! > 0) false else true,
-//            currentVal = libItem,
-//            spinner = selectProducteurMenage,
-//            listIem = producteursList?.map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//                producteursList?.let { list ->
-//                    var producteur = list.get(it)
-//                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-//                    producteurCommon.id = producteur.id!!
-//
-//                    //setupProducteurSelection(localiteCommon.id, currVal2)
-//                }
-//
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//
-//            })
-
-
-
-//        producteursList?.map {
-//            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
-//        }?.let {
-//            producteursDatas.addAll(it)
-//        }
-//
-//        val menageDraftedLocal = ApiClient.gson.fromJson(draftedDataMenage?.datas, ProducteurMenageModel::class.java)
-//        selectProducteurMenage!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
-//
-//        if (menageDraftedLocal != null) {
-//            provideDatasSpinnerSelection(
-//                selectProducteurMenage,
-//                menageDraftedLocal.producteurNomPrenoms,
-//                producteursDatas
-//            )
-//        }
-//
-//        selectProducteurMenage.setTitle("Choisir le producteur")
-//        selectProducteurMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-//                val producteur = producteursList!![position]
-//                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
-//                producteurCode = producteur.codeProd.toString()
-//
-//                producteurId = if (producteur.isSynced) {
-//                    producteur.id.toString()
-//                } else {
-//                    producteur.uid.toString()
-//                }
-//            }
-//
-//            override fun onNothingSelected(arg0: AdapterView<*>) {
-//            }
-//        }
-    }
-
-    fun setupParcelleSelection(producteurId: String?) {
-        try {
-            parcelleDao = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
-            parcellesList = parcelleDao?.getParcellesProducteur(
-                producteurId = producteurId,
-                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-            )
-
-            val parcellesAdapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList!!)
-            selectParcelleSuivi!!.adapter = parcellesAdapter
-
-            selectParcelleSuivi.setTitle("Choisir la parcelle")
-
-            selectParcelleSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        val parcelle = parcellesList!![position]
-
-                        parcelleNom = "${parcelle.culture?:Constants.VIDE} (${parcelle.anneeCreation?:Constants.VIDE})"
-                        parcelleSuperficie = parcelle.superficie?:Constants.VIDE
-
-                        if (parcelle.isSynced) {
-                            parcelleId = parcelle.id.toString()
-                        } else {
-                            parcelleId = parcelle.id.toString()
-                        }
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
-    }
-
+    val sectionCommon = CommonData();
+    val localiteCommon = CommonData();
+    val producteurCommon = CommonData();
+    val parcelleCommon = CommonData();
 
     fun addOmbrageVariete(ombrageVarieteModel: OmbrageVarieteModel) {
         try {
@@ -504,42 +322,42 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 draftedDataSuiviParcelle?.datas,
                 SuiviParcelleModel::class.java
             )
-            selectProducteurSuivi!!.adapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
-
-            if (suiviParcelleDraftedLocal != null) {
-                provideDatasSpinnerSelection(
-                    selectProducteurSuivi,
-                    suiviParcelleDraftedLocal.parcelleProducteur,
-                    producteursDatas
-                )
-            }
-
-            selectProducteurSuivi.setTitle("Choisir le producteur")
-            selectProducteurSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        val producteur = producteursList!![position]
-                        producteurNom = "${producteur.nom} ${producteur.prenoms}"
-
-                        producteurId = if (producteur.isSynced) {
-                            producteur.id.toString()
-                        } else {
-                            producteur.uid.toString()
-                        }
-
-                        //LogUtils.e(TAG, "ProducteurID => $producteurId")
-                        setupParcelleSelection(producteurId)
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectProducteurSuivi!!.adapter =
+//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+//
+//            if (suiviParcelleDraftedLocal != null) {
+//                provideDatasSpinnerSelection(
+//                    selectProducteurSuivi,
+//                    suiviParcelleDraftedLocal.parcelleProducteur,
+//                    producteursDatas
+//                )
+//            }
+//
+//            selectProducteurSuivi.setTitle("Choisir le producteur")
+//            selectProducteurSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        val producteur = producteursList!![position]
+//                        producteurNom = "${producteur.nom} ${producteur.prenoms}"
+//
+//                        producteurId = if (producteur.isSynced) {
+//                            producteur.id.toString()
+//                        } else {
+//                            producteur.uid.toString()
+//                        }
+//
+//                        //LogUtils.e(TAG, "ProducteurID => $producteurId")
+//                        setupParcelleSelection(producteurId)
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
 
             if (producteursList?.size == 0) {
                 //LogUtils.e("TAG -> ${producteursList?.size}")
@@ -926,20 +744,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupFourmiSelection() {
         try {
-            selectFourmisSuivi.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        presenceFourmi = resources.getStringArray(R.array.fullyPoor)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
+//            selectFourmisSuivi.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        presenceFourmi = resources.getStringArray(R.array.fullyPoor)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -1007,45 +825,59 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-        nomInsecticide = editInsecticeNomSuivi.text?.trim().toString()
-        nombreInsecticide = editInsecticeNombreSuivi.text?.trim().toString()
-
-        nombreFongicide = editFongicideNombreSuivi.text?.trim().toString()
-        nomFongicide = editFongicideNomSuivi.text?.trim().toString()
-
-        nomHerbicide = editHerbicideNomSuivi.text?.trim().toString()
-        nombreHerbicide = editHerbicideNombreSuivi.text?.trim().toString()
-
-        nombreDesherbageAnnuel = editDesherbageManuelSuivi.text?.trim().toString()
+//        nomInsecticide = editInsecticeNomSuivi.text?.trim().toString()
+//        nombreInsecticide = editInsecticeNombreSuivi.text?.trim().toString()
+//
+//        nombreFongicide = editFongicideNombreSuivi.text?.trim().toString()
+//        nomFongicide = editFongicideNomSuivi.text?.trim().toString()
+//
+//        nomHerbicide = editHerbicideNomSuivi.text?.trim().toString()
+//        nombreHerbicide = editHerbicideNombreSuivi.text?.trim().toString()
+//
+//        nombreDesherbageAnnuel = editDesherbageManuelSuivi.text?.trim().toString()
         //arbreVariete = editVarieteArbreSuivi.text?.trim().toString()
 
         //nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
 
 
-        if (producteurId.isEmpty()) {
-            Commons.showMessage(
-                "Choisissez un producteur svp.",
-                this,
-                finished = false,
-                callback = {},
-                positive = "Compris !",
-                deconnec = false,
-                showNo = false
+//        if (producteurId.isEmpty()) {
+//            Commons.showMessage(
+//                "Choisissez un producteur svp.",
+//                this,
+//                finished = false,
+//                callback = {},
+//                positive = "Compris !",
+//                deconnec = false,
+//                showNo = false
+//
+//            )
+//            return
+//        }
+//
+//        if (parcelleId.isBlank()) {
+//            Commons.showMessage(message = "Selectionnez la parcelle, svp !", context = this, finished = false, callback = {})
+//            return
+//        }
 
-            )
-            return
+        val itemModelOb = getSuiviParcelleObjet()
+
+        if(itemModelOb == null) return
+
+        val SParcelle = itemModelOb?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localiteId = localiteCommon.id.toString()
+                producteursId = producteurCommon.id.toString()
+                parcelleId = parcelleCommon.id.toString()
+            }
         }
 
-        if (parcelleId.isBlank()) {
-            Commons.showMessage(message = "Selectionnez la parcelle, svp !", context = this, finished = false, callback = {})
-            return
-        }
-
-        val suiviParcelle = getSuiviParcelleObjet()
+        val mapEntries: List<MapEntry>? = itemModelOb?.second?.map { MapEntry(it.first, it.second) }
 
         try {
             val intentSuiviParcellePreview = Intent(this, SuiviParcellePreviewActivity::class.java)
-            intentSuiviParcellePreview.putExtra("preview", suiviParcelle)
+            intentSuiviParcellePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
+            intentSuiviParcellePreview.putExtra("preview", SParcelle)
             intentSuiviParcellePreview.putExtra("draft_id", draftedDataSuiviParcelle?.uid)
             startActivity(intentSuiviParcellePreview)
         } catch (ex: Exception) {
@@ -1053,65 +885,117 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSuiviParcelleObjet(): SuiviParcelleModel {
-        val item = SuiviParcelleModel(
-            activiteDesherbageManuel = activiteDesherbage,
-            parcelleNom = parcelleNom,
-            parcelleSuperficie = parcelleSuperficie,
-            parcelleProducteur = producteurNom,
-            activiteEgourmandage = activiteEgourmandage,
-            activiteRecolteSanitaire = activiteSanitaire,
-            activiteTaille = activiteTaille,
-            coursEauxId = courEau,
-            existeCoursEaux = courEauYesNo,
-            dateVisite = dateSuivi,
-            nomFongicide = nomFongicide,
-            nombreFongicide = nombreFongicide,
-            nomHerbicide = nomHerbicide,
-            nombreHerbicide = nombreHerbicide,
-            nomInsecticide = nomInsecticide,
-            nombreInsecticide = nombreInsecticide,
-            nombreDesherbage = nombreDesherbageAnnuel,
-            nombreOmbrage = mutableListOf(),
-            //nombreOmbrage = ,
-            localiteNom = localiteNom,
-            localiteId = localiteId,
-            nombreSauvageons = nombreSauvageons,
-            parcellesId = parcelleId,
-            pente = penteYesNo,
-            presenceAraignee = presenceAraignee,
-            presenceBioAgresseur = preseceBio,
-            presenceFourmisRouge = presenceFourmi,
-            presenceInsectesRavageurs = presenceInsecte,
-            presenceMenteReligieuse = presenceMante,
-            presenceVerTerre = presenceVer,
-            producteursId = producteurId,
-            varieteAbres = arbreVariete,
-            varietesCacaoId = cacaoVariete,
-            varietesOmbrage = mutableListOf(),
-            presenceSwollen = selectSwollenSuivi.selectedItem?.toString(),
+    private fun getSuiviParcelleObjet(): Pair<SuiviParcelleModel, MutableList<Pair<String, String>>>? {
+//        val item = SuiviParcelleModel(
+//            activiteDesherbageManuel = activiteDesherbage,
+//            parcelleNom = parcelleNom,
+//            parcelleSuperficie = parcelleSuperficie,
+//            parcelleProducteur = producteurNom,
+//            activiteEgourmandage = activiteEgourmandage,
+//            activiteRecolteSanitaire = activiteSanitaire,
+//            activiteTaille = activiteTaille,
+//            coursEauxId = courEau,
+//            existeCoursEaux = courEauYesNo,
+//            dateVisite = dateSuivi,
+//            nomFongicide = nomFongicide,
+//            nombreFongicide = nombreFongicide,
+//            nomHerbicide = nomHerbicide,
+//            nombreHerbicide = nombreHerbicide,
+//            nomInsecticide = nomInsecticide,
+//            nombreInsecticide = nombreInsecticide,
+//            nombreDesherbage = nombreDesherbageAnnuel,
+//            nombreOmbrage = mutableListOf(),
+//            //nombreOmbrage = ,
+//            localiteNom = localiteNom,
+//            localiteId = localiteId,
+//            nombreSauvageons = nombreSauvageons,
+//            parcellesId = parcelleId,
+//            pente = penteYesNo,
+//            presenceAraignee = presenceAraignee,
+//            presenceBioAgresseur = preseceBio,
+//            presenceFourmisRouge = presenceFourmi,
+//            presenceInsectesRavageurs = presenceInsecte,
+//            presenceMenteReligieuse = presenceMante,
+//            presenceVerTerre = presenceVer,
+//            producteursId = producteurId,
+//            varieteAbres = arbreVariete,
+//            varietesCacaoId = cacaoVariete,
+//            varietesOmbrage = mutableListOf(),
+//            presenceSwollen = selectSwollenSuivi.selectedItem?.toString(),
+//            isSynced = false,
+//            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+//            origin = "local",
+//            varieteOmbragesTemp = GsonUtils.toJson(ombrageAdapter?.getOmbragesAdded()),
+//            campagneNom = campagneNom,
+//            campagneId = campagneId,
+//            arbresAgroForestiersYesNo = agroForestierYesNo,
+//            presencePourritureBrune = pourritureBrune,
+//            presenceShooter = selectSwollenSuivi.selectedItem?.toString(),//swollestShoot,
+//            arbreAgroForestierStringify = ApiClient.gson.toJson(arbreAdapter?.getOmbragesAdded()),
+//            intrantNPK = "intrantNPK",
+//            //nombresacsNPK = editIntrantNPKSuivi.text.toString().trim(),
+//            intrantFiente = "intrantFiente",
+//            //nombresacsFiente = editIntrantFienteSuivi.text.toString(),
+//            intrantComposte = "intrantComposte",
+//            //nombresacsComposte = editNombreComposteSuivi.text.toString(),
+//            insectesParasitesTemp = ApiClient.gson.toJson(insecteAdapter?.getInsectesAdded()),
+//            animauxRencontresStringify = ApiClient.gson.toJson(animauxList)
+//        )
+//        return  item
+        var itemList = getSetupSuiviParcelleModel(SuiviParcelleModel(
             isSynced = false,
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
             origin = "local",
-            varieteOmbragesTemp = GsonUtils.toJson(ombrageAdapter?.getOmbragesAdded()),
-            campagneNom = campagneNom,
-            campagneId = campagneId,
-            arbresAgroForestiersYesNo = agroForestierYesNo,
-            presencePourritureBrune = pourritureBrune,
-            presenceShooter = selectSwollenSuivi.selectedItem?.toString(),//swollestShoot,
-            arbreAgroForestierStringify = ApiClient.gson.toJson(arbreAdapter?.getOmbragesAdded()),
-            intrantNPK = "intrantNPK",
-            //nombresacsNPK = editIntrantNPKSuivi.text.toString().trim(),
-            intrantFiente = "intrantFiente",
-            //nombresacsFiente = editIntrantFienteSuivi.text.toString(),
-            intrantComposte = "intrantComposte",
-            //nombresacsComposte = editNombreComposteSuivi.text.toString(),
-            insectesParasitesTemp = ApiClient.gson.toJson(insecteAdapter?.getInsectesAdded()),
-            animauxRencontresStringify = ApiClient.gson.toJson(animauxList)
-        )
-        return  item
+        ), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        if(isMissing){
+            Commons.showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return  itemList
     }
 
+    fun getSetupSuiviParcelleModel(
+        prodModel: SuiviParcelleModel,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<SuiviParcelleModel, MutableList<Pair<String, String>>> {
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_suivi_parcelle)
+        Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
+    }
+
+    fun passSetupSuiviParcelleModel(
+        prodModel: SuiviParcelleModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_suivi_parcelle)
+        prodModel?.let {
+            Commons.setAllValueOfTextViews(mainLayout, prodModel)
+        }
+    }
 
     fun clearFields() {
         editInsecticeNomSuivi.text  = null
@@ -1134,8 +1018,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         editDesherbageManuelSuivi.text    = null
 //        editDateSuivi.text    = null
 
-        selectProducteurSuivi.setSelection(0)
-        selectParcelleSuivi.setSelection(0)
+//        selectProducteurSuivi.setSelection(0)
+//        selectParcelleSuivi.setSelection(0)
 //        selectCoursEauYesNoSuivi.setSelection(0)
 //        selectPenteYesNoSuivi.setSelection(0)
 //        selectTailleSuivi.setSelection(0)
@@ -1144,7 +1028,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        selectRecolteSanitaireSuivi.setSelection(0)
 //        selectAgresseurSuivi.setSelection(0)
 //        selectInsecteSuivi.setSelection(0)
-        selectFourmisSuivi.setSelection(0)
+        //selectFourmisSuivi.setSelection(0)
         selectAraigneeSuivi.setSelection(0)
         selectVerDeTerreSuivi.setSelection(0)
         selectManteReligieuseSuivi.setSelection(0)
@@ -1190,23 +1074,34 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
 
     fun draftSuiviParcelle(draftModel: DataDraftedModel?) {
-        nomInsecticide = editInsecticeNomSuivi.text?.trim().toString()
-        nombreInsecticide = editInsecticeNombreSuivi.text?.trim().toString()
-
-        nombreFongicide = editFongicideNombreSuivi.text?.trim().toString()
-        nomFongicide = editFongicideNomSuivi.text?.trim().toString()
-
-        nomHerbicide = editHerbicideNomSuivi.text?.trim().toString()
-        nombreHerbicide = editHerbicideNombreSuivi.text?.trim().toString()
-
-        nombreDesherbageAnnuel = editDesherbageManuelSuivi.text?.trim().toString()
+//        nomInsecticide = editInsecticeNomSuivi.text?.trim().toString()
+//        nombreInsecticide = editInsecticeNombreSuivi.text?.trim().toString()
+//
+//        nombreFongicide = editFongicideNombreSuivi.text?.trim().toString()
+//        nomFongicide = editFongicideNomSuivi.text?.trim().toString()
+//
+//        nomHerbicide = editHerbicideNomSuivi.text?.trim().toString()
+//        nombreHerbicide = editHerbicideNombreSuivi.text?.trim().toString()
+//
+//        nombreDesherbageAnnuel = editDesherbageManuelSuivi.text?.trim().toString()
         //arbreVariete = editVarieteArbreSuivi.text?.trim().toString()
 
         //nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
 
-        val suiviParcelleDraft = getSuiviParcelleObjet()
+        val itemModelOb = getSuiviParcelleObjet()
 
-        LogUtils.json(suiviParcelleDraft)
+        if(itemModelOb == null) return
+
+        val SParcelleDraft = itemModelOb?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localiteId = localiteCommon.id.toString()
+                producteursId = producteurCommon.id.toString()
+                parcelleId = parcelleCommon.id.toString()
+            }
+        }
+
+//        LogUtils.json(suiviParcelleDraft)
 
         Commons.showMessage(
             message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
@@ -1216,7 +1111,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
                     DataDraftedModel(
                         uid = draftModel?.uid ?: 0,
-                        datas = ApiClient.gson.toJson(suiviParcelleDraft),
+                        datas = ApiClient.gson.toJson(SParcelleDraft),
                         typeDraft = "suivi_parcelle",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
@@ -1246,13 +1141,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
         val suiviParcelleDrafted = ApiClient.gson.fromJson(draftedData.datas, SuiviParcelleModel::class.java)
 
         // Localite
-        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val localitesDatas: MutableList<CommonData> = mutableListOf()
-        localitesLists?.map {
-            CommonData(id = it.id, nom = it.nom)
-        }?.let {
-            localitesDatas.addAll(it)
-        }
+//        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//        val localitesDatas: MutableList<CommonData> = mutableListOf()
+//        localitesLists?.map {
+//            CommonData(id = it.id, nom = it.nom)
+//        }?.let {
+//            localitesDatas.addAll(it)
+//        }
 //        selectLocaliteSuiviParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
 //        provideDatasSpinnerSelection(
 //            selectLocaliteSuiviParcelle,
@@ -1261,13 +1156,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        )
 
         // Campagne
-        val campagnesLists = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()
-        val campagnesDatas: MutableList<CommonData> = mutableListOf()
-        campagnesLists?.map {
-            CommonData(id = it.id, nom = it.campagnesNom)
-        }?.let {
-            campagnesDatas.addAll(it)
-        }
+//        val campagnesLists = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()
+//        val campagnesDatas: MutableList<CommonData> = mutableListOf()
+//        campagnesLists?.map {
+//            CommonData(id = it.id, nom = it.campagnesNom)
+//        }?.let {
+//            campagnesDatas.addAll(it)
+//        }
 //        selectCampagneOfSuiviParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesDatas)
 //        provideDatasSpinnerSelection(
 //            selectCampagneOfSuiviParcelle,
@@ -1290,10 +1185,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        )
 
         // Ombrage
-        val ombragesType = object : TypeToken<MutableList<OmbrageVarieteModel>>(){}.type
-        val ombragesLists: MutableList<OmbrageVarieteModel> = ApiClient.gson.fromJson(suiviParcelleDrafted.varieteOmbragesTemp ?: "[]", ombragesType)
-        ombragesList?.addAll(ombragesLists)
-        ombrageAdapter?.notifyDataSetChanged()
+//        val ombragesType = object : TypeToken<MutableList<OmbrageVarieteModel>>(){}.type
+//        val ombragesLists: MutableList<OmbrageVarieteModel> = ApiClient.gson.fromJson(suiviParcelleDrafted.varieteOmbragesTemp ?: "[]", ombragesType)
+//        ombragesList?.addAll(ombragesLists)
+//        ombrageAdapter?.notifyDataSetChanged()
 
         // Variete arbres
 //        editVarieteArbreSuivi.setText(suiviParcelleDrafted.varieteAbres)
@@ -1307,10 +1202,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        )
 
         // Arbres agros
-        val arbresType = object : TypeToken<MutableList<OmbrageVarieteModel>>(){}.type
-        val arbresLists: MutableList<OmbrageVarieteModel> = ApiClient.gson.fromJson(suiviParcelleDrafted.arbreAgroForestierStringify ?: "[]", arbresType)
-        arbresList?.addAll(arbresLists)
-        arbreAdapter?.notifyDataSetChanged()
+//        val arbresType = object : TypeToken<MutableList<OmbrageVarieteModel>>(){}.type
+//        val arbresLists: MutableList<OmbrageVarieteModel> = ApiClient.gson.fromJson(suiviParcelleDrafted.arbreAgroForestierStringify ?: "[]", arbresType)
+//        arbresList?.addAll(arbresLists)
+//        arbreAdapter?.notifyDataSetChanged()
 
         // Taille
 //        provideStringSpinnerSelection(
@@ -1357,11 +1252,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        )
 
         // Pourriture
-        provideStringSpinnerSelection(
-            selectPourritureBruneOfSuiviParcelle,
-            suiviParcelleDrafted.presencePourritureBrune,
-            resources.getStringArray(R.array.fullyPoor)
-        )
+//        provideStringSpinnerSelection(
+//            selectPourritureBruneOfSuiviParcelle,
+//            suiviParcelleDrafted.presencePourritureBrune,
+//            resources.getStringArray(R.array.fullyPoor)
+//        )
 
         // Insecte
 //        provideStringSpinnerSelection(
@@ -1371,67 +1266,272 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        )
 
         // insectes list
-        val insectesType = object : TypeToken<MutableList<InsecteRavageurModel>>(){}.type
-        val insectesLists: MutableList<InsecteRavageurModel> = ApiClient.gson.fromJson(suiviParcelleDrafted.insectesParasitesTemp ?: "[]", insectesType)
-        insectesList.addAll(insectesLists)
-        insecteAdapter?.notifyDataSetChanged()
+//        val insectesType = object : TypeToken<MutableList<InsecteRavageurModel>>(){}.type
+//        val insectesLists: MutableList<InsecteRavageurModel> = ApiClient.gson.fromJson(suiviParcelleDrafted.insectesParasitesTemp ?: "[]", insectesType)
+//        insectesList.addAll(insectesLists)
+//        insecteAdapter?.notifyDataSetChanged()
 
         // Fourni
-        provideStringSpinnerSelection(
-            selectFourmisSuivi,
-            suiviParcelleDrafted.presenceFourmisRouge,
-            resources.getStringArray(R.array.fullyPoor)
-        )
+//        provideStringSpinnerSelection(
+//            selectFourmisSuivi,
+//            suiviParcelleDrafted.presenceFourmisRouge,
+//            resources.getStringArray(R.array.fullyPoor)
+//        )
 
         // araignés
-        provideStringSpinnerSelection(
-            selectAraigneeSuivi,
-            suiviParcelleDrafted.presenceAraignee,
-            resources.getStringArray(R.array.fullyPoor)
-        )
-
-        // ver
-        provideStringSpinnerSelection(
-            selectVerDeTerreSuivi,
-            suiviParcelleDrafted.presenceVerTerre,
-            resources.getStringArray(R.array.fullyPoor)
-        )
-
-        // mante religieuz
-        provideStringSpinnerSelection(
-            selectManteReligieuseSuivi,
-            suiviParcelleDrafted.presenceMenteReligieuse,
-            resources.getStringArray(R.array.fullyPoor)
-        )
-
-        // Insecticide
-        editInsecticeNomSuivi.setText(suiviParcelleDrafted.nomInsecticide)
-        editInsecticeNombreSuivi.setText(suiviParcelleDrafted.nombreInsecticide)
-
-        // Fongicide
-        editFongicideNomSuivi.setText(suiviParcelleDrafted.nomFongicide)
-        editFongicideNombreSuivi.setText(suiviParcelleDrafted.nombreFongicide)
-
-        // Herbicide
-        editHerbicideNomSuivi.setText(suiviParcelleDrafted.nomHerbicide)
-        editHerbicideNombreSuivi.setText(suiviParcelleDrafted.nombreHerbicide)
-
-        // insectes amis list
-        val animauxType = object : TypeToken<MutableList<String>>(){}.type
-        val animauxLists: MutableList<String> = ApiClient.gson.fromJson(suiviParcelleDrafted.animauxRencontresStringify ?: "[]", animauxType)
-        animauxList?.addAll(animauxLists)
-        animalAdapter?.notifyDataSetChanged()
-
-        // Sholen
-        provideStringSpinnerSelection(
-            selectSwollenSuivi,
-            suiviParcelleDrafted.presenceSwollen,
-            resources.getStringArray(R.array.YesOrNo)
-        )
+//        provideStringSpinnerSelection(
+//            selectAraigneeSuivi,
+//            suiviParcelleDrafted.presenceAraignee,
+//            resources.getStringArray(R.array.fullyPoor)
+//        )
+//
+//        // ver
+//        provideStringSpinnerSelection(
+//            selectVerDeTerreSuivi,
+//            suiviParcelleDrafted.presenceVerTerre,
+//            resources.getStringArray(R.array.fullyPoor)
+//        )
+//
+//        // mante religieuz
+//        provideStringSpinnerSelection(
+//            selectManteReligieuseSuivi,
+//            suiviParcelleDrafted.presenceMenteReligieuse,
+//            resources.getStringArray(R.array.fullyPoor)
+//        )
+//
+//        // Insecticide
+//        editInsecticeNomSuivi.setText(suiviParcelleDrafted.nomInsecticide)
+//        editInsecticeNombreSuivi.setText(suiviParcelleDrafted.nombreInsecticide)
+//
+//        // Fongicide
+//        editFongicideNomSuivi.setText(suiviParcelleDrafted.nomFongicide)
+//        editFongicideNombreSuivi.setText(suiviParcelleDrafted.nombreFongicide)
+//
+//        // Herbicide
+//        editHerbicideNomSuivi.setText(suiviParcelleDrafted.nomHerbicide)
+//        editHerbicideNombreSuivi.setText(suiviParcelleDrafted.nombreHerbicide)
+//
+//        // insectes amis list
+//        val animauxType = object : TypeToken<MutableList<String>>(){}.type
+//        val animauxLists: MutableList<String> = ApiClient.gson.fromJson(suiviParcelleDrafted.animauxRencontresStringify ?: "[]", animauxType)
+//        animauxList?.addAll(animauxLists)
+//        animalAdapter?.notifyDataSetChanged()
+//
+//        // Sholen
+//        provideStringSpinnerSelection(
+//            selectSwollenSuivi,
+//            suiviParcelleDrafted.presenceSwollen,
+//            resources.getStringArray(R.array.YesOrNo)
+//        )
 
         // Nombre desherbage
-        editDesherbageManuelSuivi.setText(suiviParcelleDrafted.nombreDesherbage)
+        //editDesherbageManuelSuivi.setText(suiviParcelleDrafted.nombreDesherbage)
         //editDateSuivi.setText(suiviParcelleDrafted.dateVisite)
+
+        setupSectionSelection(suiviParcelleDrafted.section,
+            suiviParcelleDrafted.localiteId,
+            suiviParcelleDrafted.producteursId,
+            suiviParcelleDrafted.parcelle_id)
+
+        setupVarieteArbrMultiSelection(GsonUtils.fromJson(suiviParcelleDrafted.arbreStr, object : TypeToken<MutableList<String>>() {}.type))
+
+        Commons.setListenerForSpinner(this,
+            "Bénéficies tu d'arbres agro-forestiers ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAbrAgroForesSuiviParcel,
+            currentVal = suiviParcelleDrafted.arbresAgroForestiersYesNo,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerItemRecusSuiviParcel.visibility = visibility
+                    containerVarieteArbrSuiviParcel.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quand avez-vous reçu des arbres agro forestiers ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectArbreAgroSuiviParcel,
+            currentVal = suiviParcelleDrafted.recuArbreAgroForestier,
+            listIem = resources.getStringArray(R.array.delai_arbre)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Fréquence activité de taille ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectActDTailleSuiviParcel,
+            currentVal = suiviParcelleDrafted.activiteTaille,
+            listIem = resources.getStringArray(R.array.lowMediumHigh)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Fréquence activité d’egourmandage ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectActDTailleSuiviParcel,
+            currentVal = suiviParcelleDrafted.activiteEgourmandage,
+            listIem = resources.getStringArray(R.array.lowMediumHigh)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Fréquence activité de récolte sanitaire ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectActDRecolSanitSuiviParcel,
+            currentVal = suiviParcelleDrafted.activiteRecolteSanitaire,
+            listIem = resources.getStringArray(R.array.lowMediumHigh)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Type de pesticide utilisé ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectListTypPestiSuiviParcel,
+            currentVal = suiviParcelleDrafted.pesticideUtiliseAnne,
+            listIem = resources.getStringArray(R.array.lowMediumHigh)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence de pourriture brune ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectPourritureBruneOfSuiviParcelle,
+            currentVal = suiviParcelleDrafted.presencePourritureBrune,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence de SholenShoot ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectSwollenSuivi,
+            currentVal = suiviParcelleDrafted.presenceShooter,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence d'insectes parasites ou ravageurs ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectInsecteParOuRavSuivi,
+            currentVal = suiviParcelleDrafted.presenceInsectesParasites,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerListInsectSuivParce.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix des insectes :","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectListInsecteSuivParce,
+            currentVal = suiviParcelleDrafted.presenceInsectesParasitesRavageur,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = resources.getStringArray(R.array.listeInsectes)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearPresenceInsecteRavageurOfSuiviParcelle.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence de fourmis rouges ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFourmisSuiviParcel,
+            currentVal = suiviParcelleDrafted.presenceFourmisRouge,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence d'araignées ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAraigneeSuivi,
+            currentVal = suiviParcelleDrafted.presenceAraignee,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence de verre de terres ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectVerDeTerreSuivi,
+            currentVal = suiviParcelleDrafted.presenceVerTerre,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il une présence de mentes religieuses ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectManteReligieuseSuivi,
+            currentVal = suiviParcelleDrafted.presenceMenteReligieuse,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Présence d'autres types d’insecte ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectPresencInsectSuiviParcel,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerInsectAmisSuiviParcelle.visibility = visibility
+                }
+            })
+
+        passSetupSuiviParcelleModel(suiviParcelleDrafted)
     }
 
 
@@ -1457,49 +1557,51 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        }
 
         try {
-            setupBioSelection()
-
-            setupManteSelection()
-
-            setupAraigneeSelection()
-
-            setupVerSelection()
-
-            setupInsectesSelection()
-
-            setupFourmiSelection()
-
-            setupEgourmandageSelection()
-
-            setupDesherbageSelection()
-
-            setupCampagneSelection()
-
-            setupSanitaireSelection()
-
-            setupTailleSelection()
-
-            setupCourEauxSelection()
-
-            setupPenteYesNoSelection()
-
-            setupBenefAgroForestierYesNoSelection()
-
-            setupPourritureBruneSelection()
+//            setupBioSelection()
+//
+//            setupManteSelection()
+//
+//            setupAraigneeSelection()
+//
+//            setupVerSelection()
+//
+//            setupInsectesSelection()
+//
+//            setupFourmiSelection()
+//
+//            setupEgourmandageSelection()
+//
+//            setupDesherbageSelection()
+//
+//            setupCampagneSelection()
+//
+//            setupSanitaireSelection()
+//
+//            setupTailleSelection()
+//
+//            setupCourEauxSelection()
+//
+//            setupPenteYesNoSelection()
+//
+//            setupBenefAgroForestierYesNoSelection()
+//
+//            setupPourritureBruneSelection()
 
             //setupSwollerShootSelection()
 
-            setupCourEauYesNoSelection()
+//            setupCourEauYesNoSelection()
+//
+//            setupLocaliteSelection()
+//
+//            setupOmbragesSuiviParcelle()
+//
+//            setArbreParcelle()
+//
+//            setAnimalParcelle()
+//
+//            setInsectes()
+            setOtherListener()
 
-            setupLocaliteSelection()
-
-            setupOmbragesSuiviParcelle()
-
-            setArbreParcelle()
-
-            setAnimalParcelle()
-
-            setInsectes()
         } catch (ex: Exception) {
             LogUtils.e("SParc "+ex.message)
             LogUtils.e(ex.message)
@@ -1572,19 +1674,19 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            }
 //        }
 
-        clickSaveAnimauxSuiviParcelle.setOnClickListener {
-            try {
-                if (editAnimalSuiviParcelle.text.toString().isEmpty()) {
-                    Commons.showMessage("Renseignez un animal, svp !", this, callback = {})
-                    return@setOnClickListener
-                }
-
-                addAnimalSauvage(editAnimalSuiviParcelle.text.toString())
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
+//        clickSaveAnimauxSuiviParcelle.setOnClickListener {
+//            try {
+//                if (editAnimalSuiviParcelle.text.toString().isEmpty()) {
+//                    Commons.showMessage("Renseignez un animal, svp !", this, callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                addAnimalSauvage(editAnimalSuiviParcelle.text.toString())
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
 
         clickCancelSuivi.setOnClickListener {
             clearFields()
@@ -1598,7 +1700,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             draftSuiviParcelle(draftedDataSuiviParcelle ?: DataDraftedModel(uid = 0))
         }
 
-        applyFilters(editAnimalSuiviParcelle)
+        //applyFilters(editAnimalSuiviParcelle)
         //applyFilters(editBenefAgroNombreOfSuiviParcelle)
 
         try {
@@ -1608,10 +1710,521 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     uid = 0
                 )
                 undraftedDatas(draftedDataSuiviParcelle!!)
+            }else{
+                setAllSelection()
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
+
+    private fun setOtherListener() {
+        setVarieteArbrParcelleRV()
+
+        setIntrantSParcelleRV()
+
+        setInsParasSParcelleRV()
+
+        setAutreInsParasSParcelleRV()
+
+        setAnimauSParcelleRV()
+    }
+
+    private fun setAllSelection() {
+
+        setupSectionSelection()
+
+        setupVarieteArbrMultiSelection()
+
+        Commons.setListenerForSpinner(this,
+            "Bénéficies tu d'arbres agro-forestiers ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAbrAgroForesSuiviParcel,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerItemRecusSuiviParcel.visibility = visibility
+                    containerVarieteArbrSuiviParcel.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il des insectes parasites ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectInsecteParOuRavSuivi,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerListInsectSuivParce.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix des insectes !","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectListInsecteSuivParce,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = resources.getStringArray(R.array.listeInsectes)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearPresenceInsecteRavageurOfSuiviParcelle.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Présence d'autres types d’insecte ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectPresencInsectSuiviParcel,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerInsectAmisSuiviParcelle.visibility = visibility
+                }
+            })
+
+    }
+
+    fun setupVarieteArbrMultiSelection(currentList : MutableList<String> = mutableListOf()) {
+        val varieteArbreList = resources.getStringArray(R.array.varieteArbre)
+        var listSelectVarieteArbrePosList = mutableListOf<Int>()
+        listSelectVarieteArbreList = mutableListOf<String>()
+
+        var indItem = 0
+        (varieteArbreList)?.forEach {
+            if(currentList.size > 0){ if(currentList.contains(it)) listSelectVarieteArbrePosList.add(indItem) }
+            indItem++
+        }
+
+        selectVarAbrOmbSuivParcel.setTitle("Choix de la variété")
+        selectVarAbrOmbSuivParcel.setItems(varieteArbreList)
+        //multiSelectSpinner.hasNoneOption(true)
+        selectVarAbrOmbSuivParcel.setSelection(listSelectVarieteArbrePosList.toIntArray())
+        selectVarAbrOmbSuivParcel.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+            override fun selectedIndices(indices: MutableList<Int>?) {
+                listSelectVarieteArbrePosList.clear()
+                listSelectVarieteArbrePosList.addAll(indices?.toMutableList() ?: mutableListOf())
+            }
+
+            override fun selectedStrings(strings: MutableList<String>?) {
+                listSelectVarieteArbreList.clear()
+                listSelectVarieteArbreList.addAll(strings?.toMutableList() ?: arrayListOf())
+            }
+
+        })
+    }
+
+    fun setVarieteArbrParcelleRV() {
+        val varieteArbrListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        val varieteArbrSParcelleAdapter = OmbrageAdapter(varieteArbrListSParcelle)
+        try {
+            recyclerVarieteArbrListSuiviParcel.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerVarieteArbrListSuiviParcel.adapter = varieteArbrSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddVarieteArbrSuiviParcel.setOnClickListener {
+            try {
+                if (selectVarieteArbrSuiviParcel.selectedItem.toString()
+                        .isEmpty() || editQtVarieteArbrSuiviParcel.text.toString().isEmpty()
+                ) {
+                    Commons.showMessage("Renseignez des données sur la variété, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val varieteArbre = OmbrageVarieteModel(
+                    0,
+                    selectVarieteArbrSuiviParcel.selectedItem.toString(),
+                    editQtVarieteArbrSuiviParcel.text.toString().trim()
+                )
+
+                if(varieteArbre.variete?.length?:0 > 0){
+                    varieteArbrListSParcelle?.forEach {
+                        if (it.variete?.uppercase() == varieteArbre.variete?.uppercase() && it.nombre == varieteArbre.nombre) {
+                            ToastUtils.showShort("Cette variété est deja ajoutée")
+                            return@setOnClickListener
+                        }
+                    }
+
+                    varieteArbrListSParcelle?.add(varieteArbre)
+                    varieteArbrSParcelleAdapter?.notifyDataSetChanged()
+
+                    editQtVarieteArbrSuiviParcel.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
+    }
+
+    fun setIntrantSParcelleRV() {
+        val intrantListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        val intrantSParcelleAdapter = OmbrageAdapter(intrantListSParcelle)
+        try {
+            recyclerIntrantListSuiviParcel.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerIntrantListSuiviParcel.adapter = intrantSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddIntrantListSuiviParcel.setOnClickListener {
+            try {
+                if (selectIntrantSuiviParcel.selectedItem.toString()
+                        .isEmpty() || editQtIntrantSuiviParcel.text.toString().isEmpty()
+                ) {
+                    Commons.showMessage("Renseignez des données sur l'intrant, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val intrant = OmbrageVarieteModel(
+                    0,
+                    selectIntrantSuiviParcel.selectedItem.toString(),
+                    editQtIntrantSuiviParcel.text.toString().trim()
+                )
+
+                if(intrant.variete?.length?:0 > 0){
+                    intrantListSParcelle?.forEach {
+                        if (it.variete?.uppercase() == intrant.variete?.uppercase() && it.nombre == intrant.nombre) {
+                            ToastUtils.showShort("Cet intrant est déja ajoutée")
+                            return@setOnClickListener
+                        }
+                    }
+
+                    intrantListSParcelle?.add(intrant)
+                    intrantSParcelleAdapter?.notifyDataSetChanged()
+
+                    selectIntrantSuiviParcel.setSelection(0)
+                    editQtIntrantSuiviParcel.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
+    }
+
+    fun setInsParasSParcelleRV() {
+        val insParasListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        val insParasSParcelleAdapter = OmbrageAdapter(insParasListSParcelle)
+        try {
+            recyclerInsecteOfSuiviParcelle.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerInsecteOfSuiviParcelle.adapter = insParasSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddInsecteRavagParaQuantiteOfSuiviParcelle.setOnClickListener {
+            try {
+                if (editInsecteNomOfSuiviParcelle.text.toString()
+                        .isEmpty() || selectInsecteQuantiteOfSuiviParcelle.selectedItem.toString().isNullOrBlank()
+                ) {
+                    Commons.showMessage("Renseignez des données sur l'intrant, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val insecteParRav = OmbrageVarieteModel(
+                    0,
+                    editInsecteNomOfSuiviParcelle.text.toString().trim(),
+                    selectInsecteQuantiteOfSuiviParcelle.selectedItem.toString().trim()
+                )
+
+                if(insecteParRav.variete?.length?:0 > 0){
+                    insParasListSParcelle?.forEach {
+                        if (it.variete?.uppercase() == insecteParRav.variete?.uppercase() && it.nombre == insecteParRav.nombre) {
+                            ToastUtils.showShort("Cet insecte est déja ajouté")
+                            return@setOnClickListener
+                        }
+                    }
+
+                    insParasListSParcelle?.add(insecteParRav)
+                    insParasSParcelleAdapter?.notifyDataSetChanged()
+
+                    selectInsecteQuantiteOfSuiviParcelle.setSelection(0)
+                    editInsecteNomOfSuiviParcelle.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
+    }
+
+    fun setAutreInsParasSParcelleRV() {
+        val autrInsParasListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        val autrInsParasSParcelleAdapter = OmbrageAdapter(autrInsParasListSParcelle)
+        try {
+            recyclerInsecteAmisSuiviParcelle.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerInsecteAmisSuiviParcelle.adapter = autrInsParasSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddInsectAmisSuiviParcelle.setOnClickListener {
+            try {
+                if (editInsecteNomAmisParcelle.text.toString()
+                        .isEmpty() || selectInsecteAmisQuantiteSuiviParcelle.selectedItem.toString().isNullOrBlank()
+                ) {
+                    Commons.showMessage("Renseignez des données sur l'autre insecte, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val autreInsecteParRav = OmbrageVarieteModel(
+                    0,
+                    editInsecteNomAmisParcelle.text.toString().trim(),
+                    selectInsecteAmisQuantiteSuiviParcelle.selectedItem.toString().trim()
+                )
+
+                if(autreInsecteParRav.variete?.length?:0 > 0){
+                    autrInsParasListSParcelle?.forEach {
+                        if (it.variete?.uppercase() == autreInsecteParRav.variete?.uppercase() && it.nombre == autreInsecteParRav.nombre) {
+                            ToastUtils.showShort("Cet autre insecte est déja ajouté")
+
+                            return@setOnClickListener
+                        }
+                    }
+
+                    autrInsParasListSParcelle?.add(autreInsecteParRav)
+                    autrInsParasSParcelleAdapter?.notifyDataSetChanged()
+
+                    selectInsecteAmisQuantiteSuiviParcelle.setSelection(0)
+                    editInsecteNomAmisParcelle.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
+    }
+
+    fun setAnimauSParcelleRV() {
+        val animauListSParcelle = mutableListOf<CommonData>()
+        val animauSParcelleAdapter = OnlyFieldAdapter(animauListSParcelle)
+        try {
+            recyclerAnimauxSuiviParcelle.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerAnimauxSuiviParcelle.adapter = animauSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickSaveAnimauxSuiviParcelle.setOnClickListener {
+            try {
+                if (editAnimalSuiviParcelle.text.toString()
+                        .isEmpty()
+                ) {
+                    Commons.showMessage("Renseignez des données sur l'animal, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val animaux = CommonData(
+                    0,
+                    editInsecteNomAmisParcelle.text.toString().trim(),
+                )
+
+                if(animaux.nom?.length?:0 > 0){
+                    animauListSParcelle?.forEach {
+                        if (it.nom?.uppercase() == animaux.nom?.uppercase()) {
+                            ToastUtils.showShort("Cet animal est déja ajouté")
+
+                            return@setOnClickListener
+                        }
+                    }
+
+                    animauListSParcelle?.add(animaux)
+                    animauSParcelleAdapter?.notifyDataSetChanged()
+
+                    editInsecteNomAmisParcelle.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
+    }
+
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la section !",
+            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = libItem ,
+            spinner = selectSectionSParcelle,
+            listIem = sectionList?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3)
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la localité !",
+            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectLocaliteSParcelle,
+            listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    setupProducteurSelection(localiteCommon.id!!, currVal2, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
+        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+            ?.getProducteursByLocalite(localite = id.toString())
+
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix du producteur !",
+            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (producteursList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectProducteurSParcelle,
+            listIem = producteursList?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    producteurCommon.id = producteur.id!!
+
+                    setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
+        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+        var libItem: String? = null
+        currVal3?.let { idc ->
+            parcellesList?.forEach {
+                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la parcelle !",
+            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (parcellesList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectParcelleSParcelle,
+            listIem = parcellesList?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                parcellesList?.let { list ->
+                    var parcelle = list.get(it)
+                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+                    parcelleCommon.id = parcelle.id!!
+
+                    //setupParcelleSelection(parcelleCommon.id, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+    }
+
+
 }

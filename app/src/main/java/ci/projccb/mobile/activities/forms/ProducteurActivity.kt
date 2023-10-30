@@ -505,8 +505,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         var isMissing = false
         var message = ""
         var notNecessaire = listOf<String>(
-            "Année certification *".lowercase(),
-            "Code producteur".lowercase(),
             "En tant que:".lowercase(),
             "Numéro de téléphone".lowercase(),
             "N° de la pièce CMU".lowercase(),

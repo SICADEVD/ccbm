@@ -7,8 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.adapters.OmbrageAdapter.OmbrageHolder
 import ci.projccb.mobile.models.OmbrageVarieteModel
+import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import com.blankj.utilcode.util.LogUtils
+import kotlinx.android.synthetic.main.activite_items_list.view.deleteCultureItem
+import kotlinx.android.synthetic.main.activite_items_list.view.libelle
+import kotlinx.android.synthetic.main.activite_items_list.view.valuetext
 import kotlinx.android.synthetic.main.ombrage_items_list.view.*
 
 class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?) : RecyclerView.Adapter<OmbrageHolder>() {
@@ -54,5 +58,51 @@ class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?) : 
         val varieteLabel = ombrageView.labelOmbrageItem
         val nombreLabel = ombrageView.nombreOmbrageItem
         val deleteOmbre = ombrageView.deleteOmbrageItem
+    }
+}
+
+class OnlyFieldAdapter(private var common: MutableList<CommonData>?) : RecyclerView.Adapter<OnlyFieldAdapter.OnlyItemHolder>() {
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnlyItemHolder {
+        return OnlyItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.activite_items_list, parent, false))
+    }
+
+
+    override fun onBindViewHolder(holder: OnlyItemHolder, position: Int) {
+        val onlyModel = common!![position]
+
+        holder.libelle.text = "Activité"
+        holder.valuetext.text = "${onlyModel.nom}"
+
+        holder.deleteCultureItem.setOnClickListener {
+            LogUtils.e(Commons.TAG, "position $position")
+            LogUtils.e(Commons.TAG, "Adapter position ${holder.adapterPosition}")
+
+            try {
+                if (common?.size == 1) {
+                    common?.removeAt(0)
+                    notifyItemRemoved(0)
+                } else {
+                    common?.removeAt(holder.adapterPosition)
+                    notifyItemRemoved(holder.adapterPosition)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+
+    fun getOnlyItemAdded(): MutableList<CommonData> = common!!
+
+
+    override fun getItemCount() = common?.size ?: 0
+
+
+    class OnlyItemHolder(onlyView: View) : RecyclerView.ViewHolder(onlyView) {
+        val libelle = onlyView.libelle
+        val valuetext = onlyView.valuetext
+        val deleteCultureItem = onlyView.deleteCultureItem
     }
 }

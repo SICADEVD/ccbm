@@ -18,3 +18,13 @@ data class CommonData (
         return nom!!
     }
 }
+
+data class ArbreData (
+    @Expose var id: Int? = null,
+    @Expose var arbre: String? = null,
+    @Expose val nombre: String? = null,
+) {
+    override fun toString(): String {
+        return arbre!!
+    }
+}

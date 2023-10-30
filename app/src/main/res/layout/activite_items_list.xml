@@ -21,7 +21,7 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/libelle"
+                    android:id="@+id/libelle"
                 android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
