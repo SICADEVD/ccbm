@@ -98,6 +98,7 @@ class OnlyFieldAdapter(private var common: MutableList<CommonData>?) : RecyclerV
 
 
     override fun getItemCount() = common?.size ?: 0
+    fun getCurrenntList(): MutableList<CommonData>? = common
 
 
     class OnlyItemHolder(onlyView: View) : RecyclerView.ViewHolder(onlyView) {

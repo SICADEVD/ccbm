@@ -21,6 +21,7 @@ import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
@@ -869,10 +870,25 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 localiteId = localiteCommon.id.toString()
                 producteursId = producteurCommon.id.toString()
                 parcelleId = parcelleCommon.id.toString()
+
+                itemsStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(0, it.variete, it.nombre) })
+
+                insectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                nombreInsectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+
+                insectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                nombreinsectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+
+                animauxRencontresStringify = GsonUtils.toJson((recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
             }
         }
 
-        val mapEntries: List<MapEntry>? = itemModelOb?.second?.map { MapEntry(it.first, it.second) }
+        val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
+            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
+            this.add(Pair("Insecte parasite", (recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
+            this.add(Pair("Insecte amis", (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
+            this.add(Pair("Animaux rencontrés", (recyclerInsecteAmisSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toString() ))
+        }.map { MapEntry(it.first, it.second) }
 
         try {
             val intentSuiviParcellePreview = Intent(this, SuiviParcellePreviewActivity::class.java)
@@ -1098,6 +1114,16 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 localiteId = localiteCommon.id.toString()
                 producteursId = producteurCommon.id.toString()
                 parcelleId = parcelleCommon.id.toString()
+
+                itemsStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(0, it.variete, it.nombre) })
+
+                insectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                nombreInsectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+
+                insectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                nombreinsectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+
+                animauxRencontresStringify = GsonUtils.toJson((recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
             }
         }
 
@@ -1722,7 +1748,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
     private fun setOtherListener() {
         setVarieteArbrParcelleRV()
 
-        setIntrantSParcelleRV()
+        //setIntrantSParcelleRV()
 
         setInsParasSParcelleRV()
 
@@ -1878,55 +1904,55 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     }
 
-    fun setIntrantSParcelleRV() {
-        val intrantListSParcelle = mutableListOf<OmbrageVarieteModel>()
-        val intrantSParcelleAdapter = OmbrageAdapter(intrantListSParcelle)
-        try {
-            recyclerIntrantListSuiviParcel.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerIntrantListSuiviParcel.adapter = intrantSParcelleAdapter
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-            FirebaseCrashlytics.getInstance().recordException(ex)
-        }
-
-        clickAddIntrantListSuiviParcel.setOnClickListener {
-            try {
-                if (selectIntrantSuiviParcel.selectedItem.toString()
-                        .isEmpty() || editQtIntrantSuiviParcel.text.toString().isEmpty()
-                ) {
-                    Commons.showMessage("Renseignez des données sur l'intrant, svp !", this, callback = {})
-                    return@setOnClickListener
-                }
-
-                val intrant = OmbrageVarieteModel(
-                    0,
-                    selectIntrantSuiviParcel.selectedItem.toString(),
-                    editQtIntrantSuiviParcel.text.toString().trim()
-                )
-
-                if(intrant.variete?.length?:0 > 0){
-                    intrantListSParcelle?.forEach {
-                        if (it.variete?.uppercase() == intrant.variete?.uppercase() && it.nombre == intrant.nombre) {
-                            ToastUtils.showShort("Cet intrant est déja ajoutée")
-                            return@setOnClickListener
-                        }
-                    }
-
-                    intrantListSParcelle?.add(intrant)
-                    intrantSParcelleAdapter?.notifyDataSetChanged()
-
-                    selectIntrantSuiviParcel.setSelection(0)
-                    editQtIntrantSuiviParcel.text?.clear()
-                }
-                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-    }
+//    fun setIntrantSParcelleRV() {
+//        val intrantListSParcelle = mutableListOf<OmbrageVarieteModel>()
+//        val intrantSParcelleAdapter = OmbrageAdapter(intrantListSParcelle)
+//        try {
+//            recyclerIntrantListSuiviParcel.layoutManager =
+//                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//            recyclerIntrantListSuiviParcel.adapter = intrantSParcelleAdapter
+//        } catch (ex: Exception) {
+//            LogUtils.e(ex.message)
+//            FirebaseCrashlytics.getInstance().recordException(ex)
+//        }
+//
+//        clickAddIntrantListSuiviParcel.setOnClickListener {
+//            try {
+//                if (selectIntrantSuiviParcel.selectedItem.toString()
+//                        .isEmpty() || editQtIntrantSuiviParcel.text.toString().isEmpty()
+//                ) {
+//                    Commons.showMessage("Renseignez des données sur l'intrant, svp !", this, callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                val intrant = OmbrageVarieteModel(
+//                    0,
+//                    selectIntrantSuiviParcel.selectedItem.toString(),
+//                    editQtIntrantSuiviParcel.text.toString().trim()
+//                )
+//
+//                if(intrant.variete?.length?:0 > 0){
+//                    intrantListSParcelle?.forEach {
+//                        if (it.variete?.uppercase() == intrant.variete?.uppercase() && it.nombre == intrant.nombre) {
+//                            ToastUtils.showShort("Cet intrant est déja ajoutée")
+//                            return@setOnClickListener
+//                        }
+//                    }
+//
+//                    intrantListSParcelle?.add(intrant)
+//                    intrantSParcelleAdapter?.notifyDataSetChanged()
+//
+//                    selectIntrantSuiviParcel.setSelection(0)
+//                    editQtIntrantSuiviParcel.text?.clear()
+//                }
+//                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
+//
+//    }
 
     fun setInsParasSParcelleRV() {
         val insParasListSParcelle = mutableListOf<OmbrageVarieteModel>()
