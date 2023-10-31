@@ -1354,6 +1354,25 @@ class SuiviParcelleActivity : AppCompatActivity() {
         //editDesherbageManuelSuivi.setText(suiviParcelleDrafted.nombreDesherbage)
         //editDateSuivi.setText(suiviParcelleDrafted.dateVisite)
 
+        setVarieteArbrParcelleRV(
+            (GsonUtils.fromJson<MutableList<ArbreData>>(suiviParcelleDrafted.itemsStr, object : TypeToken<MutableList<ArbreData>>() {}.type).map { "${it.arbre}" }.toMutableList()),
+            (GsonUtils.fromJson<MutableList<ArbreData>>(suiviParcelleDrafted.itemsStr, object : TypeToken<MutableList<ArbreData>>() {}.type).map { "${it.nombre}" }.toMutableList())
+        )
+
+        setInsParasSParcelleRV(
+            (GsonUtils.fromJson<MutableList<String>>(suiviParcelleDrafted.insectesParasitesTemp, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList()),
+            (GsonUtils.fromJson<MutableList<String>>(suiviParcelleDrafted.nombreInsectesParasitesTemp, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList())
+        )
+
+        setAutreInsParasSParcelleRV(
+            (GsonUtils.fromJson<MutableList<String>>(suiviParcelleDrafted.insectesAmisStr, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList()),
+            (GsonUtils.fromJson<MutableList<String>>(suiviParcelleDrafted.nombreinsectesAmisStr, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList())
+        )
+
+        setAnimauSParcelleRV(
+            (GsonUtils.fromJson<MutableList<String>>(suiviParcelleDrafted.animauxRencontresStringify, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList()),
+        )
+
         setupSectionSelection(suiviParcelleDrafted.section,
             suiviParcelleDrafted.localiteId,
             suiviParcelleDrafted.producteursId,
@@ -1626,7 +1645,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            setAnimalParcelle()
 //
 //            setInsectes()
-            setOtherListener()
+            //setOtherListener()
 
         } catch (ex: Exception) {
             LogUtils.e("SParc "+ex.message)
@@ -1746,18 +1765,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
     }
 
     private fun setOtherListener() {
-        setVarieteArbrParcelleRV()
 
-        //setIntrantSParcelleRV()
+        setVarieteArbrParcelleRV()
 
         setInsParasSParcelleRV()
 
         setAutreInsParasSParcelleRV()
 
         setAnimauSParcelleRV()
+
     }
 
     private fun setAllSelection() {
+
+        setOtherListener()
 
         setupSectionSelection()
 
@@ -1855,9 +1876,16 @@ class SuiviParcelleActivity : AppCompatActivity() {
         })
     }
 
-    fun setVarieteArbrParcelleRV() {
+    fun setVarieteArbrParcelleRV(libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
         val varieteArbrListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        var countN = 0
+        libeleList.forEach {
+            varieteArbrListSParcelle.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+            countN++
+        }
         val varieteArbrSParcelleAdapter = OmbrageAdapter(varieteArbrListSParcelle)
+
+
         try {
             recyclerVarieteArbrListSuiviParcel.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -1954,8 +1982,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //
 //    }
 
-    fun setInsParasSParcelleRV() {
+    fun setInsParasSParcelleRV(libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
         val insParasListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        var countN = 0
+        libeleList.forEach {
+            insParasListSParcelle.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+            countN++
+        }
         val insParasSParcelleAdapter = OmbrageAdapter(insParasListSParcelle)
         try {
             recyclerInsecteOfSuiviParcelle.layoutManager =
@@ -2004,8 +2037,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     }
 
-    fun setAutreInsParasSParcelleRV() {
+    fun setAutreInsParasSParcelleRV(libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
         val autrInsParasListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        var countN = 0
+        libeleList.forEach {
+            autrInsParasListSParcelle.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+            countN++
+        }
         val autrInsParasSParcelleAdapter = OmbrageAdapter(autrInsParasListSParcelle)
         try {
             recyclerInsecteAmisSuiviParcelle.layoutManager =
@@ -2055,8 +2093,14 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     }
 
-    fun setAnimauSParcelleRV() {
+    fun setAnimauSParcelleRV(libeleList:MutableList<String> = arrayListOf()) {
         val animauListSParcelle = mutableListOf<CommonData>()
+        var countN = 0
+        libeleList.forEach {
+            animauListSParcelle.add(CommonData(0, it))
+            countN++
+        }
+
         val animauSParcelleAdapter = OnlyFieldAdapter(animauListSParcelle)
         try {
             recyclerAnimauxSuiviParcelle.layoutManager =

@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
+import ci.projccb.mobile.adapters.PreviewItemAdapter
 import ci.projccb.mobile.models.InfosProducteurDTO
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.ListConverters
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -32,77 +35,98 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                 val infosProducteur: InfosProducteurDTO? = it.getParcelableExtra("preview")
                 draftID = it.getIntExtra("draft_id", 0)
 
-                infosProducteur?.run {
-                    labelProducteurInfosProducteurPreview.text = this.producteursNom
-                    labelCodeInfosProducteurPreview.text = this.producteursCode
+//                infosProducteur?.run {
+//                    labelProducteurInfosProducteurPreview.text = this.producteursNom
+//                    labelCodeInfosProducteurPreview.text = this.producteursCode
+//
+//                    labelJachereYesNoInfosProducteurPreview.text = this.foretsjachere
+//
+//                    if (foretsjachere == "oui") {
+//                        linearJachereYesSuperficieContainerInfosProducteurPreview.visibility =
+//                            VISIBLE
+//                        labelJachereYesSuperficieInfosProducteurPreview.text = this.superficie
+//                    } else {
+//                        linearJachereYesSuperficieContainerInfosProducteurPreview.visibility = GONE
+//                    }
+//
+//                    labelOthersFarmsYesNoInfosProducteurPreview.text = this.autresCultures
+//
+//                    if (autresCultures == "oui") {
+//                        this.typeculture =
+//                            ListConverters.stringToMutableList(this.typecultureStringify)
+//                        typeculture?.let { cultures ->
+//                            labelOthersFarmsInfosProducteurPreview.text = null
+//                            cultures.map { culture ->
+//                                labelOthersFarmsInfosProducteurPreview.text =
+//                                    labelOthersFarmsInfosProducteurPreview.text.toString()
+//                                        .plus(culture).plus(System.getProperty("line.separator"))
+//                            }
+//                        }
+//
+//                        linearOthersCultureYesContainerInfosProducteursPreview.visibility = VISIBLE
+//                    } else {
+//                        linearOthersCultureYesContainerInfosProducteursPreview.visibility = GONE
+//                    }
+//
+//                    this.maladiesenfants =
+//                        ListConverters.stringToMutableList(this.maladiesenfantsStringify)
+//                    maladiesenfants?.let { maladies ->
+//                        labelDeseasesInfosProducteurPreview.text = null
+//                        maladies.map { maladie ->
+//                            labelDeseasesInfosProducteurPreview.text =
+//                                labelDeseasesInfosProducteurPreview.text.toString().plus(maladie)
+//                                    .plus(System.getProperty("line.separator"))
+//                        }
+//                    }
+//
+//                    labelNbreWorkersInfosProducteurPreview.text = this.travailleurs
+//                    labelNbreWorkersUndefinedInfosProducteurPreview.text =
+//                        this.travailleurstemporaires
+//                    labelNbreWorkersDefinedInfosProducteurPreview.text = this.travailleurspermanents
+//
+//                    labelChildSchoolInfosProducteurPreview.text = this.persEcole
+//                    labelChildUnder18InfosProducteurPreview.text = this.age18
+//                    labelChildScoolExtraitInfosProducteurPreview.text = this.scolarisesExtrait
+//
+//                    labelActionPeopleInjuryInfosProducteurPreview.text = this.personneBlessee
+//                    labelPaperFarmsInfosProducteurPreview.text = this.typeDocuments
+//                    labelRecuHolderInfosProducteurPreview.text = this.recuAchat
+//
+//                    labelMobileMoneyYesNoInfosProducteurPreview.text = this.mobileMoney
+//
+//                    if (this.mobileMoney == "oui") {
+//                        labelMobileMoneyOperateurInfosProducteurPreview.text = this.operateurMM
+//                        labelMobieMoneyNumberInfosProducteurPreview.text = this.numeroCompteMM
+//
+//                        linearMobileMoneyYesOperateurContainerInfosProducteurPreview.visibility =
+//                            VISIBLE
+//                        linearMobileMoneyYesNumberContainerInfosProducteurPreview.visibility =
+//                            VISIBLE
+//                    }
+//
+//                    labelBuyMethodInfoProducteurPreview.text = this.paiementMM
+//                    labelBanqueYesNoInfosProducteurPreview.text = this.compteBanque
 
-                    labelJachereYesNoInfosProducteurPreview.text = this.foretsjachere
+                    val infoProdItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
+                    val infoProdItemListData = it.getParcelableArrayListExtra<MapEntry>("previewitem")
 
-                    if (foretsjachere == "oui") {
-                        linearJachereYesSuperficieContainerInfosProducteurPreview.visibility =
-                            VISIBLE
-                        labelJachereYesSuperficieInfosProducteurPreview.text = this.superficie
-                    } else {
-                        linearJachereYesSuperficieContainerInfosProducteurPreview.visibility = GONE
-                    }
-
-                    labelOthersFarmsYesNoInfosProducteurPreview.text = this.autresCultures
-
-                    if (autresCultures == "oui") {
-                        this.typeculture =
-                            ListConverters.stringToMutableList(this.typecultureStringify)
-                        typeculture?.let { cultures ->
-                            labelOthersFarmsInfosProducteurPreview.text = null
-                            cultures.map { culture ->
-                                labelOthersFarmsInfosProducteurPreview.text =
-                                    labelOthersFarmsInfosProducteurPreview.text.toString()
-                                        .plus(culture).plus(System.getProperty("line.separator"))
-                            }
+                    infoProdItemListData?.forEach {
+                        if(it.key.isNullOrEmpty()==false){
+                            Commons.addItemsToList(
+                                it.key,
+                                it.value,
+                                infoProdItemsListPrev
+                            )
                         }
-
-                        linearOthersCultureYesContainerInfosProducteursPreview.visibility = VISIBLE
-                    } else {
-                        linearOthersCultureYesContainerInfosProducteursPreview.visibility = GONE
                     }
+    //                LogUtils.d(producteurItemListData)
+    //                LogUtils.d(producteurItemsListPrev)
 
-                    this.maladiesenfants =
-                        ListConverters.stringToMutableList(this.maladiesenfantsStringify)
-                    maladiesenfants?.let { maladies ->
-                        labelDeseasesInfosProducteurPreview.text = null
-                        maladies.map { maladie ->
-                            labelDeseasesInfosProducteurPreview.text =
-                                labelDeseasesInfosProducteurPreview.text.toString().plus(maladie)
-                                    .plus(System.getProperty("line.separator"))
-                        }
-                    }
+                    val rvPrevAdapter = PreviewItemAdapter(infoProdItemsListPrev)
+                    recyclerInfoPrev.adapter = rvPrevAdapter
+                    recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-                    labelNbreWorkersInfosProducteurPreview.text = this.travailleurs
-                    labelNbreWorkersUndefinedInfosProducteurPreview.text =
-                        this.travailleurstemporaires
-                    labelNbreWorkersDefinedInfosProducteurPreview.text = this.travailleurspermanents
 
-                    labelChildSchoolInfosProducteurPreview.text = this.persEcole
-                    labelChildUnder18InfosProducteurPreview.text = this.age18
-                    labelChildScoolExtraitInfosProducteurPreview.text = this.scolarisesExtrait
-
-                    labelActionPeopleInjuryInfosProducteurPreview.text = this.personneBlessee
-                    labelPaperFarmsInfosProducteurPreview.text = this.typeDocuments
-                    labelRecuHolderInfosProducteurPreview.text = this.recuAchat
-
-                    labelMobileMoneyYesNoInfosProducteurPreview.text = this.mobileMoney
-
-                    if (this.mobileMoney == "oui") {
-                        labelMobileMoneyOperateurInfosProducteurPreview.text = this.operateurMM
-                        labelMobieMoneyNumberInfosProducteurPreview.text = this.numeroCompteMM
-
-                        linearMobileMoneyYesOperateurContainerInfosProducteurPreview.visibility =
-                            VISIBLE
-                        linearMobileMoneyYesNumberContainerInfosProducteurPreview.visibility =
-                            VISIBLE
-                    }
-
-                    labelBuyMethodInfoProducteurPreview.text = this.paiementMM
-                    labelBanqueYesNoInfosProducteurPreview.text = this.compteBanque
 
                     clickCloseBtn.setOnClickListener {
                         finish()
@@ -116,7 +140,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                                 showNo = true,
                                 callback = {
                                     CcbRoomDatabase.getDatabase(this@InfosProducteurPreviewActivity)
-                                        ?.infosProducteurDao()?.insert(this)
+                                        ?.infosProducteurDao()?.insert(infosProducteur!!)
                                     draftDao?.completeDraft(draftID)
                                     Commons.synchronisation(
                                         type = "infos",
@@ -139,7 +163,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                                 callback = {})
                         }
                     }
-                }
+//                }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)

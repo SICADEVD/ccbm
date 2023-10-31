@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout_info_prods"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -155,7 +156,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectSectionProducteur"
+                                android:id="@+id/selectSectionInfProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -226,6 +227,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="producteursId"
                                 android:id="@+id/selectProducteurInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -364,6 +366,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="foretsjachere"
                                 android:id="@+id/selectJachereInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -395,6 +398,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="superficie"
                             android:id="@+id/editForetYesSuperficieInfosProducteur"
                             android:layout_width="0dp"
                             android:layout_weight="4"
@@ -430,7 +434,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il d'autres cultures excepté cacao ?"
+                            android:text="Y'a t'il d'autres cultures ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -444,6 +448,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="autresCultures"
                                 android:id="@+id/selectCulturesInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -618,6 +623,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="autreActivite"
                                 android:id="@+id/selectActiviteOrCacaoInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -668,7 +674,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingLeft="@dimen/_10sdp"
-                                            android:text="Le type"
+                                            android:text="Le type d'activité"
                                             android:textStyle="bold" />
 
                                         <androidx.appcompat.widget.AppCompatEditText
@@ -918,6 +924,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="mainOeuvreFamilial"
                                 android:id="@+id/selectTravaiFamilleInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -952,6 +959,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="travailleurFamilial"
                             android:id="@+id/editNbrTravFamilleInfosProducteur"
                             android:layout_weight="4"
                             android:layout_width="0dp"
@@ -989,6 +997,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="travailleurs"
                             android:id="@+id/editNbrTravRemunInfosProducteur"
                             android:layout_weight="4"
                             android:layout_width="0dp"
@@ -1026,6 +1035,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="travailleurspermanents"
                             android:id="@+id/editNbrTravPermanInfosProducteur"
                             android:layout_weight="4"
                             android:layout_width="0dp"
@@ -1063,6 +1073,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="travailleurstemporaires"
                             android:id="@+id/editNbrTravNotPermanInfosProducteur"
                             android:layout_weight="4"
                             android:layout_width="0dp"
@@ -1465,6 +1476,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="mobileMoney"
                                 android:id="@+id/selectMoneyInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -1645,6 +1657,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="compteBanque"
                                 android:id="@+id/selectBanqueInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -1660,6 +1673,9 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
+                        android:id="@+id/containerBuyInfosProducteur"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -1683,6 +1699,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="nomBanque"
                                 android:id="@+id/selectBuyInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:entries="@array/bank_list"
@@ -1714,6 +1731,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="autreBanque"
                             android:id="@+id/editNomBanqInfosProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -1726,7 +1744,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            tools:text="Ecobanq" />
+                            tools:text="" />
 
                     </LinearLayout>
 
