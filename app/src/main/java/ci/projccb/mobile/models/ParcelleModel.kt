@@ -57,7 +57,7 @@ data class ParcelleModel(
 ) : Parcelable {
 
     @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("waypoints") var mappingPoints: MutableList<String> = mutableListOf()
-    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("protection") var protectionList: MutableList<String> = mutableListOf()
+    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("protectionList") var protectionList: MutableList<String> = mutableListOf()
 
 
     override fun toString(): String {

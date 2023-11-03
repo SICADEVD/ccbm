@@ -260,6 +260,8 @@ class ConfigurationActivity : AppCompatActivity() {
                     val responseParcelles: Response<MutableList<ParcelleModel>> = clientParcelles.execute()
                     val parcellesList: MutableList<ParcelleModel>? = responseParcelles.body()
 
+                    LogUtils.json(responseParcelles.body())
+
                     parcellesList?.map {
                         val parcelle = ParcelleModel(
                             id = it.id,
@@ -278,6 +280,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
+                    ex.printStackTrace()
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
