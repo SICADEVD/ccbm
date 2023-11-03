@@ -10,7 +10,7 @@
     android:id="@+id/mainerScroll"
     android:alpha=".1"
     app:cardBackgroundColor="#FFFFFF"
-    app:cardCornerRadius="25dp"
+    app:cardCornerRadius="2dp"
     app:cardElevation="8dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false">
@@ -31,7 +31,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="280dp"
+                android:layout_height="220dp"
                 android:src="@drawable/producteurc"
                 android:scaleType="centerCrop"
                 android:id="@+id/image_current" />
@@ -59,24 +59,24 @@
                 android:layout_below="@+id/image_current"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="4"
+                android:orientation="vertical"
                 android:gravity="center_horizontal">
 
                 <LinearLayout
-                    android:layout_weight="2"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_add"
                         android:visibility="gone"
-                        tools:visibility="gone"
-                        android:background="@drawable/border_shape_selector"
+                        tools:visibility="visible"
+                        android:background="@drawable/border_shape_selector_btn"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/_28sdp"
                         android:layout_margin="@dimen/_2sdp"
                         android:textSize="@dimen/_8ssp"
@@ -91,11 +91,12 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_update"
                         android:visibility="gone"
-                        tools:visibility="gone"
-                        android:background="@drawable/border_shape_selector"
+                        tools:visibility="visible"
+                        android:background="@drawable/border_shape_selector_btn"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/_28sdp"
                         android:textSize="@dimen/_8ssp"
                         android:layout_margin="@dimen/_2sdp"
@@ -112,7 +113,7 @@
                 <!--                <LinearLayout-->
 
                 <!--                    android:layout_weight=".8"-->
-                <!--                    android:background="@drawable/border_shape_selector"-->
+                <!--                    android:background="@drawable/border_shape_selector_btn"-->
                 <!--                    android:orientation="vertical"-->
                 <!--                    android:layout_width="wrap_content"-->
                 <!--                    android:layout_height="wrap_content"-->
@@ -123,20 +124,20 @@
                 <!--                </LinearLayout>-->
 
                 <LinearLayout
-                    android:layout_weight="2"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_sync"
                         android:visibility="gone"
-                        tools:visibility="gone"
-                        android:background="@drawable/border_shape_selector"
+                        tools:visibility="visible"
+                        android:background="@drawable/border_shape_selector_btn"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/_28sdp"
                         android:layout_margin="@dimen/_2sdp"
                         android:textSize="@dimen/_8ssp"
@@ -151,11 +152,12 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btn_draft"
                         android:visibility="gone"
-                        tools:visibility="gone"
-                        android:background="@drawable/border_shape_selector"
+                        tools:visibility="visible"
+                        android:background="@drawable/border_shape_selector_btn"
                         android:textColor="@color/text_color_white"
                         android:fontFamily="@font/montserrat_medium"
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/_28sdp"
                         android:layout_margin="@dimen/_2sdp"
                         android:textSize="@dimen/_8ssp"
@@ -172,7 +174,7 @@
                 <!--                <LinearLayout-->
 
                 <!--                    android:layout_weight=".8"-->
-                <!--                    android:background="@drawable/border_shape_selector"-->
+                <!--                    android:background="@drawable/border_shape_selector_btn"-->
                 <!--                    android:orientation="vertical"-->
                 <!--                    android:layout_width="wrap_content"-->
                 <!--                    android:layout_height="wrap_content"-->
@@ -187,7 +189,7 @@
                 <!--            tools:visibility="visible"-->
                 <!--                    android:layout_marginLeft="@dimen/_8sdp"-->
                 <!--                    android:layout_marginRight="@dimen/_8sdp"-->
-                <!--                    android:background="@drawable/border_shape_selector"-->
+                <!--                    android:background="@drawable/border_shape_selector_btn"-->
                 <!--                    android:id="@+id/btn_edit"-->
                 <!--                    android:minWidth="@dimen/_60sdp"-->
                 <!--                    android:layout_width="wrap_content"-->
@@ -202,7 +204,7 @@
                 <!--            tools:visibility="visible"-->
                 <!--                    android:layout_marginLeft="@dimen/_8sdp"-->
                 <!--                    android:layout_marginRight="@dimen/_8sdp"-->
-                <!--                    android:background="@drawable/border_shape_selector"-->
+                <!--                    android:background="@drawable/border_shape_selector_btn"-->
                 <!--                    android:id="@+id/btn_sync"-->
                 <!--                    android:minWidth="@dimen/_60sdp"-->
                 <!--                    android:layout_width="wrap_content"-->
@@ -217,7 +219,7 @@
                 <!--            tools:visibility="visible"-->
                 <!--                    android:layout_marginLeft="@dimen/_8sdp"-->
                 <!--                    android:layout_marginRight="@dimen/_8sdp"-->
-                <!--                    android:background="@drawable/border_shape_selector"-->
+                <!--                    android:background="@drawable/border_shape_selector_btn"-->
                 <!--                    android:id="@+id/btn_draft"-->
                 <!--                    android:minWidth="@dimen/_60sdp"-->
                 <!--                    android:layout_width="wrap_content"-->

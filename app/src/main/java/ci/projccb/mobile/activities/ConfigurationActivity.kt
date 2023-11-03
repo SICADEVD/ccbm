@@ -216,6 +216,7 @@ class ConfigurationActivity : AppCompatActivity() {
             } else {
                 configCompletedOrError("producteurs")
                 getParcelles()
+                //getStaffApplicateurs()
             }
         }
     }
@@ -224,18 +225,18 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getParcelles() {
         withContext(IO) {
             val parcellesUpdate = async {
-                parcelleDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                //parcelleDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
 
                 try {
                     val clientParcelles = ApiClient.apiService.getParcelles()
                     val responseParcelles: Response<MutableList<ParcelleModel>> = clientParcelles.execute()
                     val parcellesList: MutableList<ParcelleModel>? = responseParcelles.body()
 
+                    //LogUtils.json(parcellesList)
                     parcellesList?.map {
                         val parcelle = ParcelleModel(
                             id = it.id,
                             culture = it.culture,
-                            uid = 0,
                             producteurId = it.producteurId,
                             anneeCreation = it.anneeCreation,
                             superficie = it.superficie,
@@ -249,7 +250,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
@@ -682,7 +683,6 @@ class ConfigurationActivity : AppCompatActivity() {
                     dataList?.map {
                         val data = ProgrammeModel(
                             id = it.id,
-                            uid = 0,
                             libelle = "${it.libelle}",
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )

@@ -119,7 +119,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                             )
                         }
                     }
-    //                LogUtils.d(producteurItemListData)
+                    //LogUtils.json(infosProducteur)
     //                LogUtils.d(producteurItemsListPrev)
 
                     val rvPrevAdapter = PreviewItemAdapter(infoProdItemsListPrev)
@@ -147,7 +147,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                                         this@InfosProducteurPreviewActivity
                                     )
                                     Commons.showMessage(
-                                        "Infos enregistrée avec succes !",
+                                        "Information du producteur enregistrée avec succes !",
                                         this@InfosProducteurPreviewActivity,
                                         finished = true,
                                         callback = {})

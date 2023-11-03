@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.tools.Constants
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -34,10 +35,10 @@ data class ParcelleModel(
     @Expose var superficie: String? = "",
     @Expose var latitude: String? = "",
     @Expose var longitude: String? = "",
-    @Expose var nom: String? = "",
-    @Expose var prenoms: String? = "",
-    @Expose var section: String? = "",
-    @Expose var localite: String? = "",
+    @Expose @SerializedName("nom") var nom: String? = "",
+    @Expose @SerializedName("prenoms") var prenoms: String? = "",
+    @Expose @SerializedName(value = "section", alternate = ["section_id"]) var section: String? = "",
+    @Expose @SerializedName(value = "localite", alternate = ["localite_id"]) var localite: String? = "",
     @Expose var ageMoyenCacao: String? = "",
     @Expose var parcelleRegenerer: String? = "",
     @Expose var anneeRegenerer: String? = "",
@@ -45,7 +46,9 @@ data class ParcelleModel(
     @Expose var superficieConcerne: String? = "",
     @Expose var presenceCourDeau: String? = "",
     @Expose var existeMesureProtection: String? = "",
-    @Expose var protection: String? = "",
+    @Expose var arbreStr: String? = "",
+    @Expose var protectionStr: String? = "",
+    @Expose var autreProtection: String? = "",
     @Expose var existePente: String? = "",
     @Expose var niveauPente: String? = "",
     @Expose var variete: String? = "",
@@ -57,11 +60,12 @@ data class ParcelleModel(
 ) : Parcelable {
 
     @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("waypoints") var mappingPoints: MutableList<String> = mutableListOf()
+    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("items") var arbreList: MutableList<ArbreData> = mutableListOf()
     @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("protection") var protectionList: MutableList<String> = mutableListOf()
 
 
     override fun toString(): String {
-        return "$culture ($anneeCreation)"
+        return "$culture $anneeCreation"
     }
 
 }

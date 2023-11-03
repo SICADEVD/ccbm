@@ -13,6 +13,18 @@
         <item>Au dela de 02 ans</item>
     </string-array>
 
+    <string-array name="mesure_protection">
+        <item>barriere de végétation</item>
+        <item>Zone tampon</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="niveau_pente">
+        <item>Forte</item>
+        <item>Douce</item>
+        <item>Moyenne</item>
+    </string-array>
+
     <string-array name="InsectQuantifie">
         <item>Assez</item>
         <item>Moins</item>
@@ -150,7 +162,7 @@
 
     <string-array name="typeAutreMembre">
         <item>Membre de famille</item>
-        <item>Délégué</item>
+        <item>Personnel de la coopérative</item>
         <item>Autre</item>
     </string-array>
 

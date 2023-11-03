@@ -14,7 +14,7 @@
 
         <RelativeLayout
             android:visibility="visible"
-            android:background="@color/white"
+            android:background="@color/ccb_gris"
             android:layout_alignParentTop="true"
             android:id="@+id/relativeToolbarFarmDelimiter"
             android:layout_width="match_parent"
@@ -160,7 +160,7 @@ android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Surface"
-                android:background="@color/white"
+                android:background="@color/ccb_gris"
                 android:textSize="@dimen/_15ssp"/>
 
         </LinearLayout>
@@ -199,7 +199,7 @@ android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Distance"
-                android:background="@color/white"
+                android:background="@color/ccb_gris"
                 android:textSize="@dimen/_15ssp"/>
 
         </LinearLayout>
@@ -208,9 +208,9 @@ android:textColor="@color/text_color_white"
 
     <LinearLayout
         android:visibility="gone"
-            tools:visibility="visible"
+        tools:visibility="visible"
         android:id="@+id/linearSnippetInfosFarmDelimiter"
-        android:background="@color/bottom_bar_bg"
+        android:background="@color/ccb_gris"
         android:layout_marginTop="@dimen/_50sdp"
         android:orientation="vertical"
         android:padding="@dimen/_5sdp"
@@ -476,7 +476,7 @@ android:textColor="@color/text_color_white"
 
         <LinearLayout
             android:id="@+id/linearPopupMenuMapsTypeFarmDelimiter"
-            android:background="@color/white"
+            android:background="@color/ccb_gris"
             android:padding="@dimen/_10sdp"
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_100sdp"
@@ -486,7 +486,7 @@ android:textColor="@color/text_color_white"
             <LinearLayout
                 android:id="@+id/linearOrdinaireTypeMappingContainerFarmDelimiter"
                 android:gravity="center_vertical"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -511,7 +511,7 @@ android:textColor="@color/text_color_white"
             <LinearLayout
                 android:id="@+id/linearSatelliteTypeMappingContainerFarmDelimiter"
                 android:gravity="center_vertical"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -536,7 +536,7 @@ android:textColor="@color/text_color_white"
             <LinearLayout
                 android:id="@+id/linearTerrainTypeMappingContainerFarmDelimiter"
                 android:gravity="center_vertical"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">

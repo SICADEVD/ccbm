@@ -17,10 +17,11 @@ data class ProducteurModel(
     @SerializedName(value = "section") @Expose var section: String? = "0",
     @SerializedName(value = "localite_id", alternate = ["localites_id"]) @Expose var localitesId: String? = "0",
     @SerializedName(value = "programme_id") @Expose var programme_id: String? = "0",
+    @SerializedName(value = "autreProgramme") @Expose var autreProgramme: String? = "0",
     @Expose var nom: String? =  "",
     @Expose var prenoms: String? = "",
     @SerializedName("dateNaiss") @Expose var dateNaiss: String? = "",
-    @SerializedName("certificats") @Expose var certificats: String? = "",
+    @Expose var certificatsStr: String? = "",
     @SerializedName("autreCertificats") @Expose var autreCertificats: String? = "",
     @SerializedName("habitationProducteur") @Expose var habitationProducteur: String? = "",
     @SerializedName("variete") @Expose var variete: String? = "",
@@ -76,6 +77,7 @@ data class ProducteurModel(
 
     @Ignore @Expose(serialize = true, deserialize = false) var typeculture: MutableList<String>? = null
     @Ignore @Expose(serialize = true, deserialize = false) var superficieculture: MutableList<String>? = null
+    @Ignore @Expose(serialize = true, deserialize = false) var certificats: MutableList<String>? = null
     @Ignore var producteursCultures: MutableList<CultureProducteurModel>? = null
     @Expose @Ignore var localite: String? = ""
 

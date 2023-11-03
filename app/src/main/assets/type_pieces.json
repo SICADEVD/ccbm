@@ -22,5 +22,9 @@
     },{
         "id": "7",
         "nom": "CMU"
+    },
+    {
+        "id": "1",
+        "nom": "Non disponible"
     }
 ]

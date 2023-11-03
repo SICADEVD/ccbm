@@ -67,7 +67,7 @@ class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?, pr
     }
 }
 
-class OnlyFieldAdapter(private var common: MutableList<CommonData>?, private  var libelTitle: String = "Libéllé") : RecyclerView.Adapter<OnlyFieldAdapter.OnlyItemHolder>() {
+class OnlyFieldAdapter(private var common: MutableList<CommonData>?, private  var libelTitle: String = "Libellé") : RecyclerView.Adapter<OnlyFieldAdapter.OnlyItemHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnlyItemHolder {

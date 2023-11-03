@@ -138,7 +138,7 @@ class FormationActivity : AppCompatActivity() {
                     localiteIdSelected = locality.uid.toString()
                 }
 
-                setupProducteurSelection(localiteIdSelected)
+                //nnsetupProducteurSelection(localiteIdSelected)
 
                 //LogUtils.e(TAG, localiteIdSelected)
             }

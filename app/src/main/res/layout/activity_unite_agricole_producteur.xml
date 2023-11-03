@@ -165,11 +165,14 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
                     <LinearLayout
                         android:id="@+id/linearLocaliteContainerUniteAgricole"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
@@ -212,7 +215,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur* "
+                            android:text="Nom et prénom producteur"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -325,7 +328,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la culture"
+                            android:text="Informations sur l'exploitation"
                             
                             android:textSize="@dimen/_13ssp"
                             android:textStyle="bold" />
@@ -458,6 +461,10 @@ android:textColor="@color/text_color_white"
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
                         android:id="@+id/linearCultureContainerInfosProducteur"
@@ -880,7 +887,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations Menages"
+                            android:text="Informations sur la main d'œuvre"
                             
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
@@ -972,6 +979,7 @@ android:textColor="@color/text_color_white"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_13ssp"
+                            android:hint="12"
                             tools:text="12" />
 
                     </LinearLayout>
@@ -1010,6 +1018,7 @@ android:textColor="@color/text_color_white"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_13ssp"
+                            android:hint="12"
                             tools:text="12" />
 
                     </LinearLayout>
@@ -1048,6 +1057,7 @@ android:textColor="@color/text_color_white"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_13ssp"
+                            android:hint="12"
                             tools:text="12" />
 
                     </LinearLayout>
@@ -1069,7 +1079,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleurs non permanents ?"
+                            android:text="Quel est le nombre de travailleurs temporaires ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1086,6 +1096,7 @@ android:textColor="@color/text_color_white"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_13ssp"
+                            android:hint="12"
                             tools:text="12" />
 
                     </LinearLayout>
@@ -1093,6 +1104,86 @@ android:textColor="@color/text_color_white"
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:weightSum="10"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="0dp"
+                            android:layout_weight="6"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Etes-vous membre d'une société de travail ?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="travailSociete"
+                                android:id="@+id/selectTravaiSocietInfosProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"
+                                android:entries="@array/YesOrNo"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerNbrTravSocieteInfosProducteur"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:weightSum="10"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="0dp"
+                            android:layout_weight="6"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Combien de personne comporte t'elle ?"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="travailleurssociale"
+                            android:id="@+id/editNbrTravSocieteInfosProducteur"
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            android:hint="12"
+                            tools:text="12" />
+
+                    </LinearLayout>
 
 <!--                    <LinearLayout-->
 <!--                        android:layout_width="match_parent"-->
@@ -1543,6 +1634,7 @@ android:textColor="@color/text_color_white"
 
                                             <androidx.appcompat.widget.AppCompatSpinner
                                                 android:id="@+id/selectMobileOperatInfoProducteur"
+                                                android:entries="@array/operateur"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="@dimen/_35sdp"
                                                 android:spinnerMode="dialog" />
@@ -1576,11 +1668,10 @@ android:textColor="@color/text_color_white"
                                             android:layout_height="@dimen/_37sdp"
                                             android:background="@drawable/rounded_background"
                                             android:ellipsize="end"
-                                            android:hint="0.0"
+                                            android:hint="070807080708"
                                             android:gravity="center_vertical"
                                             android:imeOptions="actionDone"
                                             android:inputType="number"
-                                            android:digits="0123456789."
                                             android:paddingStart="@dimen/_10sdp"
                                             android:paddingEnd="@dimen/_10sdp"
                                             android:textAllCaps="true"
@@ -1700,7 +1791,7 @@ android:textColor="@color/text_color_white"
 
                             <androidx.appcompat.widget.AppCompatSpinner
                                 android:tag="nomBanque"
-                                android:id="@+id/selectBuyInfosProducteur"
+                                android:id="@+id/selectNomBanqueInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:entries="@array/bank_list"
                                 android:layout_height="@dimen/_35sdp"

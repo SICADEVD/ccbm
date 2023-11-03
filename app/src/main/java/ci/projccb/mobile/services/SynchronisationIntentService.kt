@@ -125,6 +125,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 //producteur.localitesId
 
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
+                producteur.certificats = GsonUtils.fromJson(producteur.certificatsStr, object : TypeToken<MutableList<String>>(){}.type)
 
                 if (!producteur.photo.isNullOrEmpty()) producteur.photo = Commons.convertPathBase64(producteur.photo, 1)
 //                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
@@ -747,7 +748,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 try {
                     info.typeculture = ListConverters.stringToMutableList(info.typecultureStringify)
                     info.superficieculture = ListConverters.stringToMutableList(info.superficiecultureStringify)
-                    info.maladiesenfants = ListConverters.stringToMutableList(info.maladiesenfantsStringify)
+                    info.numerosMM = ListConverters.stringToMutableList(info.numerosMMStr)
+                    info.operateurMM = ListConverters.stringToMutableList(info.operateurMMStr)
+                    info.typeactiviteList = ListConverters.stringToMutableList(info.typeactiviteStr)
                 }catch (e:Exception){
                     println(e.message)
                 }
@@ -763,6 +766,17 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     localiteNom = null
                     producteursCode = null
                     producteursNom = null
+                    typeactiviteStr = null
+                    typeDocuments = null
+                    scolarisesExtrait = null
+                    recuAchat = null
+                    personneBlessee = null
+                    persEcole = null
+                    paiementMM = null
+                    operateurMMStr = null
+                    numerosMMStr = null
+                    numeroCompteMM = null
+                    age18 = null
                 }
 
                 val clientInfos: Call<InfosProducteurDTO> = ApiClient.apiService.synchronisationInfosProducteur(info)

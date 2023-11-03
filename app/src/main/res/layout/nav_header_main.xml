@@ -36,7 +36,7 @@
             android:paddingTop="@dimen/_2sdp"
             android:paddingLeft="@dimen/_8sdp"
             android:text="Connectée…"
-            android:textColor="@color/green"
+            android:textColor="@color/ccb_green"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <Space

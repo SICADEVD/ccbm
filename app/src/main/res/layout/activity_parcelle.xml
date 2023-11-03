@@ -207,6 +207,10 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
                     <LinearLayout
                         android:id="@+id/linearProducteurContainerParcelle"
                         android:layout_width="match_parent"
@@ -249,15 +253,15 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         tools:visibility="visible">
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -339,6 +343,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="4"
                                 android:background="@drawable/rounded_background"
+                                android:hint="2"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
@@ -467,6 +472,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="4"
                                 android:background="@drawable/rounded_background"
+                                android:hint="2"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
@@ -513,6 +519,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="4"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background"
+                            android:hint="0.0"
                             android:ellipsize="end"
                             android:imeOptions="actionDone"
                             android:inputType="numberDecimal"
@@ -698,7 +705,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner les protections"
+                            android:text="Sélectionner les mésures de protections"
 
                             android:textStyle="bold" />
 
@@ -720,6 +727,40 @@ android:textColor="@color/text_color_white"
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/containerAutreProtectParcelle"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="autreProtection"
+                                android:textAllCaps="true"
+                                android:id="@+id/editAutreProtectParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="Précisez…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <Space
@@ -796,6 +837,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectNiveauPente"
+                                android:entries="@array/niveau_pente"
                                 />
 
                         </LinearLayout>
@@ -923,11 +965,10 @@ android:textColor="@color/text_color_white"
                                         android:layout_height="@dimen/_37sdp"
                                         android:background="@drawable/rounded_background"
                                         android:ellipsize="end"
-                                        android:hint="0"
+                                        android:hint="1"
                                         android:gravity="center_vertical"
                                         android:imeOptions="actionDone"
                                         android:inputType="number"
-                                        android:digits="0123456789."
                                         android:paddingStart="@dimen/_10sdp"
                                         android:paddingEnd="@dimen/_10sdp"
                                         android:textAllCaps="true"
@@ -1179,6 +1220,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background"
+                            android:hint="0.0"
                             android:ellipsize="end"
                             android:imeOptions="actionDone"
                             android:inputType="numberDecimal"
@@ -1223,7 +1265,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:background="@drawable/rounded_background"
                                 android:ellipsize="end"
-                                android:hint=""
+                                android:hint="5.245252"
                                 android:imeOptions="actionDone"
                                 android:inputType="textCapCharacters|textNoSuggestions"
                                 android:paddingStart="@dimen/_10sdp"
@@ -1262,7 +1304,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
                                 android:textSize="@dimen/_13ssp"
-                                android:hint=""/>
+                                android:hint="-4.2562522"/>
 
                         </LinearLayout>
 
@@ -1299,8 +1341,12 @@ android:textColor="@color/text_color_white"
                                 android:layout_weight="6"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Nombre De Cacao / Hectare"
+                                android:text="Nombre De Cacao / ha"
                                 android:textStyle="bold" />
+
+                            <Space
+                                android:layout_width="@dimen/_8sdp"
+                                android:layout_height="wrap_content"/>
 
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:tag="nbCacaoParHectare"
@@ -1309,6 +1355,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="4"
                                 android:background="@drawable/rounded_background"
+                                android:hint="100"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"

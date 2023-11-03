@@ -14,6 +14,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputFilter
 import android.util.Base64
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
@@ -21,7 +22,9 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +33,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
@@ -57,6 +61,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
+import kotlinx.android.synthetic.main.activity_producteur.editAnneeCertificationProducteur
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.json.JSONException
@@ -64,6 +69,7 @@ import java.io.*
 import java.lang.Math.log10
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.util.Calendar
 import kotlin.math.pow
 import kotlin.reflect.KClass
 import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews as getAllTitleAndValueViews1
@@ -354,6 +360,85 @@ class Commons {
             }
         }
 
+        fun List<String>?.toModifString(): String {
+            return this.toString().replace("]", "").replace("[", "").replace(",", "")
+        }
+
+        fun Context.showYearPickerDialog(editText: EditText) {
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+            val calendar: Calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val inflater = LayoutInflater.from(this)
+            val dialogView = inflater.inflate(R.layout.year_picker_dialog, null)
+            val yearPicker = dialogView.findViewById<NumberPicker>(R.id.yearPicker)
+
+            // Change this to your desired initial year
+            yearPicker.minValue = (year - 100) // Set the min year as needed
+            yearPicker.maxValue = year // Set the max year as needed
+            yearPicker.value = if(editText.text.isNullOrEmpty()) year else editText.text.toString().toInt()
+
+            builder.setView(dialogView)
+            builder.setTitle("Choix de l'année")
+            builder.setPositiveButton("Valider !") { _, _ ->
+                val selectedYear = yearPicker.value
+                editText.setText(selectedYear.toString())
+                // Handle the selected year
+            }
+            builder.setNegativeButton("Annuler") { _, _ ->
+                // Handle cancel
+            }
+
+            val dialog = builder.create()
+            dialog.show()
+        }
+
+        fun Context.limitEDTMaxLength(editText: EditText, minLength:Int = 225, maxLength:Int = 225){
+            val filterArray = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength),
+                                                    InputFilter.LengthFilter(minLength))
+            var context = this
+            editText.filters = filterArray
+
+//            editText.doAfterTextChanged {
+//
+//
+//
+//            }
+
+            editText.setOnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                } else {
+                    val textFiedl = (view as EditText)
+                    if (textFiedl.text.trim().toString().length < minLength) {
+                        MainScope().launch{
+                            showMessage(
+                                "Le contenu est inférieur à ${minLength}",
+                                context,
+                                finished = false,
+                                {},
+                                "Compris !",
+                                deconnec = false,
+                                showNo = false
+                            )
+                        }
+                    }
+
+                    if (textFiedl.text.trim().toString().length > maxLength) {
+                        MainScope().launch{
+                            showMessage(
+                                "Le contenu est supérieur à ${maxLength}",
+                                context,
+                                finished = false,
+                                {},
+                                "Compris !",
+                                deconnec = false,
+                                showNo = false
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
         fun loadJSONFromAsset(activity: Activity, assetFileName: String ): String? {
             try {
                 // Read the JSON file from assets folder
@@ -445,7 +530,11 @@ class Commons {
             val myBitmap = if (which == 3) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
 
             val byteArrayOutputStream = ByteArrayOutputStream()
-            myBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            try{
+                myBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            }catch (ex:Exception){
+                LogUtils.e(ex)
+            }
             val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
