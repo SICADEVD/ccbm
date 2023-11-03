@@ -145,7 +145,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Donnez-vous votre consentement à l’entreprise d’enregistrer vos informations"
+                        android:text="Accord de consentement du producteur"
 
                         android:textStyle="bold" />
 
@@ -185,7 +185,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Quel est votre titre ?"
+                        android:text="Comment vous vous definissez ?"
 
                         android:textStyle="bold" />
 
@@ -253,7 +253,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Certificat"
+                        android:text="Certificats"
 
                         android:textStyle="bold" />
 
@@ -266,10 +266,9 @@ android:textColor="@color/text_color_white"
                             android:layout_width="@dimen/_5sdp"
                             android:layout_height="@dimen/_10sdp" />
 
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:tag="certificats"
+                        <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            android:tag="certificatsStr"
                             android:id="@+id/selectCertifProducteur"
-                            android:entries="@array/YesOrNo"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
                             android:spinnerMode="dialog" />
@@ -292,7 +291,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Autre Certificat"
+                        android:text="Autre certificat"
 
                         android:textStyle="bold" />
 
@@ -351,6 +350,10 @@ android:textColor="@color/text_color_white"
 
 <!--                </LinearLayout>-->
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -362,7 +365,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Section *"
+                        android:text="Selectionner une section"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -400,7 +403,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Localité *"
+                        android:text="Selectionner une localite"
 
                         android:textStyle="bold" />
 
@@ -439,7 +442,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Programme *"
+                        android:text="Selectionner un programme *"
 
                         android:textStyle="bold" />
 
@@ -467,6 +470,44 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_10sdp" />
 
+<!--                <LinearLayout-->
+<!--                    android:visibility="gone"-->
+<!--                    tools:visibility="visible"-->
+<!--                    android:id="@+id/containerAutreProgramProducteur"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <androidx.appcompat.widget.AppCompatTextView-->
+<!--                        android:textColor="@color/text_color_white"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingLeft="@dimen/_12sdp"-->
+<!--                        android:text="Autre programme"-->
+
+<!--                        android:textStyle="bold" />-->
+
+<!--                    <androidx.appcompat.widget.AppCompatEditText-->
+<!--                        android:tag="autreProgramme"-->
+<!--                        android:id="@+id/editPrecisionAutreProgramProducteur"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"-->
+<!--                        android:background="@drawable/rounded_background"-->
+<!--                        android:ellipsize="end"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:imeOptions="actionDone"-->
+<!--                        android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                        android:paddingStart="@dimen/_10sdp"-->
+<!--                        android:paddingEnd="@dimen/_10sdp"-->
+<!--                        android:textAllCaps="true"-->
+<!--                        android:hint="@string/precision_hint"-->
+<!--                        android:textSize="@dimen/_13ssp"-->
+<!--                        tools:text="" />-->
+
+<!--                </LinearLayout>-->
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -478,7 +519,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Où habitez vous ?"
+                        android:text="Habitez-vous dans un campement ou village ?"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -516,7 +557,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Statut *"
+                        android:text="Donnez son statut"
 
                         android:textStyle="bold" />
 
@@ -563,13 +604,13 @@ android:textColor="@color/text_color_white"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3.5"
-                            android:text="Année certification *"
+                            android:text="Année de certification"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <RelativeLayout
                             android:layout_width="0dp"
-                            android:layout_height="@dimen/_50sdp"
+                            android:layout_height="@dimen/_37sdp"
                             android:layout_weight="6.5">
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -619,7 +660,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3.5"
-                        android:text="Code producteur"
+                        android:text="Code du producteur"
                         android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
@@ -627,7 +668,7 @@ android:textColor="@color/text_color_white"
                         android:tag="codeProd"
                         android:id="@+id/editCodeProducteur"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_height="@dimen/_37sdp"
                         android:layout_weight="6.5"
                         android:background="@drawable/rounded_background"
                         android:ellipsize="end"
@@ -657,7 +698,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Nom Producteur"
+                        android:text="Nom du producteur"
 
                         android:textStyle="bold" />
 
@@ -667,6 +708,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="KOBENAN"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:imeOptions="actionDone"
@@ -694,7 +736,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Prenom(s) Producteur"
+                        android:text="Prénom(s) du producteur"
 
                         android:textStyle="bold" />
 
@@ -704,6 +746,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="MATIASSE"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:inputType="textCapCharacters|textNoSuggestions"
@@ -730,8 +773,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Genre *"
-
+                        android:text="Etes-vous ? *"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -770,7 +812,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Statut Matrimonial *"
+                        android:text="Statut matrimonial"
 
                         android:textStyle="bold" />
 
@@ -810,8 +852,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Nationalité *"
-
+                        android:text="Quelle est la nationalité"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -849,7 +890,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Date de naissance *"
+                        android:text="Date de naissance"
 
                         android:textStyle="bold" />
 
@@ -899,7 +940,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Numéro de téléphone *"
+                        android:text="Numéro de téléphone"
 
                         android:textStyle="bold" />
 
@@ -909,6 +950,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="0707080809"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
@@ -936,8 +978,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Avez vous un proche ?"
-
+                        android:text="Avez-vous un proche à contacter pour vous joindre ?"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -1033,6 +1074,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="0707080809"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:inputType="phone"
@@ -1060,7 +1102,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Niveau d'etude *"
+                        android:text="Niveau d'étude"
 
                         android:textStyle="bold" />
 
@@ -1099,7 +1141,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Type de pièces *"
+                        android:text="Type de pièces"
 
                         android:textStyle="bold" />
 
@@ -1130,6 +1172,9 @@ android:textColor="@color/text_color_white"
                     android:layout_height="@dimen/_10sdp" />
 
                 <LinearLayout
+                    android:id="@+id/containerPieceProducteur"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -1150,6 +1195,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="CI170708080"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:inputType="textCapCharacters|textNoSuggestions"
@@ -1186,9 +1232,10 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="1234567890"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:inputType="number"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
@@ -1212,7 +1259,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Avez vous une carte CMU ?"
+                        android:text="Avez-vous une carte CMU ?"
 
                         android:textStyle="bold" />
 
@@ -1267,6 +1314,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
                         android:ellipsize="end"
+                        android:hint="1234567890124"
                         android:imeOptions="actionDone"
                         android:inputType="textCapCharacters|textNoSuggestions"
                         android:paddingStart="@dimen/_10sdp"
@@ -1292,7 +1340,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Type de carte de sécurité sociale ?"
+                        android:text="Votre type de carte de sécurité social"
 
                         android:textStyle="bold" />
 
@@ -1344,6 +1392,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
+                        android:hint="1234567890124"
                         android:ellipsize="end"
                         android:imeOptions="actionDone"
                         android:inputType="textCapCharacters|textNoSuggestions"

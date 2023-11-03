@@ -90,19 +90,14 @@ class ConfigurationActivity : AppCompatActivity() {
 
 
     // region NEW CONFIGURATION LOGIC
-    suspend fun configCompletedOrError(
-        info: String? = "",
-        hasOtherDatas: Boolean = true,
-        hisSynchro: Boolean = false,
-        hasError: Boolean = false
-    ) {
+    suspend fun configCompletedOrError(info: String? = "", hasOtherDatas: Boolean = true, hisSynchro: Boolean = false, hasError: Boolean = false) {
         MainScope().launch {
             if (hisSynchro) {
-                if (hasError) {
-                    labelIndicatorConfiguration.text = "$info !"
-                    actionUpdate.visibility = View.VISIBLE
-                    loaderConfiguration.visibility = View.GONE
-                }
+              if (hasError) {
+                  labelIndicatorConfiguration.text = "$info !"
+                  actionUpdate.visibility = View.VISIBLE
+                  loaderConfiguration.visibility = View.GONE
+              }
             } else {
                 loaderConfiguration.visibility = View.VISIBLE
                 actionUpdate.visibility = View.GONE
@@ -142,19 +137,11 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getLocalites() {
         withContext(IO) {
             val localitesUpdate = async {
-                localiteDao?.deleteAgentDatas(
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                )
+                localiteDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
 
                 try {
-                    val clientLocalite = ApiClient.apiService.getLocalites(
-                        CommonData(
-                            userid = agentID,
-                            table = "localites"
-                        )
-                    )
-                    val responseLocalites: Response<MutableList<LocaliteModel>> =
-                        clientLocalite.execute()
+                    val clientLocalite = ApiClient.apiService.getLocalites(CommonData(userid = agentID, table = "localites"))
+                    val responseLocalites: Response<MutableList<LocaliteModel>> = clientLocalite.execute()
                     val localitesList: MutableList<LocaliteModel>? = responseLocalites.body()
 
                     localitesList?.map {
@@ -164,8 +151,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             sectionId = it.sectionId,
                             uid = 0,
                             isSynced = true,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"
                         )
 
@@ -174,18 +160,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             localitesUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("localités")
                 getProducteurs()
@@ -197,15 +179,11 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getProducteurs() {
         withContext(IO) {
             val producteursUpdate = async {
-                producteurDao?.deleteAgentDatas(
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                )
+                producteurDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
 
                 try {
-                    val clientProducteurs =
-                        ApiClient.apiService.getProducteurs(agent = AgentModel(userId = agentModel?.id))
-                    val responseProducteurs: Response<MutableList<ProducteurModel>> =
-                        clientProducteurs.execute()
+                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = agentModel?.id))
+                    val responseProducteurs: Response<MutableList<ProducteurModel>> = clientProducteurs.execute()
                     val produteursList: MutableList<ProducteurModel>? = responseProducteurs.body()
 
                     produteursList?.map {
@@ -218,8 +196,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             codeProd = it.codeProd,
                             uid = 0,
                             isSynced = true,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"
                         )
 
@@ -228,21 +205,18 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             producteursUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("producteurs")
                 getParcelles()
+                //getStaffApplicateurs()
             }
         }
     }
@@ -251,22 +225,18 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getParcelles() {
         withContext(IO) {
             val parcellesUpdate = async {
-                parcelleDao?.deleteAgentDatas(
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                )
+                //parcelleDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
 
                 try {
                     val clientParcelles = ApiClient.apiService.getParcelles()
                     val responseParcelles: Response<MutableList<ParcelleModel>> = clientParcelles.execute()
                     val parcellesList: MutableList<ParcelleModel>? = responseParcelles.body()
 
-                    LogUtils.json(responseParcelles.body())
-
+                    //LogUtils.json(parcellesList)
                     parcellesList?.map {
                         val parcelle = ParcelleModel(
                             id = it.id,
                             culture = it.culture,
-                            uid = 0,
                             producteurId = it.producteurId,
                             anneeCreation = it.anneeCreation,
                             superficie = it.superficie,
@@ -280,7 +250,6 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    ex.printStackTrace()
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
@@ -288,11 +257,7 @@ class ConfigurationActivity : AppCompatActivity() {
             parcellesUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - parcelle, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - parcelle, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("parcelle")
                 //getCoursEaux()
@@ -578,12 +543,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 concernesDao?.deleteAll()
 
                 try {
-                    var clientData = ApiClient.apiService.getStaff(
-                        table = CommonData(
-                            cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID),
-                            role = "applicateur"
-                        )
-                    )
+                    var clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "applicateur"))
                     var responseData: Response<MutableList<ConcernesModel>> = clientData.execute()
                     val dataList: MutableList<ConcernesModel>? = responseData.body()
 
@@ -602,8 +562,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             adresse = it.adresse,
                             role = it.role,
                             cooperativesId = it.cooperativesId,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString()
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 
                         concernesDao?.insert(data)
@@ -612,18 +571,14 @@ class ConfigurationActivity : AppCompatActivity() {
                     oneIssue = true
                     LogUtils.e(ex.message)
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             dataUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Applicateurs, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Applicateurs, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Applicateurs")
                 getStaffDelegue()
@@ -638,12 +593,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 delegueDao?.deleteAll()
 
                 try {
-                    var clientData = ApiClient.apiService.getStaff(
-                        table = CommonData(
-                            cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID),
-                            role = "delegue"
-                        )
-                    )
+                    var clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "delegue"))
                     var responseData: Response<MutableList<ConcernesModel>> = clientData.execute()
                     val dataList: MutableList<ConcernesModel>? = responseData.body()
 
@@ -656,8 +606,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             id = it.id,
                             uid = 0,
                             nom = "${it.firstname} ${it.lastname}",
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString()
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 
                         delegueDao?.insert(data)
@@ -672,11 +621,7 @@ class ConfigurationActivity : AppCompatActivity() {
             dataUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Délégué")
                 //getTypeThemeFormations()
@@ -692,11 +637,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 sectionsDao?.deleteAll()
 
                 try {
-                    var clientData = ApiClient.apiService.getSections(
-                        CommonData(
-                            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                        )
-                    )
+                    var clientData = ApiClient.apiService.getSections(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID) ))
                     var responseData: Response<MutableList<SectionModel>> = clientData.execute()
                     val dataList: MutableList<SectionModel>? = responseData.body()
 
@@ -705,8 +646,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             id = it.id,
                             cooperativesId = it.cooperativesId,
                             libelle = it.libelle,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString()
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 
                         sectionsDao?.insert(data)
@@ -721,11 +661,7 @@ class ConfigurationActivity : AppCompatActivity() {
             dataUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Section, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Section, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Sections")
                 getProgrammes()
@@ -747,10 +683,8 @@ class ConfigurationActivity : AppCompatActivity() {
                     dataList?.map {
                         val data = ProgrammeModel(
                             id = it.id,
-                            uid = 0,
                             libelle = "${it.libelle}",
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString()
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 
                         programmesDao?.insert(data)
@@ -765,11 +699,7 @@ class ConfigurationActivity : AppCompatActivity() {
             dataUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Programme, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Programme, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Programmes")
                 getTypeThemeFormations()
@@ -1226,8 +1156,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     val clientData = ApiClient.apiService.getTypeThemesFormations()
-                    val responseData: Response<MutableList<TypeFormationModel>> =
-                        clientData.execute()
+                    val responseData: Response<MutableList<TypeFormationModel>> = clientData.execute()
 
                     val datasList: MutableList<TypeFormationModel>? = responseData.body()
 
@@ -1235,8 +1164,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         val dataTypeFormationModel = TypeFormationModel(
                             uid = 0,
                             id = typeFormation.id,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             nom = typeFormation.nom
                         )
 
@@ -1245,18 +1173,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             dataUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Type de formation")
                 //getTypeIntrans()
@@ -1266,40 +1190,40 @@ class ConfigurationActivity : AppCompatActivity() {
     }
 
 
-    /*suspend fun getThemesFormation() {
-         withContext(IO) {
-             val dataUpdate = async {
-                 themeFormationDao?.deleteAll()
+   /*suspend fun getThemesFormation() {
+        withContext(IO) {
+            val dataUpdate = async {
+                themeFormationDao?.deleteAll()
 
-                 val clientData = ApiClient.apiService.getDatasList(
-                     table = CommonData(
-                         userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID),
-                         table = "themes_formations"
-                     )
-                 )
-                 val responseData: Response<MutableList<CommonData>> = clientData.execute()
-                 val datasList: MutableList<CommonData>? = responseData.body()
+                val clientData = ApiClient.apiService.getDatasList(
+                    table = CommonData(
+                        userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID),
+                        table = "themes_formations"
+                    )
+                )
+                val responseData: Response<MutableList<CommonData>> = clientData.execute()
+                val datasList: MutableList<CommonData>? = responseData.body()
 
-                 datasList?.map {
-                     val data = FormationThemeModel(
-                         id = it.id,
-                         nom = it.nom,
-                         uid = 0,
-                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
-                         typeFormationId = it.typeFormationId.toString()
-                     )
+                datasList?.map {
+                    val data = FormationThemeModel(
+                        id = it.id,
+                        nom = it.nom,
+                        uid = 0,
+                        agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                        typeFormationId = it.typeFormationId.toString()
+                    )
 
-                     themeFormationDao?.insert(data)
-                 }
+                    themeFormationDao?.insert(data)
+                }
 
-             }
+            }
 
-             dataUpdate.join()
-             configCompletedOrError("Themes")
+            dataUpdate.join()
+            configCompletedOrError("Themes")
 
-             getTypeIntrans()
-         }
-     }*/
+            getTypeIntrans()
+        }
+    }*/
 
 
 /*    suspend fun getTypeIntrans() {
@@ -1353,8 +1277,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     val clientCampagneData = ApiClient.apiService.getCampagnes()
-                    val responseCampagneData: Response<MutableList<CampagneModel>> =
-                        clientCampagneData.execute()
+                    val responseCampagneData: Response<MutableList<CampagneModel>> = clientCampagneData.execute()
                     val datasCampagneList: MutableList<CampagneModel>? = responseCampagneData.body()
 
                     datasCampagneList?.map {
@@ -1369,18 +1292,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             campagneFetchDatas.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Campagnes")
                 getApplicateurs()
@@ -1395,15 +1314,9 @@ class ConfigurationActivity : AppCompatActivity() {
                 applicateurDao?.deleteAll()
 
                 try {
-                    val clientApplicateurData = ApiClient.apiService.getApplicateurs(
-                        CommonData(
-                            cooperativeIdex = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID)
-                        )
-                    )
-                    val responseApplicateurData: Response<MutableList<ApplicateurModel>> =
-                        clientApplicateurData.execute()
-                    val datasCampagneList: MutableList<ApplicateurModel>? =
-                        responseApplicateurData.body()
+                    val clientApplicateurData = ApiClient.apiService.getApplicateurs(CommonData(cooperativeIdex = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID)))
+                    val responseApplicateurData: Response<MutableList<ApplicateurModel>> = clientApplicateurData.execute()
+                    val datasCampagneList: MutableList<ApplicateurModel>? = responseApplicateurData.body()
 
                     datasCampagneList?.map {
                         val dataApplicateurModel = ApplicateurModel(
@@ -1418,18 +1331,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             applicateursFetchDatas.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Applicateurs, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Applicateurs, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Applicateurs")
                 getQuestionnaires()
@@ -1447,10 +1356,8 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     val clientQuestionnaireData = ApiClient.apiService.getQuestionnaires()
-                    val responseQuestionnaireData: Response<MutableList<InspectionQuestionnairesModel>> =
-                        clientQuestionnaireData.execute()
-                    val datasQuestionnaireList: MutableList<InspectionQuestionnairesModel>? =
-                        responseQuestionnaireData.body()
+                    val responseQuestionnaireData: Response<MutableList<InspectionQuestionnairesModel>> = clientQuestionnaireData.execute()
+                    val datasQuestionnaireList: MutableList<InspectionQuestionnairesModel>? = responseQuestionnaireData.body()
 
                     datasQuestionnaireList?.map {
                         val dataQuestionnaireModel = InspectionQuestionnairesModel(
@@ -1464,18 +1371,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             questionnairesFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Questionnaires, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Questionnaires, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Questionnaires")
                 getNotations()
@@ -1491,8 +1394,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     val clientNotationData = ApiClient.apiService.getNotations()
-                    val responseNotationData: Response<MutableList<NotationModel>> =
-                        clientNotationData.execute()
+                    val responseNotationData: Response<MutableList<NotationModel>> = clientNotationData.execute()
                     val datasNotationList: MutableList<NotationModel>? = responseNotationData.body()
 
                     datasNotationList?.map {
@@ -1508,18 +1410,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             notationsFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue - Notations, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue - Notations, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Notations")
                 getMagasinsSection()
@@ -1536,13 +1434,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 magasinDao?.deleteAll()
 
                 try {
-                    val clientMagasinData = ApiClient.apiService.getMagasins(
-                        commonData = CommonData(
-                            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
-                        )
-                    )
-                    val responseMagasinData: Response<MutableList<MagasinModel>> =
-                        clientMagasinData.execute()
+                    val clientMagasinData = ApiClient.apiService.getMagasins(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
+                    val responseMagasinData: Response<MutableList<MagasinModel>> = clientMagasinData.execute()
                     val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
 
                     datasMagasinList?.map {
@@ -1563,18 +1456,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             magasinsFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Magasins de section")
                 getThemesFormationSelection()
@@ -1591,10 +1480,8 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     val clieThemeFormationData = ApiClient.apiService.getThemes()
-                    val responseThemeFormationData: Response<MutableList<ThemeFormationModel>> =
-                        clieThemeFormationData.execute()
-                    val datasThemeFormationList: MutableList<ThemeFormationModel>? =
-                        responseThemeFormationData.body()
+                    val responseThemeFormationData: Response<MutableList<ThemeFormationModel>> = clieThemeFormationData.execute()
+                    val datasThemeFormationList: MutableList<ThemeFormationModel>? = responseThemeFormationData.body()
 
                     datasThemeFormationList?.map {
                         val dataThemeFormationModel = ThemeFormationModel(
@@ -1602,8 +1489,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             id = it.id,
                             nom = it.nom,
                             uid = 0,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             typeFormationsId = it.typeFormationsId
                         )
 
@@ -1612,18 +1498,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             themeFormationFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("themes")
                 getTypeFormationsSection()
@@ -1647,18 +1529,15 @@ class ConfigurationActivity : AppCompatActivity() {
                         )
                     )
 
-                    val responseTypeFormationData: Response<MutableList<CommonData>> =
-                        clientTypeFormationData.execute()
-                    val datasTypeFormationList: MutableList<CommonData>? =
-                        responseTypeFormationData.body()
+                    val responseTypeFormationData: Response<MutableList<CommonData>> = clientTypeFormationData.execute()
+                    val datasTypeFormationList: MutableList<CommonData>? = responseTypeFormationData.body()
 
                     datasTypeFormationList?.map {
                         val dataTypeFormationModel = TypeFormationModel(
                             uid = 0,
                             nom = it.nom,
                             id = it.id,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString()
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 
                         typeFormationDao?.insert(dataTypeFormationModel)
@@ -1666,18 +1545,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             magasinsFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Type de formations")
                 //configFlow()
@@ -1700,18 +1575,15 @@ class ConfigurationActivity : AppCompatActivity() {
                         )
                     )
 
-                    val responseLienParenteData: Response<MutableList<CommonData>> =
-                        clientLienParenteData.execute()
-                    val datasLienParenteList: MutableList<CommonData>? =
-                        responseLienParenteData.body()
+                    val responseLienParenteData: Response<MutableList<CommonData>> = clientLienParenteData.execute()
+                    val datasLienParenteList: MutableList<CommonData>? = responseLienParenteData.body()
 
                     datasLienParenteList?.map {
                         val dataLienParenteModel = LienParenteModel(
                             uid = 0,
                             nom = it.nom,
                             id = it.id,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             libelle = "",
                             typeFormationId = ""
                         )
@@ -1721,18 +1593,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             liensParenteFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Liens de parenté")
                 getMoyenTransportSection()
@@ -1754,18 +1622,15 @@ class ConfigurationActivity : AppCompatActivity() {
                         )
                     )
 
-                    val responseMoyenTransportData: Response<MutableList<CommonData>> =
-                        clientMoyenTransportData.execute()
-                    val datasMoyenTransportList: MutableList<CommonData>? =
-                        responseMoyenTransportData.body()
+                    val responseMoyenTransportData: Response<MutableList<CommonData>> = clientMoyenTransportData.execute()
+                    val datasMoyenTransportList: MutableList<CommonData>? = responseMoyenTransportData.body()
 
                     datasMoyenTransportList?.map {
                         val dataMoyenTransportModel = MoyenTransportModel(
                             uid = 0,
                             nom = it.nom,
                             id = it.id,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                         )
 
                         moyenTransportDao?.insert(dataMoyenTransportModel)
@@ -1773,18 +1638,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             moyenTransportFetch.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Moyens de transport")
                 //getTypeDocumentsSection()
@@ -2014,17 +1875,14 @@ class ConfigurationActivity : AppCompatActivity() {
             val parcelleInfosUncomplete = async {
 
                 try {
-                    val clientParcelleInfosUncompleteData =
-                        ApiClient.apiService.getParcelleInfosUncomplete(
-                            table = CommonData(
-                                userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                            )
+                    val clientParcelleInfosUncompleteData = ApiClient.apiService.getParcelleInfosUncomplete(
+                        table = CommonData(
+                            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
                         )
+                    )
 
-                    val responseParcelleInfosUncompleteData: Response<MutableList<ParcelleUpdateModel>> =
-                        clientParcelleInfosUncompleteData.execute()
-                    val datasParcelleInfosUncompleteList: MutableList<ParcelleUpdateModel>? =
-                        responseParcelleInfosUncompleteData.body()
+                    val responseParcelleInfosUncompleteData: Response<MutableList<ParcelleUpdateModel>> = clientParcelleInfosUncompleteData.execute()
+                    val datasParcelleInfosUncompleteList: MutableList<ParcelleUpdateModel>? = responseParcelleInfosUncompleteData.body()
 
                     datasParcelleInfosUncompleteList?.map { parcelleUpdate ->
                         val parcelleDraft = ParcelleModel(
@@ -2042,8 +1900,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             latitude = parcelleUpdate.latitude.toString(),
                             longitude = parcelleUpdate.longitude,
                             isSynced = false,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
-                                .toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
                             origin = "local"
                         )
 
@@ -2052,8 +1909,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             datas = ApiClient.gson.toJson(parcelleDraft),
                             ownerDraft = "${parcelleDraft.producteurNom}",
                             typeDraft = "content_parcelle",
-                            dateDraft = DateTime.now()
-                                .toString(DateTimeFormat.forPattern("EEEE, 'le' dd MMMM 'à' HH:mm:ss")),
+                            dateDraft = DateTime.now().toString(DateTimeFormat.forPattern("EEEE, 'le' dd MMMM 'à' HH:mm:ss")),
                             agentId = parcelleDraft.agentId,
                             draftCompleted = false
                         )
@@ -2063,18 +1919,14 @@ class ConfigurationActivity : AppCompatActivity() {
                 } catch (ex: Exception) {
                     oneIssue = false
                     LogUtils.e(ex.message)
-                    FirebaseCrashlytics.getInstance().recordException(ex)
+                FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
             parcelleInfosUncomplete.join()
 
             if (oneIssue) {
-                configCompletedOrError(
-                    "Une erreur est survenue, veuillez recommencer la mise à jour svp.",
-                    hasError = true,
-                    hisSynchro = true
-                )
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Fiche incomplete (parcelles)", hasOtherDatas = false)
             }
@@ -2095,18 +1947,15 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 dataUnSynchronized?.map { data ->
                     try {
-                        val clientDatas: Call<LocaliteModel> =
-                            ApiClient.apiService.synchronisationLocalite(localiteModel = data)
+                        val clientDatas: Call<LocaliteModel> = ApiClient.apiService.synchronisationLocalite(localiteModel = data)
 
                         val responseData: Response<LocaliteModel> = clientDatas.execute()
                         val dataSync: LocaliteModel = responseData.body()!!
 
-                        val producteurLocalitesList =
-                            producteurDao?.getProducteursUnSynchronizedLocal(
-                                dataSync.uid.toString(),
-                                SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                    .toString(),
-                            )!!
+                        val producteurLocalitesList = producteurDao?.getProducteursUnSynchronizedLocal(
+                            dataSync.uid.toString(),
+                            SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                        )!!
 
                         for (producteur in producteurLocalitesList) {
                             producteur.localitesId = dataSync.id.toString()
@@ -2131,10 +1980,7 @@ class ConfigurationActivity : AppCompatActivity() {
             dataSynchronisation.join()
 
             if (flagLocaliteSynchroErreur) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "impossible de synchroniser les localités"
-                )
+                configCompletedOrError(hasError = true, info = "impossible de synchroniser les localités")
             } else {
                 localiteDao?.deleteAgentDatas(agentID = agentID.toString())
                 synchronizeProducteurs()
@@ -2153,13 +1999,8 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 dataSynchronized?.map { producteur ->
                     // deserialize datas producteurs
-                    val culturesType =
-                        object : TypeToken<MutableList<CultureProducteurModel>>() {}.type
-                    producteur.producteursCultures =
-                        GsonUtils.fromJson<MutableList<CultureProducteurModel>>(
-                            producteur.cultures,
-                            culturesType
-                        )
+                    val culturesType = object : TypeToken<MutableList<CultureProducteurModel>>() {}.type
+                    producteur.producteursCultures = GsonUtils.fromJson<MutableList<CultureProducteurModel>>(producteur.cultures, culturesType)
                     producteur.typeculture = mutableListOf()
                     producteur.superficieculture = mutableListOf()
 
@@ -2170,8 +2011,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         producteur.superficieculture?.add(culture.superficie.toString())
                     }
 
-                    val clientProducteur: Call<ProducteurModel> =
-                        ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
+                    val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
 
                     val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
                     val producteurSynced: ProducteurModel? = responseProducteur.body()
@@ -2203,8 +2043,7 @@ class ConfigurationActivity : AppCompatActivity() {
                     }
 
                     val livraisonsList = livraisonDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                            .toString()
+                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                     )!!
 
                     livraisonsList.map { livraisonModel ->
@@ -2213,18 +2052,14 @@ class ConfigurationActivity : AppCompatActivity() {
                     }
 
                     val formationsList = formationDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                            .toString()
+                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                     )!!
 
                     for (formation in formationsList) {
                         try {
                             // deserialize datas producteurs
                             val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                            formation.producteursId = GsonUtils.fromJson<MutableList<String>>(
-                                formation.producteursIdStringify,
-                                producteursType
-                            )
+                            formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
                             val cleanList = formation.producteursId?.toMutableList()
 
                             var positionLoop = 0
@@ -2270,10 +2105,7 @@ class ConfigurationActivity : AppCompatActivity() {
             dataSynchronisation.join()
 
             if (flagProducteurSynchroErreur) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "Impossible de synchroniser les producteurs"
-                )
+                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les producteurs")
             } else {
                 producteurDao?.deleteAgentDatas(agentID = agentID.toString())
                 sychronisationParcelles()
@@ -2294,8 +2126,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 parcelleDatas?.map { parcelle ->
                     try {
                         //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
-                        val clientParcelle: Call<ParcelleModel> =
-                            ApiClient.apiService.synchronisationParcelle(parcelle)
+                        val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)
 
                         val responseParcelle: Response<ParcelleModel> = clientParcelle.execute()
                         val parcelleSync: ParcelleModel = responseParcelle.body()!!
@@ -2306,12 +2137,10 @@ class ConfigurationActivity : AppCompatActivity() {
                             localID = parcelle.uid.toInt()
                         )
 
-                        val suiviParcellesList =
-                            suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
-                                parcelleUid = parcelle.uid.toString(),
-                                SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
-                                    .toString(),
-                            )!!
+                        val suiviParcellesList = suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
+                            parcelleUid = parcelle.uid.toString(),
+                            SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                        )!!
 
                         for (suivi in suiviParcellesList) {
                             suivi.parcellesId = parcelleSync.id.toString()
@@ -2338,10 +2167,7 @@ class ConfigurationActivity : AppCompatActivity() {
             parcelleSynchronized.join()
 
             if (flagParcelleSynchroErreur) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "Impossible de synchroniser les parcelles des producteurs"
-                )
+                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les parcelles des producteurs")
             } else {
                 parcelleDao?.deleteAgentDatas(agentID = agentID.toString())
                 synchronisationSuiviParcelles()
@@ -2362,12 +2188,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 suiviDatas?.map { suivi ->
                     try {
                         // deserialize datas producteurs
-                        val ombragesType =
-                            object : TypeToken<MutableList<OmbrageVarieteModel>>() {}.type
-                        suivi.ombrages = GsonUtils.fromJson<MutableList<OmbrageVarieteModel>>(
-                            suivi.varieteOmbragesTemp,
-                            ombragesType
-                        )
+                        val ombragesType = object : TypeToken<MutableList<OmbrageVarieteModel>>() {}.type
+                        suivi.ombrages = GsonUtils.fromJson<MutableList<OmbrageVarieteModel>>(suivi.varieteOmbragesTemp, ombragesType)
 
                         //LogUtils.e(TAG, suivi.ombrages?.size)
 
@@ -2382,8 +2204,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         suivi.dateVisite = Commons.convertDate(suivi.dateVisite, true)
 
                         //LogUtils.e(TAG, "suiviDatas ID before -> ${suivi.id}")
-                        val clientSuivi: Call<SuiviParcelleModel> =
-                            ApiClient.apiService.synchronisationSuivi(suivi)
+                        val clientSuivi: Call<SuiviParcelleModel> = ApiClient.apiService.synchronisationSuivi(suivi)
 
                         val responseSuivi: Response<SuiviParcelleModel> = clientSuivi.execute()
                         val suiviSynced: SuiviParcelleModel? = responseSuivi.body()
@@ -2414,10 +2235,7 @@ class ConfigurationActivity : AppCompatActivity() {
             suiviSynchronisation.join()
 
             if (flagSuiviParcelleSynchroError) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "Impossible de synchroniser les suivis des parcelles"
-                )
+                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les suivis des parcelles")
             } else {
                 suiviParcelleDao?.deleteAgentDatas(agentID = agentID.toString())
                 synchronisationMenages()
@@ -2471,10 +2289,7 @@ class ConfigurationActivity : AppCompatActivity() {
             menageSynchronized.join()
 
             if (flagMenageSynchroError) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "Impossible de synchroniser les menages des producteurs"
-                )
+                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les menages des producteurs")
             } else {
                 menageDao?.deleteAgentDatas(agentID = agentID.toString())
                 //synchronisationMenages()
@@ -2498,10 +2313,7 @@ class ConfigurationActivity : AppCompatActivity() {
                     try {
                         // deserialize datas producteurs
                         val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                        formation.producteursId = GsonUtils.fromJson<MutableList<String>>(
-                            formation.producteursIdStringify,
-                            producteursType
-                        )
+                        formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
                         val cleanList = formation.producteursId?.toMutableList()
 
                         formation.dateFormation = Commons.convertDate(formation.dateFormation, true)
@@ -2514,8 +2326,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             val typeId = it.split("-")[1]
 
                             if (typeId == "uid") {
-                                val producteurCheck =
-                                    producteurDao?.getProducteurByUID(producteurUID = producteurId.toInt())
+                                val producteurCheck = producteurDao?.getProducteurByUID(producteurUID = producteurId.toInt())
 
                                 if (producteurCheck?.isSynced!!) {
                                     positionFound = positionLoop
@@ -2541,10 +2352,7 @@ class ConfigurationActivity : AppCompatActivity() {
                     formationDatas?.map { formationModel ->
                         // deserialize datas producteurs
                         val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                        formationModel.producteursId = GsonUtils.fromJson<MutableList<String>>(
-                            formationModel.producteursIdStringify,
-                            producteursType
-                        )
+                        formationModel.producteursId = GsonUtils.fromJson<MutableList<String>>(formationModel.producteursIdStringify, producteursType)
 
                         val listM = formationModel.producteursId?.map {
                             it.replace("-id", "")
@@ -2552,8 +2360,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
                         formationModel.producteursId = listM?.toMutableList()
 
-                        val clientFormation: Call<FormationModel> =
-                            ApiClient.apiService.synchronisationFormation(formationModel = formationModel)
+                        val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formationModel)
 
                         val responseFormation: Response<FormationModel> = clientFormation.execute()
                         val formationSynced: FormationModel? = responseFormation.body()
@@ -2581,10 +2388,7 @@ class ConfigurationActivity : AppCompatActivity() {
             formationSynchronisation.join()
 
             if (flagFormationSynchroError) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "Impossible de synchroniser les formations"
-                )
+                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les formations")
             } else {
                 formationDao?.deleteAgentDatas(agentID = agentID.toString())
                 synchronisationLivraisons()
@@ -2605,8 +2409,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 livraisonDatas?.map { livraisonPojo ->
                     livraisonPojo.dateLivre = Commons.convertDate(livraisonPojo.dateLivre, true)
 
-                    val clientLivraison: Call<LivraisonModel> =
-                        ApiClient.apiService.synchronisationLivraison(livraisonModel = livraisonPojo)
+                    val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraison(livraisonModel = livraisonPojo)
 
                     val responseLivraison: Response<LivraisonModel> = clientLivraison.execute()
                     val livraisonSynced: LivraisonModel? = responseLivraison.body()
@@ -2639,10 +2442,7 @@ class ConfigurationActivity : AppCompatActivity() {
             livraisonSynchronized.join()
 
             if (flagLivraisonSynchroError) {
-                configCompletedOrError(
-                    hasError = true,
-                    info = "Impossible de synchroniser les livraisons"
-                )
+                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les livraisons")
             } else {
                 livraisonDao?.deleteAgentDatas(agentID = agentID.toString())
                 getLocalites()

@@ -869,9 +869,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 section = sectionCommon.id.toString()
                 localiteId = localiteCommon.id.toString()
                 producteursId = producteurCommon.id.toString()
-                parcelleId = parcelleCommon.id.toString()
+                parcelle_id = parcelleCommon.id.toString()
 
-                itemsStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(0, it.variete, it.nombre) })
+                itemsStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
 
                 insectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
                 nombreInsectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
@@ -901,7 +901,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSuiviParcelleObjet(): Pair<SuiviParcelleModel, MutableList<Pair<String, String>>>? {
+    private fun getSuiviParcelleObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<SuiviParcelleModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
 //        val item = SuiviParcelleModel(
 //            activiteDesherbageManuel = activiteDesherbage,
 //            parcelleNom = parcelleNom,
@@ -976,7 +977,16 @@ class SuiviParcelleActivity : AppCompatActivity() {
             }
         }
 
-        if(isMissing){
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial2 || isMissingDial2) ){
             Commons.showMessage(
                 message,
                 this,
@@ -1104,7 +1114,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         //nombreSauvageons = editNbreSauvageonsSuivi.text?.trim().toString()
 
-        val itemModelOb = getSuiviParcelleObjet()
+        val itemModelOb = getSuiviParcelleObjet(false)
 
         if(itemModelOb == null) return
 
@@ -1113,7 +1123,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 section = sectionCommon.id.toString()
                 localiteId = localiteCommon.id.toString()
                 producteursId = producteurCommon.id.toString()
-                parcelleId = parcelleCommon.id.toString()
+                parcelle_id = parcelleCommon.id.toString()
 
                 itemsStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(0, it.variete, it.nombre) })
 
@@ -2240,7 +2250,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurSParcelle,
-            listIem = producteursList?.map { it.nom }
+            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -2264,6 +2274,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
             ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
+        LogUtils.json(parcellesList)
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {
@@ -2277,7 +2288,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectParcelleSParcelle,
-            listIem = parcellesList?.map { it.nom }
+            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
                 ?.toList() ?: listOf(),
             onChanged = {
 

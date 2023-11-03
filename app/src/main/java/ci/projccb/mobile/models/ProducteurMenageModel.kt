@@ -48,6 +48,7 @@ data class ProducteurMenageModel(
     @Expose var ageEnfant6A17: String? = "",
     @Expose var enfantscolarises: String? = "",
     @Expose var enfantsPasExtrait: String? = "",
+    @Expose var enfantsPasExtrait6A17: String? = "",
     @Expose var etatatomiseur: String? = "",
     @Expose var nomApplicateur: String? = "",
     @Expose var numeroApplicateur: String? = "",

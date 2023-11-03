@@ -10,17 +10,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.infospresenters.ProducteurPreviewActivity
 import ci.projccb.mobile.adapters.CultureProducteurAdapter
 import ci.projccb.mobile.interfaces.RecyclerItemListener
@@ -31,26 +33,25 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
-import ci.projccb.mobile.tools.Commons.Companion.applyFilters
 import ci.projccb.mobile.tools.Commons.Companion.encodeFileToBase64Binary
 import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews
+import ci.projccb.mobile.tools.Commons.Companion.limitEDTMaxLength
 import ci.projccb.mobile.tools.Commons.Companion.loadShakeAnimation
-import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
-import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.setAllValueOfTextViews
 import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.github.gcacace.signaturepad.views.SignaturePad.OnSignedListener
+import com.google.gson.reflect.TypeToken
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import kotlinx.android.synthetic.main.activity_producteur.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -188,8 +189,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         setListenerForSpinner(this, "Choix du programme !", "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(programmeListi?.size!! > 0) false else true,
-            currentVal = currVal2,
-            spinner = selectProgramProducteur, listIem = programmeListi?.map { it.libelle }
+            currentVal = libItem,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            spinner = selectProgramProducteur,
+            listIem = programmeListi?.map { it.libelle }
             ?.toList() ?: listOf(), onChanged = {
 
             val programme = programmeListi!![it]
@@ -197,7 +200,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             programmeCommon.id = programme.id!!
 
         }, onSelected = { itemId, visibility ->
-
+                //if(itemId == 1) containerAutreProgramProducteur.visibility = visibility
         })
 
     }
@@ -216,7 +219,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         setListenerForSpinner(this, "Choix de la localité !", "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if(localitesListi?.size!! > 0) false else true,
-            currentVal = currVal1,
+            currentVal = libItem,
             spinner = selectLocaliteProducteur, listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
@@ -484,8 +487,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
-                isSynced = false
-                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+
+                certificatsStr = GsonUtils.toJson(selectCertifProducteur.selectedStrings)
             }
         }
 
@@ -497,9 +500,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         startActivity(intentProducteurPreview)
     }
 
-    private fun getProducteurObjet(): Pair<ProducteurModel, MutableList<Pair<String, String>>>? {
+    private fun getProducteurObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<ProducteurModel, MutableList<Pair<String, String>>>? {
 
-        var itemList = getSetupProducteurModel(ProducteurModel(uid = 0, id = 0,), mutableListOf<Pair<String,String>>())
+        var isMissingDial2 = false
+
+        var itemList = getSetupProducteurModel(ProducteurModel(uid = 0, id = 0, isSynced = false,
+                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()), mutableListOf<Pair<String,String>>())
         //LogUtils.d(.toString())
         var allField = itemList.second
         var isMissing = false
@@ -517,7 +523,16 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }
         }
 
-        if(isMissing){
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial2 || isMissingDial2) ){
             showMessage(
                 message,
                 this,
@@ -794,17 +809,18 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 }
             })
 
-        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectCertifProducteur,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
-                ?.toList() ?: listOf(), onChanged = {
-
-            }, onSelected = { itemId, visibility ->
-                if(itemId==1){
-                    containerAutreCertifProducteur.visibility = visibility
-                }
-            })
+        setupCertificatMultiSelection()
+//        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectCertifProducteur,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
+//                ?.toList() ?: listOf(), onChanged = {
+//
+//            }, onSelected = { itemId, visibility ->
+//                if(itemId==1){
+//                    containerAutreCertifProducteur.visibility = visibility
+//                }
+//            })
 
         setupSectionSelection()
         setProgrammeSpinner()
@@ -879,9 +895,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, "Quel type de pièce ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectPieceProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
+            itemChanged = listOf(Pair(1, "Non disponible")),
             onChanged = {
 
             }, onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerPieceProducteur.visibility = visibility
+                }
             })
 
         setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
@@ -1093,18 +1113,21 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 }
             })
 
-        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectCertifProducteur,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            currentVal = producteurDrafted.certificats,
-            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
-                ?.toList() ?: listOf(), onChanged = {
-
-            }, onSelected = { itemId, visibility ->
-                if(itemId==1){
-                    containerAutreCertifProducteur.visibility = visibility
-                }
-            })
+        setupCertificatMultiSelection(
+            GsonUtils.fromJson(producteurDrafted.certificatsStr, object: TypeToken<MutableList<String>>(){}.type )
+        )
+//        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectCertifProducteur,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            currentVal = producteurDrafted.certificats,
+//            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
+//                ?.toList() ?: listOf(), onChanged = {
+//
+//            }, onSelected = { itemId, visibility ->
+//                if(itemId==1){
+//                    containerAutreCertifProducteur.visibility = visibility
+//                }
+//            })
 
 //        setListenerForSpinner(this, "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
 //            spinner = spinnerVarieteProducteur,
@@ -1168,6 +1191,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectNationaliteProducteur,
+            currentVal = producteurDrafted.nationalite,
             listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
@@ -1197,13 +1221,17 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Quelle est votre pièce", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectPieceProducteur,
             currentVal = producteurDrafted.piece,
             listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
+            itemChanged = listOf(Pair(1, "Non disponible")),
             onChanged = {
 
             }, onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerPieceProducteur.visibility = visibility
+                }
             })
 
         setListenerForSpinner(this, "Votre choix", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
@@ -1236,7 +1264,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     fun draftProducteur(draftModel: DataDraftedModel?) {
 
-        val producteurModelItem = getProducteurObjet()
+        val producteurModelItem = getProducteurObjet(false, necessaryItem = mutableListOf<String>(
+            "Nom du producteur",
+            "Prénom(s) du producteur"
+        ))
 
         if(producteurModelItem == null) return
 
@@ -1246,6 +1277,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
+
+                certificatsStr = GsonUtils.toJson(selectCertifProducteur.selectedStrings)
             }
         }
 
@@ -1284,6 +1317,35 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         )
     }
 
+    fun setupCertificatMultiSelection(currentList : MutableList<String> = mutableListOf()) {
+        val certificatList = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }?.toList() ?: listOf()
+        var listSelectCertificatPosList = mutableListOf<Int>()
+        var listSelectCertificatList = mutableListOf<String>()
+
+        var indItem = 0
+        (certificatList)?.forEach {
+            if(currentList.size > 0){ if(currentList.contains(it)) listSelectCertificatPosList.add(indItem) }
+            indItem++
+        }
+
+        selectCertifProducteur.setTitle("Choix de la variété")
+        selectCertifProducteur.setItems(certificatList)
+        //multiSelectSpinner.hasNoneOption(true)
+        selectCertifProducteur.setSelection(listSelectCertificatPosList.toIntArray())
+        selectCertifProducteur.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+            override fun selectedIndices(indices: MutableList<Int>?) {
+                listSelectCertificatPosList.clear()
+                listSelectCertificatPosList.addAll(indices?.toMutableList() ?: mutableListOf())
+            }
+
+            override fun selectedStrings(strings: MutableList<String>?) {
+                listSelectCertificatList.clear()
+                listSelectCertificatList.addAll(strings?.toMutableList() ?: arrayListOf())
+                if(listSelectCertificatList.contains("Autre")) containerAutreCertifProducteur.visibility = View.VISIBLE else containerAutreCertifProducteur.visibility = View.GONE
+            }
+
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1310,7 +1372,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         setImageObject()
 
-        addFilterToItem()
+        //addFilterToItem()
 
         if (intent.getStringExtra("from") != null) {
             fromAction = intent.getStringExtra("from") ?: ""
@@ -1322,24 +1384,16 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     }
 
     private fun setOtherListener() {
-//        editAnneeCertificationProducteur.doAfterTextChanged {
-//            val textFiedl = it?.toString()
-//
-//            if (textFiedl.toString().length == 4) {
-//                if (textFiedl.toString().trim().toInt() < 1960) {
-//                    showMessage(
-//                        "La date ne doit pas etre inferieur à 1960",
-//                        this,
-//                        finished = false,
-//                        {},
-//                        "OK",
-//                        deconnec = false,
-//                        showNo = false
-//                    )
-//                    return@doAfterTextChanged
-//                }
-//            }
-//        }
+
+        limitEDTMaxLength(editTelOneProducteur, 10, 10)
+        limitEDTMaxLength(editMembreNumProducteur, 10, 10)
+
+        //limitEDTMaxLength(editPieceProducteur, 10)
+        limitEDTMaxLength(editCarteCCCProducteur, 10)
+        limitEDTMaxLength(editNumCarteCSSProducteur, 12)
+        limitEDTMaxLength(editNumPieceCMUProducteur, 12)
+
+
 
         //signatureProducteur.setOnSignedListener(this)
 
@@ -1359,7 +1413,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     }
 
     private fun addFilterToItem() {
-        applyFilters(editTelOneProducteur)
+        //applyFilters(editTelOneProducteur)
         //applyFilters(editTelTwoProducteur)
     }
 
@@ -1418,22 +1472,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         editAnneeCertificationProducteur.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-
-
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-
-                editAnneeCertificationProducteur.setText("$year")
-                anneeCertification = editAnneeCertificationProducteur.text?.toString()!!
-            }, year, month, dayOfMonth)
-
-            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
-            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
-            datePickerDialog?.show()
+            showYearPickerDialog( it as EditText )
         }
 
     }

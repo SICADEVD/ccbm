@@ -270,12 +270,29 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:tag="quartier"-->
+<!--                                android:id="@+id/select"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:spinnerMode="dialog" />-->
+
+                            <androidx.appcompat.widget.AppCompatEditText
                                 android:tag="quartier"
-                                android:id="@+id/selectQuartierMenage"
+                                android:id="@+id/editQuartierMenage"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
+                                android:background="@drawable/rounded_background"
+                                android:hint="DJAKOBO"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
 
                         </LinearLayout>
 
@@ -374,6 +391,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="3.75"
                                 android:background="@drawable/rounded_background"
+                                android:hint="25"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
@@ -416,6 +434,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="3.75"
                                 android:background="@drawable/rounded_background"
+                                android:hint="25"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
@@ -458,6 +477,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="3.75"
                                 android:background="@drawable/rounded_background"
+                                android:hint="25"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
@@ -500,6 +520,50 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="3.75"
                                 android:background="@drawable/rounded_background"
+                                android:hint="25"
+                                android:ellipsize="end"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="10" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6"
+                                android:text="Combien n’ont pas d’extrait de naissance (6 à 17 ans) ?"
+                                android:textStyle="bold" />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="enfantsPasExtrait6A17"
+                                android:id="@+id/editNbre6A17EnfantSansExtrMenage"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_37sdp"
+                                android:layout_weight="3.75"
+                                android:background="@drawable/rounded_background"
+                                android:hint="25"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
@@ -637,6 +701,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:layout_weight="3.75"
                             android:background="@drawable/rounded_background"
+                            android:hint="10"
                             android:ellipsize="end"
                             android:imeOptions="actionDone"
                             android:inputType="number"
@@ -1309,7 +1374,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
-                                android:text="Avez-vous des équipements de protection individuel ?"
+                                android:text="Avez-vous des équipements de protection individuel (EPI) ?"
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:textStyle="bold" />
 
@@ -1474,6 +1539,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="6.5"
                                 android:background="@drawable/rounded_background"
+                                android:hint="CHAMP DE CAFE"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="textCapCharacters|textNoSuggestions"
@@ -1520,6 +1586,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="4"
                                 android:background="@drawable/rounded_background"
+                                android:hint="0.0"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="numberDecimal"
@@ -1619,6 +1686,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:layout_weight="4"
                                 android:background="@drawable/rounded_background"
+                                android:hint="0.0"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="numberDecimal"

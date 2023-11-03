@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
@@ -12,6 +13,8 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import ci.projccb.mobile.R;
 
 public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterface.OnMultiChoiceClickListener {
     public interface OnMultipleItemsSelectedListener{
@@ -33,15 +36,15 @@ public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterf
         super(context);
         c = context;
         simple_adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item);
+                R.layout.simple_spin_multi);
         super.setAdapter(simple_adapter);
     }
 
     public MultiSelectSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        simple_adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item);
+        //View view = android.R.layout.simple_spinner_item;
+        simple_adapter = new ArrayAdapter<>(context, R.layout.simple_spin_multi);
         super.setAdapter(simple_adapter);
     }
 

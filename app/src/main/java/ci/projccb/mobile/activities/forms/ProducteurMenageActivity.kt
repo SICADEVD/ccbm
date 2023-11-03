@@ -649,7 +649,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
     }
 
-    private fun getProducteurMenageObjet(): Pair<ProducteurMenageModel, MutableList<Pair<String, String>>>? {
+    private fun getProducteurMenageObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()):  Pair<ProducteurMenageModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
+
 //        return  ProducteurMenageModel(
 //            uid = 0,
 //            activiteFemme = femmeActivite,
@@ -682,7 +684,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            codeProducteur = producteurCode,
 //            localiteNom = localiteNom
 //        )
-        var itemList = getSetupProducteurMenageModel(ProducteurMenageModel(uid = 0,), mutableListOf<Pair<String,String>>())
+        var itemList = getSetupProducteurMenageModel(ProducteurMenageModel(uid = 0, agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),  origin = "local",), mutableListOf<Pair<String,String>>())
         //LogUtils.d(.toString())
         var allField = itemList.second
         var isMissing = false
@@ -702,7 +704,16 @@ class ProducteurMenageActivity : AppCompatActivity() {
             }
         }
 
-        if(isMissing){
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial2 || isMissingDial2) ){
             showMessage(
                 message,
                 this,
@@ -795,7 +806,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         //LogUtils.d("VAR MENAGE ACT 2 : "+producteurMenageModelDraft.equipements)
 
-        val itemModel = getProducteurMenageObjet()
+        val itemModel = getProducteurMenageObjet(false)
 
         if(itemModel == null) return
 
@@ -849,18 +860,18 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         setupSectionSelection(menageUndrafted.section, menageUndrafted.localite, menageUndrafted.producteurs_id)
 
-        Commons.setListenerForSpinner(this,
-            "Choix le quartier",
-            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectQuartierMenage,
-            currentVal = menageUndrafted.quartier,
-            listIem = listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Choix le quartier",
+//            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectQuartierMenage,
+//            currentVal = menageUndrafted.quartier,
+//            listIem = listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
 
         Commons.setListenerForSpinner(this,
             "Choix de l'énergie",
@@ -890,7 +901,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             listIem = (AssetFileHelper.getListDataFromAsset(
                 7,
                 this
-            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
+            ) as MutableList<OrdureMenagereModel>)?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -1320,17 +1331,17 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         setupSectionSelection()
 
-        Commons.setListenerForSpinner(this,
-            "Choix le quartier",
-            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectQuartierMenage,
-            listIem = listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Choix le quartier",
+//            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectQuartierMenage,
+//            listIem = listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
 
         Commons.setListenerForSpinner(this,
             "Choix de l'énergie",
@@ -1358,7 +1369,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             listIem = (AssetFileHelper.getListDataFromAsset(
                 7,
                 this
-            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
+            ) as MutableList<OrdureMenagereModel>)?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -1550,7 +1561,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteProducteur,
+            spinner = selectLocaliteProduMenage,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {

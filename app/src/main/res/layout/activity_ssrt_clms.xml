@@ -995,7 +995,6 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectNoSchoolRaisonSsrt"
-                                android:entries="@array/noSchoolRaison"
                                 />
 
                         </LinearLayout>

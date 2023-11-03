@@ -130,6 +130,11 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_60sdp" />
+
+
                 <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
                     android:layout_below="@+id/linear_toolbar_dashboard"
                     android:layout_above="@+id/imgProfileDashboard"
@@ -1356,7 +1361,7 @@ android:textColor="@color/text_color_white"-->
                         android:paddingTop="@dimen/_2sdp"
                         android:paddingLeft="@dimen/_8sdp"
                         android:text="Connectée …"
-                        android:textColor="@color/green_3"
+                        android:textColor="@color/ccb_green"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
                     <Space

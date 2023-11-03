@@ -30,6 +30,7 @@ import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
 import ci.projccb.mobile.tools.MapEntry
@@ -279,16 +280,16 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         var libItem: String? = null
         currVal2?.let { idc ->
             producteursList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                if ("${it.nom} ${it.prenoms}".equals(idc, ignoreCase = true)) libItem = "${it.nom} ${it.prenoms}"
             }
         }
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Choix du producteur !",
             "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurSParcelle,
+            spinner = selectProducteurInfosProducteur,
             listIem = producteursList?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -438,28 +439,28 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
     }
 
 
-    fun setupBuyMethpdYesNoSelection() {
-        try {
-            selectBuyInfosProducteur.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        buyMethodYesNo = resources.getStringArray(R.array.bank_paiement)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-
-                    }
-                }
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
-    }
+//    fun setupBuyMethpdYesNoSelection() {
+//        try {
+//            selectBuyInfosProducteur.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        buyMethodYesNo = resources.getStringArray(R.array.bank_paiement)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//                    }
+//                }
+//        } catch (ex: Exception) {
+//            LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//        }
+//    }
 
 
     fun setupBankAccountYesNoSelection() {
@@ -687,7 +688,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 this?.apply {
                     section = sectionCommon.id.toString()
                     localite = localiteCommon.id.toString()
-                    producteurId = producteurCommon.id.toString()
+                    producteursId = producteurCommon.id.toString()
 
                     typecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
                     superficiecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
@@ -700,10 +701,10 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }
 
             val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-                this.add(Pair("Les types de culture", (recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
-                this.add(Pair("Les opérateurs mobile", (recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
-                this.add(Pair("Les types d'activités", (recyclerInsecteAmisSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toString() ))
-            }.map { MapEntry(it.first, it.second) }
+                this.add(Pair("Les types de culture", (recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+                this.add(Pair("Les opérateurs mobile", (recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+                this.add(Pair("Les types d'activités", (recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
+            }?.map { MapEntry(it.first, it.second) }
 
             val intentInfosProducteurPreview = Intent(this, InfosProducteurPreviewActivity::class.java)
             intentInfosProducteurPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
@@ -716,8 +717,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         }
     }
 
-    private fun getUniteAgricoleProducteurObject(): Pair<InfosProducteurDTO, MutableList<Pair<String, String>>>? {
-
+    private fun getUniteAgricoleProducteurObject(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<InfosProducteurDTO, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
 //        val maladiesEnfant = mutableListOf<String>()
 //        maladiesEnfant.add(enfantMaladieOne)
 //        maladiesEnfant.add(enfantMaladieTwo)
@@ -756,8 +757,24 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 //
 //        return item
 
+        if( ((editNbrTravPermanInfosProducteur.text.toString().toInt()?:0) + (editNbrTravNotPermanInfosProducteur.text.toString().toInt()?:0) ) < (editNbrTravRemunInfosProducteur.text.toString().toInt()?:0)){
+
+            Commons.showMessage(
+                "Vérifiez le nombre de travailleur permanent et non permanent !",
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+            return null
+
+        }
+
         var itemList = getSetupInfoProdModel(InfosProducteurDTO(
             uid = 0,
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
             userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
             id = 0,
             origin = "local"
@@ -775,7 +792,16 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }
         }
 
-        if(isMissing){
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial2 || isMissingDial2) ){
             Commons.showMessage(
                 message,
                 this,
@@ -820,7 +846,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 //
 //            LogUtils.json(infosProducteursDraft)
 
-            val itemModelOb = getUniteAgricoleProducteurObject()
+            val itemModelOb = getUniteAgricoleProducteurObject(false)
 
             if(itemModelOb == null) return
 
@@ -828,7 +854,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 this?.apply {
                     section = sectionCommon.id.toString()
                     localite = localiteCommon.id.toString()
-                    producteurId = producteurCommon.id.toString()
+                    producteursId = producteurCommon.id.toString()
 
                     typecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
                     superficiecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
@@ -1067,7 +1093,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 infosProducteurDrafted.localite,
                 infosProducteurDrafted.producteursId)
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
                 "Avez-vous des forêts ou jacheres ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectJachereInfosProducteur,
                 currentVal = infosProducteurDrafted.foretsjachere,
@@ -1083,7 +1109,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     }
                 })
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
                 "Y'a t'il d'autres cultures ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectCulturesInfosProducteur,
                 currentVal = infosProducteurDrafted.autresCultures,
@@ -1099,7 +1125,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     }
                 })
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
                 "Y'a t'il d'autres activité excepté le cacao ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectActiviteOrCacaoInfosProducteur,
                 currentVal = infosProducteurDrafted.autreActivite,
@@ -1115,7 +1141,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     }
                 })
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
                 "Y'a t'il des travailleurs dans la famille ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectTravaiFamilleInfosProducteur,
                 currentVal = infosProducteurDrafted.mainOeuvreFamilial,
@@ -1131,7 +1157,23 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     }
                 })
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
+                "Etes-vous membre d'une société de travail ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                spinner = selectTravaiSocietInfosProducteur,
+                currentVal = "",//infosProducteurDrafted.mainOeuvreFamilial,
+                itemChanged = arrayListOf(Pair(1, "Oui")),
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+
+                },
+                onSelected = { itemId, visibility ->
+                    if (itemId == 1) {
+                        containerNbrTravSocieteInfosProducteur.visibility = visibility
+                    }
+                })
+
+            setListenerForSpinner(this,
                 "As-tu un Compte Mobile Money ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectMoneyInfosProducteur,
                 currentVal = infosProducteurDrafted.mobileMoney,
@@ -1147,7 +1189,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     }
                 })
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
                 "As-tu un compte dans une banque ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectBanqueInfosProducteur,
                 currentVal = infosProducteurDrafted.compteBanque,
@@ -1163,12 +1205,12 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     }
                 })
 
-            Commons.setListenerForSpinner(this,
+            setListenerForSpinner(this,
                 "Sélectionner la banque :","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-                spinner = selectBuyInfosProducteur,
+                spinner = selectNomBanqueInfosProducteur,
                 currentVal = infosProducteurDrafted.nomBanque,
                 itemChanged = arrayListOf(Pair(1, "Autre")),
-                listIem = resources.getStringArray(R.array.YesOrNo)
+                listIem = resources.getStringArray(R.array.bank_list)
                     ?.toList() ?: listOf(),
                 onChanged = {
 
@@ -1194,7 +1236,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             autrCultListInfoProd.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
             countN++
         }
-        val autrCultInfoProdAdapter = OmbrageAdapter(autrCultListInfoProd, "culture", "superficie")
+        val autrCultInfoProdAdapter = OmbrageAdapter(autrCultListInfoProd, "Culture", "Superficie")
 
 
         try {
@@ -1255,9 +1297,9 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
 
         try {
-            recyclerCultureInfosProducteur.layoutManager =
+            recyclerNumMobileInfosProducteur.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerCultureInfosProducteur.adapter = operatInfoProdAdapter
+            recyclerNumMobileInfosProducteur.adapter = operatInfoProdAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
@@ -1309,7 +1351,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             countN++
         }
 
-        val typActivInfoProdAdapter = OnlyFieldAdapter(typActivListInfoProd)
+        val typActivInfoProdAdapter = OnlyFieldAdapter(typActivListInfoProd, "Libellé")
         try {
             recyclerActiviteOrCacaoInfosProducteur.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -1369,12 +1411,12 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }
         }
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Choix de la localité !",
             "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteSParcelle,
+            spinner = selectLocaliteUniteAgricole,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1430,12 +1472,12 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }
         }
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Choix de la section !",
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionSParcelle,
+            spinner = selectSectionInfProducteur,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1607,7 +1649,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
         setupSectionSelection()
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Avez-vous des forêts ou jacheres ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectJachereInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1622,7 +1664,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 }
             })
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Y'a t'il d'autres cultures ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectCulturesInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1637,7 +1679,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 }
             })
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Y'a t'il d'autres activité excepté le cacao ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectActiviteOrCacaoInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1652,7 +1694,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 }
             })
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Y'a t'il des travailleurs dans la famille ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectTravaiFamilleInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1667,7 +1709,22 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 }
             })
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
+            "Etes-vous membre d'une société de travail ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTravaiSocietInfosProducteur,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerNbrTravSocieteInfosProducteur.visibility = visibility
+                }
+            })
+
+        setListenerForSpinner(this,
             "As-tu un Compte Mobile Money ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectMoneyInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1682,7 +1739,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 }
             })
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "As-tu un compte dans une banque ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectBanqueInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1697,11 +1754,11 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 }
             })
 
-        Commons.setListenerForSpinner(this,
+        setListenerForSpinner(this,
             "Sélectionner la banque :","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectBuyInfosProducteur,
+            spinner = selectNomBanqueInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = resources.getStringArray(R.array.YesOrNo)
+            listIem = resources.getStringArray(R.array.bank_list)
                 ?.toList() ?: listOf(),
             onChanged = {
 

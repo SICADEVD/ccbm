@@ -17,6 +17,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.cartographies.FarmDelimiterActivity
+import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.infospresenters.ParcellePreviewActivity
 import ci.projccb.mobile.activities.infospresenters.ProducteurPreviewActivity
 import ci.projccb.mobile.adapters.CultureProducteurAdapter
@@ -27,6 +28,7 @@ import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.ParcelleDao
 import ci.projccb.mobile.repositories.databases.daos.ProducteurDao
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
@@ -43,9 +45,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_parcelle.*
+import kotlinx.android.synthetic.main.activity_producteur.containerAutreCertifProducteur
+import kotlinx.android.synthetic.main.activity_producteur.editAnneeCertificationProducteur
+import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerListInsectSuivParce
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerVarieteArbrListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectInsecteParOuRavSuivi
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.recyclerCultureInfosProducteur
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -137,7 +145,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteProducteur,
+            spinner = selectLocaliteParcelle,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -174,8 +182,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurMenage,
-            listIem = producteursList?.map { it.nom }
+            spinner = selectProducteurParcelle,
+            listIem = producteursList?.map { "${ it.nom } ${ it.prenoms }" }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -184,7 +192,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
                     producteurCommon.id = producteur.id!!
 
-                    //setupProducteurSelection(localiteCommon.id, currVal2)
+                    //setupPa
                 }
 
 
@@ -318,7 +326,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 origin = "local"
 
-                mappingPoints = wayPoints
+                //mappingPoints = wayPoints
+                protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
+                arbreStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
         }
@@ -332,7 +342,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         startActivity(intentParcellePreview)
     }
 
-    private fun getParcellObjet(): Pair<ParcelleModel, MutableList<Pair<String, String>>>? {
+    private fun getParcellObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()):  Pair<ParcelleModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
 //        return ParcelleModel(
 //            producteurId = producteurId,
 //            producteurNom = producteurNomPrenoms,
@@ -360,7 +371,16 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             }
         }
 
-        if(isMissing){
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial2 || isMissingDial2) ){
             showMessage(
                 message,
                 this,
@@ -464,7 +484,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
     fun draftParcelle(draftModel: DataDraftedModel?) {
-        val itemModelOb = getParcellObjet()
+        val itemModelOb = getParcellObjet(false)
 
         if(itemModelOb == null) return
 
@@ -477,7 +497,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 origin = "local"
 
-                mappingPoints = wayPoints
+                protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
+                arbreStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
         }
@@ -555,6 +576,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         setupSectionSelection(parcelleDrafted.section, parcelleDrafted.localite, parcelleDrafted.producteurId)
 
+        setupMoyProtectMultiSelection(GsonUtils.fromJson(parcelleDrafted.protectionStr, object : TypeToken<MutableList<String>>() {}.type))
+
         Commons.setListenerForSpinner(this,
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = spinnerVarieteParcelle,
@@ -607,6 +630,17 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //                if (itemId == 1) {
 //                    containerAutreVarieteProducteur.visibility = visibility
 //                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Définit le niveau de la pente","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectNiveauPente,
+            listIem = resources.getStringArray(R.array.niveau_pente)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
             })
 
         Commons.setListenerForSpinner(this,
@@ -708,6 +742,36 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
     }
 
+    fun setupMoyProtectMultiSelection(currentList : MutableList<String> = mutableListOf()) {
+        val protectList = resources.getStringArray(R.array.mesure_protection)
+        var listSelectProtectPosList = mutableListOf<Int>()
+        var listSelectProtectList = mutableListOf<String>()
+
+        var indItem = 0
+        (protectList)?.forEach {
+            if(currentList.size > 0){ if(currentList.contains(it)) listSelectProtectPosList.add(indItem) }
+            indItem++
+        }
+
+        selectProtectionParcelle.setTitle("Choix des moyens de protections")
+        selectProtectionParcelle.setItems(protectList)
+        //multiSelectSpinner.hasNoneOption(true)
+        selectProtectionParcelle.setSelection(listSelectProtectPosList.toIntArray())
+        selectProtectionParcelle.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+            override fun selectedIndices(indices: MutableList<Int>?) {
+                listSelectProtectPosList.clear()
+                listSelectProtectPosList.addAll(indices?.toMutableList() ?: mutableListOf())
+            }
+
+            override fun selectedStrings(strings: MutableList<String>?) {
+                listSelectProtectList.clear()
+                listSelectProtectList.addAll(strings?.toMutableList() ?: arrayListOf())
+                if(listSelectProtectList.contains("Autre")) containerAutreProtectParcelle.visibility = View.VISIBLE else containerAutreProtectParcelle.visibility = View.GONE
+            }
+
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -768,7 +832,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         setOtherListener()
-//        setupTyprDeclarationSelection()
+       // setupTyprDeclarationSelection()
 //        setupLocaliteSelection()
 
 //        editAnneParcelle.setOnClickListener {
@@ -801,7 +865,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     fun setOmbrageParcelleRV() {
         try {
             arbrOmbrListParcelle = mutableListOf<OmbrageVarieteModel>()
-            arbreOmbrParcelleAdapter = OmbrageAdapter(arbrOmbrListParcelle)
+            arbreOmbrParcelleAdapter = OmbrageAdapter(arbrOmbrListParcelle, "Arbre", "Nombre")
             recyclerArbrOmbrListParcel.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             recyclerArbrOmbrListParcel.adapter = arbreOmbrParcelleAdapter
@@ -825,6 +889,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     editQtArbrOmbrParcel.text.toString().trim()
                 )
                 addOmbrageVariete(ombrageVariete)
+
+                editQtArbrOmbrParcel.text?.clear()
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -861,11 +927,32 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         setupTyprDeclarationSelection()
 
         setOmbrageParcelleRV()
+
+        editAnneeCreationParcelle.setOnClickListener {
+            datePickerDialog = null
+            val calendar: Calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+
+
+            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+
+                editAnneeCreationParcelle.setText("$year")
+                //anneeCertification = editAnneeCreationParcelle.text?.toString()!!
+            }, year, month, dayOfMonth)
+
+            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
+            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
+            datePickerDialog?.show()
+        }
     }
 
     private fun setAllListener() {
 
         setupSectionSelection()
+
+        setupMoyProtectMultiSelection()
 
         Commons.setListenerForSpinner(this,
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
