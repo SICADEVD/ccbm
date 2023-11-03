@@ -1,2 +1,2 @@
-rootProject.name = "PROJET CCB Mobile"
+rootProject.name = "FieldConnect-CCB"
 include ':app'
