@@ -2,6 +2,7 @@ package ci.projccb.mobile.models
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import ci.projccb.mobile.tools.Constants
@@ -29,7 +30,7 @@ data class ProducteurMenageModel(
     @Expose var nomPersonneTraitant: String? = "",
     @Expose var nombreHectareFemme: String? = "",
     @Expose @SerializedName(value="ordures_menageres") var ordures_menageres_id: String? = "",
-    @Expose @SerializedName(value="producteur") var producteurs_id: String? = "",
+    @Expose @SerializedName(value="producteur_id") var producteurs_id: String? = "",
     @Expose var producteurNomPrenoms: String? = "",
     @Expose @SerializedName(value="quartier") var quartier: String? = "",
     @Expose var separationMenage: String? = "",
@@ -52,7 +53,19 @@ data class ProducteurMenageModel(
     @Expose var etatatomiseur: String? = "",
     @Expose var nomApplicateur: String? = "",
     @Expose var numeroApplicateur: String? = "",
+    @Expose var autreMachine: String? = "",
+    @Expose var autreSourceEau: String? = "",
+    @Expose var autreEndroit: String? = "",
+    @Expose var etatEpi: String? = "",
     var isSynced: Boolean = false,
     @Expose @SerializedName("userid") val agentId: String? = "",
     var origin: String? = "local"
-) : Parcelable
+) : Parcelable{
+
+    @SerializedName("sourcesEnergie") @Expose(serialize = true, deserialize = false) @Ignore
+    var sourcesEnergieList: MutableList<String>? = arrayListOf()
+
+    @SerializedName("ordureMenageres") @Expose(serialize = true, deserialize = false) @Ignore
+    var ordureMenageresList: MutableList<String>? = arrayListOf()
+
+}

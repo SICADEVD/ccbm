@@ -56,6 +56,7 @@ data class InfosProducteurDTO(
     @SerializedName("typecultureStringify") @Expose var typecultureStringify: String? = "",
     @SerializedName("superficiecultureStringify") @Expose var superficiecultureStringify: String? = "",
     @SerializedName("mainOeuvreFamilial") @Expose var mainOeuvreFamilial: String? = "",
+    @SerializedName("membreSocieteTravail") @Expose var membreSocieteTravail: String? = "",
     @SerializedName("travailleurFamilial") @Expose var travailleurFamilial: String? = "",
     @PrimaryKey(autoGenerate = true) @SerializedName("uid") @Expose var uid: Int,
     @SerializedName("userid") @Expose var userid: Int? = 0,

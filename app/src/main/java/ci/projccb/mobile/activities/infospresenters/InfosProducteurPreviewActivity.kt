@@ -113,7 +113,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                     infoProdItemListData?.forEach {
                         if(it.key.isNullOrEmpty()==false){
                             Commons.addItemsToList(
-                                it.key,
+                                if(it.key=="null") "Autre" else it.key,
                                 it.value,
                                 infoProdItemsListPrev
                             )

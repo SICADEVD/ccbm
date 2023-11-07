@@ -94,7 +94,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
                 parcelleItemListData?.forEach {
                     if(it.key.isNullOrEmpty()==false){
                         Commons.addItemsToList(
-                            it.key,
+                            if(it.key=="null") "Autre" else it.key,
                             it.value,
                             parcelleItemsListPrev
                         )

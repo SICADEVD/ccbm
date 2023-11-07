@@ -11,6 +11,7 @@ import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.returnStringList
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
 import com.blankj.utilcode.util.GsonUtils
@@ -277,7 +278,14 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 }
             }
 
-            LogUtils.d("VAR MENAGE : "+menage.equipements)
+            menage.apply {
+
+                sourcesEnergieList = returnStringList(sources_energies_id)
+                ordureMenageresList = returnStringList(ordures_menageres_id)
+
+            }
+
+            //LogUtils.d("VAR MENAGE : "+menage.equipements)
 
             try {
                 //LogUtils.e(TAG, "menage ID before -> ${menage.id}")
@@ -287,11 +295,19 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 val responseMenage: Response<ProducteurMenageModel> = clientMenage.execute()
                 val menageSync: ProducteurMenageModel = responseMenage.body()!!
 
-                menageDao.syncData(
-                    id = menageSync.id!!.toInt(),
-                    synced = true,
-                    localID = menage.uid.toInt()
-                )
+                if(responseMenage.isSuccessful){
+                    menageDao.syncData(
+                        id = menageSync.id!!.toInt(),
+                        synced = true,
+                        localID = menage.uid.toInt()
+                    )
+                }else if(responseMenage.code() == 501){
+                    menageDao.syncData(
+                        id = menageSync.id!!.toInt(),
+                        synced = true,
+                        localID = menage.uid.toInt()
+                    )
+                }
                 //LogUtils.e(TAG, "menage ID after -> ${menageSync.id}")
             } catch (uhex: UnknownHostException) {
                 FirebaseCrashlytics.getInstance().recordException(uhex)

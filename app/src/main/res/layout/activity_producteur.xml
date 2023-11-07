@@ -591,7 +591,9 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -652,6 +654,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:weightSum="10">

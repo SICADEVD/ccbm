@@ -1448,6 +1448,11 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             finish()
         }
 
+        clickCancelProducteur.setOnClickListener {
+            ActivityUtils.startActivity(Intent(this, ProducteurActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
+        }
+
         imagePhotoProfilProducteur.setOnClickListener {
             whichPhoto = 0
             dialogPickerPhoto()

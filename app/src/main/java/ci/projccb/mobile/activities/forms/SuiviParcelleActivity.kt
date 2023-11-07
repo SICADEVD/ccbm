@@ -35,6 +35,7 @@ import kotlinx.android.synthetic.main.activity_parcelle.editQtArbrOmbrParcel
 import kotlinx.android.synthetic.main.activity_parcelle.recyclerArbrOmbrListParcel
 import kotlinx.android.synthetic.main.activity_parcelle.selectArbrOmbrParcel
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.*
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.clickCancelInfosProducteur
 import java.util.*
 
 
@@ -1743,12 +1744,17 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            }
 //        }
 
-        clickCancelSuivi.setOnClickListener {
-            clearFields()
-        }
+//        clickCancelSuivi.setOnClickListener {
+//            clearFields()
+//        }
 
         clickSaveSuivi.setOnClickListener {
             collectDatas()
+        }
+
+        clickCancelSuivi.setOnClickListener {
+            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
         }
 
         imageDraftBtn.setOnClickListener {

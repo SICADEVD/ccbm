@@ -30,10 +30,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
@@ -54,14 +51,14 @@ import ci.projccb.mobile.activities.lists.ParcellesListActivity
 import ci.projccb.mobile.activities.lists.ProducteursListActivity
 import ci.projccb.mobile.activities.lists.SuiviPacellesListActivity
 import ci.projccb.mobile.activities.lists.UpdateContentsListActivity
-import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.services.SynchronisationIntentService
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
-import kotlinx.android.synthetic.main.activity_producteur.editAnneeCertificationProducteur
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.json.JSONException
@@ -362,6 +359,17 @@ class Commons {
 
         fun List<String>?.toModifString(): String {
             return this.toString().replace("]", "").replace("[", "").replace(",", "")
+        }
+        fun String.toUtilInt(): Int? {
+            if( (this as String).isNullOrEmpty() ) return null
+            return (this as String).toInt()
+        }
+        fun returnStringList(value: String?): MutableList<String>? {
+            if(this != null){
+               //value = null
+                return GsonUtils.fromJson<MutableList<String>>(value, object: TypeToken<MutableList<String>>(){}.type)
+            }
+            return mutableListOf()
         }
 
         fun Context.showYearPickerDialog(editText: EditText) {

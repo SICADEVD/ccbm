@@ -35,8 +35,10 @@ import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
@@ -45,6 +47,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_parcelle.*
+import kotlinx.android.synthetic.main.activity_producteur.clickCancelProducteur
 import kotlinx.android.synthetic.main.activity_producteur.containerAutreCertifProducteur
 import kotlinx.android.synthetic.main.activity_producteur.editAnneeCertificationProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
@@ -808,8 +811,10 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             finish()
         }
 
+
         clickCancelParcelle.setOnClickListener {
-            clearFields()
+            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
         }
 
         clickSaveParcelle.setOnClickListener {
@@ -928,24 +933,26 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         setOmbrageParcelleRV()
 
-        editAnneeCreationParcelle.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+//        .setOnClickListener {
+//            datePickerDialog = null
+//            val calendar: Calendar = Calendar.getInstance()
+//            val year = calendar.get(Calendar.YEAR)
+//            val month = calendar.get(Calendar.MONTH)
+//            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+//
+//
+//            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+//
+//                editAnneeCreationParcelle.setText("$year")
+//                //anneeCertification = editAnneeCreationParcelle.text?.toString()!!
+//            }, year, month, dayOfMonth)
+//
+//            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
+//            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
+//            datePickerDialog?.show()
+//        }
 
-
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-
-                editAnneeCreationParcelle.setText("$year")
-                //anneeCertification = editAnneeCreationParcelle.text?.toString()!!
-            }, year, month, dayOfMonth)
-
-            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
-            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
-            datePickerDialog?.show()
-        }
+        showYearPickerDialog(editAnneeCreationParcelle)
     }
 
     private fun setAllListener() {

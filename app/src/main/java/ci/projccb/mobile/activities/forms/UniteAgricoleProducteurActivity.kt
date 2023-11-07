@@ -34,12 +34,14 @@ import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
 import ci.projccb.mobile.tools.MapEntry
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_parcelle.clickCancelParcelle
 import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddVarieteArbrSuiviParcel
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickSaveAnimauxSuiviParcelle
@@ -1160,7 +1162,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             Commons.setListenerForSpinner(this,
                 "Etes-vous membre d'une société de travail ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
                 spinner = selectTravaiSocietInfosProducteur,
-                currentVal = //infosProducteurDrafted.mainOeuvreFamilial,
+                currentVal = infosProducteurDrafted.membreSocieteTravail,//infosProducteurDrafted.mainOeuvreFamilial,
                 itemChanged = arrayListOf(Pair(1, "Oui")),
                 listIem = resources.getStringArray(R.array.YesOrNo)
                     ?.toList() ?: listOf(),
@@ -1599,6 +1601,11 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             clickCloseBtn.setOnClickListener {
                 finish()
+            }
+
+            clickCancelInfosProducteur.setOnClickListener {
+                ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                ActivityUtils.getActivityByContext(this)?.finish()
             }
 
             imageDraftBtn.setOnClickListener {

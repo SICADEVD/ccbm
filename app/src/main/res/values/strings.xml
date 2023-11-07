@@ -105,9 +105,12 @@
     </string-array>
 
     <string-array name="bank_list">
-        <item>Advans</item>
-        <item>Coopec</item>
-        <item>Microcred</item>
+        <item>BICICI</item>
+        <item>NSIA BANQUE CI</item>
+        <item>SIB</item>
+        <item>SGBCI</item>
+        <item>CITIBANK CI</item>
+        <item>BOA CI</item>
         <item>Autre</item>
     </string-array>
 
@@ -142,10 +145,10 @@
     </string-array>
 
     <string-array name="varieteArbre">
-        <item>Variete 1</item>
-        <item>Variete 2</item>
-        <item>Variete 3</item>
-        <item>Variete 4</item>
+        <item>Bois de chauffe</item>
+        <item>Charbon</item>
+        <item>Gaz</item>
+        <item>Four à pétrole</item>
     </string-array>
 
     <string-array name="IntrantDesigne">

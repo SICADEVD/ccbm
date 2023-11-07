@@ -145,7 +145,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Section *"
+                            android:text="Selectionner une section *"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -183,7 +183,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localité *"
+                            android:text="Selectionner une localite *"
 
                             android:textStyle="bold" />
 
@@ -223,7 +223,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur *"
+                            android:text="Selectionner un producteur *"
 
                             android:textStyle="bold" />
 
@@ -274,7 +274,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Année de création de la parcelle ?*"
+                                android:text="Quelle est l'année de création de la parcelle *"
                                 android:textStyle="bold" />
 
                             <RelativeLayout
@@ -333,7 +333,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_weight="6"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Age moyen des cacaoyers ?"
+                                android:text="Quel est l'âge moyen des cacaoyers ?"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -372,7 +372,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Variété"
+                            android:text="Quelle est la variété de culture ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -412,7 +412,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:layout_weight="6"
-                            android:text="A t'elle été régenerer ?"
+                            android:text="Est ce que la parcelle a été régenerer ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -462,7 +462,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_weight="6"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Nombre d'année de régénération"
+                                android:text="Année de régéneration"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -543,7 +543,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est votre document ?"
+                            android:text="Quel type de documents possèdes-tu ?"
 
                             android:textStyle="bold" />
 
@@ -582,7 +582,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a-t-il un cour ou plan d’eau ?"
+                            android:text="Y'a-t-il un cour ou plan d’eau dans la parcelle ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -624,7 +624,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De quel cour il s'agit ?"
+                            android:text="Quel est le cour ou plan d'eau ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -665,7 +665,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:layout_weight="6"
-                            android:text="Y'a t'il des mésures de protection ?"
+                            android:text="Est ce qu'il existe des mésures de protection ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -820,7 +820,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Le niveau de la pente ?"
+                            android:text="Quel est le niveau de la pente ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -856,12 +856,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
+                            android:textColortextColor="@color/text_color_white"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:layout_weight="6"
-                            android:text="Présence De Signe D'érosion ?"
+                            android:text="Présence de signe d'érosion ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -900,6 +900,14 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:padding="@dimen/_5sdp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Quels sont les arbres à Ombrages observés ?"
+                                android:textStyle="bold" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -1059,7 +1067,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la surface"
+                            android:text="Information gps de la parcelle"
 
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />

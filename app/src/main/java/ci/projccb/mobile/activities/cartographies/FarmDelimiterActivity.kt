@@ -23,8 +23,10 @@ import ci.projccb.mobile.R
 import ci.projccb.mobile.models.ParcelleMappingModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -691,9 +693,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
+
+
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-            labelOwnerFarmDelimiter.text = "Didier BOKA"
+            labelOwnerFarmDelimiter.text = agentDoa?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID)).let { "${it?.firstname} ${it?.lastname}" }.toString() //"Didier BOKA"
 
             val mapsDelimiterFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.googleMapsFarmDelimiter) as SupportMapFragment
             mapsDelimiterFragment.getMapAsync(this)
