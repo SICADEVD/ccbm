@@ -2,6 +2,7 @@ package ci.projccb.mobile.tools
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -61,6 +62,7 @@ import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 import org.json.JSONException
 import java.io.*
 import java.lang.Math.log10
@@ -372,6 +374,14 @@ class Commons {
             return mutableListOf()
         }
 
+        fun Spinner.isSpinnerEmpty(): Boolean {
+            return (this as Spinner).selectedItem.toString().isNullOrBlank()
+        }
+
+        fun Spinner.getSpinnerContent(): String {
+            return (this as Spinner).selectedItem.toString().trim()
+        }
+
         fun Context.showYearPickerDialog(editText: EditText) {
             val builder = androidx.appcompat.app.AlertDialog.Builder(this)
             val calendar: Calendar = Calendar.getInstance()
@@ -398,6 +408,19 @@ class Commons {
 
             val dialog = builder.create()
             dialog.show()
+        }
+
+        fun Context.configDate(viewClciked: AppCompatEditText) {
+            val calendar: Calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+                viewClciked.setText(convertDate("${day}-${(month + 1)}-$year", false))
+            }, year, month, dayOfMonth)
+
+            datePickerDialog.datePicker.maxDate = DateTime.now().millis
+            datePickerDialog.show()
         }
 
         fun Context.limitEDTMaxLength(editText: EditText, minLength:Int = 225, maxLength:Int = 225){

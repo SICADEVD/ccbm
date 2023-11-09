@@ -19,3 +19,17 @@ data class OmbrageVarieteModel (
         return "$variete : $nombre"
     }
 }
+
+data class AdapterItemModel (
+    val id: Int,
+    val value: String? = "",
+    val value1: String? = "",
+    val value2: String? = "",
+    val value3: String? = "",
+    val value4: String? = "",
+    val value5: String? = "",
+) {
+    override fun toString(): String {
+        return "$value"
+    }
+}

@@ -874,7 +874,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <androidx.appcompat.widget.AppCompatSpinner
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="sources_eaux_id"
                                 android:id="@+id/selectEauPotablMenage"
                                 android:layout_width="match_parent"
@@ -1494,7 +1494,7 @@ android:textColor="@color/text_color_white"
                                     android:tag="etatEpi"
                                     android:id="@+id/selectEquiEtatMenage"
                                     android:layout_width="match_parent"
-                                    android:entries="@array/YesOrNo"
+                                    android:entries="@array/etat_epi"
                                     android:layout_height="@dimen/_37sdp"
                                     android:spinnerMode="dialog" />
 
@@ -1605,13 +1605,52 @@ android:textColor="@color/text_color_white"
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/containerFemmeActiviteContainerMenage"
+                        android:id="@+id/containerFemmeActivitPrecisMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone"
-                        tools:visibility="visible"
                         >
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:weightSum="10"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Quelle activité ?"
+
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/selectFemmeActiviteDefMenage"
+                                    android:layout_width="match_parent"
+                                    android:entries="@array/femmeActivite"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:spinnerMode="dialog" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                         <Space
                             android:layout_width="match_parent"
@@ -1629,112 +1668,14 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3.5"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:text="Quelle est l'activité?"
-
-                                android:textStyle="bold" />
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="nomActiviteFemme"
-                                android:id="@+id/editFemmeActiviteMenage"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="6.5"
-                                android:background="@drawable/rounded_background"
-                                android:hint="CHAMP DE CAFE"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/containerSuperficieCacaoMenage"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        tools:visibility="visible">
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="Quel est la superficie cacao  de ta femme ?"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:textStyle="bold" />
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="superficieCacaoFemme"
-                                android:id="@+id/editSuperficieCacaoMenage"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="0.0"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="numberDecimal"
-                                android:digits="0123456789."
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="0.0" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        tools:visibility="visible">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="Es-tu prêt à donner une partie de ton champ à votre conjoint(e) ?"
+                                android:text="Précisez: "
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
+                                android:layout_weight="6.5"
                                 android:background="@drawable/rounded_background">
 
                                 <Space
@@ -1742,10 +1683,9 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
-                                    android:tag="champFemme"
-                                    android:id="@+id/selectDonCacaoYesNoMenage"
+                                    android:entries="@array/agricoleActivite"
+                                    android:id="@+id/selectFemmeActivitPrecisMenage"
                                     android:layout_width="match_parent"
-                                    android:entries="@array/YesOrNo"
                                     android:layout_height="@dimen/_37sdp"
                                     android:spinnerMode="dialog" />
 
@@ -1753,53 +1693,496 @@ android:textColor="@color/text_color_white"
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearDonCacaoFemmeSuperficieContainerMenage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
-
                         <LinearLayout
+                            android:id="@+id/containerFemmeAgricoleMenage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            >
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="Combien d'hectare ?"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:textStyle="bold" />
+                                android:orientation="vertical"
+                                tools:visibility="visible">
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="nombreHectareFemme"
-                                android:id="@+id/editDonSuperficieCacaoMenage"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="0.0"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="numberDecimal"
-                                android:digits="0123456789."
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="0.0" />
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Quelle est la superficie exploitée ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/editSuperficieExploiMenage"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background"
+                                        android:hint="0.0"
+                                        android:ellipsize="end"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="numberDecimal"
+                                        android:digits="0123456789."
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="0.0" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                tools:visibility="visible"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:weightSum="10"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:textColor="@color/text_color_white"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="6"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/_12sdp"
+                                    android:text="Comment a t'il obtenue la parcelle ?"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="4"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rounded_background">
+
+                                    <Space
+                                        android:layout_width="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_10sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatSpinner
+                                        android:id="@+id/selectParcelObtenuDefMenage"
+                                        android:layout_width="match_parent"
+                                        android:entries="@array/parcelleObtenu"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:spinnerMode="dialog" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Quel est la superficie cacao  de ta femme ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:tag="superficieCacaoFemme"
+                                        android:id="@+id/editSuperficieCacaoMenage"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background"
+                                        android:hint="0.0"
+                                        android:ellipsize="end"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="numberDecimal"
+                                        android:digits="0123456789."
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="0.0" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Es-tu prêt à donner une partie de ton champ à votre conjoint(e) ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background">
+
+                                        <Space
+                                            android:layout_width="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_10sdp" />
+
+                                        <androidx.appcompat.widget.AppCompatSpinner
+                                            android:tag="champFemme"
+                                            android:id="@+id/selectDonCacaoYesNoMenage"
+                                            android:layout_width="match_parent"
+                                            android:entries="@array/YesOrNo"
+                                            android:layout_height="@dimen/_37sdp"
+                                            android:spinnerMode="dialog" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linearDonCacaoFemmeSuperficieContainerMenage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone"
+                                tools:visibility="visible">
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Combien d'hectare ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:tag="nombreHectareFemme"
+                                        android:id="@+id/editDonSuperficieCacaoMenage"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background"
+                                        android:hint="0.0"
+                                        android:ellipsize="end"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="numberDecimal"
+                                        android:digits="0123456789."
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="0.0" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/containerFemmeNonAgricoleMenage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Dépuis combien de temps(mois) pratiquez vous cette activité ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:tag="superficieCacaoFemme"
+                                        android:id="@+id/editTempsDePratiquMenage"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background"
+                                        android:hint="10"
+                                        android:ellipsize="end"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="number"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="10" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Avez vous bénéficiez d'une formation ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background">
+
+                                        <Space
+                                            android:layout_width="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_10sdp" />
+
+                                        <androidx.appcompat.widget.AppCompatSpinner
+                                            android:id="@+id/selectFormatFemmBenefMenage"
+                                            android:layout_width="match_parent"
+                                            android:entries="@array/YesOrNo"
+                                            android:layout_height="@dimen/_37sdp"
+                                            android:spinnerMode="dialog" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/containerBenefDFormatMenage"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+
+                                    <Space
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_10sdp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal"
+                                        android:weightSum="10">
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:textColor="@color/text_color_white"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="3.5"
+                                            android:paddingLeft="@dimen/_10sdp"
+                                            android:text="De quel structure ?"
+
+                                            android:textStyle="bold" />
+
+                                        <androidx.appcompat.widget.AppCompatEditText
+                                            android:id="@+id/editFemmeNomStructMenage"
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/_37sdp"
+                                            android:layout_weight="6.5"
+                                            android:background="@drawable/rounded_background"
+                                            android:hint="CACOMIAF"
+                                            android:ellipsize="end"
+                                            android:imeOptions="actionDone"
+                                            android:inputType="textCapCharacters|textNoSuggestions"
+                                            android:paddingStart="@dimen/_10sdp"
+                                            android:paddingEnd="@dimen/_10sdp"
+                                            android:textAllCaps="true"
+                                            android:textSize="@dimen/_13ssp"
+                                            tools:text="" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_margin="@dimen/_8sdp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="3.5"
+                                        android:text="A quand remonte la formation ?"
+                                        android:textColor="@color/text_color_white"
+                                        android:textStyle="bold" />
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="6.5">
+
+                                        <androidx.appcompat.widget.AppCompatEditText
+                                            android:id="@+id/editAnneeFormatFemmeMenage"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/rounded_background"
+                                            android:editable="false"
+                                            android:focusable="false"
+                                            android:ellipsize="end"
+                                            android:hint="AAAA"
+                                            android:inputType="textCapCharacters"
+                                            android:paddingStart="@dimen/_10sdp"
+                                            android:paddingEnd="@dimen/_10sdp"
+                                            android:textAllCaps="true"
+                                            android:textSize="@dimen/_13ssp" />
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="@dimen/_35sdp"
+                                            android:layout_height="@dimen/_35sdp"
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_centerVertical="true"
+                                            app:srcCompat="@drawable/ic_date_calendar" />
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:textColor="@color/text_color_white"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="6"
+                                    android:text="Quelle est la superficie cacao de ta femme ?"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="4"
+                                    android:background="@drawable/rounded_background">
+
+                                    <Space
+                                        android:layout_width="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_10sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatSpinner
+                                        android:id="@+id/selectFemmActiviRevenuMenage"
+                                        android:layout_width="match_parent"
+                                        android:entries="@array/YesOrNo"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:spinnerMode="dialog" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 

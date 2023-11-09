@@ -15,5 +15,6 @@ data class FeatureModel(
     val canViewDraft: Boolean = false,
     val canViewSync: Boolean = false,
     val canViewUpdate: Boolean = false,
+    val categorie: Int = 0,
 ) {
 }

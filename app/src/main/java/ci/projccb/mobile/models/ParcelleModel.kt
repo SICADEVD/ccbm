@@ -23,7 +23,7 @@ import kotlinx.android.parcel.Parcelize
 data class ParcelleModel(
     @Expose @PrimaryKey(autoGenerate = true) var uid: Long = 0,
     @Expose var id: Int? = 0,
-    @Expose @SerializedName(value="producteur", alternate = ["producteur_id"]) var producteurId: String? = "",
+    @Expose @SerializedName(value="producteur_id", alternate = ["producteur"]) var producteurId: String? = "",
     @Expose var producteurNom: String? = "",
     @Expose var anneeCreation: String? = "",
     @Expose var localiteNom: String? = "",
@@ -53,6 +53,8 @@ data class ParcelleModel(
     @Expose var niveauPente: String? = "",
     @Expose var variete: String? = "",
     @Expose var erosion: String? = "",
+    @Expose var nbCacaoParHectare: String? = "",
+    @Expose var courDeau: String? = "",
     var status: Boolean = false,
     var isSynced: Boolean = false,
     @Expose @SerializedName("userid") var agentId: String? = "",

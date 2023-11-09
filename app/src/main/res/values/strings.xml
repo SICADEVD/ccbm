@@ -7,6 +7,60 @@
         <item>non</item>
     </string-array>
 
+    <string-array name="femmeActivite">
+        <item>Agricole</item>
+        <item>Non agricole</item>
+    </string-array>
+
+    <string-array name="parcelleObtenu">
+        <item>Location</item>
+        <item>Achat</item>
+        <item>Don</item>
+    </string-array>
+
+    <string-array name="capitalDemarrag">
+        <item>Vente de cacao</item>
+        <item>AVEK</item>
+        <item>Association</item>
+        <item>Subvention</item>
+        <item>Micro Crédit</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="etat_epi">
+        <item>bon</item>
+        <item>mauvais</item>
+        <item>délabrement</item>
+    </string-array>
+
+    <string-array name="agricoleActivite">
+        <item>Culture perenne</item>
+        <item>Cultures vivrieres</item>
+        <item>Elevage</item>
+        <item>Pisciculture</item>
+    </string-array>
+
+    <string-array name="noAgricoleActivite">
+        <item>Couture</item>
+        <item>Coiffure</item>
+        <item>Location</item>
+    </string-array>
+
+    <string-array name="type_intrant">
+        <item>Compost</item>
+        <item>Déchets animaux</item>
+        <item>Fiente de poulet</item>
+        <item>Bouse de vache</item>
+        <item>Engrais chimique</item>
+        <item>Engrais foliaire</item>
+        <item>Biofertilisant</item>
+        <item>Insecticide chimique</item>
+        <item>Fongicide</item>
+        <item>Nematicide</item>
+        <item>Herbicide</item>
+        <item>Autre</item>
+    </string-array>
+
     <string-array name="delai_arbre">
         <item>12 dernier mois</item>
         <item>Il y a 2ans</item>
@@ -26,7 +80,7 @@
     </string-array>
 
     <string-array name="InsectQuantifie">
-        <item>Assez</item>
+        <item>Faible</item>
         <item>Moins</item>
     </string-array>
 
@@ -38,7 +92,17 @@
     <string-array name="listeInsectes">
         <item>Mirides</item>
         <item>Punaise</item>
-        <item>Foreurs</item>
+        <item>Foreurs de tiges</item>
+        <item>Chenilles</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="maladieList">
+        <item>Pourriture brune</item>
+        <item>ShollenShoot</item>
+        <item>Punaise</item>
+        <item>Miride</item>
+        <item>Foreurs de tiges</item>
         <item>Chenilles</item>
         <item>Autre</item>
     </string-array>
@@ -135,6 +199,26 @@
         <item>Superieure</item>
     </string-array>
 
+    <string-array name="uniteBio">
+        <item>L</item>
+        <item>Kg</item>
+    </string-array>
+
+    <string-array name="contenantIntrant">
+        <item>Sachet</item>
+        <item>Sac</item>
+        <item>Boîte</item>
+        <item>Pôt</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="uniteIntrant">
+        <item>ml</item>
+        <item>L</item>
+        <item>g</item>
+        <item>Kg</item>
+    </string-array>
+
     <string-array name="noSchoolRaison">
         <item>Manque d’argent</item>
         <item>Parent décédé</item>
@@ -150,6 +234,38 @@
         <item>Gaz</item>
         <item>Four à pétrole</item>
     </string-array>
+
+    <string-array name="varieteArbreOmbrage">
+        <item>Abalé</item>
+        <item>Acajou bassam</item>
+        <item>Akpi</item>
+        <item>Aloma</item>
+        <item>Emien</item>
+        <item>Fraké</item>
+        <item>Framiré</item>
+        <item>Fromager</item>
+        <item>Hysope</item>
+        <item>Kapokier</item>
+        <item>Koya</item>
+        <item>Kplé</item>
+        <item>Makoré</item>
+        <item>Mirabellier</item>
+        <item>Petit cola</item>
+        <item>Tiama</item>
+        <item>Colatier</item>
+        <item>Dédé</item>
+        <item>Kpangba</item>
+        <item>Iroko</item>
+        <item>Aiélé</item>
+        <item>Ako</item>
+        <item>Faux muscadier</item>
+        <item>Loloti</item>
+        <item>Ngouechebi</item>
+        <item>Noisetier d\'Afrique</item>
+        <item>Poivre africain</item>
+        <item>Non identifié</item>
+    </string-array>
+
 
     <string-array name="IntrantDesigne">
         <item>NPK</item>
@@ -240,6 +356,16 @@
         <item>Faible</item>
         <item>Moyen</item>
         <item>Elevé</item>
+        <item>Inexistant</item>
+    </string-array>
+
+    <string-array name="fullyPoor1">
+        <item>Faible</item>
+        <item>Moyen</item>
+        <item>Elevé</item>
+    </string-array>
+
+    <string-array name="fullyPoor2">
         <item>Inexistant</item>
     </string-array>
 

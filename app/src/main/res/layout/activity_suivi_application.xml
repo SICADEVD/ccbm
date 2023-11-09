@@ -41,7 +41,7 @@ android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE SUIVI APPLICATIONS"
+                android:text="FICHE DES TRAITEMENTS"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />

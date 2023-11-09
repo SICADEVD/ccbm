@@ -52,10 +52,10 @@ class FeatureAdapter(
 
         val currentFeature = listOfFeatures.get(position)
 
-        if(selectedItem != -1){
-            val alpha = if (position === selectedItem) 1.0f else 0.1f
-            holder.mainerScroll.alpha = alpha
-        }
+//        if(selectedItem != -1){
+//            val alpha = if (position === selectedItem) 1.0f else 0.1f
+//            holder.mainerScroll.alpha = alpha
+//        }
 
         holder.tv_current_sync.text = currentFeature.countSync.toString()
         holder.tv_current_draft.text = currentFeature.countDraft.toString()

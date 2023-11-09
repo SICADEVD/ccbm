@@ -1280,15 +1280,20 @@ class ConfigurationActivity : AppCompatActivity() {
                     val responseCampagneData: Response<MutableList<CampagneModel>> = clientCampagneData.execute()
                     val datasCampagneList: MutableList<CampagneModel>? = responseCampagneData.body()
 
-                    datasCampagneList?.map {
-                        val dataCampagneModel = CampagneModel(
-                            campagnesNom = it.campagnesNom,
-                            id = it.id,
-                            uid = 0
-                        )
-
-                        campagneDao?.insert(dataCampagneModel)
-                    }
+//                    datasCampagneList?.map { model ->
+//                        model?.let {
+//                            if(it.campagnesNom!=null)
+//                            {
+//                                val dataCampagneModel = CampagneModel(
+//                                    campagnesNom = it.campagnesNom,
+//                                    id = it.id,
+//                                    uid = 0
+//                                )
+//
+//                                campagneDao?.insert(dataCampagneModel)
+//                            }
+//                        }
+//                    }
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)

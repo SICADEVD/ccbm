@@ -10,6 +10,7 @@ import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.returnStringList
 import ci.projccb.mobile.tools.Constants
@@ -332,17 +333,30 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             try {
                 if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
 
+                parcelle.apply {
+                    protectionList = returnStringList(protectionStr)?: arrayListOf()
+                    arbreList = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
+                }
+
                 //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
                 val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)
 
                 val responseParcelle: Response<ParcelleModel> = clientParcelle.execute()
                 val parcelleSync: ParcelleModel = responseParcelle.body()!!
 
-                parcelleDao.syncData(
-                    id = parcelleSync.id!!,
-                    synced = true,
-                    localID = parcelle.uid.toInt()
-                )
+                if(responseParcelle.code() == 200){
+                    parcelleDao.syncData(
+                        id = parcelleSync.id!!,
+                        synced = true,
+                        localID = parcelle.uid.toInt()
+                    )
+                }else if(responseParcelle.code() == 501){
+                    parcelleDao.syncData(
+                        id = parcelleSync.id!!,
+                        synced = true,
+                        localID = parcelle.uid.toInt()
+                    )
+                }
 
                 val suiviParcellesList = suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
                     parcelleUid = parcelle.uid.toString(),

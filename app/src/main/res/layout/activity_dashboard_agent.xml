@@ -130,37 +130,143 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_60sdp" />
-
-
-                <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-                    android:layout_below="@+id/linear_toolbar_dashboard"
-                    android:layout_above="@+id/imgProfileDashboard"
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand0"
+                    android:id="@+id/expandIdentif"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    tools:listitem="@layout/dashbord_item_present"
-                    tools:itemCount="2"
-                    android:id="@+id/carouselRecyclerview"/>
+                    android:layout_marginTop="30dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view"
+                    app:expandable_secondLayout="@layout/hided_view" />
 
-                <me.relex.circleindicator.CircleIndicator2
-                    android:id="@+id/indicator"
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand1"
+                    android:id="@+id/expandIdentif2"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    app:ci_width="@dimen/_5sdp"
-                    app:ci_height="@dimen/_5sdp"
-                    app:ci_margin="@dimen/_5sdp"
-                    app:ci_drawable="@drawable/blue_radius"
-                    app:ci_drawable_unselected="@drawable/gray_radius"
-                    app:ci_orientation="horizontal"
-                    app:ci_gravity="center"
-                    />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view2"
+                    app:expandable_secondLayout="@layout/hided_view2" />
+
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand2"
+                    android:id="@+id/expandIdentif3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view3" />
+
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand3"
+                    android:id="@+id/expandIdentif4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view4" />
+
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand4"
+                    android:id="@+id/expandIdentif5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view5" />
+
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand5"
+                    android:id="@+id/expandIdentif6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view6" />
+
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand6"
+                    android:id="@+id/expandIdentif7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_50sdp"
+                    app:expandable_parentLayout="@layout/showed_view7" />
+
+
+                <LinearLayout
+                    android:id="@+id/containerFeatureDash"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_6sdp" />
+
+
+                    <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        tools:listitem="@layout/dashbord_item_present"
+                        tools:itemCount="2"
+                        android:id="@+id/carouselRecyclerview"/>
+
+                    <me.relex.circleindicator.CircleIndicator2
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        app:ci_width="@dimen/_5sdp"
+                        app:ci_height="@dimen/_5sdp"
+                        app:ci_margin="@dimen/_5sdp"
+                        app:ci_drawable="@drawable/blue_radius"
+                        app:ci_drawable_unselected="@drawable/gray_radius"
+                        app:ci_orientation="horizontal"
+                        app:ci_gravity="center"
+                        />
+
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_6sdp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

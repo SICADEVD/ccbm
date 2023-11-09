@@ -3,9 +3,12 @@ package ci.projccb.mobile.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.adapters.OmbrageAdapter.OmbrageHolder
+import ci.projccb.mobile.models.AdapterItemModel
 import ci.projccb.mobile.models.OmbrageVarieteModel
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
@@ -15,7 +18,7 @@ import kotlinx.android.synthetic.main.activite_items_list.view.libelle
 import kotlinx.android.synthetic.main.activite_items_list.view.valuetext
 import kotlinx.android.synthetic.main.ombrage_items_list.view.*
 
-class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?, private  var libelTitle: String = "Libéllé", private  var valeurTitle: String = "Valeur") : RecyclerView.Adapter<OmbrageHolder>() {
+class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?, private  var libelTitle: String = "Libellé", private  var valeurTitle: String = "Valeur") : RecyclerView.Adapter<OmbrageHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OmbrageHolder {
@@ -113,5 +116,77 @@ class OnlyFieldAdapter(private var common: MutableList<CommonData>?, private  va
 
         val valuetext = onlyView.valuetext
         val deleteCultureItem = onlyView.deleteCultureItem
+    }
+}
+
+
+class MultipleItemAdapter(private var listItem: MutableList<AdapterItemModel>?,
+                          private  var libelTitle: String = "Type",
+                          private  var libelTitle2: String = "Contenant",
+                          private  var libelTitle3: String = "Unité",
+                          private  var libelTitle4: String = "Quantité",
+                          private  var valeurTitle: String = "Fréquence") : RecyclerView.Adapter<MultipleItemAdapter.MultiItemHolder>() {
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultiItemHolder {
+        return MultiItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.five_items_list, parent, false))
+    }
+
+
+    override fun onBindViewHolder(holder: MultiItemHolder, position: Int) {
+        val multiItModel = listItem!![position]
+
+        holder.item_title.text = libelTitle
+        holder.item_title2.text = libelTitle2
+        holder.item_title3.text = libelTitle3
+        holder.item_title4.text = libelTitle4
+        holder.second_title.text = valeurTitle
+
+        holder.labelItem.text = multiItModel.value
+        holder.labelItem2.text = multiItModel.value1
+        holder.labelItem3.text = multiItModel.value2
+        holder.labelItem4.text = multiItModel.value3
+        holder.labelSecondItem.text = multiItModel.value4
+
+        holder.deleteMulti.setOnClickListener {
+            LogUtils.e(Commons.TAG, "position $position")
+            LogUtils.e(Commons.TAG, "Adapter position ${holder.adapterPosition}")
+
+            try {
+                if (listItem?.size == 1) {
+                    listItem?.removeAt(0)
+                    notifyItemRemoved(0)
+                } else {
+                    listItem?.removeAt(holder.adapterPosition)
+                    notifyItemRemoved(holder.adapterPosition)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+
+    fun getMultiItemAdded(): MutableList<AdapterItemModel> = listItem!!
+
+
+    override fun getItemCount() = listItem?.size ?: 0
+
+
+    class MultiItemHolder(multiItView: View) : RecyclerView.ViewHolder(multiItView) {
+
+        val item_title = multiItView.item_title
+        val item_title2 = multiItView.findViewById<TextView>(R.id.item_title2)
+        val item_title3 = multiItView.findViewById<TextView>(R.id.item_title3)
+        val item_title4 = multiItView.findViewById<TextView>(R.id.item_title4)
+        val second_title = multiItView.findViewById<TextView>(R.id.second_title)
+
+        val labelItem = multiItView.findViewById<TextView>(R.id.labelItem)
+        val labelItem2 = multiItView.findViewById<TextView>(R.id.labelItem2)
+        val labelItem3 = multiItView.findViewById<TextView>(R.id.labelItem3)
+        val labelItem4 = multiItView.findViewById<TextView>(R.id.labelItem4)
+        val labelSecondItem = multiItView.findViewById<TextView>(R.id.labelSecondItem)
+
+        val deleteMulti = multiItView.findViewById<ImageView>(R.id.deleteitem)
     }
 }

@@ -331,7 +331,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
                 //mappingPoints = wayPoints
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
-                arbreStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
+                arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
         }
@@ -951,8 +951,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
 //            datePickerDialog?.show()
 //        }
-
-        showYearPickerDialog(editAnneeCreationParcelle)
+        editAnneeCreationParcelle.setOnClickListener { showYearPickerDialog(editAnneeCreationParcelle) }
     }
 
     private fun setAllListener() {

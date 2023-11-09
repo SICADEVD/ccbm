@@ -142,7 +142,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Section *"
+                            android:text="Selectionner une section *"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -181,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localite *"
+                            android:text="Selectionner une localite *"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -309,37 +309,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur l'exploitation"
-                            
-                            android:textSize="@dimen/_13ssp"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations sur l'exploitation"-->
+<!--                            -->
+<!--                            android:textSize="@dimen/_13ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -356,7 +356,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Avez-vous des\nforêts ou jacheres ?"
+                            android:text="Avez-vous des forêts ou jacheres ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -437,7 +437,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il d'autres cultures ?"
+                            android:text="Avez-vous d’autres cultures en dehors du cacao ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -507,7 +507,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_10sdp"
-                                                android:text="Le type"
+                                                android:text="Le nom de la culture"
                                                 android:textStyle="bold" />
 
                                             <androidx.appcompat.widget.AppCompatEditText
@@ -616,7 +616,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il d'autres activité excepté le cacao ?"
+                            android:text="Avez-vous d’autres activités en dehors des cultures ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -681,7 +681,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingLeft="@dimen/_10sdp"
-                                            android:text="Le type d'activité"
+                                            android:text="Le nom de l'activité"
                                             android:textStyle="bold" />
 
                                         <androidx.appcompat.widget.AppCompatEditText
@@ -868,37 +868,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur la main d'œuvre"
-                            
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations sur la main d'œuvre"-->
+<!--                            -->
+<!--                            android:textSize="@dimen/_14ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -917,7 +917,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il des travailleurs dans la famille ?"
+                            android:text="Avez-vous recours à une main d'œuvre familiale ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -962,7 +962,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleur (Famille) ?"
+                            android:text="Combien de personnes (de la famille travaillent) ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1001,7 +1001,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleurs rémunérés ?"
+                            android:text="Combien de travailleurs (rémunéré) avez-vous ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1040,7 +1040,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleurs permanents (+12 mois) ?"
+                            android:text="Nombre de travailleurs permanents (plus de 12mois) ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1079,7 +1079,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le nombre de travailleurs temporaires ?"
+                            android:text="Nombre de travailleurs non permanents ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1132,7 +1132,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:tag="membreSocieteTravail"
+                                android:tag="societeTravail"
                                 android:id="@+id/selectTravaiSocietInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -1167,7 +1167,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:tag="travailleurssociale"
+                            android:tag="nombrePersonne"
                             android:id="@+id/editNbrTravSocieteInfosProducteur"
                             android:layout_weight="4"
                             android:layout_width="0dp"
@@ -1503,37 +1503,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations Bancaires"
-                            
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations Bancaires"-->
+<!--                            -->
+<!--                            android:textSize="@dimen/_14ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -1620,7 +1620,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingLeft="@dimen/_10sdp"
-                                            android:text="Opérateur"
+                                            android:text="Non de l'opérateur"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
@@ -1658,7 +1658,7 @@ android:textColor="@color/text_color_white"
                                             android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Numéro"
+                                            android:text="Téléphone"
                                             android:paddingLeft="@dimen/_10sdp"
                                             android:textStyle="bold" />
 
@@ -1734,8 +1734,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="As-tu un compte\ndans une banque ?"
-
+                            android:text="As-tu un compte bancaire (dans une banque) ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1777,7 +1776,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Sélectionner la banque :"
+                            android:text="Sélectionner le nom de la banque :"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1817,7 +1816,7 @@ android:textColor="@color/text_color_white"
                             android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Nom de la banque"
+                            android:text="Précisez le nom de la banque"
                             android:paddingLeft="@dimen/_10sdp"
                             android:textStyle="bold" />
 

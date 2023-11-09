@@ -1144,7 +1144,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Type de pièces"
+                        android:text="Que possèdes-tu comme pièce d'identitification ?"
 
                         android:textStyle="bold" />
 
@@ -1162,7 +1162,6 @@ android:textColor="@color/text_color_white"
                             android:id="@+id/selectPieceProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
-                            android:entries="@array/YesOrNo"
                             android:spinnerMode="dialog" />
 
                     </LinearLayout>

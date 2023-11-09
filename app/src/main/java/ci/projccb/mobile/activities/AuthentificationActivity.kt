@@ -61,7 +61,7 @@ class AuthentificationActivity : AppCompatActivity() {
 
 
     fun bindDatas() {
-        inputLogin.text = Editable.Factory.getInstance().newEditable("CARYN")
+        inputLogin.text = Editable.Factory.getInstance().newEditable("hamish")
         //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
         //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
         inputPassword.text = Editable.Factory.getInstance().newEditable("1234567")

@@ -21,6 +21,7 @@ import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Commons.Companion.toUtilInt
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
@@ -30,6 +31,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_localite.selectSourceEauLocalite
+import kotlinx.android.synthetic.main.activity_parcelle.containerAutreProtectParcelle
 import kotlinx.android.synthetic.main.activity_producteur.containerAutreCertifProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
@@ -973,24 +975,24 @@ class ProducteurMenageActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setListenerForSpinner(this,
-            "Quelle est la source d'eau ?",
-            "La liste des sources d'eau semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectEauPotablMenage,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            currentVal = menageUndrafted.sources_eaux_id,
-            listIem = (AssetFileHelper.getListDataFromAsset(
-                16,
-                this
-            ) as MutableList<SourceEauModel>)?.map { it.nom }
-                ?.toList() ?: listOf(),
-            onChanged = {
-            },
-            onSelected = { itemId, visibility ->
-                if(itemId == 1){
-                    containerAutreSourceEauMenage.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Quelle est la source d'eau ?",
+//            "La liste des sources d'eau semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectEauPotablMenage,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            currentVal = menageUndrafted.sources_eaux_id,
+//            listIem = (AssetFileHelper.getListDataFromAsset(
+//                16,
+//                this
+//            ) as MutableList<SourceEauModel>)?.map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//            },
+//            onSelected = { itemId, visibility ->
+//                if(itemId == 1){
+//                    containerAutreSourceEauMenage.visibility = visibility
+//                }
+//            })
 
         Commons.setListenerForSpinner(this,
             "Traitez vous vos champs ?",
@@ -1063,10 +1065,31 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerFemmeActiviteContainerMenage.visibility = visibility
-                    containerSuperficieCacaoMenage.visibility = visibility
+                    containerFemmeActivitPrecisMenage.visibility = visibility
                 }
             })
+
+        Commons.setListenerForSpinner(this,
+            "Quelle activité ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFemmeActiviteDefMenage,
+            itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
+            listIem = resources.getStringArray(R.array.femmeActivite)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
+                    containerFemmeAgricoleMenage.visibility = visibility
+                }else if(itemId == 2){
+                    setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
+                    containerFemmeNonAgricoleMenage.visibility = visibility
+                }
+            })
+
+
 
         Commons.setListenerForSpinner(this,
             "Donnes tu une partie de ton cacao ?",
@@ -1291,6 +1314,56 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //        }
     }
 
+    fun setupSourceEauPotableMultiSelection(currentList : MutableList<String> = mutableListOf()) {
+        val eauPotableList = AssetFileHelper.getListDataFromAsset(16, this) as MutableList<SourceEauModel>
+        var listSelectEauPotablePosList = mutableListOf<Int>()
+        var listSelectEauPotableList = mutableListOf<String>()
+
+        var indItem = 0
+        (eauPotableList)?.forEach {
+            if(currentList.size > 0){ if(currentList.contains(it.nom)) listSelectEauPotablePosList.add(indItem) }
+            indItem++
+        }
+
+        selectEauPotablMenage.setTitle("Choix des sources d'eau ?")
+        selectEauPotablMenage.setItems(eauPotableList.map { it.nom })
+        //multiSelectSpinner.hasNoneOption(true)
+        selectEauPotablMenage.setSelection(listSelectEauPotablePosList.toIntArray())
+        selectEauPotablMenage.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+            override fun selectedIndices(indices: MutableList<Int>?) {
+                listSelectEauPotablePosList.clear()
+                listSelectEauPotablePosList.addAll(indices?.toMutableList() ?: mutableListOf())
+            }
+
+            override fun selectedStrings(strings: MutableList<String>?) {
+                listSelectEauPotableList.clear()
+                listSelectEauPotableList.addAll(strings?.toMutableList() ?: arrayListOf())
+                if(listSelectEauPotableList.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE else containerAutreSourceEauMenage.visibility = View.GONE
+            }
+
+        })
+    }
+
+    private fun setupPrecisionActiv(stringArray: Array<String>, currentVal: String? = null) {
+
+        Commons.setListenerForSpinner(this,
+            "Précisez le type de l'activité :",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFemmeActivitPrecisMenage,
+            currentVal = currentVal,
+            listIem = stringArray
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerFemmeActivitPrecisMenage.visibility = visibility
+                }
+            })
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1377,6 +1450,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             draftMenage(draftedDataMenage ?: DataDraftedModel(uid = 0))
         }
 
+        setOtherListener()
+
         //applyFiltersDec(editSuperficieCacaoMenage)
         //applyFiltersDec(editDonSuperficieCacaoMenage)
 
@@ -1388,7 +1463,15 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
     }
 
+    private fun setOtherListener() {
+
+        editAnneeFormatFemmeMenage.setOnClickListener { showYearPickerDialog(editAnneeFormatFemmeMenage) }
+
+    }
+
     private fun setAllSelection() {
+
+        setupSourceEauPotableMultiSelection()
 
         setupSectionSelection()
 
@@ -1473,24 +1556,24 @@ class ProducteurMenageActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setListenerForSpinner(this,
-            "Quelle est la source d'eau ?",
-            "La liste des sources d'eau semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectEauPotablMenage,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(
-                16,
-                this
-            ) as MutableList<SourceEauModel>)?.map { it.nom }
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-                if(itemId == 1){
-                    containerAutreSourceEauMenage.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Quelle est la source d'eau ?",
+//            "La liste des sources d'eau semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectEauPotablMenage,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            listIem = (AssetFileHelper.getListDataFromAsset(
+//                16,
+//                this
+//            ) as MutableList<SourceEauModel>)?.map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                if(itemId == 1){
+//                    containerAutreSourceEauMenage.visibility = visibility
+//                }
+//            })
 
         Commons.setListenerForSpinner(this,
             "Traitez vous vos champs ?",
@@ -1559,8 +1642,45 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerFemmeActiviteContainerMenage.visibility = visibility
-                    containerSuperficieCacaoMenage.visibility = visibility
+                    containerFemmeActivitPrecisMenage.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quelle activité ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFemmeActiviteDefMenage,
+            itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
+            listIem = resources.getStringArray(R.array.femmeActivite)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
+                    containerFemmeAgricoleMenage.visibility = visibility
+                    containerFemmeNonAgricoleMenage.visibility = View.GONE
+                }else if(itemId == 2){
+                    setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
+                    containerFemmeNonAgricoleMenage.visibility = visibility
+                    containerFemmeAgricoleMenage.visibility = View.GONE
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Avez vous bénéficiez d'une formation  ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectFormatFemmBenefMenage,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerBenefDFormatMenage.visibility = visibility
                 }
             })
 

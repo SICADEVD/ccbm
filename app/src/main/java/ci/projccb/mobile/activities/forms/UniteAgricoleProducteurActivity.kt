@@ -292,7 +292,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurInfosProducteur,
-            listIem = producteursList?.map { it.nom }
+            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
 

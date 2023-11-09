@@ -11,55 +11,78 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_25sdp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:orientation="vertical"
+            android:weightSum="3">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_title"
                 android:textColor="@color/text_color_white"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
-                android:text="Opérateur" />
+                android:text="Variété" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/item_title2"
                 android:textColor="@color/text_color_white"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:text="Quantité" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/second_title"
+                android:textColor="@color/text_color_white"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="Numéro" />
+                android:text="Fréquence" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:orientation="vertical"
+            android:weightSum="3">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:textColor="@color/text_color_white"
-                android:id="@+id/labelOperateurItem"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/labelItem"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                tools:text="Moov" />
+                tools:text="Akassia" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:textColor="@color/text_color_white"
-                android:id="@+id/numeroItem"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/labelItem2"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                tools:text="24" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:id="@+id/labelSecondItem"
+                android:layout_height="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textStyle="bold"
-                tools:text="0747687857" />
+                tools:text="25" />
 
         </LinearLayout>
 

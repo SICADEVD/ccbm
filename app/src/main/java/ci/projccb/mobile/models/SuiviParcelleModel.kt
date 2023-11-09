@@ -125,6 +125,10 @@ data class SuiviParcelleModel(
     @Expose var intrantNbrListStr: String? = "",
     @Expose var bioferNomListStr: String? = "",
     @Expose var bioferNbrListStr: String? = "",
+    @Expose var qteFongicide: String? = "",
+    @Expose var uniteFongicide: String? = "",
+    @Expose var qteHerbicide: String? = "",
+    @Expose var uniteHerbicide: String? = "",
 ) : Parcelable {
     @Ignore var ombrages: MutableList<OmbrageVarieteModel>? = null
     @Ignore var insecteAmis: MutableList<InsecteAmisModel>? = null

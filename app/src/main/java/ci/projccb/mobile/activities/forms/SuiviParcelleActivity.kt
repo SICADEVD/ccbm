@@ -15,6 +15,7 @@ import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.infospresenters.SuiviParcellePreviewActivity
 import ci.projccb.mobile.adapters.AnimalAdapter
 import ci.projccb.mobile.adapters.InsecteAdapter
+import ci.projccb.mobile.adapters.MultipleItemAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
 import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.models.*
@@ -25,6 +26,10 @@ import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.configDate
+import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
+import ci.projccb.mobile.tools.Commons.Companion.isSpinnerEmpty
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
@@ -453,27 +458,27 @@ class SuiviParcelleActivity : AppCompatActivity() {
     }
 
 
-    fun setupPourritureBruneSelection() {
-        try {
-            selectPourritureBruneOfSuiviParcelle.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        adapterView: AdapterView<*>,
-                        view: View,
-                        position: Int,
-                        l: Long
-                    ) {
-                        pourritureBrune = resources.getStringArray(R.array.lowMediumHigh)[position]
-                    }
-
-                    override fun onNothingSelected(arg0: AdapterView<*>) {
-                    }
-                }
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
-    }
+   // fun setupPourritureBruneSelection() {
+//        try {
+//            selectPourritureBruneOfSuiviParcelle.onItemSelectedListener =
+//                object : AdapterView.OnItemSelectedListener {
+//                    override fun onItemSelected(
+//                        adapterView: AdapterView<*>,
+//                        view: View,
+//                        position: Int,
+//                        l: Long
+//                    ) {
+//                        pourritureBrune = resources.getStringArray(R.array.lowMediumHigh)[position]
+//                    }
+//
+//                    override fun onNothingSelected(arg0: AdapterView<*>) {
+//                    }
+//                }
+//        } catch (ex: Exception) {
+//            LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//        }
+//    }
 
 
     fun setupBenefAgroForestierYesNoSelection() {
@@ -885,10 +890,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
-            this.add(Pair("Insecte parasite", (recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
-            this.add(Pair("Insecte amis", (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toString() ))
-            this.add(Pair("Animaux rencontrés", (recyclerInsecteAmisSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toString() ))
+            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair("Insecte parasite", (recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair("Insecte amis", (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair("Animaux rencontrés", (recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
         }.map { MapEntry(it.first, it.second) }
 
         try {
@@ -1025,23 +1030,23 @@ class SuiviParcelleActivity : AppCompatActivity() {
     }
 
     fun clearFields() {
-        editInsecticeNomSuivi.text  = null
-        editInsecticeNombreSuivi.text   = null
-        editFongicideNombreSuivi.text   = null
-        editFongicideNomSuivi.text  = null
-        editHerbicideNomSuivi.text  = null
-        editHerbicideNombreSuivi.text   = null
+//        editInsecticeNomSuivi.text  = null
+//        editInsecticeNombreSuivi.text   = null
+//        editFongicideNombreSuivi.text   = null
+//        editFongicideNomSuivi.text  = null
+//        editHerbicideNomSuivi.text  = null
+//        editHerbicideNombreSuivi.text   = null
         editDesherbageManuelSuivi.text  = null
         //editVarieteArbreSuivi.text  = null
 //        editNbreSauvageonsSuivi.text    = null
 //        editDateSuivi.text    = null
 //        editVarieteArbreSuivi.text    = null
-        editInsecticeNomSuivi.text    = null
-        editInsecticeNombreSuivi.text    = null
-        editFongicideNomSuivi.text    = null
-        editFongicideNombreSuivi.text    = null
-        editHerbicideNomSuivi.text    = null
-        editHerbicideNombreSuivi.text    = null
+//        editInsecticeNomSuivi.text    = null
+//        editInsecticeNombreSuivi.text    = null
+//        editFongicideNomSuivi.text    = null
+//        editFongicideNombreSuivi.text    = null
+//        editHerbicideNomSuivi.text    = null
+//        editHerbicideNombreSuivi.text    = null
         editDesherbageManuelSuivi.text    = null
 //        editDateSuivi.text    = null
 
@@ -1468,29 +1473,29 @@ class SuiviParcelleActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence de pourriture brune ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectPourritureBruneOfSuiviParcelle,
-            currentVal = suiviParcelleDrafted.presencePourritureBrune,
-            listIem = resources.getStringArray(R.array.fullyPoor)
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-            })
-
-        Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence de SholenShoot ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectSwollenSuivi,
-            currentVal = suiviParcelleDrafted.presenceShooter,
-            listIem = resources.getStringArray(R.array.fullyPoor)
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Y'a t'il une présence de pourriture brune ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectPourritureBruneOfSuiviParcelle,
+//            currentVal = suiviParcelleDrafted.presencePourritureBrune,
+//            listIem = resources.getStringArray(R.array.fullyPoor)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
+//
+//        Commons.setListenerForSpinner(this,
+//            "Y'a t'il une présence de SholenShoot ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectSwollenSuivi,
+//            currentVal = suiviParcelleDrafted.presenceShooter,
+//            listIem = resources.getStringArray(R.array.fullyPoor)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
 
         Commons.setListenerForSpinner(this,
             "Y'a t'il une présence d'insectes parasites ou ravageurs ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
@@ -1782,14 +1787,138 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     private fun setOtherListener() {
 
+        editdateVisiteSuiviParcel.setOnClickListener { configDate(editdateVisiteSuiviParcel) }
+
         setVarieteArbrParcelleRV()
 
         setInsParasSParcelleRV()
 
         setAutreInsParasSParcelleRV()
 
+        setMaladieSParcelleRV()
+
+        setPesticideSParcelleRV()
+
         setAnimauSParcelleRV()
 
+    }
+
+    private fun setPesticideSParcelleRV( libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+        val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
+        var countN = 0
+//        libeleList.forEach {
+//            pesticideListSParcelle.add(AdapterItemModel(0, it, valueList.get(countN)))
+//            countN++
+//        }
+        val pesticideSParcelleAdapter = MultipleItemAdapter(pesticideListSParcelle, )
+        try {
+            recyclerIntrantListSuiviParcel.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerIntrantListSuiviParcel.adapter = pesticideSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddIntrantListSuiviParcel.setOnClickListener {
+            try {
+                if (selectIntrantNomSParcell.isSpinnerEmpty()
+                    || selectIntrantContenantSParcell.isSpinnerEmpty()
+                    || selectIntrantUniteSParcell.isSpinnerEmpty()
+                    || editQuantitIntrantSParcel.text.toString().isNullOrBlank()
+                    || editFrequencIntrantSParcel.text.toString().isNullOrBlank()
+                ) {
+                    Commons.showMessage("Renseignez des données, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val pesticideParRav = AdapterItemModel(
+                    0,
+                    selectIntrantNomSParcell.getSpinnerContent(),
+                    selectIntrantContenantSParcell.getSpinnerContent(),
+                    selectIntrantUniteSParcell.getSpinnerContent(),
+                    editQuantitIntrantSParcel.text.toString(),
+                    editFrequencIntrantSParcel.text.toString(),
+                )
+
+                if(pesticideParRav.value?.length?:0 > 0){
+                    pesticideListSParcelle?.forEach {
+                        if (it.value?.uppercase() == pesticideParRav.value?.uppercase()) {
+                            ToastUtils.showShort("Cet autre insecte est déja ajouté")
+
+                            return@setOnClickListener
+                        }
+                    }
+
+                    pesticideListSParcelle?.add(pesticideParRav)
+                    pesticideSParcelleAdapter?.notifyDataSetChanged()
+
+                    selectIntrantNomSParcell.setSelection(0)
+                    selectIntrantContenantSParcell.setSelection(0)
+                    selectIntrantUniteSParcell.setSelection(0)
+                    editQuantitIntrantSParcel.text?.clear()
+                    editFrequencIntrantSParcel.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+    }
+
+    private fun setMaladieSParcelleRV( libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+        val maladieListSParcelle = mutableListOf<OmbrageVarieteModel>()
+        var countN = 0
+        libeleList.forEach {
+            maladieListSParcelle.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+            countN++
+        }
+        val maladieSParcelleAdapter = OmbrageAdapter(maladieListSParcelle, "Appelation", "Son état")
+        try {
+            recyclerMaladieListSuiviParcel.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerMaladieListSuiviParcel.adapter = maladieSParcelleAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddMaladieListSuiviParcel.setOnClickListener {
+            try {
+                if (selectMaladieNomSParcell.isSpinnerEmpty() || selectEtatMaladieSParcell.isSpinnerEmpty()
+                ) {
+                    Commons.showMessage("Renseignez des données, svp !", this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val maladieParRav = OmbrageVarieteModel(
+                    0,
+                    selectMaladieNomSParcell.getSpinnerContent(),
+                    selectEtatMaladieSParcell.getSpinnerContent()
+                )
+
+                if(maladieParRav.variete?.length?:0 > 0){
+                    maladieListSParcelle?.forEach {
+                        if (it.variete?.uppercase() == maladieParRav.variete?.uppercase() && it.nombre == maladieParRav.nombre) {
+                            ToastUtils.showShort("Cet autre insecte est déja ajouté")
+
+                            return@setOnClickListener
+                        }
+                    }
+
+                    maladieListSParcelle?.add(maladieParRav)
+                    maladieSParcelleAdapter?.notifyDataSetChanged()
+
+                    selectMaladieNomSParcell.setSelection(0)
+                    selectEtatMaladieSParcell.setSelection(0)
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
     }
 
     private fun setAllSelection() {
@@ -1799,6 +1928,52 @@ class SuiviParcelleActivity : AppCompatActivity() {
         setupSectionSelection()
 
         setupVarieteArbrMultiSelection()
+
+        Commons.setListenerForSpinner(this,
+            "Avez-vous traité votre parcelle ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAtuTraiteSParcell,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerPesticideListSParcel.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Avez-vous rencontrer des animaux ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAnimauRencontSParcell,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearAnimauxContainerSuiviParcelle.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Avez-vous constaté cette maladie ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectMaladieConstSParcell,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    if(visibility == View.VISIBLE)  setupEtatMaladieSelector(resources.getStringArray(R.array.fullyPoor1))
+                    else setupEtatMaladieSelector(resources.getStringArray(R.array.fullyPoor2))
+                }
+            })
 
         Commons.setListenerForSpinner(this,
             "Bénéficies tu d'arbres agro-forestiers ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
@@ -1863,19 +2038,33 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     }
 
+    private fun setupEtatMaladieSelector(stringArray: Array<String>, currentVal: String? = null) {
+        Commons.setListenerForSpinner(this,
+            "Choix de l'état !","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectEtatMaladieSParcell,
+            currentVal = currentVal,
+            listIem = stringArray
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+    }
+
     fun setupVarieteArbrMultiSelection(currentList : MutableList<String> = mutableListOf()) {
-        val varieteArbreList = resources.getStringArray(R.array.varieteArbre)
+        val varieteArbreList = AssetFileHelper.getListDataFromAsset(25, this) as MutableList<CommonData>
         var listSelectVarieteArbrePosList = mutableListOf<Int>()
         listSelectVarieteArbreList = mutableListOf<String>()
 
         var indItem = 0
         (varieteArbreList)?.forEach {
-            if(currentList.size > 0){ if(currentList.contains(it)) listSelectVarieteArbrePosList.add(indItem) }
+            if(currentList.size > 0){ if(currentList.contains(it.nom)) listSelectVarieteArbrePosList.add(indItem) }
             indItem++
         }
 
-        selectVarAbrOmbSuivParcel.setTitle("Choix de la variété")
-        selectVarAbrOmbSuivParcel.setItems(varieteArbreList)
+        selectVarAbrOmbSuivParcel.setTitle("Quelle variété d’arbre ombrage souhaiterais-tu avoir ?")
+        selectVarAbrOmbSuivParcel.setItems(varieteArbreList.map { it.nom })
         //multiSelectSpinner.hasNoneOption(true)
         selectVarAbrOmbSuivParcel.setSelection(listSelectVarieteArbrePosList.toIntArray())
         selectVarAbrOmbSuivParcel.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
@@ -2138,7 +2327,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
                 val animaux = CommonData(
                     0,
-                    editInsecteNomAmisParcelle.text.toString().trim(),
+                    editAnimalSuiviParcelle.text.toString().trim(),
                 )
 
                 if(animaux.nom?.length?:0 > 0){
@@ -2153,7 +2342,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     animauListSParcelle?.add(animaux)
                     animauSParcelleAdapter?.notifyDataSetChanged()
 
-                    editInsecteNomAmisParcelle.text?.clear()
+                    editAnimalSuiviParcelle.text?.clear()
                 }
                 //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
             } catch (ex: Exception) {
