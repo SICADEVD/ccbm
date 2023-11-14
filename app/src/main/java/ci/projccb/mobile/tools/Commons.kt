@@ -29,9 +29,13 @@ import android.widget.NumberPicker
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
@@ -52,14 +56,28 @@ import ci.projccb.mobile.activities.lists.ParcellesListActivity
 import ci.projccb.mobile.activities.lists.ProducteursListActivity
 import ci.projccb.mobile.activities.lists.SuiviPacellesListActivity
 import ci.projccb.mobile.activities.lists.UpdateContentsListActivity
+import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.models.AdapterItemModel
+import ci.projccb.mobile.models.OmbrageVarieteModel
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.services.SynchronisationIntentService
+import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
+import ci.projccb.mobile.tools.Commons.Companion.isSpinnerEmpty
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddPestListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editFrequencPestSParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editQuantitPestSParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestContenantSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestNomSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestUniteSParcell
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -709,7 +727,146 @@ class Commons {
             imgProfileDashboard.colorFilter = colorFilter
         }
 
+        fun setEditAndSpinnerRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            editItem: AppCompatEditText,
+            selectItem: AppCompatSpinner,
+            libelle: String = "Libellé",
+            valeur: String = "Valeur",
+            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+            val itemList = mutableListOf<OmbrageVarieteModel>()
+            var countN = 0
+            libeleList.forEach {
+                itemList.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+                countN++
+            }
+            val itemAdapter = OmbrageAdapter(itemList, libelle, valeur)
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = itemAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (editItem.text.toString()
+                            .isEmpty() || selectItem.isSpinnerEmpty()
+                    ) {
+                        Commons.showMessage("Renseignez des données sur l'autre insecte, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    val modelAdd = OmbrageVarieteModel(
+                        0,
+                        editItem.text.toString().trim(),
+                        selectItem.selectedItem.toString().trim()
+                    )
+
+                    if(modelAdd.variete?.length?:0 > 0){
+                        itemList?.forEach {
+                            if (it.variete?.uppercase() == modelAdd.variete?.uppercase() && it.nombre == modelAdd.nombre) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        itemList?.add(modelAdd)
+                        itemAdapter?.notifyDataSetChanged()
+
+                        selectItem.setSelection(0)
+                        editItem.text?.clear()
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setFiveItremRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            selectNom: AppCompatSpinner,
+            selectContenant: AppCompatSpinner,
+            selectUnite: AppCompatSpinner,
+            editQte: AppCompatEditText,
+            editFreq: AppCompatEditText,
+            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+            val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
+            var countN = 0
+//        libeleList.forEach {
+//            pesticideListSParcelle.add(AdapterItemModel(0, it, valueList.get(countN)))
+//            countN++
+//        }
+            val pesticideSParcelleAdapter = MultipleItemAdapter(pesticideListSParcelle, )
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = pesticideSParcelleAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (selectNom.isSpinnerEmpty()
+                        || selectContenant.isSpinnerEmpty()
+                        || selectUnite.isSpinnerEmpty()
+                        || editQte.text.toString().isNullOrBlank()
+                        || editFreq.text.toString().isNullOrBlank()
+                    ) {
+                        Commons.showMessage("Renseignez des données, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    val pesticideParRav = AdapterItemModel(
+                        0,
+                        selectNom.getSpinnerContent(),
+                        selectContenant.getSpinnerContent(),
+                        selectUnite.getSpinnerContent(),
+                        editQte.text.toString(),
+                        editFreq.text.toString(),
+                    )
+
+                    if(pesticideParRav.value?.length?:0 > 0){
+                        pesticideListSParcelle?.forEach {
+                            if (it.value?.uppercase() == pesticideParRav.value?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        pesticideListSParcelle?.add(pesticideParRav)
+                        pesticideSParcelleAdapter?.notifyDataSetChanged()
+
+                        selectNom.setSelection(0)
+                        selectContenant.setSelection(0)
+                        selectUnite.setSelection(0)
+                        editQte.text?.clear()
+                        editFreq.text?.clear()
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
     }
+
 
 }
 

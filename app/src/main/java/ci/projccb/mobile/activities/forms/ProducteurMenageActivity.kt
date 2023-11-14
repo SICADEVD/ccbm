@@ -30,14 +30,7 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_localite.selectSourceEauLocalite
-import kotlinx.android.synthetic.main.activity_parcelle.containerAutreProtectParcelle
-import kotlinx.android.synthetic.main.activity_producteur.containerAutreCertifProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.*
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCancelSuivi
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectVarAbrOmbSuivParcel
 import java.util.ArrayList
 
 class ProducteurMenageActivity : AppCompatActivity() {
@@ -558,21 +551,21 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun setupDonFemmeYesNoSelection() {
-        selectDonCacaoYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                donFemmeCacaoYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-
-                if (donFemmeCacaoYesNo == "oui") {
-                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.VISIBLE
-                } else {
-                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
-                }
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-
-            }
-        }
+//        selectDonCacaoYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                donFemmeCacaoYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                if (donFemmeCacaoYesNo == "oui") {
+//                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.VISIBLE
+//                } else {
+//                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//            }
+//        }
     }
 
 /*
@@ -808,7 +801,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         donFemmeCacaoYesNo = ""
         selectFemmeActiviteYesNoMenage.setSelection(0)
-        selectDonCacaoYesNoMenage.setSelection(0)
+        //selectDonCacaoYesNoMenage.setSelection(0)
 
         //editQuartierMenage.requestFocus()
 
@@ -1081,32 +1074,36 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
+                    //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
                     containerFemmeAgricoleMenage.visibility = visibility
+                    editSuperfDefFemmActMenage.visibility = visibility
+                    //containerFemmeNonAgricoleMenage.visibility = View.GONE
                 }else if(itemId == 2){
-                    setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
-                    containerFemmeNonAgricoleMenage.visibility = visibility
+                    //setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
+                    //containerFemmeNonAgricoleMenage.visibility = visibility
+                    containerFemmeAgricoleMenage.visibility = visibility
+                    editSuperfDefFemmActMenage.visibility = View.GONE
                 }
             })
 
 
 
-        Commons.setListenerForSpinner(this,
-            "Donnes tu une partie de ton cacao ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectDonCacaoYesNoMenage,
-            currentVal = menageUndrafted.champFemme,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
-            listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-                if (itemId == 1) {
-                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Donnes tu une partie de ton cacao ?",
+//            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectDonCacaoYesNoMenage,
+//            currentVal = menageUndrafted.champFemme,
+//            itemChanged = arrayListOf(Pair(1, "Oui")),
+//            listIem = resources.getStringArray(R.array.YesOrNo)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                if (itemId == 1) {
+//                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = visibility
+//                }
+//            })
 
         Commons.setListenerForSpinner(this,
             "Avez-vous des équipements de protection individuel (EPI) ?",
@@ -1346,21 +1343,21 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     private fun setupPrecisionActiv(stringArray: Array<String>, currentVal: String? = null) {
 
-        Commons.setListenerForSpinner(this,
-            "Précisez le type de l'activité :",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectFemmeActivitPrecisMenage,
-            currentVal = currentVal,
-            listIem = stringArray
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-                if (itemId == 1) {
-                    containerFemmeActivitPrecisMenage.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Précisez le type de l'activité :",
+//            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectFemmeActivitPrecisMenage,
+//            currentVal = currentVal,
+//            listIem = stringArray
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                if (itemId == 1) {
+//                    containerFemmeActivitPrecisMenage.visibility = visibility
+//                }
+//            })
 
     }
 
@@ -1631,7 +1628,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Votre femme fait des activités ?",
+            "Est-ce que votre conjoint exerce une activité génératrice de revenu ?",
             "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectFemmeActiviteYesNoMenage,
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1658,13 +1655,31 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
+                    //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
                     containerFemmeAgricoleMenage.visibility = visibility
-                    containerFemmeNonAgricoleMenage.visibility = View.GONE
+                    editSuperfDefFemmActMenage.visibility = visibility
+                    //containerFemmeNonAgricoleMenage.visibility = View.GONE
                 }else if(itemId == 2){
-                    setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
-                    containerFemmeNonAgricoleMenage.visibility = visibility
-                    containerFemmeAgricoleMenage.visibility = View.GONE
+                    //setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
+                    //containerFemmeNonAgricoleMenage.visibility = visibility
+                    containerFemmeAgricoleMenage.visibility = visibility
+                    editSuperfDefFemmActMenage.visibility = View.GONE
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Comment avez-vous obtenu le capital de démarrage ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectParcelObtenuDefMenage,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = resources.getStringArray(R.array.capitalDemarrag)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    conatinerFemmeAutrCapiDemaMenage.visibility = visibility
                 }
             })
 
@@ -1684,21 +1699,21 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 }
             })
 
-        Commons.setListenerForSpinner(this,
-            "Donnes tu une partie de ton cacao ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectDonCacaoYesNoMenage,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
-            listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-                if (itemId == 1) {
-                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Donnes tu une partie de ton cacao ?",
+//            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectDonCacaoYesNoMenage,
+//            itemChanged = arrayListOf(Pair(1, "Oui")),
+//            listIem = resources.getStringArray(R.array.YesOrNo)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                if (itemId == 1) {
+//                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = visibility
+//                }
+//            })
 
         Commons.setListenerForSpinner(this,
             "Avez-vous des équipements de protection individuel (EPI) ?",

@@ -41,24 +41,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_parcelle.clickCancelParcelle
-import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddVarieteArbrSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickSaveAnimauxSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerItemRecusSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerVarieteArbrSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editAnimalSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editInsecteNomAmisParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editQtVarieteArbrSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteOfSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerVarieteArbrListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAbrAgroForesSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectLocaliteSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectProducteurSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectSectionSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectVarieteArbrSuiviParcel
+
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.*
 import java.util.ArrayList
 

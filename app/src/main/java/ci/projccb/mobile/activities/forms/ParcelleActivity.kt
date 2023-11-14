@@ -54,8 +54,7 @@ import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerListInsectSuivParce
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerVarieteArbrListSuiviParcel
+
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectInsecteParOuRavSuivi
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.recyclerCultureInfosProducteur
 import org.joda.time.DateTime
@@ -501,7 +500,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 origin = "local"
 
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
-                arbreStr = GsonUtils.toJson((recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
+                arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
         }

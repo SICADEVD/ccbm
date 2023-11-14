@@ -20,7 +20,7 @@
 
     <string-array name="capitalDemarrag">
         <item>Vente de cacao</item>
-        <item>AVEK</item>
+        <item>AVEC</item>
         <item>Association</item>
         <item>Subvention</item>
         <item>Micro Crédit</item>
@@ -35,7 +35,7 @@
 
     <string-array name="agricoleActivite">
         <item>Culture perenne</item>
-        <item>Cultures vivrieres</item>
+        <item>Cultures vivrières</item>
         <item>Elevage</item>
         <item>Pisciculture</item>
     </string-array>
@@ -268,9 +268,12 @@
 
 
     <string-array name="IntrantDesigne">
-        <item>NPK</item>
         <item>Déchets Animal</item>
+        <item>NPK</item>
         <item>Compost</item>
+        <item>Biofertilisant/Bio stimulant</item>
+        <item>Engrais organique préfabriqué</item>
+        <item>Engrais foliaire</item>
     </string-array>
 
     <string-array name="maternelleLevel">
