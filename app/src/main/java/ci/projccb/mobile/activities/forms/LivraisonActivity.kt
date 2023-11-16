@@ -7,11 +7,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.LivraisonPreviewActivity
+import ci.projccb.mobile.activities.infospresenters.SuiviParcellePreviewActivity
 import ci.projccb.mobile.adapters.LivraisonSousModAdapter
+import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -19,16 +23,26 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.configDate
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.Constants.CURRENT_PRICE_PER_QUANTITY
+import ci.projccb.mobile.tools.MapEntry
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_livraison.*
+import kotlinx.android.synthetic.main.activity_producteur.selectProgramProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.linearAnimauxContainerSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAnimauRencontSParcell
 import java.util.*
 
 class LivraisonActivity : AppCompatActivity() {
@@ -39,6 +53,7 @@ class LivraisonActivity : AppCompatActivity() {
     }
 
 
+    private val programmeCommon: CommonData = CommonData()
     private var livraisonDrafted: LivraisonModel? = null
     private var isFirstDelegue: Boolean = true
     private var livraisonSousModelAdapter: LivraisonSousModAdapter? = null
@@ -146,29 +161,6 @@ class LivraisonActivity : AppCompatActivity() {
             //selectLocaliteLivraison?.adapter = null
             return
         }
-
-        val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-        //selectLocaliteLivraison!!.adapter = localiteAdapter
-
-        //selectLocaliteLivraison.setTitle("Choisir la localite")
-
-//        selectLocaliteLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-//                val locality = localitesList!![position]
-//                localiteSelected = locality.nom!!
-//
-//                localiteIdSelected = if (locality.isSynced) {
-//                    locality.id!!.toString()
-//                } else {
-//                    locality.uid.toString()
-//                }
-//
-//                setupProducteurSelection(localiteIdSelected)
-//            }
-//
-//            override fun onNothingSelected(arg0: AdapterView<*>) {
-//            }
-//        }
     }
 
 
@@ -282,7 +274,7 @@ class LivraisonActivity : AppCompatActivity() {
         val staffAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, concernessDatas!!)
         selectStaffList.adapter = staffAdapter
 
-        selectStaffList.setTitle("Choisir le délégué")
+        selectStaffList.setTitle("Choix du délégué")
         selectStaffList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val staff = staffList!![position]
@@ -390,13 +382,65 @@ class LivraisonActivity : AppCompatActivity() {
         })
     }
 
-    fun setAll() {
+    private fun setProgrammeSpinner(currVal2:String? = null) {
+
+        var programmesDao = CcbRoomDatabase.getDatabase(applicationContext)?.programmesDao();
+        var programmeListi = programmesDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            programmeListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix du programme !",
+            "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (programmeListi?.size!! > 0) false else true,
+            currentVal = libItem,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            spinner = selectProgramProducteur,
+            listIem = programmeListi?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val programme = programmeListi!![it]
+                programmeCommon.nom = programme.libelle!!
+                programmeCommon.id = programme.id!!
+
+            },
+            onSelected = { itemId, visibility ->
+                //if(itemId == 1) containerAutreProgramProducteur.visibility = visibility
+            })
+
+    }
+
+    fun setAllListener() {
         setupLocaliteSelection()
         setupStaffSelection()
+
+        setProgrammeSpinner()
         //setupConcerneeSelection()
         //setupCampagneSelection()
         //setupTypeProduitSelection()
         //For RecycleView
+        Commons.setListenerForSpinner(this,
+            "Quel est le type de cacao ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeLivraison,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerProgramLivraison.visibility = visibility
+                }
+            })
 
         setupLivraisonSousModRv()
     }
@@ -442,49 +486,30 @@ class LivraisonActivity : AppCompatActivity() {
             return
         }
 
-        if( editNomExpediteur.text.isNullOrBlank() or editNomDestinataire.text.isNullOrBlank()){
-            showMessage(
-                "L'une des cases chargées d'entrer le nom est vide !",
-                this,
-                finished = false,
-                callback = {},
-                deconnec = false,
-                positive = "Compris !",
-                showNo = false
-            )
-            return
+        val itemModelOb = getLivraisonObjet()
+
+        if(itemModelOb == null) return
+
+        val livraisonModel = itemModelOb?.first.apply {
+            this?.apply {
+                cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString()
+                delegueId = staffId
+                producteursId = producteurId
+                senderStaff = staffId
+                magasinSectionId = magasinId.toString()
+            }
         }
 
-        if( editContactExpediteur.text.isNullOrBlank() or editContactDestinataire.text.isNullOrBlank()){
-            showMessage(
-                "L'une des cases chargées d'entrer le contact est vide !",
-                this,
-                finished = false,
-                callback = {},
-                deconnec = false,
-                positive = "Compris !",
-                showNo = false
-            )
-            return
-        }
-
-        if( editEmailExpediteur.text.isNullOrBlank() or editEmailDestinataire.text.isNullOrBlank()){
-            showMessage(
-                "L'une des cases chargées d'entrer l'email est vide !",
-                this,
-                finished = false,
-                callback = {},
-                deconnec = false,
-                positive = "Compris !",
-                showNo = false
-            )
-            return
-        }
-
-        val livraisonModel = getLivraisonObjet()
+        val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
+//            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            livraisonSousModelList.forEach {
+                this.add(Pair(it.parcelleIdName, "${it.typeName} | ${it.quantityNb} | ${it.amountNb} | ${it.scelleList.toModifString()}") as Pair<String, String>)
+            }
+        }.map { MapEntry(it.first, it.second) }
 
        try {
            val intentLivraisonPreview = Intent(this, LivraisonPreviewActivity::class.java)
+           intentLivraisonPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
            intentLivraisonPreview.putExtra("preview", livraisonModel)
            intentLivraisonPreview.putExtra("draft_id", draftedDataLivraison?.uid)
            startActivity(intentLivraisonPreview)
@@ -495,10 +520,10 @@ class LivraisonActivity : AppCompatActivity() {
 
 
     fun clearFields() {
-        setAll()
+        setAllListener()
 
         editDateLivraison.text = null
-        clearInfoLivraisonTable()
+        //clearInfoLivraisonTable()
 
         staffId = ""
         magasinId = ""
@@ -510,7 +535,8 @@ class LivraisonActivity : AppCompatActivity() {
         //selectLocaliteLivraison.setSelection(0)
     }
 
-    fun getLivraisonObjet(): LivraisonModel {
+    fun getLivraisonObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<LivraisonModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
 
         val listOflivraisonSousModelProdName = arrayListOf<String>()
         val listOflivraisonSousModelProdId = arrayListOf<String>()
@@ -533,48 +559,135 @@ class LivraisonActivity : AppCompatActivity() {
 
         }
 
-        val livraisonModel = LivraisonModel(
-            uid = 0,    id = 0,
-            cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString(),
-            estimatDate = dateLivraison,
-            paymentStatus = resources.getStringArray(R.array.statuPaiement).get(selectStatuPaiementList.selectedItemPosition),
-            delegueId = staffId,
-            producteursId = producteurId,
+//        val livraisonModel = LivraisonModel(
+//            uid = 0,    id = 0,
+//            cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString(),
+//            estimatDate = dateLivraison,
+//            paymentStatus = resources.getStringArray(R.array.statuPaiement).get(selectStatuPaiementList.selectedItemPosition),
+//            delegueId = staffId,
+//            producteursId = producteurId,
+//            isSynced = false,
+//            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+//            origin = "local",
+//            delegueNom = staffNomPrenoms,
+//            senderStaff = staffId,
+//            senderName = editNomExpediteur.text.toString(),
+//            senderPhone = editContactExpediteur.text.toString(),
+//            senderEmail = editEmailExpediteur.text.toString(),
+//            senderAddress = editAdressExpediteur.text.toString(),
+//            receiverName = editNomDestinataire.text.toString(),
+//            receiverPhone = editContactDestinataire.text.toString(),
+//            receiverEmail = editEmailDestinataire.text.toString(),
+//            receiverAddress = editAdressDestinataire.text.toString(),
+//            magasinSectionId = magasinId.toString(),
+//            magasinSection = magasinNom.toString(),
+//            reduction = editReduction.text.toString(),
+//            sousTotalReduce = tvSousTotal.text.toString(),
+//            totalReduce = tvTotalReduce.text.toString(),
+//            livraisonSousModelProdNamesStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdName),
+//            livraisonSousModelProdIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdId),
+//            livraisonSousModelParcellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelle),
+//            livraisonSousModelParcelleIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelleId),
+//            livraisonSousModelTypesStringify = ApiClient.gson.toJson(listOflivraisonSousModelType),
+//            livraisonSousModelQuantitysStringify = ApiClient.gson.toJson(listOflivraisonSousModelQuantity),
+//            livraisonSousModelAmountsStringify = ApiClient.gson.toJson(listOflivraisonSousModelAmount),
+//            livraisonSousModelScellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelScelle),
+//        )
+
+
+        var itemList = getSetupLivraisonModel(LivraisonModel(
+            uid = 0,
+            id = 0,
             isSynced = false,
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
             origin = "local",
-            delegueNom = staffNomPrenoms,
-            senderStaff = staffId,
-            senderName = editNomExpediteur.text.toString(),
-            senderPhone = editContactExpediteur.text.toString(),
-            senderEmail = editEmailExpediteur.text.toString(),
-            senderAddress = editAdressExpediteur.text.toString(),
-            receiverName = editNomDestinataire.text.toString(),
-            receiverPhone = editContactDestinataire.text.toString(),
-            receiverEmail = editEmailDestinataire.text.toString(),
-            receiverAddress = editAdressDestinataire.text.toString(),
-            magasinSectionId = magasinId.toString(),
-            magasinSection = magasinNom.toString(),
-            reduction = editReduction.text.toString(),
-            sousTotalReduce = tvSousTotal.text.toString(),
-            totalReduce = tvTotalReduce.text.toString(),
-            livraisonSousModelProdNamesStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdName),
-            livraisonSousModelProdIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdId),
-            livraisonSousModelParcellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelle),
-            livraisonSousModelParcelleIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelleId),
-            livraisonSousModelTypesStringify = ApiClient.gson.toJson(listOflivraisonSousModelType),
-            livraisonSousModelQuantitysStringify = ApiClient.gson.toJson(listOflivraisonSousModelQuantity),
-            livraisonSousModelAmountsStringify = ApiClient.gson.toJson(listOflivraisonSousModelAmount),
-            livraisonSousModelScellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelScelle),
-        )
+        ), mutableListOf<Pair<String,String>>())
 
-        return livraisonModel
+        itemList.first.apply {
+            livraisonSousModelProdNamesStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdName)
+            livraisonSousModelProdIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdId)
+            livraisonSousModelParcellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelle)
+            livraisonSousModelParcelleIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelleId)
+            livraisonSousModelTypesStringify = ApiClient.gson.toJson(listOflivraisonSousModelType)
+            livraisonSousModelQuantitysStringify = ApiClient.gson.toJson(listOflivraisonSousModelQuantity)
+            livraisonSousModelAmountsStringify = ApiClient.gson.toJson(listOflivraisonSousModelAmount)
+            livraisonSousModelScellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelScelle)
+        }
+
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial2 || isMissingDial2) ){
+            Commons.showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return  itemList
     }
 
+    fun getSetupLivraisonModel(
+        prodModel: LivraisonModel,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<LivraisonModel, MutableList<Pair<String, String>>> {
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_livraison)
+        Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
+    }
+
+    fun passSetupLivraisonModel(
+        prodModel: LivraisonModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_livraison)
+        prodModel?.let {
+            Commons.setAllValueOfTextViews(mainLayout, prodModel)
+        }
+    }
 
     fun draftLivraison(draftModel: DataDraftedModel?) {
 
-        val livraisonModelDraft = getLivraisonObjet()
+        val itemModelOb = getLivraisonObjet(false)
+
+        if(itemModelOb == null) return
+
+        val livraisonModelDraft = itemModelOb?.first.apply {
+            this?.apply {
+                cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString()
+                delegueId = staffId
+                producteursId = producteurId
+                senderStaff = staffId
+                magasinSectionId = magasinId.toString()
+            }
+        }
 
         Commons.showMessage(
             message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
@@ -672,7 +785,9 @@ class LivraisonActivity : AppCompatActivity() {
             true
         }
 
+        setProgrammeSpinner(livraisonDrafted?.programme_id)
 
+        passSetupLivraisonModel(livraisonDrafted)
         
     }
 
@@ -699,26 +814,10 @@ class LivraisonActivity : AppCompatActivity() {
         livraisonDao = CcbRoomDatabase.getDatabase(this)?.livraisonDao()
 
 
-
-        editDateLivraison.setOnClickListener {
-            datePickerDialog = null
-            val calendar: Calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-
-                //LogUtils.e(TAG, Commons.convertDate("${day}-${(month + 1)}-$year", false))
-                editDateLivraison.setText(Commons.convertDate("${day}-${(month + 1)}-$year", false))
-                dateLivraison = editDateLivraison.text?.toString()!!
-            }, year, month, dayOfMonth)
-
-            datePickerDialog!!.datePicker.maxDate = Date().time
-            datePickerDialog?.show()
-        }
-
         clickCancelLivraison.setOnClickListener {
-            clearFields()
+            //clearFields()
+            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
         }
 
         clickSaveLivraison.setOnClickListener {
@@ -733,7 +832,18 @@ class LivraisonActivity : AppCompatActivity() {
             draftLivraison(draftedDataLivraison ?: DataDraftedModel(uid = 0))
         }
 
-        setAll()
+        setOtherListener()
+
+        if (intent.getStringExtra("from") != null) {
+            draftedDataLivraison = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
+            undraftedDatas(draftedDataLivraison!!)
+        }else{
+            setAllListener()
+        }
+    }
+
+    private fun setOtherListener() {
+        editDateLivraison.setOnClickListener { configDate(editDateLivraison) }
         setListener()
 
         clickAddLivraisonInfo.setOnClickListener {
@@ -791,36 +901,12 @@ class LivraisonActivity : AppCompatActivity() {
                 livraisonSousModelList.add(livraisonSousModel)
                 livraisonSousModelAdapter!!.notifyDataSetChanged()
 
-                clearInfoLivraisonTable()
+                //clearInfoLivraisonTable()
 
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
             }
-        }
-
-//        editVolumeLivraison.doAfterTextChanged {
-//            try {
-//
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
-//        }
-//
-//        editNombreSacsLivraison.doAfterTextChanged {
-//            try {
-//
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
-//        }
-
-//        applyFilters(editNombreSacsLivraison, withZero = true)
-//        applyFilters(editVolumeLivraison, withZero = true)
-
-        if (intent.getStringExtra("from") != null) {
-            draftedDataLivraison = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
-            undraftedDatas(draftedDataLivraison!!)
         }
     }
 

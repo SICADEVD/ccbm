@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout_livraison"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -781,7 +782,7 @@ android:textColor="@color/text_color_white"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Quel est le type ?"/>
+                            android:text="Quel est le type de cacao ?"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -797,6 +798,48 @@ android:textColor="@color/text_color_white"
                                 android:entries="@array/type_produit"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerProgramLivraison"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Selectionner un programme"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag=""
+                                android:id="@+id/selectProgramLivraison"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
 
                         </LinearLayout>
 
@@ -941,7 +984,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="wrap_content"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_height="wrap_content"
-    
+                                android:paddingLeft="@dimen/_15sdp"
                                 android:textStyle="bold"
                                 android:text="Quantité"/>
 
@@ -967,6 +1010,7 @@ android:textColor="@color/text_color_white"
                        <Space android:layout_width="@dimen/_10sdp"  android:layout_height="match_parent"/>
 
                        <LinearLayout
+                           android:visibility="gone"
                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:orientation="vertical"
@@ -1039,6 +1083,7 @@ android:textColor="@color/text_color_white"
             <Space android:layout_width="match_parent"  android:layout_height="@dimen/_10sdp"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -1075,6 +1120,7 @@ android:textColor="@color/text_color_white"
                 android:layout_height="@dimen/_10sdp" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

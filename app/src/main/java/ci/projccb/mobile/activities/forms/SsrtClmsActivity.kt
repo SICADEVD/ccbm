@@ -23,7 +23,7 @@ import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
-import ci.projccb.mobile.tools.Commons.Companion.applyFilters
+import ci.projccb.mobile.tools.Commons.Companion.configHour
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
@@ -32,8 +32,10 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_ssrt_clms.*
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectLocaliteUniteAgricole
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectProducteurInfosProducteur
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectSectionInfProducteur
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 
@@ -74,48 +76,120 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     var draftedSsrteModel: DataDraftedModel? = null
     var fromAction = ""
 
+    val sectionCommon = CommonData();
+    val localiteCommon = CommonData();
+    val producteurCommon = CommonData();
 
-    fun setupLocaliteSelection() {
-        localitesList = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()?.getAll(agentID = SPUtils.getInstance().getInt(
-            Constants.AGENT_ID, 0).toString()) ?: mutableListOf()
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-        if (localitesList?.isEmpty() == true) {
-            showMessage(
-                "La liste des localités est vide ! Refaite une mise à jour.",
-                this,
-                finished = false,
-                callback = {},
-                "Compris !",
-                false,
-                showNo = false,
-            )
-
-            localiteId = ""
-            localiteNom = ""
-            //selectLocaliteSsrt?.adapter = null
-        } else {
-            val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-//            selectLocaliteSsrt!!.adapter = localiteAdapter
-//            selectLocaliteSsrt.setTitle("Choisir la localite")
-//
-//            selectLocaliteSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-//                    val locality = localitesList!![position]
-//                    localiteNom = locality.nom!!
-//
-//                    localiteId = if (locality.isSynced) {
-//                        locality.id!!.toString()
-//                    } else {
-//                        locality.uid.toString()
-//                    }
-//
-//                    setupProducteurSelection(localiteId)
-//                }
-//
-//                override fun onNothingSelected(arg0: AdapterView<*>) {
-//                }
-//            }
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
         }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la section !",
+            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = libItem ,
+            spinner = selectSectionInfProducteur,
+            listIem = sectionList?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3)
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la localité !",
+            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectLocaliteUniteAgricole,
+            listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    setupProducteurSelection(localiteCommon.id!!, currVal2)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupProducteurSelection(id: Int, currVal2: String? = null) {
+        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+            ?.getProducteursByLocalite(localite = id.toString())?: arrayListOf<ProducteurModel>()
+
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if ("${it.nom} ${it.prenoms}".equals(idc, ignoreCase = true)) libItem = "${it.nom} ${it.prenoms}"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix du producteur !",
+            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (producteursList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectProducteurInfosProducteur,
+            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    producteurCommon.id = producteur.id!!
+
+                    //setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
     }
 
 
@@ -199,94 +273,94 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     }
 
 
-    fun setupDejaScholariseYesNoSelection() {
-        selectDejaScolariseSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                schoolOldYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-
-                when (schoolOldYesNo.uppercase()) {
-                    "OUI" -> {
-                        setupOldSchoolLevelSelection()
-                        linearNiveauEtudeAtteintContainerSsrt.visibility = VISIBLE
-                    }
-                    "NON" -> {
-                        schoolOldLevel = ""
-                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
-                    }
-                    else -> {
-                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
-                    }
-                }
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-    }
-
-
-    fun setupSchoolStatusSelection() {
-        selectSchoolStatusSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                schoolYesNo = resources.getStringArray(R.array.YesOrNo)[position]
-                setSchoolLevelSelection()
-                when (schoolYesNo.uppercase()) {
-                    "OUI" -> {
-                        setSchoolLevelSelection()
-                        linearSchoolLevelContainerSsrt.visibility = VISIBLE
-                        linearSchoolNameContainerSsrt.visibility = VISIBLE
-                        linearVillageDistanceContainerSsrt.visibility = VISIBLE
-                        linearMoyenDeplacementContainerSsrt.visibility = VISIBLE
-                        linearClasseLevelContainerSsrt.visibility = VISIBLE
-                        // linearSchoolInPlaceYesNoContainerSsrt.visibility = VISIBLE
-
-                        linearDejaScolariseContainerSsrt.visibility = GONE
-                        linearNoSchoolRaisonContainerSsrt.visibility = GONE
-                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
-                    }
-                    "NON" -> {
-                        linearDejaScolariseContainerSsrt.visibility = VISIBLE
-                        linearNoSchoolRaisonContainerSsrt.visibility = VISIBLE
-                        linearNiveauEtudeAtteintContainerSsrt.visibility = VISIBLE
-
-                        linearSchoolLevelContainerSsrt.visibility = GONE
-                        linearSchoolInPlaceYesNoContainerSsrt.visibility = GONE
-                        linearClasseLevelContainerSsrt.visibility = GONE
-                        linearSchoolNameContainerSsrt.visibility = GONE
-                        linearVillageDistanceContainerSsrt.visibility = GONE
-                        linearMoyenDeplacementContainerSsrt.visibility = GONE
-
-                        setupDejaScholariseYesNoSelection()
-                    }
-                    else -> {
-                        linearSchoolLevelContainerSsrt.visibility = GONE
-                        linearSchoolInPlaceYesNoContainerSsrt.visibility = GONE
-                        linearMoyenDeplacementContainerSsrt.visibility = GONE
-                        linearDejaScolariseContainerSsrt.visibility = GONE
-                        linearSchoolNameContainerSsrt.visibility = GONE
-                        linearVillageDistanceContainerSsrt.visibility = GONE
+//    fun setupDejaScholariseYesNoSelection() {
+//        selectDejaScolariseSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                schoolOldYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                when (schoolOldYesNo.uppercase()) {
+//                    "OUI" -> {
+//                        setupOldSchoolLevelSelection()
+//                        linearNiveauEtudeAtteintContainerSsrt.visibility = VISIBLE
+//                    }
+//                    "NON" -> {
+//                        schoolOldLevel = ""
+//                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
+//                    }
+//                    else -> {
+//                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
+//                    }
+//                }
+//            }
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//
+//            }
+//        }
+//    }
 
 
-                        linearDejaScolariseContainerSsrt.visibility = GONE
-                        linearNoSchoolRaisonContainerSsrt.visibility = GONE
-                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
-
-
-                        linearSchoolLevelContainerSsrt.visibility = GONE
-                        linearSchoolNameContainerSsrt.visibility = GONE
-                        linearVillageDistanceContainerSsrt.visibility = GONE
-                        linearMoyenDeplacementContainerSsrt.visibility = GONE
-                    }
-                }
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-                linearSchoolLevelContainerSsrt.visibility = GONE
-                linearClasseLevelContainerSsrt.visibility = GONE
-                linearSchoolInPlaceYesNoContainerSsrt.visibility = GONE
-            }
-        } 
-    }
+//    fun setupSchoolStatusSelection() {
+//        selectSchoolStatusSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                schoolYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//                setSchoolLevelSelection()
+//                when (schoolYesNo.uppercase()) {
+//                    "OUI" -> {
+//                        setSchoolLevelSelection()
+//                        linearSchoolLevelContainerSsrt.visibility = VISIBLE
+//                        linearSchoolNameContainerSsrt.visibility = VISIBLE
+//                        linearVillageDistanceContainerSsrt.visibility = VISIBLE
+//                        linearMoyenDeplacementContainerSsrt.visibility = VISIBLE
+//                        linearClasseLevelContainerSsrt.visibility = VISIBLE
+//                        // linearSchoolInPlaceYesNoContainerSsrt.visibility = VISIBLE
+//
+//                        linearDejaScolariseContainerSsrt.visibility = GONE
+//                        linearNoSchoolRaisonContainerSsrt.visibility = GONE
+//                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
+//                    }
+//                    "NON" -> {
+//                        linearDejaScolariseContainerSsrt.visibility = VISIBLE
+//                        linearNoSchoolRaisonContainerSsrt.visibility = VISIBLE
+//                        linearNiveauEtudeAtteintContainerSsrt.visibility = VISIBLE
+//
+//                        linearSchoolLevelContainerSsrt.visibility = GONE
+//                        linearSchoolInPlaceYesNoContainerSsrt.visibility = GONE
+//                        linearClasseLevelContainerSsrt.visibility = GONE
+//                        linearSchoolNameContainerSsrt.visibility = GONE
+//                        linearVillageDistanceContainerSsrt.visibility = GONE
+//                        linearMoyenDeplacementContainerSsrt.visibility = GONE
+//
+//                        setupDejaScholariseYesNoSelection()
+//                    }
+//                    else -> {
+//                        linearSchoolLevelContainerSsrt.visibility = GONE
+//                        linearSchoolInPlaceYesNoContainerSsrt.visibility = GONE
+//                        linearMoyenDeplacementContainerSsrt.visibility = GONE
+//                        linearDejaScolariseContainerSsrt.visibility = GONE
+//                        linearSchoolNameContainerSsrt.visibility = GONE
+//                        linearVillageDistanceContainerSsrt.visibility = GONE
+//
+//
+//                        linearDejaScolariseContainerSsrt.visibility = GONE
+//                        linearNoSchoolRaisonContainerSsrt.visibility = GONE
+//                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
+//
+//
+//                        linearSchoolLevelContainerSsrt.visibility = GONE
+//                        linearSchoolNameContainerSsrt.visibility = GONE
+//                        linearVillageDistanceContainerSsrt.visibility = GONE
+//                        linearMoyenDeplacementContainerSsrt.visibility = GONE
+//                    }
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//                linearSchoolLevelContainerSsrt.visibility = GONE
+//                linearClasseLevelContainerSsrt.visibility = GONE
+//                linearSchoolInPlaceYesNoContainerSsrt.visibility = GONE
+//            }
+//        }
+//    }
 
 
     fun setupSexeSsrtSelection() {
@@ -301,20 +375,20 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         }
     }
-    fun setupOldSchoolLevelSelection() {
-        selectNiveauEtudeAtteintSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                schoolOldLevel = resources.getStringArray(R.array.schoolLevelFull)[position]
-            }
+//    fun setupOldSchoolLevelSelection() {
+//        selectNiveauEtudeAtteintSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                schoolOldLevel = resources.getStringArray(R.array.schoolLevelFull)[position]
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//            }
+//        }
+//    }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-        }
-    }
 
-
-    fun setupStoppedSchoolRaisonSelection() {
-        val stoppedSchoolReason = resources.getStringArray(R.array.noSchoolRaison)
+//    fun setupStoppedSchoolRaisonSelection() {
+//        val stoppedSchoolReason = resources.getStringArray(R.array.noSchoolRaison)
         //val multiSelectionReason: MutableList<KeyPairBoolData> = mutableListOf()
 
 //        for (i in stoppedSchoolReason.indices) {
@@ -333,70 +407,70 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //            }
 //        }
 
-        var listSelectRaison = mutableListOf<Int>()
-
-        val multiSelectSpinner = selectNoSchoolRaisonSsrt
-        multiSelectSpinner.setTitle("Choisir la raison")
-        multiSelectSpinner.setItems(stoppedSchoolReason)
-        //multiSelectSpinner.hasNoneOption(true)
-        multiSelectSpinner.setSelection(listSelectRaison.toIntArray())
-        multiSelectSpinner.setListener(object : OnMultipleItemsSelectedListener{
-            override fun selectedIndices(indices: MutableList<Int>?) {
-                listSelectRaison.clear()
-                listSelectRaison.addAll(indices?.toMutableList() ?: mutableListOf())
-            }
-
-            override fun selectedStrings(strings: MutableList<String>?) {
-                stoppedSchoolReasonList.clear()
-                stoppedSchoolReasonList.addAll(strings?.toMutableList() ?: arrayListOf())
-            }
-
-        })
-
-    }
-
-
-    fun setupTravauxDangereuxSelection() {
-        val travauxDangereuxResources = resources.getStringArray(R.array.recentWork)
-//        val multiSelectionTravauxDangereux: MutableList<KeyPairBoolData> = mutableListOf()
+//        var listSelectRaison = mutableListOf<Int>()
 //
-//        for (i in travauxDangereuxResources.indices) {
-//            val h = KeyPairBoolData()
-//            h.id = (i + 1).toLong()
-//            h.name = travauxDangereuxResources[i]
-//            h.isSelected = false
-//            multiSelectionTravauxDangereux.add(h)
-//        }
-//
-//        selectRecentWorkSsrt.setItems(multiSelectionTravauxDangereux) { items ->
-//            for (i in items.indices) {
-//                if (items[i].isSelected) {
-//                    travauxDangereuxList.add(items[i].name)
-//                }
+//        val multiSelectSpinner = selectNoSchoolRaisonSsrt
+//        multiSelectSpinner.setTitle("Choisir la raison")
+//        multiSelectSpinner.setItems(stoppedSchoolReason)
+//        //multiSelectSpinner.hasNoneOption(true)
+//        multiSelectSpinner.setSelection(listSelectRaison.toIntArray())
+//        multiSelectSpinner.setListener(object : OnMultipleItemsSelectedListener{
+//            override fun selectedIndices(indices: MutableList<Int>?) {
+//                listSelectRaison.clear()
+//                listSelectRaison.addAll(indices?.toMutableList() ?: mutableListOf())
 //            }
-//        }
+//
+//            override fun selectedStrings(strings: MutableList<String>?) {
+//                stoppedSchoolReasonList.clear()
+//                stoppedSchoolReasonList.addAll(strings?.toMutableList() ?: arrayListOf())
+//            }
+//
+//        })
+//
+//    }
 
-        var listSelectTravauxDangereux = mutableListOf<Int>()
 
-        val multiSelectSpinner = selectRecentWorkSsrt
-        multiSelectSpinner.setTitle("Selectionnez les travaux")
-        multiSelectSpinner.setItems(travauxDangereuxResources)
-        //multiSelectSpinner.hasNoneOption(true)
-        multiSelectSpinner.setSelection(listSelectTravauxDangereux.toIntArray())
-        multiSelectSpinner.setListener(object : OnMultipleItemsSelectedListener{
-            override fun selectedIndices(indices: MutableList<Int>?) {
-                listSelectTravauxDangereux.clear()
-                listSelectTravauxDangereux.addAll(indices?.toMutableList() ?: mutableListOf())
-            }
-
-            override fun selectedStrings(strings: MutableList<String>?) {
-                travauxDangereuxList.clear()
-                travauxDangereuxList.addAll(strings?.toMutableList() ?: arrayListOf())
-            }
-
-        })
-
-    }
+//    fun setupTravauxDangereuxSelection() {
+//        val travauxDangereuxResources = resources.getStringArray(R.array.recentWork)
+////        val multiSelectionTravauxDangereux: MutableList<KeyPairBoolData> = mutableListOf()
+////
+////        for (i in travauxDangereuxResources.indices) {
+////            val h = KeyPairBoolData()
+////            h.id = (i + 1).toLong()
+////            h.name = travauxDangereuxResources[i]
+////            h.isSelected = false
+////            multiSelectionTravauxDangereux.add(h)
+////        }
+////
+////        selectRecentWorkSsrt.setItems(multiSelectionTravauxDangereux) { items ->
+////            for (i in items.indices) {
+////                if (items[i].isSelected) {
+////                    travauxDangereuxList.add(items[i].name)
+////                }
+////            }
+////        }
+//
+//        var listSelectTravauxDangereux = mutableListOf<Int>()
+//
+//        val multiSelectSpinner = selectRecentWorkSsrt
+//        multiSelectSpinner.setTitle("Selectionnez les travaux")
+//        multiSelectSpinner.setItems(travauxDangereuxResources)
+//        //multiSelectSpinner.hasNoneOption(true)
+//        multiSelectSpinner.setSelection(listSelectTravauxDangereux.toIntArray())
+//        multiSelectSpinner.setListener(object : OnMultipleItemsSelectedListener{
+//            override fun selectedIndices(indices: MutableList<Int>?) {
+//                listSelectTravauxDangereux.clear()
+//                listSelectTravauxDangereux.addAll(indices?.toMutableList() ?: mutableListOf())
+//            }
+//
+//            override fun selectedStrings(strings: MutableList<String>?) {
+//                travauxDangereuxList.clear()
+//                travauxDangereuxList.addAll(strings?.toMutableList() ?: arrayListOf())
+//            }
+//
+//        })
+//
+//    }
 
 
     fun setupTravauxDangereuxLieuSelection() {
@@ -461,25 +535,25 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //            }
 //        }
 
-        var listSelectLegersResources = mutableListOf<Int>()
-
-        val multiSelectSpinner = selectRecentWorkLightSsrt
-        multiSelectSpinner.setTitle("Selectionnez les travaux")
-        multiSelectSpinner.setItems(travauxLegersResources)
-        //multiSelectSpinner.hasNoneOption(true)
-        multiSelectSpinner.setSelection(listSelectLegersResources.toIntArray())
-        multiSelectSpinner.setListener(object : OnMultipleItemsSelectedListener{
-            override fun selectedIndices(indices: MutableList<Int>?) {
-                listSelectLegersResources.clear()
-                listSelectLegersResources.addAll(indices?.toMutableList() ?: mutableListOf())
-            }
-
-            override fun selectedStrings(strings: MutableList<String>?) {
-                travauxLegersList.clear()
-                travauxLegersList.addAll(strings?.toMutableList() ?: arrayListOf())
-            }
-
-        })
+//        var listSelectLegersResources = mutableListOf<Int>()
+//
+//        val multiSelectSpinner = selectRecentWorkLightSsrt
+//        multiSelectSpinner.setTitle("Selectionnez les travaux")
+//        multiSelectSpinner.setItems(travauxLegersResources)
+//        //multiSelectSpinner.hasNoneOption(true)
+//        multiSelectSpinner.setSelection(listSelectLegersResources.toIntArray())
+//        multiSelectSpinner.setListener(object : OnMultipleItemsSelectedListener{
+//            override fun selectedIndices(indices: MutableList<Int>?) {
+//                listSelectLegersResources.clear()
+//                listSelectLegersResources.addAll(indices?.toMutableList() ?: mutableListOf())
+//            }
+//
+//            override fun selectedStrings(strings: MutableList<String>?) {
+//                travauxLegersList.clear()
+//                travauxLegersList.addAll(strings?.toMutableList() ?: arrayListOf())
+//            }
+//
+//        })
 
     }
 
@@ -525,91 +599,91 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     }
 
 
-    fun setSchoolLevelSelection() {
-        selectSchoolLevelSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                schoolLevel = resources.getStringArray(R.array.schoolLevel)[position]
-
-                var classLevels = arrayOf<String>()
-
-                when (schoolLevel.uppercase()) {
-                    "Maternelle".uppercase() -> {
-                        classLevels = resources.getStringArray(R.array.maternelleLevel)
-                    }
-                    "PRIMAIRE" -> {
-                        classLevels = resources.getStringArray(R.array.primaireLevel)
-                    }
-                    "1er CYCLE",
-                    "1ER CYCLE",
-                    "1er Cycle" -> {
-                        classLevels = resources.getStringArray(R.array.oneCycleLevel)
-                    }
-                    "2nd CYCLE",
-                    "2ND CYCLE",
-                    "2nd Cycle" -> {
-                        classLevels = resources.getStringArray(R.array.twoCycleLevel)
-                    }
-                }
-
-                setSchoolClassSelection(classLevels)
-                linearClasseLevelContainerSsrt.visibility = VISIBLE
-
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
-
-    fun setSchoolClassSelection(datas: Array<String>) {
-        val schoolClassesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, datas)
-        selectClasseLevelSsrt!!.adapter = schoolClassesAdapter
-
-        selectClasseLevelSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                schoolClass = datas[position]
-                // val ssrteDraftedLocal =  ApiClient.gson.fromJson(draftedSsrteModel?.datas, EnqueteSsrtModel::class.java)
-
-                provideStringSpinnerSelection(
-                    selectClasseLevelSsrt,
-                    schoolClass,
-                    datas
-                )
-
-                linearSchoolInPlaceYesNoContainerSsrt.visibility = VISIBLE
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
+//    fun setSchoolLevelSelection() {
+//        selectSchoolLevelSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                schoolLevel = resources.getStringArray(R.array.schoolLevel)[position]
+//
+//                var classLevels = arrayOf<String>()
+//
+//                when (schoolLevel.uppercase()) {
+//                    "Maternelle".uppercase() -> {
+//                        classLevels = resources.getStringArray(R.array.maternelleLevel)
+//                    }
+//                    "PRIMAIRE" -> {
+//                        classLevels = resources.getStringArray(R.array.primaireLevel)
+//                    }
+//                    "1er CYCLE",
+//                    "1ER CYCLE",
+//                    "1er Cycle" -> {
+//                        classLevels = resources.getStringArray(R.array.oneCycleLevel)
+//                    }
+//                    "2nd CYCLE",
+//                    "2ND CYCLE",
+//                    "2nd Cycle" -> {
+//                        classLevels = resources.getStringArray(R.array.twoCycleLevel)
+//                    }
+//                }
+//
+//                setSchoolClassSelection(classLevels)
+//                linearClasseLevelContainerSsrt.visibility = VISIBLE
+//
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
 
-    fun setupSchoolLocationVillageYesNoSelection() {
+//    fun setSchoolClassSelection(datas: Array<String>) {
+//        val schoolClassesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, datas)
+//        selectClasseLevelSsrt!!.adapter = schoolClassesAdapter
+//
+//        selectClasseLevelSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                schoolClass = datas[position]
+//                // val ssrteDraftedLocal =  ApiClient.gson.fromJson(draftedSsrteModel?.datas, EnqueteSsrtModel::class.java)
+//
+//                provideStringSpinnerSelection(
+//                    selectClasseLevelSsrt,
+//                    schoolClass,
+//                    datas
+//                )
+//
+//                linearSchoolInPlaceYesNoContainerSsrt.visibility = VISIBLE
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
-        selectSchoolInPlaceYesNoSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                schoolPlaceYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
-                when (schoolPlaceYesNo.uppercase()) {
-                    "OUI" -> {
-                        linearVillageDistanceContainerSsrt.visibility = GONE
-                    }
-                    "NON" -> {
-                        linearVillageDistanceContainerSsrt.visibility = VISIBLE
-                    }
-                    else -> {
-                        linearVillageDistanceContainerSsrt.visibility = GONE
-                    }
-                }
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-                linearVillageDistanceContainerSsrt.visibility = GONE
-            }
-        }
-    }
+//    fun setupSchoolLocationVillageYesNoSelection() {
+//
+//        selectSchoolInPlaceYesNoSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                schoolPlaceYesNo = resources.getStringArray(R.array.YesOrNo)[position]
+//
+//                when (schoolPlaceYesNo.uppercase()) {
+//                    "OUI" -> {
+//                        linearVillageDistanceContainerSsrt.visibility = GONE
+//                    }
+//                    "NON" -> {
+//                        linearVillageDistanceContainerSsrt.visibility = VISIBLE
+//                    }
+//                    else -> {
+//                        linearVillageDistanceContainerSsrt.visibility = GONE
+//                    }
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//                linearVillageDistanceContainerSsrt.visibility = GONE
+//            }
+//        }
+//    }
 
 
     fun configDate(viewClciked: AppCompatEditText) {
@@ -632,22 +706,158 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     }
 
 
-    fun setAll() {
-        setupLocaliteSelection()
-        setupSchoolStatusSelection()
+    fun setAllListener() {
 
-        setupSchoolLocationVillageYesNoSelection()
 
-        setupTravauxLegersSelection()
-        setupTravauxDangereuxSelection()
+        setupSectionSelection()
 
-        setupTravauxDangereuxLieuSelection()
-        setupTravauxLegersLieuSelection()
+        Commons.setListenerForSpinner(this,
+            "Va-t-il à l'école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectSchoolStatusSsrt,
+            itemChanged = arrayListOf(Pair(1, "Non"), Pair(2, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
 
-        setupStoppedSchoolRaisonSelection()
-        setupLienParenteSelection()
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAvoirFrequPasseSsrt.visibility = visibility
+                    containerVaDejaALecole.visibility = GONE
+                }else if (itemId == 2) {
+                    containerVaDejaALecole.visibility = visibility
+                    containerAvoirFrequPasseSsrt.visibility = GONE
+                }
+            })
 
-        setupSexeSsrtSelection()
+        Commons.setListenerForSpinner(this,
+            "As-tu été à l’école par le passé ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAvoirFrequPasseSsrt,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAvoirFaitEcole.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Ton école est-elle située dans le village ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectSchoolInPlaceYesNoSsrt,
+            itemChanged = arrayListOf(Pair(1, "Non")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearVillageDistanceContainerSsrt.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Ton école est-elle située dans le village ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectNiveauEtudeAtteintSsrt,
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+                when (it) {
+                    0 -> {
+                        val classLevels = resources.getStringArray(R.array.maternelleLevel)
+                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, )
+                    }
+                    1 -> {
+                        val classLevels = resources.getStringArray(R.array.primaireLevel)
+                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                    }
+                    2 -> {
+                        val classLevels = resources.getStringArray(R.array.oneCycleLevel)
+                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                    }
+                    3 -> {
+                        val classLevels = resources.getStringArray(R.array.twoCycleLevel)
+                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                    }
+                }
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectRaisonArretEcoleSSrte,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAutreRaisonArretEcole.visibility = visibility
+                }
+            })
+
+        Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte, "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?", resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) }){
+            if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
+        }
+
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux dangereux as-tu effectués ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+
+        }
+
+        Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte, "Où as-tu effectué ces travaux ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
+
+        }
+
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux légés as-tu effectués ?", resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
+
+        }
+
+        Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte, "Où as-tu effectué ces travaux ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
+
+        }
+
+//        setupLocaliteSelection()
+//        setupSchoolStatusSelection()
+//
+//        setupSchoolLocationVillageYesNoSelection()
+//
+//        setupTravauxLegersSelection()
+//        setupTravauxDangereuxSelection()
+//
+//        setupTravauxDangereuxLieuSelection()
+//        setupTravauxLegersLieuSelection()
+//
+//        setupStoppedSchoolRaisonSelection()
+//        setupLienParenteSelection()
+//
+//        setupSexeSsrtSelection()
+    }
+
+    private fun setupClasseSelectedListen(
+        selectClasseLevelSsrt: AppCompatSpinner?,
+        classLevels: Array<String>,
+        currentVal: String? = null
+    ) {
+
+        Commons.setListenerForSpinner(this,
+            "Quelle est sa classe actuelle ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectClasseLevelSsrt!!,
+            currentVal = currentVal,
+            listIem = classLevels
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
     }
 
 
@@ -742,33 +952,33 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         return  EnqueteSsrtModel(
             autreLienParente = editAutreLienParentSsrt.text.toString().trim(),
-            avoirFrequente = schoolOldYesNo,
-            classe = schoolClass,
-            codeMembre = "",
-            dateEnquete = DateTime.now().toString(DateTimeFormat.forPattern("dd-MM-yyyy")),
-            datenaissMembre = editDateNaissancelSsrt.text.toString(),
-            distanceEcole = schoolNoPlaceDistance,
-            ecoleVillage = schoolPlaceYesNo,
-            frequente = schoolYesNo,
-            endpoint = "",
-            lienParente = lienParente,
-            moyenTransport = schoolNoPlaceMoyenTransport,
-            niveauEtude = schoolLevel,
-            niveauEtudeAtteint = schoolOldLevel,
-            nomEcole = editSchoolNameSsrt.text.toString(),
-            nomMembre = editMembreNomlSsrt.text.toString(),
-            prenomMembre = editMembrePrenomlSsrt.text.toString(),
-            producteursId = producteurId,
-            lieuTravauxDangereuxStringify = ApiClient.gson.toJson(lieuTravauxDangereuxList),
-            lieuTravauxLegersStringify = ApiClient.gson.toJson(lieuTravauxLegerList),
-            raisonArretEcoleStringify = ApiClient.gson.toJson(stoppedSchoolReasonList),
-            travauxDangereuxStringify = ApiClient.gson.toJson(travauxDangereuxList),
-            travauxLegersStringify = ApiClient.gson.toJson(travauxLegersList),
-            sexeMembre = sexeSsrtValue,
-            isSynced = false,
-            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID),
-            localiteNom = localiteNom,
-            producteurNom = producteurNom,
+//            avoirFrequente = schoolOldYesNo,
+//            classe = schoolClass,
+//            codeMembre = "",
+//            dateEnquete = DateTime.now().toString(DateTimeFormat.forPattern("dd-MM-yyyy")),
+//            datenaissMembre = editDateNaissancelSsrt.text.toString(),
+//            distanceEcole = schoolNoPlaceDistance,
+//            ecoleVillage = schoolPlaceYesNo,
+//            frequente = schoolYesNo,
+//            endpoint = "",
+//            lienParente = lienParente,
+//            moyenTransport = schoolNoPlaceMoyenTransport,
+//            niveauEtude = schoolLevel,
+//            niveauEtudeAtteint = schoolOldLevel,
+//            nomEcole = editSchoolNameSsrt.text.toString(),
+//            nomMembre = editMembreNomlSsrt.text.toString(),
+//            prenomMembre = editMembrePrenomlSsrt.text.toString(),
+//            producteursId = producteurId,
+//            lieuTravauxDangereuxStringify = ApiClient.gson.toJson(lieuTravauxDangereuxList),
+//            lieuTravauxLegersStringify = ApiClient.gson.toJson(lieuTravauxLegerList),
+//            raisonArretEcoleStringify = ApiClient.gson.toJson(stoppedSchoolReasonList),
+//            travauxDangereuxStringify = ApiClient.gson.toJson(travauxDangereuxList),
+//            travauxLegersStringify = ApiClient.gson.toJson(travauxLegersList),
+//            sexeMembre = sexeSsrtValue,
+//            isSynced = false,
+//            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID),
+//            localiteNom = localiteNom,
+//            producteurNom = producteurNom,
             uid = 0,
         )
 
@@ -879,8 +1089,6 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         super.onCreate(savedInstanceState)
         //scrollableMarquee()
 
-        setAll()
-
         labelInfosScrollerSsrt.setOnClickListener {
             // scrollableMarquee()
         }
@@ -929,12 +1137,24 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             }
         }*/
 
+        setOtherListener()
+
         if (intent.getStringExtra("from") != null) {
             fromAction = intent.getStringExtra("from") ?: ""
             draftedSsrteModel = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
             undraftedDatas(draftedSsrteModel!!)
+        }else{
+            setAllListener()
         }
 
-        applyFilters(editVillageDistanceSsrt)
+        //applyFilters(editVillageDistanceSsrt)
+    }
+
+    private fun setOtherListener() {
+
+        editDateNaissancelSsrt.setOnClickListener { configDate(editDateNaissancelSsrt) }
+        editDateEnqueteSsrt.setOnClickListener { configDate(editDateEnqueteSsrt) }
+        editDureeFormation.setOnClickListener { configHour(editDureeFormation) }
+
     }
 }

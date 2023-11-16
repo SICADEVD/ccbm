@@ -150,6 +150,23 @@
         <item>Aucun</item>
     </string-array>
 
+    <string-array name="recentWorkHard">
+        <item>Le défrichage à la machette</item>
+        <item>Le port de charge lourde</item>
+        <item>Manipulation de Produits Agrochimiques</item>
+        <item>Les défrichages</item>
+        <item>Le bucheronnage</item>
+        <item>Production de Charbons</item>
+        <item>Dessouchage</item>
+        <item>La Trouaison</item>
+        <item>La chasse aux gibiers avec une arme</item>
+        <item>Recolte avec Machette ou objets Tranchants</item>
+        <item>Brulage des parcelles</item>
+        <item>L’Abattage des arbres</item>
+        <item>La conduite d’engins motorisé</item>
+        <item>Aucun</item>
+    </string-array>
+
     <string-array name="recentWorkLight">
         <item>Aider à mesurer les distance entre les plants</item>
         <item>Laver les fèves</item>
@@ -193,6 +210,7 @@
     </string-array>
 
     <string-array name="schoolLevelFull">
+        <item>Maternelle</item>
         <item>Primaire</item>
         <item>1er Cycle</item>
         <item>2nd Cycle</item>
@@ -289,7 +307,6 @@
     </string-array>
 
     <string-array name="moyenDeplacement">
-        <item>Moyen de deplacement</item>
         <item>A vélo</item>
         <item>A pieds</item>
         <item>A moto</item>
@@ -323,8 +340,9 @@
         <item>Fils</item>
         <item>Neveu/Niece</item>
         <item>Frère/Soeur</item>
-        <item>Cousine</item>
-        <item>Protegé ou tuteur</item>
+        <item>Cousin/Cousine</item>
+        <item>Protegé/Tuteur</item>
+        <item>Oncle/Tante</item>
         <item>Autre, précisez</item>
     </string-array>
 

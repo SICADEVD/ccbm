@@ -133,6 +133,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand0"
                     android:id="@+id/expandIdentif"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -147,6 +148,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand1"
                     android:id="@+id/expandIdentif2"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -161,6 +163,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand2"
                     android:id="@+id/expandIdentif3"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -174,6 +177,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand3"
                     android:id="@+id/expandIdentif4"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -187,6 +191,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand4"
                     android:id="@+id/expandIdentif5"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -200,6 +205,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand5"
                     android:id="@+id/expandIdentif6"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
@@ -213,6 +219,7 @@
                 <com.skydoves.expandablelayout.ExpandableLayout
                     android:tag="expand6"
                     android:id="@+id/expandIdentif7"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"

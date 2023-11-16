@@ -16,6 +16,7 @@ import kotlinx.android.parcel.Parcelize
 data class LivraisonModel(
     @Expose @PrimaryKey(autoGenerate = true) var uid: Int,
     @Expose val id: Int? = 0,
+    @Expose val programme_id: String? = null,
     @SerializedName("dateLivre")
     @Expose var dateLivre: String? = "",
     @SerializedName("nomDelegue") @Expose var delegueId: String? = "",

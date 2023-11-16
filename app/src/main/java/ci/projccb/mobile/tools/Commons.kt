@@ -3,6 +3,7 @@ package ci.projccb.mobile.tools
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -48,6 +49,7 @@ import ci.projccb.mobile.activities.forms.SsrtClmsActivity
 import ci.projccb.mobile.activities.forms.SuiviApplicationActivity
 import ci.projccb.mobile.activities.forms.SuiviParcelleActivity
 import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
+import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
 import ci.projccb.mobile.activities.lists.FormationsListActivity
 import ci.projccb.mobile.activities.lists.LivraisonsListActivity
@@ -439,6 +441,20 @@ class Commons {
 
             datePickerDialog.datePicker.maxDate = DateTime.now().millis
             datePickerDialog.show()
+        }
+
+        fun Context.configHour(viewClciked: AppCompatEditText) {
+            // Get Current Time
+            val c: Calendar = Calendar.getInstance()
+            val mHour = c.get(Calendar.HOUR_OF_DAY)
+            val mMinute = c.get(Calendar.MINUTE)
+            val timePickerDialog = TimePickerDialog(
+                this, { timePickerView, hourOfDay, minute -> viewClciked.setText("$hourOfDay:$minute") },
+                mHour,
+                mMinute,
+                true
+            )
+            timePickerDialog.show()
         }
 
         fun Context.limitEDTMaxLength(editText: EditText, minLength:Int = 225, maxLength:Int = 225){
@@ -863,6 +879,43 @@ class Commons {
                 }
             }
 
+        }
+
+        fun setupItemMultiSelection(
+            context: Activity,
+            selectItemMulti: MultiSelectSpinner,
+            title: String  = "Faites vos choix !",
+            itemList: List<CommonData>,
+            currentList : MutableList<String> = mutableListOf(),
+            onValueChanged: ((MutableList<String>) -> Unit)) {
+
+            var listSelectVarieteArbrePosList = mutableListOf<Int>()
+            var listSelectVarieteArbreList = mutableListOf<String>()
+
+            var indItem = 0
+            (itemList)?.forEach {
+                if(currentList.size > 0){ if(currentList.contains(it.nom)) listSelectVarieteArbrePosList.add(indItem) }
+                indItem++
+            }
+
+            selectItemMulti.setTitle(title)
+            selectItemMulti.setItems(itemList.map { it.nom })
+            //multiSelectSpinner.hasNoneOption(true)
+            selectItemMulti.setSelection(listSelectVarieteArbrePosList.toIntArray())
+            selectItemMulti.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+                override fun selectedIndices(indices: MutableList<Int>?) {
+                    listSelectVarieteArbrePosList.clear()
+                    listSelectVarieteArbrePosList.addAll(indices?.toMutableList() ?: mutableListOf())
+                }
+
+                override fun selectedStrings(strings: MutableList<String>?) {
+                    listSelectVarieteArbreList.clear()
+                    listSelectVarieteArbreList.addAll(strings?.toMutableList() ?: arrayListOf())
+
+                    onValueChanged(listSelectVarieteArbreList)
+                }
+
+            })
         }
 
     }
