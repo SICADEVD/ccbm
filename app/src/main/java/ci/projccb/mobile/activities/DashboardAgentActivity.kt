@@ -830,43 +830,17 @@ class DashboardAgentActivity : AppCompatActivity(),
         ).apply { this.image = image.plus("estimations.png")})
 
         listOfFeatures.add(FeatureModel("FORMATION PRODUCTEUR",
-            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
-            type = "FORMATION",
+            countSync = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
+            type = "VISTEUR_FORMATION",
             categorie = 2,
             //image = R.drawable.livraison,
             icon = R.drawable.ic_shipped,
-            canAdd = false,
+            canAdd = true,
             canEdit = false,
             canViewDraft = false,
             canViewSync = false //can be false
-        ).apply { this.image = image.plus("livraison.png")})
-
-        listOfFeatures.add(FeatureModel("FORMATION STAFF",
-            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
-            type = "FORMATION",
-            categorie = 2,
-            //image = R.drawable.livraison,
-            icon = R.drawable.ic_shipped,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("livraison.png")})
-
-        listOfFeatures.add(FeatureModel("FORMATION ENTITÉ",
-            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
-            type = "FORMATION",
-            categorie = 2,
-            //image = R.drawable.livraison,
-            icon = R.drawable.ic_shipped,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("livraison.png")})
+        ).apply { this.image = image.plus("formation.png")})
 
         listOfFeatures.add(FeatureModel("SUIVI LIVRAISON",
             countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,

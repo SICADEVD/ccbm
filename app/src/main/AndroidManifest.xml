@@ -31,6 +31,9 @@
         tools:ignore="HardcodedDebugMode"
         tools:targetApi="n">
         <activity
+            android:name=".activities.forms.VisiteurFormationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.forms.EvaluationArbreActivity"
             android:exported="false" />
         <activity

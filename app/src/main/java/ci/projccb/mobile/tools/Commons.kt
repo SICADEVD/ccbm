@@ -51,6 +51,7 @@ import ci.projccb.mobile.activities.forms.SsrtClmsActivity
 import ci.projccb.mobile.activities.forms.SuiviApplicationActivity
 import ci.projccb.mobile.activities.forms.SuiviParcelleActivity
 import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
+import ci.projccb.mobile.activities.forms.VisiteurFormationActivity
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
 import ci.projccb.mobile.activities.lists.FormationsListActivity
@@ -693,6 +694,7 @@ class Commons {
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
                         "DISTRIBUTION_ARBRE" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
                         "EVALUATION_ARBRE" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
+                        "VISTEUR_FORMATION" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
                     }
                 }
 
