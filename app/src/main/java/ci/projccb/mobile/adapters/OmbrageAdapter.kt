@@ -137,16 +137,40 @@ class MultipleItemAdapter(private var listItem: MutableList<AdapterItemModel>?,
         val multiItModel = listItem!![position]
 
         holder.item_title.text = libelTitle
-        holder.item_title2.text = libelTitle2
-        holder.item_title3.text = libelTitle3
-        holder.item_title4.text = libelTitle4
-        holder.second_title.text = valeurTitle
+        if(!libelTitle2.isNullOrEmpty()){
+            holder.item_title2.text = libelTitle2
+        }else holder.item_title2.visibility = View.GONE
+
+        if(!libelTitle3.isNullOrEmpty()){
+            holder.item_title3.text = libelTitle3
+        }else holder.item_title3.visibility = View.GONE
+
+        if(!libelTitle4.isNullOrEmpty()){
+            holder.item_title2.text = libelTitle4
+        }else holder.item_title4.visibility = View.GONE
+
+        if(!valeurTitle.isNullOrEmpty()){
+            holder.second_title.text = valeurTitle
+        }else holder.second_title.visibility = View.GONE
 
         holder.labelItem.text = multiItModel.value
-        holder.labelItem2.text = multiItModel.value1
-        holder.labelItem3.text = multiItModel.value2
-        holder.labelItem4.text = multiItModel.value3
-        holder.labelSecondItem.text = multiItModel.value4
+        if(!multiItModel.value1.isNullOrEmpty()) {
+            holder.labelItem2.text = multiItModel.value1
+        }else holder.labelItem2.visibility = View.GONE
+
+        if(!multiItModel.value2.isNullOrEmpty()) {
+            holder.labelItem3.text = multiItModel.value2
+        }else holder.labelItem3.visibility = View.GONE
+
+        if(!multiItModel.value3.isNullOrEmpty()) {
+            holder.labelItem4.text = multiItModel.value3
+        }else holder.labelItem4.visibility = View.GONE
+
+        if(!multiItModel.value4.isNullOrEmpty()) {
+            holder.labelSecondItem.text = multiItModel.value4
+        }else {
+            holder.labelSecondItem.visibility = View.GONE
+        }
 
         holder.deleteMulti.setOnClickListener {
             LogUtils.e(Commons.TAG, "position $position")

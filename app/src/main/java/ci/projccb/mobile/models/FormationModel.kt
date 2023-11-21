@@ -35,9 +35,11 @@ data class FormationModel(
     @Expose var producteursStringify: String? = "",
     @Expose var themesLabelStringify: String? = "",
     @Expose var themeStringify: String? = "",
+    @Expose var module: String? = "",
     @Expose @SerializedName(value = "staff", alternate = ["userid"]) var usersId: Int? = 0,
     @Expose @SerializedName("campagnes_id") var campagneId: Int? = 0,
     @Expose @SerializedName("photo_formations") var photoFormation: String? = "",
+    @Expose @SerializedName("rapport_formations") var rapportFormation: String? = "",
     @Expose @SerializedName("visiteur")  var visiteurs: String? = null,
     var photoPath: String? = null,
     @Expose var themeNom: String? = null,
@@ -52,4 +54,5 @@ data class FormationModel(
     @Expose(serialize = true, deserialize = false) @SerializedName("producteurs") @Ignore var producteursNom: MutableList<String>? = null
     @Expose(serialize = true, deserialize = false) @SerializedName("themesLabel") @Ignore var themesLabel: MutableList<String>? = null
     @Expose(serialize = true, deserialize = false) @SerializedName("theme") @Ignore var themeIds: MutableList<String>? = null
+    //@Expose(serialize = true, deserialize = false) @SerializedName("module") @Ignore var moduleList: MutableList<String>? = null
 }

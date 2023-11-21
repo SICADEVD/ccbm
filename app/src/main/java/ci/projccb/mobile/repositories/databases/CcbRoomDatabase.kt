@@ -69,6 +69,8 @@ import ci.projccb.mobile.tools.ListConverters
         ConcernesModel::class,
         SectionModel::class,
         ProgrammeModel::class,
+        DistributionArbreModel::class,
+        EvaluationArbreModel::class,
     ],
 )
 @TypeConverters(ListConverters::class)
@@ -122,6 +124,8 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun concernesDao(): ConcernesDao
     abstract fun sectionsDao(): SectionsDao
     abstract fun programmesDao(): ProgrammesDao
+    abstract fun distributionArbreDao(): DistributionArbreDao
+    abstract fun evaluationArbreDao(): EvaluationArbreDao
 
 
     companion object {

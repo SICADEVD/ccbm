@@ -815,7 +815,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         selectManteReligieuseSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 presenceMante = resources.getStringArray(R.array.fullyPoor)[position]
-                LogUtils.d("Mante Reali : "+presenceMante)
+                LogUtils.d("Mante Real : "+presenceMante)
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {

@@ -7,6 +7,138 @@
         <item>non</item>
     </string-array>
 
+    <string-array name="nomScienArbreConseille">
+        <item>Akpi, Eho|Ricinodendron heudelotii|Strate 3</item>
+        <item>Samba|Triplochiton scleroxylon|Strate 3</item>
+        <item>Iroko|Milicia excelsa|Strate 3</item>
+        <item>Acajou blanc|Khaya anthoteca|Strate 3</item>
+        <item>Acajou Bassam|Khaya ivorensis|Strate 3</item>
+        <item>Ilomba|Pycnanthus angolensis|Strate 3</item>
+        <item>AKO|Antiaris toxicaria|Strate 3</item>
+        <item>Kplé, Sako, Kaklou,Boborou |Irvingia gabonensis |Strate 3</item>
+        <item>Irvingia grandifolia|Strate 3</item>
+        <item>Emien|Alstonia boonei|Strate 3</item>
+        <item>Pouo, Pri, Arbre à caoutchouc|Funtumia latifolia, F. elastica|Strate 3</item>
+        <item>Niangon|Heritiera densifolia, Tarrietia utilis|Strate 3</item>
+        <item>Framiré|Terminalia ivorensis|Strate 3</item>
+        <item>Fraké|Terminalia superba|Strate 3</item>
+        <item>Tiama|Entandrophragma angolense|Strate 3</item>
+        <item>Bois bété|Mansonia altissima|Strate 3</item>
+        <item>Tulipier d’Afrique|Spathodea campanulata |Strate 3</item>
+        <item>Makoré|Tieghemella heckelii|Strate 3</item>
+        <item>Poé|Strombosia pustulata|Strate 3</item>
+        <item>Aniégré|Chrysophyllum spp./ Pouteria sp|Strate 3</item>
+        <item>Bitei, bilè, atiokouo|Beilschmiedia manni|Strate 3</item>
+        <item>Assamela|Pericopsis elata|Strate 3</item>
+        <item>Azobé|Lophira alata|Strate 3</item>
+        <item>Lebbeck, Okouro, Bangbaye |Albizia spp.(lebbeck, guachepele,  adiantifolia)|Strate 3</item>
+        <item>Adjouaba, Safoutier|Dacryodes klaineana|Strate 3</item>
+        <item>Abalé|Petersianthus macrocarpus|Strate 3</item>
+        <item>Aloma|Ficus capensis|Strate 3</item>
+        <item>Koya|Morinda lucida|Strate 3</item>
+        <item>Koto|Pterygota macrocarpa|Strate 3</item>
+        <item>Poivre long|Xylopia aethiopica|Strate 2</item>
+        <item>Avocatier|Persea americana*|Strate 2</item>
+        <item>Manguier|Mangifera indica*|Strate 2</item>
+        <item>Colatier|Cola nitida|Strate 2</item>
+        <item>Cocotier|Cocos nucifera|Strate 2</item>
+        <item>Goyavier|Psidium goyava|Strate 2</item>
+        <item>Igname de blanc|Artocarpus altilis |Strate 2</item>
+        <item>Kaklou |Irvingia wombolu|Strate 2</item>
+        <item>Safoutié|Dacryodes klaineana|Strate 2</item>
+        <item>Oranger|Citrus sinensis|Strate 1</item>
+        <item>Citronnier|Citrus limon|Strate 1</item>
+        <item>Mandarinier|Citus reticulata*|Strate 1</item>
+        <item>Pamplemousse|Citrus grandis| paradisi*|Strate 1</item>
+        <item>Goyavier|Psiduim goyava|Strate 1</item>
+        <item>Corossolier|Annoma Muricata|Strate 1</item>
+        <item>Gmelina|Gmelina arborea|Strate 1</item>
+        <item>Teck|Tectona grandis|Strate 1</item>
+        <item>Isope africaine|Newbouldia leavis|Strate 1</item>
+        <item>Caféier|Coffea canephora|Strate 1</item>
+        <item>Palmier à huile|Elaeis guineensis|Strate 1</item>
+        <item>Gliricidia|Gliricidia sépium|Strate 1</item>
+        <item>Albizzia|Albizzia sp|Strate 1</item>
+        <item>Acacia|Acacia mangium|Strate 1</item>
+        <item>Acacia auriculiformis|Strate 1</item>
+    </string-array>
+
+    <string-array name="stratArbrConseille">
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 3</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 2</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+        <item>Strate 1</item>
+    </string-array>
+
+    <string-array name="listStrat">
+        <item>Strate 3</item>
+        <item>Strate 2</item>
+        <item>Strate 1</item>
+    </string-array>
+
+    <string-array name="entity_example">
+        <item>Module 1</item>
+        <item>Module 2</item>
+        <item>Module 3</item>
+        <item>Module 4</item>
+    </string-array>
+
+    <string-array name="theme_example">
+        <item>Theme 1</item>
+        <item>Theme 2</item>
+        <item>Theme 3</item>
+        <item>Theme 4</item>
+    </string-array>
+
     <string-array name="femmeActivite">
         <item>Agricole</item>
         <item>Non agricole</item>
@@ -79,6 +211,11 @@
         <item>Moyenne</item>
     </string-array>
 
+    <string-array name="type_formation">
+        <item>Ciblé</item>
+        <item>Groupé</item>
+    </string-array>
+
     <string-array name="InsectQuantifie">
         <item>Faible</item>
         <item>Moins</item>
@@ -87,6 +224,14 @@
     <string-array name="cible_formation">
         <item>Staff</item>
         <item>Membre</item>
+    </string-array>
+
+    <string-array name="example_pilier">
+        <item>Pilier 1</item>
+        <item>Pilier 2</item>
+        <item>Pilier 3</item>
+        <item>Pilier 4</item>
+        <item>Pilier 5</item>
     </string-array>
 
     <string-array name="listeInsectes">

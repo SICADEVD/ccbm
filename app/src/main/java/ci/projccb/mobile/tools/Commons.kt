@@ -39,6 +39,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
+import ci.projccb.mobile.activities.forms.DistributionArbreActivity
+import ci.projccb.mobile.activities.forms.EvaluationArbreActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.activities.forms.InspectionActivity
 import ci.projccb.mobile.activities.forms.LivraisonActivity
@@ -689,6 +691,8 @@ class Commons {
                         "CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
                         "SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
+                        "DISTRIBUTION_ARBRE" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
+                        "EVALUATION_ARBRE" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
                     }
                 }
 
@@ -811,19 +815,25 @@ class Commons {
             context: Activity,
             recyclerList: RecyclerView,
             addBtn: AppCompatButton,
-            selectNom: AppCompatSpinner,
-            selectContenant: AppCompatSpinner,
-            selectUnite: AppCompatSpinner,
+            selectNom: Spinner,
+            selectContenant: Spinner,
+            selectUnite: Spinner,
             editQte: AppCompatEditText,
             editFreq: AppCompatEditText,
-            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+            defaultItemSize: Int = 5,
+            libeleList:MutableList<String> = arrayListOf(),
+            valueList:MutableList<String> = arrayListOf() ) {
             val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
             var countN = 0
 //        libeleList.forEach {
 //            pesticideListSParcelle.add(AdapterItemModel(0, it, valueList.get(countN)))
 //            countN++
 //        }
-            val pesticideSParcelleAdapter = MultipleItemAdapter(pesticideListSParcelle, )
+            var pesticideSParcelleAdapter: MultipleItemAdapter? = MultipleItemAdapter(pesticideListSParcelle, )
+
+            if(libeleList.size > 0){
+                pesticideSParcelleAdapter = MultipleItemAdapter(pesticideListSParcelle, libeleList[0], libeleList[1], libeleList[2], libeleList[3], libeleList[4])
+            }
             try {
                 recyclerList.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -845,7 +855,7 @@ class Commons {
                         return@setOnClickListener
                     }
 
-                    val pesticideParRav = AdapterItemModel(
+                    var pesticideParRav = AdapterItemModel(
                         0,
                         selectNom.getSpinnerContent(),
                         selectContenant.getSpinnerContent(),
@@ -853,6 +863,28 @@ class Commons {
                         editQte.text.toString(),
                         editFreq.text.toString(),
                     )
+
+                    if(defaultItemSize == 4){
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            selectNom.getSpinnerContent(),
+                            selectContenant.getSpinnerContent(),
+                            editQte.text.toString(),
+                            editFreq.text.toString(),
+                            ""
+                        )
+                    }
+
+                    if(defaultItemSize == 3){
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            selectNom.getSpinnerContent(),
+                            selectContenant.getSpinnerContent(),
+                            editQte.text.toString(),
+                            "",
+                            "",
+                        )
+                    }
 
                     if(pesticideParRav.value?.length?:0 > 0){
                         pesticideListSParcelle?.forEach {

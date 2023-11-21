@@ -401,8 +401,7 @@ class LivraisonActivity : AppCompatActivity() {
             "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (programmeListi?.size!! > 0) false else true,
             currentVal = libItem,
-            itemChanged = arrayListOf(Pair(1, "Certifie")),
-            spinner = selectProgramProducteur,
+            spinner = selectProgramLivraison,
             listIem = programmeListi?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
