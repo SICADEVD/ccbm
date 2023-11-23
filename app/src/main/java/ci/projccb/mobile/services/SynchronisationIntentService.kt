@@ -23,6 +23,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import okio.Buffer
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import java.net.UnknownHostException
 
@@ -170,104 +171,124 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 }
 
                 val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
-                val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
-                val producteurSynced: ProducteurModel? = responseProducteur.body()
+                clientProducteur.enqueue(object: Callback<ProducteurModel>{
+                    override fun onResponse(
+                        call: Call<ProducteurModel>,
+                        response: Response<ProducteurModel>
+                    ) {
+                        var producteurSynced = response.body()
 
-                LogUtils.d("RESPONSE CODE "+responseProducteur.code())
+                        if(response.code().toString().contains("422")){
+                            //val buffer = Buffer()
+                            val respText = response.errorBody()?.string().toString()
+                            if(respText.contains("phone1", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
+                                LogUtils.d(respText)
+                                producteurDao.syncDataOnExist(
+                                    synced = 1,
+                                    localID = producteur.uid
+                                )
+                            }
+                        }
 
-                if(responseProducteur.code().toString().contains("422")){
-                    //val buffer = Buffer()
-                    val respText = responseProducteur.errorBody()?.string().toString()
-                    LogUtils.d(respText)
-                    if(respText.contains("Ce numéro de téléphone est déjà utilisé.", ignoreCase = true)){
-                        producteurDao.syncDataOnExist(
-                            synced = 1,
-                            localID = producteur.uid
-                        )
-                    }
-                }
+                        producteurSynced?.let {
+                            LogUtils.d(producteurSynced?.id)
+                            LogUtils.d(response.code())
 
-                producteurSynced?.let {
-                    LogUtils.d(producteurSynced?.id)
-                    LogUtils.d(responseProducteur.code())
+                            producteurDao.syncData(
+                                id = producteurSynced?.id!!,
+                                synced = true,
+                                localID = producteur.uid
+                            )
 
-                    producteurDao.syncData(
-                        id = producteurSynced?.id!!,
-                        synced = true,
-                        localID = producteur.uid
-                    )
+                            val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
+                                producteur.uid.toString(),
+                                SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                            )!!
 
-                    val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
-                        producteur.uid.toString(),
-                        SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
-
-                    for (prodMenage in producteurMenagesList) {
-                        prodMenage.producteurs_id = producteurSynced.id.toString()
-                        menageDao?.insert(prodMenage)
-                    }
-
-                    val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
-                        producteur.uid.toString(),
-                        SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
-
-                    for (parcelle in producteurParcellesList) {
-                        parcelle.producteurId = producteurSynced.id.toString()
-                        parcelleDao?.insert(parcelle)
-                    }
-
-                    val livraisonsList = livraisonDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
-
-                    livraisonsList.map { livraisonModel ->
-                        livraisonModel.producteursId = producteurSynced.id.toString()
-                        livraisonDao?.insert(livraisonModel)
-                    }
-
-                    val formationsList = formationDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
-
-                    for (formation in formationsList) {
-                        try {
-                            // deserialize datas producteurs
-                            val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                            formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                            val cleanList = formation.producteursId?.toMutableList()
-
-                            var positionLoop = 0
-                            var positionFound: Int
-
-                            formation.producteursId?.map {
-                                val producteurId = it.split("-")[0]
-                                val typeId = it.split("-")[1]
-
-                                if (typeId == "uid") {
-                                    if (producteurId.toInt() == producteurSynced.uid) {
-                                        positionFound = positionLoop
-                                        cleanList?.removeAt(positionFound)
-                                        cleanList?.add("${producteurSynced.id}-id")
-                                    }
-                                }
-
-                                positionLoop += 1
+                            for (prodMenage in producteurMenagesList) {
+                                prodMenage.producteurs_id = producteurSynced.id.toString()
+                                menageDao?.insert(prodMenage)
                             }
 
-                            formation.producteursId = mutableListOf()
-                            formation.producteursId = cleanList
-                            formation.producteursIdStringify = GsonUtils.toJson(cleanList)
+                            val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
+                                producteur.uid.toString(),
+                                SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                            )!!
 
-                            formationDao?.insert(formation)
-                        } catch (uhex: UnknownHostException) {
-                            FirebaseCrashlytics.getInstance().recordException(uhex)
-                        } catch (ex: Exception) {
-                            LogUtils.e(ex.message)
-                            FirebaseCrashlytics.getInstance().recordException(ex)
+                            for (parcelle in producteurParcellesList) {
+                                parcelle.producteurId = producteurSynced.id.toString()
+                                parcelleDao?.insert(parcelle)
+                            }
+
+                            val livraisonsList = livraisonDao?.getUnSyncedAll(
+                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                            )!!
+
+                            livraisonsList.map { livraisonModel ->
+                                livraisonModel.producteursId = producteurSynced.id.toString()
+                                livraisonDao?.insert(livraisonModel)
+                            }
+
+                            val formationsList = formationDao?.getUnSyncedAll(
+                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                            )!!
+
+                            for (formation in formationsList) {
+                                try {
+                                    // deserialize datas producteurs
+                                    val producteursType = object : TypeToken<MutableList<String>>() {}.type
+                                    formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
+                                    val cleanList = formation.producteursId?.toMutableList()
+
+                                    var positionLoop = 0
+                                    var positionFound: Int
+
+                                    formation.producteursId?.map {
+                                        val producteurId = it.split("-")[0]
+                                        val typeId = it.split("-")[1]
+
+                                        if (typeId == "uid") {
+                                            if (producteurId.toInt() == producteurSynced.uid) {
+                                                positionFound = positionLoop
+                                                cleanList?.removeAt(positionFound)
+                                                cleanList?.add("${producteurSynced.id}-id")
+                                            }
+                                        }
+
+                                        positionLoop += 1
+                                    }
+
+                                    formation.producteursId = mutableListOf()
+                                    formation.producteursId = cleanList
+                                    formation.producteursIdStringify = GsonUtils.toJson(cleanList)
+
+                                    formationDao?.insert(formation)
+                                } catch (uhex: UnknownHostException) {
+                                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                                } catch (ex: Exception) {
+                                    LogUtils.e(ex.message)
+                                    FirebaseCrashlytics.getInstance().recordException(ex)
+                                }
+                            }
                         }
+
                     }
-                }
+
+                    override fun onFailure(call: Call<ProducteurModel>, t: Throwable) {
+                        LogUtils.e(t.message)
+                    }
+
+                })
+//                val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
+//                val producteurSynced: ProducteurModel? = responseProducteur.body()
+//
+//                LogUtils.d("RESPONSE CODE "+responseProducteur.code())
+//
+
+//
+//                producteurSynced?.let {
+//
+//                }
 
             } catch (uhex: UnknownHostException) {
                 LogUtils.e(uhex.message)

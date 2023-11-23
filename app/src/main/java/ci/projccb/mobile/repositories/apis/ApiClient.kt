@@ -59,7 +59,7 @@ object ApiClient {
                 .connectTimeout(30, TimeUnit.MINUTES)
                 .readTimeout(30, TimeUnit.MINUTES)
                 .writeTimeout(30, TimeUnit.MINUTES)
-                .addInterceptor(interceptor = CustomInterceptor())
+                //.addInterceptor(interceptor = CustomInterceptor())
                 .addInterceptor(interceptor = getLoggin())
             builder
         } catch (e: Exception) {
@@ -73,7 +73,7 @@ object ApiClient {
             .connectTimeout(30, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.MINUTES)
             .writeTimeout(30, TimeUnit.MINUTES)
-            .addInterceptor(interceptor = CustomInterceptor())
+            //.addInterceptor(interceptor = CustomInterceptor())
             .addInterceptor(interceptor = getLoggin())
             .build()
     }
