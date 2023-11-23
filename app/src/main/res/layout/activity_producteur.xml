@@ -1225,7 +1225,6 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
                         android:text="N° de la carte CCC"
-
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -1306,7 +1305,6 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
                         android:text="N° de la pièce CMU"
-
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText

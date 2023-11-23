@@ -164,7 +164,11 @@ class Commons {
 //        }
         fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, isEmpty:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
 
-            if(spinner is SearchableSpinner) (spinner as SearchableSpinner).setTitle(title)
+            if(spinner is SearchableSpinner) {
+                (spinner as SearchableSpinner).setTitle(title)
+                (spinner as SearchableSpinner).setPositiveButton("Fermer !")
+            }
+
             if(listIem.size > 0) {
                 spinner.adapter =
                     ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
@@ -192,13 +196,13 @@ class Commons {
                     selectedItem.let {
                         itemChanged?.let { changedText ->
                             if(changedText.size == 1){
-                                if(changedText.get(0).second.equals(it, ignoreCase = true)) {
+                                if(changedText.get(0).second.contains(it, ignoreCase = true)) {
                                     onSelected.invoke(changedText.get(0).first, View.VISIBLE)
                                 }else onSelected.invoke(changedText.get(0).first, View.GONE)
                             }else{
                                 var isFind = false
                                 for (item in changedText){
-                                    if(item.second.equals(it, ignoreCase = true)) {
+                                    if(item.second.contains(it, ignoreCase = true)) {
                                         onSelected.invoke(item.first, View.VISIBLE)
                                         isFind = true
                                     }
@@ -595,7 +599,8 @@ class Commons {
             val imgFile = File(filePath)
             val options = BitmapFactory.Options()
             options.inSampleSize = 8
-            val myBitmap = if (which == 3) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
+            var myBitmap = if (which == 3) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
+            myBitmap = if (which == 0) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
 
             val byteArrayOutputStream = ByteArrayOutputStream()
             try{
@@ -694,7 +699,7 @@ class Commons {
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
                         "DISTRIBUTION_ARBRE" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
                         "EVALUATION_ARBRE" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
-                        "VISTEUR_FORMATION" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
+                        "VISITEUR_FORMATION" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
                     }
                 }
 

@@ -15,11 +15,13 @@ import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.returnStringList
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
+import ci.projccb.mobile.tools.SendErrorOnline
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import okio.Buffer
 import retrofit2.Call
 import retrofit2.Response
 import java.net.UnknownHostException
@@ -129,7 +131,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
                 producteur.certificats = GsonUtils.fromJson(producteur.certificatsStr, object : TypeToken<MutableList<String>>(){}.type)
 
-                if (!producteur.photo.isNullOrEmpty()) producteur.photo = Commons.convertPathBase64(producteur.photo, 1)
+                if (!producteur.photo.isNullOrEmpty()) {
+                    val photoPath = producteur.photo
+                    producteur.photo = Commons.convertPathBase64(photoPath, 1)
+                }
 //                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
 //                if (!producteur.versoPath.isNullOrEmpty()) producteur.verso = Commons.convertPathBase64(producteur.versoPath, 1)
 //                if (!producteur.esignaturePath.isNullOrEmpty()) producteur.esignature = Commons.convertPathBase64(producteur.esignaturePath, 3)
@@ -154,7 +159,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     localite = null
                     mobileMoney = null
                     paperGuards = null
-                    photo = null
                     rectoPath = null
                     versoPath = null
                     recuAchat = null
@@ -169,7 +173,23 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
                 val producteurSynced: ProducteurModel? = responseProducteur.body()
 
-                if(responseProducteur.isSuccessful){
+                LogUtils.d("RESPONSE CODE "+responseProducteur.code())
+
+                if(responseProducteur.code().toString().contains("422")){
+                    //val buffer = Buffer()
+                    val respText = responseProducteur.errorBody()?.string().toString()
+                    LogUtils.d(respText)
+                    if(respText.contains("Ce numéro de téléphone est déjà utilisé.", ignoreCase = true)){
+                        producteurDao.syncDataOnExist(
+                            synced = 1,
+                            localID = producteur.uid
+                        )
+                    }
+                }
+
+                producteurSynced?.let {
+                    LogUtils.d(producteurSynced?.id)
+                    LogUtils.d(responseProducteur.code())
 
                     producteurDao.syncData(
                         id = producteurSynced?.id!!,
@@ -247,10 +267,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                             FirebaseCrashlytics.getInstance().recordException(ex)
                         }
                     }
-
                 }
 
             } catch (uhex: UnknownHostException) {
+                LogUtils.e(uhex.message)
                 FirebaseCrashlytics.getInstance().recordException(uhex)
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
@@ -331,6 +351,17 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
         for (parcelle in parcelleDatas) {
             try {
+                parcelle?.apply {
+                    codeParc = null
+                    id = 0
+                    localiteNom = null
+                    nom = null
+                    perimeter = null
+                    prenoms = null
+                    producteurNom = null
+                    typedeclaration = null
+                }
+
                 if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
 
                 parcelle.apply {
@@ -344,7 +375,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 val responseParcelle: Response<ParcelleModel> = clientParcelle.execute()
                 val parcelleSync: ParcelleModel = responseParcelle.body()!!
 
-                if(responseParcelle.code() == 200){
+                if(responseParcelle.code() == 200 || responseParcelle.code() == 201){
                     parcelleDao.syncData(
                         id = parcelleSync.id!!,
                         synced = true,
@@ -810,14 +841,31 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 }
 
                 val clientInfos: Call<InfosProducteurDTO> = ApiClient.apiService.synchronisationInfosProducteur(info)
-                val responseInfos: Response<InfosProducteurDTO> = clientInfos.execute()
-
-                val infoSynced: InfosProducteurDTO? = responseInfos.body()
-                infosProducteurDao.syncData(
-                    infoSynced?.id!!,
-                    true,
-                    info.uid
-                )
+                try {
+                    val responseInfos: Response<InfosProducteurDTO> = clientInfos.execute()
+                    LogUtils.d("RESPONSE CODE "+responseInfos.code())
+                    if(responseInfos.raw().message.contains("info existe", ignoreCase = true)){
+                        infosProducteurDao.deleteProducteurInfo(
+                            info.uid
+                        )
+                    }
+                }catch (ex: Exception) {
+                    infosProducteurDao.deleteProducteurInfo(
+                        info.uid
+                    )
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+//
+//
+//                if(responseInfos.code() == 200){
+//                    val infoSynced: InfosProducteurDTO? = responseInfos.body()
+//                    infosProducteurDao.syncData(
+//                        infoSynced?.id!!,
+//                        true,
+//                        info.uid
+//                    )
+//                }
             }
 
             if (Build.VERSION.SDK_INT >= 26) {
@@ -828,7 +876,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
     }

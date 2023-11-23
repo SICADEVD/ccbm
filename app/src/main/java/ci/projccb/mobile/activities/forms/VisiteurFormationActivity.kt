@@ -22,18 +22,28 @@ import kotlinx.android.synthetic.main.activity_evaluation_arbre.clickCancelEvalu
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.clickSaveEvaluationArbre
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.selectSectionEvaluationArbre
 import kotlinx.android.synthetic.main.activity_producteur_menage.containerAutreMachineMenage
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectLocaliteProduMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectMachinePulMenage
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCloseBtn
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.containerNbrTravSocieteInfosProducteur
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectTravaiSocietInfosProducteur
+import kotlinx.android.synthetic.main.activity_visiteur_formation.clickCancelVisitForm
 import kotlinx.android.synthetic.main.activity_visiteur_formation.containerAutreLienParentVisitForm
 import kotlinx.android.synthetic.main.activity_visiteur_formation.containerVisiteurIsProducteur
 import kotlinx.android.synthetic.main.activity_visiteur_formation.selectFormationVisitForm
 import kotlinx.android.synthetic.main.activity_visiteur_formation.selectLienParentVisitForm
 import kotlinx.android.synthetic.main.activity_visiteur_formation.selectReprProducteurVisitForm
+import kotlinx.android.synthetic.main.activity_visiteur_formation.*
 
 class VisiteurFormationActivity : AppCompatActivity() {
+
+    val sectionCommon = CommonData();
+    val localiteCommon = CommonData();
+    val producteurCommon = CommonData();
+
     private val formationCommon: CommonData = CommonData()
     private var formationDao: FormationDao? = null
     private var draftedDataVisit: DataDraftedModel? = null
@@ -50,11 +60,11 @@ class VisiteurFormationActivity : AppCompatActivity() {
             finish()
         }
 
-        clickSaveEvaluationArbre.setOnClickListener {
+        clickCancelVisitForm.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelEvaluationArbre.setOnClickListener {
+        clickCancelVisitForm.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
@@ -80,6 +90,115 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
     }
 
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la section !",
+            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = libItem ,
+            spinner = selectSectionProducteurVisitForm,
+            listIem = sectionList?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2)
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+    }
+
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la localité !",
+            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectLocaliteProduVisitForm,
+            listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    setupProducteurSelection(localiteCommon.id!!, currVal2)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupProducteurSelection(id: Int, currVal2: String? = null) {
+       val producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = id.toString())
+
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix du producteur !",
+            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (producteursList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectProducteurVisitForm,
+            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    producteurCommon.id = producteur.id!!
+
+                    //setupProducteurSelection(localiteCommon.id, currVal2)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+    }
+
     private fun setOtherListenner() {
 
     }
@@ -93,6 +212,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
     }
 
     private fun setAllSelection() {
+
+        setupSectionSelection()
 
         val formationList = formationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 

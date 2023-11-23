@@ -7,6 +7,14 @@
         <item>non</item>
     </string-array>
 
+    <string-array name="lieuDeFormation">
+        <item>Dans le menage</item>
+        <item>Place publique</item>
+        <item>Champs ecole</item>
+        <item>En salle</item>
+        <item>Autre</item>
+    </string-array>
+
     <string-array name="nomScienArbreConseille">
         <item>Akpi, Eho|Ricinodendron heudelotii|Strate 3</item>
         <item>Samba|Triplochiton scleroxylon|Strate 3</item>
@@ -126,10 +134,9 @@
     </string-array>
 
     <string-array name="entity_example">
-        <item>Module 1</item>
-        <item>Module 2</item>
-        <item>Module 3</item>
-        <item>Module 4</item>
+        <item>Bonnes Pratiques Agricoles BPA</item>
+        <item>Bonnes Pratiques Sociales BPS</item>
+        <item>Bonnes Pratiques Environementales</item>
     </string-array>
 
     <string-array name="theme_example">
@@ -156,6 +163,30 @@
         <item>Association</item>
         <item>Subvention</item>
         <item>Micro Crédit</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="nomActiviteAgr">
+        <item>Cacao</item>
+        <item>Café</item>
+        <item>Hévéa</item>
+        <item>Palmier</item>
+        <item>Anarcade</item>
+        <item>Banane</item>
+        <item>Riz</item>
+        <item>Igname</item>
+        <item>Manioc</item>
+        <item>Maîs</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="nomActiviteNAgr">
+        <item>Commerce</item>
+        <item>Elevage</item>
+        <item>Couture</item>
+        <item>Coiffure</item>
+        <item>Artisant</item>
+        <item>Mécano</item>
         <item>Autre</item>
     </string-array>
 
@@ -352,6 +383,7 @@
         <item>Primaire</item>
         <item>1er Cycle</item>
         <item>2nd Cycle</item>
+        <item>Supérieur</item>
     </string-array>
 
     <string-array name="schoolLevelFull">

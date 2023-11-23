@@ -98,7 +98,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionInfProducteur,
+            spinner = selectSectionSsrte,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -134,7 +134,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteUniteAgricole,
+            spinner = selectLocaliteSsrte,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -171,7 +171,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurInfosProducteur,
+            spinner = selectProducteurSsrte,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -193,26 +193,26 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     }
 
 
-    fun setupLienParenteSelection() {
-        liensParenteList = CcbRoomDatabase.getDatabase(applicationContext)?.lienParenteDao()?.getAll(agentID = SPUtils.getInstance().getInt(
-            Constants.AGENT_ID, 0).toString())
-
-        val lienParenteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, liensParenteList!!)
-        selectLienParentSsrt!!.adapter = lienParenteAdapter
-
-        selectLienParentSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val lienParent = liensParenteList!![position]
-                lienParente = lienParent.nom!!
-
-                if (lienParente.uppercase().contains("AUTRE")) linearAutreLienParentContainerSsrte.visibility = VISIBLE
-                else linearAutreLienParentContainerSsrte.visibility = GONE
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
+//    fun setupLienParenteSelection() {
+//        liensParenteList = CcbRoomDatabase.getDatabase(applicationContext)?.lienParenteDao()?.getAll(agentID = SPUtils.getInstance().getInt(
+//            Constants.AGENT_ID, 0).toString())
+//
+//        val lienParenteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, liensParenteList!!)
+//        selectLienParentSsrt!!.adapter = lienParenteAdapter
+//
+//        selectLienParentSsrt.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val lienParent = liensParenteList!![position]
+//                lienParente = lienParent.nom!!
+//
+//                if (lienParente.uppercase().contains("AUTRE")) linearAutreLienParentContainerSsrte.visibility = VISIBLE
+//                else linearAutreLienParentContainerSsrte.visibility = GONE
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
 
     fun setupProducteurSelection(localite: String?) {
@@ -712,6 +712,33 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         setupSectionSelection()
 
         Commons.setListenerForSpinner(this,
+            "Quel est le lien de parenté avec le producteur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectLienParentSsrt,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = resources.getStringArray(R.array.parentAffiliation)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    linearAutreLienParentContainerSsrte.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "uel niveau d’étude as-tu atteint ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectSchoolLevelSsrt,
+            listIem = resources.getStringArray(R.array.schoolLevelFull)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+
+        Commons.setListenerForSpinner(this,
             "Va-t-il à l'école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectSchoolStatusSsrt,
             itemChanged = arrayListOf(Pair(1, "Non"), Pair(2, "Oui")),
@@ -761,9 +788,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
         Commons.setListenerForSpinner(this,
-            "Ton école est-elle située dans le village ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            "Quel niveau d’étude as-tu atteint ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectNiveauEtudeAtteintSsrt,
-            listIem = resources.getStringArray(R.array.YesOrNo)
+            listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
             onChanged = {
                 when (it) {
@@ -783,25 +810,29 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                         val classLevels = resources.getStringArray(R.array.twoCycleLevel)
                         setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
                     }
+                    4 -> {
+                        val classLevels = arrayOf<String>()
+                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                    }
                 }
             },
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setListenerForSpinner(this,
-            "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectRaisonArretEcoleSSrte,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
-            listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-                if (itemId == 1) {
-                    containerAutreRaisonArretEcole.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectRaisonArretEcoleSSrte,
+//            itemChanged = arrayListOf(Pair(1, "Oui")),
+//            listIem = resources.getStringArray(R.array.YesOrNo)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                if (itemId == 1) {
+//                    containerAutreRaisonArretEcole.visibility = visibility
+//                }
+//            })
 
         Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte, "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?", resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) }){
             if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
@@ -815,7 +846,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux légés as-tu effectués ?", resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux légés as-tu effectués ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+
+        }
+
+        Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux a tu effectués ?", resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
 
         }
 

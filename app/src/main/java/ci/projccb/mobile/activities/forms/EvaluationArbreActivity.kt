@@ -257,6 +257,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                     parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
                     parcelleCommon.id = parcelle.id!!
 
+                    editSuperficieEvaluationArbre.setText("${parcelle.superficieConcerne}")
                     //setupParcelleSelection(parcelleCommon.id, currVal3)
                 }
 

@@ -19,7 +19,7 @@ import ci.projccb.mobile.tools.ListConverters
  */
 
 @Database(
-    version = 3, exportSchema = false,
+    version = 2, exportSchema = false,
     entities = [
         AgentModel::class,
         EauUseeModel::class,

@@ -43,8 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE Evaluation Des Arbres"
-
+                android:text="FICHE Evaluation Des Besoins"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -224,7 +223,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nom et Prénom Producteur *"
+                            android:text="Nom et prénom producteur"
 
                             android:textStyle="bold" />
 
@@ -422,7 +421,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nombre d’arbre"
+                            android:text="Nombre d’arbre estimée sur la superficie !"
                             android:textStyle="bold" />
 
 

@@ -509,7 +509,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             expandIdentif4,
             expandIdentif5,
             expandIdentif6,
-            expandIdentif7,
+            //expandIdentif7,
         )
 
         expandableList.forEach {
@@ -568,14 +568,14 @@ class DashboardAgentActivity : AppCompatActivity(),
                 //carouselRecyclerview?.adapter?.unregisterAdapterDataObserver(indicator!!.getAdapterDataObserver())
 
                 listOfFeatures.clear()
-                LogUtils.d(listOfFeatureCloned.size)
-                LogUtils.d("Pos "+position)
+//                LogUtils.d(listOfFeatureCloned.size)
+//                LogUtils.d("Pos "+position)
                 var isThereItem = false
 
                 listOfFeatureCloned.forEach {
                     if(it.categorie == position) {
                         listOfFeatures.add(it)
-                        LogUtils.d(it.title)
+                        //LogUtils.d(it.title)
                         isThereItem = true
                     }
                 }
@@ -597,6 +597,8 @@ class DashboardAgentActivity : AppCompatActivity(),
         expandableList.forEach {
             it.visibility = View.VISIBLE
         }
+//        listOfFeatures.clear()
+//        (carouselRecyclerview.adapter as FeatureAdapter) ?.notifyDataSetChanged()
     }
 
     private fun updateListOfFeature() {
@@ -750,7 +752,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(8)
                     //setClickListenForFeature(8);
                     //linearFormation.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("SUIVI FORMATION",
+                    listOfFeatures.add(FeatureModel("FORMATION",
                         countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")!!,
                         type = "FORMATION",
@@ -803,20 +805,61 @@ class DashboardAgentActivity : AppCompatActivity(),
             //carouselRecyclerview?.adapter?.notifyDataSetChanged()
         }
 
-        listOfFeatures.add(FeatureModel("DISTRIBUTION D'ARBRE",
-            countSync = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "distribution_arbre")!!,
-            type = "DISTRIBUTION_ARBRE",
-            categorie = 4,
-            //image = R.drawable.livraison,
-            icon = R.drawable.ic_shipped,
+        listOfFeatures.add(FeatureModel("VISITEUR FORMATION",
+            countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
+            type = "VISITEUR_FORMATION",
+            categorie = 2,
+            //image = R.drawable.formation,
+            icon = R.drawable.ic_formation,
             canAdd = true,
             canEdit = false,
             canViewDraft = false,
             canViewSync = false //can be false
-        ).apply { this.image = image.plus("estimations.png")})
+        ).apply { this.image = image.plus("formation.png")})
 
-        listOfFeatures.add(FeatureModel("EVALUATION DES ARBRES",
+//        listOfFeatures.add(FeatureModel("FORMATION PRODUCTEUR",
+//            countSync = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
+//            type = "FORMATION",
+//            categorie = 2,
+//            //image = R.drawable.livraison,
+//            icon = R.drawable.ic_shipped,
+//            canAdd = true,
+//            canEdit = false,
+//            canViewDraft = false,
+//            canViewSync = false //can be false
+//        ).apply { this.image = image.plus("formation.png")})
+
+        listOfFeatures.add(FeatureModel("SUIVI LIVRAISON",
+            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison")!!,
+            type = "SUIVI_LIVRAISON",
+            categorie = 3,
+            //image = R.drawable.livraison,
+            icon = R.drawable.ic_shipped,
+            canAdd = false,
+            canEdit = false,
+            canViewDraft = false,
+            canViewSync = false //can be false
+        ).apply { this.image = image.plus("livraison.png")})
+
+        listOfFeatures.add(FeatureModel("MAGASIN",
+            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "magasin")!!,
+            type = "MAGASIN",
+            categorie = 3,
+            //image = R.drawable.livraison,
+            icon = R.drawable.ic_shipped,
+            canAdd = false,
+            canEdit = false,
+            canViewDraft = false,
+            canViewSync = false //can be false
+        ).apply { this.image = image.plus("livraison.png")})
+
+
+
+        listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
             countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
             countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")!!,
             type = "EVALUATION_ARBRE",
@@ -829,44 +872,18 @@ class DashboardAgentActivity : AppCompatActivity(),
             canViewSync = false //can be false
         ).apply { this.image = image.plus("estimations.png")})
 
-        listOfFeatures.add(FeatureModel("FORMATION PRODUCTEUR",
-            countSync = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
-            type = "VISTEUR_FORMATION",
-            categorie = 2,
+        listOfFeatures.add(FeatureModel("DISTRIBUTION D'ARBRE",
+            countSync = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "distribution_arbre")!!,
+            type = "DISTRIBUTION_ARBRE",
+            categorie = 4,
             //image = R.drawable.livraison,
             icon = R.drawable.ic_shipped,
             canAdd = true,
             canEdit = false,
             canViewDraft = false,
             canViewSync = false //can be false
-        ).apply { this.image = image.plus("formation.png")})
-
-        listOfFeatures.add(FeatureModel("SUIVI LIVRAISON",
-            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
-            type = "LIVRAISON",
-            categorie = 3,
-            //image = R.drawable.livraison,
-            icon = R.drawable.ic_shipped,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("livraison.png")})
-
-        listOfFeatures.add(FeatureModel("MAGASIN",
-            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
-            type = "LIVRAISON",
-            categorie = 3,
-            //image = R.drawable.livraison,
-            icon = R.drawable.ic_shipped,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("livraison.png")})
+        ).apply { this.image = image.plus("estimations.png")})
 
         listOfFeatures.add(FeatureModel("APPROVISIONNEMENT",
             countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
@@ -894,18 +911,18 @@ class DashboardAgentActivity : AppCompatActivity(),
             canViewSync = false //can be false
         ).apply { this.image = image.plus("estimations.png")})
 
-        listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
-            countSync =  CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "inspection")!!,
-            type = "INSPECTION",
-            categorie = 4,
-            //image = R.drawable.evaluation,
-            icon = R.drawable.baseline_elevator,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("evaluation.png")})
+//        listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
+//            countSync =  CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "inspection")!!,
+//            type = "INSPECTION",
+//            categorie = 4,
+//            //image = R.drawable.evaluation,
+//            icon = R.drawable.baseline_elevator,
+//            canAdd = false,
+//            canEdit = false,
+//            canViewDraft = false,
+//            canViewSync = false //can be false
+//        ).apply { this.image = image.plus("evaluation.png")})
 
         listOfFeatures.map {
             listOfFeatureCloned.add(it)

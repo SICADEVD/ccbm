@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
@@ -1659,11 +1660,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
                     containerFemmeAgricoleMenage.visibility = visibility
                     editSuperfDefFemmActMenage.visibility = visibility
                     //containerFemmeNonAgricoleMenage.visibility = View.GONE
+                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr))
                 }else if(itemId == 2){
                     //setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
                     //containerFemmeNonAgricoleMenage.visibility = visibility
                     containerFemmeAgricoleMenage.visibility = visibility
                     editSuperfDefFemmActMenage.visibility = View.GONE
+                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteNAgr))
                 }
             })
 
@@ -1728,6 +1731,26 @@ class ProducteurMenageActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
                     containerEquiEtatMenage.visibility = visibility
+                }
+            })
+
+    }
+
+    private fun setupNomFemActiviteList(selectNomFemmeActiviteDefMenage: Spinner?, stringArray: Array<String>, currentVal: String? = null) {
+
+        Commons.setListenerForSpinner(this,
+            "Quelle est le nom de l'activité ?",
+            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectNomFemmeActiviteDefMenage!!,
+            currentVal = currentVal,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = stringArray?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    conatinerFemmeAutrNomActivitMenage.visibility = visibility
                 }
             })
 

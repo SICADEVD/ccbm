@@ -43,8 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE Distribution D'Arbre"
-
+                android:text="FICHE Distribution Des Arbres"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -417,7 +416,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Choix du STATE"
+                                                    android:text="Choix du STRATE"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatSpinner

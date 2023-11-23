@@ -36,6 +36,10 @@ interface ProducteurDao {
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
+    @Query("UPDATE producteur SET isSynced = :synced, origin = 'remote' WHERE uid = :localID")
+    fun syncDataOnExist(synced: Int, localID: Int)
+
+    @Transaction
     @Query("SELECT * FROM producteur WHERE (isSynced = 0 AND localitesId = :localiteUid AND origin = 'local' AND agentId = :agentId)")
     fun getProducteursUnSynchronizedLocal(localiteUid: String?, agentId: String?): MutableList<ProducteurModel>
 

@@ -28,6 +28,10 @@ interface InfosProducteurDao {
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
+    @Query("DELETE FROM infos_producteur WHERE uid = :uid")
+    fun deleteProducteurInfo(uid: Int?)
+
+    @Transaction
     @Query("DELETE FROM infos_producteur WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
 }

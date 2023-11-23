@@ -484,6 +484,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         val producteur = producteurModelItem?.first.apply {
             this?.apply {
                 photo = profilPhotoPath ?: ""
+                profilPhotoPath = profilPhotoPath ?: ""
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
@@ -892,15 +893,17 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
+        val listPiece = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)
         setListenerForSpinner(this, "Quel type de pièce ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectPieceProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
+            listIem = listPiece?.map { it.nom },
             itemChanged = listOf(Pair(1, "Non disponible")),
             onChanged = {
-
+                  //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
+                  if((listPiece.size) - 1 > it) containerPieceProducteur.visibility = View.VISIBLE
             }, onSelected = { itemId, visibility ->
                 if(itemId == 1){
-                    containerPieceProducteur.visibility = visibility
+                    containerPieceProducteur.visibility = View.GONE
                 }
             })
 
@@ -1221,16 +1224,18 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Quelle est votre pièce", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        val listPiece = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)
+        setListenerForSpinner(this, "Quel type de pièce ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectPieceProducteur,
             currentVal = producteurDrafted.piece,
-            listIem = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)?.map { it.nom },
+            listIem = listPiece?.map { it.nom },
             itemChanged = listOf(Pair(1, "Non disponible")),
             onChanged = {
-
+                //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
+                if((listPiece.size) - 1 > it) containerPieceProducteur.visibility = View.VISIBLE
             }, onSelected = { itemId, visibility ->
                 if(itemId == 1){
-                    containerPieceProducteur.visibility = visibility
+                    containerPieceProducteur.visibility = View.GONE
                 }
             })
 
@@ -1273,7 +1278,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         val producteurDraft = producteurModelItem?.first.apply {
             this?.apply {
-                photo = profilPhotoPath ?: ""
+                profilPhotoPath = profilPhotoPath ?: ""
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
@@ -1389,9 +1394,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         limitEDTMaxLength(editMembreNumProducteur, 10, 10)
 
         //limitEDTMaxLength(editPieceProducteur, 10)
-        limitEDTMaxLength(editCarteCCCProducteur, 10)
-        limitEDTMaxLength(editNumCarteCSSProducteur, 12)
-        limitEDTMaxLength(editNumPieceCMUProducteur, 12)
+        limitEDTMaxLength(editCarteCCCProducteur, 11, 11)
+        //limitEDTMaxLength(editNumCarteCSSProducteur, 12)
+        //limitEDTMaxLength(editNumPieceCMUProducteur, 12)
 
 
 

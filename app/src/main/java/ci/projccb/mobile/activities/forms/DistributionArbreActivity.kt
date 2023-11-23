@@ -103,7 +103,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             defaultItemSize = 3,
             libeleList = arrayListOf(
                 "Arbre concerné",
-                "State",
+                "Strate",
                 "Quantité",
                 "",
                 "",

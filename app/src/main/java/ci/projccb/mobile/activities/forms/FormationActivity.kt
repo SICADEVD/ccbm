@@ -426,6 +426,11 @@ class FormationActivity : AppCompatActivity() {
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
+                    Commons.setupItemMultiSelection(this, selectProducteurFormation, "Selectionner les producteurs présent",
+                        CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { CommonData(0, "${it.nom} ${it.prenoms}") }!!
+                    ){
+                        //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
+                    }
                 }
 
 
@@ -461,11 +466,20 @@ class FormationActivity : AppCompatActivity() {
             "Lieu de la formation",
             spinner = selectLieuFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(
-                4,
-                this
-            ) as MutableList<LieuFormationModel>)?.map { it.nom }
-                ?.toList() ?: listOf(),
+            listIem = resources.getStringArray(R.array.lieuDeFormation)?.toList() ?: listOf(),
+            onChanged = {
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAutreLieuFormation.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Type de formation",
+            spinner = selectTypeFormation,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = resources.getStringArray(R.array.type_formation)?.toList() ?: listOf(),
             onChanged = {
             },
             onSelected = { itemId, visibility ->
@@ -476,18 +490,14 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             "Quel est le module de la formation ?",
-            spinner = selectLieuFormation,
+            spinner = selectModuleFormation,
             listIem = resources.getStringArray(R.array.entity_example).map { it.toString() }
                 ?.toList() ?: listOf(),
             onChanged = {
-                Commons.setupItemMultiSelection(this, selectThemeFormation,
-                    "Quel est le theme de la formation ?",
-                    (AssetFileHelper.getListDataFromAsset(
-                        9,
-                        this
-                    ) as MutableList<ThemeFormationModel>)?.map { CommonData(0, it.toString()) }
-                ){
 
+                Commons.setupItemMultiSelection(this, selectThemeFormation, "Quels sont les themes de la formation ?",
+                    (AssetFileHelper.getListDataFromAsset( 9,this) as MutableList<ThemeFormationModel>).map { CommonData(0, "${it.nom}") }){
+                    //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
                 }
 
             },
@@ -495,6 +505,11 @@ class FormationActivity : AppCompatActivity() {
 
             })
 
+        Commons.setupItemMultiSelection(this, selectDelegueFormation, "Selectionner les délégués présent à la formation !",
+            (CcbRoomDatabase.getDatabase(this)?.delegueDao()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()))?.map { CommonData(0, "${it.nom}") }
+                ?: arrayListOf()){
+            //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
+        }
 
         // setupThemeFormationSelection()
     }

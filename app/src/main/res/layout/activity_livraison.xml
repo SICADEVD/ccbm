@@ -681,7 +681,7 @@ android:textColor="@color/text_color_white"
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectProductsLivraison"
+                                android:id="@+id/selectProducLivraison"
                                 />
 
                         </LinearLayout>

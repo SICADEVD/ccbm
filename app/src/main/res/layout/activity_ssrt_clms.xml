@@ -186,7 +186,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selection de la section *"
+                            android:text="Selection de la section"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -362,6 +362,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background"
                             android:ellipsize="end"
+                            android:hint="KOFFI"
                             android:imeOptions="actionDone"
                             android:inputType="textCapCharacters"
                             android:paddingStart="@dimen/_10sdp"
@@ -397,6 +398,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background"
                             android:ellipsize="end"
+                            android:hint="HENRI"
                             android:imeOptions="actionDone"
                             android:inputType="textCapWords"
                             android:paddingStart="@dimen/_10sdp"
@@ -510,7 +512,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Lien de parenté avec le producteur *"
+                            android:text="Quel est le lien de parenté avec le producteur ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -535,6 +537,8 @@ android:textColor="@color/text_color_white"
 
                     <LinearLayout
                         android:id="@+id/linearAutreLienParentContainerSsrte"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -648,7 +652,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Quelle niveau d’étude as-tu atteint ?"
+                                android:text="Quel niveau d’étude as-tu atteint ?"
 
                                 android:textStyle="bold" />
 

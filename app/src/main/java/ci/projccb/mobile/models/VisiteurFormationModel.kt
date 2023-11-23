@@ -43,7 +43,7 @@ interface VisiteurFormationDao {
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(visiteurFormationActivity: VisiteurFormationActivity)
+    fun insert(visiteurFormationModel: VisiteurFormationModel)
 
     @Transaction
     @Query("SELECT * FROM visiteur_formation WHERE userid = :agentID")
