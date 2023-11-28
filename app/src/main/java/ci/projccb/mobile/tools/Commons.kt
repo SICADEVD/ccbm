@@ -818,6 +818,69 @@ class Commons {
 
         }
 
+        fun setSpinnerAndSpinnerRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            selectItem2: AppCompatSpinner,
+            selectItem: AppCompatSpinner,
+            libelle: String = "Libellé",
+            valeur: String = "Valeur",
+            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+            val itemList = mutableListOf<OmbrageVarieteModel>()
+            var countN = 0
+            libeleList.forEach {
+                itemList.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+                countN++
+            }
+            val itemAdapter = OmbrageAdapter(itemList, libelle, valeur)
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = itemAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (selectItem2.isSpinnerEmpty() || selectItem.isSpinnerEmpty()
+                    ) {
+                        Commons.showMessage("Renseignez des données sur l'autre insecte, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    val modelAdd = OmbrageVarieteModel(
+                        0,
+                        selectItem2.getSpinnerContent(),
+                        selectItem.getSpinnerContent().trim()
+                    )
+
+                    if(modelAdd.variete?.length?:0 > 0){
+                        itemList?.forEach {
+                            if (it.variete?.uppercase() == modelAdd.variete?.uppercase() && it.nombre == modelAdd.nombre) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        itemList?.add(modelAdd)
+                        itemAdapter?.notifyDataSetChanged()
+
+                        selectItem.setSelection(0)
+                        selectItem2.setSelection(0)
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
         fun setFiveItremRV(
             context: Activity,
             recyclerList: RecyclerView,

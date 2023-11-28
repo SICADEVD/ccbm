@@ -8,6 +8,7 @@ import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Constants
@@ -80,6 +81,7 @@ class ConfigurationActivity : AppCompatActivity() {
     var programmesDao: ProgrammesDao? = null
     var sectionsDao: SectionsDao? = null
     var agentModel: AgentModel? = null
+    var arbreDao: ArbreDao? = null
     var agentID: Int = 0
     var oneIssue = false
 
@@ -1561,6 +1563,48 @@ class ConfigurationActivity : AppCompatActivity() {
             } else {
                 configCompletedOrError("Type de formations")
                 //configFlow()
+                //getLiensParenteSection()
+                getArbreList()
+            }
+        }
+    }
+
+    suspend fun getArbreList() {
+        withContext(IO) {
+            val arbreListFetch = async {
+                arbreDao?.deleteAll()
+
+                try {
+                    val clientArbreListData = ApiClient.apiService.getArbreList()
+
+                    val responseArbreListData: Response<MutableList<ArbreModel>> = clientArbreListData.execute()
+                    val datasArbreListList: MutableList<ArbreModel>? = responseArbreListData.body()
+
+                    datasArbreListList?.map {
+                        val dataArbreListModel = ArbreModel(
+                            uid = 0,
+                            nom = it.nom,
+                            nomScientifique = it.nomScientifique,
+                            strate = it.strate,
+                            id = it.id,
+                        )
+
+                        arbreDao?.insert(dataArbreListModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            arbreListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des arbres")
+                //configFlow()
                 getLiensParenteSection()
             }
         }
@@ -2506,6 +2550,7 @@ class ConfigurationActivity : AppCompatActivity() {
         concernesDao = database?.concernesDao()
         programmesDao = database?.programmesDao()
         sectionsDao = database?.sectionsDao()
+        arbreDao = database?.arbreDao()
 
         if (intent != null) {
             agentID = intent.getIntExtra(Constants.AGENT_ID, 0)

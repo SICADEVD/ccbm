@@ -1658,7 +1658,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 if (itemId == 1) {
                     //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
                     containerFemmeAgricoleMenage.visibility = visibility
-                    editSuperfDefFemmActMenage.visibility = visibility
+                    editSuperfDefFemmActMenage.visibility = View.VISIBLE
                     //containerFemmeNonAgricoleMenage.visibility = View.GONE
                     setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr))
                 }else if(itemId == 2){

@@ -886,6 +886,12 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //                insectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
 //                nombreInsectesParasitesTemp = GsonUtils.toJson((recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
+                pesticideUtiliseAnneeDerStr = GsonUtils.toJson((recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded())
+                intrantUtiliseAnneeDerStr = GsonUtils.toJson((recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded())
+
+                presenceInsectesParasitesRavageurStr = GsonUtils.toJson((recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded())
+                autreInsectesParasitesRavageurStr = GsonUtils.toJson((recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded())
+
                 insectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
                 nombreinsectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
@@ -896,6 +902,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 //            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
 //            this.add(Pair("Insecte parasite", (recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair("Pesticides utilisés l'an dernier", (recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Type: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair("Intrants utilisés l'an dernier", (recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Type: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+
+            this.add(Pair("Autre insecte parasites ou ravageurs", (recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair("Insecte parasites ou ravageurs", (recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
             this.add(Pair("Insecte amis", (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
             this.add(Pair("Animaux rencontrés", (recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
         }.map { MapEntry(it.first, it.second) }
@@ -1797,10 +1808,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setEditAndSpinnerRV(this, recyclerInsecteAmisSuiviParcelle, clickAddInsectAmisSuiviParcelle, editInsecteNomAmisParcelle, selectInsecteAmisQuantiteSuiviParcelle,"Nom d'insecte", "Quantité")
         Commons.setEditAndSpinnerRV(this, recyclerAutreInsecteParOuRavSuiviParcelle, clickAddAutreInsecteParOuRavSuiviParcelle, editAutreInsecteParOuRavNomSParcelle, selectAutrInsecteParOuRavQtSuiviParcelle, "Nom d'insecte", "Quantité")
+        Commons.setSpinnerAndSpinnerRV(this, recyclerInsecteParOuRavSuiviParcelle, clickAddInsecteParOuRavSuiviParcelle, selectInsecteParOuRavNomSuiviParcelle, selectInsecteParOuRavQtSuiviParcelle, "Nom d'insecte", "Quantité")
 
-        Commons.setFiveItremRV(this, recyclerPestListSuiviParcel, clickAddPestListSuiviParcel, selectPestNomSParcell,selectPestContenantSParcell,selectPestUniteSParcell,editQuantitPestSParcel,editFrequencPestSParcel)
-        Commons.setFiveItremRV(this, recyclerIntantAnDerListSuiviParcel, clickAddIntantAnDerListSuiviParcel, selectIntantAnDerSParcell,selectIntantAnDerContenantSParcell,selectIntantAnDerUniteSParcell,editIntantAnDerPestSParcel,editFrequencIntantAnDerSParcel)
-        Commons.setFiveItremRV(this, recyclerTraitInsecteParOuRavListSuiviParcel, clickAddTraitInsecteParOuRavListSuiviParcel, selectTraitInsecteParOuRavNomSParcell,selectTraitInsecteParOuRavContenantSParcell,selectTraitInsecteParOuRavUniteSParcell,editTraitInsecteParOuRavQtSParcel,editTraitInsecteParOuRavFrequSParcel)
+        Commons.setFiveItremRV(this, recyclerPestListSuiviParcel, clickAddPestListSuiviParcel, selectPestNomSParcell,selectPestContenantSParcell,selectPestUniteSParcell,editQuantitPestSParcel,editFrequencPestSParcel, libeleList = mutableListOf<String>("Type", "Contenant", "Unité", "Quantité", "Fréquence"))
+        Commons.setFiveItremRV(this, recyclerIntantAnDerListSuiviParcel, clickAddIntantAnDerListSuiviParcel, selectIntantAnDerSParcell,selectIntantAnDerContenantSParcell,selectIntantAnDerUniteSParcell,editIntantAnDerPestSParcel,editFrequencIntantAnDerSParcel, libeleList = mutableListOf<String>("Type", "Contenant", "Unité", "Quantité", "Fréquence"))
+        Commons.setFiveItremRV(this, recyclerTraitInsecteParOuRavListSuiviParcel, clickAddTraitInsecteParOuRavListSuiviParcel, selectTraitInsecteParOuRavNomSParcell,selectTraitInsecteParOuRavContenantSParcell,selectTraitInsecteParOuRavUniteSParcell,editTraitInsecteParOuRavQtSParcel,editTraitInsecteParOuRavFrequSParcel, libeleList = mutableListOf<String>("Type", "Contenant", "Unité", "Quantité", "Fréquence"))
 
         //setVarieteArbrParcelleRV()
 

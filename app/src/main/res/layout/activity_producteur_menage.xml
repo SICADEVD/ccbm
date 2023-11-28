@@ -1632,6 +1632,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="typeActivite"
                                 android:id="@+id/selectFemmeActiviteDefMenage"
                                 android:layout_width="match_parent"
                                 android:entries="@array/femmeActivite"
@@ -1730,6 +1731,7 @@ android:textColor="@color/text_color_white"
                                         android:layout_height="@dimen/_10sdp" />
 
                                     <androidx.appcompat.widget.AppCompatSpinner
+                                        android:tag="nomActiviteAgricole"
                                         android:id="@+id/selectNomFemmeActiviteDefMenage"
                                         android:layout_width="match_parent"
                                         android:entries="@array/nomActiviteAgr"
@@ -1762,6 +1764,7 @@ android:textColor="@color/text_color_white"
                                     android:textStyle="bold" />
 
                                 <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="autreActiviteAgricole"
                                     android:id="@+id/editFemmeAutrNomActivitMenage"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/_37sdp"
@@ -1808,6 +1811,7 @@ android:textColor="@color/text_color_white"
                                         android:textStyle="bold" />
 
                                     <androidx.appcompat.widget.AppCompatEditText
+                                        android:tag="nombreHectareConjoint"
                                         android:id="@+id/editSuperficieExploiMenage"
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/_37sdp"
@@ -1857,6 +1861,7 @@ android:textColor="@color/text_color_white"
                                         android:layout_height="@dimen/_10sdp" />
 
                                     <androidx.appcompat.widget.AppCompatSpinner
+                                        android:tag="capitalDemarrage"
                                         android:id="@+id/selectParcelObtenuDefMenage"
                                         android:layout_width="match_parent"
                                         android:entries="@array/capitalDemarrag"
@@ -1888,6 +1893,7 @@ android:textColor="@color/text_color_white"
                                     android:textStyle="bold" />
 
                                 <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="autreCapital"
                                     android:id="@+id/editFemmeAutrCapiDemaMenage"
                                     android:layout_width="0dp"
                                     android:layout_height="@dimen/_37sdp"
@@ -1932,7 +1938,7 @@ android:textColor="@color/text_color_white"
                                         android:textStyle="bold" />
 
                                     <androidx.appcompat.widget.AppCompatEditText
-                                        android:tag="superficieCacaoFemme"
+                                        android:tag="dureeActivite"
                                         android:id="@+id/editTempsDePratiquMenage"
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/_37sdp"
@@ -1986,6 +1992,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_height="@dimen/_10sdp" />
 
                                         <androidx.appcompat.widget.AppCompatSpinner
+                                            android:tag="formation"
                                             android:id="@+id/selectFormatFemmBenefMenage"
                                             android:layout_width="match_parent"
                                             android:entries="@array/YesOrNo"
@@ -2031,10 +2038,10 @@ android:textColor="@color/text_color_white"
                                             android:layout_weight="3.5"
                                             android:paddingLeft="@dimen/_10sdp"
                                             android:text="De quel structure ?"
-
                                             android:textStyle="bold" />
 
                                         <androidx.appcompat.widget.AppCompatEditText
+                                            android:tag="entite"
                                             android:id="@+id/editFemmeNomStructMenage"
                                             android:layout_width="0dp"
                                             android:layout_height="@dimen/_37sdp"

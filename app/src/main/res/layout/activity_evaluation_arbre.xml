@@ -43,6 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:textAllCaps="true"
                 android:text="FICHE Evaluation Des Besoins"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -247,43 +248,43 @@
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Choisir sa parcelle concernée *"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Choisir la parcelle concernée"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
 
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="parcelle_id"
-                                android:id="@+id/selectParcelleEvaluationArbre"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:tag="parcelle_id"-->
+<!--                                android:id="@+id/selectParcelleEvaluationArbre"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:spinnerMode="dialog" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <!--                    <Space-->
                     <!--                        android:layout_width="@dimen/_5sdp"-->
@@ -311,10 +312,142 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_cardview_with_border_brown"
                     android:orientation="vertical"
-                    android:padding="@dimen/_20sdp">
+                    android:padding="@dimen/_5sdp">
+
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:weightSum="10"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                                android:textColor="@color/text_color_white"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_weight="6"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:paddingLeft="@dimen/_12sdp"-->
+<!--                                android:text="Combien d'arbre avez vous dénombrer ou collecter dans la parcelle / Ha ?"-->
+<!--                                android:textStyle="bold" />-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_8sdp"-->
+<!--                                android:layout_height="wrap_content"/>-->
+
+<!--                            <androidx.appcompat.widget.AppCompatEditText-->
+<!--                                android:tag=""-->
+<!--                                android:id="@+id/editNbrCacaoHecEvaluationArbre"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:layout_weight="4"-->
+<!--                                android:background="@drawable/rounded_background"-->
+<!--                                android:hint="100"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:imeOptions="actionDone"-->
+<!--                                android:inputType="number"-->
+<!--                                android:paddingStart="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_10sdp"-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:textSize="@dimen/_13ssp"-->
+<!--                                tools:text="100" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/containerSuperf"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:weightSum="10">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_weight="6"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Superficie enrégistrée"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        &lt;!&ndash;    android:text="Superficie de la parcelle (m\u00B2)"    &ndash;&gt;-->
+
+<!--                        <androidx.appcompat.widget.AppCompatEditText-->
+<!--                            android:tag=""-->
+<!--                            android:id="@+id/editSuperficieEvaluationArbre"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_weight="4"-->
+<!--                            android:layout_height="@dimen/_37sdp"-->
+<!--                            android:background="@drawable/rounded_background"-->
+<!--                            android:hint="0.0"-->
+<!--                            android:text="0.0"-->
+<!--                            android:ellipsize="end"-->
+<!--                            android:imeOptions="actionDone"-->
+<!--                            android:inputType="numberDecimal"-->
+<!--                            android:digits="0123456789."-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingEnd="@dimen/_10sdp"-->
+<!--                            android:textAllCaps="true"-->
+<!--                            android:textSize="@dimen/_13ssp"-->
+<!--                            tools:text="0.0" />-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:weightSum="10">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="6"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Nombre d’arbre estimée sur la superficie !"-->
+<!--                            android:textStyle="bold" />-->
+
+
+<!--                        <androidx.appcompat.widget.AppCompatEditText-->
+<!--                            android:tag=""-->
+<!--                            android:id="@+id/editNbreDAbreEvaluationArbre"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="@dimen/_37sdp"-->
+<!--                            android:layout_weight="4.0"-->
+<!--                            android:background="@drawable/rounded_background"-->
+<!--                            android:hint="25"-->
+<!--                            android:ellipsize="end"-->
+<!--                            android:imeOptions="actionDone"-->
+<!--                            android:inputType="number"-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingEnd="@dimen/_10sdp"-->
+<!--                            android:textAllCaps="true"-->
+<!--                            android:textSize="@dimen/_13ssp"-->
+<!--                            tools:text="10" />-->
+
+<!--                    </LinearLayout>-->
 
 
                     <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -322,125 +455,166 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:weightSum="10"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:padding="@dimen/_5sdp">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_weight="6"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Combien d'arbre avez vous dénombrer ou collecter dans la parcelle / Ha ?"
+                                android:textAllCaps="true"
+                                android:gravity="center_horizontal"
+                                android:text="ENREGISTREZ LA LISTE DES BESOINS EN ARBRES DU PRODUCTEUR"
                                 android:textStyle="bold" />
 
-                            <Space
-                                android:layout_width="@dimen/_8sdp"
-                                android:layout_height="wrap_content"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="@dimen/_5sdp">
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag=""
-                                android:id="@+id/editNbrCacaoHecEvaluationArbre"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="100"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="number"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="100" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        >
+
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:weightSum="5"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:text="Choix de l'arbre"
+                                                    android:textStyle="bold" />
+
+                                                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                                    android:id="@+id/selectChoixDeLArbreEvalArbre"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_37sdp"
+                                                    android:background="@drawable/rounded_background"
+                                                    android:entries="@array/nomScienArbreConseille"
+                                                    android:spinnerMode="dialog" />
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_10sdp" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:weightSum="5"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="2.5"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Quelle est sa strate ?"
+                                                    android:textStyle="bold" />
+
+                                                <androidx.appcompat.widget.AppCompatSpinner
+                                                    android:id="@+id/selectChoixStateArbrEvalArbre"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_37sdp"
+                                                    android:background="@drawable/rounded_background"
+                                                    android:entries="@array/listStrat"
+                                                    android:spinnerMode="dialog" />
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="2.5"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:text="Qté souhaitée"
+                                                    android:textStyle="bold" />
+
+                                                <androidx.appcompat.widget.AppCompatEditText
+                                                    android:id="@+id/editQuantitEvalArbre"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_37sdp"
+                                                    android:background="@drawable/rounded_background"
+                                                    android:ellipsize="end"
+                                                    android:hint="12"
+                                                    android:imeOptions="actionDone"
+                                                    android:inputType="number"
+                                                    android:paddingStart="@dimen/_10sdp"
+                                                    android:paddingEnd="@dimen/_10sdp"
+                                                    android:textSize="@dimen/_13ssp"
+                                                    tools:text="Quantité: 12" />
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <Space
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_5sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatButton
+                                        android:id="@+id/clickAddArbreEvalArbre"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_gravity="end"
+                                        android:background="@drawable/submit_button_bg"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textColor="@color/text_color_white"
+                                        android:text="Ajouter"
+                                        android:textSize="@dimen/_9ssp" />
+
+                                </LinearLayout>
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_5sdp" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerArbreListEvalArbre"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                    tools:itemCount="1"
+                                    tools:listitem="@layout/three_items_list" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:id="@+id/containerSuperf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="10">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="0dp"
-                            android:layout_weight="6"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Superficie enrégistrée"
-                            android:textStyle="bold" />
-
-                        <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:tag=""
-                            android:id="@+id/editSuperficieEvaluationArbre"
-                            android:layout_width="0dp"
-                            android:layout_weight="4"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background"
-                            android:hint="0.0"
-                            android:text="0.0"
-                            android:ellipsize="end"
-                            android:imeOptions="actionDone"
-                            android:inputType="numberDecimal"
-                            android:digits="0123456789."
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
-                            tools:text="0.0" />
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="10">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nombre d’arbre estimée sur la superficie !"
-                            android:textStyle="bold" />
-
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:tag=""
-                            android:id="@+id/editNbreDAbreEvaluationArbre"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_37sdp"
-                            android:layout_weight="4.0"
-                            android:background="@drawable/rounded_background"
-                            android:hint="25"
-                            android:ellipsize="end"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
-                            tools:text="10" />
 
                     </LinearLayout>
 

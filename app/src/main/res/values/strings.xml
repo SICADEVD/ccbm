@@ -488,6 +488,7 @@
         <item>A pieds</item>
         <item>A moto</item>
         <item>Transport en commun</item>
+        <item>Autre</item>
     </string-array>
 
     <string-array name="primaireLevel">
@@ -500,15 +501,15 @@
     </string-array>
 
     <string-array name="oneCycleLevel">
-        <item>6eme</item>
-        <item>5eme</item>
-        <item>4eme</item>
-        <item>3eme</item>
+        <item>6ème</item>
+        <item>5ème</item>
+        <item>4ème</item>
+        <item>3ème</item>
     </string-array>
 
 
     <string-array name="twoCycleLevel">
-        <item>1ere</item>
+        <item>1ère</item>
         <item>2nd</item>
         <item>Terminale</item>
     </string-array>
@@ -518,9 +519,10 @@
         <item>Neveu/Niece</item>
         <item>Frère/Soeur</item>
         <item>Cousin/Cousine</item>
-        <item>Protegé/Tuteur</item>
+        <item>Protegé</item>
+        <item>Tuteur</item>
         <item>Oncle/Tante</item>
-        <item>Autre, précisez</item>
+        <item>Autre</item>
     </string-array>
 
     <string-array name="IntrantList">

@@ -191,9 +191,9 @@ class MenagePreviewActivity : AppCompatActivity() {
 
 //
 //
-//                    clickCloseBtn.setOnClickListener {
-//                        finish()
-//                    }
+                    clickCloseBtn.setOnClickListener {
+                        finish()
+                    }
 //                }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)

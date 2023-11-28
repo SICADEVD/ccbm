@@ -222,7 +222,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selection de la localite *"
+                            android:text="Selection de la localite"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -424,7 +424,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Genre du membre *"
+                            android:text="Quel est le genre du membre ?"
 
                             android:textStyle="bold" />
 
@@ -764,7 +764,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="À Combien de Km du village est-elle située (mètre) ?"
+                                android:text="À Combien de Km du village est-elle située (kilomètre) ?"
 
                                 android:textStyle="bold" />
 
@@ -774,7 +774,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_37sdp"
                                 android:background="@drawable/rounded_background"
                                 android:ellipsize="end"
-                                android:hint="20 mètre"
+                                android:hint="10"
                                 android:imeOptions="actionDone"
                                 android:inputType="number"
                                 android:paddingStart="@dimen/_10sdp"
@@ -1112,7 +1112,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Au cours de ces 2 dernières années lequel de ces travaux as-tu effectués ?"
+                            android:text="Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1212,7 +1212,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Travaux légés"
+                            android:text="Travaux légers"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
@@ -1236,7 +1236,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Au cours de ces 2 dernières années lequel de ces travaux a tu effectués ?"
+                            android:text="Au cours de ces 2 dernières années, lequel de ces travaux légers as-tu effectué ?"
                             android:textStyle="bold" />
 
                         <LinearLayout

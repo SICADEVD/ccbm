@@ -118,4 +118,7 @@ interface ApiService {
     @POST("getprogrammes")
     fun getProgrammes(): Call<MutableList<ProgrammeModel>>
 
+    @POST("getarbre")
+    fun getArbreList(): Call<MutableList<ArbreModel>>
+
 }

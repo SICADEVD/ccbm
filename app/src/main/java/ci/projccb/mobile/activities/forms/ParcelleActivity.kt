@@ -32,6 +32,7 @@ import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
@@ -330,7 +331,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
                 //mappingPoints = wayPoints
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
-                arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
+                arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
         }
@@ -500,7 +501,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 origin = "local"
 
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
-                arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.variete, it.nombre) })
+                arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
         }
@@ -707,13 +708,12 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
             })
 
+        val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
         Commons.setListenerForSpinner(this,
             "Choix de l'arbre ?","La liste des arbres d'ombrage semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectArbrOmbrParcel,
-            listIem = (AssetFileHelper.getListDataFromAsset(
-                25,
-                this
-            ) as MutableList<CommonData>)?.map { it.nom }
+            listIem = listArbres?.map { "${ it.nom+" |"} ${it.nomScientifique}" }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -867,6 +867,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
     fun setOmbrageParcelleRV() {
+
+        val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
         try {
             arbrOmbrListParcelle = mutableListOf<OmbrageVarieteModel>()
             arbreOmbrParcelleAdapter = OmbrageAdapter(arbrOmbrListParcelle, "Arbre", "Nombre")
@@ -887,14 +890,21 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     return@setOnClickListener
                 }
 
-                val ombrageVariete = OmbrageVarieteModel(
-                    0,
-                    selectArbrOmbrParcel.selectedItem.toString(),
-                    editQtArbrOmbrParcel.text.toString().trim()
-                )
-                addOmbrageVariete(ombrageVariete)
+                val arbreLibel = selectArbrOmbrParcel.getSpinnerContent().split("|")
 
-                editQtArbrOmbrParcel.text?.clear()
+                listArbres?.forEach {
+                    if(it.nomScientifique?.contains(arbreLibel[1].trim(), ignoreCase = true) == true){
+                        val ombrageVariete = OmbrageVarieteModel(
+                            it.id?:0,
+                            selectArbrOmbrParcel.getSpinnerContent().replace(" | ", "/").replace("| ", "/"),
+                            editQtArbrOmbrParcel.text.toString().trim()
+                        )
+                        addOmbrageVariete(ombrageVariete)
+
+                        editQtArbrOmbrParcel.text?.clear()
+                    }
+                }
+
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -1055,13 +1065,26 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 }
             })
 
+//        Commons.setListenerForSpinner(this,
+//            "Choix de l'arbre ?","La liste des arbres d'ombrage semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectArbrOmbrParcel,
+//            listIem = (AssetFileHelper.getListDataFromAsset(
+//                25,
+//                this
+//            ) as MutableList<CommonData>)?.map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
+
+        val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
         Commons.setListenerForSpinner(this,
             "Choix de l'arbre ?","La liste des arbres d'ombrage semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectArbrOmbrParcel,
-            listIem = (AssetFileHelper.getListDataFromAsset(
-                25,
-                this
-            ) as MutableList<CommonData>)?.map { it.nom }
+            listIem = listArbres?.map { "${ it.nom+" |"} ${it.nomScientifique}" }
                 ?.toList() ?: listOf(),
             onChanged = {
 

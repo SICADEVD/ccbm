@@ -2934,7 +2934,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Ecris le nom de l'insecte et choisis le volume"
+                                android:text="Quel est le nom de l'insecte amis et leur nombre constaté ?"
                                 android:textStyle="bold" />
 
                             <LinearLayout

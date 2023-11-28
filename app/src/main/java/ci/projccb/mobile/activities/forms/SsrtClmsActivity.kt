@@ -838,7 +838,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux dangereux as-tu effectués ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
 
         }
 
@@ -846,7 +846,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux légés as-tu effectués ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux légers as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
 
         }
 

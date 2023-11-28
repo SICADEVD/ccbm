@@ -116,13 +116,15 @@ data class SuiviParcelleModel(
     @Expose var arbreStr: String? = "",
     @Expose var recuArbreAgroForestier: String? = "",
     @Expose var frequencePesticide: String? = "",
-    @Expose var pesticideUtiliseAnne: String? = "",
+    @Expose var pesticideUtiliseAnneeDerStr: String? = "",
+    @Expose var intrantUtiliseAnneeDerStr: String? = "",
     @Expose var autrePesticide: String? = "",
     @Expose var presenceInsectesParasites: String? = "",
     @Expose var presenceInsectesParasitesRavageur: String? = "",
+    @Expose var presenceInsectesParasitesRavageurStr: String? = "",
+    @Expose var autreInsectesParasitesRavageurStr: String? = "",
     @Expose var presenceAutreTypeInsecteAmi: String? = "",
     @Expose var intrantNomListStr: String? = "",
-    @Expose var intrantNbrListStr: String? = "",
     @Expose var bioferNomListStr: String? = "",
     @Expose var bioferNbrListStr: String? = "",
     @Expose var qteFongicide: String? = "",
@@ -135,13 +137,19 @@ data class SuiviParcelleModel(
     @Ignore @SerializedName("insectesParasites") @Expose(serialize = true, deserialize = false) var insectesParasitesList: MutableList<String>? = null
     @Ignore @SerializedName("nombreinsectesParasites") @Expose(serialize = true, deserialize = false) var nombreInsectesParasitesList: MutableList<String>? = null
 
+    @Ignore @SerializedName("insectesParasitesOuRavageurs") @Expose(serialize = true, deserialize = false) var insectesParasitesOuRavageursList: MutableList<String>? = null
+    @Ignore @SerializedName("nombreinsectesParasitesOuRavageurs") @Expose(serialize = true, deserialize = false) var nombreInsectesParasitesOuRavageursList: MutableList<String>? = null
+
+    @Ignore @SerializedName("autreInsectesParasitesOuRavageurs") @Expose(serialize = true, deserialize = false) var autreParasitesOuRavageursList: MutableList<String>? = null
+    @Ignore @SerializedName("autreNombreinsectesParasitesOuRavageurs") @Expose(serialize = true, deserialize = false) var autreInsectesParasitesOuRavageursList: MutableList<String>? = null
+
     @Ignore @SerializedName("insectesAmis") @Expose(serialize = true, deserialize = false) var insectesAmisList: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("nombreinsectesAmis") @Expose(serialize = true, deserialize = false) var nombreinsectesAmisList: MutableList<String>? = mutableListOf()
 
     @Ignore @Expose(serialize = true, deserialize = false) var animauxRencontres: MutableList<String>? = mutableListOf()
 
     @Ignore @Expose(serialize = true, deserialize = false) var intrantNomList: MutableList<String>? = mutableListOf()
-    @Ignore @Expose(serialize = true, deserialize = false) var intrantNbrList: MutableList<String>? = mutableListOf()
+
     @Ignore @Expose(serialize = true, deserialize = false) var bioferNomList: MutableList<String>? = mutableListOf()
     @Ignore @Expose(serialize = true, deserialize = false) var bioferNbrList: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("items") @Expose(serialize = true, deserialize = false) var itemsList: MutableList<ArbreData>? = mutableListOf()

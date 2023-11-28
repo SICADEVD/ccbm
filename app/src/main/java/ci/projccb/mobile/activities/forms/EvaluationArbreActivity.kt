@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import ci.projccb.mobile.R
+import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.EvaluationArbreDao
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -17,15 +18,18 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.android.synthetic.main.activity_distribution_arbre.clickAddArbreDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.clickCancelDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistributionArbre
+import kotlinx.android.synthetic.main.activity_distribution_arbre.editQuantitArbreDistribut
+import kotlinx.android.synthetic.main.activity_distribution_arbre.recyclerArbreListDistributionArbre
+import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixDeLArbreDistributionArbre
+import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixStateArbrDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectParcelleDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
-import kotlinx.android.synthetic.main.activity_evaluation_arbre.editNbrCacaoHecEvaluationArbre
-import kotlinx.android.synthetic.main.activity_evaluation_arbre.editNbreDAbreEvaluationArbre
-import kotlinx.android.synthetic.main.activity_evaluation_arbre.editSuperficieEvaluationArbre
+
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.*
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCloseBtn
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.imageDraftBtn
@@ -84,23 +88,69 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     private fun setOtherListenner() {
 
-        editNbrCacaoHecEvaluationArbre.addTextChangedListener {
-            caculateNbrArbre()
-        }
-
-        editSuperficieEvaluationArbre.addTextChangedListener {
-            caculateNbrArbre()
-        }
+//        editNbrCacaoHecEvaluationArbre.addTextChangedListener {
+//            caculateNbrArbre()
+//        }
+//
+//        editSuperficieEvaluationArbre.addTextChangedListener {
+//            caculateNbrArbre()
+//        }
+        Commons.setFiveItremRV(this, recyclerArbreListEvalArbre, clickAddArbreEvalArbre,
+            selectChoixDeLArbreEvalArbre,
+            selectChoixStateArbrEvalArbre,
+            selectChoixDeLArbreEvalArbre,
+            editQuantitEvalArbre,
+            editQuantitEvalArbre,
+            defaultItemSize = 3,
+            libeleList = arrayListOf(
+                "Arbre concerné",
+                "Strate",
+                "Quantité",
+                "",
+                "",
+            )
+        )
 
     }
 
     private fun caculateNbrArbre() {
-        if(!editNbrCacaoHecEvaluationArbre.text.toString().isNullOrEmpty() &&
-            !editSuperficieEvaluationArbre.text.toString().isNullOrEmpty()){
+//        if(!editNbrCacaoHecEvaluationArbre.text.toString().isNullOrEmpty() &&
+//            !editSuperficieEvaluationArbre.text.toString().isNullOrEmpty()){
+//
+//            editNbreDAbreEvaluationArbre.setText( ((editSuperficieEvaluationArbre.text.toString().toDouble()*25) - editNbrCacaoHecEvaluationArbre.text.toString().toInt()).toString() )
+//
+//        }
+    }
 
-            editNbreDAbreEvaluationArbre.setText( ((editSuperficieEvaluationArbre.text.toString().toDouble()*25) - editNbrCacaoHecEvaluationArbre.text.toString().toInt()).toString() )
+    private fun setupSelectionArbreList(listArbreADistri: MutableList<ArbreModel>, currentVal: String? = null) {
+        Commons.setListenerForSpinner(this,
+            "De quel arbre s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectChoixDeLArbreEvalArbre,
+            currentVal = currentVal,
+            listIem = listArbreADistri?.map { "${it.nom+"|"} ${it.nomScientifique}" }?.toMutableList() ?: listOf(),
+            onChanged = {
+                val  listofstrate = mutableListOf<String>()
+                val value = "Strate "+listArbreADistri[it].strate
+                listofstrate.add("${value}")
+                //LogUtils.d(listofstrate)
+                setupSelectionStrate(listofstrate)
+            },
+            onSelected = { itemId, visibility ->
+            })
+    }
 
-        }
+    private fun setupSelectionStrate(listStrate: MutableList<String>, currentVal: String? = null) {
+        Commons.setListenerForSpinner(this,
+            "Quelle est sa strate ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectChoixStateArbrEvalArbre,
+            currentVal = currentVal,
+            listIem = listStrate
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
     }
 
     private fun undraftedDatas(evaluationArbreDao: DataDraftedModel) {
@@ -110,6 +160,9 @@ class EvaluationArbreActivity : AppCompatActivity() {
     private fun setAllSelection() {
 
         setupSectionSelection()
+
+        val listArbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        setupSelectionArbreList(listArbre?: mutableListOf())
 
     }
 
@@ -218,7 +271,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
                     producteurCommon.id = producteur.id!!
 
-                    setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+                    //setupParcelleSelection(producteurCommon.id.toString(), currVal3)
                 }
 
 
@@ -229,42 +282,42 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     }
 
-    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
-        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
-            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(
-                Constants.AGENT_ID, 0).toString())
-
-        LogUtils.json(parcellesList)
-        var libItem: String? = null
-        currVal3?.let { idc ->
-            parcellesList?.forEach {
-                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
-            }
-        }
-
-        Commons.setListenerForSpinner(this,
-            "Choix de la parcelle !",
-            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
-            isEmpty = if (parcellesList?.size!! > 0) false else true,
-            currentVal = libItem,
-            spinner = selectParcelleEvaluationArbre,
-            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-                parcellesList?.let { list ->
-                    var parcelle = list.get(it)
-                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
-                    parcelleCommon.id = parcelle.id!!
-
-                    editSuperficieEvaluationArbre.setText("${parcelle.superficieConcerne}")
-                    //setupParcelleSelection(parcelleCommon.id, currVal3)
-                }
-
-
-            },
-            onSelected = { itemId, visibility ->
-
-            })
-    }
+//    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
+//        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+//            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(
+//                Constants.AGENT_ID, 0).toString())
+//
+//        LogUtils.json(parcellesList)
+//        var libItem: String? = null
+//        currVal3?.let { idc ->
+//            parcellesList?.forEach {
+//                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+//            }
+//        }
+//
+//        Commons.setListenerForSpinner(this,
+//            "Choix de la parcelle !",
+//            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+//            isEmpty = if (parcellesList?.size!! > 0) false else true,
+//            currentVal = libItem,
+//            spinner = selectParcelleEvaluationArbre,
+//            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                parcellesList?.let { list ->
+//                    var parcelle = list.get(it)
+//                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+//                    parcelleCommon.id = parcelle.id!!
+//
+//                    //editSuperficieEvaluationArbre.setText("${parcelle.superficieConcerne}")
+//                    //setupParcelleSelection(parcelleCommon.id, currVal3)
+//                }
+//
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
+//    }
 }
