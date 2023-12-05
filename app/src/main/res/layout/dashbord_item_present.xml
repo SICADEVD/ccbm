@@ -73,7 +73,7 @@
                         android:visibility="gone"
                         tools:visibility="visible"
                         android:background="@drawable/border_shape_selector_btn"
-                        android:textColor="@color/text_color_white"
+                        android:textColor="@color/white_color"
                         android:fontFamily="@font/montserrat_medium"
                         android:layout_weight="1"
                         android:layout_width="0dp"

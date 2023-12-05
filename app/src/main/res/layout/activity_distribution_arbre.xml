@@ -44,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE Distribution Des Arbres"
+                app:textAllCaps="true"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -314,224 +315,75 @@
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
 
-                    <LinearLayout
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:weightSum="10"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                                android:textColor="@color/text_color_white"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_weight="6"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:paddingLeft="@dimen/_12sdp"-->
+<!--                                android:text="Combien d'arbre avez vous dénombrer ou collecter dans la parcelle / Ha ?"-->
+<!--                                android:textStyle="bold" />-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_8sdp"-->
+<!--                                android:layout_height="wrap_content"/>-->
+
+<!--                            <androidx.appcompat.widget.AppCompatEditText-->
+<!--                                android:tag=""-->
+<!--                                android:id="@+id/editNbrCacaoHecParcelle"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:layout_weight="4"-->
+<!--                                android:background="@drawable/rounded_background"-->
+<!--                                android:hint="100"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:imeOptions="actionDone"-->
+<!--                                android:inputType="number"-->
+<!--                                android:paddingStart="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_10sdp"-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:textSize="@dimen/_13ssp"-->
+<!--                                tools:text="100" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:textAllCaps="true"
+                        android:gravity="center_horizontal"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="LISTE DES ARBRES EVALUÉS AUPRES DES PRODUCTEURS"
+                        android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:weightSum="10"
-                            android:orientation="horizontal">
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_5sdp" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_weight="6"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/_12sdp"
-                                android:text="Combien d'arbre avez vous dénombrer ou collecter dans la parcelle / Ha ?"
-                                android:textStyle="bold" />
-
-                            <Space
-                                android:layout_width="@dimen/_8sdp"
-                                android:layout_height="wrap_content"/>
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag=""
-                                android:id="@+id/editNbrCacaoHecParcelle"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="100"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="number"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="100" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_marginTop="@dimen/_10sdp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerArbreListDistrArbre"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="@dimen/_5sdp">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/_12sdp"
-                                android:textAllCaps="true"
-                                android:text="Quels sont les arbres que vous souhaitez distribuer ?"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="@dimen/_5sdp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical"
-                                        >
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:weightSum="5"
-                                            android:layout_height="wrap_content">
-
-                                            <LinearLayout
-                                                android:layout_width="0dp"
-                                                android:layout_weight="2.5"
-                                                android:layout_height="wrap_content"
-                                                android:orientation="vertical">
-
-                                                <androidx.appcompat.widget.AppCompatTextView
-                                                    android:textColor="@color/text_color_white"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Choix du STRATE"
-                                                    android:textStyle="bold" />
-
-                                                <androidx.appcompat.widget.AppCompatSpinner
-                                                    android:id="@+id/selectChoixStateArbrDistributionArbre"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_37sdp"
-                                                    android:background="@drawable/rounded_background"
-                                                    android:entries="@array/listStrat"
-                                                    android:spinnerMode="dialog" />
-
-                                            </LinearLayout>
-
-                                            <LinearLayout
-                                                android:layout_width="0dp"
-                                                android:layout_weight="2.5"
-                                                android:layout_height="wrap_content"
-                                                android:orientation="vertical">
-
-                                                <androidx.appcompat.widget.AppCompatTextView
-                                                    android:textColor="@color/text_color_white"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Qté à distribuer"
-                                                    android:textStyle="bold" />
-
-                                                <androidx.appcompat.widget.AppCompatEditText
-                                                    android:id="@+id/editQuantitArbreDistribut"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_37sdp"
-                                                    android:background="@drawable/rounded_background"
-                                                    android:ellipsize="end"
-                                                    android:hint="12"
-                                                    android:imeOptions="actionDone"
-                                                    android:inputType="number"
-                                                    android:paddingStart="@dimen/_10sdp"
-                                                    android:paddingEnd="@dimen/_10sdp"
-                                                    android:textSize="@dimen/_13ssp"
-                                                    tools:text="Quantité: 12" />
-                                            </LinearLayout>
-
-
-                                        </LinearLayout>
-
-                                        <Space
-                                            android:layout_width="match_parent"
-                                            android:layout_height="@dimen/_10sdp" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:weightSum="5"
-                                            android:layout_height="wrap_content">
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:orientation="vertical">
-
-                                                <androidx.appcompat.widget.AppCompatTextView
-                                                    android:textColor="@color/text_color_white"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Choix de l'arbre"
-                                                    android:textStyle="bold" />
-
-                                                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                                    android:id="@+id/selectChoixDeLArbreDistributionArbre"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_37sdp"
-                                                    android:background="@drawable/rounded_background"
-                                                    android:entries="@array/nomScienArbreConseille"
-                                                    android:spinnerMode="dialog" />
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                    </LinearLayout>
-
-                                    <Space
-                                        android:layout_width="match_parent"
-                                        android:layout_height="@dimen/_5sdp" />
-
-                                    <androidx.appcompat.widget.AppCompatButton
-                                        android:id="@+id/clickAddArbreDistributionArbre"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="@dimen/_25sdp"
-                                        android:layout_gravity="end"
-                                        android:background="@drawable/submit_button_bg"
-                                        android:paddingStart="@dimen/_10sdp"
-                                        android:paddingEnd="@dimen/_10sdp"
-                                        android:textColor="@color/text_color_white"
-                                        android:text="Ajouter"
-                                        android:textSize="@dimen/_9ssp" />
-
-                                </LinearLayout>
-
-                                <Space
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_5sdp" />
-
-                                <androidx.recyclerview.widget.RecyclerView
-                                    android:id="@+id/recyclerArbreListDistributionArbre"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                                    tools:itemCount="1"
-                                    tools:listitem="@layout/three_items_list" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="10"
+                        tools:listitem="@layout/arbre_distribuee_list" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -557,6 +409,7 @@
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    android:textColor="@color/text_color_white"
                     android:text="ANNULER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
@@ -573,6 +426,7 @@
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    app:iconTint="@color/white_color"
                     android:text="VÉRIFIER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"

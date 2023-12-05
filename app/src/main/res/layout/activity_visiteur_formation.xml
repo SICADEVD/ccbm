@@ -44,7 +44,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE Des Visiteurs De La Formation"
-
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -627,6 +626,7 @@
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    android:textColor="@color/text_color_white"
                     android:text="ANNULER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
@@ -643,6 +643,7 @@
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    app:iconTint="@color/white_color"
                     android:text="VÉRIFIER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"

@@ -383,7 +383,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             }
         }
 
-        if(isMissing && (isMissingDial2 || isMissingDial2) ){
+        if(isMissing && (isMissingDial || isMissingDial2) ){
             showMessage(
                 message,
                 this,

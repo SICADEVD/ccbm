@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
@@ -366,7 +367,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         bindDatas(agentModel = agentLogged)
 
         // .setNavigationItemSelectedListener(this)
-        Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.white)
+        Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Deconnexion ?")
@@ -411,7 +412,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             dialog.show()
         }
 
-        Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.white)
+        Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
         imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Voulez-vous quitter ?")
@@ -442,7 +443,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             drawer_layout.openDrawer(GravityCompat.START);
         }
 
-        Commons.modifyIcColor(this@DashboardAgentActivity, linearSync, R.color.white)
+        Commons.modifyIcColor(this@DashboardAgentActivity, linearSync, R.color.black)
         linearSync.setOnClickListener {
             var message = "Mettre à jour la base de données... ?"
 
@@ -533,13 +534,13 @@ class DashboardAgentActivity : AppCompatActivity(),
         setNavViewItems()
         setViewFeatureListing()
 
-        if(carouselRecyclerview?.adapter?.itemCount!! > 0){
-            val pagerSnapHelper = PagerSnapHelper()
-            pagerSnapHelper.attachToRecyclerView(carouselRecyclerview)
-
-            (indicator as CircleIndicator2).attachToRecyclerView(carouselRecyclerview!!, pagerSnapHelper)
-            carouselRecyclerview?.adapter?.registerAdapterDataObserver(indicator!!.getAdapterDataObserver());
-        }
+//        if(carouselRecyclerview?.adapter?.itemCount!! > 0){
+//            val pagerSnapHelper = PagerSnapHelper()
+//            pagerSnapHelper.attachToRecyclerView(carouselRecyclerview)
+//
+//            (indicator as CircleIndicator2).attachToRecyclerView(carouselRecyclerview!!, pagerSnapHelper)
+//            carouselRecyclerview?.adapter?.registerAdapterDataObserver(indicator!!.getAdapterDataObserver());
+//        }
 
         /*if(
             listOrderItem.containsAll(listOf(1,2,3,4))
@@ -579,8 +580,11 @@ class DashboardAgentActivity : AppCompatActivity(),
                         isThereItem = true
                     }
                 }
-                if(isThereItem) containerFeatureDash.visibility = VISIBLE else containerFeatureDash.visibility = GONE
-                (carouselRecyclerview.adapter as FeatureAdapter) ?.notifyDataSetChanged()
+                if(isThereItem) {
+                    containerFeatureDash.visibility = VISIBLE
+                    //carouselRecyclerview.scrollToPosition(0)
+                }else containerFeatureDash.visibility = GONE
+                (recyclerViewFeature.adapter as FeatureAdapter) ?.notifyDataSetChanged()
 
 //                if(carouselRecyclerview?.adapter?.itemCount!! > 0){
 //                    val pagerSnapHelper = PagerSnapHelper()
@@ -885,31 +889,31 @@ class DashboardAgentActivity : AppCompatActivity(),
             canViewSync = false //can be false
         ).apply { this.image = image.plus("estimations.png")})
 
-        listOfFeatures.add(FeatureModel("APPROVISIONNEMENT",
-            countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
-            type = "CALCUL_ESTIMATION",
-            categorie = 4,
-            //image = R.drawable.estimations,
-            icon = R.drawable.ic_suivi_parcel,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("estimations.png")})
+//        listOfFeatures.add(FeatureModel("APPROVISIONNEMENT",
+//            countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
+//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
+//            type = "CALCUL_ESTIMATION",
+//            categorie = 4,
+//            //image = R.drawable.estimations,
+//            icon = R.drawable.ic_suivi_parcel,
+//            canAdd = false,
+//            canEdit = false,
+//            canViewDraft = false,
+//            canViewSync = false //can be false
+//        ).apply { this.image = image.plus("estimations.png")})
 
-        listOfFeatures.add(FeatureModel("MONITORING",
-            countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
-            type = "CALCUL_ESTIMATION",
-            categorie = 4,
-            //image = R.drawable.estimations,
-            icon = R.drawable.ic_suivi_parcel,
-            canAdd = false,
-            canEdit = false,
-            canViewDraft = false,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("estimations.png")})
+//        listOfFeatures.add(FeatureModel("MONITORING",
+//            countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
+//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
+//            type = "CALCUL_ESTIMATION",
+//            categorie = 4,
+//            //image = R.drawable.estimations,
+//            icon = R.drawable.ic_suivi_parcel,
+//            canAdd = false,
+//            canEdit = false,
+//            canViewDraft = false,
+//            canViewSync = false //can be false
+//        ).apply { this.image = image.plus("estimations.png")})
 
 //        listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
 //            countSync =  CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
@@ -929,7 +933,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
         LogUtils.d(listOfFeatures.size)
 
-        carouselRecyclerview?.adapter?.let {
+        recyclerViewFeature?.adapter?.let {
             it.notifyDataSetChanged()
         }
 
@@ -1023,26 +1027,28 @@ class DashboardAgentActivity : AppCompatActivity(),
 
     private fun setViewFeatureListing() {
 
-        carouselRecyclerview?.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
+        val manager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        recyclerViewFeature!!.setLayoutManager(manager)
+        recyclerViewFeature?.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
         //carouselRecyclerview.set3DItem(true)
-        carouselRecyclerview?.setInfinite(false)
+        //carouselRecyclerview?.setInfinite(false)
         //carouselRecyclerview?.setAlpha(true)
-        carouselRecyclerview?.setFlat(true)
-        carouselRecyclerview?.setIsScrollingEnabled(true)
+//        carouselRecyclerview?.setFlat(true)
+//        carouselRecyclerview?.setIsScrollingEnabled(true)
 
-        carouselRecyclerview?.setItemSelectListener(object : CarouselLayoutManager.OnSelected {
-            override fun onItemSelected(position: Int) {
-                //LogUtils.d(position)
-                (carouselRecyclerview?.adapter as FeatureAdapter).setPositionSelected(position)
-            }
-        })
-
-        carouselRecyclerview?.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-            }
-        })
+//        carouselRecyclerview?.setItemSelectListener(object : CarouselLayoutManager.OnSelected {
+//            override fun onItemSelected(position: Int) {
+//                //LogUtils.d(position)
+//                (carouselRecyclerview?.adapter as FeatureAdapter).setPositionSelected(position)
+//            }
+//        })
+//
+//        carouselRecyclerview?.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//
+//            }
+//        })
 
     }
 

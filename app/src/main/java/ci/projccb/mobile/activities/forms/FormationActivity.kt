@@ -48,7 +48,7 @@ import kotlinx.android.synthetic.main.activity_formation.*
 import kotlinx.android.synthetic.main.activity_producteur.containerPrecisionTitreProducteur
 import kotlinx.android.synthetic.main.activity_producteur.imagePhotoProfilProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectTitreDUProducteur
-import kotlinx.android.synthetic.main.activity_ssrt_clms.containerAutreRaisonArretEcole
+
 import kotlinx.android.synthetic.main.activity_ssrt_clms.selectRaisonArretEcoleSSrte
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
@@ -636,7 +636,7 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        if(isMissing && (isMissingDial2 || isMissingDial2) ){
+        if(isMissing && (isMissingDial || isMissingDial2) ){
             Commons.showMessage(
                 message,
                 this,

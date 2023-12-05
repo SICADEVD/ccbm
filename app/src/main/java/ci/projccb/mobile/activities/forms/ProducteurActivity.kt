@@ -533,7 +533,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }
         }
 
-        if(isMissing && (isMissingDial2 || isMissingDial2) ){
+        if(isMissing && (isMissingDial || isMissingDial2) ){
             showMessage(
                 message,
                 this,

@@ -101,7 +101,7 @@ data class SuiviParcelleModel(
     @Expose var animauxRencontresStringify: String? = "",
     @SerializedName("presenceVerTerre")
     @Expose var presenceVerTerre: String? = "",
-    @SerializedName(value = "producteur", alternate = ["producteurs_id"]) @Expose var producteursId: String? = "",
+    @SerializedName(value = "producteur_id", alternate = ["producteurs_id"]) @Expose var producteursId: String? = "",
     @Expose @SerializedName("varieteAbres") var varieteAbres: String? = "",
     @Expose @SerializedName(value = "varietes_cacao", alternate = ["varietes_cacao_id"]) var varietesCacaoId: String? = "",
     var isSynced: Boolean = false,

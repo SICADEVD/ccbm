@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout_ssrte"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -357,6 +358,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="nomMembre"
                             android:id="@+id/editMembreNomlSsrt"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -393,6 +395,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="prenomMembre"
                             android:id="@+id/editMembrePrenomlSsrt"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -438,6 +441,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="sexeMembre"
                                 android:id="@+id/selectSexeSsrt"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -472,6 +476,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="datenaissMembre"
                                 android:id="@+id/editDateNaissancelSsrt"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -525,6 +530,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="lienParente"
                                 android:spinnerMode="dialog"
                                 android:entries="@array/parentAffiliation"
                                 android:id="@+id/selectLienParentSsrt"
@@ -554,6 +560,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="autreLienParente"
                             android:textAllCaps="true"
                             android:id="@+id/editAutreLienParentSsrt"
                             android:layout_width="match_parent"
@@ -621,6 +628,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="frequente"
                                 android:spinnerMode="dialog"
                                 android:entries="@array/YesOrNo"
                                 android:id="@+id/selectSchoolStatusSsrt"
@@ -666,6 +674,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    android:tag="niveauEtude"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/schoolLevelFull"
                                     android:id="@+id/selectNiveauEtudeAtteintSsrt"
@@ -703,6 +712,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    android:tag="classe"
                                     android:spinnerMode="dialog"
                                     android:id="@+id/selectClasseLevelSsrt"
                                     android:layout_width="match_parent"
@@ -739,6 +749,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    android:tag="ecoleVillage"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/YesOrNo"
                                     android:id="@+id/selectSchoolInPlaceYesNoSsrt"
@@ -769,6 +780,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="distanceEcole"
                                 android:id="@+id/editVillageDistanceSsrt"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -803,6 +815,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="nomEcole"
                                 android:id="@+id/editSchoolNameSsrt"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -844,6 +857,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    android:tag="moyenTransport"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/moyenDeplacement"
                                     android:id="@+id/selectMoyenDeplacementSsrt"
@@ -882,6 +896,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="avoirFrequente"
                                 android:spinnerMode="dialog"
                                 android:entries="@array/YesOrNo"
                                 android:id="@+id/selectAvoirFrequPasseSsrt"
@@ -927,6 +942,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    android:tag="niveauEtudeAtteint"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/schoolLevel"
                                     android:id="@+id/selectSchoolLevelSsrt"
@@ -961,7 +977,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                    android:tag=""
+                                    android:tag="autreRaisonArretEcole"
                                     android:id="@+id/selectRaisonArretEcoleSSrte"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_37sdp"
@@ -971,40 +987,40 @@ android:textColor="@color/text_color_white"
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:id="@+id/containerAutreRaisonArretEcole"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="5">
+<!--                        <LinearLayout-->
+<!--                            android:layout_marginTop="@dimen/_5sdp"-->
+<!--                            android:id="@+id/containerAutreRaisonArretEcole"-->
+<!--                            android:visibility="gone"-->
+<!--                            tools:visibility="visible"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:weightSum="5">-->
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical">-->
 
 
-                                <androidx.appcompat.widget.AppCompatEditText
-                                    android:tag="autreProtection"
-                                    android:textAllCaps="true"
-                                    android:id="@+id/editAutreRaisonArretEcoleSStre"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/_37sdp"
-                                    android:background="@drawable/rounded_background"
-                                    android:ellipsize="end"
-                                    android:hint="Précisez…"
-                                    android:imeOptions="actionDone"
-                                    android:inputType="textCapCharacters|textNoSuggestions"
-                                    android:paddingStart="@dimen/_10sdp"
-                                    android:paddingEnd="@dimen/_10sdp"
-                                    android:textSize="@dimen/_13ssp"
-                                    tools:text="" />
+<!--                                <androidx.appcompat.widget.AppCompatEditText-->
+<!--                                    android:tag="autreRaisonArretEcole"-->
+<!--                                    android:textAllCaps="true"-->
+<!--                                    android:id="@+id/editAutreRaisonArretEcoleSStre"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="@dimen/_37sdp"-->
+<!--                                    android:background="@drawable/rounded_background"-->
+<!--                                    android:ellipsize="end"-->
+<!--                                    android:hint="Précisez…"-->
+<!--                                    android:imeOptions="actionDone"-->
+<!--                                    android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                                    android:paddingStart="@dimen/_10sdp"-->
+<!--                                    android:paddingEnd="@dimen/_10sdp"-->
+<!--                                    android:textSize="@dimen/_13ssp"-->
+<!--                                    tools:text="" />-->
 
-                            </LinearLayout>
-                        </LinearLayout>
+<!--                            </LinearLayout>-->
+<!--                        </LinearLayout>-->
 
                     </LinearLayout>
 
@@ -1125,7 +1141,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
+                                android:tag="travauxDangereuxStringify"
                                 android:id="@+id/selectLequelTravEffectSSrte"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1159,7 +1175,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
+                                android:tag="lieuTravauxDangereuxStringify"
                                 android:id="@+id/selectEndroitTravEffectSSrte"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1249,7 +1265,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
+                                android:tag="travauxLegersStringify"
                                 android:id="@+id/selectLequelTrav2EffectSSrte"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1283,7 +1299,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
+                                android:tag="lieuTravauxLegersStringify"
                                 android:id="@+id/selectEndroitTrav2EffectSSrte"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1369,7 +1385,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:tag=""
+                            android:tag="nomEnqueteur"
                             android:id="@+id/editNomLenquet"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -1407,7 +1423,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:tag=""
+                            android:tag="prenomEnqueteur"
                             android:id="@+id/editPrenomsLenquet"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -1440,7 +1456,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:tag=""
+                            android:tag="telephoneEnqueteur"
                             android:id="@+id/editTelOneLenquet"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -1481,6 +1497,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="dateEnquete"
                                 android:id="@+id/editDateEnqueteSsrt"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -1622,6 +1639,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    android:textColor="@color/text_color_white"
                     android:text="ANNULER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
@@ -1638,6 +1656,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    app:iconTint="@color/white_color"
                     android:text="VÉRIFIER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"

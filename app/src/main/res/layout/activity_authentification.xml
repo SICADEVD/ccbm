@@ -23,6 +23,7 @@
                 android:layout_margin="@dimen/_1sdp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="25dp"
+                android:backgroundTint="#0C000000"
                 app:cardElevation="8dp"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="false">
@@ -30,7 +31,6 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_logo"
                     android:background="@color/ccb_gris_transparent"
-                    android:backgroundTint="@android:color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_150sdp"
                     android:layout_gravity="center_horizontal"
@@ -85,7 +85,7 @@ android:textColor="@color/text_color_white"-->
                     android:layout_marginEnd="@dimen/_12sdp"
                     android:gravity="center"
                     android:background="@drawable/rounded_background"
-                    android:paddingLeft="16dp"/>
+                    />
 
             </LinearLayout>
 
@@ -120,7 +120,7 @@ android:textColor="@color/text_color_white"-->
                     android:gravity="center"
                     android:background="@drawable/rounded_background"
                     android:hint="MOT DE PASSE"
-                    android:paddingLeft="16dp"/>
+                    />
 
             </LinearLayout>
 
@@ -136,6 +136,7 @@ android:textColor="@color/text_color_white"-->
                 app:icon="@drawable/ic_sync"
                 app:iconGravity="start"
                 style="@style/OptionsButton_Active"
+                app:iconTint="@color/white_color"
                 app:cornerRadius="50dp"
                 android:backgroundTint="@color/ccb_green"
                 android:layout_gravity="center"

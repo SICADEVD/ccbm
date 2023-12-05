@@ -544,6 +544,7 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"
+                    app:iconTint="@color/white_color"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/ic_save_work"
                     app:iconGravity="start" />

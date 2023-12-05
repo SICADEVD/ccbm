@@ -786,7 +786,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }
         }
 
-        if(isMissing && (isMissingDial2 || isMissingDial2) ){
+        if(isMissing && (isMissingDial || isMissingDial2) ){
             Commons.showMessage(
                 message,
                 this,

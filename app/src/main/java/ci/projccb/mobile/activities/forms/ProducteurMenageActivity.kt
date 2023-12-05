@@ -654,6 +654,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         val mapEntries: List<MapEntry>? = itemModel?.second?.map { MapEntry(it.first, it.second) }
 
+        Commons.printModelValue(producteurMenage as Object, mapEntries)
+
         try {
             val intentMenagePreview = Intent(this, MenagePreviewActivity::class.java)
             intentMenagePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
@@ -729,7 +731,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             }
         }
 
-        if(isMissing && (isMissingDial2 || isMissingDial2) ){
+        if(isMissing && (isMissingDial || isMissingDial2) ){
             showMessage(
                 message,
                 this,
@@ -1655,6 +1657,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
+                LogUtils.d(itemId, visibility)
                 if (itemId == 1) {
                     //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
                     containerFemmeAgricoleMenage.visibility = visibility

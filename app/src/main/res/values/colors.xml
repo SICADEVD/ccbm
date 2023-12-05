@@ -38,10 +38,13 @@
     <color name="detail_bg_1">#e6e4e2</color>
     <color name="detail_bg_2">#f5f4f4</color>
     <color name="light_brown">#cecac6</color>
-    <color name="ccb_light_green">#a4da22</color>
-    <color name="ccb_green">#5C7914</color>
+<!--    <color name="ccb_light_green">#a4da22</color>-->
+    <color name="ccb_light_green">#E0E0E0</color>
+<!--    <color name="ccb_green">#5C7914</color>-->
+    <color name="ccb_green">#424242</color>
     <color name="ccb_orange">#ffc06b</color>
-    <color name="ccb_gris">#959494</color>
+<!--    <color name="ccb_gris">#959494</color>-->
+    <color name="ccb_gris">#ECEFF1</color>
     <color name="rect_stroke">#ffffdeaf</color>
     <color name="rect_bg">#fffffbf8</color>
     <color name="orange_bar">#faa60f</color>
@@ -62,9 +65,15 @@
     <color name="blue_pur">#4634ff</color>
     <color name="dark_brown">#858585</color>
     <color name="brown_logo">#A67169</color>
-    <color name="text_color_white">#FFFFFF</color>
+    <color name="text_color_white">#000000</color>
     <color name="text_color_title_white">#F1EFEF</color>
     <color name="ccb_gris_transparent">#41DCDCDC</color>
 
     <color name="navigation_item_color">#F4F4F4</color>
+    <color name="ccb_belge">#ECEFF1</color>
+    <color name="contour_gray">#546E7A</color>
+    <color name="field_content_color">#F5F5F5</color>
+    <color name="contour_edit_field">#BCAAA4</color>
+    <color name="ccb_gris_sec">#CFD8DC</color>
+    <color name="tranpar_dark">#56000000</color>
 </resources>

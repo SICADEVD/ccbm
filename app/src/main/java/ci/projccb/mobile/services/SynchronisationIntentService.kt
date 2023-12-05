@@ -21,6 +21,10 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectEndroitTrav2EffectSSrte
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectEndroitTravEffectSSrte
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectLequelTrav2EffectSSrte
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectLequelTravEffectSSrte
 import okio.Buffer
 import retrofit2.Call
 import retrofit2.Callback
@@ -751,8 +755,13 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 enquete.lieuTravauxDangereux = ListConverters.stringToMutableList(enquete.lieuTravauxDangereuxStringify)
                 enquete.lieuTravauxLegers = ListConverters.stringToMutableList(enquete.lieuTravauxLegersStringify)
 
-                enquete.raisonArretEcole = ListConverters.stringToMutableList(enquete.raisonArretEcoleStringify)
+                //enquete.raisonArretEcole = ListConverters.stringToMutableList(enquete.raisonArretEcoleStringify)
 
+//                travauxDangereuxStringify = GsonUtils.toJson(selectLequelTravEffectSSrte.selectedStrings)
+//                travauxLegersStringify = GsonUtils.toJson(selectLequelTrav2EffectSSrte.selectedStrings)
+//
+//                lieuTravauxDangereuxStringify = GsonUtils.toJson(selectEndroitTravEffectSSrte.selectedStrings)
+//                lieuTravauxLegersStringify = GsonUtils.toJson(selectEndroitTrav2EffectSSrte.selectedStrings)
                 LogUtils.json(enquete)
 
                 val clientEnqueteSsrt: Call<EnqueteSsrtModel> = ApiClient.apiService.synchronisationEnqueteSsrt(enquete)

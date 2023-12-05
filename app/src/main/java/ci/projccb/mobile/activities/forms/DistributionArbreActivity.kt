@@ -3,9 +3,10 @@ package ci.projccb.mobile.activities.forms
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Spinner
-import androidx.appcompat.widget.AppCompatSpinner
+import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
+import ci.projccb.mobile.adapters.DistribArbreAdapter
+import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.DistributionArbreDao
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -18,29 +19,12 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.*
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixDeLArbreDistributionArbre
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixStateArbrDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectParcelleDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddTraitInsecteParOuRavListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCancelSuivi
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCloseBtn
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickSaveSuivi
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editTraitInsecteParOuRavFrequSParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editTraitInsecteParOuRavQtSParcel
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.imageDraftBtn
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.linearAnimauxContainerSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerTraitInsecteParOuRavListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAnimauRencontSParcell
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectLocaliteSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectParcelleSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectProducteurSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectSectionSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectTraitInsecteParOuRavContenantSParcell
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectTraitInsecteParOuRavNomSParcell
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectTraitInsecteParOuRavUniteSParcell
 
 class DistributionArbreActivity : AppCompatActivity() {
     val sectionCommon = CommonData();
@@ -94,21 +78,21 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     private fun setOtherListenner() {
 
-        Commons.setFiveItremRV(this, recyclerArbreListDistributionArbre, clickAddArbreDistributionArbre,
-            selectChoixDeLArbreDistributionArbre,
-            selectChoixStateArbrDistributionArbre,
-            selectChoixDeLArbreDistributionArbre,
-            editQuantitArbreDistribut,
-            editQuantitArbreDistribut,
-            defaultItemSize = 3,
-            libeleList = arrayListOf(
-                "Arbre concerné",
-                "Strate",
-                "Quantité",
-                "",
-                "",
-            )
-        )
+//        Commons.setFiveItremRV(this, recyclerArbreListDistributionArbre, clickAddArbreDistributionArbre,
+//            selectChoixDeLArbreDistributionArbre,
+//            selectChoixStateArbrDistributionArbre,
+//            selectChoixDeLArbreDistributionArbre,
+//            editQuantitArbreDistribut,
+//            editQuantitArbreDistribut,
+//            defaultItemSize = 3,
+//            libeleList = arrayListOf(
+//                "Arbre concerné",
+//                "Strate",
+//                "Quantité",
+//                "",
+//                "",
+//            )
+//        )
 
     }
 
@@ -116,60 +100,64 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         setupSectionSelection()
 
-        val listArbreAndState : MutableMap<List<String>, List<String>> = HashMap()
-        listArbreAndState.put(resources.getStringArray(R.array.nomScienArbreConseille).toList(),resources.getStringArray(R.array.stratArbrConseille).toList())
+        val listArbreAndState: MutableList<ArbreModel>? = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
 
-        Commons.setListenerForSpinner(this,
-            "De quel strate s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectChoixStateArbrDistributionArbre,
-            listIem = resources.getStringArray(R.array.listStrat)
-                ?.toList() ?: listOf(),
-            onChanged = {
-                val listArbreADistri = mutableListOf<String>()
-                LogUtils.d(it)
-                if(it == 0){
-                    var counter = 0
-                    listArbreAndState.values.first().forEach{
-                        if(it.equals("strate 3", ignoreCase = true)) listArbreADistri.add(listArbreAndState.keys.first()[counter])
-                        counter++
-                    }
-                }
+        recyclerArbreListDistrArbre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerArbreListDistrArbre.adapter = DistribArbreAdapter(listArbreAndState)
+        recyclerArbreListDistrArbre.adapter?.notifyDataSetChanged()
+        //listArbreAndState.put(resources.getStringArray(R.array.nomScienArbreConseille).toList(),resources.getStringArray(R.array.stratArbrConseille).toList())
 
-                if(it == 1){
-                    var counter = 0
-                    listArbreAndState.values.first().forEach{
-                        if(it.equals("strate 2", ignoreCase = true)) listArbreADistri.add(listArbreAndState.keys.first()[counter])
-                        counter++
-                    }
-                }
-
-                if(it == 2){
-                    var counter = 0
-                    listArbreAndState.values.first().forEach{
-                        if(it.equals("strate 1", ignoreCase = true)) listArbreADistri.add(listArbreAndState.keys.first()[counter])
-                        counter++
-                    }
-                }
-
-                LogUtils.d(listArbreADistri)
-                setupSelectionArbreList(listArbreADistri)
-            },
-            onSelected = { itemId, visibility ->
-            })
+//        Commons.setListenerForSpinner(this,
+//            "De quel strate s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectChoixStateArbrDistributionArbre,
+//            listIem = resources.getStringArray(R.array.listStrat)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//                val listArbreADistri = mutableListOf<String>()
+//                LogUtils.d(it)
+//                if(it == 0){
+//                    var counter = 0
+//                    listArbreAndState.values.first().forEach{
+//                        if(it.equals("strate 3", ignoreCase = true)) listArbreADistri.add(listArbreAndState.keys.first()[counter])
+//                        counter++
+//                    }
+//                }
+//
+//                if(it == 1){
+//                    var counter = 0
+//                    listArbreAndState.values.first().forEach{
+//                        if(it.equals("strate 2", ignoreCase = true)) listArbreADistri.add(listArbreAndState.keys.first()[counter])
+//                        counter++
+//                    }
+//                }
+//
+//                if(it == 2){
+//                    var counter = 0
+//                    listArbreAndState.values.first().forEach{
+//                        if(it.equals("strate 1", ignoreCase = true)) listArbreADistri.add(listArbreAndState.keys.first()[counter])
+//                        counter++
+//                    }
+//                }
+//
+//                LogUtils.d(listArbreADistri)
+//                setupSelectionArbreList(listArbreADistri)
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
 
     }
 
     private fun setupSelectionArbreList(listArbreADistri: MutableList<String>, currentVal: String? = null) {
-        Commons.setListenerForSpinner(this,
-            "De quel arbre s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectChoixDeLArbreDistributionArbre,
-            listIem = listArbreADistri
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-            })
+//        Commons.setListenerForSpinner(this,
+//            "De quel arbre s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectChoixDeLArbreDistributionArbre,
+//            listIem = listArbreADistri
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
     }
 
 

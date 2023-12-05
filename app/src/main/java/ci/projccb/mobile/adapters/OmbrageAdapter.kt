@@ -3,12 +3,14 @@ package ci.projccb.mobile.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.adapters.OmbrageAdapter.OmbrageHolder
 import ci.projccb.mobile.models.AdapterItemModel
+import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.OmbrageVarieteModel
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.activite_items_list.view.deleteCultureItem
 import kotlinx.android.synthetic.main.activite_items_list.view.libelle
 import kotlinx.android.synthetic.main.activite_items_list.view.valuetext
 import kotlinx.android.synthetic.main.ombrage_items_list.view.*
+import kotlin.random.Random
 
 class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?, private  var libelTitle: String = "Libellé", private  var valeurTitle: String = "Valeur") : RecyclerView.Adapter<OmbrageHolder>() {
 
@@ -212,5 +215,55 @@ class MultipleItemAdapter(private var listItem: MutableList<AdapterItemModel>?,
         val labelSecondItem = multiItView.findViewById<TextView>(R.id.labelSecondItem)
 
         val deleteMulti = multiItView.findViewById<ImageView>(R.id.deleteitem)
+    }
+}
+
+class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : RecyclerView.Adapter<DistribArbreAdapter.DistribArbreHolder>() {
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DistribArbreHolder {
+        return DistribArbreHolder(LayoutInflater.from(parent.context).inflate(R.layout.arbre_distribuee_list, parent, false))
+    }
+
+
+    override fun onBindViewHolder(holder: DistribArbreHolder, position: Int) {
+        val multiItModel = listItem!![position]
+
+        holder.item_id.text = multiItModel.id.toString()
+        holder.item_title.text =  multiItModel.nom.plus(" /${multiItModel.nomScientifique}")
+        holder.item_limit.text =  Random.nextInt(10, 50).toString()
+
+
+//        holder.deleteMulti.setOnClickListener {
+//            LogUtils.e(Commons.TAG, "position $position")
+//            LogUtils.e(Commons.TAG, "Adapter position ${holder.adapterPosition}")
+//
+//            try {
+//                if (listItem?.size == 1) {
+//                    listItem?.removeAt(0)
+//                    notifyItemRemoved(0)
+//                } else {
+//                    listItem?.removeAt(holder.adapterPosition)
+//                    notifyItemRemoved(holder.adapterPosition)
+//                }
+//            } catch (ex: Exception) {
+//                ex.printStackTrace()
+//            }
+//        }
+    }
+
+
+    fun getArbreListAdded(): MutableList<ArbreModel> = listItem!!
+
+
+    override fun getItemCount() = listItem?.size ?: 0
+
+
+    class DistribArbreHolder(multiItView: View) : RecyclerView.ViewHolder(multiItView) {
+
+        val item_id = multiItView.findViewById<TextView>(R.id.item_dist_id)
+        val item_title = multiItView.findViewById<TextView>(R.id.item_dist_title)
+        val item_limit = multiItView.findViewById<TextView>(R.id.item_dist_limit)
+        val item_distrib = multiItView.findViewById<EditText>(R.id.item_dist_quant)
     }
 }

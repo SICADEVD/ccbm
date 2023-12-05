@@ -29,7 +29,7 @@
 
     <style name="OptionsButton_Active" parent="OptionsButton">
         <item name="backgroundTint">@color/green</item>
-        <item name="iconTint">@color/white</item>
+<!--        <item name="iconTint">@color/text_color_white</item>-->
         <item name="android:textColor">@color/white</item>
     </style>
 

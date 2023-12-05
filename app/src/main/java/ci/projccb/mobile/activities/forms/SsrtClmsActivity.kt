@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
@@ -18,6 +19,9 @@ import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner.OnMultipleItemsSelectedListener
 import ci.projccb.mobile.activities.infospresenters.EnqueteSsrtPreviewActivity
+import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -27,11 +31,22 @@ import ci.projccb.mobile.tools.Commons.Companion.configHour
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MapEntry
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectEnergieMenage
+import kotlinx.android.synthetic.main.activity_producteur_menage.selectOrdureMenagMenage
 import kotlinx.android.synthetic.main.activity_ssrt_clms.*
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAutreInsecteParOuRavSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteParOuRavSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerIntantAnDerListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectLocaliteUniteAgricole
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectProducteurInfosProducteur
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectSectionInfProducteur
@@ -835,7 +850,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //            })
 
         Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte, "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?", resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) }){
-            if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
+            //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
         }
 
         Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
@@ -906,15 +921,15 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
 
     fun  collectDatas() {
-        if (producteurId.isEmpty()) {
-            showMessage("Selectionnez le producteur", this, false, {}, deconnec = false)
-            return
-        }
-
-        if (editMembreNomlSsrt.text.toString().isEmpty()) {
-            showMessage("Renseignez le nom du membre", this, false, {}, deconnec = false)
-            return
-        }
+//        if (producteurId.isEmpty()) {
+//            showMessage("Selectionnez le producteur", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (editMembreNomlSsrt.text.toString().isEmpty()) {
+//            showMessage("Renseignez le nom du membre", this, false, {}, deconnec = false)
+//            return
+//        }
 
         /*
         producteurs_id
@@ -931,51 +946,77 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         dateEnquete
          */
 
-        if (editMembrePrenomlSsrt.text.toString().isEmpty()) {
-            showMessage("Renseignez le prenom du membre", this, false, {}, deconnec = false)
-            return
+//        if (editMembrePrenomlSsrt.text.toString().isEmpty()) {
+//            showMessage("Renseignez le prenom du membre", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (editDateNaissancelSsrt.text.toString().isEmpty()) {
+//            showMessage("Renseignez la date de naissance de ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (schoolYesNo.lowercase().contains("svp")) {
+//            showMessage("Selectionnez le statut scolaire ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (travauxDangereuxList.isEmpty()) {
+//            showMessage("Renseignez un travail deja fait par ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (lieuTravauxDangereuxList.isEmpty()) {
+//            showMessage("Renseignez le lieu ou le travail est fait", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (lieuTravauxLegerList.isEmpty()) {
+//            showMessage("Renseignez le lieu ou le travail est fait", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (travauxLegersList.isEmpty()) {
+//            showMessage("Renseignez un travail fait par ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
+//            return
+//        }
+//
+//        if (editDateEnqueteSsrt.text.toString().isEmpty()) {
+//            showMessage("Renseignez la date de l'enquete svp", this, false, {}, deconnec = false)
+//            return
+//        }
+
+        val itemModel = getEnqueteSsrtObjet()
+
+        if(itemModel == null) return
+
+        val enqueteModel = itemModel?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localiteId = localiteCommon.id.toString()
+                producteursId = producteurCommon.id.toString()
+
+                travauxDangereuxStringify = GsonUtils.toJson(selectLequelTravEffectSSrte.selectedStrings)
+                travauxLegersStringify = GsonUtils.toJson(selectLequelTrav2EffectSSrte.selectedStrings)
+
+                lieuTravauxDangereuxStringify = GsonUtils.toJson(selectEndroitTravEffectSSrte.selectedStrings)
+                lieuTravauxLegersStringify = GsonUtils.toJson(selectEndroitTrav2EffectSSrte.selectedStrings)
+            }
         }
 
-        if (editDateNaissancelSsrt.text.toString().isEmpty()) {
-            showMessage("Renseignez la date de naissance de ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-            return
+        val mapEntries: List<MapEntry>? = itemModel?.second?.apply {
+
+        }?.map { MapEntry(it.first, it.second) }.apply {
+
         }
 
-        if (schoolYesNo.lowercase().contains("svp")) {
-            showMessage("Selectionnez le statut scolaire ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-            return
-        }
-
-        if (travauxDangereuxList.isEmpty()) {
-            showMessage("Renseignez un travail deja fait par ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-            return
-        }
-
-        if (lieuTravauxDangereuxList.isEmpty()) {
-            showMessage("Renseignez le lieu ou le travail est fait", this, false, {}, deconnec = false)
-            return
-        }
-
-        if (lieuTravauxLegerList.isEmpty()) {
-            showMessage("Renseignez le lieu ou le travail est fait", this, false, {}, deconnec = false)
-            return
-        }
-
-        if (travauxLegersList.isEmpty()) {
-            showMessage("Renseignez un travail fait par ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-            return
-        }
-
-        if (editDateEnqueteSsrt.text.toString().isEmpty()) {
-            showMessage("Renseignez la date de l'enquete svp", this, false, {}, deconnec = false)
-            return
-        }
-
-        val enqueteModel = getEnqueteSsrtObjet()
+        Commons.printModelValue(enqueteModel as Object, mapEntries)
 
         try {
             val intentEnquetePreview = Intent(this, EnqueteSsrtPreviewActivity::class.java)
+            intentEnquetePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
             intentEnquetePreview.putExtra("preview", enqueteModel)
+            intentEnquetePreview.putExtra("draft_id", draftedSsrteModel?.uid)
             startActivity(intentEnquetePreview)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -983,10 +1024,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         }
     }
 
-    private fun getEnqueteSsrtObjet(): EnqueteSsrtModel {
+    private fun getEnqueteSsrtObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()):  Pair<EnqueteSsrtModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
 
-        return  EnqueteSsrtModel(
-            autreLienParente = editAutreLienParentSsrt.text.toString().trim(),
+//        return  EnqueteSsrtModel(
+//            autreLienParente = editAutreLienParentSsrt.text.toString().trim(),
 //            avoirFrequente = schoolOldYesNo,
 //            classe = schoolClass,
 //            codeMembre = "",
@@ -1014,9 +1056,67 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID),
 //            localiteNom = localiteNom,
 //            producteurNom = producteurNom,
-            uid = 0,
-        )
+//            uid = 0,
+//        )
 
+        var itemList = getSetupSsteModel(EnqueteSsrtModel(isSynced = false, uid = 0, userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),  origin = "local",), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial || isMissingDial2) ){
+            showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return itemList
+
+    }
+
+    private fun getSetupSsteModel(enqueteSsrtModel: EnqueteSsrtModel, mutableListOf: MutableList<Pair<String, String>>): Pair<EnqueteSsrtModel, MutableList<Pair<String, String>>> {
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_ssrte)
+        Commons.getAllTitleAndValueViews(
+            mainLayout, enqueteSsrtModel, false,
+            mutableListOf
+        )
+        return Pair(enqueteSsrtModel, mutableListOf)
+    }
+
+    fun passSetupSsteModel(
+        model: EnqueteSsrtModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_ssrte)
+        model?.let {
+            Commons.setAllValueOfTextViews(mainLayout, model)
+        }
     }
 
 

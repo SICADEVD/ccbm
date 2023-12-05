@@ -91,6 +91,7 @@ import java.io.*
 import java.lang.Math.log10
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.util.ArrayList
 import java.util.Calendar
 import kotlin.math.pow
 import kotlin.reflect.KClass
@@ -202,7 +203,7 @@ class Commons {
                             }else{
                                 var isFind = false
                                 for (item in changedText){
-                                    if(item.second.contains(it, ignoreCase = true)) {
+                                    if(item.second.equals(it, ignoreCase = true)) {
                                         onSelected.invoke(item.first, View.VISIBLE)
                                         isFind = true
                                     }
@@ -394,7 +395,7 @@ class Commons {
             return (this as String).toInt()
         }
         fun returnStringList(value: String?): MutableList<String>? {
-            if(this != null){
+            if(value != null){
                //value = null
                 return GsonUtils.fromJson<MutableList<String>>(value, object: TypeToken<MutableList<String>>(){}.type)
             }
@@ -1018,6 +1019,14 @@ class Commons {
                 }
 
             })
+        }
+
+        fun printModelValue(producteurMenage: Object, mapEntries: List<MapEntry>?) {
+
+            LogUtils.json(producteurMenage)
+            LogUtils.e("*********************************************************")
+            LogUtils.json(ArrayList(mapEntries))
+
         }
 
     }

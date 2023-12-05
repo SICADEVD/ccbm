@@ -535,6 +535,7 @@
                                                     android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_5sdp"
                                                     android:text="Quelle est sa strate ?"
                                                     android:textStyle="bold" />
 
@@ -594,7 +595,7 @@
                                         android:background="@drawable/submit_button_bg"
                                         android:paddingStart="@dimen/_10sdp"
                                         android:paddingEnd="@dimen/_10sdp"
-                                        android:textColor="@color/text_color_white"
+                                        android:textColor="@color/white_color"
                                         android:text="Ajouter"
                                         android:textSize="@dimen/_9ssp" />
 
@@ -642,6 +643,7 @@
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    android:textColor="@color/text_color_white"
                     android:text="ANNULER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
@@ -658,6 +660,7 @@
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     android:paddingHorizontal="20dp"
+                    app:iconTint="@color/white_color"
                     android:text="VÉRIFIER"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
