@@ -300,7 +300,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="@dimen/_1sdp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="25dp"
@@ -380,9 +380,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerArbreListDistrArbre"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="10"
+                        tools:itemCount="3"
                         tools:listitem="@layout/arbre_distribuee_list" />
 
                 </LinearLayout>

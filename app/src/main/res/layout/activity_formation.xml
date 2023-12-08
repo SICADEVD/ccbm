@@ -203,6 +203,81 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Selectionner la campagne"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
+
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:spinnerMode="dialog"-->
+<!--                                android:id="@+id/selectCampagneFormation"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Quel est le pilier ?"-->
+
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
+
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:spinnerMode="dialog"-->
+<!--                                android:id="@+id/selectPilierFormation"-->
+<!--                                android:entries="@array/example_pilier"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
@@ -218,44 +293,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner la campagne"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectCampagneFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le pilier ?"
+                            android:text="Quels sont Les producteurs présents à la formation ?"
 
                             android:textStyle="bold" />
 
@@ -268,12 +306,12 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectPilierFormation"
-                                android:entries="@array/example_pilier"
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:tag=""
+                                android:id="@+id/selectProducteurFormation"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
 
                         </LinearLayout>
 
@@ -448,46 +486,6 @@ android:textColor="@color/text_color_white"
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner les producteurs présent"
-
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
-                                android:id="@+id/selectProducteurFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                    <Space
-                        android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <LinearLayout
@@ -583,7 +581,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le module de la formation ?"
+                            android:text="Quels sont les modules de la formation ?"
 
                             android:textStyle="bold" />
 
@@ -592,10 +590,10 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background">
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectModuleFormation"
+                                android:id="@+id/selectModuleMultiFormation"
                                 />
 
                         </LinearLayout>
@@ -630,7 +628,42 @@ android:textColor="@color/text_color_white"
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectThemeFormation"
+                                android:id="@+id/selectThemeMultiFormation"
+                                />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quels sont les sous-themes de la formation ?"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:id="@+id/selectSousThemeMultiFormation"
                                 />
 
                         </LinearLayout>
@@ -772,43 +805,6 @@ android:textColor="@color/text_color_white"
 <!--                            android:textSize="@dimen/_13ssp" />-->
 
 <!--                    </LinearLayout>-->
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner les délégués présent à la formation"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
-                                android:id="@+id/selectDelegueFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -855,7 +851,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la date"
+                            android:text="Informations sur la formation"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -864,6 +860,44 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_1sdp"
                             android:layout_weight="1"
                             android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quels sont les staff qui ont dispensé la formation ?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag=""
+                                android:id="@+id/selectStaffFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -1018,6 +1052,47 @@ android:textColor="@color/text_color_white"
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="Observations"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textAllCaps="true"
+                                android:id="@+id/editObservationFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_80sdp"
+                                android:background="@drawable/background_present"
+                                android:ellipsize="end"
+                                android:hint="Précisez…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -1084,48 +1159,6 @@ android:textColor="@color/text_color_white"
                         </RelativeLayout>
 
                     </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:text="Observations"
-                                android:textStyle="bold" />
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:textAllCaps="true"
-                                android:id="@+id/editObservationFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_80sdp"
-                                android:background="@drawable/background_present"
-                                android:ellipsize="end"
-                                android:hint="Précisez…"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
 
                 </LinearLayout>
 

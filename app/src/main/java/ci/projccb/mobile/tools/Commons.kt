@@ -229,6 +229,16 @@ class Commons {
             }
         }
 
+        fun calculateTotalHeight(context:Context, recyclerView: RecyclerView, childHeiht: Int = 50): Int {
+            val layoutManager = recyclerView.layoutManager
+            val pixels: Int = (childHeiht * context.resources.displayMetrics.density).toInt()
+            var totalHeight = pixels*layoutManager!!.itemCount
+
+            LogUtils.d(totalHeight)
+
+            return totalHeight
+        }
+
         fun <T : Any>  getAllTitleAndValueViews(
             viewGroup: ViewGroup,
             prodModel: T,

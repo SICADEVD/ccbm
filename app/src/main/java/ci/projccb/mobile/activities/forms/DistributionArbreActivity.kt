@@ -3,7 +3,14 @@ package ci.projccb.mobile.activities.forms
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.adapters.DistribArbreAdapter
 import ci.projccb.mobile.models.ArbreModel
@@ -12,6 +19,7 @@ import ci.projccb.mobile.models.DistributionArbreDao
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.calculateTotalHeight
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
@@ -105,6 +113,13 @@ class DistributionArbreActivity : AppCompatActivity() {
         recyclerArbreListDistrArbre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerArbreListDistrArbre.adapter = DistribArbreAdapter(listArbreAndState)
         recyclerArbreListDistrArbre.adapter?.notifyDataSetChanged()
+
+        val totalHeight = calculateTotalHeight(this, recyclerArbreListDistrArbre, 80)
+
+        val params = recyclerArbreListDistrArbre.layoutParams
+        params.height = totalHeight
+        recyclerArbreListDistrArbre.layoutParams = params
+
         //listArbreAndState.put(resources.getStringArray(R.array.nomScienArbreConseille).toList(),resources.getStringArray(R.array.stratArbrConseille).toList())
 
 //        Commons.setListenerForSpinner(this,
@@ -160,6 +175,49 @@ class DistributionArbreActivity : AppCompatActivity() {
 //            })
     }
 
+    fun getAllRVItemInList(
+        viewGroup: ViewGroup,
+        mutableListOfId: MutableList<String>,
+        mutableListOfNom: MutableList<String>,
+        mutableListOfLimit: MutableList<String>,
+        mutableListOfQte: MutableList<String>,
+    ) {
+        val childCount = viewGroup.childCount
+
+        for (i in 0 until childCount) {
+            val childView = viewGroup.getChildAt(i)
+
+            if ( childView is AppCompatTextView && childView.tag != null ) {
+                val value = childView.text.toString()
+                //LogUtils.d("Spinner ${value} "+ childView::class.java.simpleName)
+                when(childView.tag){
+                    "arbreId" -> mutableListOfId.add(value)
+                    "arbreNom" -> mutableListOfNom.add(value)
+                    "arbreLimit" -> mutableListOfLimit.add(value)
+                }
+            } else if ( childView is AppCompatEditText && childView.tag != null ) {
+                // You've found an EditText with the specified tag, get its value
+                val editText = childView as AppCompatEditText
+                val value = editText.text.toString()
+                when(childView.tag){
+                    "arbreQte" -> mutableListOfQte.add(value)
+                }
+                //countField++
+            } else if (childView is ViewGroup) {
+                // If it's a ViewGroup, recursively call this method
+//                if(childView.visibility == View.VISIBLE)
+//                {
+                    getAllRVItemInList(
+                        viewGroup = childView,
+                        mutableListOfId,
+                        mutableListOfNom,
+                        mutableListOfLimit,
+                        mutableListOfQte,
+                    )
+//                }
+            }
+        }
+    }
 
     private fun undraftedDatas(draftedDataDistribution: DataDraftedModel) {
 
@@ -170,6 +228,15 @@ class DistributionArbreActivity : AppCompatActivity() {
     }
 
     private fun collectDatas() {
+
+        val idList = mutableListOf<String>()
+        val nomList = mutableListOf<String>()
+        val limitList = mutableListOf<String>()
+        val qteList = mutableListOf<String>()
+        getAllRVItemInList(recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
+
+        LogUtils.d( recyclerArbreListDistrArbre.childCount )
+        LogUtils.d(idList, nomList, limitList, qteList)
 
     }
 
@@ -290,7 +357,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(
                 Constants.AGENT_ID, 0).toString())
 
-        LogUtils.json(parcellesList)
+//        LogUtils.json(parcellesList)
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {

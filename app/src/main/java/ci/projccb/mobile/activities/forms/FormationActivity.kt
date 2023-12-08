@@ -213,48 +213,48 @@ class FormationActivity : AppCompatActivity() {
 //    }
 
 
-    fun setupTypeFormationSelection() {
-        typeFormationDao = CcbRoomDatabase.getDatabase(applicationContext)?.typeFormationDao()
-        typeFormationsList = typeFormationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//    fun setupTypeFormationSelection() {
+//        typeFormationDao = CcbRoomDatabase.getDatabase(applicationContext)?.typeFormationDao()
+//        typeFormationsList = typeFormationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//
+//        val typeFormationAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, typeFormationsList!!)
+//        selectTypeFormation!!.adapter = typeFormationAdapter
+//
+//        selectTypeFormation.setTitle("Choisir le type de formation")
+//
+//        selectTypeFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val typeFormation = typeFormationsList!![position]
+//                typeFormationNom = typeFormation.nom!!
+//                typeFormationId = typeFormation.id.toString()
+//
+//                setupThemeFormationSelection(typeFormationId)
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
-        val typeFormationAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, typeFormationsList!!)
-        selectTypeFormation!!.adapter = typeFormationAdapter
 
-        selectTypeFormation.setTitle("Choisir le type de formation")
-
-        selectTypeFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val typeFormation = typeFormationsList!![position]
-                typeFormationNom = typeFormation.nom!!
-                typeFormationId = typeFormation.id.toString()
-
-                setupThemeFormationSelection(typeFormationId)
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
-
-    fun setupCampagneSelection() {
-        campagnesList = CcbRoomDatabase.getDatabase(applicationContext)?.campagneDao()?.getAll()
-
-        val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList!!)
-        selectCampagneFormation!!.adapter = campagneAdapter
-        selectCampagneFormation.setTitle("Choisir la campagne")
-
-        selectCampagneFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val campagne = campagnesList!![position]
-                campagne.campagnesNom = campagne.campagnesNom!!
-                campagne.id = campagne.id
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
+//    fun setupCampagneSelection() {
+//        campagnesList = CcbRoomDatabase.getDatabase(applicationContext)?.campagneDao()?.getAll()
+//
+//        val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList!!)
+//        selectCampagneFormation!!.adapter = campagneAdapter
+//        selectCampagneFormation.setTitle("Choisir la campagne")
+//
+//        selectCampagneFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val campagne = campagnesList!![position]
+//                campagne.campagnesNom = campagne.campagnesNom!!
+//                campagne.id = campagne.id
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
 
     fun setupLieuSelection() {
@@ -278,51 +278,51 @@ class FormationActivity : AppCompatActivity() {
     }
 
 
-    fun setupThemeFormationSelection(type: String) {
-        themesList?.clear()
-        //themeFormationDao = CcbRoomDatabase.getDatabase(applicationContext)?.themeFormationDao()
-        themesList = AssetFileHelper.getListDataFromAsset(9, this@FormationActivity) as MutableList<ThemeFormationModel>?
-            //themeFormationDao?.getAllByType(type)
-
-        val newList = mutableListOf<ThemeFormationModel>()
-         themesList?.map {
-            if(it?.typeFormationsId.toString().equals(type))
-                newList.add(it)
-        }
-        themesList?.clear()
-        themesList?.addAll(newList)
-            LogUtils.d(themesList)
-
-        var listSelectLegersResources = mutableListOf<Int>()
-        val listofTtitles = mutableListOf<String>()
-        listofTtitles.addAll(themesList?.map { "${it.nom}" } ?: arrayListOf())
-
-        val multiSelectSpinner = selectThemeFormation
-        multiSelectSpinner.setTitle("Choisir les themes")
-        multiSelectSpinner.setItems(listofTtitles)
-        //multiSelectSpinner.hasNoneOption(true)
-        multiSelectSpinner.setSelection(listSelectLegersResources.toIntArray())
-        multiSelectSpinner.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
-            override fun selectedIndices(indices: MutableList<Int>?) {
-                //themesIdSelected.clear()
-
-            }
-
-            override fun selectedStrings(strings: MutableList<String>?) {
-                themesSelected.clear()
-                themesSelected.addAll(strings?.toMutableList() ?: arrayListOf())
-                themesIdSelected.clear()
-                var listIds = mutableListOf<String>()
-                strings?.forEach {
-                    for (theme in themesList?: arrayListOf()){
-                        if(theme.nom.equals(it)) listIds.add(theme.id.toString())
-                    }
-                }
-                themesIdSelected.addAll(listIds)
-            }
-
-        })
-    }
+//    fun setupThemeFormationSelection(type: String) {
+//        themesList?.clear()
+//        //themeFormationDao = CcbRoomDatabase.getDatabase(applicationContext)?.themeFormationDao()
+//        themesList = AssetFileHelper.getListDataFromAsset(9, this@FormationActivity) as MutableList<ThemeFormationModel>?
+//            //themeFormationDao?.getAllByType(type)
+//
+//        val newList = mutableListOf<ThemeFormationModel>()
+//         themesList?.map {
+//            if(it?.typeFormationsId.toString().equals(type))
+//                newList.add(it)
+//        }
+//        themesList?.clear()
+//        themesList?.addAll(newList)
+//            LogUtils.d(themesList)
+//
+//        var listSelectLegersResources = mutableListOf<Int>()
+//        val listofTtitles = mutableListOf<String>()
+//        listofTtitles.addAll(themesList?.map { "${it.nom}" } ?: arrayListOf())
+//
+//        val multiSelectSpinner = selectThemeFormation
+//        multiSelectSpinner.setTitle("Choisir les themes")
+//        multiSelectSpinner.setItems(listofTtitles)
+//        //multiSelectSpinner.hasNoneOption(true)
+//        multiSelectSpinner.setSelection(listSelectLegersResources.toIntArray())
+//        multiSelectSpinner.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+//            override fun selectedIndices(indices: MutableList<Int>?) {
+//                //themesIdSelected.clear()
+//
+//            }
+//
+//            override fun selectedStrings(strings: MutableList<String>?) {
+//                themesSelected.clear()
+//                themesSelected.addAll(strings?.toMutableList() ?: arrayListOf())
+//                themesIdSelected.clear()
+//                var listIds = mutableListOf<String>()
+//                strings?.forEach {
+//                    for (theme in themesList?: arrayListOf()){
+//                        if(theme.nom.equals(it)) listIds.add(theme.id.toString())
+//                    }
+//                }
+//                themesIdSelected.addAll(listIds)
+//            }
+//
+//        })
+//    }
 
 
 //    fun setupProducteurSelection(localite: String?) {
@@ -426,7 +426,7 @@ class FormationActivity : AppCompatActivity() {
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    Commons.setupItemMultiSelection(this, selectProducteurFormation, "Selectionner les producteurs présent",
+                    Commons.setupItemMultiSelection(this, selectProducteurFormation, "Quels sont les producteurs présents à la formation ?",
                         CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { CommonData(0, "${it.nom} ${it.prenoms}") }!!
                     ){
                         //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
@@ -448,19 +448,19 @@ class FormationActivity : AppCompatActivity() {
 
         setupLieuSelection()
 
-        setupCampagneSelection()
+        //setupCampagneSelection()
 
-        setupTypeFormationSelection()
+        //setupTypeFormationSelection()
 
-        Commons.setListenerForSpinner(this,
-            "Quel est le pilier ?",
-            spinner = selectPilierFormation,
-            listIem = resources.getStringArray(R.array.example_pilier)
-                ?.toList() ?: listOf(),
-            onChanged = {
-            },
-            onSelected = { itemId, visibility ->
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Quel est le pilier ?",
+//            spinner = selectPilierFormation,
+//            listIem = resources.getStringArray(R.array.example_pilier)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
 
         Commons.setListenerForSpinner(this,
             "Lieu de la formation",
@@ -488,28 +488,55 @@ class FormationActivity : AppCompatActivity() {
                 }
             })
 
+        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listSousThemeFormation = AssetFileHelper.getListDataFromAsset(28, this) as MutableList<SousThemeFormationModel>
+        Commons.setupItemMultiSelection(this, selectModuleMultiFormation, "Quels sont les modules de la formation ?",
+            (listTypeFormation)?.map { CommonData(0, it.nom.toString()) }?: arrayListOf()
+        ){ typeSelect ->
+            //val idOfTypeForm = mutableListOf<Int?>()
+            val listThemeFormationCustom = mutableListOf<ThemeFormationModel>()
+            //LogUtils.json(listThemeFormation)
+            listTypeFormation?.forEach { typeForm ->
+                if( typeSelect.contains(typeForm.nom) ){
+                    listThemeFormationCustom.addAll(listThemeFormation?.filter {it.typeFormationsId === typeForm.id}?.toMutableList()?: arrayListOf())
+                }
+            }
+            Commons.setupItemMultiSelection(this, selectThemeMultiFormation, "Quels sont les themes de la formation ?",
+                (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }){ themeList ->
+
+                val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
+                listThemeFormation?.forEach { themeForm ->
+                    if( themeList.contains(themeForm.nom) ){
+                        listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter {it.themeFormationsId === themeForm.id}?.toMutableList()?: arrayListOf())
+                    }
+                }
+                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, "Quels sont les sous themes de la formation ?",
+                    (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }){
+
+                }
+
+            }
+        }
+
+        val listDelegue = CcbRoomDatabase.getDatabase(this)?.delegueDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
-            "Quel est le module de la formation ?",
-            spinner = selectModuleFormation,
-            listIem = resources.getStringArray(R.array.entity_example).map { it.toString() }
+            "Quels sont les staff qui ont dispensé la formation ?",
+            spinner = selectStaffFormation,
+            listIem = listDelegue?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
-
-                Commons.setupItemMultiSelection(this, selectThemeFormation, "Quels sont les themes de la formation ?",
-                    (AssetFileHelper.getListDataFromAsset( 9,this) as MutableList<ThemeFormationModel>).map { CommonData(0, "${it.nom}") }){
-                    //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
-                }
 
             },
             onSelected = { itemId, visibility ->
 
             })
 
-        Commons.setupItemMultiSelection(this, selectDelegueFormation, "Selectionner les délégués présent à la formation !",
-            (CcbRoomDatabase.getDatabase(this)?.delegueDao()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()))?.map { CommonData(0, "${it.nom}") }
-                ?: arrayListOf()){
-            //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
-        }
+//        Commons.setupItemMultiSelection(this, selectStaffFormation, "Selectionner les délégués présent à la formation !",
+//            (CcbRoomDatabase.getDatabase(this)?.delegueDao()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()))?.map { CommonData(0, "${it.nom}") }
+//                ?: arrayListOf()){
+//            //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
+//        }
 
         // setupThemeFormationSelection()
     }
@@ -1039,6 +1066,7 @@ class FormationActivity : AppCompatActivity() {
 
         editDateDebuFormation.setOnClickListener { configDate(editDateDebuFormation) }
         editDateFinFormation.setOnClickListener { configDate(editDateFinFormation) }
+        editDureeFormation.setOnClickListener { configHour(editDureeFormation) }
 
     }
 }
