@@ -54,6 +54,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
     var livraisonDao: LivraisonDao? = null
     var menageDao: ProducteurMenageDao? = null
     var formationDao: FormationDao? = null
+    var visiteurFormationDao: VisiteurFormationDao? = null
     var suiviParcelleDao: SuiviParcelleDao? = null
     var suiviApplicationDao: SuiviApplicationDao? = null
     var enqueteSsrtDao: EnqueteSsrteDao? = null
@@ -233,47 +234,47 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 livraisonDao?.insert(livraisonModel)
                             }
 
-                            val formationsList = formationDao?.getUnSyncedAll(
-                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                            )!!
-
-                            for (formation in formationsList) {
-                                try {
-                                    // deserialize datas producteurs
-                                    val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                                    formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                                    val cleanList = formation.producteursId?.toMutableList()
-
-                                    var positionLoop = 0
-                                    var positionFound: Int
-
-                                    formation.producteursId?.map {
-                                        val producteurId = it.split("-")[0]
-                                        val typeId = it.split("-")[1]
-
-                                        if (typeId == "uid") {
-                                            if (producteurId.toInt() == producteurSynced.uid) {
-                                                positionFound = positionLoop
-                                                cleanList?.removeAt(positionFound)
-                                                cleanList?.add("${producteurSynced.id}-id")
-                                            }
-                                        }
-
-                                        positionLoop += 1
-                                    }
-
-                                    formation.producteursId = mutableListOf()
-                                    formation.producteursId = cleanList
-                                    formation.producteursIdStringify = GsonUtils.toJson(cleanList)
-
-                                    formationDao?.insert(formation)
-                                } catch (uhex: UnknownHostException) {
-                                    FirebaseCrashlytics.getInstance().recordException(uhex)
-                                } catch (ex: Exception) {
-                                    LogUtils.e(ex.message)
-                                    FirebaseCrashlytics.getInstance().recordException(ex)
-                                }
-                            }
+//                            val formationsList = formationDao?.getUnSyncedAll(
+//                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+//                            )!!
+//
+//                            for (formation in formationsList) {
+//                                try {
+//                                    // deserialize datas producteurs
+//                                    val producteursType = object : TypeToken<MutableList<String>>() {}.type
+//                                    formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
+//                                    val cleanList = formation.producteursId?.toMutableList()
+//
+//                                    var positionLoop = 0
+//                                    var positionFound: Int
+//
+//                                    formation.producteursId?.map {
+//                                        val producteurId = it.split("-")[0]
+//                                        val typeId = it.split("-")[1]
+//
+//                                        if (typeId == "uid") {
+//                                            if (producteurId.toInt() == producteurSynced.uid) {
+//                                                positionFound = positionLoop
+//                                                cleanList?.removeAt(positionFound)
+//                                                cleanList?.add("${producteurSynced.id}-id")
+//                                            }
+//                                        }
+//
+//                                        positionLoop += 1
+//                                    }
+//
+//                                    formation.producteursId = mutableListOf()
+//                                    formation.producteursId = cleanList
+//                                    formation.producteursIdStringify = GsonUtils.toJson(cleanList)
+//
+//                                    formationDao?.insert(formation)
+//                                } catch (uhex: UnknownHostException) {
+//                                    FirebaseCrashlytics.getInstance().recordException(uhex)
+//                                } catch (ex: Exception) {
+//                                    LogUtils.e(ex.message)
+//                                    FirebaseCrashlytics.getInstance().recordException(ex)
+//                                }
+//                            }
                         }
 
                     }
@@ -493,6 +494,41 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
+            syncVisiteurFormation(visiteurFormationDao!!)
+        } else {
+            syncVisiteurFormation(visiteurFormationDao!!)
+        }
+    }
+
+    fun syncVisiteurFormation(visiteurFormationDao: VisiteurFormationDao) {
+        val suiviDatas = visiteurFormationDao.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
+        )
+        LogUtils.json(suiviDatas)
+        if (suiviDatas.size > 0) {
+            for (suivi in suiviDatas) {
+                try {
+                    // deserialize datas producteurs
+
+                    val clientSuivi: Call<VisiteurFormationModel> = ApiClient.apiService.synchronisationVisiteurFormation(suivi)
+
+                    val responseSuivi: Response<VisiteurFormationModel> = clientSuivi.execute()
+                    val visiteurFormationModel: VisiteurFormationModel? = responseSuivi.body()
+
+
+
+                    visiteurFormationDao.syncData(
+                        id = visiteurFormationModel?.id!!,
+                        synced = true,
+                        localID = suivi.uid
+                    )
+                } catch (uhex: UnknownHostException) {
+                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
             syncFormations(formationDao!!)
         } else {
             syncFormations(formationDao!!)
@@ -508,65 +544,29 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         for (formation in formationDatas) {
             try {
                 // deserialize datas producteurs
-                val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                val cleanList = formation.producteursId?.toMutableList()
 
-                formation.dateFormation = Commons.convertDate(formation.dateFormation, true)
-                formation.themeIds = ListConverters.stringToMutableList(formation.themeStringify)
+                formation.apply {
+                    producteursIdList = GsonUtils.fromJson(formation.producteursIdStr, object : TypeToken<MutableList<String>>() {}.type)
+                    typeFormationList = GsonUtils.fromJson(formation.typeFormationStr, object : TypeToken<MutableList<String>>() {}.type)
+                    themeList = GsonUtils.fromJson(formation.themeStr, object : TypeToken<MutableList<String>>() {}.type)
+                    sousThemeList = GsonUtils.fromJson(formation.sousThemeStr, object : TypeToken<MutableList<String>>() {}.type)
 
-                var positionLoop = 0
-                var positionFound = 0
-
-                formation.producteursId?.map {
-                    val producteurId = it.split("-")[0]
-                    val typeId = it.split("-")[1]
-
-                    if (typeId == "uid") {
-                        val producteurCheck = producteurDao?.getProducteurByUID(producteurUID = producteurId.toInt())
-
-                        if (producteurCheck?.isSynced!!) {
-                            positionFound = positionLoop
-                            cleanList?.removeAt(positionFound)
-                            cleanList?.add("${producteurCheck.id}-id")
-                        } else {
-                            suncFormationsFlag = false
-                        }
+                    dureeFormation?.split(":").let {
+                        hour = it?.get(0)?.toString()
+                        minute = it?.get(1)?.toString()
                     }
 
-                    positionLoop += 1
+                    multiStartDate = Commons.convertDate(multiStartDate, true)
+                    multiEndDate = Commons.convertDate(multiEndDate, true)
+
+
+                    photo_filename = photoFormation
+                    rapport_filename = rapportFormation
+                    photoFormation = Commons.convertPathBase64(photoFormation, 1)
+                    rapportFormation = Commons.fileToBase64(rapportFormation)
                 }
 
-                formation.producteursId = mutableListOf()
-                formation.producteursId = cleanList
-            } catch (uhex: UnknownHostException) {
-                FirebaseCrashlytics.getInstance().recordException(uhex)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        if (suncFormationsFlag) { // all is done bring synchronization
-            formationDatas.map { formationModel ->
-                // deserialize datas producteurs
-                val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                formationModel.producteursId = GsonUtils.fromJson<MutableList<String>>(formationModel.producteursIdStringify, producteursType)
-                formationModel.photoFormation = Commons.convertPathBase64(formationModel.photoPath, 0)
-                //LogUtils.e(TAG, GsonUtils.toJson(formationModel.producteurs))
-
-                formationModel.visiteursNom = mutableListOf<String>()
-                formationModel.visiteurs?.split(",")?.map {
-                    formationModel.visiteursNom?.add(it.toString())
-                }
-
-                val listM = formationModel.producteursId?.map {
-                    it.replace("-id", "")
-                }
-
-                formationModel.producteursId = listM?.toMutableList()
-
-                val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formationModel)
+                val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)
 
                 val responseFormation: Response<FormationModel> = clientFormation.execute()
                 val formationSynced: FormationModel? = responseFormation.body()
@@ -574,8 +574,15 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 formationDao.syncData(
                     formationSynced?.id!!,
                     true,
-                    formationModel.uid
+                    formation.uid
                 )
+
+
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
             }
         }
 
@@ -933,6 +940,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
             menageDao = CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
             formationDao = CcbRoomDatabase.getDatabase(this)?.formationDao()
+            visiteurFormationDao = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
             suiviParcelleDao = CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()
             livraisonDao = CcbRoomDatabase.getDatabase(this)?.livraisonDao()
             estimationDao = CcbRoomDatabase.getDatabase(this)?.estimationDao()

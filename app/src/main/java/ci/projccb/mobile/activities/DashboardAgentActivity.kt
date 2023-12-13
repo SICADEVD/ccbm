@@ -287,20 +287,7 @@ class DashboardAgentActivity : AppCompatActivity(),
     @SuppressLint("MissingPermission")
     suspend fun checkNetworkAvailablility() {
 
-        CoroutineScope(IO).launch {
-            try {
-                networkFlag = NetworkUtils.isAvailable()
-            } catch (ex: UnknownHostException) {
-                networkFlag = false
-                LogUtils.e("Internet error !")
-            }
 
-            if (networkFlag) {
-                MainScope().launch {
-                    Commons.synchronisation("all",  this@DashboardAgentActivity)
-                }
-            }
-        }
     }
 
 
@@ -308,9 +295,6 @@ class DashboardAgentActivity : AppCompatActivity(),
         super.onResume()
         //refreshDatas()
 
-        MainScope().launch {
-            checkNetworkAvailablility()
-        }
         askLocationPermission()
     }
 

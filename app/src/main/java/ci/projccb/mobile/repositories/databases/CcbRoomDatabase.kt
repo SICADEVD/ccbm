@@ -19,7 +19,7 @@ import ci.projccb.mobile.tools.ListConverters
  */
 
 @Database(
-    version = 4, exportSchema = false,
+    version = 5, exportSchema = false,
     entities = [
         AgentModel::class,
         EauUseeModel::class,
@@ -45,6 +45,7 @@ import ci.projccb.mobile.tools.ListConverters
         LivraisonModel::class,
         FormationModel::class,
         TypeFormationModel::class,
+        SousThemeFormationModel::class,
         DelegueModel::class,
         SuiviParcelleModel::class,
         IntrantModel::class,
@@ -73,6 +74,7 @@ import ci.projccb.mobile.tools.ListConverters
         EvaluationArbreModel::class,
         VisiteurFormationModel::class,
         ArbreModel::class,
+        StaffFormationModel::class,
     ],
 )
 @TypeConverters(ListConverters::class)
@@ -81,6 +83,7 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun draftedDatasDao(): DraftedDatasDao
     abstract fun typeProduitDao(): TypeProduitDao
     abstract fun themeFormationDao(): ThemeFormationDao
+    abstract fun sousThemeFormationDao(): SousThemeFormationDao
     abstract fun moyenTransport(): MoyenTransportDao
     abstract fun lienParenteDao(): LienParenteDao
     abstract fun infosProducteurDao(): InfosProducteurDao
@@ -130,6 +133,7 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun evaluationArbreDao(): EvaluationArbreDao
     abstract fun visiteurFormationDao(): VisiteurFormationDao
     abstract fun arbreDao(): ArbreDao
+    abstract fun staffFormation(): StaffFormationDao
 
 
     companion object {

@@ -41,7 +41,7 @@ android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RECAPITULATIF FORMATION"
+                android:text="RECAPITULATIF VISITEUR FORMATION"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -83,50 +83,6 @@ android:textColor="@color/text_color_white"
                 android:layout_height="@dimen/_30sdp" />
 
             <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Photo :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="4"
-                    android:gravity="center">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imagePhotoFormationPreview"
-                        android:background="@drawable/rounded_background"
-                        android:padding="@dimen/_5sdp"
-                        android:layout_weight="2"
-                        android:src="@drawable/ic_suivi_parcel"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_80sdp"/>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp" />
-
-            <LinearLayout
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,7 +90,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/clickSaveFormationPreview"
+                    android:id="@+id/clickSaveVisitFormationPreview"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"

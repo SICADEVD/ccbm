@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
@@ -21,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
@@ -35,6 +37,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
+import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
@@ -67,22 +70,17 @@ import ci.projccb.mobile.models.AdapterItemModel
 import ci.projccb.mobile.models.OmbrageVarieteModel
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.services.SynchronisationIntentService
-import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
-import ci.projccb.mobile.tools.Commons.Companion.isSpinnerEmpty
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddPestListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editFrequencPestSParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editQuantitPestSParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestContenantSParcell
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestNomSParcell
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestUniteSParcell
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -90,13 +88,10 @@ import org.json.JSONException
 import java.io.*
 import java.lang.Math.log10
 import java.math.RoundingMode
+import java.net.UnknownHostException
 import java.text.DecimalFormat
-import java.util.ArrayList
 import java.util.Calendar
 import kotlin.math.pow
-import kotlin.reflect.KClass
-import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews as getAllTitleAndValueViews1
-import ci.projccb.mobile.tools.Commons.Companion.setAllValueOfTextViews as setAllValueOfTextViews1
 
 
 class Commons {
@@ -398,7 +393,7 @@ class Commons {
         }
 
         fun List<String>?.toModifString(): String {
-            return this.toString().replace("]", "").replace("[", "").replace(",", "")
+            return this.toString().replace("]", "").replace("[", "") //.replace(",", "")
         }
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null
@@ -448,7 +443,7 @@ class Commons {
             dialog.show()
         }
 
-        fun Context.configDate(viewClciked: AppCompatEditText) {
+        fun Context.configDate(viewClciked: AppCompatEditText, isDateMax: Boolean = true) {
             val calendar: Calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
@@ -457,7 +452,7 @@ class Commons {
                 viewClciked.setText(convertDate("${day}-${(month + 1)}-$year", false))
             }, year, month, dayOfMonth)
 
-            datePickerDialog.datePicker.maxDate = DateTime.now().millis
+            if(isDateMax) datePickerDialog.datePicker.maxDate = DateTime.now().millis
             datePickerDialog.show()
         }
 
@@ -602,9 +597,14 @@ class Commons {
             return file.absolutePath
         }
 
+        fun fileToBase64(filePath: String?): String? {
+            if (filePath.isNullOrEmpty()) return ""
+            val fileBytes: ByteArray = FileUtils.getFileByPath(filePath).readBytes()
+            return Base64.encodeToString(fileBytes, Base64.DEFAULT)
+        }
 
         fun convertPathBase64(filePath: String?, which: Int): String {
-            if (filePath == null) return ""
+            if (filePath.isNullOrEmpty()) return ""
 
             LogUtils.d(filePath)
             val imgFile = File(filePath)
@@ -692,6 +692,26 @@ class Commons {
         }
 
         fun redirectMenu(fromMenu: String, actionMenu: String, activity: Activity) {
+//            MainScope().launch {
+//                checkNetworkAvailablility()
+//            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                var networkFlag = false
+                try {
+                    networkFlag = NetworkUtils.isAvailable()
+                } catch (ex: UnknownHostException) {
+                    networkFlag = false
+                    LogUtils.e("Internet error !")
+                }
+
+                if (networkFlag) {
+                    MainScope().launch {
+                        Commons.synchronisation("all",  activity)
+                    }
+                }
+            }
+
             when (actionMenu.uppercase()) {
                 "ADD" -> {
                     when (fromMenu.uppercase()) {
@@ -910,7 +930,9 @@ class Commons {
 //            pesticideListSParcelle.add(AdapterItemModel(0, it, valueList.get(countN)))
 //            countN++
 //        }
-            var pesticideSParcelleAdapter: MultipleItemAdapter? = MultipleItemAdapter(pesticideListSParcelle, )
+            var pesticideSParcelleAdapter: MultipleItemAdapter? = MultipleItemAdapter(
+                pesticideListSParcelle
+            )
 
             if(libeleList.size > 0){
                 pesticideSParcelleAdapter = MultipleItemAdapter(pesticideListSParcelle, libeleList[0], libeleList[1], libeleList[2], libeleList[3], libeleList[4])
@@ -1039,6 +1061,44 @@ class Commons {
 
         }
 
+        fun getFileExtension(filePath: String): String {
+            val mimeTypeMap = MimeTypeMap.getSingleton()
+            val extension = MimeTypeMap.getFileExtensionFromUrl(filePath)
+            return mimeTypeMap.getMimeTypeFromExtension(extension)?.split("/")?.lastOrNull() ?: ""
+        }
+
+        fun getFilePathFromUri(uri: Uri, context: Context): String? {
+            val documentFile = DocumentFile.fromSingleUri(context, uri)
+            return documentFile?.uri?.path
+        }
+
+        fun copyFile(sourceUri: Uri?, pPath: String?, context: Context) {
+            try {
+                // Open an input stream from the selected file URI
+                val inputStream: InputStream? = context.getContentResolver().openInputStream(
+                    sourceUri!!
+                )
+
+                // Create the destination file
+                val destinationFile = File(pPath)
+
+                // Open an output stream to the destination file
+                val outputStream: OutputStream = FileOutputStream(destinationFile)
+
+                // Copy the bytes from the input stream to the output stream
+                val buffer = ByteArray(1024)
+                var length: Int
+                while ( inputStream?.read(buffer).also { length = it!! }!! > 0) {
+                    outputStream.write(buffer, 0, length)
+                }
+
+                inputStream?.close()
+                outputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                LogUtils.e(e.message)
+            }
+        }
     }
 
 

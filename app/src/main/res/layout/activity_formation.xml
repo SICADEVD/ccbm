@@ -156,6 +156,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="sectionId"
                                 android:id="@+id/selectSectionFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -194,6 +195,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="localitesId"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectLocaliteFormation"
                                 android:layout_width="match_parent"
@@ -307,7 +309,6 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag=""
                                 android:id="@+id/selectProducteurFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -379,6 +380,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -474,6 +476,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="formationType"
                                 android:id="@+id/selectTypeFormation"
                                 android:entries="@array/type_formation"
                                 android:layout_width="match_parent"
@@ -512,6 +515,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="lieuFormation"
                                 android:id="@+id/selectLieuFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -526,49 +530,49 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp"/>
 
-                    <LinearLayout
-                        android:id="@+id/containerAutreLieuFormation"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/containerAutreLieuFormation"-->
+<!--                        android:visibility="gone"-->
+<!--                        tools:visibility="visible"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:weightSum="5">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical">-->
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:text="Autre lieu"
-                                android:textStyle="bold" />
+<!--                            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                                android:textColor="@color/text_color_white"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:paddingLeft="@dimen/_10sdp"-->
+<!--                                android:text="Autre lieu"-->
+<!--                                android:textStyle="bold" />-->
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:textAllCaps="true"
-                                android:id="@+id/editAutreLieuFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:background="@drawable/background_present"
-                                android:ellipsize="end"
-                                android:hint="Précisez…"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
+<!--                            <androidx.appcompat.widget.AppCompatEditText-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:id="@+id/editAutreLieuFormation"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:background="@drawable/background_present"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:hint="Précisez…"-->
+<!--                                android:imeOptions="actionDone"-->
+<!--                                android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                                android:paddingStart="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_10sdp"-->
+<!--                                android:textSize="@dimen/_13ssp"-->
+<!--                                tools:text="" />-->
 
-                        </LinearLayout>
-                    </LinearLayout>
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -891,7 +895,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag=""
+                                android:tag="staffId"
                                 android:id="@+id/selectStaffFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -924,6 +928,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="multiStartDate"
                                 android:id="@+id/editDateDebuFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -972,6 +977,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="multiEndDate"
                                 android:id="@+id/editDateFinFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -1022,6 +1028,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="dureeFormation"
                                 android:id="@+id/editDureeFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -1070,6 +1077,7 @@ android:textColor="@color/text_color_white"
 
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:textAllCaps="true"
+                                android:tag="observationFormation"
                                 android:id="@+id/editObservationFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_80sdp"

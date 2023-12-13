@@ -197,7 +197,7 @@
                     android:textSize="@dimen/_9ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color"
+                    android:textColor="@color/text_color"
                     android:id="@+id/labelDelimiterOwner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -213,14 +213,14 @@ android:textColor="@color/text_color"
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color"
+                    android:textColor="@color/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Metre: "
                     android:textSize="@dimen/_9ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color"
+                    android:textColor="@color/text_color"
                     android:id="@+id/labelDelimiterDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -236,14 +236,14 @@ android:textColor="@color/text_color"
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color"
+                    android:textColor="@color/text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Surface: "
                     android:textSize="@dimen/_9ssp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color"
+                    android:textColor="@color/text_color"
                     android:id="@+id/labelDelimiterSurface"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

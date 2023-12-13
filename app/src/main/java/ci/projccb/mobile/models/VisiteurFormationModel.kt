@@ -30,10 +30,19 @@ data class VisiteurFormationModel(
     @PrimaryKey(autoGenerate = true) @SerializedName("uid") @Expose var uid: Int,
     @SerializedName("producteur") @Expose var producteurId: String? = "",
     @SerializedName("formation") @Expose var formationId: String? = "",
+    @Expose var section: String? = "",
+    @Expose var localite: String? = "",
+    @Expose var nom: String? = "",
+    @Expose var prenom: String? = "",
+    @Expose var sexe: String? = "",
+    @Expose var telephone: String? = "",
+    @Expose var representer: String? = "",
+    @Expose var lien: String? = "",
+    @Expose var autre_lien: String? = "",
+    @Expose var suivi_formation_id: String? = "",
     var origin: String? = "local",
     var isSynced: Boolean = false,
-    @SerializedName("userid") @Expose var userid: Int? = 0,
-    @Expose @SerializedName("agentId") var agentId: String? = "",
+    @SerializedName("agentId") @Expose var agentId: Int? = 0,
 ): Parcelable {
 
 }
@@ -46,19 +55,19 @@ interface VisiteurFormationDao {
     fun insert(visiteurFormationModel: VisiteurFormationModel)
 
     @Transaction
-    @Query("SELECT * FROM visiteur_formation WHERE userid = :agentID")
-    fun getAll(agentID: String?): MutableList<VisiteurFormationModel>
+    @Query("SELECT * FROM visiteur_formation WHERE agentId = :agentID")
+    fun getAll(agentID: Int?): MutableList<VisiteurFormationModel>
 
     @Transaction
-    @Query("SELECT * FROM visiteur_formation WHERE isSynced = 0 AND userid = :agentID")
-    fun getUnSyncedAll(agentID: String?): MutableList<VisiteurFormationModel>
+    @Query("SELECT * FROM visiteur_formation WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAll(agentID: Int?): MutableList<VisiteurFormationModel>
 
     @Transaction
     @Query("UPDATE visiteur_formation SET id = :id, isSynced = :synced, origin = 'remote' WHERE uid = :localID")
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
-    @Query("DELETE FROM visiteur_formation WHERE userid = :agentID")
-    fun deleteAgentDatas(agentID: String?)
+    @Query("DELETE FROM visiteur_formation WHERE agentId = :agentID")
+    fun deleteAgentDatas(agentID: Int?)
 
 }

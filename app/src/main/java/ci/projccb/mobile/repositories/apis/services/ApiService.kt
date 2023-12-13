@@ -33,6 +33,10 @@ interface ApiService {
     @POST("apisuiviformation")
     fun synchronisationFormation(@Body formationModel: FormationModel): Call<FormationModel>
 
+    @POST("apivisiteur")
+    fun synchronisationVisiteurFormation(@Body visiteurFormationModel: VisiteurFormationModel): Call<VisiteurFormationModel>
+
+
     @POST("apilivraison")
     fun synchronisationLivraison(@Body livraisonModel: LivraisonModel): Call<LivraisonModel>
 
@@ -93,6 +97,9 @@ interface ApiService {
 
     @POST("getthemes")
     fun getThemes(): Call<MutableList<ThemeFormationModel>>
+
+    @POST("getsousthemes")
+    fun getSousThemes(): Call<MutableList<SousThemeFormationModel>>
 
     @POST("apiestimation")
     fun synchronisationEstimation(@Body estimationModel: EstimationModel): Call<EstimationModel>

@@ -8,6 +8,8 @@ data class CommonData (
     @Expose var nom: String? = null,
     @Expose val table: String? = null,
     @Expose val codeapp: String? = null,
+    @Expose val is_different: Boolean? = false,
+    @Expose val value: String? = "",
     @Expose @SerializedName("role_name") val role: String? = null,
     @Expose val userid: Int? = null,
     @Expose val typeFormationId: Int? = null,

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.adapters.PreviewItemAdapter
-import ci.projccb.mobile.models.FormationModel
+import ci.projccb.mobile.models.VisiteurFormationModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.ListConverters
@@ -19,42 +19,25 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_formation_preview.*
-import kotlinx.android.synthetic.main.activity_formation_preview.imagePhotoFormationPreview
+
 import kotlinx.android.synthetic.main.activity_producteur_preview.imageProfileProdPreview
+import kotlinx.android.synthetic.main.activity_visiteur_formation_preview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class FormationPreviewActivity : AppCompatActivity() {
+class VisiteurFormationPreviewActivity : AppCompatActivity() {
 
 
-    var formationDatas: FormationModel? = null
+    var visiteurFormationDatas: VisiteurFormationModel? = null
     val draftDao = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
-    suspend fun loadFileToBitmap(pPath: String?) {
-        if (pPath?.isEmpty()!!) return
-
-        val imgFile = File(pPath)
-
-        if (imgFile.exists()) {
-            val options = BitmapFactory.Options()
-            options.inSampleSize = 8
-            val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath, options)
-
-
-            MainScope().launch {
-                imagePhotoFormationPreview.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 80, 80, false))
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_formation_preview)
+        setContentView(R.layout.activity_visiteur_formation_preview)
 
         intent?.let {
             try {
@@ -77,35 +60,23 @@ class FormationPreviewActivity : AppCompatActivity() {
                 recyclerInfoPrev.adapter = rvPrevAdapter
                 recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-
-                formationDatas = it.getParcelableExtra("preview")
+                visiteurFormationDatas = it.getParcelableExtra("preview")
                 draftID = it.getIntExtra("draft_id", 0)
 
-                //LogUtils.e(Commons.TAG, GsonUtils.toJson(formationDatas))
-
-                formationDatas?.let { formation ->
-                    formation.photoFormation.isNullOrEmpty()?.let {
-                        if(!it){
-                            val tobi =  BitmapFactory.decodeFile(File(formation.photoFormation).absolutePath)
-                            val tobi2 =  Bitmap.createScaledBitmap(tobi, 80, 80, false)
-                            imagePhotoFormationPreview.setImageBitmap(tobi2)
-                        }
-                    }
+                //LogUtils.e(Commons.TAG, GsonUtils.toJson(visiteurFormationDatas))
 
 
-                }
 
-
-                clickSaveFormationPreview.setOnClickListener {
+                clickSaveVisitFormationPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,
                         showNo = true,
                         callback = {
-                            CcbRoomDatabase.getDatabase(this)?.formationDao()
-                                ?.insert(formationDatas!!)
+                            CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
+                                ?.insert(visiteurFormationDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "formation", this)
+                            Commons.synchronisation(type = "visiteur_formation", this)
                             Commons.showMessage(
                                 "Formation enregistrée !",
                                 this,

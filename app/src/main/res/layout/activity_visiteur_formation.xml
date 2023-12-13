@@ -157,7 +157,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag=""
+                                android:tag="suivi_formation_id"
                                 android:id="@+id/selectFormationVisitForm"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -211,6 +211,7 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="nom"
                             android:id="@+id/editNomVisitForm"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -247,6 +248,7 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="prenom"
                             android:id="@+id/editPrenomVisitForm"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -291,7 +293,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:tag=""
+                                android:tag="sexe"
                                 android:id="@+id/selectSexeVisitForm"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -322,7 +324,7 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:tag=""
+                            android:tag="telephone"
                             android:id="@+id/editTelephoneVisitForm"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -377,7 +379,7 @@
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
-                                    android:tag=""
+                                    android:tag="representer"
                                     android:id="@+id/selectReprProducteurVisitForm"
                                     android:layout_width="match_parent"
                                     android:entries="@array/YesOrNo"
@@ -520,7 +522,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag=""
+                                android:tag="producteur"
                                 android:id="@+id/selectProducteurVisitForm"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -558,6 +560,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="lien"
                                 android:id="@+id/selectLienParentVisitForm"
                                 android:spinnerMode="dialog"
                                 android:entries="@array/parentAffiliation"
@@ -583,10 +586,10 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text=""
-
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="autre_lien"
                             android:textAllCaps="true"
                             android:id="@+id/editAutreLienParentVisitForm"
                             android:layout_width="match_parent"
