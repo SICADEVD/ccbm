@@ -198,7 +198,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="localiteId"
+                                android:tag="localite"
                                 android:id="@+id/selectLocaliteEvaluationArbre"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"

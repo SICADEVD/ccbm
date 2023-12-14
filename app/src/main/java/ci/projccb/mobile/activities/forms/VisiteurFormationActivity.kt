@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.FormationPreviewActivity
 import ci.projccb.mobile.activities.infospresenters.VisiteurFormationPreviewActivity
+import ci.projccb.mobile.adapters.MultipleItemAdapter
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.FormationModel
 import ci.projccb.mobile.models.TypeMachineModel
@@ -28,14 +29,13 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.clickCancelEvaluationArbre
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.clickSaveEvaluationArbre
+import kotlinx.android.synthetic.main.activity_evaluation_arbre.recyclerArbreListEvalArbre
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.selectSectionEvaluationArbre
 import kotlinx.android.synthetic.main.activity_producteur_menage.containerAutreMachineMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectLocaliteProduMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectMachinePulMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCloseBtn
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.containerNbrTravSocieteInfosProducteur
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectTravaiSocietInfosProducteur
 import kotlinx.android.synthetic.main.activity_visiteur_formation.clickCancelVisitForm
@@ -268,7 +268,52 @@ class VisiteurFormationActivity : AppCompatActivity() {
     }
 
     private fun draftData(dataDraftedModel: DataDraftedModel) {
+        val itemModelOb = getVisiteurFormationObjet(false)
 
+        if(itemModelOb == null) return
+
+        val formationModelDraft = itemModelOb?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+
+                producteurId = producteurCommon.id.toString()
+                suivi_formation_id = formationCommon.id.toString()
+            }
+        }
+
+        Commons.showMessage(
+            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            context = this,
+            finished = false,
+            callback = {
+
+                CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
+                    DataDraftedModel(
+                        uid = dataDraftedModel?.uid ?: 0,
+                        datas = ApiClient.gson.toJson(formationModelDraft),
+                        typeDraft = "visiteur_formation",
+                        agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
+                    )
+                )
+
+                Commons.showMessage(
+                    message = "Contenu ajouté aux brouillons !",
+                    context = this,
+                    finished = true,
+                    callback = {
+                        Commons.playDraftSound(this)
+                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                    },
+                    positive = "OK",
+                    deconnec = false,
+                    false
+                )
+            },
+            positive = "OUI",
+            deconnec = false,
+            showNo = true
+        )
     }
 
     private fun setAllSelection() {

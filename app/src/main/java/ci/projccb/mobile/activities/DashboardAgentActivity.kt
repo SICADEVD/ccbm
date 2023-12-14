@@ -848,7 +848,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
 
         listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
-            countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+            countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))?.size!!,
             countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")!!,
             type = "EVALUATION_ARBRE",
             categorie = 4,

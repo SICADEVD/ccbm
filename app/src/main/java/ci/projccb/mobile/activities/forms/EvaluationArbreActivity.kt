@@ -4,17 +4,27 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextWatcher
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.infospresenters.EvaluationBesoinPreviewActivity
+import ci.projccb.mobile.activities.infospresenters.VisiteurFormationPreviewActivity
+import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.PreviewItemAdapter
 import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.EvaluationArbreDao
+import ci.projccb.mobile.models.EvaluationArbreModel
+import ci.projccb.mobile.models.VisiteurFormationModel
+import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -31,8 +41,7 @@ import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducte
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
 
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.*
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickCloseBtn
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.imageDraftBtn
+import java.util.ArrayList
 
 class EvaluationArbreActivity : AppCompatActivity() {
     val sectionCommon = CommonData();
@@ -83,6 +92,60 @@ class EvaluationArbreActivity : AppCompatActivity() {
     }
 
     private fun draftData(dataDraftedModel: DataDraftedModel) {
+
+        val itemModelOb = getEvalBesObjet(false)
+
+        if(itemModelOb == null) return
+
+        val listArbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
+        val formationModelDraft = itemModelOb?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+                producteurId = producteurCommon.id.toString()
+
+                especesarbreStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { adapterIt ->
+                    listArbre?.filter { "${it.nom}".trim().equals(adapterIt.value?.split("|")?.get(0)?.trim()) }?.let {
+                        if(it.size > 0) it[0].id else -1
+                    }
+                })
+                quantiteStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { it.value2 })
+            }
+        }
+
+        Commons.showMessage(
+            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            context = this,
+            finished = false,
+            callback = {
+
+                CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
+                    DataDraftedModel(
+                        uid = dataDraftedModel?.uid ?: 0,
+                        datas = ApiClient.gson.toJson(formationModelDraft),
+                        typeDraft = "evaluation_besoin",
+                        agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
+                    )
+                )
+
+                Commons.showMessage(
+                    message = "Contenu ajouté aux brouillons !",
+                    context = this,
+                    finished = true,
+                    callback = {
+                        Commons.playDraftSound(this)
+                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                    },
+                    positive = "OK",
+                    deconnec = false,
+                    false
+                )
+            },
+            positive = "OUI",
+            deconnec = false,
+            showNo = true
+        )
 
     }
 
@@ -153,7 +216,15 @@ class EvaluationArbreActivity : AppCompatActivity() {
             })
     }
 
-    private fun undraftedDatas(evaluationArbreDao: DataDraftedModel) {
+    private fun undraftedDatas(evaluationArbreModel: DataDraftedModel) {
+        val evaluationArbreModelDraft = evaluationArbreModel.datas?.let {
+            GsonUtils.fromJson(it, EvaluationArbreModel::class.java)
+        }
+
+        setupSectionSelection(evaluationArbreModelDraft?.section, evaluationArbreModelDraft?.localite)
+
+        val listArbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        setupSelectionArbreList(listArbre?: mutableListOf())
 
     }
 
@@ -168,6 +239,117 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     private fun collectDatas() {
 
+        val itemModelOb = getEvalBesObjet()
+
+        if(itemModelOb == null) return
+
+        val listArbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
+        val formationModel = itemModelOb?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+                producteurId = producteurCommon.id.toString()
+
+                especesarbreStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { adapterIt ->
+                    listArbre?.filter { "${it.nom}".trim().equals(adapterIt.value?.split("|")?.get(0)?.trim()) }?.let {
+                        if(it.size > 0) it[0].id else -1
+                    }
+                })
+                quantiteStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { it.value2 })
+            }
+        }
+
+        //val listArbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
+        val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
+            (recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().forEach { adapItem ->
+                //val arbreId = listArbre?.filter { it.nom+" | "+it.nomScientifique == adapItem.value }?.get(0)?.id ?: -1
+                add(Pair(adapItem.value.toString(), adapItem.value2.toString()))
+            }
+        }.map { MapEntry(it.first, it.second) }
+
+        Commons.printModelValue(formationModel as Object, mapEntries)
+
+        try {
+            val intentVisitFormationPreview = Intent(this, EvaluationBesoinPreviewActivity::class.java)
+            intentVisitFormationPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
+            intentVisitFormationPreview.putExtra("preview", formationModel)
+            intentVisitFormationPreview.putExtra("draft_id", draftedDataEval?.uid)
+            startActivity(intentVisitFormationPreview)
+        } catch (ex: Exception) {
+            ex.toString()
+        }
+
+    }
+
+    private fun getEvalBesObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<EvaluationArbreModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
+
+        var itemList = getSetupEvalBesModel(
+            EvaluationArbreModel(
+                uid = 0,
+                isSynced = false,
+                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
+                origin = "local",
+            ), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial || isMissingDial2) ){
+            Commons.showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return  itemList
+    }
+
+    fun getSetupEvalBesModel(
+        prodModel: EvaluationArbreModel,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<EvaluationArbreModel, MutableList<Pair<String, String>>> {
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_EvaluationArbre)
+        Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
+    }
+
+    fun passSetupEvalBesModel(
+        prodModel: EvaluationArbreModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_EvaluationArbre)
+        prodModel?.let {
+            Commons.setAllValueOfTextViews(mainLayout, prodModel)
+        }
     }
 
     fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {

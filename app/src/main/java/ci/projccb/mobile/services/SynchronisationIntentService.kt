@@ -54,6 +54,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
     var livraisonDao: LivraisonDao? = null
     var menageDao: ProducteurMenageDao? = null
     var formationDao: FormationDao? = null
+    var evaluationArbreDao: EvaluationArbreDao? = null
     var visiteurFormationDao: VisiteurFormationDao? = null
     var suiviParcelleDao: SuiviParcelleDao? = null
     var suiviApplicationDao: SuiviApplicationDao? = null
@@ -529,6 +530,60 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
+            syncEvaluationBesoin(evaluationArbreDao!!)
+        } else {
+            syncEvaluationBesoin(evaluationArbreDao!!)
+        }
+    }
+
+    fun syncEvaluationBesoin(evaluationArbreDao: EvaluationArbreDao) {
+        val suiviDatas = evaluationArbreDao.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
+        )
+
+        if (suiviDatas.size > 0) {
+            for (suivi in suiviDatas) {
+                try {
+                    // deserialize datas producteurs
+                    suivi.apply {
+                        especesarbreList = returnStringList(especesarbreStr)
+                        quantiteList = returnStringList(quantiteStr)
+                    }
+
+                    val clientSuivi: Call<EvaluationArbreModel> = ApiClient.apiService.synchronisationEvaluationBesoin(suivi)
+
+                    clientSuivi.enqueue(object : Callback<EvaluationArbreModel>{
+                        override fun onResponse(
+                            call: Call<EvaluationArbreModel>,
+                            response: Response<EvaluationArbreModel>
+                        ) {
+                            if(response.isSuccessful){
+                                val evaluationArbreModel: EvaluationArbreModel? = response.body()
+
+                                evaluationArbreDao.syncData(
+                                    id = evaluationArbreModel?.id!!,
+                                    synced = true,
+                                    localID = suivi.uid
+                                )
+                            }else{
+                                evaluationArbreDao.deleteByUid(
+                                    suivi.uid
+                                )
+                            }
+                        }
+
+                        override fun onFailure(call: Call<EvaluationArbreModel>, t: Throwable) {
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+                } catch (uhex: UnknownHostException) {
+                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
             syncFormations(formationDao!!)
         } else {
             syncFormations(formationDao!!)
@@ -940,6 +995,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
             menageDao = CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
             formationDao = CcbRoomDatabase.getDatabase(this)?.formationDao()
+            evaluationArbreDao = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
             visiteurFormationDao = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
             suiviParcelleDao = CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()
             livraisonDao = CcbRoomDatabase.getDatabase(this)?.livraisonDao()

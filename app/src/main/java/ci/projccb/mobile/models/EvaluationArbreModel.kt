@@ -3,6 +3,7 @@ package ci.projccb.mobile.models
 import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -32,11 +33,18 @@ data class EvaluationArbreModel(
     @SerializedName("nombre_arbre_denombre") @Expose var nombreDarbreDenombre: String? = "",
     @SerializedName("superficie") @Expose var superficie: String? = "",
     @SerializedName("nombre_arbre") @Expose var nombreArbre: String? = "",
+    @Expose var section: String? = "",
+    @Expose var localite: String? = "",
+    @Expose var especesarbreStr: String? = "",
+    @Expose var quantiteStr: String? = "",
     var origin: String? = "local",
     var isSynced: Boolean = false,
     @SerializedName("userid") @Expose var userid: Int? = 0,
-    @Expose @SerializedName("agentId") var agentId: String? = "",
+    @Expose @SerializedName("agentId") var agentId: Int? = 0,
 ): Parcelable {
+
+    @Ignore @SerializedName("especesarbre") @Expose(serialize = true, deserialize = false) var especesarbreList: MutableList<String>? = null
+    @Ignore @SerializedName("quantite") @Expose(serialize = true, deserialize = false) var quantiteList: MutableList<String>? = null
 
 }
 
@@ -48,19 +56,23 @@ interface EvaluationArbreDao {
     fun insert(evaluationArbreModel: EvaluationArbreModel)
 
     @Transaction
-    @Query("SELECT * FROM evaluation_arbre WHERE userid = :agentID")
-    fun getAll(agentID: String?): MutableList<EvaluationArbreModel>
+    @Query("SELECT * FROM evaluation_arbre WHERE agentId = :agentID")
+    fun getAll(agentID: Int?): MutableList<EvaluationArbreModel>
 
     @Transaction
-    @Query("SELECT * FROM evaluation_arbre WHERE isSynced = 0 AND userid = :agentID")
-    fun getUnSyncedAll(agentID: String?): MutableList<EvaluationArbreModel>
+    @Query("SELECT * FROM evaluation_arbre WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAll(agentID: Int?): MutableList<EvaluationArbreModel>
 
     @Transaction
     @Query("UPDATE evaluation_arbre SET id = :id, isSynced = :synced, origin = 'remote' WHERE uid = :localID")
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
-    @Query("DELETE FROM evaluation_arbre WHERE userid = :agentID")
-    fun deleteAgentDatas(agentID: String?)
+    @Query("DELETE FROM evaluation_arbre WHERE agentId = :agentID")
+    fun delete(agentID: Int?)
+
+    @Transaction
+    @Query("DELETE FROM evaluation_arbre WHERE uid = :uid")
+    fun deleteByUid(uid: Int?)
 
 }
