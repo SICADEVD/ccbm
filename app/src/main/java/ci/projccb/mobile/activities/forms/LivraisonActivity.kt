@@ -54,6 +54,8 @@ class LivraisonActivity : AppCompatActivity() {
 
 
     private val programmeCommon: CommonData = CommonData()
+    private val senderStaffCommon: CommonData = CommonData()
+    private val magasinSectionCommon: CommonData = CommonData()
     private var livraisonDrafted: LivraisonModel? = null
     private var isFirstDelegue: Boolean = true
     private var livraisonSousModelAdapter: LivraisonSousModAdapter? = null
@@ -106,38 +108,58 @@ class LivraisonActivity : AppCompatActivity() {
 
     fun setupMagasinSelection(concernes: String) {
         magasinDao = CcbRoomDatabase.getDatabase(applicationContext)?.magasinSectionDao()
-        magasinsList = magasinDao?.getConcerneeMagasins(concernes.toInt())
+        val magasinsList = magasinDao?.getMagasinsSections()
 
-        val magasinAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, magasinsList!!)
-        selectMagasinSectionLivraison!!.adapter = magasinAdapter
-        selectMagasinSectionLivraison.setTitle("Choisir le magasin")
-        selectMagasinSectionLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val magasin = magasinsList!![position]
-                magasinNom = magasin.nomMagasinsections!!
-                magasinId = magasin.id.toString()
+//        val magasinAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, magasinsList!!)
+//        selectMagasinSectionLivraison!!.adapter = magasinAdapter
+//        selectMagasinSectionLivraison.setTitle("Choisir le magasin")
+//        selectMagasinSectionLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val magasin = magasinsList!![position]
+//                magasinNom = magasin.nomMagasinsections!!
+//                magasinId = magasin.id.toString()
+//
+//                editNomDestinataire.setText("${magasin.nomMagasinsections}")
+//                editContactDestinataire.setText("${magasin.phone}")
+//                editEmailDestinataire.setText("${magasin.email}")
+//                editAdressDestinataire.setText("${magasin.adresse?:"Inconnu"}")
+//
+//                LogUtils.e(Commons.TAG, "ID -> $magasinId")
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//
+//        var unDraftedCounter = 0
+//        if(magasinsList != null){
+//            magasinsList!!.forEach { magasin ->
+//                if(livraisonDrafted?.magasinSectionId.toString().equals(magasin.id)){
+//                    selectMagasinSectionLivraison.setSelection( unDraftedCounter, true)
+//                }
+//                unDraftedCounter++
+//            }
+//        }
+
+        Commons.setListenerForSpinner(this,
+            "Choisir le magasin","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectAnimauRencontSParcell,
+            listIem = magasinsList?.map { it.nomMagasinsections }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val magasin = magasinsList!![it]
+                magasinSectionCommon.nom = magasin.nomMagasinsections!!
+                magasinSectionCommon.id = magasin.id
 
                 editNomDestinataire.setText("${magasin.nomMagasinsections}")
                 editContactDestinataire.setText("${magasin.phone}")
                 editEmailDestinataire.setText("${magasin.email}")
                 editAdressDestinataire.setText("${magasin.adresse?:"Inconnu"}")
 
-                LogUtils.e(Commons.TAG, "ID -> $magasinId")
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-
-        var unDraftedCounter = 0
-        if(magasinsList != null){
-            magasinsList!!.forEach { magasin ->
-                if(livraisonDrafted?.magasinSectionId.toString().equals(magasin.id)){
-                    selectMagasinSectionLivraison.setSelection( unDraftedCounter, true)
-                }
-                unDraftedCounter++
-            }
-        }
+            },
+            onSelected = { itemId, visibility ->
+            })
     }
 
 
@@ -262,27 +284,29 @@ class LivraisonActivity : AppCompatActivity() {
 
     fun setupStaffSelection(){
 
-        staffList = CcbRoomDatabase.getDatabase(applicationContext)?.concernesDao()
-            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val concernessDatas: MutableList<CommonData> = mutableListOf()
-        staffList?.map {
-            CommonData(id = it.id, nom = "${it.firstname} ${it.lastname}")
-        }?.let {
-            concernessDatas.addAll(it)
-        }
+        val staffList = CcbRoomDatabase.getDatabase(applicationContext)?.delegueDao()
+            ?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        val staffAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, concernessDatas!!)
-        selectStaffList.adapter = staffAdapter
+//        val concernessDatas: MutableList<CommonData> = mutableListOf()
+//        staffList?.map {
+//            CommonData(id = it.id, nom = "${it.firstname} ${it.lastname}")
+//        }?.let {
+//            concernessDatas.addAll(it)
+//        }
 
-        selectStaffList.setTitle("Choix du délégué")
-        selectStaffList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val staff = staffList!![position]
-                staffNomPrenoms = "${staff.firstname} ${staff.lastname}"
-                staffId = staff.id!!.toString()
+        Commons.setListenerForSpinner(this,
+            "Choix du délégué","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectStaffList,
+            listIem = staffList?.map {
+                "${it.nom}"
+            }?.toList() ?: listOf(),
+            onChanged = {
+                val staff = staffList!![it]
+                senderStaffCommon.nom = "${staff.nom}"
+                senderStaffCommon.id = staff.id
 
                 if(!isFirstDelegue){
-                    editNomExpediteur.setText("${staff.firstname} ${staff.lastname}")
+                    editNomExpediteur.setText("${staff.nom}")
                     editContactExpediteur.setText("${staff.mobile}")
                     editEmailExpediteur.setText("${staff.email}")
                     editAdressExpediteur.setText("${staff.adresse?:"Inconnu"}")
@@ -290,11 +314,11 @@ class LivraisonActivity : AppCompatActivity() {
                 isFirstDelegue = false
 
                 setupMagasinSelection(staffId)
-            }
 
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+            },
+            onSelected = { itemId, visibility ->
+
+            })
 
     }
 
@@ -426,20 +450,20 @@ class LivraisonActivity : AppCompatActivity() {
         //setupCampagneSelection()
         //setupTypeProduitSelection()
         //For RecycleView
-        Commons.setListenerForSpinner(this,
-            "Quel est le type de cacao ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectTypeLivraison,
-            itemChanged = arrayListOf(Pair(1, "Certifie")),
-            listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-            },
-            onSelected = { itemId, visibility ->
-                if (itemId == 1) {
-                    containerProgramLivraison.visibility = visibility
-                }
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Quel est le type de cacao ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            spinner = selectTypeLivraison,
+//            itemChanged = arrayListOf(Pair(1, "Certifie")),
+//            listIem = resources.getStringArray(R.array.YesOrNo)
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                if (itemId == 1) {
+//                    containerProgramLivraison.visibility = visibility
+//                }
+//            })
 
         setupLivraisonSousModRv()
     }
@@ -491,11 +515,9 @@ class LivraisonActivity : AppCompatActivity() {
 
         val livraisonModel = itemModelOb?.first.apply {
             this?.apply {
-                cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString()
-                delegueId = staffId
-                producteursId = producteurId
-                senderStaff = staffId
-                magasinSectionId = magasinId.toString()
+                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                senderStaff = senderStaffCommon.id.toString()
+                magasinSection = magasinSectionCommon.id.toString()
             }
         }
 

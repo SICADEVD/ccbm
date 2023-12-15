@@ -662,6 +662,9 @@ class ConfigurationActivity : AppCompatActivity() {
                             id = it.id,
                             uid = 0,
                             nom = "${it.firstname} ${it.lastname}",
+                            mobile = it.mobile,
+                            adresse = it.adresse,
+                            email = it.email,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 

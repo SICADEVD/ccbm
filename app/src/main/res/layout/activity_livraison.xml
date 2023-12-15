@@ -105,7 +105,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_10sdp"
                         android:textColor="@color/text_color_white"
-                        android:text="Information Expéditeur">
+                        android:text="Information Expéditeur(Délégué)">
 
                     </TextView>
 
@@ -332,7 +332,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_color_white"
-                        android:text="Information Destinataire">
+                        android:text="Information Destinataire\n(Magasin de Section)">
 
                     </TextView>
 
@@ -595,6 +595,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/_10sdp"
                             android:text="Section *"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
@@ -632,7 +633,7 @@ android:textColor="@color/text_color_white"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Localite *"
                             android:textColor="@color/text_color_white"
-
+                            android:textSize="@dimen/_10sdp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -649,40 +650,6 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Choix des producteurs"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectProducLivraison"
-                                />
 
                         </LinearLayout>
 
@@ -726,91 +693,12 @@ android:textColor="@color/text_color_white"
 
                     </TextView>
 
-                     <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
-                            android:layout_height="wrap_content"
-
-                            android:textStyle="bold"
-                            android:text="Choix du Livraison"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp"/>
-
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectLivraisonList"
-                                android:spinnerMode="dialog"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_35sdp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:text="Quel est le type de cacao ?"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp"/>
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectTypeLivraison"
-                                android:entries="@array/type_produit"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_35sdp"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:id="@+id/containerProgramLivraison"
-                        android:visibility="gone"
-                        tools:visibility="visible"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -821,29 +709,143 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner un programme"
-
+                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/_10sdp"
+                            android:text="Choix des producteurs"
                             android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background">
 
                             <Space
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag=""
-                                android:id="@+id/selectProgramLivraison"
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
+                                android:id="@+id/selectProducLivraison"
+                                />
 
                         </LinearLayout>
 
                     </LinearLayout>
+
+<!--                    <LinearLayout-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:textSize="@dimen/_10sdp"-->
+<!--                            android:layout_height="wrap_content"-->
+
+<!--                            android:textStyle="bold"-->
+<!--                            android:text="Choix du Livraison"/>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp"/>-->
+
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:id="@+id/selectLivraisonList"-->
+<!--                                android:spinnerMode="dialog"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_35sdp"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:textSize="@dimen/_10sdp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:text="Quel est le type de cacao ?"/>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp"/>-->
+
+<!--                            <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                                android:id="@+id/selectTypeLivraison"-->
+<!--                                android:entries="@array/type_produit"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_35sdp"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/containerProgramLivraison"-->
+<!--                        android:visibility="gone"-->
+<!--                        tools:visibility="visible"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Selectionner un programme"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
+
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:tag=""-->
+<!--                                android:id="@+id/selectProgramLivraison"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:spinnerMode="dialog" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -861,7 +863,6 @@ android:textColor="@color/text_color_white"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Choix de la parcelle"/>
 
@@ -900,9 +901,8 @@ android:textColor="@color/text_color_white"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
-                            android:text="Choix du type de parcelle"/>
+                            android:text="Choix du type de produit"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -924,42 +924,42 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                    <LinearLayout-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:layout_height="wrap_content"
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:layout_height="wrap_content"-->
 
-                            android:textStyle="bold"
-                            android:textSize="@dimen/_10sdp"
-                            android:text="Numéro de scellé *"/>
+<!--                            android:textStyle="bold"-->
+<!--                            android:textSize="@dimen/_10sdp"-->
+<!--                            android:text="Numéro de scellé *"/>-->
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/editNumScelle"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:imeOptions="actionDone"
-                            tools:text="Numéro"
-                            android:ellipsize="end"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
-                            android:layout_width="match_parent"
-                            android:inputType="textCapCharacters|textNoSuggestions"
-                            android:layout_weight="6.5"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background"/>
+<!--                        <androidx.appcompat.widget.AppCompatEditText-->
+<!--                            android:id="@+id/editNumScelle"-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingEnd="@dimen/_10sdp"-->
+<!--                            android:imeOptions="actionDone"-->
+<!--                            tools:text="Numéro"-->
+<!--                            android:ellipsize="end"-->
+<!--                            android:textAllCaps="true"-->
+<!--                            android:textSize="@dimen/_13ssp"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                            android:layout_weight="6.5"-->
+<!--                            android:layout_height="@dimen/_37sdp"-->
+<!--                            android:background="@drawable/rounded_background"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -1183,46 +1183,46 @@ android:textColor="@color/text_color_white"
 
             </LinearLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp" />
+<!--            <Space-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_10sdp" />-->
 
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<!--            <LinearLayout-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
 
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:paddingLeft="@dimen/_12sdp"
-                    android:layout_height="wrap_content"
-                    
-                    android:textStyle="bold"
-                    android:textSize="@dimen/_10sdp"
-                    android:text="Status de paiement*"/>
+<!--                <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:paddingLeft="@dimen/_12sdp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    -->
+<!--                    android:textStyle="bold"-->
+<!--                    android:textSize="@dimen/_10sdp"-->
+<!--                    android:text="Status de paiement*"/>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/rounded_background">-->
 
-                    <Space
-                        android:layout_width="@dimen/_5sdp"
-                        android:layout_height="@dimen/_10sdp"/>
+<!--                    <Space-->
+<!--                        android:layout_width="@dimen/_5sdp"-->
+<!--                        android:layout_height="@dimen/_10sdp"/>-->
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/selectStatuPaiementList"
-                        android:spinnerMode="dialog"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
-                        android:entries="@array/statuPaiement"/>
+<!--                    <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                        android:id="@+id/selectStatuPaiementList"-->
+<!--                        android:spinnerMode="dialog"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_35sdp"-->
+<!--                        android:entries="@array/statuPaiement"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <Space
                 android:layout_width="match_parent"
@@ -1240,8 +1240,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
                     android:textSize="@dimen/_10sdp"
-                    android:text="Date estimée de livraison"
-                    
+                    android:text="Date de livraison"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -1294,7 +1293,6 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
                     android:textColor="@color/text_color_white"
                     android:text="ANNULER"
                     app:cornerRadius="50dp"
@@ -1311,7 +1309,6 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
                     app:iconTint="@color/white_color"
                     android:text="VÉRIFIER"
                     app:cornerRadius="50dp"

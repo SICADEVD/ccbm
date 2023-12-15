@@ -16,6 +16,9 @@ data class DelegueModel (
     @PrimaryKey(autoGenerate = true) val uid: Int,
     @Expose val id: Int?,
     @Expose val nom: String?,
+    @Expose val mobile: String? = null,
+    @Expose val adresse: String? = null,
+    @Expose val email: String? = null,
     @Expose val agentId: String?
 ) {
     override fun toString(): String {
