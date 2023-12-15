@@ -49,12 +49,11 @@ interface ApiService {
     fun synchronisationInfosProducteur(@Body infosProducteurDTO: InfosProducteurDTO): Call<InfosProducteurDTO>
     // endregion
 
-
-
     @POST("getmagasinsection")
     fun getMagasins(@Body commonData: CommonData): Call<MutableList<MagasinModel>>
 
-
+    @POST("getmagasincentraux")
+    fun getMagasinsCentraux(@Body commonData: CommonData): Call<MutableList<MagasinModel>>
 
     // region SERVICE WITH COROUTINES
 

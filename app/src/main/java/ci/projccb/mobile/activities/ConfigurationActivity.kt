@@ -1500,24 +1500,38 @@ class ConfigurationActivity : AppCompatActivity() {
                     val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
 
                     datasMagasinList?.map {
-                        val dataMagasinModel = MagasinModel(
-                            codeMagasinsections = it.codeMagasinsections,
-                            nomMagasinsections = it.nomMagasinsections,
-                            staffId = it.staffId,
-                            phone = it.phone,
-                            email = it.email,
-                            adresse = it.adresse,
-                            status = it.status,
-                            id = it.id,
-                            uid = 0
-                        )
+//                        val dataMagasinModel = MagasinModel(
+//                            codeMagasinsections = it.codeMagasinsections,
+//                            nomMagasinsections = it.nomMagasinsections,
+//                            staffId = it.staffId,
+//                            phone = it.phone,
+//                            email = it.email,
+//                            adresse = it.adresse,
+//                            status = it.status,
+//                            id = it.id,
+//                            uid = 0
+//                        )
 
-                        magasinDao?.insert(dataMagasinModel)
+                        magasinDao?.insert(it)
                     }
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+
+                try {
+                    val clientMagasinData = ApiClient.apiService.getMagasinsCentraux(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
+                    val responseMagasinData: Response<MutableList<MagasinModel>> = clientMagasinData.execute()
+                    val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
+
+                    datasMagasinList?.map {
+                        magasinDao?.insert(it)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
@@ -1526,7 +1540,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (oneIssue) {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
-                configCompletedOrError("Magasins de section")
+                configCompletedOrError("Magasins de section et centraux")
                 getThemesFormationSelection()
             }
         }
