@@ -15,7 +15,6 @@ import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_infos_producteur_preview.recyclerInfoPrev
 import kotlinx.android.synthetic.main.activity_livraison_preview.*
 
 class LivraisonPreviewActivity : AppCompatActivity() {
@@ -51,8 +50,8 @@ class LivraisonPreviewActivity : AppCompatActivity() {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoProdItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                recyclerInfoLivraison.adapter = rvPrevAdapter
+                recyclerInfoLivraison.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                 rvPrevAdapter.notifyDataSetChanged()
 
                 //livraisonDatas.let { livraison ->

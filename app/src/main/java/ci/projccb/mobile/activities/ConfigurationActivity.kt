@@ -53,7 +53,8 @@ class ConfigurationActivity : AppCompatActivity() {
     var applicateurDao: ApplicateurDao? = null
     var questionnaireDao: QuestionnaireDao? = null
     var notationDao: NotationDao? = null
-    var magasinDao: MagasinDao? = null
+    var magasinDao: MagasinCentralDao? = null
+    var magasinSectionDao: MagasinDao? = null
     var menageDao: ProducteurMenageDao? = null
     var livraisonDao: LivraisonDao? = null
     var formationDao: FormationDao? = null
@@ -1484,7 +1485,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Notations, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Notations")
-                getMagasinsSection()
+                getMagasinsCentral()
             }
 
 
@@ -1492,13 +1493,14 @@ class ConfigurationActivity : AppCompatActivity() {
     }
 
 
-    suspend fun getMagasinsSection() {
+    suspend fun getMagasinsCentral() {
         withContext(IO) {
             val magasinsFetch = async {
                 magasinDao?.deleteAll()
+                var magasinList = mutableListOf<MagasinModel>()
 
                 try {
-                    val clientMagasinData = ApiClient.apiService.getMagasins(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
+                    val clientMagasinData = ApiClient.apiService.getMagasinsCentraux(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
                     val responseMagasinData: Response<MutableList<MagasinModel>> = clientMagasinData.execute()
                     val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
 
@@ -1514,22 +1516,42 @@ class ConfigurationActivity : AppCompatActivity() {
 //                            id = it.id,
 //                            uid = 0
 //                        )
-
                         magasinDao?.insert(it)
+                        //magasinDao?.insert(it)
                     }
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
                 }
 
+            }
+
+            magasinsFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Magasins centraux")
+                getMagasinsSection()
+            }
+        }
+    }
+
+    suspend fun getMagasinsSection() {
+        withContext(IO) {
+            val magasinsFetch = async {
+                magasinSectionDao?.deleteAll()
+                var magasinList = mutableListOf<MagasinModel>()
+
                 try {
-                    val clientMagasinData = ApiClient.apiService.getMagasinsCentraux(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
+                    val clientMagasinData = ApiClient.apiService.getMagasins(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
                     val responseMagasinData: Response<MutableList<MagasinModel>> = clientMagasinData.execute()
                     val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
 
                     datasMagasinList?.map {
-                        magasinDao?.insert(it)
+                        magasinSectionDao?.insert(it)
+                        //magasinDao?.insert(it)
                     }
                 } catch (ex: Exception) {
                     oneIssue = true
@@ -1543,7 +1565,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (oneIssue) {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
-                configCompletedOrError("Magasins de section et centraux")
+                configCompletedOrError("Magasins sections")
                 getThemesFormationSelection()
             }
         }
@@ -2535,7 +2557,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 livraisonDatas?.map { livraisonPojo ->
                     livraisonPojo.dateLivre = Commons.convertDate(livraisonPojo.dateLivre, true)
 
-                    val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraison(livraisonModel = livraisonPojo)
+                    val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraisonSection(livraisonModel = livraisonPojo)
 
                     val responseLivraison: Response<LivraisonModel> = clientLivraison.execute()
                     val livraisonSynced: LivraisonModel? = responseLivraison.body()
@@ -2616,7 +2638,8 @@ class ConfigurationActivity : AppCompatActivity() {
         applicateurDao = database?.applicateurDao()
         notationDao = database?.notationDao()
         questionnaireDao = database?.questionnaireDao()
-        magasinDao = database?.magasinSectionDao()
+        magasinDao = database?.magasinCentralDao()
+        magasinSectionDao = database?.magasinSectionDao()
         typeFormationDao = database?.typeFormationDao()
         lienParenteDao = database?.lienParenteDao()
         paiementMobileDao = database?.paiementMobileDao()

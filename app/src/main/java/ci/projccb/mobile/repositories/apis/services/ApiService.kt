@@ -39,8 +39,8 @@ interface ApiService {
     @POST("apiagroevaluation")
     fun synchronisationEvaluationBesoin(@Body evaluationArbreModel: EvaluationArbreModel): Call<EvaluationArbreModel>
 
-    @POST("apilivraison")
-    fun synchronisationLivraison(@Body livraisonModel: LivraisonModel): Call<LivraisonModel>
+    @POST("apilivraisonmagasinsection")
+    fun synchronisationLivraisonSection(@Body livraisonModel: LivraisonModel): Call<LivraisonModel>
 
     @POST("apievaluation")
     fun synchronisationInspection(@Body questionDTO: InspectionDTO): Call<InspectionDTO>

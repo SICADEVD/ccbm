@@ -45,6 +45,7 @@ object Constants {
     const val TABLE_LOCALITES                   =                   "localite"
     const val TABLE_NOTATION                    =                   "notation"
     const val TABLE_MAGASIN                     =                   "magasin"
+    const val TABLE_MAGASIN_CENTRAL                     =                   "magasin_central"
     const val TABLE_QUESTIONAIRES               =                   "questionnaire"
     const val TABLE_TYPES_MACHINES              =                   "type_machine"
     const val TABLE_TYPES_PIECES                =                   "type_piece"

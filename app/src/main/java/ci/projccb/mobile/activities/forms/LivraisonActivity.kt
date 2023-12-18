@@ -37,12 +37,18 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_livraison.*
+import kotlinx.android.synthetic.main.activity_parcelle.selectLocaliteParcelle
+import kotlinx.android.synthetic.main.activity_parcelle.selectSectionParcelle
 import kotlinx.android.synthetic.main.activity_producteur.selectProgramProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.linearAnimauxContainerSuiviParcelle
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAnimauRencontSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectLocaliteSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectParcelleSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectProducteurSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectSectionSParcelle
 import java.util.*
 
 class LivraisonActivity : AppCompatActivity() {
@@ -53,7 +59,10 @@ class LivraisonActivity : AppCompatActivity() {
     }
 
 
-    private val programmeCommon: CommonData = CommonData()
+    private val parcelleCommon: CommonData = CommonData()
+    private val producteurCommon: CommonData = CommonData()
+    private val sectionCommon: CommonData = CommonData()
+    private val localiteCommon: CommonData = CommonData()
     private val senderStaffCommon: CommonData = CommonData()
     private val magasinSectionCommon: CommonData = CommonData()
     private var livraisonDrafted: LivraisonModel? = null
@@ -76,7 +85,6 @@ class LivraisonActivity : AppCompatActivity() {
     var magasinDao: MagasinDao? = null
 
     var localitesList: MutableList<LocaliteModel>? = null
-    var magasinsList: MutableList<MagasinModel>? = mutableListOf()
     //var deleguesList: MutableList<DelegueModel>? = null
     var cponcerneeList: MutableList<ConcernesModel>? = null
     var producteursList: MutableList<ProducteurModel>? = null
@@ -106,44 +114,15 @@ class LivraisonActivity : AppCompatActivity() {
     var draftedDataLivraison: DataDraftedModel? = null
 
 
-    fun setupMagasinSelection(concernes: String) {
-        magasinDao = CcbRoomDatabase.getDatabase(applicationContext)?.magasinSectionDao()
-        val magasinsList = magasinDao?.getMagasinsSections()
-
-//        val magasinAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, magasinsList!!)
-//        selectMagasinSectionLivraison!!.adapter = magasinAdapter
-//        selectMagasinSectionLivraison.setTitle("Choisir le magasin")
-//        selectMagasinSectionLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-//                val magasin = magasinsList!![position]
-//                magasinNom = magasin.nomMagasinsections!!
-//                magasinId = magasin.id.toString()
-//
-//                editNomDestinataire.setText("${magasin.nomMagasinsections}")
-//                editContactDestinataire.setText("${magasin.phone}")
-//                editEmailDestinataire.setText("${magasin.email}")
-//                editAdressDestinataire.setText("${magasin.adresse?:"Inconnu"}")
-//
-//                LogUtils.e(Commons.TAG, "ID -> $magasinId")
-//            }
-//
-//            override fun onNothingSelected(arg0: AdapterView<*>) {
-//            }
-//        }
-//
-//        var unDraftedCounter = 0
-//        if(magasinsList != null){
-//            magasinsList!!.forEach { magasin ->
-//                if(livraisonDrafted?.magasinSectionId.toString().equals(magasin.id)){
-//                    selectMagasinSectionLivraison.setSelection( unDraftedCounter, true)
-//                }
-//                unDraftedCounter++
-//            }
-//        }
+    fun setupMagasinSelection(concernes: String, currVal: String? = null) {
+        magasinDao = CcbRoomDatabase.getDatabase(this)?.magasinSectionDao()
+        val magasinsList = magasinDao?.getAll()
+        LogUtils.json(magasinsList)
 
         Commons.setListenerForSpinner(this,
             "Choisir le magasin","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-            spinner = selectAnimauRencontSParcell,
+            spinner = selectMagasinSectionLivraison,
+            currentVal = magasinsList?.filter { it.id.toString() == currVal }?.first().let { "${it?.nomMagasinsections}" },
             listIem = magasinsList?.map { it.nomMagasinsections }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -151,11 +130,18 @@ class LivraisonActivity : AppCompatActivity() {
                 val magasin = magasinsList!![it]
                 magasinSectionCommon.nom = magasin.nomMagasinsections!!
                 magasinSectionCommon.id = magasin.id
-
-                editNomDestinataire.setText("${magasin.nomMagasinsections}")
-                editContactDestinataire.setText("${magasin.phone}")
-                editEmailDestinataire.setText("${magasin.email}")
-                editAdressDestinataire.setText("${magasin.adresse?:"Inconnu"}")
+                LogUtils.d(magasin.staffId.toString())
+                CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId!!)?.let { staff ->
+                    editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
+                    editContactDestinataire.setText("${staff.mobile}")
+                    editEmailDestinataire.setText("${staff.email}")
+                    editAdressDestinataire.setText("${staff.adresse?:"Inconnu"}")
+                }
+//
+//                editNomDestinataire.setText("${magasin.nomMagasinsections}")
+//                editContactDestinataire.setText("${magasin.phone}")
+//                editEmailDestinataire.setText("${magasin.email}")
+//                editAdressDestinataire.setText("${magasin.adresse?:"Inconnu"}")
 
             },
             onSelected = { itemId, visibility ->
@@ -282,7 +268,7 @@ class LivraisonActivity : AppCompatActivity() {
 //        }
     }
 
-    fun setupStaffSelection(){
+    fun setupStaffSelection(currVal: String? = null, currVal2: String? = null){
 
         val staffList = CcbRoomDatabase.getDatabase(applicationContext)?.delegueDao()
             ?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -297,6 +283,7 @@ class LivraisonActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Choix du délégué","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectStaffList,
+            currentVal = staffList?.filter { it.id.toString() == currVal }?.first().let { "${it?.nom}" },
             listIem = staffList?.map {
                 "${it.nom}"
             }?.toList() ?: listOf(),
@@ -305,15 +292,14 @@ class LivraisonActivity : AppCompatActivity() {
                 senderStaffCommon.nom = "${staff.nom}"
                 senderStaffCommon.id = staff.id
 
-                if(!isFirstDelegue){
-                    editNomExpediteur.setText("${staff.nom}")
-                    editContactExpediteur.setText("${staff.mobile}")
-                    editEmailExpediteur.setText("${staff.email}")
-                    editAdressExpediteur.setText("${staff.adresse?:"Inconnu"}")
-                }
-                isFirstDelegue = false
+                //if(!isFirstDelegue){
+                editNomExpediteur.setText("${staff.nom}")
+                editContactExpediteur.setText("${staff.mobile}")
+                editEmailExpediteur.setText("${staff.email}")
+                editAdressExpediteur.setText("${staff.adresse?:"Inconnu"}")
+                //rstDelegue = false
 
-                setupMagasinSelection(staffId)
+                setupMagasinSelection(staffId, currVal2)
 
             },
             onSelected = { itemId, visibility ->
@@ -368,42 +354,42 @@ class LivraisonActivity : AppCompatActivity() {
     }
 
     fun setListener(){
-        editQuantity.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val valueNum = s.toString()
-                val result = (valueNum.toInt())*CURRENT_PRICE_PER_QUANTITY
-                editResultatQuantity.setText("${result.toString()}")
-                currentResult = result
-            }
-        })
-
-        editReduction.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val valueNum2 = s.toString()
-                if (!editResultatQuantity.text.isNullOrBlank() && !valueNum2.isNullOrBlank()){
-                    LogUtils.d("Cureent float : "+ (valueNum2.toDouble()/100).toDouble())
-                    var sousTotal = 0; var total = 0
-                    livraisonSousModelList.map {
-                        total += it.amountNb ?: 0
-                    }
-                    val reduce = (total) - (total*(valueNum2.toDouble()/100).toDouble())
-                    tvSousTotal.text = "${reduce}"
-                    tvTotalReduce.setText("${total}")
-                }
-            }
-        })
+//        editQuantity.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                val valueNum = s.toString()
+//                val result = (valueNum.toInt())*CURRENT_PRICE_PER_QUANTITY
+//                editResultatQuantity.setText("${result.toString()}")
+//                currentResult = result
+//            }
+//        })
+//
+//        editReduction.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//
+//            override fun afterTextChanged(s: Editable?) {
+//                val valueNum2 = s.toString()
+//                if (!editResultatQuantity.text.isNullOrBlank() && !valueNum2.isNullOrBlank()){
+//                    LogUtils.d("Cureent float : "+ (valueNum2.toDouble()/100).toDouble())
+//                    var sousTotal = 0; var total = 0
+//                    livraisonSousModelList.map {
+//                        total += it.amountNb ?: 0
+//                    }
+//                    val reduce = (total) - (total*(valueNum2.toDouble()/100).toDouble())
+//                    tvSousTotal.text = "${reduce}"
+//                    tvTotalReduce.setText("${total}")
+//                }
+//            }
+//        })
     }
 
     private fun setProgrammeSpinner(currVal2:String? = null) {
@@ -420,32 +406,182 @@ class LivraisonActivity : AppCompatActivity() {
             }
         }
 
+//        Commons.setListenerForSpinner(this,
+//            "Choix du programme !",
+//            "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
+//            isEmpty = if (programmeListi?.size!! > 0) false else true,
+//            currentVal = libItem,
+//            spinner = selectProgramLivraison,
+//            listIem = programmeListi?.map { it.libelle }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                val programme = programmeListi!![it]
+//                programmeCommon.nom = programme.libelle!!
+//                programmeCommon.id = programme.id!!
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//                //if(itemId == 1) containerAutreProgramProducteur.visibility = visibility
+//            })
+
+    }
+
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
         Commons.setListenerForSpinner(this,
-            "Choix du programme !",
-            "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
-            isEmpty = if (programmeListi?.size!! > 0) false else true,
-            currentVal = libItem,
-            spinner = selectProgramLivraison,
-            listIem = programmeListi?.map { it.libelle }
+            "Choix de la section !",
+            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = libItem ,
+            spinner = selectSectionLivraison,
+            listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
 
-                val programme = programmeListi!![it]
-                programmeCommon.nom = programme.libelle!!
-                programmeCommon.id = programme.id!!
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3)
 
             },
             onSelected = { itemId, visibility ->
-                //if(itemId == 1) containerAutreProgramProducteur.visibility = visibility
+
             })
 
     }
 
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la localité !",
+            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectLocaliteLivraison,
+            listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    setupProducteurSelection(localiteCommon.id!!, currVal2, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
+        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+            ?.getProducteursByLocalite(localite = id.toString())
+
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix du producteur !",
+            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (producteursList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectProducLivraison,
+            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    producteurCommon.id = producteur.id!!
+
+                    setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
+        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+        LogUtils.json(parcellesList)
+        var libItem: String? = null
+        currVal3?.let { idc ->
+            parcellesList?.forEach {
+                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la parcelle !",
+            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (parcellesList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectParcelleLivraison,
+            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                parcellesList?.let { list ->
+                    var parcelle = list.get(it)
+                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+                    parcelleCommon.id = parcelle.id!!
+
+                    //setupParcelleSelection(parcelleCommon.id, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+    }
+
     fun setAllListener() {
-        setupLocaliteSelection()
+        setupSectionSelection()
+
         setupStaffSelection()
 
-        setProgrammeSpinner()
+        //setProgrammeSpinner()
         //setupConcerneeSelection()
         //setupCampagneSelection()
         //setupTypeProduitSelection()
@@ -470,7 +606,7 @@ class LivraisonActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-        if (staffId.isBlank()) {
+        if (senderStaffCommon.id.toString().isNullOrEmpty()) {
             showMessage(
                 "Aucun délégué ou staff selectionné !",
                 this,
@@ -483,7 +619,7 @@ class LivraisonActivity : AppCompatActivity() {
             return
         }
 
-        if (magasinId.isBlank()) {
+        if (magasinSectionCommon.id.toString().isNullOrEmpty()) {
             showMessage(
                 "Aucun magasin selectionné !",
                 this,
@@ -518,14 +654,18 @@ class LivraisonActivity : AppCompatActivity() {
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 senderStaff = senderStaffCommon.id.toString()
                 magasinSection = magasinSectionCommon.id.toString()
+
+                itemsStringify = GsonUtils.toJson(livraisonSousModelList)
             }
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 //            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            var valueMod = ""
             livraisonSousModelList.forEach {
-                this.add(Pair(it.parcelleIdName, "${it.typeName} | ${it.quantityNb} | ${it.amountNb} | ${it.scelleList.toModifString()}") as Pair<String, String>)
+                valueMod += "${it.producteurIdName} | ${it.parcelleIdName} | ${it.typeName} | ${it.quantityNb}\n"
             }
+            this.add(Pair("Les produits à livrés", valueMod) as Pair<String, String>)
         }.map { MapEntry(it.first, it.second) }
 
        try {
@@ -702,11 +842,11 @@ class LivraisonActivity : AppCompatActivity() {
 
         val livraisonModelDraft = itemModelOb?.first.apply {
             this?.apply {
-                cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString()
-                delegueId = staffId
-                producteursId = producteurId
-                senderStaff = staffId
-                magasinSectionId = magasinId.toString()
+                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+                senderStaff = senderStaffCommon.id.toString()
+                magasinSection = magasinSectionCommon.id.toString()
+
+                itemsStringify = GsonUtils.toJson(livraisonSousModelList)
             }
         }
 
@@ -748,65 +888,62 @@ class LivraisonActivity : AppCompatActivity() {
         livraisonDrafted = ApiClient.gson.fromJson(draftedData.datas, LivraisonModel::class.java)
         var countero = 0;
         livraisonDrafted?.let {
-            staffList!!.forEach { delegue ->
-                if(delegue.id.toString().equals(it?.delegueId)){
-                    selectStaffList.setSelection(countero , true)
+//            staffList!!.forEach { delegue ->
+//                if(delegue.id.toString().equals(it?.delegueId)){
+//                    selectStaffList.setSelection(countero , true)
+//
+//                    editNomExpediteur.setText("${it?.senderName}")
+//                    editContactExpediteur.setText("${it?.senderPhone}")
+//                    editEmailExpediteur.setText("${it?.senderEmail}")
+//                    editAdressExpediteur.setText("${it?.senderAddress ?:"Inconnu"}")
+//
+//                    setupMagasinSelection(it?.delegueId.toString())
+//                }
+//                countero++
+//            }
+//
+//            countero = 0
+//            val listProdId: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelProdIdsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            val listParce: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelParcellesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            val listParcelId: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelParcelleIdsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            val listType: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelTypesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            val listQuantity: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelQuantitysStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            val listAmount: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelAmountsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            val listScelle: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelScellesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
+//            (ApiClient.gson.fromJson(it.livraisonSousModelProdNamesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type) as MutableList<String>).forEach {
+//
+//                livraisonSousModelList.add(
+//                    LivraisonSousModel(
+//                        producteurId = listProdId.get(countero)?:"",
+//                        producteurIdName = it,
+//                        parcelleId = listParcelId.get(countero)?:"",
+//                        parcelleIdName = listParce.get(countero)?:"",
+//                        typeName = listType.get(countero)?:"",
+//                        quantityNb = listQuantity.get(countero).toInt(),
+//                        amountNb = listAmount.get(countero).toInt(),
+//                        numScelle = listScelle.get(countero)?:""
+//                    )
+//                )
+//                countero++
+//            }
+            setupSectionSelection()
 
-                    editNomExpediteur.setText("${it?.senderName}")
-                    editContactExpediteur.setText("${it?.senderPhone}")
-                    editEmailExpediteur.setText("${it?.senderEmail}")
-                    editAdressExpediteur.setText("${it?.senderAddress ?:"Inconnu"}")
+            setupStaffSelection(livraisonDrafted?.senderStaff, livraisonDrafted?.magasinSection)
 
-                    setupMagasinSelection(it?.delegueId.toString())
-                }
-                countero++
-            }
+            setupLivraisonSousModRv()
 
-            countero = 0
-            val listProdId: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelProdIdsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            val listParce: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelParcellesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            val listParcelId: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelParcelleIdsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            val listType: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelTypesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            val listQuantity: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelQuantitysStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            val listAmount: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelAmountsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            val listScelle: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelScellesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-            (ApiClient.gson.fromJson(it.livraisonSousModelProdNamesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type) as MutableList<String>).forEach {
-
-                livraisonSousModelList.add(
-                    LivraisonSousModel(
-                        producteurId = listProdId.get(countero)?:"",
-                        producteurIdName = it,
-                        parcelleId = listParcelId.get(countero)?:"",
-                        parcelleIdName = listParce.get(countero)?:"",
-                        typeName = listType.get(countero)?:"",
-                        quantityNb = listQuantity.get(countero).toInt(),
-                        amountNb = listAmount.get(countero).toInt(),
-                        numScelle = listScelle.get(countero)?:""
-                    )
-                )
-                countero++
-            }
-
+            var itemList = GsonUtils.fromJson<MutableList<LivraisonSousModel>>(livraisonDrafted?.itemsStringify, object : TypeToken<MutableList<LivraisonSousModel>>() {}.type)
+            livraisonSousModelList.addAll(itemList)
             livraisonSousModelAdapter?.notifyDataSetChanged()
 
-            countero = 0
-            resources.getStringArray(R.array.statuPaiement).forEach { stPay ->
-                if(stPay.equals("${it.paymentStatus}")) {
-                    selectStatuPaiementList.setSelection(countero)
-                    countero++
-                }
-            }
-
-            editReduction.setText("${ it.reduction }")
-            tvSousTotal.setText("${ it.sousTotalReduce.toString() }")
-            tvTotalReduce.setText("${ it.totalReduce.toString() }")
-            LogUtils.d(it.estimatDate)
-            editDateLivraison.setText("${it.estimatDate}")
+//            editReduction.setText("${ it.reduction }")
+//            tvSousTotal.setText("${ it.sousTotalReduce.toString() }")
+//            tvTotalReduce.setText("${ it.totalReduce.toString() }")
+//            LogUtils.d(it.estimatDate)
+//            editDateLivraison.setText("${it.estimatDate}")
 
             true
         }
-
-        setProgrammeSpinner(livraisonDrafted?.programme_id)
 
         passSetupLivraisonModel(livraisonDrafted)
         
@@ -864,12 +1001,12 @@ class LivraisonActivity : AppCompatActivity() {
     }
 
     private fun setOtherListener() {
-        editDateLivraison.setOnClickListener { configDate(editDateLivraison) }
+        editDateLivraison.setOnClickListener { configDate(editDateLivraison, false) }
         setListener()
 
         clickAddLivraisonInfo.setOnClickListener {
             try{
-                if (producteurId.isEmpty()) {
+                if (producteurCommon.id.toString().isNullOrEmpty()) {
                     showMessage(
                         "Selectionnez le producteur, svp !",
                         context = this,
@@ -882,7 +1019,7 @@ class LivraisonActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                if(parcelleId.isEmpty()){
+                if(parcelleCommon.id.toString().isEmpty()){
                     showMessage(
                         "Selectionnez une parcelle, svp !",
                         context = this,
@@ -909,14 +1046,13 @@ class LivraisonActivity : AppCompatActivity() {
                 }
 
                 val livraisonSousModel = LivraisonSousModel(
-                    producteurId= producteurId,
-                    producteurIdName= producteurNomPrenoms,
-                    parcelleId= parcelleId,
-                    parcelleIdName = parcelleNom,
-                    typeName = typeProducteurParcrelle,
+                    producteurId= producteurCommon.id.toString(),
+                    producteurIdName= producteurCommon.nom.toString(),
+                    parcelleId= parcelleCommon.id.toString(),
+                    parcelleIdName = parcelleCommon.nom.toString(),
+                    typeName = selectTypeLivraison.selectedItem.toString(),
                     quantityNb = editQuantity.text.toString().toInt(),
-                    amountNb = editResultatQuantity.text.toString().toInt(),
-                    numScelle = editNumScelle.text.toString()
+                    //numScelle = editNumScelle.text.toString()
                 )
 
                 livraisonSousModelList.add(livraisonSousModel)
@@ -940,6 +1076,6 @@ class LivraisonActivity : AppCompatActivity() {
     private fun clearInfoLivraisonTable() {
         editQuantity.setText("")
         editResultatQuantity.setText("")
-        editNumScelle.setText("")
+        //editNumScelle.setText("")
     }
 }

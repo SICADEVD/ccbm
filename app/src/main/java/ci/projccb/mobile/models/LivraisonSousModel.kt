@@ -14,8 +14,8 @@ data class LivraisonSousModel(
     @SerializedName("parcelle_name") @Expose var parcelleIdName: String? = "",
     @SerializedName("type") @Expose var typeName: String? = "",
     @SerializedName("quantity") @Expose var quantityNb: Int? = 0,
-    @SerializedName("amount") @Expose var amountNb: Int? = 0,
-    @SerializedName("scelleStringify") @Expose var numScelle: String? = "",
+    @SerializedName("amount") @Expose var amountNb: Int? = null,
+    @SerializedName("scelleStringify") @Expose var numScelle: String? = null,
 ): Parcelable {
     @Ignore @SerializedName("scelle") @Expose(serialize = true, deserialize = false) var scelleList: MutableList<String>? = null
 }

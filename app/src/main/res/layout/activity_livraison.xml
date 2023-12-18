@@ -139,6 +139,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp"/>
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="senderStaff"
                                 android:id="@+id/selectStaffList"
                                 android:spinnerMode="dialog"
                                 android:layout_width="match_parent"
@@ -165,11 +166,11 @@ android:textColor="@color/text_color_white"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Nom*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderName"
                             android:id="@+id/editNomExpediteur"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -207,6 +208,7 @@ android:textColor="@color/text_color_white"
                             android:text="Contact*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderPhone"
                             android:id="@+id/editContactExpediteur"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -244,6 +246,7 @@ android:textColor="@color/text_color_white"
                             android:text="Email*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderEmail"
                             android:id="@+id/editEmailExpediteur"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -281,6 +284,7 @@ android:textColor="@color/text_color_white"
                             android:text="Adresse*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderAddress"
                             android:id="@+id/editAdressExpediteur"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -354,7 +358,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Selectionner un magasin de section*"/>
+                            android:text="Selectionner un magasin de section *"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -366,6 +370,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp"/>
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="magasinSection"
                                 android:id="@+id/selectMagasinSectionLivraison"
                                 android:spinnerMode="dialog"
                                 android:layout_width="match_parent"
@@ -397,6 +402,7 @@ android:textColor="@color/text_color_white"
                             android:text="Nom*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverName"
                             android:id="@+id/editNomDestinataire"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -434,6 +440,7 @@ android:textColor="@color/text_color_white"
                             android:text="Contact*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverPhone"
                             android:id="@+id/editContactDestinataire"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -471,6 +478,7 @@ android:textColor="@color/text_color_white"
                             android:text="Email*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverEmail"
                             android:id="@+id/editEmailDestinataire"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -508,6 +516,7 @@ android:textColor="@color/text_color_white"
                             android:text="Adresse*"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverAddress"
                             android:id="@+id/editAdressDestinataire"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
@@ -596,7 +605,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
-                            android:text="Section *"
+                            android:text="Dans quel section livrez vous ?"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -631,7 +640,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localite *"
+                            android:text="De quelle localite s'agit-il ?"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/_10sdp"
                             android:textStyle="bold" />
@@ -646,7 +655,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectLocaliteUniteAgricole"
+                                android:id="@+id/selectLocaliteLivraison"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -710,7 +719,6 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
-                            android:textSize="@dimen/_10sdp"
                             android:text="Choix des producteurs"
                             android:textStyle="bold" />
 
@@ -723,7 +731,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectProducLivraison"
@@ -914,7 +922,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp"/>
 
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectTypeLivraisonParcrelle"
+                                android:id="@+id/selectTypeLivraison"
                                 android:spinnerMode="dialog"
                                 android:layout_width="match_parent"
                                 android:entries="@array/type_produit"
@@ -990,7 +998,6 @@ android:textColor="@color/text_color_white"
 
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:id="@+id/editQuantity"
-                                android:enabled="false"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:imeOptions="actionDone"
@@ -1000,6 +1007,7 @@ android:textColor="@color/text_color_white"
                                 android:textSize="@dimen/_13ssp"
                                 android:layout_width="match_parent"
                                 android:height="0dp"
+                                android:hint="20"
                                 android:inputType="number|textNoSuggestions"
                                 android:layout_weight="6.5"
                                 android:layout_height="@dimen/_37sdp"
@@ -1248,6 +1256,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="@dimen/_37sdp">
 
                     <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="estimatDate"
                         android:id="@+id/editDateLivraison"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

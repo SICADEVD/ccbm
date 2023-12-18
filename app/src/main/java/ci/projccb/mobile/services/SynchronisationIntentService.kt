@@ -654,37 +654,38 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             livraisonPojo.estimatDate = Commons.convertDate(livraisonPojo.estimatDate, true)
 
             val livraisonSModList:ArrayList<LivraisonSousModel> = arrayListOf()
-            val producteursId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)
-            val parcelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcellesStringify)
-            val parcellesId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcelleIdsStringify)
-            val quantites = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelQuantitysStringify)
-            val types = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelTypesStringify)
-            val amounts = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelAmountsStringify)
-            val scelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelScellesStringify)
-            var counter = 0
-            ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)?.forEach {
-                livraisonSModList.add(
-                    LivraisonSousModel(
-                        producteurId = producteursId!![counter],
-                        producteurIdName = it,
-                        parcelleIdName = parcelles!![counter],
-                        parcelleId = parcellesId!![counter],
-                        quantityNb = quantites!![counter].toInt(),
-                        amountNb = amounts!![counter].toInt(),
-                        typeName = types!![counter]
-                        //nsumScelle = scelles!![counter],
-                    ).apply {
-                        scelleList = mutableListOf<String>()
-                        scelleList!!.add(numScelle.toString())
-                    }
-                )
-                counter++
-            }
+//            val producteursId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)
+//            val parcelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcellesStringify)
+//            val parcellesId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcelleIdsStringify)
+//            val quantites = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelQuantitysStringify)
+//            val types = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelTypesStringify)
+//            val amounts = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelAmountsStringify)
+//            val scelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelScellesStringify)
+//            var counter = 0
+//            ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)?.forEach {
+//                livraisonSModList.add(
+//                    LivraisonSousModel(
+//                        producteurId = producteursId!![counter],
+//                        producteurIdName = it,
+//                        parcelleIdName = parcelles!![counter],
+//                        parcelleId = parcellesId!![counter],
+//                        quantityNb = quantites!![counter].toInt(),
+//                        amountNb = amounts!![counter].toInt(),
+//                        typeName = types!![counter]
+//                        //nsumScelle = scelles!![counter],
+//                    ).apply {
+//                        scelleList = mutableListOf<String>()
+//                        scelleList!!.add(numScelle.toString())
+//                    }
+//                )
+//                counter++
+//            }
 
-            val listLivrSModJson = ApiClient.gson.toJson(livraisonSModList)
+            livraisonPojo.itemList = GsonUtils.fromJson<MutableList<LivraisonSousModel>>(livraisonPojo.itemsStringify, object : TypeToken<MutableList<LivraisonSousModel>>() {}.type)
+
+            //val listLivrSModJson = ApiClient.gson.toJson(livraisonSModList)
             livraisonPojo.apply {
-                itemList = livraisonSModList
-                itemsStringify = null
+                 itemsStringify = null
                  livraisonSousModelProdNamesStringify = null
                  livraisonSousModelProdIdsStringify = null
                  livraisonSousModelParcellesStringify = null
@@ -695,7 +696,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                  livraisonSousModelScellesStringify = null
             }
 
-            val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraison(livraisonModel = livraisonPojo)
+            val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraisonSection(livraisonModel = livraisonPojo)
 
             val responseLivraison: Response<LivraisonModel> = clientLivraison.execute()
             val livraisonSynced: LivraisonModel? = responseLivraison.body()

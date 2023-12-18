@@ -62,6 +62,8 @@ data class LivraisonModel(
      @Expose var livraisonSousModelQuantitysStringify: String? = null,
      @Expose var livraisonSousModelAmountsStringify: String? = null,
      @Expose var livraisonSousModelScellesStringify: String? = null,
+     @Expose var staffLab: String? = null,
+     @Expose var magasinLab: String? = null,
     var origin: String? = "local"
 ) : Parcelable {
     @Expose(serialize = true, deserialize = false) @Ignore @SerializedName("items") var itemList: MutableList<LivraisonSousModel>? = null

@@ -64,6 +64,10 @@ interface StaffFormationDao {
     fun getAll(agentID: String?): MutableList<StaffFormationModel>
 
     @Transaction
+    @Query("SELECT * FROM staff_formation WHERE id = :id")
+    fun getStaffFormationById(id: Int?): StaffFormationModel
+
+    @Transaction
     @Query("DELETE FROM staff_formation")
     fun deleteAll()
 }
