@@ -869,7 +869,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 arbreStr = GsonUtils.toJson(arbresList?.filter { (selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
                 arbreItemStr = GsonUtils.toJson((recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     LogUtils.d(it.variete.toString())
-                    val idd = arbresList?.filter { item -> item.nom.toString().equals(it.variete) }?.first()?.id.toString()
+                    val idd = arbresList?.filter { item -> item.nom.toString().trim().contains(it.variete.toString()) }?.first()?.id.toString()
                     ArbreData(
                         arbre = idd,
                         nombre = it.nombre
@@ -1164,7 +1164,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 arbreStr = GsonUtils.toJson(arbresList?.filter { (selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
                 arbreItemStr = GsonUtils.toJson((recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     LogUtils.d(it.variete.toString())
-                    val idd = arbresList?.filter { item -> item.nom.toString().contains(it.variete.toString()) }?.first()?.id.toString()
+                    val idd = arbresList?.filter { item -> item.nom.toString().trim().contains(it.variete.toString()) }?.first()?.id.toString()
                     ArbreData(
                         arbre = idd,
                         nombre = it.nombre
