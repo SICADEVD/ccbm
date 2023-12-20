@@ -685,6 +685,52 @@ class ConfigurationActivity : AppCompatActivity() {
             } else {
                 configCompletedOrError("Délégué")
                 //getTypeThemeFormations()
+                getListFormation()
+            }
+
+        }
+    }
+
+    suspend fun getListFormation() {
+        withContext(IO) {
+            val dataUpdate = async {
+                formationDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getFormationByUser(table = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
+                    var responseData: Response<MutableList<FormationModel>> = clientData.execute()
+                    val dataList: MutableList<FormationModel>? = responseData.body()
+
+//                    clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "delegue"))
+//                    responseData = clientData.execute()
+//                    dataList?.addAll(responseData.body()?: arrayListOf())
+
+                    dataList?.map {
+                        val formModel = FormationModel(
+                            id = it.id,
+                            uid = 0,
+                            localitesId = it.localitesId,
+                            lieuFormation = it.lieuFormation,
+                            formationType = it.formationType,
+                            observationFormation = it.observationFormation,
+                            agentId = it.agentId
+                        )
+                        formationDao?.insert(formModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des formations")
+                //getTypeThemeFormations()
                 getSections()
             }
 
@@ -1340,20 +1386,21 @@ class ConfigurationActivity : AppCompatActivity() {
                     val responseCampagneData: Response<MutableList<CampagneModel>> = clientCampagneData.execute()
                     val datasCampagneList: MutableList<CampagneModel>? = responseCampagneData.body()
 
-//                    datasCampagneList?.map { model ->
-//                        model?.let {
-//                            if(it.campagnesNom!=null)
-//                            {
-//                                val dataCampagneModel = CampagneModel(
-//                                    campagnesNom = it.campagnesNom,
-//                                    id = it.id,
-//                                    uid = 0
-//                                )
-//
-//                                campagneDao?.insert(dataCampagneModel)
-//                            }
-//                        }
-//                    }
+                    datasCampagneList?.map { model ->
+                        model?.let {
+                            if(it.campagnesNom!=null)
+                            {
+                                val dataCampagneModel = CampagneModel(
+                                    campagnesNom = it.campagnesNom,
+                                    id = it.id,
+                                    uid = 0
+                                )
+
+                                campagneDao?.insert(dataCampagneModel)
+                            }
+                        }
+                    }
+
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)

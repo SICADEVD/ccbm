@@ -120,6 +120,9 @@ interface ApiService {
     @POST("getstaff")
     fun getStaff(@Body table: CommonData): Call<MutableList<ConcernesModel>>
 
+    @POST("getformationsbyuser")
+    fun getFormationByUser(@Body table: CommonData): Call<MutableList<FormationModel>>
+
     @POST("getsections")
     fun getSections(@Body table: CommonData): Call<MutableList<SectionModel>>
 

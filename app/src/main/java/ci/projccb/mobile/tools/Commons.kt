@@ -793,11 +793,13 @@ class Commons {
             selectItem: AppCompatSpinner,
             libelle: String = "Libellé",
             valeur: String = "Valeur",
-            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf(), isInverted:Boolean = false ) {
             val itemList = mutableListOf<OmbrageVarieteModel>()
             var countN = 0
             libeleList.forEach {
-                itemList.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+                if(isInverted){
+                    itemList.add(OmbrageVarieteModel(0, valueList.get(countN), it))
+                }else itemList.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
                 countN++
             }
             val itemAdapter = OmbrageAdapter(itemList, libelle, valeur)
@@ -819,11 +821,20 @@ class Commons {
                         return@setOnClickListener
                     }
 
-                    val modelAdd = OmbrageVarieteModel(
-                        0,
-                        editItem.text.toString().trim(),
-                        selectItem.selectedItem.toString().trim()
-                    )
+                    var modelAdd: OmbrageVarieteModel? = null
+                    if(isInverted){
+                        modelAdd = OmbrageVarieteModel(
+                            0,
+                            selectItem.selectedItem.toString().trim(),
+                            editItem.text.toString().trim()
+                        )
+                    }else{
+                        modelAdd = OmbrageVarieteModel(
+                            0,
+                            editItem.text.toString().trim(),
+                            selectItem.selectedItem.toString().trim()
+                        )
+                    }
 
                     if(modelAdd.variete?.length?:0 > 0){
                         itemList?.forEach {

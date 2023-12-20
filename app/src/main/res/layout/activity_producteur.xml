@@ -185,7 +185,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Comment vous vous definissez ?"
+                        android:text="Comment-vous vous définissez ?"
 
                         android:textStyle="bold" />
 

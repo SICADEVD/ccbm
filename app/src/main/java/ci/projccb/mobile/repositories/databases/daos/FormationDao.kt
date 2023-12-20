@@ -30,4 +30,8 @@ interface FormationDao {
     @Transaction
     @Query("DELETE FROM formation WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM formation")
+    fun deleteAll()
 }

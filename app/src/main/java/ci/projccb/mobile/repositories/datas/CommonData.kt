@@ -30,3 +30,33 @@ data class ArbreData (
         return arbre!!
     }
 }
+
+data class InsectesParasitesData (
+    @Expose var nom: String? = null,
+    @Expose var nombreinsectesParasites: String? = null,
+) {
+    override fun toString(): String {
+        return nom!!
+    }
+}
+
+data class PresenceAutreInsecteData (
+    @Expose var autreInsecteNom: String? = null,
+    @Expose var nombreAutreInsectesParasites: String? = null,
+) {
+    override fun toString(): String {
+        return autreInsecteNom!!
+    }
+}
+
+data class PesticidesAnneDerniereModel (
+    @Expose var nom: String? = null,
+    @Expose val unite: String? = null,
+    @Expose val quantite: String? = null,
+    @Expose val contenant: String? = null,
+    @Expose val frequence: String? = null,
+) {
+    override fun toString(): String {
+        return nom!!
+    }
+}

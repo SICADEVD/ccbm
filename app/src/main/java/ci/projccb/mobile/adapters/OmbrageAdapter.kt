@@ -59,6 +59,11 @@ class OmbrageAdapter(private var ombrages: MutableList<OmbrageVarieteModel>?, pr
 
     fun getOmbragesAdded(): MutableList<OmbrageVarieteModel> = ombrages!!
 
+    fun setOmbragesList(list:MutableList<OmbrageVarieteModel>) {
+        ombrages?.addAll(list)
+        notifyDataSetChanged()
+    }
+
 
     override fun getItemCount() = ombrages?.size ?: 0
 
@@ -149,7 +154,7 @@ class MultipleItemAdapter(private var listItem: MutableList<AdapterItemModel>?,
         }else holder.item_title3.visibility = View.GONE
 
         if(!libelTitle4.isNullOrEmpty()){
-            holder.item_title2.text = libelTitle4
+            holder.item_title4.text = libelTitle4
         }else holder.item_title4.visibility = View.GONE
 
         if(!valeurTitle.isNullOrEmpty()){
@@ -195,6 +200,11 @@ class MultipleItemAdapter(private var listItem: MutableList<AdapterItemModel>?,
 
 
     fun getMultiItemAdded(): MutableList<AdapterItemModel> = listItem!!
+
+    fun setDataToRvItem(list: MutableList<AdapterItemModel>){
+        listItem?.addAll(list)
+        notifyDataSetChanged()
+    }
 
 
     override fun getItemCount() = listItem?.size ?: 0
