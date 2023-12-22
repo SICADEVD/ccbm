@@ -219,6 +219,20 @@
                     app:expandable_spinner_size="@dimen/_20sdp"
                     app:expandable_parentLayout="@layout/showed_view6" />
 
+                <com.skydoves.expandablelayout.ExpandableLayout
+                    android:tag="expand6"
+                    android:id="@+id/expandIdentif7"
+                    android:layout_marginHorizontal="@dimen/_35sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    app:expandable_spinner_gravity="start"
+                    app:expandable_animation="bounce"
+                    app:expandable_duration="300"
+                    app:expandable_isExpanded="false"
+                    app:expandable_spinner_size="@dimen/_20sdp"
+                    app:expandable_parentLayout="@layout/showed_view7" />
+
 <!--                <com.skydoves.expandablelayout.ExpandableLayout-->
 <!--                    android:tag="expand6"-->
 <!--                    android:id="@+id/expandIdentif7"-->

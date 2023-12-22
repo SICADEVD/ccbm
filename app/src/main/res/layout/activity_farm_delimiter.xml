@@ -122,7 +122,9 @@
             android:layout_marginBottom="@dimen/_30sdp"
             android:contentDescription="TODO"
             android:gravity="end|bottom"
-            android:src="@android:drawable/ic_input_add"
+            app:rippleColor="@color/white_color"
+            app:backgroundTint="@color/ccb_gris_sec"
+            android:src="@drawable/baseline_add_white_24"
             app:elevation="@dimen/_5sdp"
             app:fabCustomSize="@dimen/_45sdp" />
 
@@ -145,7 +147,7 @@
                 android:layout_height="@dimen/_45sdp"
                 android:id="@+id/fabSurfaceFarmDelimiter"
                 android:gravity="end|bottom"
-                app:backgroundTint="@color/white"
+                app:backgroundTint="@color/ccb_gris_sec"
                 android:src="@drawable/ic_surface"
                 app:elevation="@dimen/_5sdp"
                 app:fabCustomSize="@dimen/_45sdp" />
@@ -182,9 +184,9 @@ android:textColor="@color/text_color_white"
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="@dimen/_45sdp"
                 android:layout_height="@dimen/_45sdp"
-                app:backgroundTint="@color/white"
                 android:gravity="end|bottom"
                 android:id="@+id/fabDistanceFarmDelimiter"
+                app:backgroundTint="@color/ccb_gris_sec"
                 android:src="@drawable/ic_distance"
                 app:elevation="@dimen/_5sdp"
                 app:fabCustomSize="@dimen/_45sdp" />

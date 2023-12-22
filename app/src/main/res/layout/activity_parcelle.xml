@@ -1176,7 +1176,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:layout_weight="6"
-                            android:text="Type de déclaration superficiee *"
+                            android:text="Type de déclaration superficie*"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1308,6 +1308,7 @@ android:textColor="@color/text_color_white"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
                                 android:inputType="numberDecimal"
+                                android:digits="0123456789.-"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
@@ -1349,7 +1350,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_weight="6"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Nombre De Cacao / ha"
+                                android:text="Nombre de cacao / ha"
                                 android:textStyle="bold" />
 
                             <Space
@@ -1484,7 +1485,7 @@ android:textColor="@color/text_color_white"
                 android:textAllCaps="false"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
-                android:textColor="@color/text_color_white"
+                android:textColor="@color/white_color"
                 android:background="@drawable/submit_button_bg"
                 android:text="Cliquer pour mapper"
                  />

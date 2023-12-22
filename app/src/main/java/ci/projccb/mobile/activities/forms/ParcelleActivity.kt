@@ -55,6 +55,8 @@ import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
 import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerArbreAgroSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAgroForesterieSParcelle
 
 import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectInsecteParOuRavSuivi
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.recyclerCultureInfosProducteur
@@ -245,18 +247,18 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
 
-    fun setupTyprDeclarationSelection() {
-        selectDeclarationTypeParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                typeDeclaration = resources.getStringArray(R.array.declarationType)[position]
-                disableField()
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-
-            }
-        }
-    }
+//    fun setupTyprDeclarationSelection() {
+//        selectDeclarationTypeParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                typeDeclaration = resources.getStringArray(R.array.declarationType)[position]
+//                disableField(typeDeclaration)
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//
+//            }
+//        }
+//    }
 
 
 
@@ -416,7 +418,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             linearProducteurContainerParcelle.visibility = GONE
         }*/
 
-        setupTyprDeclarationSelection()
+        //setupTyprDeclarationSelection()
 
         typeDeclaration = ""
 
@@ -457,7 +459,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
 
-    fun disableField() {
+    fun disableField(typeDeclaration: String = "") {
         if (typeDeclaration == "GPS") {
             editSuperficieParcelle.isEnabled = false
             editLatParcelle.isEnabled = false
@@ -565,11 +567,25 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //        )
 
         // Type selection superficie
-        provideStringSpinnerSelection(
-            selectDeclarationTypeParcelle,
-            parcelleDrafted.typedeclaration,
-            resources.getStringArray(R.array.declarationType)
-        )
+//        provideStringSpinnerSelection(
+//            selectDeclarationTypeParcelle,
+//            parcelleDrafted.typedeclaration,
+//            resources.getStringArray(R.array.declarationType)
+//        )
+
+        Commons.setListenerForSpinner(this,
+            "Type de déclaration superficie*","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectDeclarationTypeParcelle,
+            itemChanged = arrayListOf(Pair(1, "Verbal"), Pair(2, "Gps")),
+            currentVal = parcelleDrafted.typedeclaration,
+            listIem = resources.getStringArray(R.array.declarationType)
+                ?.toList() ?: listOf(),
+            onChanged = {
+                typeDeclaration = resources.getStringArray(R.array.declarationType)[it]
+                disableField(typeDeclaration)
+            },
+            onSelected = { itemId, visibility ->
+            })
 
         //editNomParcelle.setText(parcelleDrafted.culture)
 //        editSuperficieParcelle.setText(parcelleDrafted.superficie)
@@ -821,8 +837,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         clickLatLongParcelle.setOnClickListener {
-            editLatParcelle.text = Editable.Factory.getInstance().newEditable(SPUtils.getInstance().getString(Constants.PREFS_COMMON_LAT, "0.0"))
-            editLongParcelle.text = Editable.Factory.getInstance().newEditable(SPUtils.getInstance().getString(Constants.PREFS_COMMON_LNG, "0.0"))
+            editLatParcelle.setText("0.0")
+            editLongParcelle.setText("-0.0")
         }
 
         clickToMappingParcelle.setOnClickListener {
@@ -938,7 +954,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
     private fun setOtherListener() {
-        setupTyprDeclarationSelection()
+        //setupTyprDeclarationSelection()
 
         setOmbrageParcelleRV()
 
@@ -968,6 +984,19 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         setupSectionSelection()
 
         setupMoyProtectMultiSelection()
+
+        Commons.setListenerForSpinner(this,
+            "Type de déclaration superficie*","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectDeclarationTypeParcelle,
+            itemChanged = arrayListOf(Pair(1, "Verbal"), Pair(2, "Gps")),
+            listIem = resources.getStringArray(R.array.declarationType)
+                ?.toList() ?: listOf(),
+            onChanged = {
+                typeDeclaration = resources.getStringArray(R.array.declarationType)[it]
+                disableField(typeDeclaration)
+            },
+            onSelected = { itemId, visibility ->
+            })
 
         Commons.setListenerForSpinner(this,
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",

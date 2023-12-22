@@ -151,10 +151,7 @@ class AuthentificationActivity : AppCompatActivity() {
                                 val agentModel = agentResponseBody?.results
 
                                 //remavoe some feature
-                                roles?.remove("APPLICATION")
-                                roles?.remove("SUIVIAPPLICATIONS")
                                 roles?.remove("ESTIMATION")
-                                roles?.remove("EVALUATION")
 
                                 SPUtils.getInstance().put("menu", GsonUtils.toJson(roles))
                                 agentModel?.isLogged = true

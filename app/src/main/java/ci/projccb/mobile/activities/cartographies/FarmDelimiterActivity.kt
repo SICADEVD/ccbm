@@ -834,6 +834,14 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
+
+        fabMenuFarmDelimiter.setImageResource(R.drawable.baseline_add_white_24);
+        // Set background tint color (adjust this according to your design)
+        fabMenuFarmDelimiter.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+        // Set ripple color (optional, adjust according to your design)
+        fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
+        // Set other attributes as needed (e.g., elevation, translationZ)
+        fabMenuFarmDelimiter.setElevation(0.8f);
     }
 
 }
