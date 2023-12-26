@@ -37,7 +37,7 @@ data class LivraisonModel(
     @Expose @SerializedName("userid") var agentId: String? = "",
     @Expose @SerializedName("magasinsections_id") var magasinSectionId: String? = "",
     @Expose var magasinSectionLabel: String? = "",
-    @SerializedName("cooperative") @Expose var cooperativeId: String? = "",
+    @SerializedName("cooperative_id") @Expose var cooperativeId: String? = "",
     @SerializedName("estimate_date") @Expose var estimatDate: String? = "",
     @SerializedName("payment_status") @Expose var paymentStatus: String? = "",
     @SerializedName("sender_staff") @Expose var senderStaff: String? = "",

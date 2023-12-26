@@ -230,6 +230,12 @@
         <item>Au dela de 02 ans</item>
     </string-array>
 
+    <string-array name="personne_applicant">
+        <item>Producteur</item>
+        <item>Applicateur coopérative</item>
+        <item>Independant</item>
+    </string-array>
+
     <string-array name="mesure_protection">
         <item>barriere de végétation</item>
         <item>Zone tampon</item>
@@ -288,7 +294,18 @@
         <item>Fongicide</item>
         <item>Nematicide</item>
         <item>Herbicide</item>
+        <item>Acaricide</item>
+        <item>Pesticide</item>
         <item>Autre</item>
+    </string-array>
+
+    <string-array name="classToxiq">
+        <item>I</item>
+        <item>IA</item>
+        <item>IB</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
     </string-array>
 
     <string-array name="bank_paiement">

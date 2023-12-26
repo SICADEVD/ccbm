@@ -30,4 +30,8 @@ interface SuiviApplicationDao {
     @Transaction
     @Query("DELETE FROM suivi_application")
     fun deleteAgentDatas()
+
+    @Transaction
+    @Query("DELETE FROM suivi_application WHERE uid = :uid")
+    fun deleteByUid(uid: Int)
 }

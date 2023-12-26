@@ -122,7 +122,9 @@ class LivraisonActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Choisir le magasin","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectMagasinSectionLivraison,
-            currentVal = magasinsList?.filter { it.id.toString() == currVal }?.first().let { "${it?.nomMagasinsections}" },
+            currentVal = magasinsList?.filter { it.id.toString() == currVal }.let {
+                if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
+            },
             listIem = magasinsList?.map { it.nomMagasinsections }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -283,7 +285,9 @@ class LivraisonActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Choix du délégué","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectStaffList,
-            currentVal = staffList?.filter { it.id.toString() == currVal }?.first().let { "${it?.nom}" },
+            currentVal = staffList?.filter { it.id.toString() == currVal }.let {
+                  if(it?.size!! > 0) it.first().let { "${it?.nom}" } else null
+            },
             listIem = staffList?.map {
                 "${it.nom}"
             }?.toList() ?: listOf(),
@@ -720,45 +724,11 @@ class LivraisonActivity : AppCompatActivity() {
 
         }
 
-//        val livraisonModel = LivraisonModel(
-//            uid = 0,    id = 0,
-//            cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString(),
-//            estimatDate = dateLivraison,
-//            paymentStatus = resources.getStringArray(R.array.statuPaiement).get(selectStatuPaiementList.selectedItemPosition),
-//            delegueId = staffId,
-//            producteursId = producteurId,
-//            isSynced = false,
-//            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-//            origin = "local",
-//            delegueNom = staffNomPrenoms,
-//            senderStaff = staffId,
-//            senderName = editNomExpediteur.text.toString(),
-//            senderPhone = editContactExpediteur.text.toString(),
-//            senderEmail = editEmailExpediteur.text.toString(),
-//            senderAddress = editAdressExpediteur.text.toString(),
-//            receiverName = editNomDestinataire.text.toString(),
-//            receiverPhone = editContactDestinataire.text.toString(),
-//            receiverEmail = editEmailDestinataire.text.toString(),
-//            receiverAddress = editAdressDestinataire.text.toString(),
-//            magasinSectionId = magasinId.toString(),
-//            magasinSection = magasinNom.toString(),
-//            reduction = editReduction.text.toString(),
-//            sousTotalReduce = tvSousTotal.text.toString(),
-//            totalReduce = tvTotalReduce.text.toString(),
-//            livraisonSousModelProdNamesStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdName),
-//            livraisonSousModelProdIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelProdId),
-//            livraisonSousModelParcellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelle),
-//            livraisonSousModelParcelleIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelleId),
-//            livraisonSousModelTypesStringify = ApiClient.gson.toJson(listOflivraisonSousModelType),
-//            livraisonSousModelQuantitysStringify = ApiClient.gson.toJson(listOflivraisonSousModelQuantity),
-//            livraisonSousModelAmountsStringify = ApiClient.gson.toJson(listOflivraisonSousModelAmount),
-//            livraisonSousModelScellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelScelle),
-//        )
-
 
         var itemList = getSetupLivraisonModel(LivraisonModel(
             uid = 0,
             id = 0,
+            cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, 1).toString(),
             isSynced = false,
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
             origin = "local",

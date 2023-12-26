@@ -11,8 +11,10 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -20,17 +22,31 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.SuiviApplicationPreviewActivity
+import ci.projccb.mobile.activities.infospresenters.SuiviParcellePreviewActivity
 import ci.projccb.mobile.adapters.InsecteAdapter
 import ci.projccb.mobile.adapters.MatiereAdapter
+import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
+import ci.projccb.mobile.adapters.SixItemAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
+import ci.projccb.mobile.repositories.datas.InsectesParasitesData
+import ci.projccb.mobile.repositories.datas.PesticidesAnneDerniereModel
+import ci.projccb.mobile.repositories.datas.PesticidesApplicationModel
+import ci.projccb.mobile.repositories.datas.PresenceAutreInsecteData
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.configHour
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
+import ci.projccb.mobile.tools.Commons.Companion.setOnlyOneITemSApplicRV
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -39,6 +55,29 @@ import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import kotlinx.android.synthetic.main.activity_suivi_application.*
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddTraitInsecteParOuRavListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickSaveAnimauxSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerArbreAgroSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editAnimalSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editTraitInsecteParOuRavFrequSParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editTraitInsecteParOuRavQtSParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerArbrAgroSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAutreInsecteParOuRavSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteParOuRavSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerIntantAnDerListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerTraitInsecteParOuRavListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAgroForesterieSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectArbreSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectLocaliteSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectParcelleSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectProducteurSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectSectionSParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectTraitInsecteParOuRavContenantSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectTraitInsecteParOuRavNomSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectTraitInsecteParOuRavUniteSParcell
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,6 +92,7 @@ import java.util.*
 class SuiviApplicationActivity : AppCompatActivity() {
 
 
+    private var maladieList: MutableList<String>? = mutableListOf()
     private var endphotoTamponPath: String = ""
     private var endphotoDouchePath: String = ""
     var insecteAdapter: InsecteAdapter? = null
@@ -91,6 +131,12 @@ class SuiviApplicationActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1
     val REQUEST_IMAGE_PICKED = 2
     var draftedDataApplicateur: DataDraftedModel? = null
+
+    val sectionCommon: CommonData = CommonData()
+    val localiteCommon: CommonData = CommonData()
+    val producteurCommon: CommonData = CommonData()
+    val parcelleCommon: CommonData = CommonData()
+    val applicateurCommon: CommonData = CommonData()
 
 
     fun configDate(viewClciked: AppCompatEditText) {
@@ -143,48 +189,6 @@ class SuiviApplicationActivity : AppCompatActivity() {
     }
 
 
-    fun setupLocaliteSelection() {
-        val localitesList = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()) ?: mutableListOf()
-
-        if (localitesList.size == 0) {
-            Commons.showMessage(
-                "La liste des localités est vide ! Refaite une mise à jour.",
-                this,
-                finished = false,
-                callback = {},
-                "Compris !",
-                false,
-                showNo = false,
-            )
-
-            localiteId = ""
-            localiteNom = ""
-            selectLocaliteSuiviApplication?.adapter = null
-
-            return
-        }
-
-        val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList)
-        selectLocaliteSuiviApplication!!.adapter = localiteAdapter
-
-        selectLocaliteSuiviApplication.setTitle("Choisir la localité")
-
-        selectLocaliteSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-
-                val localiteModel = localitesList[position]
-                localiteId = localiteModel.id.toString()
-                localiteNom = localiteModel.nom!!
-
-                setupProducteurSelection(localiteId)
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
-
     fun setMatiereParcelle() {
         matieresList = mutableListOf()
         matiereAdapter = MatiereAdapter(matieresList!!)
@@ -200,101 +204,25 @@ class SuiviApplicationActivity : AppCompatActivity() {
 //        recyclerParasiteListSuiviApplication.adapter = insecteAdapter
     }
 
-
-    fun setupProducteurSelection(pLocaliteId: String) {
-        val producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = pLocaliteId)
-        val producteursDatas: MutableList<CommonData> = mutableListOf()
-        producteursList?.map {
-            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
-        }?.let {
-            producteursDatas.addAll(it)
-        }
-
-        val estimationDrafted = ApiClient.gson.fromJson(draftedDataApplicateur?.datas, EstimationModel::class.java)
-        selectProducteurSuiviApplication.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
-
-        if (draftedDataApplicateur != null) {
-            provideDatasSpinnerSelection(
-                selectProducteurSuiviApplication,
-                estimationDrafted.producteurNom,
-                producteursDatas
-            )
-        }
-
-        selectProducteurSuiviApplication.setTitle("Choisir le producteur")
-        selectProducteurSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val producteur = producteursList!![position]
-                producteurNom = "${producteur.nom} ${producteur.prenoms}"
-
-                producteurId = if (producteur.isSynced) {
-                    producteur.id!!.toString()
-                } else {
-                    producteur.uid.toString()
-                }
-
-                setupCulturePulveriseeSelection(producteurId)
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
-
-    fun setupCampagneSelection() {
-        val campagnesList = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()!!
-        val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList)
-        selectCampagneSuiviApplication!!.adapter = campagneAdapter
-
-        selectCampagneSuiviApplication.setTitle("Choisir la campagne")
-
-        selectCampagneSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-
-                val campagneModel = campagnesList[position]
-                campagneId = campagneModel.id.toString()
-                campagneNom = campagneModel.campagnesNom!!
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
-
-    fun setupCulturePulveriseeSelection(producteurId: String?) {
-        val culturesList = CcbRoomDatabase.getDatabase(this)?.parcelleDao()?.getParcellesProducteur(producteurId, SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())!!
-        val cultureAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, culturesList)
-        selectCulturePuveriseeSuiviApplication!!.adapter = cultureAdapter
-
-        selectCulturePuveriseeSuiviApplication.setTitle("Choisir la culture")
-
-        selectCulturePuveriseeSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-
-                val cultureModel = culturesList[position]
-                cultureId = cultureModel.id.toString()
-                cultureNom = cultureModel.culture?:Constants.VIDE
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
-
-    fun degreDangerositeLevel() {
-        selectDegreDangerosiousSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                degreDangerositeLevel = resources.getStringArray(R.array.lowMediumHigh)[position]
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
+//    fun setupCampagneSelection() {
+//        val campagnesList = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()!!
+//        val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList)
+//        selectCampagneSuiviApplication!!.adapter = campagneAdapter
+//
+//        selectCampagneSuiviApplication.setTitle("Choisir la campagne")
+//
+//        selectCampagneSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//
+//                val campagneModel = campagnesList[position]
+//                campagneId = campagneModel.id.toString()
+//                campagneNom = campagneModel.campagnesNom!!
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
     fun setupZoneTemponSelection() {
 //        selectZoneTampoSuiviApplication.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -346,48 +274,117 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-        val suiviApplicationDatas = getSuiviApplicationObjet()
+        val itemModelOb = getSuiviApplicationObjet()
 
-        LogUtils.json(suiviApplicationDatas)
+        if(itemModelOb == null) return
+
+        val suiviApplicationDatas = itemModelOb?.first.apply {
+            this?.apply {
+                section = sectionCommon.id.toString()
+                this.localite = localiteCommon.id.toString()
+                producteur = producteurCommon.id.toString()
+                parcelle_id = parcelleCommon.id.toString()
+                applicateur = applicateurCommon.id.toString()
+
+                maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
+
+                pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map {
+                    PesticidesApplicationModel(
+                        nom = it.value,
+                        toxicicologie = it.value1,
+                        nomCommercial = it.value2,
+                        matiereActive = it.value3,
+                        dose = it.value4,
+                        frequence = it.value5
+                    )
+                } )
+            }
+        }
+
+        val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
+            this.add(Pair("Produits pythos enrégistrés", (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString() ))
+            this.add(Pair("Maladies observées dans la parcelle", selectListMaladieSuiviApplication.selectedStrings.toModifString() ))
+        }.map { MapEntry(it.first, it.second) }
+
+        Commons.printModelValue(suiviApplicationDatas as Object, mapEntries)
 
         try {
             val intentSuiviApplicationPreview = Intent(this, SuiviApplicationPreviewActivity::class.java)
+            intentSuiviApplicationPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
             intentSuiviApplicationPreview.putExtra("preview", suiviApplicationDatas)
             intentSuiviApplicationPreview.putExtra("draft_id", draftedDataApplicateur?.uid)
             startActivity(intentSuiviApplicationPreview)
         } catch (ex: Exception) {
-            ex.printStackTrace()
+
         }
     }
 
-    private fun getSuiviApplicationObjet(): SuiviApplicationModel {
-        val item = SuiviApplicationModel(
-            applicateursId = applicationId,
-            campagnesId = campagneId.toInt(),
-            dateApplication = editDateSuiviApplication.text.toString(),
-            degreDangerosite = degreDangerositeLevel,
-            delaisReentree = editDelaiProduitJourSuiviApplication.text.toString(),
-            heureApplication = editHeureDebutSuiviApplication.text.toString(),
-            //heureFinApplication = editHeureFinSuiviApplication.text.toString(),
-            marqueProduitPulverise = editCommercialProduitSuiviApplication.text.toString(),
-            parcellesId = cultureId,
-            presenceDouche = doucheYesNo,
-            zoneTampons = zoneTamponYesNo,
-            cultureNom = cultureNom,
-            localiteNom = localiteNom,
-            producteurNom = producteurNom,
-            campagneNom = campagneNom,
-            applicateurNom = applicationNom,
-            //raisonApplication = editRaisonApplicationSuiviApplication.text.toString(),
-            superficiePulverisee = editSuperficieSuiviApplication.text.toString(),
+    private fun getSuiviApplicationObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<SuiviApplicationModel, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
+
+        var itemList = getSetupSuiviApplicationModel(SuiviApplicationModel(
             uid = 0,
-            photoDouchePath = endphotoDouchePath,
-            photoTamponPath = endphotoTamponPath,
+            isSynced = false,
             userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
-            matieresActivesStringify = ApiClient.gson.toJson(matiereAdapter?.getMatieresAdded()),
-            nomInsectesCiblesStringify = ApiClient.gson.toJson(insecteAdapter?.getInsectesAdded())
-        )
-        return item
+            origin = "local",
+        ), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial || isMissingDial2) ){
+            Commons.showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return  itemList
+    }
+
+    fun getSetupSuiviApplicationModel(
+        prodModel: SuiviApplicationModel,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<SuiviApplicationModel, MutableList<Pair<String, String>>> {
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_suivi_application)
+        Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
+    }
+
+    fun passSetupSuiviApplicationModel(
+        prodModel: SuiviApplicationModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_suivi_application)
+        prodModel?.let {
+            Commons.setAllValueOfTextViews(mainLayout, prodModel)
+        }
     }
 
 
@@ -429,10 +426,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
         try {
             setupDoucheYesNoSelection()
             setupZoneTemponSelection()
-            degreDangerositeLevel()
-            setupCampagneSelection()
+            //degreDangerositeLevel()
+            //setupCampagneSelection()
             setupApplicateurSelection()
-            setupLocaliteSelection()
+            //setupLocaliteSelection()
             setMatiereParcelle()
             setParasitesList()
         } catch (ex: Exception) {
@@ -706,7 +703,32 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
     fun draftSuiviApplication(draftModel: DataDraftedModel?) {
         try {
-            val suiviApplicationDatasDraft = getSuiviApplicationObjet()
+            val itemModelOb = getSuiviApplicationObjet(false)
+
+            if(itemModelOb == null) return
+
+            val suiviApplicationDatasDraft = itemModelOb?.first.apply {
+                this?.apply {
+                    section = sectionCommon.id.toString()
+                    this.localite = localiteCommon.id.toString()
+                    producteur = producteurCommon.id.toString()
+                    parcelle_id = parcelleCommon.id.toString()
+                    applicateur = applicateurCommon.id.toString()
+
+                    maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
+
+                    pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map {
+                        PesticidesApplicationModel(
+                            nom = it.value,
+                            toxicicologie = it.value1,
+                            nomCommercial = it.value2,
+                            matiereActive = it.value3,
+                            dose = it.value4,
+                            frequence = it.value5
+                        )
+                    } )
+                }
+            }
 
             Commons.showMessage(
                 message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
@@ -755,94 +777,82 @@ class SuiviApplicationActivity : AppCompatActivity() {
             val applicationDrafted =
                 ApiClient.gson.fromJson(draftedData.datas, SuiviApplicationModel::class.java)
 
-            // Applicateur
-            val applicateursLists =
-                CcbRoomDatabase.getDatabase(this)?.applicateurDao()?.getAll()
-            val applicateursDatas: MutableList<CommonData> = mutableListOf()
-            applicateursLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                applicateursDatas.addAll(it)
+            setupSectionSelection(applicationDrafted.section, applicationDrafted.localite, applicationDrafted.producteur, applicationDrafted.parcelle_id)
+
+            Commons.setListenerForSpinner(this,
+                "Qui a réalisé l'application ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                spinner = selectPersonApplicSApplic,
+                currentVal = applicationDrafted.personneApplication,
+                listIem = resources.getStringArray(R.array.personne_applicant)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                    if(it == 1){
+                        containerListApplicSApplic.visibility = View.VISIBLE
+                    }else if(it == 2){
+                        containerIndepenSApplic.visibility = View.VISIBLE
+                    }else{
+                        containerListApplicSApplic.visibility = View.GONE
+                        containerIndepenSApplic.visibility = View.GONE
+                    }
+                },
+                onSelected = { itemId, visibility ->
+                })
+
+            val listApplicateur = CcbRoomDatabase.getDatabase(this)?.concernesDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+            Commons.setListenerForSpinner(this,
+                "Qui est l'applicateur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                spinner = selectListApplicSApplic,
+                currentVal = listApplicateur?.filter { it.id.toString() == applicationDrafted.applicateur }?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull(),
+                listIem = listApplicateur?.map { "${it.firstname} ${it.lastname}" }
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                    applicateurCommon.id = listApplicateur?.get(it)?.id!!
+                    applicateurCommon.nom = "${listApplicateur[it].firstname} ${listApplicateur[it].lastname}"
+                },
+                onSelected = { itemId, visibility ->
+                })
+
+            Commons.setListenerForSpinner(this,
+                "Possède t-il un EPI ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                spinner = selectIndependantEpiSApplic,
+                currentVal = applicationDrafted.independantEpi,
+                itemChanged = arrayListOf(Pair(1, "Oui")),
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                },
+                onSelected = { itemId, visibility ->
+                    if(itemId==1){
+                        containerEtatEpiSApplic.visibility = visibility
+                    }
+                })
+
+            Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+                ){
+
             }
-//            selectApplicateurSuiviApplication.adapter =
-//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, applicateursDatas)
-//            provideDatasSpinnerSelection(
-//                selectApplicateurSuiviApplication,
-//                applicationDrafted.applicateurNom,
-//                applicateursDatas
-//            )
 
-            // Localite
-            val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()
-                ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val localitesDatas: MutableList<CommonData> = mutableListOf()
-            localitesLists?.map {
-                CommonData(id = it.id, nom = it.nom)
-            }?.let {
-                localitesDatas.addAll(it)
-            }
-            selectLocaliteSuiviApplication.adapter =
-                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-            provideDatasSpinnerSelection(
-                selectLocaliteSuiviApplication,
-                applicationDrafted.localiteNom,
-                localitesDatas
+            selectListMaladieSuiviApplication.setItems(GsonUtils.fromJson<List<String>>(applicationDrafted.maladiesStr, object : TypeToken<List<String>>() {}.type))
+
+            (recyclerPestListSApplic.adapter as SixItemAdapter).setDataToRvItem(
+                (GsonUtils.fromJson<MutableList<PesticidesApplicationModel>>(applicationDrafted.pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)).map {
+                    AdapterItemModel(
+                        id=0,
+                        value = it.nom,
+                        value1 = it.toxicicologie,
+                        value2 = it.nomCommercial,
+                        value3 = it.matiereActive,
+                        value4 = it.dose,
+                        value5 = it.frequence
+                    )
+                }.toMutableList()
             )
 
-            // Superficie
-            editSuperficieSuiviApplication.setText(applicationDrafted.superficiePulverisee)
+            passSetupSuiviApplicationModel(applicationDrafted)
 
-            //Commons.applyFiltersDec(editSuperficieSuiviApplication, withZero = false)
-
-            // Nom com
-            editCommercialProduitSuiviApplication.setText(applicationDrafted.marqueProduitPulverise)
-
-            // Matieres
-            matieresList?.addAll(
-                ListConverters.stringToMutableList(applicationDrafted.matieresActivesStringify)
-                    ?: mutableListOf()
-            )
-            matiereAdapter?.notifyDataSetChanged()
-
-            // Dangerosite
-            provideStringSpinnerSelection(
-                selectDegreDangerosiousSuiviApplication,
-                applicationDrafted.degreDangerosite,
-                resources.getStringArray(R.array.lowMediumHigh)
-            )
-
-            // Tampon
-//            provideStringSpinnerSelection(
-//                selectZoneTampoSuiviApplication,
-//                applicationDrafted.zoneTampons,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-//
-//            // Douche
-//            provideStringSpinnerSelection(
-//                selectPresenceDoucheSuiviApplication,
-//                applicationDrafted.presenceDouche,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-
-            // Insectes
-            val insectesType = object : TypeToken<MutableList<InsecteRavageurModel>>() {}.type
-            val insectesLists: MutableList<InsecteRavageurModel> = ApiClient.gson.fromJson(
-                applicationDrafted.nomInsectesCiblesStringify ?: "[]",
-                insectesType
-            )
-            parasitesList?.addAll(insectesLists)
-            insecteAdapter?.notifyDataSetChanged()
-
-            editDelaiProduitJourSuiviApplication.setText(applicationDrafted.delaisReentree)
-            //editRaisonApplicationSuiviApplication.setText(applicationDrafted.raisonApplication)
-
-            editDateSuiviApplication.setText(applicationDrafted.dateApplication)
-            editHeureDebutSuiviApplication.setText(applicationDrafted.heureApplication)
-            //editHeureFinSuiviApplication.setText(applicationDrafted.heureApplication)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
 
@@ -851,29 +861,41 @@ class SuiviApplicationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_suivi_application)
 
-        setAllConfigurations()
+        //setAllConfigurations()
 
         editHeureDebutSuiviApplication.setOnClickListener {
-            configTime(editHeureDebutSuiviApplication)
+            configHour(editHeureDebutSuiviApplication)
         }
-
-//        editHeureFinSuiviApplication.setOnClickListener {
-//            configTime(editHeureFinSuiviApplication)
-//        }
 
         editDateSuiviApplication.setOnClickListener {
             configDate(editDateSuiviApplication)
         }
 
-//        imageZoneTamponPhotoSuiviApplication.setOnClickListener {
-//            whichPhoto = 1
-//            dialogPickerPhoto()
-//        }
+        setOnlyOneITemSApplicRV(this,
+            recyclerMatiereListSuiviApplication,
+            clickSaveMatiereSuiviApplication,
+            editMatiereActiveSuiviApplication){
 
-//        imagePresenceDoucheSuiviApplication.setOnClickListener {
-//            whichPhoto = 2
-//            dialogPickerPhoto()
-//        }
+            Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Quelles sont les maladies observées ?", (recyclerMatiereListSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().toMutableList() ){
+
+            }
+
+        }
+
+        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Quelles sont les maladies observées ?", arrayListOf() ){
+
+        }
+
+        Commons.setSixItremRV(this,
+            recyclerPestListSApplic,
+            clickAddPestListSApplic,
+            selectPestNomSApplic,
+            selectPestToxicoSApplic,
+            selectMatActivPestSApplic,
+            editNomComPestSApplic,
+            editDosePestSApplic,
+            editFrequencPestSApplic,
+            libeleList = arrayListOf())
 
         clickSaveSuiviApplication.setOnClickListener {
             collectDatas()
@@ -883,48 +905,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
             finish()
         }
 
-        clickSaveMatiereSuiviApplication.setOnClickListener {
-            try {
-                if (editMatiereActiveSuiviApplication.text.toString()
-                        .isEmpty() || editMatiereActiveSuiviApplication.text.toString().isEmpty()
-                ) {
-                    Commons.showMessage("Renseignez une matiere, svp !", this, callback = {})
-                    return@setOnClickListener
-                }
-
-                addMatiere(editMatiereActiveSuiviApplication.text.toString())
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-//        clickSaveParasiteSuiviApplication.setOnClickListener {
-//            try {
-//                if (editParasiteSuiviApplication.text.toString().isEmpty()) {
-//                    Commons.showMessage(
-//                        "Renseignez un insecte ou parasite, svp !",
-//                        this,
-//                        callback = {})
-//                    return@setOnClickListener
-//                }
-//
-//                addParasite(
-//                    InsecteRavageurModel(
-//                        nom = editParasiteSuiviApplication.text.toString(),
-//                        uid = 0,
-//                        quantite = ""
-//                    )
-//                )
-//            } catch (ex: Exception) {
-//                LogUtils.e(ex.message)
-//                FirebaseCrashlytics.getInstance().recordException(ex)
-//            }
-//        }
-
         imageDraftBtn.setOnClickListener {
             draftSuiviApplication(draftedDataApplicateur ?: DataDraftedModel(uid = 0))
         }
+
+        maladieList = resources.getStringArray(R.array.maladieList).toMutableList()
 
         //applyFilters(editSuperficieSuiviApplication)
 
@@ -935,10 +920,217 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     uid = 0
                 )
                 undraftedDatas(draftedDataApplicateur!!)
+            }else{
+                setAllSelection()
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
+    }
+
+    private fun setAllSelection() {
+
+        setupSectionSelection()
+
+        Commons.setListenerForSpinner(this,
+            "Qui a réalisé l'application ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectPersonApplicSApplic,
+            listIem = resources.getStringArray(R.array.personne_applicant)
+                ?.toList() ?: listOf(),
+            onChanged = {
+                        if(it == 1){
+                            containerListApplicSApplic.visibility = View.VISIBLE
+                        }else if(it == 2){
+                            containerIndepenSApplic.visibility = View.VISIBLE
+                        }else{
+                            containerListApplicSApplic.visibility = View.GONE
+                            containerIndepenSApplic.visibility = View.GONE
+                        }
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        val listApplicateur = CcbRoomDatabase.getDatabase(this)?.concernesDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+        Commons.setListenerForSpinner(this,
+            "Qui est l'applicateur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectListApplicSApplic,
+            listIem = listApplicateur?.map { "${it.firstname} ${it.lastname}" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+                applicateurCommon.id = listApplicateur?.get(it)?.id!!
+                applicateurCommon.nom = "${listApplicateur[it].firstname} ${listApplicateur[it].lastname}"
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Possède t-il un EPI ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectIndependantEpiSApplic,
+            itemChanged = arrayListOf(Pair(1, "Oui")),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerEtatEpiSApplic.visibility = visibility
+                }
+            })
+
+        Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+
+        }
+
+
+    }
+
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la section !",
+            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = libItem ,
+            spinner = selectSectionSApplic,
+            listIem = sectionList?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3)
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id == idc.toInt()) libItem = it.nom
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la localité !",
+            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectLocaliteSApplic,
+            listIem = localitesListi?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                localitesListi?.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
+
+                    setupProducteurSelection(localiteCommon.id!!, currVal2, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
+        val producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+            ?.getProducteursByLocalite(localite = id.toString())
+
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix du producteur !",
+            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (producteursList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectProducteurSApplic,
+            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    producteurCommon.id = producteur.id!!
+
+                    setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
+        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+        LogUtils.json(parcellesList)
+        var libItem: String? = null
+        currVal3?.let { idc ->
+            parcellesList?.forEach {
+                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Choix de la parcelle !",
+            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+            isEmpty = if (parcellesList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectParcelleSApplic,
+            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                parcellesList?.let { list ->
+                    var parcelle = list.get(it)
+                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+                    parcelleCommon.id = parcelle.id!!
+
+                    //setupParcelleSelection(parcelleCommon.id, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
     }
 }

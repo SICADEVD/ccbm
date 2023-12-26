@@ -26,6 +26,7 @@ import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.NumberPicker
@@ -66,6 +67,8 @@ import ci.projccb.mobile.activities.lists.SuiviPacellesListActivity
 import ci.projccb.mobile.activities.lists.UpdateContentsListActivity
 import ci.projccb.mobile.adapters.MultipleItemAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
+import ci.projccb.mobile.adapters.SixItemAdapter
 import ci.projccb.mobile.models.AdapterItemModel
 import ci.projccb.mobile.models.OmbrageVarieteModel
 import ci.projccb.mobile.repositories.datas.CommonData
@@ -79,6 +82,9 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
+import kotlinx.android.synthetic.main.activity_suivi_application.clickSaveMatiereSuiviApplication
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editAnimalSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -158,6 +164,63 @@ class Commons {
 //                }
 //            }
 //        }
+        fun setOnlyOneITemSApplicRV(ctx: Context, recycler:RecyclerView, button:Button, editT: EditText, libeleList:MutableList<String> = arrayListOf(), clickItem: () -> Unit?) {
+            val itemList = mutableListOf<CommonData>()
+            var countN = 0
+            libeleList.forEach {
+                itemList.add(CommonData(0, it))
+                countN++
+            }
+
+            val itemAdapter = OnlyFieldAdapter(itemList)
+            try {
+                recycler.layoutManager =
+                    LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
+                recycler.adapter = itemAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            button.setOnClickListener {
+                try {
+                    if (editT.text.toString()
+                            .isEmpty()
+                    ) {
+                        Commons.showMessage("Renseignez des données sur l'animal, svp !", ctx, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    val item = CommonData(
+                        0,
+                        editT.text.toString().trim(),
+                    )
+
+                    if(item.nom?.length?:0 > 0){
+                        itemList?.forEach {
+                            if (it.nom?.uppercase() == item.nom?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        itemList?.add(item)
+                        itemAdapter?.notifyDataSetChanged()
+
+                        editT.text?.clear()
+                    }
+
+                    clickItem.invoke()
+
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
         fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, isEmpty:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
 
             if(spinner is SearchableSpinner) {
@@ -1017,6 +1080,92 @@ class Commons {
                         selectUnite.setSelection(0)
                         editQte.text?.clear()
                         editFreq.text?.clear()
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setSixItremRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            select: Spinner,
+            select2: Spinner,
+            select3: Spinner,
+            edit: AppCompatEditText,
+            edit2: AppCompatEditText,
+            edit3: AppCompatEditText,
+            defaultItemSize: Int = 5,
+            libeleList:MutableList<String> = arrayListOf(),
+            valueList:MutableList<String> = arrayListOf() ) {
+            val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
+            var countN = 0
+
+            var pesticideSParcelleAdapter: SixItemAdapter? = SixItemAdapter(
+                pesticideListSParcelle
+            )
+
+            if(libeleList.size > 0){
+                pesticideSParcelleAdapter = SixItemAdapter(pesticideListSParcelle,
+                    libeleList[0], libeleList[1],
+                    libeleList[2], libeleList[3],
+                    libeleList[4], libeleList[5])
+            }
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = pesticideSParcelleAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (select.isSpinnerEmpty()
+                        || select2.isSpinnerEmpty()
+                        || select3.isSpinnerEmpty()
+                        || edit.text.toString().isNullOrBlank()
+                        || edit2.text.toString().isNullOrBlank()
+                        || edit3.text.toString().isNullOrBlank()
+                    ) {
+                        Commons.showMessage("Renseignez des données, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    var pesticideParRav = AdapterItemModel(
+                        0,
+                        select.getSpinnerContent(),
+                        select2.getSpinnerContent(),
+                        edit.text.toString(),
+                        select3.getSpinnerContent(),
+                        edit2.text.toString(),
+                        edit3.text.toString(),
+                    )
+
+                    if(pesticideParRav.value?.length?:0 > 0){
+                        pesticideListSParcelle?.forEach {
+                            if (it.value?.uppercase() == pesticideParRav.value?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        pesticideListSParcelle?.add(pesticideParRav)
+                        pesticideSParcelleAdapter?.notifyDataSetChanged()
+
+                        select.setSelection(0)
+                        select2.setSelection(0)
+                        select3.setSelection(0)
+                        edit.setSelection(0)
+                        edit2.text?.clear()
+                        edit3.text?.clear()
                     }
                     //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
                 } catch (ex: Exception) {

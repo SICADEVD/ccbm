@@ -16,6 +16,7 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.InsectesParasitesData
 import ci.projccb.mobile.repositories.datas.PesticidesAnneDerniereModel
+import ci.projccb.mobile.repositories.datas.PesticidesApplicationModel
 import ci.projccb.mobile.repositories.datas.PresenceAutreInsecteData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.returnStringList
@@ -249,47 +250,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 livraisonDao?.insert(livraisonModel)
                             }
 
-//                            val formationsList = formationDao?.getUnSyncedAll(
-//                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-//                            )!!
-//
-//                            for (formation in formationsList) {
-//                                try {
-//                                    // deserialize datas producteurs
-//                                    val producteursType = object : TypeToken<MutableList<String>>() {}.type
-//                                    formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-//                                    val cleanList = formation.producteursId?.toMutableList()
-//
-//                                    var positionLoop = 0
-//                                    var positionFound: Int
-//
-//                                    formation.producteursId?.map {
-//                                        val producteurId = it.split("-")[0]
-//                                        val typeId = it.split("-")[1]
-//
-//                                        if (typeId == "uid") {
-//                                            if (producteurId.toInt() == producteurSynced.uid) {
-//                                                positionFound = positionLoop
-//                                                cleanList?.removeAt(positionFound)
-//                                                cleanList?.add("${producteurSynced.id}-id")
-//                                            }
-//                                        }
-//
-//                                        positionLoop += 1
-//                                    }
-//
-//                                    formation.producteursId = mutableListOf()
-//                                    formation.producteursId = cleanList
-//                                    formation.producteursIdStringify = GsonUtils.toJson(cleanList)
-//
-//                                    formationDao?.insert(formation)
-//                                } catch (uhex: UnknownHostException) {
-//                                    FirebaseCrashlytics.getInstance().recordException(uhex)
-//                                } catch (ex: Exception) {
-//                                    LogUtils.e(ex.message)
-//                                    FirebaseCrashlytics.getInstance().recordException(ex)
-//                                }
-//                            }
                         }
 
                     }
@@ -688,34 +648,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         livraisonDatas.map { livraisonPojo ->
             livraisonPojo.estimatDate = Commons.convertDate(livraisonPojo.estimatDate, true)
 
-            val livraisonSModList:ArrayList<LivraisonSousModel> = arrayListOf()
-//            val producteursId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)
-//            val parcelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcellesStringify)
-//            val parcellesId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcelleIdsStringify)
-//            val quantites = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelQuantitysStringify)
-//            val types = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelTypesStringify)
-//            val amounts = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelAmountsStringify)
-//            val scelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelScellesStringify)
-//            var counter = 0
-//            ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)?.forEach {
-//                livraisonSModList.add(
-//                    LivraisonSousModel(
-//                        producteurId = producteursId!![counter],
-//                        producteurIdName = it,
-//                        parcelleIdName = parcelles!![counter],
-//                        parcelleId = parcellesId!![counter],
-//                        quantityNb = quantites!![counter].toInt(),
-//                        amountNb = amounts!![counter].toInt(),
-//                        typeName = types!![counter]
-//                        //nsumScelle = scelles!![counter],
-//                    ).apply {
-//                        scelleList = mutableListOf<String>()
-//                        scelleList!!.add(numScelle.toString())
-//                    }
-//                )
-//                counter++
-//            }
-
             livraisonPojo.itemList = GsonUtils.fromJson<MutableList<LivraisonSousModel>>(livraisonPojo.itemsStringify, object : TypeToken<MutableList<LivraisonSousModel>>() {}.type)
 
             //val listLivrSModJson = ApiClient.gson.toJson(livraisonSModList)
@@ -794,38 +726,43 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             suiviApplicationDatas.map { suiviApplication ->
                 suiviApplication.dateApplication = Commons.convertDate(suiviApplication.dateApplication, toEng = true)
 
-                if (!suiviApplication.matieresActivesStringify.isNullOrEmpty()) suiviApplication.matieresActives = ListConverters.stringToMutableList(suiviApplication.matieresActivesStringify)
-
-                if (!suiviApplication.nomInsectesCiblesStringify.isNullOrEmpty()) {
-                    val insecteType = object : TypeToken<MutableList<InsecteRavageurModel>>() {}.type
-                    val insectesRavs: MutableList<InsecteRavageurModel> = ApiClient.gson.fromJson(suiviApplication.nomInsectesCiblesStringify, insecteType)
-
-                    suiviApplication.nomInsectesCibles = mutableListOf()
-
-                    insectesRavs.map { insecte ->
-                        suiviApplication.nomInsectesCibles?.add(insecte.nom!!)
-                    }
-                }
-
-                if (!suiviApplication.photoDouchePath.isNullOrEmpty()) suiviApplication.photoDouche = Commons.convertPathBase64(suiviApplication.photoDouchePath, 0)
-                if (!suiviApplication.photoTamponPath.isNullOrEmpty()) suiviApplication.photoZoneTampons = Commons.convertPathBase64(suiviApplication.photoTamponPath, 0)
 
                 suiviApplication.apply {
-                    parcellesIds = parcellesId?.toInt()
-                    applicateursIds = applicateursId?.toInt()
-                    parcellesId = null
-                    applicateursId = null
+                    campagnesId = campagneDao?.getAll()?.get(0)?.id
+                    hour = heureApplication?.split(":")?.get(0).toString()
+                    minute = heureApplication?.split(":")?.get(1).toString()
+
+                    pesticidesList = GsonUtils.fromJson(pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)
+                    maladiesList = GsonUtils.fromJson(maladiesStr, object : TypeToken<MutableList<String>>() {}.type)
                 }
 
                 val clientSuiviApplication: Call<SuiviApplicationModel> = ApiClient.apiService.synchronisationSuiviApplication(suiviApplication)
-                val responseSuiviApplication: Response<SuiviApplicationModel> = clientSuiviApplication.execute()
+                clientSuiviApplication.enqueue(object : Callback<SuiviApplicationModel>{
+                    override fun onResponse(
+                        call: Call<SuiviApplicationModel>,
+                        response: Response<SuiviApplicationModel>
+                    ) {
+                        if(response.isSuccessful){
+                            val suiviApplicationSynced: SuiviApplicationModel? = response.body()
+                            suiviApplicationDao.syncData(
+                                suiviApplicationSynced?.id!!,
+                                true,
+                                suiviApplication.uid
+                            )
+                        }else{
+                            suiviApplicationDao.deleteByUid(
+                                suiviApplication.uid
+                            )
+                        }
+                    }
 
-                val suiviApplicationSynced: SuiviApplicationModel? = responseSuiviApplication.body()
-                suiviApplicationDao.syncData(
-                    suiviApplicationSynced?.id!!,
-                    true,
-                    suiviApplication.uid
-                )
+                    override fun onFailure(call: Call<SuiviApplicationModel>, t: Throwable) {
+                        LogUtils.e(t.message)
+                    }
+
+                })
+
+
             }
 
             syncEnqueteSsrt(enqueteSsrtDao!!)

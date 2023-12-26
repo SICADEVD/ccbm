@@ -28,6 +28,7 @@ data class AdapterItemModel (
     val value3: String? = "",
     val value4: String? = "",
     val value5: String? = "",
+    val value6: String? = "",
 ) {
     override fun toString(): String {
         return "$value"

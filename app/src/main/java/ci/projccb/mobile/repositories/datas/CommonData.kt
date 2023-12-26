@@ -60,3 +60,16 @@ data class PesticidesAnneDerniereModel (
         return nom!!
     }
 }
+
+data class PesticidesApplicationModel (
+    @Expose var nom: String? = null,
+    @Expose val nomCommercial: String? = null,
+    @Expose val matiereActive: String? = null,
+    @Expose val toxicicologie: String? = null,
+    @Expose val dose: String? = null,
+    @Expose val frequence: String? = null,
+) {
+    override fun toString(): String {
+        return nom!!
+    }
+}
