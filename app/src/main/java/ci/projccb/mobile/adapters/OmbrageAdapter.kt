@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.adapters.OmbrageAdapter.OmbrageHolder
@@ -353,7 +354,14 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
         holder.item_id.text = multiItModel.id.toString()
         holder.item_title.text =  multiItModel.nom.plus(" /${multiItModel.nomScientifique}")
         holder.item_limit.text =  Random.nextInt(10, 50).toString()
-        holder.item_distrib.setText("0")
+        holder.item_distrib.setText(multiItModel.qte_distribue)
+
+        holder.item_distrib.doOnTextChanged() { text, start, before, count ->
+            if(text.isNullOrEmpty()) return@doOnTextChanged
+
+            listItem!![position].qte_distribue = text.toString()
+
+        }
 
 
 //        holder.deleteMulti.setOnClickListener {
@@ -376,6 +384,11 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
 
 
     fun getArbreListAdded(): MutableList<ArbreModel> = listItem!!
+
+    fun setDataToRvItem(list: MutableList<ArbreModel>){
+        listItem?.addAll(list)
+        notifyDataSetChanged()
+    }
 
 
     override fun getItemCount() = listItem?.size ?: 0

@@ -198,7 +198,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="localiteId"
+                                android:tag="localite"
                                 android:id="@+id/selectLocaliteDistributionArbre"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -238,7 +238,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="producteursId"
+                                android:tag="producteurId"
                                 android:id="@+id/selectProducteurDistributionArbre"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -252,40 +252,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Choisir sa parcelle concernée *"
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Choisir sa parcelle concernée *"-->
 
-                            android:textStyle="bold" />
+<!--                            android:textStyle="bold" />-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
 
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="parcelle_id"
-                                android:id="@+id/selectParcelleDistributionArbre"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:tag="parcelle_id"-->
+<!--                                android:id="@+id/selectParcelleDistributionArbre"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:spinnerMode="dialog" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <!--                    <Space-->
                     <!--                        android:layout_width="@dimen/_5sdp"-->

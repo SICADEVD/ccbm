@@ -27,6 +27,7 @@ data class ProducteurModel(
     @SerializedName("habitationProducteur") @Expose var habitationProducteur: String? = "",
     @SerializedName("variete") @Expose var variete: String? = "",
     @SerializedName("autreVariete") @Expose var autreVariete: String? = "",
+    @SerializedName("certification") @Expose var certification: String? = "",
     @SerializedName("certificat") @Expose var anneeCertification: String? = "",
     @SerializedName(value = "statut", alternate = ["status"]) @Expose var statutCertification: String? = "",
     @SerializedName("consentement") @Expose var consentement: String? = "",

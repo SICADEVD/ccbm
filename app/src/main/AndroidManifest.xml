@@ -31,10 +31,19 @@
         tools:ignore="HardcodedDebugMode"
         tools:targetApi="n">
         <activity
+            android:name=".activities.infospresenters.LivraisonCentralPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.infospresenters.DistributionArbrePreviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.infospresenters.VisiteurFormationPreviewActivity"
             android:exported="false" />
         <activity
             android:name=".activities.infospresenters.EvaluationBesoinPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.forms.LivraisonCentralActivity"
             android:exported="false" />
         <activity
             android:name=".activities.forms.VisiteurFormationActivity"

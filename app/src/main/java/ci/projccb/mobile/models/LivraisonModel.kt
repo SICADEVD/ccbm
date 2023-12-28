@@ -59,6 +59,7 @@ data class LivraisonModel(
      @Expose var livraisonSousModelParcellesStringify: String? = null,
      @Expose var livraisonSousModelParcelleIdsStringify: String? = null,
      @Expose var livraisonSousModelTypesStringify: String? = null,
+     @Expose var livraisonSousModelCertifStringify: String? = null,
      @Expose var livraisonSousModelQuantitysStringify: String? = null,
      @Expose var livraisonSousModelAmountsStringify: String? = null,
      @Expose var livraisonSousModelScellesStringify: String? = null,

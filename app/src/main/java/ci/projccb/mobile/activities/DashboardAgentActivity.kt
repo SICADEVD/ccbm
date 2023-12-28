@@ -802,33 +802,20 @@ class DashboardAgentActivity : AppCompatActivity(),
             icon = R.drawable.visitor_form,
             canAdd = true,
             canEdit = false,
-            canViewDraft = false,
+            canViewDraft = true,
             canViewSync = false //can be false
         ).apply { this.image = image.plus("visitor_form.png")})
 
-//        listOfFeatures.add(FeatureModel("FORMATION PRODUCTEUR",
-//            countSync = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
-//            type = "FORMATION",
-//            categorie = 2,
-//            //image = R.drawable.livraison,
-//            icon = R.drawable.ic_shipped,
-//            canAdd = true,
-//            canEdit = false,
-//            canViewDraft = false,
-//            canViewSync = false //can be false
-//        ).apply { this.image = image.plus("formation.png")})
-
         listOfFeatures.add(FeatureModel("LIVRAISON MAG CENTRAL",
             countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison")!!,
-            type = "SUIVI_LIVRAISON",
+            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison_central")!!,
+            type = "SUIVI_LIVRAISON_CENTRAL",
             categorie = 3,
             //image = R.drawable.livraison,
             icon = R.drawable.livrais_mag_central,
-            canAdd = false,
+            canAdd = true,
             canEdit = false,
-            canViewDraft = false,
+            canViewDraft = true,
             canViewSync = false //can be false
         ).apply { this.image = image.plus("livrais_mag_central.png")})
 
@@ -843,7 +830,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             icon = R.drawable.arbre_black,
             canAdd = true,
             canEdit = false,
-            canViewDraft = false,
+            canViewDraft = true,
             canViewSync = false //can be false
         ).apply { this.image = image.plus("arbre_black.png")})
 
@@ -856,48 +843,9 @@ class DashboardAgentActivity : AppCompatActivity(),
             icon = R.drawable.distrib_arbre,
             canAdd = true,
             canEdit = false,
-            canViewDraft = false,
+            canViewDraft = true,
             canViewSync = false //can be false
         ).apply { this.image = image.plus("distrib_arbre.png")})
-
-//        listOfFeatures.add(FeatureModel("APPROVISIONNEMENT",
-//            countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
-//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
-//            type = "CALCUL_ESTIMATION",
-//            categorie = 4,
-//            //image = R.drawable.estimations,
-//            icon = R.drawable.ic_suivi_parcel,
-//            canAdd = false,
-//            canEdit = false,
-//            canViewDraft = false,
-//            canViewSync = false //can be false
-//        ).apply { this.image = image.plus("estimations.png")})
-
-//        listOfFeatures.add(FeatureModel("MONITORING",
-//            countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
-//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
-//            type = "CALCUL_ESTIMATION",
-//            categorie = 4,
-//            //image = R.drawable.estimations,
-//            icon = R.drawable.ic_suivi_parcel,
-//            canAdd = false,
-//            canEdit = false,
-//            canViewDraft = false,
-//            canViewSync = false //can be false
-//        ).apply { this.image = image.plus("estimations.png")})
-
-//        listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
-//            countSync =  CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-//            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "inspection")!!,
-//            type = "INSPECTION",
-//            categorie = 4,
-//            //image = R.drawable.evaluation,
-//            icon = R.drawable.baseline_elevator,
-//            canAdd = false,
-//            canEdit = false,
-//            canViewDraft = false,
-//            canViewSync = false //can be false
-//        ).apply { this.image = image.plus("evaluation.png")})
 
         listOfFeatures.map {
             listOfFeatureCloned.add(it)

@@ -31,6 +31,10 @@ data class DistributionArbreModel(
     @SerializedName("producteur") @Expose var producteurId: String? = "",
     @SerializedName("parcelle") @Expose var parcelleId: String? = "",
     @SerializedName("nombre_arbre_denombre") @Expose var nombreDarbreDenombre: String? = "",
+    @Expose var section: String? = "",
+    @Expose var localite: String? = "",
+    @Expose var quantiteStr: String? = "",
+    @Expose var qtelivre: String? = "",
     @Expose var listNomArbreDistribueStr: String? = "",
     @Expose var listQuantiteArbreDistribueStr: String? = "",
     @Expose var listStrateArbreDistribueStr: String? = "",
@@ -40,16 +44,14 @@ data class DistributionArbreModel(
     @Expose @SerializedName("agentId") var agentId: String? = "",
 ): Parcelable{
 
-    @SerializedName("list_nom_arbre_distribue") @Expose(serialize = true, deserialize = false) @Ignore
-    var listNomArbreDistribue: MutableList<String> = mutableListOf()
-
-    @SerializedName("list_quantite_arbre_distribue") @Expose(serialize = true, deserialize = false) @Ignore
-    var listQuantiteArbreDistribue: MutableList<String> = mutableListOf()
-
-    @SerializedName("list_strate_arbre_distribue") @Expose(serialize = true, deserialize = false) @Ignore
-    var listStrateArbreDistribue: MutableList<String> = mutableListOf()
+    @Ignore @SerializedName("quantite") @Expose(serialize = true, deserialize = false) var quantiteList: Map<String, Map<String, String>>? = null
 
 }
+
+@Parcelize
+data class QuantiteDistribuer(
+    val variableKey: Map<String, Map<String, String>>
+): Parcelable
 
 @Dao
 interface DistributionArbreDao {
@@ -73,4 +75,8 @@ interface DistributionArbreDao {
     @Transaction
     @Query("DELETE FROM distribution_arbre WHERE userid = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM distribution_arbre WHERE uid = :uid")
+    fun deleteByUid(uid: Int?)
 }

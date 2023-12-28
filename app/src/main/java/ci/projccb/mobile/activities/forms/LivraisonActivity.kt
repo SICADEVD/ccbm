@@ -590,20 +590,30 @@ class LivraisonActivity : AppCompatActivity() {
         //setupCampagneSelection()
         //setupTypeProduitSelection()
         //For RecycleView
-//        Commons.setListenerForSpinner(this,
-//            "Quel est le type de cacao ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
-//            spinner = selectTypeLivraison,
-//            itemChanged = arrayListOf(Pair(1, "Certifie")),
-//            listIem = resources.getStringArray(R.array.YesOrNo)
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//                if (itemId == 1) {
-//                    containerProgramLivraison.visibility = visibility
-//                }
-//            })
+        Commons.setListenerForSpinner(this,
+            "Choix du type de produit","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeLivraison,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            listIem = resources.getStringArray(R.array.type_produit)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerTypeCertifLivraison.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix du type de certificat","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeCertifLivraison,
+            listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
 
         setupLivraisonSousModRv()
     }
@@ -667,7 +677,7 @@ class LivraisonActivity : AppCompatActivity() {
 //            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
             var valueMod = ""
             livraisonSousModelList.forEach {
-                valueMod += "${it.producteurIdName} | ${it.parcelleIdName} | ${it.typeName} | ${it.quantityNb}\n"
+                valueMod += "${it.producteurIdName} | ${it.parcelleIdName} | ${it.typeName} | ${it.certificat} | ${it.quantityNb}\n"
             }
             this.add(Pair("Les produits à livrés", valueMod) as Pair<String, String>)
         }.map { MapEntry(it.first, it.second) }
@@ -708,6 +718,7 @@ class LivraisonActivity : AppCompatActivity() {
         val listOflivraisonSousModelParcelle = arrayListOf<String>()
         val listOflivraisonSousModelParcelleId = arrayListOf<String>()
         val listOflivraisonSousModelType = arrayListOf<String>()
+        val listOflivraisonSousModelCertificat = arrayListOf<String>()
         val listOflivraisonSousModelQuantity = arrayListOf<String>()
         val listOflivraisonSousModelAmount = arrayListOf<String>()
         val listOflivraisonSousModelScelle = arrayListOf<String>()
@@ -718,6 +729,7 @@ class LivraisonActivity : AppCompatActivity() {
             listOflivraisonSousModelParcelle.add("${it.parcelleIdName}")
             listOflivraisonSousModelParcelleId.add("${it.parcelleId}")
             listOflivraisonSousModelType.add("${it.typeName}")
+            listOflivraisonSousModelCertificat.add("${it.certificat}")
             listOflivraisonSousModelQuantity.add("${it.quantityNb}")
             listOflivraisonSousModelAmount.add("${it.amountNb}")
             listOflivraisonSousModelScelle.add("${it.numScelle}")
@@ -740,6 +752,7 @@ class LivraisonActivity : AppCompatActivity() {
             livraisonSousModelParcellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelle)
             livraisonSousModelParcelleIdsStringify = ApiClient.gson.toJson(listOflivraisonSousModelParcelleId)
             livraisonSousModelTypesStringify = ApiClient.gson.toJson(listOflivraisonSousModelType)
+            livraisonSousModelCertifStringify = ApiClient.gson.toJson(listOflivraisonSousModelCertificat)
             livraisonSousModelQuantitysStringify = ApiClient.gson.toJson(listOflivraisonSousModelQuantity)
             livraisonSousModelAmountsStringify = ApiClient.gson.toJson(listOflivraisonSousModelAmount)
             livraisonSousModelScellesStringify = ApiClient.gson.toJson(listOflivraisonSousModelScelle)
@@ -856,46 +869,34 @@ class LivraisonActivity : AppCompatActivity() {
 
     fun undraftedDatas(draftedData: DataDraftedModel) {
         livraisonDrafted = ApiClient.gson.fromJson(draftedData.datas, LivraisonModel::class.java)
+
+        Commons.setListenerForSpinner(this,
+            "Choix du type de produit","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeLivraison,
+            itemChanged = arrayListOf(Pair(1, "Certifie")),
+            listIem = resources.getStringArray(R.array.type_produit)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerTypeCertifLivraison.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Choix du type de certificat","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectTypeCertifLivraison,
+            listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
         var countero = 0;
         livraisonDrafted?.let {
-//            staffList!!.forEach { delegue ->
-//                if(delegue.id.toString().equals(it?.delegueId)){
-//                    selectStaffList.setSelection(countero , true)
-//
-//                    editNomExpediteur.setText("${it?.senderName}")
-//                    editContactExpediteur.setText("${it?.senderPhone}")
-//                    editEmailExpediteur.setText("${it?.senderEmail}")
-//                    editAdressExpediteur.setText("${it?.senderAddress ?:"Inconnu"}")
-//
-//                    setupMagasinSelection(it?.delegueId.toString())
-//                }
-//                countero++
-//            }
-//
-//            countero = 0
-//            val listProdId: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelProdIdsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            val listParce: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelParcellesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            val listParcelId: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelParcelleIdsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            val listType: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelTypesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            val listQuantity: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelQuantitysStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            val listAmount: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelAmountsStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            val listScelle: MutableList<String> = ApiClient.gson.fromJson(it.livraisonSousModelScellesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type)
-//            (ApiClient.gson.fromJson(it.livraisonSousModelProdNamesStringify?:"[]", object : TypeToken<MutableList<String>>() {}.type) as MutableList<String>).forEach {
-//
-//                livraisonSousModelList.add(
-//                    LivraisonSousModel(
-//                        producteurId = listProdId.get(countero)?:"",
-//                        producteurIdName = it,
-//                        parcelleId = listParcelId.get(countero)?:"",
-//                        parcelleIdName = listParce.get(countero)?:"",
-//                        typeName = listType.get(countero)?:"",
-//                        quantityNb = listQuantity.get(countero).toInt(),
-//                        amountNb = listAmount.get(countero).toInt(),
-//                        numScelle = listScelle.get(countero)?:""
-//                    )
-//                )
-//                countero++
-//            }
             setupSectionSelection()
 
             setupStaffSelection(livraisonDrafted?.senderStaff, livraisonDrafted?.magasinSection)
@@ -905,12 +906,6 @@ class LivraisonActivity : AppCompatActivity() {
             var itemList = GsonUtils.fromJson<MutableList<LivraisonSousModel>>(livraisonDrafted?.itemsStringify, object : TypeToken<MutableList<LivraisonSousModel>>() {}.type)
             livraisonSousModelList.addAll(itemList)
             livraisonSousModelAdapter?.notifyDataSetChanged()
-
-//            editReduction.setText("${ it.reduction }")
-//            tvSousTotal.setText("${ it.sousTotalReduce.toString() }")
-//            tvTotalReduce.setText("${ it.totalReduce.toString() }")
-//            LogUtils.d(it.estimatDate)
-//            editDateLivraison.setText("${it.estimatDate}")
 
             true
         }
@@ -931,7 +926,7 @@ class LivraisonActivity : AppCompatActivity() {
 //            }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
 
@@ -1021,6 +1016,7 @@ class LivraisonActivity : AppCompatActivity() {
                     parcelleId= parcelleCommon.id.toString(),
                     parcelleIdName = parcelleCommon.nom.toString(),
                     typeName = selectTypeLivraison.selectedItem.toString(),
+                    certificat =  if(selectTypeLivraison.selectedItem.toString().equals("Ordinaire", ignoreCase = true) == false) selectTypeCertifLivraison.selectedItem.toString() else "",
                     quantityNb = editQuantity.text.toString().toInt(),
                     //numScelle = editNumScelle.text.toString()
                 )

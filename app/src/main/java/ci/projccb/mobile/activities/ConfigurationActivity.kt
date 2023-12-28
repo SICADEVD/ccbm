@@ -80,6 +80,11 @@ class ConfigurationActivity : AppCompatActivity() {
     var recuDao: RecuDao? = null
     var delegueDao: DelegueDao? = null
     var concernesDao: ConcernesDao? = null
+    var transporteurDao: TransporteurDao? = null
+    var entrepriseDao: EntrepriseDao? = null
+    var vehiculeDao: VehiculeDao? = null
+    var remorqueDao: RemorqueDao? = null
+    var livraisonVerMagCentralDao: LivraisonVerMagCentralDao? = null
     var staffFormationDao: StaffFormationDao? = null
     var programmesDao: ProgrammesDao? = null
     var sectionsDao: SectionsDao? = null
@@ -588,6 +593,103 @@ class ConfigurationActivity : AppCompatActivity() {
             } else {
                 configCompletedOrError("Applicateurs")
                 //getStaffDelegue()
+                getListeTransporteurs()
+            }
+
+        }
+    }
+
+    suspend fun getListeTransporteurs() {
+
+        val listOfEntreprise = mutableListOf<EntrepriseModel>()
+
+        withContext(IO) {
+            val dataUpdate = async {
+                transporteurDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getTransporteurList()
+                    var responseData: Response<MutableList<TransporteurModel>> = clientData.execute()
+                    val dataList: MutableList<TransporteurModel>? = responseData.body()
+
+                    val entrepriseNameList = mutableListOf<String>()
+
+                    dataList?.map {
+
+                        if (!entrepriseNameList.contains(it.entreprise.toString())) {
+                            entrepriseNameList.add(it.entreprise.toString())
+                            val entreprise = EntrepriseModel(
+                                id = it.entreprise_id,
+                                nom = it.entreprise.toString(),
+                                uid = 0,
+                                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                            )
+                            listOfEntreprise.add(entreprise)
+                        }
+
+                        val data = TransporteurModel(
+                            id = it.id,
+                            entreprise_id = it.entreprise_id,
+                            nom = it.nom,
+                            prenoms = it.prenoms,
+                            date_naiss = it.date_naiss,
+                            phone1 = it.phone1,
+                            num_piece = it.num_piece,
+                            num_permis = it.num_permis,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        transporteurDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Transporteurs, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Transporteurs")
+                //getStaffDelegue()
+                getEntrepriseFormation(listOfEntreprise)
+                //getStaffFormation()
+            }
+
+        }
+    }
+
+    suspend fun getEntrepriseFormation(listOfEntreprise: MutableList<EntrepriseModel>) {
+
+        withContext(IO) {
+            val dataUpdate = async {
+                entrepriseDao?.deleteAll()
+
+                try {
+
+                    listOfEntreprise?.map {
+                        entrepriseDao?.insert(it)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Entreprises, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Entreprises")
+                //getStaffDelegue()
                 getStaffFormation()
             }
 
@@ -638,6 +740,134 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Staff de la formation, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Staff de la formation")
+                getVehicule()
+            }
+
+        }
+    }
+
+    suspend fun getVehicule() {
+        withContext(IO) {
+            val dataUpdate = async {
+                vehiculeDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getVehiculeList()
+                    var responseData: Response<MutableList<VehiculeModel>> = clientData.execute()
+                    val dataList: MutableList<VehiculeModel>? = responseData.body()
+
+                    dataList?.map {
+                        val data = VehiculeModel(
+                            id = it.id,
+                            marque_id = it.marque_id,
+                            vehicule_immat = it.vehicule_immat,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        vehiculeDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Vehicules, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Vehicules")
+                getRemorque()
+            }
+
+        }
+    }
+
+    suspend fun getRemorque() {
+        withContext(IO) {
+            val dataUpdate = async {
+                remorqueDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getRemorqueList()
+                    var responseData: Response<MutableList<RemorqueModel>> = clientData.execute()
+                    val dataList: MutableList<RemorqueModel>? = responseData.body()
+
+                    dataList?.map {
+                        val data = RemorqueModel(
+                            id = it.id,
+                            remorque_immat = it.remorque_immat,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        remorqueDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Remorques, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Remorques")
+                getLivraisonVerMagCentral()
+            }
+
+        }
+    }
+
+    suspend fun getLivraisonVerMagCentral() {
+        withContext(IO) {
+            val dataUpdate = async {
+                livraisonVerMagCentralDao?.deleteAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+                try {
+                    var clientData = ApiClient.apiService.getLivraisonVerMagCentralList()
+                    var responseData: Response<MutableList<LivraisonVerMagCentralModel>> = clientData.execute()
+                    val dataList: MutableList<LivraisonVerMagCentralModel>? = responseData.body()
+
+                    dataList?.map { data ->
+                        val data = LivraisonVerMagCentralModel(
+                            id = data.id,
+                            section = data.section,
+                            magasinier = data.magasinier,
+                            magasinSection = data.magasinSection,
+                            codeMagasinSection = data.codeMagasinSection,
+                            Delegue = data.Delegue,
+                            typeProduit = data.typeProduit,
+                            certificat = data.certificat,
+                            quantiteMagasinSection = data.quantiteMagasinSection,
+                            quantiteLivreMagCentral = data.quantiteLivreMagCentral,
+                            nom = data.nom,
+                            prenoms = data.prenoms,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                            uid = 0
+                        )
+
+                        livraisonVerMagCentralDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Livraison vers magasin central, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Livraison vers magasin central")
                 getStaffDelegue()
             }
 
@@ -1552,18 +1782,16 @@ class ConfigurationActivity : AppCompatActivity() {
                     val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
 
                     datasMagasinList?.map {
-//                        val dataMagasinModel = MagasinModel(
-//                            codeMagasinsections = it.codeMagasinsections,
-//                            nomMagasinsections = it.nomMagasinsections,
-//                            staffId = it.staffId,
-//                            phone = it.phone,
-//                            email = it.email,
-//                            adresse = it.adresse,
-//                            status = it.status,
-//                            id = it.id,
-//                            uid = 0
-//                        )
-                        magasinDao?.insert(it)
+                        val dataMagasinModel = MagasinCentralModel(
+                            codeMagasinsections = it.codeMagasinsections,
+                            nomMagasinsections = it.nomMagasinsections,
+                            staffId = it.staffId,
+                            phone = it.phone,
+                            status = it.status,
+                            id = it.id,
+                            uid = 0
+                        )
+                        magasinDao?.insert(dataMagasinModel)
                         //magasinDao?.insert(it)
                     }
                 } catch (ex: Exception) {
@@ -2694,6 +2922,11 @@ class ConfigurationActivity : AppCompatActivity() {
         typeDocuDocumentDao = database?.typeDocumentDao()
         typeProduitDao = database?.typeProduitDao()
         concernesDao = database?.concernesDao()
+        transporteurDao = database?.transporteurDao()
+        entrepriseDao = database?.entrepriseDao()
+        vehiculeDao = database?.vehiculeDao()
+        remorqueDao = database?.remorqueDao()
+        livraisonVerMagCentralDao = database?.livraisonVerMagCentralDao()
         staffFormationDao = database?.staffFormation()
         programmesDao = database?.programmesDao()
         sectionsDao = database?.sectionsDao()

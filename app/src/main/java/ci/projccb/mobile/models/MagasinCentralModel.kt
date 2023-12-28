@@ -40,23 +40,23 @@ interface MagasinCentralDao {
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(magasinModel: MagasinModel)
+    fun insert(magasinCentralModel: MagasinCentralModel)
 
     @Transaction
     @Query("SELECT * FROM magasin_central")
-    fun getAll(): MutableList<MagasinModel>
+    fun getAll(): MutableList<MagasinCentralModel>
 
     @Transaction
     @Query("SELECT * FROM magasin_central where staffId = :concernes")
-    fun getConcerneeMagasins(concernes: Int): MutableList<MagasinModel>
+    fun getConcerneeMagasins(concernes: Int): MutableList<MagasinCentralModel>
 
     @Transaction
     @Query("SELECT * FROM magasin_central where section_id != 0")
-    fun getMagasinsSections(): MutableList<MagasinModel>
+    fun getMagasinsSections(): MutableList<MagasinCentralModel>
 
     @Transaction
     @Query("SELECT * FROM magasin_central where cooperative_id != 0")
-    fun getMagasinsCentraux(): MutableList<MagasinModel>
+    fun getMagasinsCentraux(): MutableList<MagasinCentralModel>
 
     @Transaction
     @Query("DELETE FROM magasin_central")

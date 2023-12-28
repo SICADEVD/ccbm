@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
-import ci.projccb.mobile.activities.forms.EvaluationArbreActivity
+import ci.projccb.mobile.activities.forms.DistributionArbreActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.adapters.PreviewItemAdapter
-import ci.projccb.mobile.models.EvaluationArbreModel
+import ci.projccb.mobile.models.DistributionArbreModel
 import ci.projccb.mobile.models.VisiteurFormationModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
@@ -21,7 +21,7 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_eval_besoin_preview.*
+import kotlinx.android.synthetic.main.activity_distribution_arbre_preview.*
 
 import kotlinx.android.synthetic.main.activity_producteur_preview.imageProfileProdPreview
 import kotlinx.coroutines.CoroutineScope
@@ -30,16 +30,16 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class EvaluationBesoinPreviewActivity : AppCompatActivity() {
+class DistributionArbrePreviewActivity : AppCompatActivity() {
 
 
-    var evaluationArbreDatas: EvaluationArbreModel? = null
+    var distributionArbreDatas: DistributionArbreModel? = null
     val draftDao = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_eval_besoin_preview)
+        setContentView(R.layout.activity_distribution_arbre_preview)
 
         intent?.let {
             try {
@@ -62,25 +62,23 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
                 recyclerInfoPrev.adapter = rvPrevAdapter
                 recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-                evaluationArbreDatas = it.getParcelableExtra("preview")
+                distributionArbreDatas = it.getParcelableExtra("preview")
                 draftID = it.getIntExtra("draft_id", 0)
 
-                //LogUtils.e(Commons.TAG, GsonUtils.toJson(visiteurFormationDatas))
+                LogUtils.d(Commons.TAG, GsonUtils.toJson(distributionArbreDatas))
 
-
-
-                clickSaveEvaluatBesoinPreview.setOnClickListener {
+                clickSaveDistributionArbrePreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,
                         showNo = true,
                         callback = {
-                            CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
-                                ?.insert(evaluationArbreDatas!!)
+                            CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
+                                ?.insert(distributionArbreDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "evaluation_besoin", this)
+                            Commons.synchronisation(type = "distribution_arbre", this)
                             Commons.showMessage(
-                                "Evaluation enregistrée !",
+                                "Distribution d'arbre enregistrée !",
                                 this,
                                 finished = true,
                                 callback = {})
@@ -89,7 +87,7 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
                     )
 
 
-                    ActivityUtils.finishActivity(EvaluationArbreActivity::class.java)
+                    ActivityUtils.finishActivity(DistributionArbreActivity::class.java)
                 }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)

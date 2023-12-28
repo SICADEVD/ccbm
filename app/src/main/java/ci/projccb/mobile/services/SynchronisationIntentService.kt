@@ -67,10 +67,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
     var producteurDao: ProducteurDao? = null
     var parcelleDao: ParcelleDao? = null
     var livraisonDao: LivraisonDao? = null
+    var livraisonCentralDao: LivraisonCentralDao? = null
     var menageDao: ProducteurMenageDao? = null
     var formationDao: FormationDao? = null
     var evaluationArbreDao: EvaluationArbreDao? = null
     var visiteurFormationDao: VisiteurFormationDao? = null
+    var distributionArbreDao: DistributionArbreDao? = null
     var suiviParcelleDao: SuiviParcelleDao? = null
     var suiviApplicationDao: SuiviApplicationDao? = null
     var enqueteSsrtDao: EnqueteSsrteDao? = null
@@ -332,8 +334,14 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 }
                 //LogUtils.e(TAG, "menage ID after -> ${menageSync.id}")
             } catch (uhex: UnknownHostException) {
+                menageDao.deleteUid(
+                    uId = menage.uid.toString()
+                )
                 FirebaseCrashlytics.getInstance().recordException(uhex)
             } catch (ex: Exception) {
+                menageDao.deleteUid(
+                    uId = menage.uid.toString()
+                )
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
             }
@@ -360,7 +368,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     perimeter = null
                     prenoms = null
                     producteurNom = null
-                    typedeclaration = null
                 }
 
                 if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
@@ -579,65 +586,84 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
-            syncLivraison(livraisonDao!!)
+            syncFormations(formationDao!!)
         } else {
-            syncLivraison(livraisonDao!!)
+            syncFormations(formationDao!!)
         }
     }
 
 
-//    fun syncFormations(formationDao: FormationDao) {
-//        val formationDatas = formationDao.getUnSyncedAll(
-//            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-//        );
-//
-//        for (formation in formationDatas) {
-//            try {
-//                // deserialize datas producteurs
-//
-//                formation.apply {
-//                    producteursIdList = GsonUtils.fromJson(formation.producteursIdStr, object : TypeToken<MutableList<String>>() {}.type)
-//                    typeFormationList = GsonUtils.fromJson(formation.typeFormationStr, object : TypeToken<MutableList<String>>() {}.type)
-//                    themeList = GsonUtils.fromJson(formation.themeStr, object : TypeToken<MutableList<String>>() {}.type)
-//                    sousThemeList = GsonUtils.fromJson(formation.sousThemeStr, object : TypeToken<MutableList<String>>() {}.type)
-//
-//                    dureeFormation?.split(":").let {
-//                        hour = it?.get(0)?.toString()
-//                        minute = it?.get(1)?.toString()
-//                    }
-//
-//                    multiStartDate = Commons.convertDate(multiStartDate, true)
-//                    multiEndDate = Commons.convertDate(multiEndDate, true)
-//
-//
-//                    photo_filename = photoFormation
-//                    rapport_filename = rapportFormation
-//                    photoFormation = Commons.convertPathBase64(photoFormation, 1)
-//                    rapportFormation = Commons.fileToBase64(rapportFormation)
-//                }
-//
-//                val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)
-//
-//                val responseFormation: Response<FormationModel> = clientFormation.execute()
-//                val formationSynced: FormationModel? = responseFormation.body()
-//
-//                formationDao.syncData(
-//                    formationSynced?.id!!,
-//                    true,
-//                    formation.uid
-//                )
-//
-//
-//            } catch (uhex: UnknownHostException) {
-//                FirebaseCrashlytics.getInstance().recordException(uhex)
-//            } catch (ex: Exception) {
-//                LogUtils.e(ex.message)
-//                FirebaseCrashlytics.getInstance().recordException(ex)
-//            }
-//        }
-//
-//        syncLivraison(livraisonDao!!)
-//    }
+    fun syncFormations(formationDao: FormationDao) {
+        val formationDatas = formationDao.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        );
+
+        for (formation in formationDatas) {
+            try {
+                // deserialize datas producteurs
+
+                formation.apply {
+                    producteursIdList = GsonUtils.fromJson(formation.producteursIdStr, object : TypeToken<MutableList<String>>() {}.type)
+                    typeFormationList = GsonUtils.fromJson(formation.typeFormationStr, object : TypeToken<MutableList<String>>() {}.type)
+                    themeList = GsonUtils.fromJson(formation.themeStr, object : TypeToken<MutableList<String>>() {}.type)
+                    sousThemeList = GsonUtils.fromJson(formation.sousThemeStr, object : TypeToken<MutableList<String>>() {}.type)
+
+                    dureeFormation?.split(":").let {
+                        hour = it?.get(0)?.toString()
+                        minute = it?.get(1)?.toString()
+                    }
+
+                    dureeFormation = (if(hour?.length == 1) "0$hour:" else "$hour:")+(if(minute?.length == 1) "0$minute" else "$minute")
+
+                    multiStartDate = Commons.convertDate(multiStartDate, true)
+                    multiEndDate = Commons.convertDate(multiEndDate, true)
+
+
+                    photo_filename = photoFormation
+                    rapport_filename = rapportFormation
+                    photoFormation = Commons.convertPathBase64(photoFormation, 1)
+                    rapportFormation = Commons.fileToBase64(rapportFormation)
+                }
+
+                val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)
+
+                clientFormation.enqueue(object : Callback<FormationModel>{
+                    override fun onResponse(
+                        call: Call<FormationModel>,
+                        response: Response<FormationModel>
+                    ) {
+                        if(response.isSuccessful){
+                            val formationSynced: FormationModel? = response.body()
+
+                            formationDao.syncData(
+                                formationSynced?.id!!,
+                                true,
+                                formation.uid
+                            )
+                        }else{
+                            formationDao.deleteByUid(
+                                formation.uid
+                            )
+                        }
+                    }
+
+                    override fun onFailure(call: Call<FormationModel>, t: Throwable) {
+                        LogUtils.e(t.message)
+                    }
+
+                })
+
+
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
+        syncLivraison(livraisonDao!!)
+    }
 
 
     fun syncLivraison(livraisonDao: LivraisonDao) {
@@ -765,12 +791,137 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
             }
 
-            syncEnqueteSsrt(enqueteSsrtDao!!)
+            syncDistributionDarbre(distributionArbreDao!!)
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+    }
+
+
+    fun syncDistributionDarbre(distributionArbreDao: DistributionArbreDao) {
+        try {
+            val distribArbrDatas = distributionArbreDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+            LogUtils.d("DISTRIBUTION ARBRE : ", distribArbrDatas)
+
+            distribArbrDatas.map {distrib ->
+
+                distrib.quantiteList = GsonUtils.fromJson(distrib.quantiteStr, QuantiteDistribuer::class.java).variableKey
+
+                val clientRequ: Call<DistributionArbreModel> = ApiClient.apiService.synchronisationDistributionArbre(distrib)
+                clientRequ.enqueue(object : Callback<DistributionArbreModel>{
+                    override fun onResponse(
+                        call: Call<DistributionArbreModel>,
+                        response: Response<DistributionArbreModel>
+                    ) {
+                        if(response.isSuccessful){
+
+                            val responseItem = response.body()
+
+                            distributionArbreDao.syncData(
+                                responseItem?.id!!,
+                                true,
+                                distrib.uid
+                            )
+
+                        }else{
+
+                            distributionArbreDao.deleteByUid(
+                                distrib.uid
+                            )
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<DistributionArbreModel>, t: Throwable) {
+                        distributionArbreDao.deleteByUid(
+                            distrib.uid
+                        )
+                        LogUtils.e(t.message)
+                    }
+
+                })
+
+
+            }
+
+            syncLivraisonMagCentral(livraisonCentralDao!!)
+        } catch (uhex: UnknownHostException) {
+            FirebaseCrashlytics.getInstance().recordException(uhex)
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+    }
+
+
+    fun syncLivraisonMagCentral(livraisonCentralDao: LivraisonCentralDao) {
+        try {
+            val livraisonCentralDatas = livraisonCentralDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+            LogUtils.d("livraisonVerMagCentralDao : ", livraisonCentralDatas)
+
+            livraisonCentralDatas.map {
+
+                val livraisonList = GsonUtils.fromJson<MutableList<LivraisonCentralSousModel>>(it.itemsStringify, object : TypeToken<MutableList<LivraisonCentralSousModel>>(){}.type)
+
+                it.apply {
+                    producteur_idList = livraisonList.map { "${it.producteur_id}" }.toMutableList()
+                    producteursList = livraisonList.map { "${it.producteurs}" }.toMutableList()
+                    parcelleList = livraisonList.map { "${it.parcelle}" }.toMutableList()
+                    quantiteList = livraisonList.map { "${it.quantite}" }.toMutableList()
+                    certificatList  = livraisonList.map { "${it.certificat}" }.toMutableList()
+                    typeproduitList = livraisonList.map { "${it.typeproduit}" }.toMutableList()
+                    typeList = GsonUtils.fromJson<MutableList<String>>(typeStr, object : TypeToken<MutableList<String>>(){}.type)
+
+                    poidsnet = livraisonList.sumBy { it?.quantite?.toInt()?:0 }.toString()
+
+                    estimatDate = Commons.convertDate(estimatDate, toEng = true)
+                }
+
+                val clientRequ: Call<LivraisonCentralModel> = ApiClient.apiService.synchronisationLivraisonCentral(it)
+                clientRequ.enqueue(object : Callback<LivraisonCentralModel>{
+                    override fun onResponse(
+                        call: Call<LivraisonCentralModel>,
+                        response: Response<LivraisonCentralModel>
+                    ) {
+                        if(response.isSuccessful){
+
+                            val responseItem = response.body()
+
+                            livraisonCentralDao.syncData(
+                                responseItem?.id!!,
+                                true,
+                                it.uid
+                            )
+
+                        }else{
+
+                            livraisonCentralDao.deleteByUid(
+                                it.uid.toString()
+                            )
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<LivraisonCentralModel>, t: Throwable) {
+                        LogUtils.e(t.message)
+                    }
+
+                })
+
+
+            }
+
+            syncEnqueteSsrt(enqueteSsrtDao!!)
+        } catch (uhex: UnknownHostException) {
+            FirebaseCrashlytics.getInstance().recordException(uhex)
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
     }
@@ -971,6 +1122,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             formationDao = CcbRoomDatabase.getDatabase(this)?.formationDao()
             evaluationArbreDao = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
             visiteurFormationDao = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
+            distributionArbreDao = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
             suiviParcelleDao = CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()
             livraisonDao = CcbRoomDatabase.getDatabase(this)?.livraisonDao()
             estimationDao = CcbRoomDatabase.getDatabase(this)?.estimationDao()
@@ -978,6 +1130,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             enqueteSsrtDao = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()
             inspectionDao = CcbRoomDatabase.getDatabase(this)?.inspectionDao()
             infosProducteurDao = CcbRoomDatabase.getDatabase(this)?.infosProducteurDao()
+            livraisonCentralDao = CcbRoomDatabase.getDatabase(this)?.livraisonCentralDao()
 
             if (intent != null) {
                 syncLocalite(localiteDao!!)

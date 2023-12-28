@@ -20,7 +20,7 @@ interface FormationDao {
     fun getAll(agentID: String?): MutableList<FormationModel>
 
     @Transaction
-    @Query("SELECT * FROM formation WHERE isSynced = 0 AND agentId = :agentID")
+    @Query("SELECT * FROM formation WHERE isSynced = 0 AND id = 0 AND agentId = :agentID")
     fun getUnSyncedAll(agentID: String?): MutableList<FormationModel>
 
     @Transaction
@@ -34,4 +34,8 @@ interface FormationDao {
     @Transaction
     @Query("DELETE FROM formation")
     fun deleteAll()
+
+    @Transaction
+    @Query("DELETE FROM formation WHERE uid = :uId")
+    fun deleteByUid(uId: Int)
 }

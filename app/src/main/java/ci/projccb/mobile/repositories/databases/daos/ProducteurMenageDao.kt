@@ -36,4 +36,8 @@ interface ProducteurMenageDao {
     @Transaction
     @Query("DELETE FROM menage WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM menage WHERE uid = :uId")
+    fun deleteUid(uId: String?)
 }

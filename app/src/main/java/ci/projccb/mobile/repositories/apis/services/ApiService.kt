@@ -36,11 +36,17 @@ interface ApiService {
     @POST("apivisiteur")
     fun synchronisationVisiteurFormation(@Body visiteurFormationModel: VisiteurFormationModel): Call<VisiteurFormationModel>
 
+    @POST("apidistribution")
+    fun synchronisationDistributionArbre(@Body distributionArbreModel: DistributionArbreModel): Call<DistributionArbreModel>
+
     @POST("apiagroevaluation")
     fun synchronisationEvaluationBesoin(@Body evaluationArbreModel: EvaluationArbreModel): Call<EvaluationArbreModel>
 
     @POST("apilivraisonmagasinsection")
     fun synchronisationLivraisonSection(@Body livraisonModel: LivraisonModel): Call<LivraisonModel>
+
+    @POST("apilivraisonmagasincentral")
+    fun synchronisationLivraisonCentral(@Body livraisonCentralModel: LivraisonCentralModel): Call<LivraisonCentralModel>
 
     @POST("apievaluation")
     fun synchronisationInspection(@Body questionDTO: InspectionDTO): Call<InspectionDTO>
@@ -131,5 +137,17 @@ interface ApiService {
 
     @POST("getarbre")
     fun getArbreList(): Call<MutableList<ArbreModel>>
+
+    @POST("gettransporteurs")
+    fun getTransporteurList(): Call<MutableList<TransporteurModel>>
+
+    @POST("getvehicules")
+    fun getVehiculeList(): Call<MutableList<VehiculeModel>>
+
+    @POST("getremorques")
+    fun getRemorqueList(): Call<MutableList<RemorqueModel>>
+
+    @POST("livraisonbroussebymagasinsection")
+    fun getLivraisonVerMagCentralList(): Call<MutableList<LivraisonVerMagCentralModel>>
 
 }

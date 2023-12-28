@@ -48,6 +48,7 @@ import ci.projccb.mobile.activities.forms.EvaluationArbreActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.activities.forms.InspectionActivity
 import ci.projccb.mobile.activities.forms.LivraisonActivity
+import ci.projccb.mobile.activities.forms.LivraisonCentralActivity
 import ci.projccb.mobile.activities.forms.ParcelleActivity
 import ci.projccb.mobile.activities.forms.ProducteurActivity
 import ci.projccb.mobile.activities.forms.ProducteurMenageActivity
@@ -794,6 +795,7 @@ class Commons {
                         "DISTRIBUTION_ARBRE" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
                         "EVALUATION_ARBRE" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
                         "VISITEUR_FORMATION" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
+                        "SUIVI_LIVRAISON_CENTRAL" -> ActivityUtils.startActivity(LivraisonCentralActivity::class.java)
                     }
                 }
 

@@ -76,6 +76,12 @@ import ci.projccb.mobile.tools.ListConverters
         ArbreModel::class,
         StaffFormationModel::class,
         MagasinCentralModel::class,
+        EntrepriseModel::class,
+        TransporteurModel::class,
+        VehiculeModel::class,
+        RemorqueModel::class,
+        LivraisonCentralModel::class,
+        LivraisonVerMagCentralModel::class,
     ],
 )
 @TypeConverters(ListConverters::class)
@@ -136,6 +142,12 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun visiteurFormationDao(): VisiteurFormationDao
     abstract fun arbreDao(): ArbreDao
     abstract fun staffFormation(): StaffFormationDao
+    abstract fun entrepriseDao(): EntrepriseDao
+    abstract fun transporteurDao(): TransporteurDao
+    abstract fun vehiculeDao(): VehiculeDao
+    abstract fun remorqueDao(): RemorqueDao
+    abstract fun livraisonCentralDao(): LivraisonCentralDao
+    abstract fun livraisonVerMagCentralDao(): LivraisonVerMagCentralDao
 
 
     companion object {

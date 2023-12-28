@@ -36,7 +36,6 @@ import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistr
 //import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixDeLArbreDistributionArbre
 //import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixStateArbrDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectParcelleDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.*
@@ -14,6 +15,7 @@ import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.repositories.apis.ApiClient
+import ci.projccb.mobile.tools.Commons.Companion.modifyIcColor
 import kotlinx.android.synthetic.main.drafted_items_list.view.*
 
 
@@ -122,7 +124,33 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "inspection")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
+            "VISITEUR_FORMATION" -> {
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
+                intentUndraftedData = Intent(context, VisiteurFormationActivity::class.java)
+                intentUndraftedData.putExtra("from", "visiteur_formation")
+                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+            }
+            "EVALUATION_ARBRE" -> {
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
+                intentUndraftedData = Intent(context, EvaluationArbreActivity::class.java)
+                intentUndraftedData.putExtra("from", "evaluation_arbre")
+                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+            }
+            "DISTRIBUTION_ARBRE" -> {
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
+                intentUndraftedData = Intent(context, DistributionArbreActivity::class.java)
+                intentUndraftedData.putExtra("from", "distribution_arbre")
+                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+            }
+            "SUIVI_LIVRAISON_CENTRAL" -> {
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
+                intentUndraftedData = Intent(context, LivraisonCentralActivity::class.java)
+                intentUndraftedData.putExtra("from", "suivi_livraison_central")
+                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+            }
         }
+
+        modifyIcColor(context, holder.imageTypeDraft, R.color.black)
 
         when (draftedData.typeDraft?.uppercase()) {
             "CONTENT_PRODUCTEUR" ->  {
@@ -137,7 +165,9 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
         }
 
         holder.itemView.setOnClickListener {
-            context.startActivity(intentUndraftedData)
+            if(intentUndraftedData!= null)
+                context.startActivity(intentUndraftedData)
+            else Toast.makeText(context, "Aucun intent définit !", Toast.LENGTH_SHORT).show()
         }
     }
 
