@@ -55,6 +55,7 @@ data class ParcelleModel(
     @Expose var erosion: String? = "",
     @Expose var nbCacaoParHectare: String? = "",
     @Expose var courDeau: String? = "",
+    @Expose var autreCourDeau: String? = "",
     var status: Boolean = false,
     var isSynced: Boolean = false,
     @Expose @SerializedName("userid") var agentId: String? = "",

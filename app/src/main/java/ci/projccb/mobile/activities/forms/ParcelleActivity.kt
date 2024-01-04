@@ -679,6 +679,20 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
 
         Commons.setListenerForSpinner(this,
+            "Quel est le cour ou plan d'eau ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectCourEauParcelle,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAutreCourDeau.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
             "Y'a t'il des mesures de protection ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectMesurProtectParcelle,
             currentVal = parcelleDrafted.existeMesureProtection,
@@ -1061,6 +1075,20 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
                     containerCourEauParcelle.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Quel est le cour ou plan d'eau ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectCourEauParcelle,
+            itemChanged = arrayListOf(Pair(1, "Autre")),
+            listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAutreCourDeau.visibility = visibility
                 }
             })
 

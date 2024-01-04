@@ -639,13 +639,47 @@ android:textColor="@color/text_color_white"
                             <androidx.appcompat.widget.AppCompatSpinner
                                 android:tag="courDeau"
                                 android:id="@+id/selectCourEauParcelle"
-                                android:entries="@array/YesOrNo"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/containerAutreCourDeau"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="autreCourDeau"
+                                android:textAllCaps="true"
+                                android:id="@+id/editAutreCourDeauParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="Précisez…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <Space
