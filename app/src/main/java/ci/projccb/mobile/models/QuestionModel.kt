@@ -10,5 +10,8 @@ data class QuestionModel(
     var id: Int? = 0,
     @SerializedName("libelle")
     @Expose
-    var libelle: String? = ""
+    var libelle: String? = "",
+    @SerializedName("certificat")
+    @Expose
+    var certificat: String? = ""
 )

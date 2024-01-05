@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatEditText
@@ -24,6 +25,7 @@ import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
@@ -80,7 +82,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     }
 
 
-    fun fetchQuestionnairesReview(fromDraft: Boolean) {
+    fun fetchQuestionnairesReview(fromDraft: Boolean, fromCertificat: String) {
         if (!fromDraft) {
             cQuestionnaires = CcbRoomDatabase.getDatabase(this)?.questionnaireDao()?.getAll()
 
@@ -100,25 +102,30 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     isTitle = true
                 )
 
-                questionResponseList.add(questionResponseTitleModel)
-                cQuestionnairesReviewList?.add(questionResponseTitleModel)
+                LogUtils.d(cQuestionnaires!![i - 1].questionnairesStringify)
 
-                val mQuestionsInfos: MutableList<QuestionModel> =  ApiClient.gson.fromJson(cQuestionnaires!![i - 1].questionnairesStringify!!, mQuestionsToken)
+                if(cQuestionnaires!![i - 1].questionnairesStringify?.contains(fromCertificat, ignoreCase = true) == true){
+                    questionResponseList.add(questionResponseTitleModel)
+                    cQuestionnairesReviewList?.add(questionResponseTitleModel)
 
-                for (questionIndex in 0 until mQuestionsInfos.size) {
-                    questionNumber += 1
+                    val mQuestionsInfos: MutableList<QuestionModel> =  ApiClient.gson.fromJson(cQuestionnaires!![i - 1].questionnairesStringify!!, mQuestionsToken)
 
-                    val questionResponseInfoModel = QuestionResponseModel(
-                        id = questionNumber.toString(),
-                        label = mQuestionsInfos[questionIndex].libelle!!,
-                        note = "",
-                        reponseId = 0,
-                        isTitle = false
-                    )
+                    for (questionIndex in 0 until mQuestionsInfos.size) {
+                        questionNumber += 1
 
-                    questionResponseList.add(questionResponseInfoModel)
-                    cQuestionnairesReviewList?.add(questionResponseInfoModel)
+                        val questionResponseInfoModel = QuestionResponseModel(
+                            id = questionNumber.toString(),
+                            label = mQuestionsInfos[questionIndex].libelle!!,
+                            note = "",
+                            reponseId = 0,
+                            isTitle = false
+                        )
+
+                        questionResponseList.add(questionResponseInfoModel)
+                        cQuestionnairesReviewList?.add(questionResponseInfoModel)
+                    }
                 }
+
             }
         }
 
@@ -229,6 +236,30 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 } else {
                     producteurId = producteur.uid.toString()
                 }
+
+                val listCertif = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteur(producteurID = producteurId.toInt())
+
+                Commons.setListenerForSpinner(this@InspectionActivity,
+                    "Choix du ou des certificats","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                    spinner = selectCertifInspection,
+                    isEmpty = listCertif?.certification?.split(",")
+                        ?.toList()?.isEmpty() ?: true,
+                    listIem = listCertif?.certification?.split(",")
+                        ?.toList() ?: listOf(),
+                    onChanged = {
+
+                        val certificat = listCertif?.certification?.split(",")?.get(it).toString()
+
+                        if(certificat.isNullOrEmpty() == false) {
+                            cQuestionnairesReviewList?.clear()
+                            recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
+                            fetchQuestionnairesReview(true, certificat ?: "")
+                        }
+
+
+                    },
+                    onSelected = { itemId, visibility ->
+                    })
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {
@@ -277,11 +308,10 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     fun setupEncareurSelection(){
 
-        encadreurList = CcbRoomDatabase.getDatabase(applicationContext)?.delegueDao()
-            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+        val encadreurList = CcbRoomDatabase.getDatabase(applicationContext)?.staffFormation()?.getAll( agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString() )
         val delegueDatas: MutableList<CommonData> = mutableListOf()
         encadreurList?.map {
-            CommonData(id = it.id, nom = "${it.nom}")
+            CommonData(id = it.id, nom = "${it.firstname} ${it.lastname}")
         }?.let {
             delegueDatas.addAll(it)
         }
@@ -293,7 +323,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         selectEncadreurList.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val encadreur = encadreurList!![position]
-                encadreurNomPrenoms = "${encadreur.nom}"
+                encadreurNomPrenoms = "${encadreur.firstname} ${encadreur.lastname}"
                 encadreurId = encadreur.id!!.toString()
             }
 
@@ -303,28 +333,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     }
 
-    fun setupCampagneSelection() {
-        campagnesList = CcbRoomDatabase.getDatabase(applicationContext)?.campagneDao()?.getAll()!!
-
-        val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList)
-        selectCampagneInspection!!.adapter = campagneAdapter
-        selectCampagneInspection.setTitle("Choisir la campagne")
-
-        selectCampagneInspection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val campagne = campagnesList[position]
-                campagneLabel = campagne.campagnesNom!!
-                campagneId = campagne.id.toString()
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-    }
-
 
     fun draftInspection(draftModel: DataDraftedModel?) {
-        val draftInsoection = getInspectionObjet()
+        val itemModelOb = getInspectObjet(false)
+        if(itemModelOb == null) return
+        val draftInsoection = itemModelOb?.first.apply {}
 
         showMessage(
             message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
@@ -408,7 +421,13 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             return
         }
 
-        val questionnaireDto = getInspectionObjet()
+        val itemModelOb = getInspectObjet()
+        if(itemModelOb == null) return
+        val questionnaireDto = itemModelOb?.first.apply {}
+
+        questionnaireDto.producteursId = producteurId
+
+        Commons.printModelValue(questionnaireDto as Object, (itemModelOb.second as List<MapEntry>?))
 
         var quizCount = 0
 
@@ -438,8 +457,10 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         ActivityUtils.startActivity(intentInspectionPreview)
     }
 
-    private fun getInspectionObjet(): InspectionDTO {
-        return InspectionDTO(
+    private fun getInspectObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()):  Pair<InspectionDTO, MutableList<Pair<String, String>>>? {
+        var isMissingDial2 = false
+
+        var itemList = getSetupInspectModel(InspectionDTO(
             uid = 0,
             id = 0,
             encadreur = encadreurId,
@@ -455,7 +476,63 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             isSynced = false,
             userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
+        ), mutableListOf<Pair<String,String>>())
+
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                break
+            }
+        }
+
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial || isMissingDial2) ){
+            showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
+        return  itemList
+    }
+
+    fun getSetupInspectModel(
+        prodModel: InspectionDTO,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<InspectionDTO, MutableList<Pair<String, String>>> {
+        val mainLayout = findViewById<ViewGroup>(R.id.container_inspection)
+        Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
+    }
+
+    fun passSetupInspectModel(
+        prodModel: InspectionDTO?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.container_inspection)
+        prodModel?.let {
+            Commons.setAllValueOfTextViews(mainLayout, prodModel)
+        }
     }
 
 
@@ -478,26 +555,60 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             localitesDatas
         )
 
+        val listPersonne = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+        Commons.setListenerForSpinner(this@InspectionActivity,
+            "Selectionner un producteur","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            spinner = selectProducteurInspection,
+            currentVal = listPersonne?.filter { it.id == inspectionDrafted.producteursId?.toInt() }?.map { "${it.nom} ${it.prenoms}" }?.let{
+                if (it.isNullOrEmpty() == false) {
+                    it[0]
+                } else {
+                    ""
+                }
+            } ?: "",
+            listIem = listPersonne?.map { "${it.nom} ${it.prenoms}" }?.toList() ?: listOf(),
+            onChanged = {
+
+                val listCertif = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteur(producteurID = listPersonne?.get(it)?.id)
+
+                Commons.setListenerForSpinner(this@InspectionActivity,
+                    "Choix du ou des certificats","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                    spinner = selectCertifInspection,
+                    isEmpty = listCertif?.certification?.split(",")
+                        ?.toList()?.isEmpty() ?: true,
+                    listIem = listCertif?.certification?.split(",")
+                        ?.toList() ?: listOf(),
+                    onChanged = {
+
+                        val certificat = listCertif?.certification?.split(",")?.get(it).toString()
+
+
+                        if(certificat.isNullOrEmpty() == false) {
+                            cQuestionnairesReviewList?.clear()
+                            recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
+                            fetchQuestionnairesReview(true, certificat ?: "")
+                        }
+
+
+
+                    },
+                    onSelected = { itemId, visibility ->
+                    })
+
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
         // Campagne
-        val campagnesLists = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()
-        val campagnesDatas: MutableList<CommonData> = mutableListOf()
-        campagnesLists?.map {
-            CommonData(id = it.id, nom = it.campagnesNom)
-        }?.let {
-            campagnesDatas.addAll(it)
-        }
-        selectCampagneInspection.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesDatas)
-        provideDatasSpinnerSelection(
-            selectCampagneInspection,
-            inspectionDrafted.campagnesLabel,
-            campagnesDatas
-        )
 
         editDateInspection.setText(inspectionDrafted.dateEvaluation)
 
         val mQuestionsReviewToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
         cQuestionnairesReviewList = GsonUtils.fromJson(inspectionDrafted.reponseStringify, mQuestionsReviewToken)
-        fetchQuestionnairesReview(true)
+
+        fetchQuestionnairesReview(true, inspectionDrafted.certificat ?: "")
     }
 
 
@@ -528,7 +639,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         }
 
         setupLocaliteSelection()
-        setupCampagneSelection()
+
         setupEncareurSelection()
 
         if (intent.getStringExtra("from") != null) {
@@ -537,7 +648,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             draftedDataInspection = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
             undraftedDatas(draftedDataInspection!!)
         } else {
-            fetchQuestionnairesReview(false)
+
         }
     }
 

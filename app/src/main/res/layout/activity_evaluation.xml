@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/container_inspection"
     tools:context=".activities.forms.InspectionActivity">
 
     <RelativeLayout
@@ -112,7 +113,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localite *"
+                            android:text="Selectionner localite"
 
                             android:textStyle="bold" />
         
@@ -147,7 +148,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur *"
+                            android:text="Selectionner un producteur"
 
                             android:textStyle="bold" />
         
@@ -188,7 +189,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Encadreur *"
+                            android:text="Selectionner l'encadreur"
 
                             android:textStyle="bold" />
         
@@ -202,6 +203,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
         
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="encadreur"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectEncadreurList"
                                 android:layout_width="match_parent"
@@ -223,7 +225,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Campagne *"
+                            android:text="Choix du ou des certificats"
 
                             android:textStyle="bold" />
         
@@ -235,16 +237,11 @@ android:textColor="@color/text_color_white"
                             <Space
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
-        
-                            <!--<androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectProducteurParcelle"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />-->
-        
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="certificat"
                                 android:spinnerMode="dialog"
-                                android:id="@+id/selectCampagneInspection"
+                                android:id="@+id/selectCertifInspection"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"/>
         

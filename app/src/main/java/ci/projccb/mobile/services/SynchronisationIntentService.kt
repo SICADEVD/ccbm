@@ -978,6 +978,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
             inspectionsDatas.map { inspection ->
                 inspection.dateEvaluation = Commons.convertDate(inspection.dateEvaluation, toEng = true)
+                inspection.certificatList = mutableListOf<String>()
+                inspection.certificatList?.add(inspection.certificat!!)
                 inspection.reponse = mutableMapOf()
 
                 var counter = 1;

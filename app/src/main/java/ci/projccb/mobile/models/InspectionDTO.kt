@@ -34,6 +34,7 @@ data class InspectionDTO(
     @SerializedName("producteurs_nom") @Expose var producteurNomPrenoms: String? = "",
     @SerializedName("note") @Expose var noteInspection: String? = "",
     @SerializedName("encadreur") @Expose var encadreur: String? = "",
+    @Expose var certificat: String? = "",
     @SerializedName("reponseStringify") @Expose var reponseStringify: String? = "",
     @SerializedName("userid") @Expose var userid: Int? = 0,
     var origin: String? = "local",
@@ -41,4 +42,5 @@ data class InspectionDTO(
     @Expose @SerializedName("agentId") var agentId: String? = "",
 ): Parcelable {
     @SerializedName("reponse") @Expose(serialize = true, deserialize = false) @Ignore var reponse: MutableMap<String, String> = mutableMapOf()
+    @SerializedName("certificat") @Expose(serialize = true, deserialize = false) @Ignore var certificatList: MutableList<String> = mutableListOf()
 }

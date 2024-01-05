@@ -204,6 +204,8 @@ class ConfigurationActivity : AppCompatActivity() {
                             prenoms = it.prenoms,
                             localitesId = it.localitesId,
                             codeProd = it.codeProd,
+                            certification = it.certification,
+                            statutCertification = it.statutCertification,
                             uid = 0,
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
