@@ -195,7 +195,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     //setupPa
                 }
@@ -906,6 +908,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             recyclerArbrOmbrListParcel.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             recyclerArbrOmbrListParcel.adapter = arbreOmbrParcelleAdapter
+
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
@@ -990,6 +993,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
 //            datePickerDialog?.show()
 //        }
+
+        editNumAnneeRegenParcelle.setOnClickListener { showYearPickerDialog(editNumAnneeRegenParcelle) }
         editAnneeCreationParcelle.setOnClickListener { showYearPickerDialog(editAnneeCreationParcelle) }
     }
 

@@ -215,34 +215,6 @@ android:textColor="@color/text_color_white"
                     android:layout_height="@dimen/_10sdp" />
 
                 <LinearLayout
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:id="@+id/containerPrecisionTitreProducteur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:tag="plantePartage"
-                        android:id="@+id/editPrecisionTitreProducteur"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_37sdp"
-                        android:background="@drawable/rounded_background"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters|textNoSuggestions"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
-                        android:hint="@string/precision_hint"
-                        android:textSize="@dimen/_13ssp"
-                        tools:text="" />
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -253,7 +225,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Certificats"
+                        android:text="Donnez son statut"
 
                         android:textStyle="bold" />
 
@@ -266,38 +238,218 @@ android:textColor="@color/text_color_white"
                             android:layout_width="@dimen/_5sdp"
                             android:layout_height="@dimen/_10sdp" />
 
-                        <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                            android:tag="certificatsStr"
-                            android:id="@+id/selectCertifProducteur"
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:tag="statutCertification"
+                            android:id="@+id/selectStatutProducteur"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
+                            android:entries="@array/status"
                             android:spinnerMode="dialog" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:id="@+id/linearAnneeCertificationProducteur"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3.5"
+                                android:text="Année de certification"
+                                android:textColor="@color/text_color_white"
+                                android:textStyle="bold" />
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_37sdp"
+                                android:layout_weight="6.5">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="anneeCertification"
+                                    android:id="@+id/editAnneeCertificationProducteur"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/rounded_background"
+                                    android:editable="false"
+                                    android:focusable="false"
+                                    android:ellipsize="end"
+                                    android:hint="AAAA"
+                                    android:inputType="textCapCharacters"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:textAllCaps="true"
+                                    android:textSize="@dimen/_13ssp" />
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    app:srcCompat="@drawable/ic_date_calendar" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3.5"
+                            android:text="Code du producteur"
+                            android:textColor="@color/text_color_white"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="codeProd"
+                            android:id="@+id/editCodeProducteur"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_37sdp"
+                            android:layout_weight="6.5"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:hint="00-XX-AAA"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Certificats"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:tag="certificatsStr"
+                                android:id="@+id/selectCertifProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:id="@+id/containerAutreCertifProducteur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Autre certificat"
+
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="autreCertificats"
+                            android:id="@+id/editPrecisionAutreCertifProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:hint="@string/precision_hint"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                </LinearLayout>
+
                 <LinearLayout
                     android:visibility="gone"
                     tools:visibility="visible"
-                    android:id="@+id/containerAutreCertifProducteur"
+                    android:id="@+id/containerPrecisionTitreProducteur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:textColor="@color/text_color_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_12sdp"
-                        android:text="Autre certificat"
-
-                        android:textStyle="bold" />
-
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:tag="autreCertificats"
-                        android:id="@+id/editPrecisionAutreCertifProducteur"
+                        android:tag="plantePartage"
+                        android:id="@+id/editPrecisionTitreProducteur"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_37sdp"
                         android:background="@drawable/rounded_background"
@@ -539,150 +691,6 @@ android:textColor="@color/text_color_white"
                             android:spinnerMode="dialog" />
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_12sdp"
-                        android:text="Donnez son statut"
-
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_background">
-
-                        <Space
-                            android:layout_width="@dimen/_5sdp"
-                            android:layout_height="@dimen/_10sdp" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:tag="statutCertification"
-                            android:id="@+id/selectStatutProducteur"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:entries="@array/status"
-                            android:spinnerMode="dialog" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
-
-                <LinearLayout
-                    android:id="@+id/linearAnneeCertificationProducteur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:weightSum="10">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3.5"
-                            android:text="Année de certification"
-                            android:textColor="@color/text_color_white"
-                            android:textStyle="bold" />
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_37sdp"
-                            android:layout_weight="6.5">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="anneeCertification"
-                                android:id="@+id/editAnneeCertificationProducteur"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/rounded_background"
-                                android:editable="false"
-                                android:focusable="false"
-                                android:ellipsize="end"
-                                android:hint="AAAA"
-                                android:inputType="textCapCharacters"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                app:srcCompat="@drawable/ic_date_calendar" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp" />
-
-                <LinearLayout
-                    android:id="@+id/linearCodeContainerProducteur"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3.5"
-                        android:text="Code du producteur"
-                        android:textColor="@color/text_color_white"
-                        android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:tag="codeProd"
-                        android:id="@+id/editCodeProducteur"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_37sdp"
-                        android:layout_weight="6.5"
-                        android:background="@drawable/rounded_background"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:hint="00-XX-AAA"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters|textNoSuggestions"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp" />
 
                 </LinearLayout>
 

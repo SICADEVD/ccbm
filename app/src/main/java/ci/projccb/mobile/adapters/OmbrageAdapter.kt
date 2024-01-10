@@ -353,7 +353,7 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
 
         holder.item_id.text = multiItModel.id.toString()
         holder.item_title.text =  multiItModel.nom.plus(" /${multiItModel.nomScientifique}")
-        holder.item_limit.text =  Random.nextInt(10, 50).toString()
+        holder.item_limit.text =  multiItModel.limited_count
         holder.item_distrib.setText(multiItModel.qte_distribue)
 
         holder.item_distrib.doOnTextChanged() { text, start, before, count ->

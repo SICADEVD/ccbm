@@ -224,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nom et prénom producteur"
+                            android:text="Selectionner un producteur"
 
                             android:textStyle="bold" />
 
@@ -238,7 +238,7 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="producteursId"
+                                android:tag="producteurId"
                                 android:id="@+id/selectProducteurEvaluationArbre"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -465,7 +465,7 @@
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:textAllCaps="true"
                                 android:gravity="center_horizontal"
-                                android:text="ENREGISTREZ LA LISTE DES BESOINS EN ARBRES DU PRODUCTEUR"
+                                android:text="ENREGISTRER LA LISTE DES BESOINS EN ARBRES DU PRODUCTEUR"
                                 android:textStyle="bold" />
 
                             <LinearLayout

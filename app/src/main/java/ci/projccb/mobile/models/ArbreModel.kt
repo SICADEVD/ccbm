@@ -31,6 +31,7 @@ data class ArbreModel(
     @Expose var nom: String? = "",
     @Expose var strate: String? = "",
     @Expose var qte_distribue: String? = "0",
+    @Expose var limited_count: String? = "0",
 ): Parcelable {
 
 }

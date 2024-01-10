@@ -431,7 +431,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     setupParcelleSelection(producteurCommon.id.toString(), currVal3)
                 }
@@ -452,7 +454,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {
-                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
             }
         }
 
@@ -462,13 +464,13 @@ class LivraisonCentralActivity : AppCompatActivity() {
 //            isEmpty = if (parcellesList?.size!! > 0) false else true,
 //            currentVal = libItem,
 //            spinner = selectParcelleLivraisonCentral,
-//            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
+//            listIem = parcellesList?.map { "${it.codeParc}" }
 //                ?.toList() ?: listOf(),
 //            onChanged = {
 //
 //                parcellesList?.let { list ->
 //                    var parcelle = list.get(it)
-//                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+//                    parcelleCommon.nom = "${it.codeParc}"
 //                    parcelleCommon.id = parcelle.id!!
 //
 //                    //setupParcelleSelection(parcelleCommon.id, currVal3)
@@ -505,10 +507,10 @@ class LivraisonCentralActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Choix du véhicule","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectVehiculeLivraisonCentral,
-            listIem = vehiculeList?.map { "${it.marque_id} (${it.vehicule_immat})" }
+            listIem = vehiculeList?.map { "${it.marque} (${it.vehicule_immat})" }
                 ?.toList() ?: listOf(),
             onChanged = {
-                vehiculeCommon.nom = "${vehiculeList!![it].marque_id} (${vehiculeList!![it].vehicule_immat})"
+                vehiculeCommon.nom = "${vehiculeList!![it].marque} (${vehiculeList!![it].vehicule_immat})"
                 vehiculeCommon.id = vehiculeList[it].id
             },
             onSelected = { itemId, visibility ->
@@ -563,7 +565,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 livraisonVerMagCentralModelList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!} - ${producteur.typeProduit}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     setupProducteurView(producteur)
                 }
@@ -880,12 +884,12 @@ class LivraisonCentralActivity : AppCompatActivity() {
             "Choix du véhicule","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectVehiculeLivraisonCentral,
             currentVal = vehiculeList?.filter { it.id.toString() == livraisonCentralDrafted?.sender_vehicule }?.let {
-                if(it.size > 0) "${it.first().marque_id} (${it.first().vehicule_immat})" else null
+                if(it.size > 0) "${it.first().marque} (${it.first().vehicule_immat})" else null
             },
-            listIem = vehiculeList?.map { "${it.marque_id} (${it.vehicule_immat})" }
+            listIem = vehiculeList?.map { "${it.marque} (${it.vehicule_immat})" }
                 ?.toList() ?: listOf(),
             onChanged = {
-                vehiculeCommon.nom = "${vehiculeList!![it].marque_id} (${vehiculeList!![it].vehicule_immat})"
+                vehiculeCommon.nom = "${vehiculeList!![it].marque} (${vehiculeList!![it].vehicule_immat})"
                 vehiculeCommon.id = vehiculeList[it].id
             },
             onSelected = { itemId, visibility ->

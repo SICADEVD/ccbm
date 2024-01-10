@@ -21,6 +21,7 @@ import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.DistributionArbreDao
 import ci.projccb.mobile.models.DistributionArbreModel
 import ci.projccb.mobile.models.LivraisonModel
+import ci.projccb.mobile.models.QuantiteArbrDistribuer
 import ci.projccb.mobile.models.QuantiteDistribuer
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -36,6 +37,7 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.*
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
@@ -78,7 +80,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             draftData(draftedDataDistribution ?: DataDraftedModel(uid = 0))
         }
 
-        setOtherListenner()
+        ///setOtherListenner()
 
         try {
             if (intent.getStringExtra("from") != null) {
@@ -97,9 +99,61 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     }
 
-    private fun setOtherListenner() {
+    private fun setupRvOtherListenner(producteur_id: String) {
 
+        val getAllElavOfProd = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getEvaluationByProducteur(producteur_id)
+        val getAllDistributFait = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getDistributionByProducteur(producteur_id)
         listArbreAndState = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+
+        if(getAllDistributFait?.isEmpty() == false){
+            val itemDistribuer = getAllDistributFait.last()
+            listArbreAndState = listArbreAndState?.map {
+                val mapQuantDistrib = GsonUtils.fromJson<Map<String, Map<String, String>>>(itemDistribuer.quantiteStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+                val currentDistrib =  mapQuantDistrib.get(producteur_id)
+                val disturb = currentDistrib?.get(it.id.toString())
+                if(disturb != null) it.limited_count = disturb.toString()
+                it
+            }?.toMutableList()
+        }else{
+
+            if(getAllElavOfProd?.isEmpty() == false){
+
+                val listArbreEvalAndTotaux = mutableMapOf<String, Int>()
+                getAllElavOfProd.map {
+                    val keyy : MutableList<String> = GsonUtils.fromJson(it.especesarbreStr, object : TypeToken<MutableList<String>>(){}.type)
+                    val valuey : MutableList<String> = GsonUtils.fromJson(it.quantiteStr, object : TypeToken<MutableList<String>>(){}.type)
+
+                    keyy.forEachIndexed { index, s ->
+                        val item = listArbreEvalAndTotaux.get(s)
+                        if(item != null) listArbreEvalAndTotaux[s] = (listArbreEvalAndTotaux.get(s)?.toInt()?.plus(1)?:0)
+                        else listArbreEvalAndTotaux.put(s, valuey[index].toInt())
+                    }
+                }
+
+                listArbreAndState = listArbreAndState?.map {
+                    listArbreEvalAndTotaux.get(it.id.toString())?.let { value ->
+                        it.limited_count = value.toString()
+                    }
+                    it
+                }?.toMutableList()
+
+            }else{
+
+                Commons.showMessage(
+                    "Aucun besoin enrégistré pour ce producteur !",
+                    this,
+                    finished = false,
+                    callback = {},
+                    positive = "Compris !",
+                    deconnec = false,
+                    showNo = false
+                )
+
+                listArbreAndState?.clear()
+
+            }
+
+        }
 
         recyclerArbreListDistrArbre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerArbreListDistrArbre.adapter = DistribArbreAdapter(listArbreAndState)
@@ -112,7 +166,6 @@ class DistributionArbreActivity : AppCompatActivity() {
     private fun setAllSelection() {
 
         setupSectionSelection()
-
 
     }
 
@@ -228,6 +281,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         }.toMap().filter { it.value.toInt() > 0 }
 
         val qtelivre = qteList.sumBy { it.toInt() }.toString()
+        val total = limitList.sumBy { it.toInt() }.toString()
 
         val quantiteDistribuer = QuantiteDistribuer(
             mapOf(
@@ -241,8 +295,9 @@ class DistributionArbreActivity : AppCompatActivity() {
                 this.localite = localiteCommon.id.toString()
                 producteurId = producteurCommon.id.toString()
 
-                quantiteStr = GsonUtils.toJson(quantiteDistribuer)
+                quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
                 this.qtelivre = qtelivre
+                this.total = total
             }
         }
 
@@ -294,6 +349,21 @@ class DistributionArbreActivity : AppCompatActivity() {
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
+        if(qteList.isEmpty()){
+
+            Commons.showMessage(
+                "Aucun arbre n'a été enrégistré !",
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return ;
+
+        }
 
 
         val itemModelOb = getDistributArbreObjet()
@@ -305,6 +375,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         }.toMap().filter { it.value.toInt() > 0 }
 
         val qtelivre = qteList.sumBy { it.toInt() }.toString()
+        val total = limitList.sumBy { it.toInt() }.toString()
 
         val quantiteDistribuer = QuantiteDistribuer(
             mapOf(
@@ -319,14 +390,16 @@ class DistributionArbreActivity : AppCompatActivity() {
                 this.localite = localiteCommon.id.toString()
                 producteurId = producteurCommon.id.toString()
 
-                quantiteStr = GsonUtils.toJson(quantiteDistribuer)
+                quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
                 this.qtelivre = qtelivre
+                this.total = total
             }
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
             this.add(Pair("Les arbres distribués", (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
             this.add(Pair("Quantité à distribuer", qtelivre))
+            this.add(Pair("Total à enregistrer", total))
         }.map { MapEntry(it.first, it.second) }
 
         try {
@@ -440,9 +513,11 @@ class DistributionArbreActivity : AppCompatActivity() {
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
-                  //  setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+                    setupRvOtherListenner(producteurCommon.id.toString())
                 }
 
 
@@ -462,7 +537,7 @@ class DistributionArbreActivity : AppCompatActivity() {
 //        var libItem: String? = null
 //        currVal3?.let { idc ->
 //            parcellesList?.forEach {
-//                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+//                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
 //            }
 //        }
 //
@@ -472,13 +547,13 @@ class DistributionArbreActivity : AppCompatActivity() {
 //            isEmpty = if (parcellesList?.size!! > 0) false else true,
 //            currentVal = libItem,
 //            spinner = selectParcelleDistributionArbre,
-//            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
+//            listIem = parcellesList?.map { "${it.codeParc}" }
 //                ?.toList() ?: listOf(),
 //            onChanged = {
 //
 //                parcellesList?.let { list ->
 //                    var parcelle = list.get(it)
-//                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+//                    parcelleCommon.nom = "${it.codeParc}"
 //                    parcelleCommon.id = parcelle.id!!
 //
 //                    //setupParcelleSelection(parcelleCommon.id, currVal3)

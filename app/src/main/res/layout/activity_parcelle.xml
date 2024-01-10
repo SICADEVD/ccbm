@@ -183,7 +183,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localite *"
+                            android:text="Selectionner une localité *"
 
                             android:textStyle="bold" />
 
@@ -459,28 +459,41 @@ android:textColor="@color/text_color_white"
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
-                                android:layout_weight="6"
+                                android:layout_weight="4"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:text="Année de régéneration"
                                 android:textStyle="bold" />
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="anneeRegenerer"
-                                android:id="@+id/editNumAnneeRegenParcelle"
+                            <RelativeLayout
+                                android:layout_weight="6"
                                 android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="2"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="number"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="1" />
+                                android:layout_height="@dimen/_37sdp">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="anneeRegenerer"
+                                    android:id="@+id/editNumAnneeRegenParcelle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/rounded_background"
+                                    android:editable="false"
+                                    android:focusable="false"
+                                    android:ellipsize="end"
+                                    android:hint="AAAA"
+                                    android:inputType="textCapCharacters"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:textAllCaps="true"
+                                    android:textSize="@dimen/_13ssp" />
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="@dimen/_35sdp"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    app:srcCompat="@drawable/ic_date_calendar" />
+
+                            </RelativeLayout>
 
                         </LinearLayout>
 

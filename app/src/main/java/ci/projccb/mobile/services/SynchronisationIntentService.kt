@@ -809,7 +809,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
             distribArbrDatas.map {distrib ->
 
-                distrib.quantiteList = GsonUtils.fromJson(distrib.quantiteStr, QuantiteDistribuer::class.java).variableKey
+                GsonUtils.fromJson<Map<String, Map<String, String>>>(distrib.quantiteStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)?.let {
+                    distrib.quantiteList = it
+                }
 
                 val clientRequ: Call<DistributionArbreModel> = ApiClient.apiService.synchronisationDistributionArbre(distrib)
                 clientRequ.enqueue(object : Callback<DistributionArbreModel>{
@@ -979,20 +981,20 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             inspectionsDatas.map { inspection ->
                 inspection.dateEvaluation = Commons.convertDate(inspection.dateEvaluation, toEng = true)
                 inspection.certificatList = mutableListOf<String>()
-                inspection.certificatList?.add(inspection.certificat!!)
-                inspection.reponse = mutableMapOf()
+                inspection.certificatList?.add(inspection.certificatStr!!)
+//                inspection.reponse = mutableMapOf()
 
                 var counter = 1;
-                var note = 0;
+//                var note = 0;
                 ApiClient.gson.fromJson<MutableList<QuestionResponseModel>>(inspection.reponseStringify, inspectionsToken).map {
                     if(it.isTitle == false) {
                         inspection.reponse[counter.toString()] = it.note!!
                         counter++
-                        note += it.note!!.toInt()
+                        //note += it.note!!.toInt()
                     }
                 }
-
-                inspection.noteInspection = note.toString()
+//
+//                inspection.noteInspection = note.toString()
 
                 inspection.reponseStringify = null
 

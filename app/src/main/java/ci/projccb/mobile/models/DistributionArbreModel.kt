@@ -35,6 +35,8 @@ data class DistributionArbreModel(
     @Expose var localite: String? = "",
     @Expose var quantiteStr: String? = "",
     @Expose var qtelivre: String? = "",
+    @Expose var total: String? = "",
+    @Expose var agroapprovisionnementsection: String? = "0",
     @Expose var listNomArbreDistribueStr: String? = "",
     @Expose var listQuantiteArbreDistribueStr: String? = "",
     @Expose var listStrateArbreDistribueStr: String? = "",
@@ -47,6 +49,18 @@ data class DistributionArbreModel(
     @Ignore @SerializedName("quantite") @Expose(serialize = true, deserialize = false) var quantiteList: Map<String, Map<String, String>>? = null
 
 }
+
+@Parcelize
+data class QuantiteArbrDistribuer(
+    @Expose val evaluations: MutableList<ItemDistribuer>
+): Parcelable
+
+@Parcelize
+data class ItemDistribuer(
+    @Expose val agroespecesarbre_id: String? = null,
+    @Expose val producteur_id: String? = null,
+    @Expose val total: String? = null,
+): Parcelable
 
 @Parcelize
 data class QuantiteDistribuer(
@@ -79,4 +93,8 @@ interface DistributionArbreDao {
     @Transaction
     @Query("DELETE FROM distribution_arbre WHERE uid = :uid")
     fun deleteByUid(uid: Int?)
+
+    @Transaction
+    @Query("SELECT * FROM distribution_arbre WHERE isSynced = 1 AND producteurId = :producteurId")
+    fun getDistributionByProducteur(producteurId: String): MutableList<DistributionArbreModel>
 }

@@ -22,6 +22,7 @@ data class VehiculeModel (
     @SerializedName(value = "cooperative_id", alternate = ["cooperatives_id"])
     val cooperativesId: Int? = null,
     @Expose val marque_id: Int? = null,
+    @Expose val marque: String? = null,
     @Expose val vehicule_immat: Int? = null,
     @Expose
     @SerializedName("id")

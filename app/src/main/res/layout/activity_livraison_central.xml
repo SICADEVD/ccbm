@@ -846,7 +846,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_color_white"
-                        android:text="Information de Livraison Central">
+                        android:text="Information sur la Livraison Central">
 
                     </TextView>
 
@@ -855,7 +855,6 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
-                        android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"

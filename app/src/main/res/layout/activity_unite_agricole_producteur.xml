@@ -181,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localite *"
+                            android:text="Selectionner une localité *"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -215,7 +215,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nom et prénom producteur"
+                            android:text="Selectionner un producteur"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />

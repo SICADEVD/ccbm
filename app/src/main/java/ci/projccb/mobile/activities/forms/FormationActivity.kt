@@ -547,7 +547,7 @@ class FormationActivity : AppCompatActivity() {
 
         val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
-            "Quels sont les staff qui ont dispensé la formation ?",
+            "Quel est le staff qui a dispensé la formation ?",
             spinner = selectStaffFormation,
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
@@ -987,7 +987,7 @@ class FormationActivity : AppCompatActivity() {
 
         val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
-            "Quels sont les staff qui ont dispensé la formation ?",
+            "Quel est le staff qui a dispensé la formation ?",
             spinner = selectStaffFormation,
             currentVal = listDelegue?.filter { formationDrafted.staffId == it.id.toString() }?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull() ?: "",
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }

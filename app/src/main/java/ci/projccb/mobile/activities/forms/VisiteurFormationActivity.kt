@@ -195,7 +195,9 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     //setupProducteurSelection(localiteCommon.id, currVal2)
                 }
@@ -253,7 +255,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel lien avez vous ?",
+            "Quel est leur lien ?",
             "La liste des éléments semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectLienParentVisitForm,
             currentVal = visiteurFormationDrafted.lien,
@@ -356,7 +358,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel lien avez vous ?",
+            "Quel est leur lien ?",
             "La liste des éléments semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectLienParentVisitForm,
             itemChanged = arrayListOf(Pair(1, "Autre")),

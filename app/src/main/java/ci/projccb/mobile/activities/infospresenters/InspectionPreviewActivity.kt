@@ -94,7 +94,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
 
                 inspectionDTO?.let { inspection ->
                     labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
-                    labelCampagneInspectionPreview.text = inspection.campagnesLabel
+                    labelCampagneInspectionPreview.text = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(inspection.encadreur?.toInt())?.let { "${it.firstname} ${it.lastname}"  }
 
                     CoroutineScope(Dispatchers.Main).launch {
                         fetchQuestionnaires(inspection)

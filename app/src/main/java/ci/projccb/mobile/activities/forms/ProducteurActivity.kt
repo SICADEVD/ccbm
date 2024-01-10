@@ -844,7 +844,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
                 if(itemId==1){
                     linearAnneeCertificationProducteur.visibility = visibility
-                    linearCodeContainerProducteur.visibility = visibility
+                    //linearCodeContainerProducteur.visibility = visibility
                 }
             })
 
@@ -1168,7 +1168,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
                 if(itemId==1){
                     linearAnneeCertificationProducteur.visibility = visibility
-                    linearCodeContainerProducteur.visibility = visibility
+                    //linearCodeContainerProducteur.visibility = visibility
                 }
             })
 

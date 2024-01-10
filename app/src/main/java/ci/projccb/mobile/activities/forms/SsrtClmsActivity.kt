@@ -194,7 +194,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     //setupParcelleSelection(producteurCommon.id.toString(), currVal3)
                 }

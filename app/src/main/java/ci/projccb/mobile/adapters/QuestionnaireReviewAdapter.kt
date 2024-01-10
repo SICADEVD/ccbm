@@ -94,7 +94,7 @@ class QuestionnaireReviewAdapter(
                     questionnaireResponseInfo.note = selectedNote.point?.toString()
                     questionnaireResponseInfo.reponseId = positionSelection
                     questionnaireResponseInfo.noteLabel = selectedNote.nom
-                    LogUtils.d("${questionnaireResponseInfo.reponseId}")
+//                    LogUtils.d("${questionnaireResponseInfo.reponseId}")
                     questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
                 }
 

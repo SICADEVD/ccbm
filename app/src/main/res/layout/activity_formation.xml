@@ -882,7 +882,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quels sont les staff qui ont dispensé la formation ?"
+                            android:text="Quel est le staff qui a dispensé la formation ?"
                             android:textStyle="bold" />
 
                         <LinearLayout

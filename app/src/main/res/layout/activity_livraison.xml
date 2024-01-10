@@ -640,7 +640,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De quelle localite s'agit-il ?"
+                            android:text="De quelle localité s'agit-il ?"
                             android:textColor="@color/text_color_white"
                             android:textSize="@dimen/_10sdp"
                             android:textStyle="bold" />
@@ -698,7 +698,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_color_white"
-                        android:text="Information de Livraison">
+                        android:text="Information sur la Livraison de Section">
 
                     </TextView>
 
@@ -719,7 +719,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
-                            android:text="Choix des producteurs"
+                            android:text="Choix du producteur"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -932,12 +932,9 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
                     <LinearLayout
                         android:id="@+id/containerTypeCertifLivraison"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:layout_width="match_parent"

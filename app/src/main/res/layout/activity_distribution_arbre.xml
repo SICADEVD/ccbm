@@ -224,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nom et Prénom Producteur *"
+                            android:text="Selectionner un producteur *"
 
                             android:textStyle="bold" />
 

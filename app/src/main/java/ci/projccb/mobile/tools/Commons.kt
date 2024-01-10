@@ -457,7 +457,7 @@ class Commons {
         }
 
         fun List<String>?.toModifString(): String {
-            return this.toString().replace("]", "").replace("[", "") //.replace(",", "")
+            return this.toString().replace("]", "").replace("[", "").replace(", ", "")
         }
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null

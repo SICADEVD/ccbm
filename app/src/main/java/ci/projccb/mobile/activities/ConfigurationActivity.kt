@@ -90,6 +90,7 @@ class ConfigurationActivity : AppCompatActivity() {
     var sectionsDao: SectionsDao? = null
     var agentModel: AgentModel? = null
     var arbreDao: ArbreDao? = null
+    var distributionArbreDao: DistributionArbreDao? = null
     var agentID: Int = 0
     var oneIssue = false
 
@@ -252,6 +253,10 @@ class ConfigurationActivity : AppCompatActivity() {
                             producteurId = it.producteurId,
                             anneeCreation = it.anneeCreation,
                             superficie = it.superficie,
+                            codeParc = it.codeParc,
+                            nbCacaoParHectare = it.nbCacaoParHectare,
+                            latitude = it.latitude,
+                            longitude = it.longitude,
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"
@@ -762,6 +767,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         val data = VehiculeModel(
                             id = it.id,
                             marque_id = it.marque_id,
+                            marque = it.marque,
                             vehicule_immat = it.vehicule_immat,
                             cooperativesId = it.cooperativesId,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
@@ -2017,6 +2023,62 @@ class ConfigurationActivity : AppCompatActivity() {
             } else {
                 configCompletedOrError("Liste des arbres")
                 //configFlow()
+                getDistributionArbreList()
+            }
+        }
+    }
+
+    suspend fun getDistributionArbreList() {
+        withContext(IO) {
+            val distArbreListFetch = async {
+                distributionArbreDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+
+                try {
+                    val clientDistArbreListData = ApiClient.apiService.getArbreDistributList()
+
+                    val responseDistriArbreListData: Response<QuantiteArbrDistribuer> = clientDistArbreListData.execute()
+                    val datasDistribArbre: QuantiteArbrDistribuer? = responseDistriArbreListData.body()
+
+                    var variableKey: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
+                    datasDistribArbre?.evaluations?.map {
+                        val item = variableKey.get(it.producteur_id)
+                        if(item != null)
+                            variableKey.get(it.producteur_id)?.put(it.agroespecesarbre_id.toString(), it.total.toString())
+                        else {
+                            val value = mutableMapOf<String, String>()
+                            value.put(it.agroespecesarbre_id.toString(), it.total.toString())
+                            variableKey.put(it.producteur_id.toString(), value)
+                        }
+                    }
+
+                    variableKey.map {
+
+                        val dataDistrArbreListModel = DistributionArbreModel(
+                            uid = 0,
+                            producteurId = it.key,
+                            quantiteStr = GsonUtils.toJson(mutableMapOf(Pair(it.key, it.value))),
+                            id = it.key.toInt(),
+                            isSynced = true,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(),
+                            origin = "remote"
+                        )
+
+                        distributionArbreDao?.insert(dataDistrArbreListModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            distArbreListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des arbres distribués")
+                //configFlow()
                 getLiensParenteSection()
             }
         }
@@ -2933,6 +2995,7 @@ class ConfigurationActivity : AppCompatActivity() {
         programmesDao = database?.programmesDao()
         sectionsDao = database?.sectionsDao()
         arbreDao = database?.arbreDao()
+        distributionArbreDao = database?.distributionArbreDao()
 
         if (intent != null) {
             agentID = intent.getIntExtra(Constants.AGENT_ID, 0)

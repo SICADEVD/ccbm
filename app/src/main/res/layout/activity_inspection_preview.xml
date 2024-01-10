@@ -128,7 +128,7 @@ android:textColor="@color/text_color_white"
                     android:textStyle="bold"
                     
                     android:layout_height="match_parent"
-                    android:text="Campagne"
+                    android:text="Encadreur"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>

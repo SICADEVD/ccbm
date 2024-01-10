@@ -450,7 +450,9 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     //setupParcelleSelection(producteurCommon.id.toString(), currVal3)
                 }
@@ -472,7 +474,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
 //        var libItem: String? = null
 //        currVal3?.let { idc ->
 //            parcellesList?.forEach {
-//                if (it.id == idc.toInt()) libItem = "(${it.anneeCreation}) ${it.superficieConcerne} ha"
+//                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
 //            }
 //        }
 //
@@ -482,13 +484,13 @@ class EvaluationArbreActivity : AppCompatActivity() {
 //            isEmpty = if (parcellesList?.size!! > 0) false else true,
 //            currentVal = libItem,
 //            spinner = selectParcelleEvaluationArbre,
-//            listIem = parcellesList?.map { "(${it.anneeCreation}) ${it.superficieConcerne} ha" }
+//            listIem = parcellesList?.map { "${it.codeParc}" }
 //                ?.toList() ?: listOf(),
 //            onChanged = {
 //
 //                parcellesList?.let { list ->
 //                    var parcelle = list.get(it)
-//                    parcelleCommon.nom = "(${parcelle.anneeCreation}) ${parcelle.superficieConcerne} ha"
+//                    parcelleCommon.nom = "${it.codeParc}"
 //                    parcelleCommon.id = parcelle.id!!
 //
 //                    //editSuperficieEvaluationArbre.setText("${parcelle.superficieConcerne}")

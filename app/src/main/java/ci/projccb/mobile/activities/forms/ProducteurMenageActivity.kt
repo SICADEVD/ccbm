@@ -339,7 +339,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    producteurCommon.id = producteur.id!!
+                    if(producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    }else producteurCommon.id = producteur.uid
 
                     //setupProducteurSelection(localiteCommon.id, currVal2)
                 }

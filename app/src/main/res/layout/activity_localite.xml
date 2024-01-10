@@ -93,7 +93,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Nom de\nla localite *"/>
+                    android:text="Nom de\nla localité *"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editNomLocalite"
