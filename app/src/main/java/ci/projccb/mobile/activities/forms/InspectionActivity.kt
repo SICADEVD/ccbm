@@ -518,7 +518,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             }
         }
 
-        Commons.printModelValue(questionnaireDto as Object, (itemModelOb.second as List<MapEntry>?))
+        //Commons.printModelValue(questionnaireDto as Object, (itemModelOb.second as List<MapEntry>?))
 
         var quizCount = 0
 
@@ -528,7 +528,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             }
         }
 
-        LogUtils.e(Commons.TAG, quizCount)
+        //LogUtils.e(Commons.TAG, quizCount)
 
         if (quizCount > 4) {
             showMessage(

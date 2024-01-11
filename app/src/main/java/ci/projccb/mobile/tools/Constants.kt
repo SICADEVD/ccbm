@@ -56,6 +56,7 @@ object Constants {
     const val TABLE_VARIETES_CACAOS             =                   "variete_cacao"
     const val TABLE_DELEGUES                    =                   "delegue"
     const val TABLE_APPLICATEURS                =                   "applicateur"
+    const val TABLE_APPROVISION               =                   "approvisionnement"
     const val TABLE_EAUX_USEES                  =                   "eau_usee"
     const val TABLE_TYPE_PRODUITS               =                   "type_produit"
     const val TABLE_THEMES_FORMATION            =                   "theme_formation"

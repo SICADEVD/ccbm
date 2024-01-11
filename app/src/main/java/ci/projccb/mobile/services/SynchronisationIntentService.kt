@@ -180,7 +180,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     mobileMoney = null
                     hasMobileMoney = null
                     hasOtherFarms = null
-                    localite = null
                     mobileMoney = null
                     paperGuards = null
                     rectoPath = null
@@ -205,7 +204,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                             //val buffer = Buffer()
                             val respText = response.errorBody()?.string().toString()
                             if(respText.contains("phone1", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
-                                LogUtils.d(respText)
+//                                LogUtils.d(respText)
                                 producteurDao.syncDataOnExist(
                                     synced = 1,
                                     localID = producteur.uid
@@ -214,8 +213,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         }
 
                         producteurSynced?.let {
-                            LogUtils.d(producteurSynced?.id)
-                            LogUtils.d(response.code())
+//                            LogUtils.d(producteurSynced?.id)
+//                            LogUtils.d(response.code())
 
                             producteurDao.syncData(
                                 id = producteurSynced?.id!!,
@@ -243,14 +242,14 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 parcelleDao?.insert(parcelle)
                             }
 
-                            val livraisonsList = livraisonDao?.getUnSyncedAll(
-                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                            )!!
-
-                            livraisonsList.map { livraisonModel ->
-                                livraisonModel.producteursId = producteurSynced.id.toString()
-                                livraisonDao?.insert(livraisonModel)
-                            }
+//                            val livraisonsList = livraisonDao?.getUnSyncedAll(
+//                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+//                            )!!
+//
+//                            livraisonsList.map { livraisonModel ->
+//                                livraisonModel.producteursId = producteurSynced.id.toString()
+//                                livraisonDao?.insert(livraisonModel)
+//                            }
 
                         }
 
@@ -828,6 +827,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 true,
                                 distrib.uid
                             )
+
+                            evaluationArbreDao?.deleteByProducteurId(distrib.producteurId)
 
                         }else{
 

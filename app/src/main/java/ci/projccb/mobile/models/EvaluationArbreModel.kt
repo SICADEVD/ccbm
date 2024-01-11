@@ -79,4 +79,12 @@ interface EvaluationArbreDao {
     @Query("DELETE FROM evaluation_arbre WHERE uid = :uid")
     fun deleteByUid(uid: Int?)
 
+    @Transaction
+    @Query("DELETE FROM evaluation_arbre WHERE agentId = :agentID")
+    fun deleteAgentDatas(agentID: Int)
+
+    @Transaction
+    @Query("DELETE FROM evaluation_arbre WHERE producteurId = :producteurId")
+    fun deleteByProducteurId(producteurId: String?)
+
 }

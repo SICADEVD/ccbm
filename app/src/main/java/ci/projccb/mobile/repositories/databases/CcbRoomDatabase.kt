@@ -82,6 +82,7 @@ import ci.projccb.mobile.tools.ListConverters
         RemorqueModel::class,
         LivraisonCentralModel::class,
         LivraisonVerMagCentralModel::class,
+        ApprovisionnementModel::class,
     ],
 )
 @TypeConverters(ListConverters::class)
@@ -148,6 +149,7 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun remorqueDao(): RemorqueDao
     abstract fun livraisonCentralDao(): LivraisonCentralDao
     abstract fun livraisonVerMagCentralDao(): LivraisonVerMagCentralDao
+    abstract fun approvisionnementDao(): ApprovisionnementDao
 
 
     companion object {

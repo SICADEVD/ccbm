@@ -90,7 +90,8 @@ class ConfigurationActivity : AppCompatActivity() {
     var sectionsDao: SectionsDao? = null
     var agentModel: AgentModel? = null
     var arbreDao: ArbreDao? = null
-    var distributionArbreDao: DistributionArbreDao? = null
+    var approvisionnementDao: ApprovisionnementDao? = null
+    var evaluationArbreDao: EvaluationArbreDao? = null
     var agentID: Int = 0
     var oneIssue = false
 
@@ -2023,24 +2024,68 @@ class ConfigurationActivity : AppCompatActivity() {
             } else {
                 configCompletedOrError("Liste des arbres")
                 //configFlow()
-                getDistributionArbreList()
+                getApprovisionnementList()
             }
         }
     }
 
-    suspend fun getDistributionArbreList() {
+
+    suspend fun getApprovisionnementList() {
         withContext(IO) {
-            val distArbreListFetch = async {
-                distributionArbreDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+            val approvisionnementListFetch = async {
+                approvisionnementDao?.deleteAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
 
                 try {
-                    val clientDistArbreListData = ApiClient.apiService.getArbreDistributList()
+                    val clientArbreListData = ApiClient.apiService.getApprovisionnement()
 
-                    val responseDistriArbreListData: Response<QuantiteArbrDistribuer> = clientDistArbreListData.execute()
-                    val datasDistribArbre: QuantiteArbrDistribuer? = responseDistriArbreListData.body()
+                    val responseArbreListData: Response<MutableList<ApprovisionnementModel>> = clientArbreListData.execute()
+                    val datasArbreListList: MutableList<ApprovisionnementModel>? = responseArbreListData.body()
+
+                    datasArbreListList?.map {
+                        val dataArbreListModel = ApprovisionnementModel(
+                            uid = 0,
+                            id = it.id,
+                            section_id = it.section_id,
+                            agroapprovisionnement_id = it.agroapprovisionnement_id,
+                            bon_livraison = it.bon_livraison,
+                            total = it.total,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
+                        )
+
+                        approvisionnementDao?.insert(dataArbreListModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            approvisionnementListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des approvisionnements")
+                //configFlow()
+                getProductEvalArbrList()
+            }
+        }
+    }
+
+    suspend fun getProductEvalArbrList() {
+        withContext(IO) {
+            val distArbreListFetch = async {
+                evaluationArbreDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID))
+
+                try {
+                    val clientProductEvalListData = ApiClient.apiService.getProductEvalList()
+
+                    val responseProductEvalListData: Response<QuantiteArbrDistribuer> = clientProductEvalListData.execute()
+                    val datasProductEval: QuantiteArbrDistribuer? = responseProductEvalListData.body()
 
                     var variableKey: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
-                    datasDistribArbre?.evaluations?.map {
+                    datasProductEval?.evaluations?.map {
                         val item = variableKey.get(it.producteur_id)
                         if(item != null)
                             variableKey.get(it.producteur_id)?.put(it.agroespecesarbre_id.toString(), it.total.toString())
@@ -2053,17 +2098,21 @@ class ConfigurationActivity : AppCompatActivity() {
 
                     variableKey.map {
 
-                        val dataDistrArbreListModel = DistributionArbreModel(
+                        val curreProd = it.key
+                        val currentInfoArbre = it.value.map { it.key }.toMutableList()
+                        val currentInfoArbreEval = it.value.map { it.value }.toMutableList()
+                        val dataEvalProdListModel = EvaluationArbreModel(
                             uid = 0,
-                            producteurId = it.key,
-                            quantiteStr = GsonUtils.toJson(mutableMapOf(Pair(it.key, it.value))),
-                            id = it.key.toInt(),
+                            producteurId = curreProd,
+                            especesarbreStr = GsonUtils.toJson(currentInfoArbre),
+                            quantiteStr = GsonUtils.toJson(currentInfoArbreEval),
+                            id = curreProd.toInt(),
                             isSynced = true,
-                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(),
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID),
                             origin = "remote"
                         )
 
-                        distributionArbreDao?.insert(dataDistrArbreListModel)
+                        evaluationArbreDao?.insert(dataEvalProdListModel)
                     }
                 } catch (ex: Exception) {
                     oneIssue = true
@@ -2995,7 +3044,8 @@ class ConfigurationActivity : AppCompatActivity() {
         programmesDao = database?.programmesDao()
         sectionsDao = database?.sectionsDao()
         arbreDao = database?.arbreDao()
-        distributionArbreDao = database?.distributionArbreDao()
+        evaluationArbreDao = database?.evaluationArbreDao()
+        approvisionnementDao = database?.approvisionnementDao()
 
         if (intent != null) {
             agentID = intent.getIntExtra(Constants.AGENT_ID, 0)

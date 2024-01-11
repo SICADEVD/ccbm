@@ -78,6 +78,9 @@ interface ApiService {
     @POST("getapplicateurs")
     fun getApplicateurs(@Body table: CommonData): Call<MutableList<ApplicateurModel>>
 
+    @POST("getapprovisionnementsection")
+    fun getApprovisionnement(): Call<MutableList<ApprovisionnementModel>>
+
     @POST("getlocalite")
     fun getLocalites(@Body table: CommonData): Call<MutableList<LocaliteModel>>
 
@@ -137,8 +140,9 @@ interface ApiService {
 
     @POST("getarbre")
     fun getArbreList(): Call<MutableList<ArbreModel>>
+
     @POST("getbesoinprod")
-    fun getArbreDistributList(): Call<QuantiteArbrDistribuer>
+    fun getProductEvalList(): Call<QuantiteArbrDistribuer>
 
     @POST("gettransporteurs")
     fun getTransporteurList(): Call<MutableList<TransporteurModel>>

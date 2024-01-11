@@ -3,30 +3,23 @@ package ci.projccb.mobile.activities.forms
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.DistributionArbrePreviewActivity
-import ci.projccb.mobile.activities.infospresenters.LivraisonPreviewActivity
 import ci.projccb.mobile.adapters.DistribArbreAdapter
-import ci.projccb.mobile.adapters.SixItemAdapter
 import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.DistributionArbreDao
 import ci.projccb.mobile.models.DistributionArbreModel
-import ci.projccb.mobile.models.LivraisonModel
-import ci.projccb.mobile.models.QuantiteArbrDistribuer
+import ci.projccb.mobile.models.EvaluationArbreModel
 import ci.projccb.mobile.models.QuantiteDistribuer
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.datas.CommonData
-import ci.projccb.mobile.repositories.datas.PesticidesApplicationModel
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.calculateTotalHeight
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
@@ -44,8 +37,6 @@ import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocalite
 
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
-import kotlinx.android.synthetic.main.activity_suivi_application.recyclerPestListSApplic
-import kotlinx.android.synthetic.main.activity_suivi_application.selectListMaladieSuiviApplication
 import java.util.ArrayList
 
 class DistributionArbreActivity : AppCompatActivity() {
@@ -99,59 +90,47 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     }
 
-    private fun setupRvOtherListenner(producteur_id: String) {
+    private fun setupRvOtherListenner(
+        producteur_id: String,
+        evaluationsList: MutableList<EvaluationArbreModel>?
+    ) {
+        LogUtils.d(evaluationsList, producteur_id)
+        val getAllElavOfProd = evaluationsList?.filter { it.producteurId == producteur_id }
+        LogUtils.d(getAllElavOfProd)
 
-        val getAllElavOfProd = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getEvaluationByProducteur(producteur_id)
-        val getAllDistributFait = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getDistributionByProducteur(producteur_id)
-        listArbreAndState = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        if(getAllElavOfProd?.isEmpty() == false){
 
-        if(getAllDistributFait?.isEmpty() == false){
-            val itemDistribuer = getAllDistributFait.last()
+            val listArbreEvalAndTotaux = mutableMapOf<String, Int>()
+            getAllElavOfProd.map {
+                val keyy : MutableList<String> = GsonUtils.fromJson(it.especesarbreStr, object : TypeToken<MutableList<String>>(){}.type)
+                val valuey : MutableList<String> = GsonUtils.fromJson(it.quantiteStr, object : TypeToken<MutableList<String>>(){}.type)
+
+                keyy.forEachIndexed { index, s ->
+                    listArbreEvalAndTotaux.put(s, valuey[index].toInt())
+                }
+            }
+            LogUtils.d(listArbreEvalAndTotaux)
+
             listArbreAndState = listArbreAndState?.map {
-                val mapQuantDistrib = GsonUtils.fromJson<Map<String, Map<String, String>>>(itemDistribuer.quantiteStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)
-                val currentDistrib =  mapQuantDistrib.get(producteur_id)
-                val disturb = currentDistrib?.get(it.id.toString())
-                if(disturb != null) it.limited_count = disturb.toString()
+                listArbreEvalAndTotaux.get(it.id.toString())?.let { value ->
+                    it.limited_count = value.toString()
+                }
                 it
-            }?.toMutableList()
+            }?.filter { it.limited_count.equals("0") == false }?.toMutableList()
+
         }else{
 
-            if(getAllElavOfProd?.isEmpty() == false){
+            Commons.showMessage(
+                "Aucun besoin enrégistré pour ce producteur !",
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
 
-                val listArbreEvalAndTotaux = mutableMapOf<String, Int>()
-                getAllElavOfProd.map {
-                    val keyy : MutableList<String> = GsonUtils.fromJson(it.especesarbreStr, object : TypeToken<MutableList<String>>(){}.type)
-                    val valuey : MutableList<String> = GsonUtils.fromJson(it.quantiteStr, object : TypeToken<MutableList<String>>(){}.type)
-
-                    keyy.forEachIndexed { index, s ->
-                        val item = listArbreEvalAndTotaux.get(s)
-                        if(item != null) listArbreEvalAndTotaux[s] = (listArbreEvalAndTotaux.get(s)?.toInt()?.plus(1)?:0)
-                        else listArbreEvalAndTotaux.put(s, valuey[index].toInt())
-                    }
-                }
-
-                listArbreAndState = listArbreAndState?.map {
-                    listArbreEvalAndTotaux.get(it.id.toString())?.let { value ->
-                        it.limited_count = value.toString()
-                    }
-                    it
-                }?.toMutableList()
-
-            }else{
-
-                Commons.showMessage(
-                    "Aucun besoin enrégistré pour ce producteur !",
-                    this,
-                    finished = false,
-                    callback = {},
-                    positive = "Compris !",
-                    deconnec = false,
-                    showNo = false
-                )
-
-                listArbreAndState?.clear()
-
-            }
+            listArbreAndState?.clear()
 
         }
 
@@ -271,6 +250,39 @@ class DistributionArbreActivity : AppCompatActivity() {
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
 
+        if(qteList.isEmpty()){
+
+            Commons.showMessage(
+                "Aucun arbre n'a été enrégistré, faite une mise à jour des evaluations !",
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return ;
+
+        }
+        //brouad02@gmail.com
+
+        val listApproVi = CcbRoomDatabase.getDatabase(applicationContext)?.approvisionnementDao()?.getApproBySect(sectionCommon.id)
+
+        if(listApproVi?.isEmpty() == true){
+            Commons.showMessage(
+                "Aucune approvisionnement selectionnée, faite une mise à jour des evaluations !",
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return ;
+        }
+
 
         val itemModelOb = getDistributArbreObjet(false)
 
@@ -297,6 +309,9 @@ class DistributionArbreActivity : AppCompatActivity() {
 
                 quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
                 this.qtelivre = qtelivre
+                listApproVi?.first()?.let {
+                    this.agroapprovisionnementsection = it.agroapprovisionnement_id
+                }
                 this.total = total
             }
         }
@@ -352,7 +367,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         if(qteList.isEmpty()){
 
             Commons.showMessage(
-                "Aucun arbre n'a été enrégistré !",
+                "Aucun arbre n'a été enrégistré, faite une mise à jour des evaluations !",
                 this,
                 finished = false,
                 callback = {},
@@ -365,6 +380,21 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         }
 
+        val listApproVi = CcbRoomDatabase.getDatabase(applicationContext)?.approvisionnementDao()?.getApproBySect(sectionCommon.id)
+
+        if(listApproVi?.isEmpty() == true){
+            Commons.showMessage(
+                "Aucune approvisionnement selectionnée, faite une mise à jour des evaluations !",
+                this,
+                finished = false,
+                callback = {},
+                positive = "Compris !",
+                deconnec = false,
+                showNo = false
+            )
+
+            return ;
+        }
 
         val itemModelOb = getDistributArbreObjet()
 
@@ -392,6 +422,9 @@ class DistributionArbreActivity : AppCompatActivity() {
 
                 quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
                 this.qtelivre = qtelivre
+                listApproVi?.first()?.let {
+                    this.agroapprovisionnementsection = it.agroapprovisionnement_id
+                }
                 this.total = total
             }
         }
@@ -490,8 +523,14 @@ class DistributionArbreActivity : AppCompatActivity() {
     }
 
     fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
-        val producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+        var producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
             ?.getProducteursByLocalite(localite = id.toString())
+
+        val evaluationsList = CcbRoomDatabase.getDatabase(applicationContext)?.evaluationArbreDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID))
+        val prodEvaluationsList = evaluationsList?.map { if(it.isSynced) it.id else it.uid }?.toMutableList()
+        LogUtils.d(prodEvaluationsList)
+
+        producteursList = producteursList?.filter { ( prodEvaluationsList?.contains(it.id?.toInt()) == true or (prodEvaluationsList?.contains(it.uid.toInt()) == true) == true) }?.toMutableList()
 
         var libItem: String? = null
         currVal2?.let { idc ->
@@ -517,7 +556,8 @@ class DistributionArbreActivity : AppCompatActivity() {
                         producteurCommon.id = producteur.id!!
                     }else producteurCommon.id = producteur.uid
 
-                    setupRvOtherListenner(producteurCommon.id.toString())
+                    listArbreAndState = CcbRoomDatabase.getDatabase(applicationContext)?.arbreDao()?.getAll()
+                    setupRvOtherListenner(producteurCommon.id.toString(), evaluationsList)
                 }
 
 

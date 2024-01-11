@@ -79,7 +79,36 @@ android:textColor="@color/text_color_white"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Campagne :"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:id="@+id/labelCampagneInspectionPreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+
+                    android:layout_height="match_parent"
+                    android:text="Encadreur"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -108,27 +137,138 @@ android:textColor="@color/text_color_white"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Campagne :"
+                    android:text="Total conformité (%):"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
 android:textColor="@color/text_color_white"
-                    android:id="@+id/labelCampagneInspectionPreview"
+                    android:id="@+id/labelTauConformInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    
                     android:layout_height="match_parent"
-                    android:text="Encadreur"
+                    android:text="12"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total question conforme:"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:id="@+id/labelNbConformInspectionPreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="12"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total question non conforme:"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:id="@+id/labelNbNonConformInspectionPreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="12"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total question non applicable:"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:id="@+id/labelNonApplicableInspectionPreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="12"
+                    android:layout_weight="2.5"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total question:"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:id="@+id/labelTotalInspectionPreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
+                    android:layout_height="match_parent"
+                    android:text="12"
                     android:layout_weight="2.5"/>
 
             </LinearLayout>
