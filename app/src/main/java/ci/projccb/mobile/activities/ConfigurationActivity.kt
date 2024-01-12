@@ -2670,6 +2670,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         parcelleDao?.syncData(
                             id = parcelleSync.id!!,
                             synced = true,
+                            codeparc = parcelleSync.codeParc.toString(),
                             localID = parcelle.uid.toInt()
                         )
 

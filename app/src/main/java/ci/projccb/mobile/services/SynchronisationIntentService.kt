@@ -140,7 +140,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         val producteurDatas = producteurDao.getUnSyncedAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
-        LogUtils.json(producteurDatas)
+//        LogUtils.json(producteurDatas)
         for (producteur in producteurDatas) {
             try {
                 // deserialize datas producteurs
@@ -379,33 +379,46 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
                 val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)
 
-                val responseParcelle: Response<ParcelleModel> = clientParcelle.execute()
-                val parcelleSync: ParcelleModel = responseParcelle.body()!!
+                clientParcelle.enqueue(object : Callback<ParcelleModel>{
 
-                if(responseParcelle.code() == 200 || responseParcelle.code() == 201){
-                    parcelleDao.syncData(
-                        id = parcelleSync.id!!,
-                        synced = true,
-                        localID = parcelle.uid.toInt()
-                    )
-                }else if(responseParcelle.code() == 501){
-                    parcelleDao.syncData(
-                        id = parcelleSync.id!!,
-                        synced = true,
-                        localID = parcelle.uid.toInt()
-                    )
-                }
+                    override fun onResponse(
+                        call: Call<ParcelleModel>,
+                        response: Response<ParcelleModel>
+                    ) {
+                        if(response.isSuccessful){
 
-                val suiviParcellesList = suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
-                    parcelleUid = parcelle.uid.toString(),
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-                )!!
+                            val parcelleSync: ParcelleModel = response.body()!!
 
-                for (suivi in suiviParcellesList) {
-                    suivi.parcellesId = parcelleSync.id.toString()
-                    suivi.producteursId = parcelleSync.producteurId
-                    suiviParcelleDao?.insert(suivi)
-                }
+                            parcelleDao.syncData(
+                                id = parcelleSync.id!!,
+                                synced = true,
+                                codeparc = parcelleSync.codeParc.toString(),
+                                localID = parcelle.uid.toInt()
+                            )
+
+                            val suiviParcellesList = suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
+                                parcelleUid = parcelle.uid.toString(),
+                                SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+                            )!!
+
+                            for (suivi in suiviParcellesList) {
+                                suivi.parcellesId = parcelleSync.id.toString()
+                                suivi.producteursId = parcelleSync.producteurId
+                                suiviParcelleDao?.insert(suivi)
+                            }
+
+                        }else{
+
+                            parcelleDao.deleteUid(parcelle.uid)
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ParcelleModel>, t: Throwable) {
+                        LogUtils.e(t.message)
+                    }
+
+                })
 
             } catch (uhex: UnknownHostException) {
                 FirebaseCrashlytics.getInstance().recordException(uhex)
@@ -477,9 +490,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                     localID = suivi.uid
                                 )
                             }else{
-//                                suiviParcelleDao.deleteByUid(
-//                                    suivi.uid
-//                                )
+                                suiviParcelleDao.deleteByUid(
+                                    suivi.uid
+                                )
                             }
                         }
 
@@ -506,7 +519,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         val suiviDatas = visiteurFormationDao.getUnSyncedAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
         )
-        LogUtils.json(suiviDatas)
+//        LogUtils.json(suiviDatas)
         if (suiviDatas.size > 0) {
             for (suivi in suiviDatas) {
                 try {
@@ -804,7 +817,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
     fun syncDistributionDarbre(distributionArbreDao: DistributionArbreDao) {
         try {
             val distribArbrDatas = distributionArbreDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            LogUtils.d("DISTRIBUTION ARBRE : ", distribArbrDatas)
+//            LogUtils.d("DISTRIBUTION ARBRE : ", distribArbrDatas)
 
             distribArbrDatas.map {distrib ->
 
@@ -865,7 +878,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
     fun syncLivraisonMagCentral(livraisonCentralDao: LivraisonCentralDao) {
         try {
             val livraisonCentralDatas = livraisonCentralDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            LogUtils.d("livraisonVerMagCentralDao : ", livraisonCentralDatas)
+//            LogUtils.d("livraisonVerMagCentralDao : ", livraisonCentralDatas)
 
             livraisonCentralDatas.map {
 
@@ -951,7 +964,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 //
 //                lieuTravauxDangereuxStringify = GsonUtils.toJson(selectEndroitTravEffectSSrte.selectedStrings)
 //                lieuTravauxLegersStringify = GsonUtils.toJson(selectEndroitTrav2EffectSSrte.selectedStrings)
-                LogUtils.json(enquete)
+//                LogUtils.json(enquete)
 
                 val clientEnqueteSsrt: Call<EnqueteSsrtModel> = ApiClient.apiService.synchronisationEnqueteSsrt(enquete)
                 val responseEnqueteSsrt: Response<EnqueteSsrtModel> = clientEnqueteSsrt.execute()

@@ -16,6 +16,7 @@ import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.DistributionArbreDao
 import ci.projccb.mobile.models.DistributionArbreModel
 import ci.projccb.mobile.models.EvaluationArbreModel
+import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.models.QuantiteDistribuer
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -94,9 +95,9 @@ class DistributionArbreActivity : AppCompatActivity() {
         producteur_id: String,
         evaluationsList: MutableList<EvaluationArbreModel>?
     ) {
-        LogUtils.d(evaluationsList, producteur_id)
+        //LogUtils.d(evaluationsList, producteur_id)
         val getAllElavOfProd = evaluationsList?.filter { it.producteurId == producteur_id }
-        LogUtils.d(getAllElavOfProd)
+        //LogUtils.d(getAllElavOfProd)
 
         if(getAllElavOfProd?.isEmpty() == false){
 
@@ -310,7 +311,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                 quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
                 this.qtelivre = qtelivre
                 listApproVi?.first()?.let {
-                    this.agroapprovisionnementsection = it.agroapprovisionnement_id
+                    this.agroapprovisionnementsection = it.id.toString()
                 }
                 this.total = total
             }
@@ -423,7 +424,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                 quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
                 this.qtelivre = qtelivre
                 listApproVi?.first()?.let {
-                    this.agroapprovisionnementsection = it.agroapprovisionnement_id
+                    this.agroapprovisionnementsection = it.id.toString()
                 }
                 this.total = total
             }
@@ -434,6 +435,8 @@ class DistributionArbreActivity : AppCompatActivity() {
             this.add(Pair("Quantité à distribuer", qtelivre))
             this.add(Pair("Total à enregistrer", total))
         }.map { MapEntry(it.first, it.second) }
+
+        //Commons.printModelValue(suiviDistrArbrDatas as Object, (mapEntries) )
 
         try {
             val intentDistribArbrPreview = Intent(this, DistributionArbrePreviewActivity::class.java)
@@ -527,10 +530,15 @@ class DistributionArbreActivity : AppCompatActivity() {
             ?.getProducteursByLocalite(localite = id.toString())
 
         val evaluationsList = CcbRoomDatabase.getDatabase(applicationContext)?.evaluationArbreDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID))
-        val prodEvaluationsList = evaluationsList?.map { if(it.isSynced) it.id else it.uid }?.toMutableList()
+        val prodEvaluationsList = evaluationsList?.map { if(it.isSynced) it.producteurId else -1 }?.toMutableList()
         LogUtils.d(prodEvaluationsList)
 
-        producteursList = producteursList?.filter { ( prodEvaluationsList?.contains(it.id?.toInt()) == true or (prodEvaluationsList?.contains(it.uid.toInt()) == true) == true) }?.toMutableList()
+        val producteursList2 = mutableListOf<ProducteurModel>()
+        producteursList?.forEach {
+            if( prodEvaluationsList?.contains(it.id?.toString()) == true ) producteursList2.add(it)
+        }
+        LogUtils.d(producteursList2)
+        producteursList = producteursList2
 
         var libItem: String? = null
         currVal2?.let { idc ->

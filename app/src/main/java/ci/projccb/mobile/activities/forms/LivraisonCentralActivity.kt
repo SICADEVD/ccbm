@@ -558,7 +558,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (livraisonVerMagCentralModelList?.size!! > 0) false else true,
             spinner = selectProducLivraisonCentral,
-            listIem = livraisonVerMagCentralModelList?.map { "${it.nom!!} ${it.prenoms!!} - ${it.typeProduit}" }
+            listIem = livraisonVerMagCentralModelList?.map { "${it.nom!!} ${it.prenoms!!} - ${it.typeProduit}".plus(if(it.certificat.isNullOrEmpty() == false) "- ${it.certificat}" else "") }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -582,7 +582,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
     private fun setupProducteurView(producteur: LivraisonVerMagCentralModel) {
 
-        editCertificatLivraisonCentral.setText(if(producteur.typeProduit.equals("Ordinaire", ignoreCase = true) == false) producteur.certificat?:"" else "")
+        editCertificatLivraisonCentral.setText(if(producteur.typeProduit != "Ordinaire") producteur.certificat?:"" else "")
         editTypProduitLivraisonCentral.setText(producteur.typeProduit?:"")
         var qteEnStock = if(producteur.quantiteMagasinSection?.toInt()?:0 > 0) producteur.quantiteMagasinSection?.toInt()  else 0
         editQuantityLivraisonCentral.hint = qteEnStock.toString()

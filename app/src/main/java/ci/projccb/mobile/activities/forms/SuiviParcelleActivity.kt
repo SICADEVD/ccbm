@@ -1826,7 +1826,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
             ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        LogUtils.json(parcellesList)
+//        LogUtils.json(parcellesList)
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {

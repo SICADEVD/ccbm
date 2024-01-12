@@ -414,6 +414,8 @@
     <string-array name="uniteBio">
         <item>L</item>
         <item>Kg</item>
+        <item>g</item>
+        <item>ml</item>
     </string-array>
 
     <string-array name="contenantIntrant">

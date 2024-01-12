@@ -303,7 +303,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
             this.add(Pair("Produits pythos enrégistrés", (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString() ))
-            this.add(Pair("Maladies observées dans la parcelle", selectListMaladieSuiviApplication.selectedStrings.toModifString() ))
+            this.add(Pair("Maladies observées dans la parcelle", selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
         }.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(suiviApplicationDatas as Object, mapEntries)

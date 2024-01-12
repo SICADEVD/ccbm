@@ -258,7 +258,6 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Quartier *"
-
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -266,23 +265,11 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:background="@drawable/rounded_background">
 
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
-<!--                                android:tag="quartier"-->
-<!--                                android:id="@+id/select"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="@dimen/_37sdp"-->
-<!--                                android:spinnerMode="dialog" />-->
-
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:tag="quartier"
                                 android:id="@+id/editQuartierMenage"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:background="@drawable/rounded_background"
                                 android:hint="DJAKOBO"
                                 android:ellipsize="end"
                                 android:gravity="center_vertical"

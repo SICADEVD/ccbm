@@ -456,8 +456,9 @@ class Commons {
             }
         }
 
-        fun List<String>?.toModifString(): String {
-            return this.toString().replace("]", "").replace("[", "").replace(", ", "")
+        fun List<String>?.toModifString(isComma:Boolean = true): String {
+            val values = this.toString().replace("]", "").replace("[", "")
+            return if(isComma) values.replace(", ", "") else values
         }
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null

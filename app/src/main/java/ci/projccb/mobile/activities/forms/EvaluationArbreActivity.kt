@@ -268,7 +268,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
             }
         }.map { MapEntry(it.first, it.second) }
 
-        Commons.printModelValue(formationModel as Object, mapEntries)
+        //Commons.printModelValue(formationModel as Object, mapEntries)
 
         try {
             val intentVisitFormationPreview = Intent(this, EvaluationBesoinPreviewActivity::class.java)
@@ -290,6 +290,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 uid = 0,
                 isSynced = false,
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
+                userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
                 origin = "local",
             ), mutableListOf<Pair<String,String>>())
         //LogUtils.d(.toString())

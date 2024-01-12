@@ -32,8 +32,8 @@ interface ParcelleDao {
     fun getUnSyncedAll(agentID: String?): MutableList<ParcelleModel>
 
     @Transaction
-    @Query("UPDATE parcelle SET id = :id, isSynced = :synced, origin = 'remote' WHERE uid = :localID")
-    fun syncData(id: Int, synced: Boolean, localID: Int)
+    @Query("UPDATE parcelle SET id = :id, isSynced = :synced, origin = 'remote', codeParc = :codeparc WHERE uid = :localID")
+    fun syncData(id: Int, synced: Boolean, codeparc: String, localID: Int)
 
     @Transaction
     @Query("SELECT * FROM parcelle WHERE (isSynced = 0 AND producteurId = :producteurUid AND origin = 'local' AND agentId = :agentId)")
@@ -42,4 +42,8 @@ interface ParcelleDao {
     @Transaction
     @Query("DELETE FROM parcelle WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM parcelle WHERE uid = :uid")
+    fun deleteUid(uid: Long)
 }

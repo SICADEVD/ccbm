@@ -34,4 +34,8 @@ interface SuiviParcelleDao {
     @Transaction
     @Query("DELETE FROM suivi_parcelle WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM suivi_parcelle WHERE uid = :uid")
+    fun deleteByUid(uid: Int)
 }
