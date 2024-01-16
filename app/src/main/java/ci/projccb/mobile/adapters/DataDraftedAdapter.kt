@@ -82,7 +82,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", if (draftedData.typeDraft.toString().lowercase() ==  "parcelle") "parcelle" else "content_parcelle")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "SUIVI_PARCELLE" -> {
+            "PARCELLES" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_suivi_parcel)
                 intentUndraftedData = Intent(context, SuiviParcelleActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_parcelle")
@@ -100,7 +100,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "estimation")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "SUIVI_APPLICATION" -> {
+            "APPLICATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_applicateurs)
                 intentUndraftedData = Intent(context, SuiviApplicationActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_application")
@@ -112,7 +112,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "livraison")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "SSRTE" -> {
+            "SSRTECLMRS" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_ssrt_black)
                 intentUndraftedData = Intent(context, SsrtClmsActivity::class.java)
                 intentUndraftedData.putExtra("from", "ssrte")
@@ -124,25 +124,25 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "inspection")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "VISITEUR_FORMATION" -> {
+            "FORMATION_VISITEUR" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
                 intentUndraftedData = Intent(context, VisiteurFormationActivity::class.java)
                 intentUndraftedData.putExtra("from", "visiteur_formation")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "EVALUATION_ARBRE" -> {
+            "AGRO_EVALUATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
                 intentUndraftedData = Intent(context, EvaluationArbreActivity::class.java)
                 intentUndraftedData.putExtra("from", "evaluation_arbre")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "DISTRIBUTION_ARBRE" -> {
+            "AGRO_DISTRIBUTION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
                 intentUndraftedData = Intent(context, DistributionArbreActivity::class.java)
                 intentUndraftedData.putExtra("from", "distribution_arbre")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "SUIVI_LIVRAISON_CENTRAL" -> {
+            "LIVRAISON_MAGCENTRAL" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
                 intentUndraftedData = Intent(context, LivraisonCentralActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_livraison_central")

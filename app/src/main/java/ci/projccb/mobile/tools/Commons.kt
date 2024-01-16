@@ -739,14 +739,14 @@ class Commons {
             var isUpdated = true
             when (fromMenu.uppercase()) {
                 "INSPECTION",
-                "SSRTE",
+                "SSRTECLMRS",
                 "LOCALITE",
                 "INFOS_PRODUCTEUR",
                 "MENAGE",
-                "SUIVI_PARCELLE",
+                "PARCELLES",
                 "FORMATION",
                 "CALCUL_ESTIMATION",
-                "SUIVI_APPLICATION",
+                "APPLICATION",
                 "LIVRAISON" -> {
                     isUpdated = false
                 }
@@ -786,17 +786,17 @@ class Commons {
                             UniteAgricoleProducteurActivity::class.java)
                         "MENAGE" -> ActivityUtils.startActivity(ProducteurMenageActivity::class.java)
                         "PARCELLE" -> ActivityUtils.startActivity(ParcelleActivity::class.java)
-                        "SUIVI_PARCELLE" -> ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
+                        "PARCELLES" -> ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
                         "INSPECTION" -> ActivityUtils.startActivity(InspectionActivity::class.java)
-                        "SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
+                        "SSRTECLMRS" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                         "FORMATION" -> ActivityUtils.startActivity(FormationActivity::class.java)
                         "CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
-                        "SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
+                        "APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
-                        "DISTRIBUTION_ARBRE" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
-                        "EVALUATION_ARBRE" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
-                        "VISITEUR_FORMATION" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
-                        "SUIVI_LIVRAISON_CENTRAL" -> ActivityUtils.startActivity(LivraisonCentralActivity::class.java)
+                        "AGRO_DISTRIBUTION" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
+                        "AGRO_EVALUATION" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
+                        "FORMATION_VISITEUR" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
+                        "LIVRAISON_MAGCENTRAL" -> ActivityUtils.startActivity(LivraisonCentralActivity::class.java)
                     }
                 }
 
@@ -819,7 +819,7 @@ class Commons {
                         //"INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                         "MENAGE" -> ActivityUtils.startActivity(MenageresListActivity::class.java)
                         "PARCELLE" -> ActivityUtils.startActivity(ParcellesListActivity::class.java)
-                        "SUIVI_PARCELLE" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
+                        "PARCELLES" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
                         //"INSPECTION" -> ActivityUtils.startActivity(EvaluationActivity::class.java)
                         //"SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                         "FORMATION" -> ActivityUtils.startActivity(FormationsListActivity::class.java)

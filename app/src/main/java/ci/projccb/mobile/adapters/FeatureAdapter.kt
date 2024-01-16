@@ -67,7 +67,7 @@ class FeatureAdapter(
         holder.tv_current_draft.text = currentFeature.countDraft.toString()
         holder.image_current.setImageResource(currentFeature.icon)
         Commons.modifyIcColor(activity, holder.image_current, R.color.black)
-        holder.feature_tv_main.text = currentFeature.title.toString()
+        holder.feature_tv_main.text = currentFeature.title.toString().replace("_", " ")
 
         //holder.tv_current_sync.text = currentFeature.title.toString()
 

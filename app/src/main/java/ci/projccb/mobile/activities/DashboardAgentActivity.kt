@@ -15,18 +15,14 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
-import ci.projccb.mobile.adapters.ExpandableListAdapter
 
 import ci.projccb.mobile.adapters.FeatureAdapter
 import ci.projccb.mobile.broadcasts.LoopAlarmReceiver
@@ -41,18 +37,12 @@ import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.reflect.TypeToken
-import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager
-import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
 import com.skydoves.expandablelayout.ExpandableLayout
 import com.techatmosphere.expandablenavigation.model.ChildModel
 import com.techatmosphere.expandablenavigation.model.HeaderModel
 import kotlinx.android.synthetic.main.activity_dashboard_agent.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import me.relex.circleindicator.CircleIndicator2
-import java.net.UnknownHostException
 
 
 /**
@@ -520,7 +510,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         //updateListOfFeature()
         updateListOfFeature()
-        setNavViewItems()
+        setNavViewItems(roles)
         setViewFeatureListing()
 
 //        if(carouselRecyclerview?.adapter?.itemCount!! > 0){
@@ -554,11 +544,11 @@ class DashboardAgentActivity : AppCompatActivity(),
     ) {
         if(roles.containsAll(listOf("PRODUCTEUR")) == false && expandableLayout.tag.toString().equals("expand0") ) lexpand0.visibility = View.GONE
         if(roles.containsAll(listOf("PARCELLE", "PARCELLES")) == false && expandableLayout.tag.toString().equals("expand1") ) lexpand1.visibility = View.GONE
-        if(roles.containsAll(listOf("FORMATION","VISTEURFORMATION")) == false && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
-        if(roles.containsAll(listOf("LIVRAISON", "LIVRAISONCENTRAL")) == false && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
-        if(roles.containsAll(listOf("EVALUATIONBESOIN", "DISTRIBUTION")) == false && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
-        if(roles.containsAll(listOf("MENAGE", "SSRTECLMR")) == false && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
-        if(roles.containsAll(listOf("APPLICATION", "EVALUATION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
+        if(roles.containsAll(listOf("FORMATION","FORMATION_VISITEUR")) == false && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
+        if(roles.containsAll(listOf("LIVRAISON", "LIVRAISON_MAGCENTRAL")) == false && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
+        if(roles.containsAll(listOf("AGRO_EVALUATION", "AGRO_DISTRIBUTION")) == false && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
+        if(roles.containsAll(listOf("MENAGE", "SSRTECLMRS")) == false && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
+        if(roles.containsAll(listOf("APPLICATION", "INSPECTION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
     }
 
     private fun hideOtherExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
@@ -695,7 +685,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     listOfFeatures.add(FeatureModel("TRAITEMENTS PHYTOS",
                         countSync = CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_application")!!,
-                        type = "SUIVI_APPLICATION",
+                        type = "APPLICATION",
                         categorie = 6,
                         //placeholder = R.drawable.suiviapplication,
                         icon = R.drawable.application_phyto,
@@ -705,7 +695,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canViewSync = false //can be false
                     ).apply { this.image = image.plus("application_phyto.png")})
                 }
-                "EVALUATIONS","EVALUATION" -> {
+                "EVALUATIONS","INSPECTION" -> {
                     //listOrderItem.add(6)
                     //setClickListenForFeature(6);
                     //linearEvaluation.visibility = View.VISIBLE
@@ -722,22 +712,22 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canViewSync = false //can be false
                     ).apply { this.image = image.plus("evaluation.png")})
                 }
-                "ESTIMATIONS","ESTIMATION" -> {
-                    //listOrderItem.add(9)
-                    //setClickListenForFeature(9);
-                    //linearCalculEstimation.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("ESTIMATION",
-                        countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
-                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
-                        type = "CALCUL_ESTIMATION",
-                        //image = R.drawable.estimations,
-                        icon = R.drawable.ic_suivi_parcel,
-                        canAdd = true,
-                        canEdit = true,
-                        canViewDraft = true,
-                        canViewSync = false //can be false
-                    ).apply { this.image = image.plus("estimations.png")})
-                }
+//                "ESTIMATIONS","ESTIMATION" -> {
+//                    //listOrderItem.add(9)
+//                    //setClickListenForFeature(9);
+//                    //linearCalculEstimation.visibility = View.VISIBLE
+//                    listOfFeatures.add(FeatureModel("ESTIMATION",
+//                        countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
+//                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
+//                        type = "CALCUL_ESTIMATION",
+//                        //image = R.drawable.estimations,
+//                        icon = R.drawable.ic_suivi_parcel,
+//                        canAdd = true,
+//                        canEdit = true,
+//                        canViewDraft = true,
+//                        canViewSync = false //can be false
+//                    ).apply { this.image = image.plus("estimations.png")})
+//                }
                 "SUIVIPARCELLES","PARCELLES" -> {
                     //listOrderItem.add(5)
                     //setClickListenForFeature(5);
@@ -745,7 +735,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     listOfFeatures.add(FeatureModel("TECHNIQUE AGRICOLE",
                         countSync = suiviParcelleDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_parcelle")!!,
-                        type = "SUIVI_PARCELLE",
+                        type = "PARCELLES",
                         categorie = 1,
                         //image = R.drawable.suiviparcelle,
                         icon = R.drawable.ic_suivi_parcel,
@@ -779,7 +769,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     listOfFeatures.add(FeatureModel("SSRTECLMR",
                         countSync = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "ssrte")!!,
-                        type = "SSRTE",
+                        type = "SSRTECLMRS",
                         categorie = 5,
                         //image = R.drawable.ssrte,
                         icon = R.drawable.ssrte_ic,
@@ -793,7 +783,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(11)
                     //setClickListenForFeature(11);
                     //linearLivraison.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("LIVRAISON MAG SECTION",
+                    listOfFeatures.add(FeatureModel("LIVRAISON MAG_SECTION",
                         countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
                         type = "LIVRAISON",
@@ -806,65 +796,66 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canViewSync = true //can be false
                     ).apply { this.image = image.plus("livrais_mag_sect.png")})
                 }
-
+                "AGRO_DISTRIBUTION" -> {
+                    listOfFeatures.add(FeatureModel("DISTRIBUTION D'ARBRE",
+                        countSync = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "distribution_arbre")!!,
+                        type = "AGRO_DISTRIBUTION",
+                        categorie = 4,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.distrib_arbre,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("distrib_arbre.png")})
+                }
+                "AGRO_EVALUATION" -> {
+                    listOfFeatures.add(FeatureModel("EVALUATION BESOINS",
+                        countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")!!,
+                        type = "AGRO_EVALUATION",
+                        categorie = 4,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.arbre_black,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("arbre_black.png")})
+                }
+                "LIVRAISON_MAGCENTRAL" -> {
+                    listOfFeatures.add(FeatureModel("LIVRAISON MAG_CENTRAL",
+                        countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison_central")!!,
+                        type = "LIVRAISON_MAGCENTRAL",
+                        categorie = 3,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.livrais_mag_central,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("livrais_mag_central.png")})
+                }
+                "FORMATION_VISITEUR" -> {
+                    listOfFeatures.add(FeatureModel("VISITEUR FORMATION",
+                        countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
+                        type = "FORMATION_VISITEUR",
+                        categorie = 2,
+                        //image = R.drawable.formation,
+                        icon = R.drawable.visitor_form,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("visitor_form.png")})
+                }
                 else -> {}
             }
             //carouselRecyclerview?.adapter?.notifyDataSetChanged()
         }
-
-        listOfFeatures.add(FeatureModel("VISITEUR FORMATION",
-            countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
-            type = "VISITEUR_FORMATION",
-            categorie = 2,
-            //image = R.drawable.formation,
-            icon = R.drawable.visitor_form,
-            canAdd = true,
-            canEdit = false,
-            canViewDraft = true,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("visitor_form.png")})
-
-        listOfFeatures.add(FeatureModel("LIVRAISON MAG CENTRAL",
-            countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison_central")!!,
-            type = "SUIVI_LIVRAISON_CENTRAL",
-            categorie = 3,
-            //image = R.drawable.livraison,
-            icon = R.drawable.livrais_mag_central,
-            canAdd = true,
-            canEdit = false,
-            canViewDraft = true,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("livrais_mag_central.png")})
-
-
-
-        listOfFeatures.add(FeatureModel("EVALUATION BESOINS",
-            countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")!!,
-            type = "EVALUATION_ARBRE",
-            categorie = 4,
-            //image = R.drawable.livraison,
-            icon = R.drawable.arbre_black,
-            canAdd = true,
-            canEdit = false,
-            canViewDraft = true,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("arbre_black.png")})
-
-        listOfFeatures.add(FeatureModel("DISTRIBUTION D'ARBRE",
-            countSync = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
-            countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "distribution_arbre")!!,
-            type = "DISTRIBUTION_ARBRE",
-            categorie = 4,
-            //image = R.drawable.livraison,
-            icon = R.drawable.distrib_arbre,
-            canAdd = true,
-            canEdit = false,
-            canViewDraft = true,
-            canViewSync = false //can be false
-        ).apply { this.image = image.plus("distrib_arbre.png")})
 
         listOfFeatures.map {
             listOfFeatureCloned.add(it)
@@ -877,30 +868,56 @@ class DashboardAgentActivity : AppCompatActivity(),
 
     }
 
-    private fun setNavViewItems() {
+    private fun setNavViewItems(roles: MutableList<String>) {
 
         var expandableLV = expandable_navigation1.init(this@DashboardAgentActivity)
         val listHeaders = mutableListOf<HeaderModel>()
         listOfFeatureCloned.forEach {
-            var titlo = it.title?.let {
-                var returner = it
-                if(it.contains(" ")){
-                    val velo = it.split(" ".toRegex(), it.lastIndexOf(" "))
-                    if(velo.size > 1)
-                        returner = velo[0].plus("\n"+velo[1])
-                    else
-                        returner = velo[0]
-                }
-                returner
-            }
-            val featured = HeaderModel(titlo  , it.icon, true)
-                .addChildModel(ChildModel("NOUVEAU"))
 
-            if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
-            if(it.canViewUpdate) featured.addChildModel(ChildModel("A MODIFIER"))
-            if(it.canViewSync) featured.addChildModel(ChildModel("A ENVOYER"))
-            listHeaders.add(featured)
-            expandableLV.addHeaderModel(featured)
+            if(roles.contains(it.type)){
+                var titlo = it.title?.let {
+                    var returner = it
+                    if(it.contains(" ")){
+                        val velo = it.split(" ".toRegex(), it.lastIndexOf(" "))
+                        if(velo.size > 1)
+                            returner = velo[0].plus("\n"+velo[1])
+                        else
+                            returner = velo[0]
+                    }
+                    returner
+                }
+                val featured = HeaderModel(titlo  , it.icon, true)
+                    .addChildModel(ChildModel("NOUVEAU"))
+
+                if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
+                if(it.canViewUpdate) featured.addChildModel(ChildModel("A MODIFIER"))
+                if(it.canViewSync) featured.addChildModel(ChildModel("A ENVOYER"))
+                listHeaders.add(featured)
+                expandableLV.addHeaderModel(featured)
+            }
+
+            if(roles.contains("PRODUCTEUR") && it.type == "INFOS_PRODUCTEUR"){
+                var titlo = it.title?.let {
+                    var returner = it
+                    if(it.contains(" ")){
+                        val velo = it.split(" ".toRegex(), it.lastIndexOf(" "))
+                        if(velo.size > 1)
+                            returner = velo[0].plus("\n"+velo[1])
+                        else
+                            returner = velo[0]
+                    }
+                    returner
+                }
+                val featured = HeaderModel(titlo  , it.icon, true)
+                    .addChildModel(ChildModel("NOUVEAU"))
+
+                if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
+                if(it.canViewUpdate) featured.addChildModel(ChildModel("A MODIFIER"))
+                if(it.canViewSync) featured.addChildModel(ChildModel("A ENVOYER"))
+                listHeaders.add(featured)
+                expandableLV.addHeaderModel(featured)
+            }
+
         }
 
 //        val tvmain = this.findViewById<ImageView>(com.techatmosphere.R.id.icon_menu)

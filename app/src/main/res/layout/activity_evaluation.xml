@@ -225,42 +225,6 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner l'encadreur"
-
-                            android:textStyle="bold" />
-        
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-        
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-        
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="encadreur"
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectEncadreurList"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>
-        
-                        </LinearLayout>
-        
-                    </LinearLayout>
-        
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-        
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
                             android:text="Choix du ou des certificats"
 
                             android:textStyle="bold" />
@@ -297,6 +261,78 @@ android:textColor="@color/text_color_white"
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Selectionner l'encadreur"
+
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:tag="encadreur"
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectEncadreurList"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Quel est votre production de l' année précedente ? (Kg)"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:tag="production"
+                    android:id="@+id/editNbrProductionEvalBesoin"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="20"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_width="0dp"
+                    android:inputType="number"
+                    android:layout_weight="4"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
             
             <LinearLayout
                     android:layout_marginBottom="@dimen/_10sdp"

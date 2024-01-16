@@ -35,6 +35,7 @@ data class InspectionDTO(
     @SerializedName("producteurs_nom") @Expose var producteurNomPrenoms: String? = "",
     @SerializedName("note") @Expose var noteInspection: String? = "",
     @SerializedName("encadreur") @Expose var encadreur: String? = "",
+    @Expose var production: String? = "",
     @Expose var certificatStr: String? = "",
     @Expose var total_question: String? = "",
     @Expose var total_question_conforme: String? = "",
