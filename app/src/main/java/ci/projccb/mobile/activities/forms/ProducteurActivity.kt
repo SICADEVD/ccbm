@@ -826,7 +826,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setupSectionSelection()
         setProgrammeSpinner()
 
-        setListenerForSpinner(this, "Choix du lieu","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Habitez-vous dans un campement ou village ?","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectHabitationProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>)?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
@@ -856,7 +856,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Choix de votre statut", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Choix du statut", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectStatutMatProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
@@ -864,7 +864,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Quelle est la nationalité ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectNationaliteProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
@@ -1148,7 +1148,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setupSectionSelection(producteurDrafted.section, producteurDrafted.localitesId)
         setProgrammeSpinner(producteurDrafted.programme_id)
 
-        setListenerForSpinner(this, "Choix du lieu","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Habitez-vous dans un campement ou village ?","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectHabitationProducteur,
             currentVal = producteurDrafted.habitationProducteur,
             listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>)?.map { it.nom }
@@ -1192,7 +1192,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
             })
 
-        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Quelle est la nationalité ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectNationaliteProducteur,
             currentVal = producteurDrafted.nationalite,
             listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
@@ -1201,7 +1201,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, "Choix de votre nationlité", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+        setListenerForSpinner(this, "Quelle est la nationalité ?", "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectProcheProducteur,
             listIem = listOf(),
             itemChanged = arrayListOf(Pair(1, "Oui")),
@@ -1333,7 +1333,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             indItem++
         }
 
-        selectCertifProducteur.setTitle("Choix de la variété")
+        selectCertifProducteur.setTitle("Quels sont les certificats ?")
         selectCertifProducteur.setItems(certificatList)
         //multiSelectSpinner.hasNoneOption(true)
         selectCertifProducteur.setSelection(listSelectCertificatPosList.toIntArray())

@@ -183,7 +183,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localite"
+                            android:text="Selectionner une localité"
 
                             android:textStyle="bold" />
 
@@ -250,38 +250,32 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        >
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quartier *"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Renseignez le quartier"
                             android:textStyle="bold" />
 
-                        <LinearLayout
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="quartier"
+                            android:id="@+id/editQuartierMenage"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="quartier"
-                                android:id="@+id/editQuartierMenage"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:hint="DJAKOBO"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
-
-                        </LinearLayout>
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:hint="Broukro"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="Broukro" />
 
                     </LinearLayout>
 
@@ -568,8 +562,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Source d'energie du ménage"
-
+                            android:text="Sources d'energies du ménage"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -598,6 +591,8 @@ android:textColor="@color/text_color_white"
 
                     <LinearLayout
                         android:id="@+id/containerNbreDBoisMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -609,6 +604,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
+                            android:paddingLeft="@dimen/_10sdp"
                             android:text="Combien de bois par semaine ?"
                             android:textStyle="bold" />
 

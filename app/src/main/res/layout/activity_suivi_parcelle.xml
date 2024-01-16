@@ -143,7 +143,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section *"
+                            android:text="Selectionner une section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -181,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité *"
+                            android:text="Selectionner une localité"
 
                             android:textStyle="bold" />
 
@@ -221,7 +221,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner un producteur *"
+                            android:text="Selectionner un producteur"
 
                             android:textStyle="bold" />
 
@@ -260,7 +260,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Choisir sa parcelle concernée *"
+                            android:text="Choisir sa parcelle concernée"
 
                             android:textStyle="bold" />
 
@@ -436,7 +436,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:paddingLeft="@dimen/_12sdp"
-                                    android:text="Quand Avez-vous Recu ?"
+                                    android:text="Quand avez-vous recu des arbres ?"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -1319,7 +1319,7 @@ android:textColor="@color/text_color_white"
                         android:layout_weight="6"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Nombre de désherbage manuel (l'année)"
+                        android:text="Nombre de désherbage manuel (par année)"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -1725,6 +1725,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:paddingTop="@dimen/_5sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_background">

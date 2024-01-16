@@ -93,7 +93,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Nom de\nla localité *"/>
+                    android:text="Nom de\nla localité"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editNomLocalite"
@@ -128,7 +128,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Type de\nlocalite *"/>
+                    android:text="Type de\nlocalite"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,7 +166,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Nom de la\nsous-prefecture *"/>
+                    android:text="Nom de la\nsous-prefecture"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editSousPrefectureLocalite"
@@ -236,7 +236,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Existe-t-il un\ncentre de santé ? *"/>
+                    android:text="Existe-t-il un\ncentre de santé ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -398,7 +398,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Y'a-t-il une\nécole primaire ? *"/>
+                    android:text="Y'a-t-il une\nécole primaire ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -654,7 +654,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Source d'eaux potable ? *"/>
+                    android:text="Source d'eaux potable ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -743,7 +743,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Existe-t-il l’éclairage public dans la localité ? *"/>
+                    android:text="Existe-t-il l’éclairage public dans la localité ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -783,7 +783,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Existe-t-il un marché dans la localité ? *"/>
+                    android:text="Existe-t-il un marché dans la localité ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -920,7 +920,7 @@ android:textColor="@color/text_color_white"
                     android:layout_height="wrap_content"
                     
                     android:textStyle="bold"
-                    android:text="Endroit pour déchets ? *"/>
+                    android:text="Endroit pour déchets ?"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

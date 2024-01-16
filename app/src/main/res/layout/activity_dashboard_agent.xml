@@ -133,105 +133,153 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand0"
-                    android:id="@+id/expandIdentif"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
+                <LinearLayout
+                    android:id="@+id/lexpand0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view"
-                    app:expandable_secondLayout="@layout/hided_view" />
+                    android:orientation="vertical">
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand0"
+                        android:id="@+id/expandIdentif"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view"
+                        app:expandable_secondLayout="@layout/hided_view" />
+                </LinearLayout>
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand1"
-                    android:id="@+id/expandIdentif2"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
+                <LinearLayout
+                    android:id="@+id/lexpand1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view2"
-                    app:expandable_secondLayout="@layout/hided_view2" />
+                    android:orientation="vertical">
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand2"
-                    android:id="@+id/expandIdentif3"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view3" />
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand1"
+                        android:id="@+id/expandIdentif2"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view2"
+                        app:expandable_secondLayout="@layout/hided_view2" />
+                </LinearLayout>
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand3"
-                    android:id="@+id/expandIdentif4"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
+                <LinearLayout
+                    android:id="@+id/lexpand2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view4" />
+                    android:orientation="vertical">
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand4"
-                    android:id="@+id/expandIdentif5"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view5" />
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand2"
+                        android:id="@+id/expandIdentif3"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view3" />
+                </LinearLayout>
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand5"
-                    android:id="@+id/expandIdentif6"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
+                <LinearLayout
+                    android:id="@+id/lexpand3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view6" />
+                    android:orientation="vertical">
 
-                <com.skydoves.expandablelayout.ExpandableLayout
-                    android:tag="expand6"
-                    android:id="@+id/expandIdentif7"
-                    android:layout_marginHorizontal="@dimen/_35sdp"
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand3"
+                        android:id="@+id/expandIdentif4"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lexpand4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    app:expandable_spinner_gravity="start"
-                    app:expandable_animation="bounce"
-                    app:expandable_duration="300"
-                    app:expandable_isExpanded="false"
-                    app:expandable_spinner_size="@dimen/_20sdp"
-                    app:expandable_parentLayout="@layout/showed_view7" />
+                    android:orientation="vertical">
+
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand4"
+                        android:id="@+id/expandIdentif5"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view5" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lexpand5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand5"
+                        android:id="@+id/expandIdentif6"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view6" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lexpand6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand6"
+                        android:id="@+id/expandIdentif7"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view7" />
+                </LinearLayout>
+
 
 <!--                <com.skydoves.expandablelayout.ExpandableLayout-->
 <!--                    android:tag="expand6"-->

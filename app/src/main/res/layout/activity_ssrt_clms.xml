@@ -257,7 +257,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selection du producteur *"
+                            android:text="Selection du producteur"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -1162,7 +1162,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Où as-tu effectué ces travaux ?"
+                            android:text="Où as-tu effectué ces travaux dangereux ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1286,7 +1286,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Où as-tu effectué ces travaux ?"
+                            android:text="Où as-tu effectué ces travaux légers ?"
                             android:textStyle="bold" />
 
                         <LinearLayout

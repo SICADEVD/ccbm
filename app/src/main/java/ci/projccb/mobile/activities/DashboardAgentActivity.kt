@@ -486,6 +486,8 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
 
         //setDataClickListener()
+        val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), object : TypeToken<MutableList<String>>(){}.type)
+
         val expandableList = arrayListOf<ExpandableLayout>(
             expandIdentif,
             expandIdentif2,
@@ -507,9 +509,13 @@ class DashboardAgentActivity : AppCompatActivity(),
                         hideOtherExpandable(this, expandableList)
                     }
                     LogUtils.d("Expand : ${it}")
+                    hideNotExistFeature(roles, this)
+
                 }
                 parentLayout.setOnClickListener { this.toggleLayout() }
             }
+
+            hideNotExistFeature(roles, it)
         }
 
         //updateListOfFeature()
@@ -540,6 +546,19 @@ class DashboardAgentActivity : AppCompatActivity(),
         /*for (i in 1..10) {
             FakeLocaliteDatas.saveLocalite(i, this)
         }*/
+    }
+
+    private fun hideNotExistFeature(
+        roles: MutableList<String>,
+        expandableLayout: ExpandableLayout
+    ) {
+        if(roles.containsAll(listOf("PRODUCTEUR")) == false && expandableLayout.tag.toString().equals("expand0") ) lexpand0.visibility = View.GONE
+        if(roles.containsAll(listOf("PARCELLE", "PARCELLES")) == false && expandableLayout.tag.toString().equals("expand1") ) lexpand1.visibility = View.GONE
+        if(roles.containsAll(listOf("FORMATION","VISTEURFORMATION")) == false && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
+        if(roles.containsAll(listOf("LIVRAISON", "LIVRAISONCENTRAL")) == false && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
+        if(roles.containsAll(listOf("EVALUATIONBESOIN", "DISTRIBUTION")) == false && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
+        if(roles.containsAll(listOf("MENAGE", "SSRTECLMR")) == false && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
+        if(roles.containsAll(listOf("APPLICATION", "EVALUATION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
     }
 
     private fun hideOtherExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
@@ -821,7 +840,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
 
 
-        listOfFeatures.add(FeatureModel("EVALUATION DES BESOINS",
+        listOfFeatures.add(FeatureModel("EVALUATION BESOINS",
             countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))?.size!!,
             countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")!!,
             type = "EVALUATION_ARBRE",
@@ -863,7 +882,18 @@ class DashboardAgentActivity : AppCompatActivity(),
         var expandableLV = expandable_navigation1.init(this@DashboardAgentActivity)
         val listHeaders = mutableListOf<HeaderModel>()
         listOfFeatureCloned.forEach {
-            val featured = HeaderModel(it.title, it.icon, true)
+            var titlo = it.title?.let {
+                var returner = it
+                if(it.contains(" ")){
+                    val velo = it.split(" ".toRegex(), it.lastIndexOf(" "))
+                    if(velo.size > 1)
+                        returner = velo[0].plus("\n"+velo[1])
+                    else
+                        returner = velo[0]
+                }
+                returner
+            }
+            val featured = HeaderModel(titlo  , it.icon, true)
                 .addChildModel(ChildModel("NOUVEAU"))
 
             if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))

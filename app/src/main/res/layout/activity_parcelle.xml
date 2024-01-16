@@ -145,7 +145,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section *"
+                            android:text="Selectionner une section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -183,7 +183,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité *"
+                            android:text="Selectionner une localité"
 
                             android:textStyle="bold" />
 
@@ -223,7 +223,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner un producteur *"
+                            android:text="Selectionner un producteur"
 
                             android:textStyle="bold" />
 
@@ -274,7 +274,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Quelle est l'année de création de la parcelle *"
+                                android:text="Quelle est l'année de création de la parcelle"
                                 android:textStyle="bold" />
 
                             <RelativeLayout
@@ -556,7 +556,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel type de documents possèdes-tu ?"
+                            android:text="Quel type de document possèdes-tu ?"
 
                             android:textStyle="bold" />
 
@@ -957,6 +957,7 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <LinearLayout
+                                android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
@@ -1143,7 +1144,7 @@ android:textColor="@color/text_color_white"
 <!--                            android:layout_width="match_parent"-->
 <!--                            android:layout_height="wrap_content"-->
 <!--                            android:paddingLeft="@dimen/_12sdp"-->
-<!--                            android:text="Type de déclaration superficiee *"-->
+<!--                            android:text="Type de déclaration superficiee"-->
 
 <!--                            android:textStyle="bold" />-->
 

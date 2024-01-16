@@ -148,7 +148,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localité *"
+                            android:text="Localité"
 
                             android:textStyle="bold" />
 
@@ -166,7 +166,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog"
-                                app:hintText="Localité *" />
+                                app:hintText="Localité" />
 
                         </LinearLayout>
 
@@ -187,7 +187,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Campagne *"
+                            android:text="Campagne"
 
                             android:textStyle="bold" />
 
@@ -225,7 +225,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur *"
+                            android:text="Producteur"
 
                             android:textStyle="bold" />
 
@@ -263,7 +263,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Parcelle *"
+                            android:text="Parcelle"
 
                             android:textStyle="bold" />
 

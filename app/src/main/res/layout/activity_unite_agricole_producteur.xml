@@ -142,7 +142,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section *"
+                            android:text="Selectionner une section"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -181,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité *"
+                            android:text="Selectionner une localité"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />

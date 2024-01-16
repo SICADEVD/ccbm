@@ -167,7 +167,7 @@ android:textColor="@color/text_color_white"
                             android:textSize="@dimen/_10sdp"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Nom*"/>
+                            android:text="Nom"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="senderName"
@@ -205,7 +205,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Contact*"/>
+                            android:text="Contact"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="senderPhone"
@@ -243,7 +243,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Email*"/>
+                            android:text="Email"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="senderEmail"
@@ -281,7 +281,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Adresse*"/>
+                            android:text="Adresse"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="senderAddress"
@@ -358,7 +358,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Selectionner un magasin central *"/>
+                            android:text="Selectionner un magasin central"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -399,7 +399,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Nom*"/>
+                            android:text="Nom"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="receiverName"
@@ -437,7 +437,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Contact*"/>
+                            android:text="Contact"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="receiverPhone"
@@ -475,7 +475,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Email*"/>
+                            android:text="Email"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="receiverEmail"
@@ -513,7 +513,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
 
                             android:textStyle="bold"
-                            android:text="Adresse*"/>
+                            android:text="Adresse"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="receiverAddress"
@@ -569,7 +569,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/_10sdp"
-                            android:text="Désignez le type de produit ?"
+                            android:text="Désignez le type de produit !"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -888,16 +888,19 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
                     <LinearLayout
+                        android:id="@+id/containerCertificat"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:textColor="@color/text_color_white"
@@ -992,7 +995,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_15sdp"
                                 android:textStyle="bold"
-                                android:text="Quantité(Kg)"/>
+                                android:text="Quantité (Kg)"/>
 
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:id="@+id/editQuantityLivraisonCentral"

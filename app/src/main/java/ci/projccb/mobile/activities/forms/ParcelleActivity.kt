@@ -576,7 +576,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //        )
 
         Commons.setListenerForSpinner(this,
-            "Type de déclaration superficie*","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            "Type de déclaration superficie","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectDeclarationTypeParcelle,
             itemChanged = arrayListOf(Pair(1, "Verbal"), Pair(2, "Gps")),
             currentVal = parcelleDrafted.typedeclaration,
@@ -636,7 +636,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel type de document ?","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            "Quel type de document possèdes-tu ?","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectDocumentParcelle,
             currentVal = parcelleDrafted.typeDoc,
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -787,7 +787,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             indItem++
         }
 
-        selectProtectionParcelle.setTitle("Choix des moyens de protections")
+        selectProtectionParcelle.setTitle("Sélectionner les mésures de protections")
         selectProtectionParcelle.setItems(protectList)
         //multiSelectSpinner.hasNoneOption(true)
         selectProtectionParcelle.setSelection(listSelectProtectPosList.toIntArray())
@@ -1005,7 +1005,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         setupMoyProtectMultiSelection()
 
         Commons.setListenerForSpinner(this,
-            "Type de déclaration superficie*","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            "Type de déclaration superficie","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectDeclarationTypeParcelle,
             itemChanged = arrayListOf(Pair(1, "Verbal"), Pair(2, "Gps")),
             listIem = resources.getStringArray(R.array.declarationType)
@@ -1052,7 +1052,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel type de document ?","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            "Quel type de document possèdes-tu ?","La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectDocumentParcelle,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 10,

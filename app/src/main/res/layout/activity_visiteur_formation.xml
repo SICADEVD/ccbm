@@ -279,7 +279,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
-                                android:text="Selectionner une localite"
+                                android:text="Selectionner une localité"
 
                                 android:textStyle="bold" />
 

@@ -876,13 +876,13 @@ class SuiviApplicationActivity : AppCompatActivity() {
             clickSaveMatiereSuiviApplication,
             editMatiereActiveSuiviApplication){
 
-            Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Quelles sont les maladies observées ?", (recyclerMatiereListSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().toMutableList() ){
+            Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", (recyclerMatiereListSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().toMutableList() ){
 
             }
 
         }
 
-        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Quelles sont les maladies observées ?", arrayListOf() ){
+        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", arrayListOf() ){
 
         }
 
@@ -1112,7 +1112,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la parcelle !",
+            "Choisir sa parcelle concernée",
             "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,

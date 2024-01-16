@@ -139,7 +139,7 @@ android:textColor="@color/text_color_white"
 <!--                            android:layout_width="match_parent"-->
 <!--                            android:layout_height="wrap_content"-->
 <!--                            android:paddingLeft="@dimen/_12sdp"-->
-<!--                            android:text="Compagne *"-->
+<!--                            android:text="Compagne"-->
 
 <!--                            android:textStyle="bold" />-->
 
@@ -177,7 +177,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section *"
+                            android:text="Selectionner une section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -215,7 +215,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité *"
+                            android:text="Selectionner une localité"
 
                             android:textStyle="bold" />
 
@@ -255,7 +255,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner un producteur *"
+                            android:text="Selectionner un producteur"
 
                             android:textStyle="bold" />
 
@@ -294,7 +294,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Choisir sa parcelle concernée *"
+                            android:text="Choisir sa parcelle concernée"
 
                             android:textStyle="bold" />
 
@@ -699,7 +699,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="4"
-                                android:text="Faites une liste des matières actives ?"
+                                android:text="Quelles sont les matières actives à renseigner ?"
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:textStyle="bold" />
 
@@ -830,6 +830,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_weight=".6"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_12sdp"
+                                                android:textSize="@dimen/_10ssp"
                                                 android:text="Classe toxicologique"
                                                 android:textStyle="bold" />
 
@@ -837,7 +838,7 @@ android:textColor="@color/text_color_white"
                                                 android:id="@+id/selectPestToxicoSApplic"
                                                 android:layout_width="0dp"
                                                 android:layout_weight=".4"
-                                                android:layout_height="@dimen/_25sdp"
+                                                android:layout_height="@dimen/_30sdp"
                                                 android:background="@drawable/rounded_background"
                                                 android:entries="@array/classToxiq"
                                                 android:spinnerMode="dialog" />
@@ -864,6 +865,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/_10ssp"
                                                     android:text="Nom commercial"
                                                     android:textStyle="bold" />
 
@@ -885,7 +887,7 @@ android:textColor="@color/text_color_white"
                                             <LinearLayout
                                                 android:layout_width="0dp"
                                                 android:layout_weight="2.5"
-                                                android:layout_height="wrap_content"
+                                                android:layout_height="match_parent"
                                                 android:orientation="vertical">
 
                                                 <androidx.appcompat.widget.AppCompatTextView
@@ -893,15 +895,24 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Matière active"
+                                                    android:textSize="@dimen/_10ssp"
+                                                    android:text="Matières actives"
                                                     android:textStyle="bold" />
-
-                                                <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                                    android:id="@+id/selectMatActivPestSApplic"
+                                                
+                                                <LinearLayout
+                                                    android:orientation="vertical"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_25sdp"
                                                     android:background="@drawable/rounded_background"
-                                                    android:spinnerMode="dialog" />
+                                                    android:layout_height="match_parent">
+
+                                                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                                        android:id="@+id/selectMatActivPestSApplic"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:spinnerMode="dialog" />
+
+                                                </LinearLayout>
+
                                             </LinearLayout>
 
                                         </LinearLayout>
@@ -926,6 +937,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/_10ssp"
                                                     android:text="La dose (L/Ha)"
                                                     android:textStyle="bold" />
 
@@ -955,6 +967,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/_10ssp"
                                                     android:text="Fréquence"
                                                     android:textStyle="bold" />
 
@@ -1133,7 +1146,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Date d'application *"
+                            android:text="Date d'application"
 
                             android:textStyle="bold" />
 

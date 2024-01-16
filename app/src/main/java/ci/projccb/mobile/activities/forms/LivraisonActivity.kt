@@ -120,7 +120,7 @@ class LivraisonActivity : AppCompatActivity() {
         LogUtils.json(magasinsList)
 
         Commons.setListenerForSpinner(this,
-            "Choisir le magasin","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            "Selectionner un magasin de section","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
             spinner = selectMagasinSectionLivraison,
             currentVal = magasinsList?.filter { it.id.toString() == currVal }.let {
                 if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
@@ -445,7 +445,7 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
+            "Dans quel section livrez vous ?",
             "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
@@ -481,7 +481,7 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
+            "De quelle localité s'agit-il ?",
             "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,

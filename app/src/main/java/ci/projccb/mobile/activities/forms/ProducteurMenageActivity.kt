@@ -710,7 +710,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         var isMissing = false
         var message = ""
         var notNecessaire = listOf<String>(
-            "Année certification *".lowercase(),
+            "Année certification".lowercase(),
             "Code producteur".lowercase(),
             "En tant que:".lowercase(),
             "Numéro de téléphone".lowercase(),
@@ -1327,7 +1327,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectEauPotablMenage.setTitle("Choix des sources d'eau ?")
+        selectEauPotablMenage.setTitle("Où procurez-vous l'eau potable ?")
         selectEauPotablMenage.setItems(eauPotableList.map { it.nom })
         //multiSelectSpinner.hasNoneOption(true)
         selectEauPotablMenage.setSelection(listSelectEauPotablePosList.toIntArray())
@@ -1772,7 +1772,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectOrdureMenagMenage.setTitle("Choix de la gestion ordure ménagère")
+        selectOrdureMenagMenage.setTitle("Comment gérez-vous les ordures ménagères ?")
         selectOrdureMenagMenage.setItems(ordurMenagList)
         //multiSelectSpinner.hasNoneOption(true)
         selectOrdureMenagMenage.setSelection(listordurMenagPosList.toIntArray())
@@ -1803,7 +1803,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectEnergieMenage.setTitle("Choix de la source d'énergies")
+        selectEnergieMenage.setTitle("Choix des sources d'énergies du ménage")
         selectEnergieMenage.setItems(sourceEnergieList)
         //multiSelectSpinner.hasNoneOption(true)
         selectEnergieMenage.setSelection(listSourceEnergiePosList.toIntArray())

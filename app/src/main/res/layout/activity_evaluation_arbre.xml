@@ -146,7 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section *"
+                            android:text="Selectionner une section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -184,7 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité *"
+                            android:text="Selectionner une localité"
 
                             android:textStyle="bold" />
 

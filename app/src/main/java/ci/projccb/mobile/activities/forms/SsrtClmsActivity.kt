@@ -859,19 +859,19 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         }
 
-        Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte, "Où as-tu effectué ces travaux ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte, "Où as-tu effectué ces travaux dangereux ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux légers as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte, "Au cours de ces 2 dernières années lequel de ces travaux a tu effectués ?", resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux légers as-tu effectué ?", resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte, "Où as-tu effectué ces travaux ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte, "Où as-tu effectué ces travaux légers ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
 
         }
 

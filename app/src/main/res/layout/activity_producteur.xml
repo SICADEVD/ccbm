@@ -371,7 +371,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Certificats"
+                            android:text="Quels sont les certificats ?"
 
                             android:textStyle="bold" />
 
@@ -555,7 +555,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Selectionner une localite"
+                        android:text="Selectionner une localité"
 
                         android:textStyle="bold" />
 
@@ -594,7 +594,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Selectionner un programme *"
+                        android:text="Selectionner un programme"
 
                         android:textStyle="bold" />
 
@@ -784,7 +784,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Etes-vous ? *"
+                        android:text="Etes-vous ?"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -863,7 +863,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Quelle est la nationalité"
+                        android:text="Quelle est la nationalité ?"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -1457,7 +1457,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
-                            android:text="Photo de profile *" />
+                            android:text="Photo de profile" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/imagePhotoProfilProducteur"
@@ -1548,7 +1548,7 @@ android:textColor="@color/text_color_white"
 <!--                        android:layout_width="wrap_content"-->
 <!--                        android:layout_height="wrap_content"-->
 <!--                        android:layout_margin="@dimen/_10sdp"-->
-<!--                        android:text="Signature *" />-->
+<!--                        android:text="Signature" />-->
 
 <!--                    <View-->
 <!--                        android:layout_width="match_parent"-->

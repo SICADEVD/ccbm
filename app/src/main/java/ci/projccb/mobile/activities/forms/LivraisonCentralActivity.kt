@@ -529,7 +529,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit ?", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit !", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
             typeCommon.nom = it.toModifString()
             livraisonVerMagCentralModelList.clear()
             it.forEach {produit ->
@@ -558,7 +558,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
             isEmpty = if (livraisonVerMagCentralModelList?.size!! > 0) false else true,
             spinner = selectProducLivraisonCentral,
-            listIem = livraisonVerMagCentralModelList?.map { "${it.nom!!} ${it.prenoms!!} - ${it.typeProduit}".plus(if(it.certificat.isNullOrEmpty() == false) "- ${it.certificat}" else "") }
+            listIem = livraisonVerMagCentralModelList?.map { "${it.nom!!} ${it.prenoms!!} - ${it.typeProduit}".plus(if(it.certificat.isNullOrEmpty() == false) " - ${it.certificat}" else "") }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -582,7 +582,12 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
     private fun setupProducteurView(producteur: LivraisonVerMagCentralModel) {
 
-        editCertificatLivraisonCentral.setText(if(producteur.typeProduit != "Ordinaire") producteur.certificat?:"" else "")
+        if(producteur.typeProduit != "Ordinaire") {
+            containerCertificat.visibility = View.GONE
+            editCertificatLivraisonCentral.setText(producteur.certificat ?: "")
+        }else{
+            containerCertificat.visibility = View.VISIBLE
+        }
         editTypProduitLivraisonCentral.setText(producteur.typeProduit?:"")
         var qteEnStock = if(producteur.quantiteMagasinSection?.toInt()?:0 > 0) producteur.quantiteMagasinSection?.toInt()  else 0
         editQuantityLivraisonCentral.hint = qteEnStock.toString()
@@ -595,7 +600,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             ?.getListByEntrpriseId(entrId?.toInt() ?: 0)
 
         Commons.setListenerForSpinner(this,
-            "Choix du transporteur !",
+            "Choix du transporteur",
             "La liste des transporteurs semble vide, veuillez procéder à la synchronisation des données svp.",
             currentVal = currVal,
             spinner = selectTransporteurLivraisonCentral,
@@ -911,7 +916,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit ?", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit !", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
             typeCommon.nom = it.toModifString()
 
             livraisonVerMagCentralModelList.clear()
