@@ -95,8 +95,10 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                 inspectionDTO?.let { inspection ->
                     labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
                     labelCampagneInspectionPreview.text = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(inspection.encadreur?.toInt())?.let { "${it.firstname} ${it.lastname}"  }
-                    val substrain = (inspection.total_question?.toInt()?.minus(inspection.total_question_non_applicable?.toInt()?:0))?.toInt()?:1
-                    labelTauConformInspectionPreview.text = ( (inspection.total_question_conforme?.toInt()?.div( substrain )?:0).times(100)  ).toString()
+                    val total_question = inspection.total_question?.toInt()
+                    val total_question_non_applicable = inspection.total_question_non_applicable?.toInt()
+                    val total_question_conforme = inspection.total_question_conforme?.toInt()
+                    labelTauConformInspectionPreview.text = ((total_question_conforme?.div(total_question?:1))?.toFloat()!! * 100).toString().plus("%")
                     labelNbConformInspectionPreview.text = inspection.total_question_conforme
                     labelNbNonConformInspectionPreview.text = inspection.total_question_non_conforme
                     labelNonApplicableInspectionPreview.text = inspection.total_question_non_applicable
