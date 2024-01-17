@@ -88,6 +88,8 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inspection_preview)
 
+        clickCancelInspectionPreview.setOnClickListener { finish() }
+
         intent?.let { intent ->
             try {
                 val inspectionDTO: InspectionDTO? = intent.getParcelableExtra("preview")
@@ -98,7 +100,10 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                     val total_question = inspection.total_question?.toInt()
                     val total_question_non_applicable = inspection.total_question_non_applicable?.toInt()
                     val total_question_conforme = inspection.total_question_conforme?.toInt()
-                    labelTauConformInspectionPreview.text = ((total_question_conforme?.div(total_question?:1))?.toFloat()!! * 100).toString().plus("%")
+                    val total_question_non_conforme = inspection.total_question_non_conforme?.toInt()
+                    val substrain = (total_question?:1).minus(total_question_non_applicable?:1)
+                    //LogUtils.d(total_question, total_question_conforme, total_question_non_conforme, total_question_non_applicable, substrain)
+                    labelTauConformInspectionPreview.text = (total_question_conforme?.times(100))?.div(substrain).toString().plus("%")
                     labelNbConformInspectionPreview.text = inspection.total_question_conforme
                     labelNbNonConformInspectionPreview.text = inspection.total_question_non_conforme
                     labelNonApplicableInspectionPreview.text = inspection.total_question_non_applicable
@@ -107,6 +112,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                     CoroutineScope(Dispatchers.Main).launch {
                         fetchQuestionnaires(inspection)
                     }
+
 
                     labelDateInspectionPreview.text = inspection.dateEvaluation
 
