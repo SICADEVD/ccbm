@@ -107,6 +107,11 @@ class QuestionnaireReviewAdapter(
         }
     }
 
+    fun setListQuestion(pQuestionnaireList: MutableList<QuestionResponseModel>){
+        pQuestionnaireResponsesList.addAll(pQuestionnaireList)
+        notifyDataSetChanged()
+    }
+
 
     fun retrieveNotation() {
 
