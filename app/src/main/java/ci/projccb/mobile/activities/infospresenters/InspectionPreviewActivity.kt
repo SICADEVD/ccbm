@@ -33,6 +33,8 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
     private var cQuestionnaires: MutableList<QuestionResponseModel>? = mutableListOf()
     lateinit var questionnaireAdapter: QuestionnairePreviewAdapter
 
+    val draftDao = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()
+    var draftID = 0
 
     suspend fun fetchQuestionnaires(inspectionDTO: InspectionDTO?) {
         MainScope().launch {
@@ -93,6 +95,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
         intent?.let { intent ->
             try {
                 val inspectionDTO: InspectionDTO? = intent.getParcelableExtra("preview")
+                draftID = intent.getIntExtra("draft_id", 0)
 
                 inspectionDTO?.let { inspection ->
                     labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
@@ -104,10 +107,12 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                     val substrain = (total_question?:1).minus(total_question_non_applicable?:1)
                     //LogUtils.d(total_question, total_question_conforme, total_question_non_conforme, total_question_non_applicable, substrain)
                     labelTauConformInspectionPreview.text = (total_question_conforme?.times(100))?.div(substrain).toString().plus("%")
+                    inspection.noteInspection = (total_question_conforme?.times(100))?.div(substrain)?.toDouble().toString()
                     labelNbConformInspectionPreview.text = inspection.total_question_conforme
                     labelNbNonConformInspectionPreview.text = inspection.total_question_non_conforme
                     labelNonApplicableInspectionPreview.text = inspection.total_question_non_applicable
                     labelTotalInspectionPreview.text = inspection.total_question
+                    labelNrbProdInspectionPreview.text = inspection.production
 
                     CoroutineScope(Dispatchers.Main).launch {
                         fetchQuestionnaires(inspection)
@@ -125,6 +130,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                                 callback = {
                                     CcbRoomDatabase.getDatabase(this)?.inspectionDao()
                                         ?.insert(inspection)
+                                    draftDao?.completeDraft(draftID)
                                     Commons.synchronisation(type = "inspection", this)
                                     Commons.showMessage(
                                         "Inpection enregistrée avec succes !",

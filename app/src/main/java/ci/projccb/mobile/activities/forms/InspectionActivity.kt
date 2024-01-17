@@ -570,6 +570,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         val intentInspectionPreview = Intent(this, InspectionPreviewActivity::class.java)
         intentInspectionPreview.putExtra("preview", questionnaireDto)
+        intentInspectionPreview.putExtra("draft_id", draftedDataInspection?.uid)
         ActivityUtils.startActivity(intentInspectionPreview)
     }
 
