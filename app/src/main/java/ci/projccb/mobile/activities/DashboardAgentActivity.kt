@@ -484,8 +484,8 @@ class DashboardAgentActivity : AppCompatActivity(),
             expandIdentif3,
             expandIdentif4,
             expandIdentif5,
-            expandIdentif6,
-            expandIdentif7,
+            //expandIdentif6,
+            //expandIdentif7,
         )
 
         expandableList.forEach {
@@ -542,13 +542,13 @@ class DashboardAgentActivity : AppCompatActivity(),
         roles: MutableList<String>,
         expandableLayout: ExpandableLayout
     ) {
-        if(roles.containsAll(listOf("PRODUCTEUR")) == false && expandableLayout.tag.toString().equals("expand0") ) lexpand0.visibility = View.GONE
-        if(roles.containsAll(listOf("PARCELLE", "PARCELLES")) == false && expandableLayout.tag.toString().equals("expand1") ) lexpand1.visibility = View.GONE
-        if(roles.containsAll(listOf("FORMATION","FORMATION_VISITEUR")) == false && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
-        if(roles.containsAll(listOf("LIVRAISON", "LIVRAISON_MAGCENTRAL")) == false && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
-        if(roles.containsAll(listOf("AGRO_EVALUATION", "AGRO_DISTRIBUTION")) == false && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
-        if(roles.containsAll(listOf("MENAGE", "SSRTECLMRS")) == false && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
-        if(roles.containsAll(listOf("APPLICATION", "INSPECTION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
+        if( (roles.containsAll(listOf("PRODUCTEUR")) == false || roles.containsAll(listOf("PARCELLE")) == false) && expandableLayout.tag.toString().equals("expand0") ) lexpand0.visibility = View.GONE
+        if( (roles.containsAll(listOf("PARCELLES")) == false || roles.containsAll(listOf("PARCELLES")) == false || roles.containsAll(listOf("FORMATION")) == false || roles.containsAll(listOf("FORMATION_VISITEUR")) == false || roles.containsAll(listOf("APPLICATION")) == false || roles.containsAll(listOf("INSPECTION")) == false) && expandableLayout.tag.toString().equals("expand1") ) lexpand1.visibility = View.GONE
+        if( (roles.containsAll(listOf("LIVRAISON")) == false || roles.containsAll(listOf("LIVRAISON_MAGCENTRAL")) == false) && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
+        if( (roles.containsAll(listOf("MENAGE")) == false || roles.containsAll(listOf("SSRTECLMRS")) == false) && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
+        if( (roles.containsAll(listOf("AGRO_EVALUATION")) == false || roles.containsAll(listOf("AGRO_DISTRIBUTION")) == false) && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
+        //if( () && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
+        //if(roles.containsAll(listOf("APPLICATION", "INSPECTION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
     }
 
     private fun hideOtherExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
@@ -652,7 +652,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = parcelleDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "parcelle")!!,
                         type = "PARCELLE",
-                        categorie = 1,
+                        categorie = 0,
                         //image = R.drawable.parcelles,
                         icon = R.drawable.ic_parcel,
                         canAdd = true,
@@ -669,7 +669,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = producteurMenageDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "menage")!!,
                         type = "MENAGE",
-                        categorie = 5,
+                        categorie = 3,
                         //image = R.drawable.menage,
                         icon = R.drawable.ic_menage,
                         canAdd = true,
@@ -686,7 +686,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_application")!!,
                         type = "APPLICATION",
-                        categorie = 6,
+                        categorie = 1,
                         //placeholder = R.drawable.suiviapplication,
                         icon = R.drawable.application_phyto,
                         canAdd = true,
@@ -704,7 +704,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "inspection")!!,
                         type = "INSPECTION",
                         //image = R.drawable.evaluation,
-                        categorie = 6,
+                        categorie = 1,
                         icon = R.drawable.baseline_elevator,
                         canAdd = true,
                         canEdit = true,
@@ -753,7 +753,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")!!,
                         type = "FORMATION",
-                        categorie = 2,
+                        categorie = 1,
                         //image = R.drawable.formation,
                         icon = R.drawable.ic_formation,
                         canAdd = true,
@@ -770,7 +770,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "ssrte")!!,
                         type = "SSRTECLMRS",
-                        categorie = 5,
+                        categorie = 3,
                         //image = R.drawable.ssrte,
                         icon = R.drawable.ssrte_ic,
                         canAdd = true,
@@ -787,7 +787,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
                         type = "LIVRAISON",
-                        categorie = 3,
+                        categorie = 2,
                         //image = R.drawable.livraison,
                         icon = R.drawable.livrais_mag_sect,
                         canAdd = true,
@@ -829,7 +829,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison_central")!!,
                         type = "LIVRAISON_MAGCENTRAL",
-                        categorie = 3,
+                        categorie = 2,
                         //image = R.drawable.livraison,
                         icon = R.drawable.livrais_mag_central,
                         canAdd = true,
@@ -843,7 +843,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
                         type = "FORMATION_VISITEUR",
-                        categorie = 2,
+                        categorie = 1,
                         //image = R.drawable.formation,
                         icon = R.drawable.visitor_form,
                         canAdd = true,

@@ -498,7 +498,7 @@ android:textColor="@color/text_color_white"
 
                                         <LinearLayout
                                             android:layout_width="0dp"
-                                            android:layout_weight="3.50"
+                                            android:layout_weight="3.0"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
 
@@ -530,11 +530,11 @@ android:textColor="@color/text_color_white"
                                         <Space
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="0.25" />
+                                            android:layout_weight="0.15" />
 
                                         <LinearLayout
                                             android:layout_width="0dp"
-                                            android:layout_weight="1.25"
+                                            android:layout_weight="1.85"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
 
@@ -1620,7 +1620,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingLeft="@dimen/_10sdp"
-                                            android:text="Non de l'opérateur"
+                                            android:text="Opérateur Téléphonique"
                                             android:textStyle="bold" />
 
                                         <LinearLayout

@@ -28,7 +28,7 @@
             android:textAllCaps="true"
             android:textSize="@dimen/_11ssp"
             android:textFontWeight="500"
-            android:text="Productivité améliorée"
+            android:text="Gestion suivi productivité"
             android:textColor="@color/text_color_white" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -705,7 +705,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Type de contenant"
+                                                    android:text="Contenant"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatSpinner
@@ -764,7 +764,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Nom du pesticide"
+                                                    android:text="Quantité"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatEditText
@@ -773,7 +773,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:ellipsize="end"
-                                                    android:hint="Quantité: 12"
+                                                    android:hint="12"
                                                     android:imeOptions="actionDone"
                                                     android:inputType="number"
                                                     android:paddingStart="@dimen/_10sdp"
@@ -802,13 +802,13 @@ android:textColor="@color/text_color_white"
                                                     android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:ellipsize="end"
-                                                    android:hint="Fréquence: 12"
+                                                    android:hint="3"
                                                     android:imeOptions="actionDone"
                                                     android:inputType="number"
                                                     android:paddingStart="@dimen/_10sdp"
                                                     android:paddingEnd="@dimen/_10sdp"
                                                     android:textSize="@dimen/_13ssp"
-                                                    tools:text="Fréquence: 12" />
+                                                    tools:text="3" />
                                             </LinearLayout>
 
                                         </LinearLayout>
@@ -935,7 +935,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Type de contenant"
+                                                    android:text="Contenant"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatSpinner
@@ -994,7 +994,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Nom d'intrant"
+                                                    android:text="Quantité"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatEditText
@@ -1003,7 +1003,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:ellipsize="end"
-                                                    android:hint="Quantité: 12"
+                                                    android:hint="12"
                                                     android:imeOptions="actionDone"
                                                     android:inputType="number"
                                                     android:paddingStart="@dimen/_10sdp"
@@ -1032,13 +1032,13 @@ android:textColor="@color/text_color_white"
                                                     android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:ellipsize="end"
-                                                    android:hint="Fréquence: 12"
+                                                    android:hint="3"
                                                     android:imeOptions="actionDone"
                                                     android:inputType="number"
                                                     android:paddingStart="@dimen/_10sdp"
                                                     android:paddingEnd="@dimen/_10sdp"
                                                     android:textSize="@dimen/_13ssp"
-                                                    tools:text="Fréquence: 12" />
+                                                    tools:text="3" />
                                             </LinearLayout>
 
                                         </LinearLayout>
@@ -1601,6 +1601,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
+                                android:paddingBottom="@dimen/_5sdp"
                                 android:text="Insectes parasites ou ravageurs"
                                 android:textStyle="bold" />
 
@@ -1775,6 +1776,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
+                                android:paddingBottom="@dimen/_5sdp"
                                 android:text="Autre insectes parasites ou ravageurs"
                                 android:textStyle="bold" />
 
@@ -2014,7 +2016,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_12sdp"
-                                                android:text="Type de contenant"
+                                                android:text="Contenant"
                                                 android:textStyle="bold" />
 
                                             <androidx.appcompat.widget.AppCompatSpinner
@@ -2073,7 +2075,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_12sdp"
-                                                android:text="Nom d'intrant"
+                                                android:text="Quantité"
                                                 android:textStyle="bold" />
 
                                             <androidx.appcompat.widget.AppCompatEditText
@@ -2082,7 +2084,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_height="@dimen/_30sdp"
                                                 android:background="@drawable/rounded_background"
                                                 android:ellipsize="end"
-                                                android:hint="Quantité: 12"
+                                                android:hint="12"
                                                 android:imeOptions="actionDone"
                                                 android:inputType="number"
                                                 android:paddingStart="@dimen/_10sdp"
@@ -2111,13 +2113,13 @@ android:textColor="@color/text_color_white"
                                                 android:layout_height="@dimen/_30sdp"
                                                 android:background="@drawable/rounded_background"
                                                 android:ellipsize="end"
-                                                android:hint="Fréquence: 12"
+                                                android:hint="3"
                                                 android:imeOptions="actionDone"
                                                 android:inputType="number"
                                                 android:paddingStart="@dimen/_10sdp"
                                                 android:paddingEnd="@dimen/_10sdp"
                                                 android:textSize="@dimen/_13ssp"
-                                                tools:text="Fréquence: 12" />
+                                                tools:text="3" />
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -2440,6 +2442,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
+                                android:paddingBottom="@dimen/_5sdp"
                                 android:text="Quel est le nom de l'insecte amis et leur nombre constaté ?"
                                 android:textStyle="bold" />
 

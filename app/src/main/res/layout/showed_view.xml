@@ -28,7 +28,7 @@
             android:textAllCaps="true"
             android:textSize="@dimen/_11ssp"
             android:textFontWeight="500"
-            android:text="IDENTIFICATION"
+            android:text="Gestion des Exploitations"
             android:textColor="@color/text_color_white" />
 
     </LinearLayout>
