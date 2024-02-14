@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import ci.projccb.mobile.R
 import ci.projccb.mobile.adapters.MultipleItemAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
 import ci.projccb.mobile.adapters.OnlyFieldAdapter
@@ -143,14 +144,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 //        LogUtils.json(producteurDatas)
         for (producteur in producteurDatas) {
             try {
-                // deserialize datas producteurs
-//                val culturesType = object : TypeToken<MutableList<CultureProducteurModel>>() {}.type
-//                producteur.producteursCultures = GsonUtils.fromJson<MutableList<CultureProducteurModel>>(producteur.cultures, culturesType)
-//                producteur.typeculture = mutableListOf()
-//                producteur.superficieculture = mutableListOf()
-
-                //reform producteur
-                //producteur.localitesId
 
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
                 producteur.certificats = GsonUtils.fromJson(producteur.certificatsStr, object : TypeToken<MutableList<String>>(){}.type)
@@ -159,14 +152,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     val photoPath = producteur.photo
                     producteur.photo = Commons.convertPathBase64(photoPath, 1)
                 }
-//                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
-//                if (!producteur.versoPath.isNullOrEmpty()) producteur.verso = Commons.convertPathBase64(producteur.versoPath, 1)
-//                if (!producteur.esignaturePath.isNullOrEmpty()) producteur.esignature = Commons.convertPathBase64(producteur.esignaturePath, 3)
-
-//                producteur.producteursCultures?.map { culture ->
-//                    producteur.typeculture?.add(culture.label!!)
-//                    producteur.superficieculture?.add(culture.superficie.toString())
-//                }
 
 
                 producteur.apply {
@@ -222,34 +207,94 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 localID = producteur.uid
                             )
 
-                            val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
-                                producteur.uid.toString(),
-                                SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                            )!!
-
-                            for (prodMenage in producteurMenagesList) {
-                                prodMenage.producteurs_id = producteurSynced.id.toString()
-                                menageDao?.insert(prodMenage)
+                            infosProducteurDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                infosProducteurDao?.insert(it)
                             }
 
-                            val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
-                                producteur.uid.toString(),
-                                SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                            )!!
-
-                            for (parcelle in producteurParcellesList) {
-                                parcelle.producteurId = producteurSynced.id.toString()
-                                parcelleDao?.insert(parcelle)
+                            inspectionDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                inspectionDao?.insert(it)
                             }
 
-//                            val livraisonsList = livraisonDao?.getUnSyncedAll(
-//                                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-//                            )!!
-//
-//                            livraisonsList.map { livraisonModel ->
-//                                livraisonModel.producteursId = producteurSynced.id.toString()
-//                                livraisonDao?.insert(livraisonModel)
-//                            }
+                            livraisonDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                livraisonDao?.insert(it)
+                            }
+
+                            livraisonCentralDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                livraisonCentralDao?.insert(it)
+                            }
+
+                            menageDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurs_id = producteurSynced.id.toString()
+                                menageDao?.insert(it)
+                            }
+
+                            enqueteSsrtDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                enqueteSsrtDao?.insert(it)
+                            }
+
+                            parcelleDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                parcelleDao?.insert(it)
+                            }
+
+                            distributionArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                distributionArbreDao?.insert(it)
+                            }
+
+                            evaluationArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                evaluationArbreDao?.insert(it)
+                            }
+
+
+                            // THIS SYNC DEPEND TO PRODUCTEUR_ID AND PARCELLE_ID
+
+                            estimationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                estimationDao?.insert(it)
+                            }
+
+                            suiviParcelleDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                suiviParcelleDao?.insert(it)
+                            }
+
+                            suiviApplicationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                it.producteur = producteurSynced.id.toString()
+                                suiviApplicationDao?.insert(it)
+                            }
+
+                            // THIS SYNC DEPEND TO PRODUCTEUR_ID AND FORMATION_ID
+
+                            visiteurFormationDao?.getUnSyncedByProdAndFormUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                visiteurFormationDao?.insert(it)
+                            }
+
+                            // THIS SYNC DEPEND TO PRODUCTEUR_ID
+                            formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
+                                if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
+                                    if( producteurDao.getProducteurByID(producteur.uid) == null ) {
+                                        formMod.producteursIdList = formMod.producteursIdList?.map {
+
+                                            var curValue = it
+                                            if (curValue == producteur.uid.toString()) curValue = producteurSynced.id.toString()
+                                            curValue
+
+                                        } as MutableList<String>?
+
+                                    }
+                                }
+
+                                formationDao?.insert(formMod)
+
+                            }
 
                         }
 
@@ -260,16 +305,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
 
                 })
-//                val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
-//                val producteurSynced: ProducteurModel? = responseProducteur.body()
-//
-//                LogUtils.d("RESPONSE CODE "+responseProducteur.code())
-//
-
-//
-//                producteurSynced?.let {
-//
-//                }
 
             } catch (uhex: UnknownHostException) {
                 LogUtils.e(uhex.message)
@@ -280,7 +315,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
         }
 
-        syncMenage(menageDao!!)
+
+        syncParcelle(parcelleDao!!)
     }
 
 
@@ -297,7 +333,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 id = null
                 empruntMachine = null
                 if(activiteFemme.isNullOrBlank()) {
-                    activiteFemme = "non"
+                    activiteFemme = getString(R.string.non)
                 }
             }
 
@@ -346,7 +382,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
         }
 
-        syncParcelle(parcelleDao!!)
+        syncEnqueteSsrt(enqueteSsrtDao!!)
+
     }
 
 
@@ -396,15 +433,22 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 localID = parcelle.uid.toInt()
                             )
 
-                            val suiviParcellesList = suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
+                            estimationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
+                                it.parcelleId = parcelleSync.id.toString()
+                                estimationDao?.insert(it)
+                            }
+
+                            suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
                                 parcelleUid = parcelle.uid.toString(),
                                 SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-                            )!!
+                            )?.forEach {
+                                it.parcellesId = parcelleSync.id.toString()
+                                suiviParcelleDao?.insert(it)
+                            }
 
-                            for (suivi in suiviParcellesList) {
-                                suivi.parcellesId = parcelleSync.id.toString()
-                                suivi.producteursId = parcelleSync.producteurId
-                                suiviParcelleDao?.insert(suivi)
+                            suiviApplicationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
+                                it.parcelle_id = parcelleSync.id.toString()
+                                suiviApplicationDao?.insert(it)
                             }
 
                         }else{
@@ -428,7 +472,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
         }
 
-        syncSuivi(suiviParcelleDao!!)
+
+        syncEstimation(estimationDao!!)
     }
 
 
@@ -509,10 +554,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
-            syncVisiteurFormation(visiteurFormationDao!!)
+            //syncVisiteurFormation(visiteurFormationDao!!)
         } else {
-            syncVisiteurFormation(visiteurFormationDao!!)
         }
+
+        syncSuiviApplication(suiviApplicationDao!!)
+
     }
 
     fun syncVisiteurFormation(visiteurFormationDao: VisiteurFormationDao) {
@@ -527,16 +574,37 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                     val clientSuivi: Call<VisiteurFormationModel> = ApiClient.apiService.synchronisationVisiteurFormation(suivi)
 
-                    val responseSuivi: Response<VisiteurFormationModel> = clientSuivi.execute()
-                    val visiteurFormationModel: VisiteurFormationModel? = responseSuivi.body()
+                    clientSuivi.enqueue(object : Callback<VisiteurFormationModel>{
+                        override fun onResponse(
+                            call: Call<VisiteurFormationModel>,
+                            response: Response<VisiteurFormationModel>
+                        ) {
+
+                            if(response.isSuccessful){
+                                val visiteurFormationModel: VisiteurFormationModel? = response.body()
+
+                                visiteurFormationDao.syncData(
+                                    id = visiteurFormationModel?.id!!,
+                                    synced = true,
+                                    localID = suivi.uid
+                                )
+                            }else{
+                                visiteurFormationDao.deleteByUid(suivi.uid)
+                            }
+
+                        }
+
+                        override fun onFailure(call: Call<VisiteurFormationModel>, t: Throwable) {
+//                            try{
+//                                visiteurFormationDao.deleteByUid(suivi.uid)
+//                            }catch (ex: Exception){
+//
+//                            }
+                        }
+
+                    })
 
 
-
-                    visiteurFormationDao.syncData(
-                        id = visiteurFormationModel?.id!!,
-                        synced = true,
-                        localID = suivi.uid
-                    )
                 } catch (uhex: UnknownHostException) {
                     FirebaseCrashlytics.getInstance().recordException(uhex)
                 } catch (ex: Exception) {
@@ -544,10 +612,16 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
-            syncEvaluationBesoin(evaluationArbreDao!!)
+            //syncEvaluationBesoin(evaluationArbreDao!!)
         } else {
-            syncEvaluationBesoin(evaluationArbreDao!!)
         }
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            stopForeground(true)
+            notificationManager?.cancel(1)
+        }
+
+
     }
 
     fun syncEvaluationBesoin(evaluationArbreDao: EvaluationArbreDao) {
@@ -598,10 +672,11 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
-            syncFormations(formationDao!!)
+            //syncFormations(formationDao!!)
         } else {
-            syncFormations(formationDao!!)
         }
+
+        syncFormations(formationDao!!)
     }
 
 
@@ -652,6 +727,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 true,
                                 formation.uid
                             )
+
+                            visiteurFormationDao?.getUnSyncedByFormUid(formation.uid.toString())?.forEach {
+                                it.producteurId = formationSynced.id.toString()
+                                visiteurFormationDao?.insert(it)
+                            }
+
                         }else{
                             formationDao.deleteByUid(
                                 formation.uid
@@ -674,7 +755,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
         }
 
-        syncLivraison(livraisonDao!!)
+        syncVisiteurFormation(visiteurFormationDao!!)
+
+
     }
 
 
@@ -724,7 +807,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
         }
 
-        syncEstimation(estimationDao!!)
+        syncLivraisonMagCentral(livraisonCentralDao!!)
+
     }
 
 
@@ -736,23 +820,42 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 estimationPojo.dateEstimation = Commons.convertDate(estimationPojo.dateEstimation, toEng = true)
 
                 val clientEstimation: Call<EstimationModel> = ApiClient.apiService.synchronisationEstimation(estimationPojo)
-                val responseEstimation: Response<EstimationModel> = clientEstimation.execute()
 
-                val estimationSynced: EstimationModel? = responseEstimation.body()
-                estimationDao.syncData(
-                    estimationSynced?.id!!,
-                    true,
-                    estimationPojo.uid!!
-                )
+                clientEstimation.enqueue(object : Callback<EstimationModel>{
+                    override fun onResponse(
+                        call: Call<EstimationModel>,
+                        response: Response<EstimationModel>
+                    ) {
+                        if(response.isSuccessful){
+                            val responseEstimation: EstimationModel? = response.body()
+                            estimationDao.syncData(
+                                responseEstimation?.id!!,
+                                true,
+                                estimationPojo.uid!!
+                            )
+                        }else{
+                            estimationDao?.deleteByUid(
+                                estimationPojo.uid
+                            )
+                        }
+                    }
+
+                    override fun onFailure(call: Call<EstimationModel>, t: Throwable) {
+                        LogUtils.e(t.message)
+                    }
+
+                })
             }
 
-            syncSuiviApplication(suiviApplicationDao!!)
+            syncSuivi(suiviParcelleDao!!)
+
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
+
 
     }
 
@@ -803,7 +906,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
             }
 
-            syncDistributionDarbre(distributionArbreDao!!)
+            syncInfosProducteur(infosProducteurDao!!)
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
@@ -853,9 +956,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
 
                     override fun onFailure(call: Call<DistributionArbreModel>, t: Throwable) {
-                        distributionArbreDao.deleteByUid(
-                            distrib.uid
-                        )
+//                        distributionArbreDao.deleteByUid(
+//                            distrib.uid
+//                        )
                         LogUtils.e(t.message)
                     }
 
@@ -864,7 +967,15 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
             }
 
-            syncLivraisonMagCentral(livraisonCentralDao!!)
+
+            syncVisiteurFormation(visiteurFormationDao!!)
+
+            if (Build.VERSION.SDK_INT >= 26) {
+                stopForeground(true)
+                notificationManager?.cancel(1)
+            }
+
+
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
@@ -932,7 +1043,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
             }
 
-            syncEnqueteSsrt(enqueteSsrtDao!!)
+            syncMenage(menageDao!!)
+
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
@@ -977,7 +1089,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 )
             }
 
-            syncInspection(inspectionDao!!)
+
+            syncDistributionDarbre(distributionArbreDao!!)
+
+
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
@@ -1023,7 +1138,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 )
             }
 
-            syncInfosProducteur(infosProducteurDao!!)
+            syncLivraison(livraisonDao!!)
+
+
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {
@@ -1102,10 +1219,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 //                }
             }
 
-            if (Build.VERSION.SDK_INT >= 26) {
-                stopForeground(true)
-                notificationManager?.cancel(1)
-            }
+            syncInspection(inspectionDao!!)
+
         } catch (uhex: UnknownHostException) {
             FirebaseCrashlytics.getInstance().recordException(uhex)
         } catch (ex: Exception) {

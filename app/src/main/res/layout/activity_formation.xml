@@ -43,7 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE FORMATION"
+                android:text="@string/fiche_formation"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -116,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur localité"
+                            android:text="@string/informations_sur_localit"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner la section"
+                            android:text="@string/choix_de_la_section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -181,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner la localité"
+                            android:text="@string/choix_de_la_localit"
 
                             android:textStyle="bold" />
 
@@ -295,7 +295,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quels sont Les producteurs présents à la formation ?"
+                            android:text="@string/quels_sont_les_producteurs_pr_sents_la_formation"
 
                             android:textStyle="bold" />
 
@@ -363,7 +363,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la formation"
+                            android:text="@string/informations_sur_la_formation"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -391,7 +391,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quelle est l'appelation de la formation ?"
+                            android:text="@string/quelle_est_l_appelation_de_la_formation"
 
                             android:textStyle="bold" />
 
@@ -463,7 +463,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Type de formation"
+                            android:text="@string/type_de_formation"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -502,7 +502,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Lieu de la formation"
+                            android:text="@string/lieu_de_la_formation"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -585,7 +585,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quels sont les modules de la formation ?"
+                            android:text="@string/quels_sont_les_modules_de_la_formation"
 
                             android:textStyle="bold" />
 
@@ -620,7 +620,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quels sont les themes de la formation ?"
+                            android:text="@string/quels_sont_les_themes_de_la_formation"
 
                             android:textStyle="bold" />
 
@@ -655,7 +655,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quels sont les sous-themes de la formation ?"
+                            android:text="@string/quels_sont_les_sous_themes_de_la_formation"
 
                             android:textStyle="bold" />
 
@@ -855,7 +855,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la formation"
+                            android:text="@string/informations_sur_la_formation"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -882,7 +882,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le staff qui a dispensé la formation ?"
+                            android:text="@string/quel_est_le_staff_qui_a_dispens_la_formation"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -920,7 +920,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Date de debut de la formation"
+                            android:text="@string/date_de_debut_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -969,7 +969,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Date de fin de la formation"
+                            android:text="@string/date_de_fin_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -1019,7 +1019,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Durée de formation ?"
+                            android:text="@string/dur_e_de_formation"
 
                             android:textStyle="bold" />
 
@@ -1072,7 +1072,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_10sdp"
-                                android:text="Observations"
+                                android:text="@string/observations"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -1083,7 +1083,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_80sdp"
                                 android:background="@drawable/background_present"
                                 android:ellipsize="end"
-                                android:hint="Précisez…"
+                                android:hint="@string/pr_cisez"
                                 android:imeOptions="actionDone"
                                 android:inputType="textCapCharacters|textNoSuggestions"
                                 android:paddingStart="@dimen/_10sdp"
@@ -1108,7 +1108,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:text="Photo de la formation"
+                            android:text="@string/photo_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -1145,7 +1145,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:text="Rapport de la formation"
+                            android:text="@string/rapport_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -1193,7 +1193,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
-                    android:text="ANNULER"
+                    android:text="@string/annuler"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
@@ -1209,7 +1209,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
-                    android:text="VÉRIFIER"
+                    android:text="@string/v_rifier"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />

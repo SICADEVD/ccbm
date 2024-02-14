@@ -517,7 +517,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Selectionner une section"
+                        android:text="@string/selectionner_une_section"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -555,7 +555,7 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
-                        android:text="Selectionner une localité"
+                        android:text="@string/selectionner_une_localit"
 
                         android:textStyle="bold" />
 
@@ -2362,7 +2362,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
-                    android:text="ANNULER"
+                    android:text="@string/annuler"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
@@ -2378,7 +2378,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
-                    android:text="VÉRIFIER"
+                    android:text="@string/v_rifier"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />

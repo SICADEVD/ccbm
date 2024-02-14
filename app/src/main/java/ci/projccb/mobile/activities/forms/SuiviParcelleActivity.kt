@@ -147,7 +147,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             ombragesList?.forEach {
                 if (it.variete?.uppercase() == ombrageVarieteModel.variete?.uppercase() && it.nombre == ombrageVarieteModel.nombre) {
-                    ToastUtils.showShort("Cette variété est deja ajoutée")
+                    ToastUtils.showShort(getString(R.string.cette_vari_t_est_deja_ajout_e))
                     return
                 }
             }
@@ -169,7 +169,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             animauxList?.forEach {
                 if (it.uppercase() == animalSauvageModel.uppercase()) {
-                    ToastUtils.showShort("Cet animal est deja ajouté")
+                    ToastUtils.showShort(getString(R.string.cet_animal_est_deja_ajout))
                     return
                 }
             }
@@ -213,7 +213,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             insectesList.forEach { insecte ->
                 if (insecte.nom?.uppercase() == insecteRavageur.nom?.uppercase() && insecte.quantite == insecteRavageur.quantite) {
-                    ToastUtils.showShort("Ce insecte est deja ajouté")
+                    ToastUtils.showShort(getString(R.string.cet_insecte_est_deja_ajout))
                     return
                 }
             }
@@ -313,11 +313,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             if (producteursList?.size == 0) {
                 Commons.showMessage(
-                    "La liste des producteurs de cette Localité semble vide, veuillez procéder à la synchronisation des données svp.",
+                    getString(R.string.la_liste_des_producteurs_de_cette_localit_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                     this,
                     finished = false,
                     callback = {},
-                    positive = "Compris !",
+                    positive = getString(R.string.compris),
                     deconnec = false,
                     showNo = false
 
@@ -376,7 +376,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             if (producteursList?.size == 0) {
                 //LogUtils.e("TAG -> ${producteursList?.size}")
-                Commons.showMessage("Aucun producteur enregistré", this, callback = {})
+                Commons.showMessage(getString(R.string.aucun_producteur_enregistr), this, callback = {})
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -426,7 +426,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //                    override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
 //                        courEauYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //
-//                        if (courEauYesNo == "oui") {
+//                        if (courEauYesNo == getString(R.string.oui)) {
 //                            linearCoursEauContainerSuivi.visibility = View.VISIBLE
 //                        } else {
 //                            linearCoursEauContainerSuivi.visibility = View.GONE
@@ -602,7 +602,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
 //            )
 
-            arrayCourEau.add("Choisir la source...")
+            arrayCourEau.add(getString(R.string.choisir_la_source))
 
             courEauxList?.map {
                 arrayCourEau.add(it.nom!!)
@@ -670,7 +670,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //                        presenceInsecte = resources.getStringArray(R.array.YesOrNo)[position]
 //
 //                        when (presenceInsecte) {
-//                            "oui" -> {
+//                            getString(R.string.oui) -> {
 //                                linearPresenceInsecteRavageurOfSuiviParcelle.visibility =
 //                                    View.VISIBLE
 //                            }
@@ -696,11 +696,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
             if (localitesList?.size == 0) {
                 Commons.showMessage(
-                    "La liste des Localités semble vide, veuillez procéder à la synchronisation des données svp.",
+                    getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                     this,
                     finished = true,
                     callback = {},
-                    positive = "Compris !",
+                    positive = getString(R.string.compris),
                     deconnec = false,
                     showNo = false
 
@@ -885,15 +885,15 @@ class SuiviParcelleActivity : AppCompatActivity() {
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 //            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
 //            this.add(Pair("Insecte parasite", (recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair("Pesticides utilisés l'an dernier", (recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
-            this.add(Pair("Intrants utilisés l'an dernier", (recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.pesticides_utilis_s_l_an_dernier), (recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.intrants_utilis_s_l_an_dernier), (recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
 
-            this.add(Pair("Insecte parasites ou ravageurs", (recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair("Autre insecte parasites ou ravageurs", (recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair("Traitements", (recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
-            this.add(Pair("As tu bénéficié d'arbres agro-forestiers", (recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair("Insecte amis", (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair("Animaux rencontrés", (recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.insecte_parasites_ou_ravageurs), (recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.autre_insecte_parasites_ou_ravageurs), (recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.traitements), (recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers), (recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.insecte_amis), (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.animaux_rencontr_s), (recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
         }.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(SParcelle as Object, mapEntries)
@@ -924,7 +924,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -932,7 +932,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -945,7 +945,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -1125,7 +1125,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        LogUtils.json(suiviParcelleDraft)
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -1139,19 +1139,19 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -1172,9 +1172,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "As-tu Bénéficié D’arbres Agro-forestiers ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAgroForesterieSParcelle,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1266,7 +1266,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             suiviParcelleDrafted.parcelle_id)
 
         Commons.setListenerForSpinner(this,
-            "Fréquence activité de taille ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.fr_quence_activit_de_taille),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectActDTailleSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteTaille,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
@@ -1278,7 +1278,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Fréquence activité d’egourmandage ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.fr_quence_activit_d_egourmandage),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectActDTailleSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteEgourmandage,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
@@ -1290,7 +1290,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Fréquence activité de récolte sanitaire ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.fr_quence_activit_de_r_colte_sanitaire),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectActDRecolSanitSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteRecolteSanitaire,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
@@ -1302,7 +1302,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
 //        Commons.setListenerForSpinner(this,
-//            "Type de pesticide utilisé ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            "Type de pesticide utilisé ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectListTypPestiSuiviParcel,
 //            currentVal = suiviParcelleDrafted.pesticideUtiliseAnne,
 //            listIem = resources.getStringArray(R.array.lowMediumHigh)
@@ -1314,7 +1314,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            })
 
 //        Commons.setListenerForSpinner(this,
-//            "Y'a t'il une présence de pourriture brune ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            "Y'a t'il une présence de pourriture brune ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectPourritureBruneOfSuiviParcelle,
 //            currentVal = suiviParcelleDrafted.presencePourritureBrune,
 //            listIem = resources.getStringArray(R.array.fullyPoor)
@@ -1326,7 +1326,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            })
 //
 //        Commons.setListenerForSpinner(this,
-//            "Y'a t'il une présence de SholenShoot ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            "Y'a t'il une présence de SholenShoot ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectSwollenSuivi,
 //            currentVal = suiviParcelleDrafted.presenceShooter,
 //            listIem = resources.getStringArray(R.array.fullyPoor)
@@ -1338,10 +1338,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence d'insectes parasites ou ravageurs ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.y_a_t_il_une_pr_sence_d_insectes_parasites_ou_ravageurs),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectInsecteParOuRavSuivi,
             currentVal = suiviParcelleDrafted.presenceInsectesParasites,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1356,9 +1356,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous observé d'autres insectes ou ravageur qui n'apparaissent pas dans la liste précédente ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_observ_d_autres_insectes_ou_ravageur_qui_n_apparaissent_pas_dans_la_liste_pr_c_dente),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAutrInsecteParOuRavSuivi,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = suiviParcelleDrafted.autreInsecte,
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1372,10 +1372,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous traiter votre parcelle ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_traiter_votre_parcelle),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTraitInsecteParOuRavSuivi,
             currentVal = suiviParcelleDrafted.traiterParcelle,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1390,10 +1390,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous rencontrer des animaux ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_rencontrer_des_animaux),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAnimauRencontSParcell,
             currentVal = suiviParcelleDrafted.animauxRencontrer,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1406,9 +1406,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Présence d'autres types d’insecte ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.pr_sence_d_autres_types_d_insecte),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectPresencInsectSuiviParcel,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1421,7 +1421,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
 //        Commons.setListenerForSpinner(this,
-//            "Choix des insectes :","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            "Choix des insectes :",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectListInsecteSuivParce,
 //            currentVal = suiviParcelleDrafted.presenceInsectesParasitesRavageur,
 //            itemChanged = arrayListOf(Pair(1, "Autre")),
@@ -1437,7 +1437,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence de fourmis rouges ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.y_a_t_il_une_pr_sence_de_fourmis_rouges),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFourmisSuiviParcel,
             currentVal = suiviParcelleDrafted.presenceFourmisRouge,
             listIem = resources.getStringArray(R.array.fullyPoor)
@@ -1449,7 +1449,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence d'araignées ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.y_a_t_il_une_pr_sence_d_araign_es),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAraigneeSuivi,
             currentVal = suiviParcelleDrafted.presenceAraignee,
             listIem = resources.getStringArray(R.array.fullyPoor)
@@ -1461,7 +1461,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence de verre de terres ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.y_a_t_il_une_pr_sence_de_verre_de_terres),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectVerDeTerreSuivi,
             currentVal = suiviParcelleDrafted.presenceVerTerre,
             listIem = resources.getStringArray(R.array.fullyPoor)
@@ -1473,7 +1473,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il une présence de mentes religieuses ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.y_a_t_il_une_pr_sence_de_mentes_religieuses),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectManteReligieuseSuivi,
             currentVal = suiviParcelleDrafted.presenceMenteReligieuse,
             listIem = resources.getStringArray(R.array.fullyPoor)
@@ -1556,14 +1556,15 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         setupSectionSelection()
 
-        Commons.setupItemMultiSelection(this, selectArbreSParcelle, "Quelle variété d’arbre ombrage souhaiterais-tu avoir ?", arbresList?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, selectArbreSParcelle,
+            getString(R.string.quelle_vari_t_d_arbre_ombrage_souhaiterais_tu_avoir), arbresList?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf() ){
 
         }
 
         Commons.setListenerForSpinner(this,
-            "As-tu bénéficié d’arbres agro-forestiers ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAgroForesterieSParcelle,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1576,9 +1577,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous rencontrer des animaux ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_rencontrer_des_animaux),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAnimauRencontSParcell,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1591,9 +1592,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il des insectes parasites ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.y_a_t_il_des_insectes_parasites),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectInsecteParOuRavSuivi,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1606,9 +1607,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous observé d'autres insectes ou ravageur qui n'apparaissent pas dans la liste précédente ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_observ_d_autres_insectes_ou_ravageur_qui_n_apparaissent_pas_dans_la_liste_pr_c_dente),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAutrInsecteParOuRavSuivi,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1621,9 +1622,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Présence d'autres types d’insecte ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.pr_sence_d_autres_types_d_insecte),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectPresencInsectSuiviParcel,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1636,9 +1637,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous traiter votre parcelle ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_traiter_votre_parcelle),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTraitInsecteParOuRavSuivi,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1677,7 +1678,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 if (editAnimalSuiviParcelle.text.toString()
                         .isEmpty()
                 ) {
-                    Commons.showMessage("Renseignez des données sur l'animal, svp !", this, callback = {})
+                    Commons.showMessage(getString(R.string.renseignez_des_donn_es_sur_l_animal_svp), this, callback = {})
                     return@setOnClickListener
                 }
 
@@ -1689,7 +1690,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 if(animaux.nom?.length?:0 > 0){
                     animauListSParcelle?.forEach {
                         if (it.nom?.uppercase() == animaux.nom?.uppercase()) {
-                            ToastUtils.showShort("Cet animal est déja ajouté")
+                            ToastUtils.showShort(getString(R.string.cet_animal_est_d_ja_ajout))
 
                             return@setOnClickListener
                         }
@@ -1723,8 +1724,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionSParcelle,
@@ -1759,8 +1760,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteSParcelle,
@@ -1796,8 +1797,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurSParcelle,
@@ -1835,8 +1836,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la parcelle !",
-            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_parcelle),
+            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectParcelleSParcelle,

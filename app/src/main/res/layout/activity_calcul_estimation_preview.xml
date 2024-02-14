@@ -227,7 +227,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds A1 :"
+                    android:text="Comptage carré A1 :"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -256,7 +256,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds A2 :"
+                    android:text="Comptage carré A2 :"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -285,7 +285,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds A3:"
+                    android:text="Comptage carré A3:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -318,7 +318,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds B1:"
+                    android:text="Comptage carré B1:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -347,7 +347,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds B2:"
+                    android:text="Comptage carré B2:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -376,7 +376,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds B3:"
+                    android:text="Comptage carré B3:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -410,7 +410,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds C1:"
+                    android:text="Comptage carré C1:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -441,7 +441,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds C2:"
+                    android:text="Comptage carré C2:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
@@ -472,7 +472,7 @@ android:textColor="@color/text_color_white"
 android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comptage pieds C3:"
+                    android:text="Comptage carré C3:"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 

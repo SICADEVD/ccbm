@@ -428,7 +428,7 @@ class Commons {
                 }
 
                 if (showNo) {
-                    builder.setNegativeButton("Non") { dialog, _ ->
+                    builder.setNegativeButton(context.getString(R.string.non)) { dialog, _ ->
                         dialog.dismiss()
                     }
                 }
@@ -456,9 +456,9 @@ class Commons {
             }
         }
 
-        fun List<String>?.toModifString(isComma:Boolean = true): String {
+        fun List<String>?.toModifString(isComma:Boolean = true, commaReplace:String = ""): String {
             val values = this.toString().replace("]", "").replace("[", "")
-            return if(isComma) values.replace(", ", "") else values
+            return if(isComma) values.replace(", ", commaReplace) else values
         }
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null

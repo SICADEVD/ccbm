@@ -41,7 +41,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RECAPITULATIF LIVRAISON MAG SECTION"
+                android:text="RECAPITULATIF STOCK MAGASINS SECTION"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />

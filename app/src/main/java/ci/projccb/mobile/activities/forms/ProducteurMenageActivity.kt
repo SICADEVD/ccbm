@@ -185,11 +185,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         if (localitesList?.size == 0) {
             showMessage(
-                "La liste des localités est vide ! Refaite une mise à jour.",
+                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -290,7 +290,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         typeMachinesList = AssetFileHelper.getListDataFromAsset(18, this@ProducteurMenageActivity) as MutableList<TypeMachineModel>?
                 //typeMachineDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        arrayTypeMachines.add("Choisir le type...")
+        arrayTypeMachines.add(getString(R.string.choisir_le_type))
 
         typeMachinesList?.map {
             arrayTypeMachines.add(it.nom!!)
@@ -327,8 +327,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurMenage,
@@ -498,13 +498,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 traitementSelfYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (traitementSelfYesNo) {
-                    "oui" -> {
+                    getString(R.string.oui) -> {
                         linearTypeMachinePulContainerMenage.visibility = View.VISIBLE
                         linearMachinePulKeeperContainerMenage.visibility = View.VISIBLE
 //                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.VISIBLE
 //                        linearChampsNoNumberContainerMenage.visibility = View.GONE
                     }
-                    "non" -> {
+                    getString(R.string.non) -> {
                         linearTypeMachinePulContainerMenage.visibility = View.GONE
                         linearMachinePulKeeperContainerMenage.visibility = View.GONE
 //                        linearAtomisateurContainerMenage.visibility = View.GONE
@@ -535,10 +535,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 femmeActiviteYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (femmeActiviteYesNo.uppercase()) {
-                    "OUI" -> {
+                    getString(R.string.oui) -> {
                         //linearFemmeActiviteContainerMenage.visibility = View.VISIBLE
                     }
-                    "NON" -> {
+                    getString(R.string.non) -> {
                         //linearFemmeActiviteContainerMenage.visibility = View.GONE
                     }
                     else -> {
@@ -558,7 +558,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
 //                donFemmeCacaoYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //
-//                if (donFemmeCacaoYesNo == "oui") {
+//                if (donFemmeCacaoYesNo == getString(R.string.oui)) {
 //                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.VISIBLE
 //                } else {
 //                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
@@ -614,14 +614,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     fun collectDatas() {
         if ( editNbreEnfant0a5Menage.text.toString().toUtilInt()?:0 < editNbreEnfantSansExtrMenage.text.toString().toUtilInt()?:0 ) {
-            showMessage("La valeur des champs pour les enfants de 0 à 5 ans incorrectes !", this, callback = {})
+            showMessage(getString(R.string.la_valeur_des_champs_pour_les_enfants_de_0_5_ans_incorrectes), this, callback = {})
             return
         }
 
         if ( editNbreEnfant6a17Menage.text.toString().toUtilInt()?:0 < editNbre6A17EnfantSansExtrMenage.text.toString().toUtilInt()?:0
             || editNbreEnfant6a17Menage.text.toString().toUtilInt()?:0 < editNbreEnfantScolariseMenage.text.toString().toUtilInt()?:0
             ) {
-            showMessage("La valeur des champs pour les enfants de 6 à 17 ans incorrectes !", this, callback = {})
+            showMessage(getString(R.string.la_valeur_des_champs_pour_les_enfants_de_6_17_ans_incorrectes), this, callback = {})
             return
         }
 //
@@ -710,15 +710,15 @@ class ProducteurMenageActivity : AppCompatActivity() {
         var isMissing = false
         var message = ""
         var notNecessaire = listOf<String>(
-            "Année certification".lowercase(),
-            "Code producteur".lowercase(),
-            "En tant que:".lowercase(),
-            "Numéro de téléphone".lowercase(),
-            "N° de la pièce CMU".lowercase(),
-            "N° de carte de sécurité sociale".lowercase())
+            getString(R.string.ann_e_certification).lowercase(),
+            getString(R.string.code_producteur).lowercase(),
+            getString(R.string.en_tant_que).lowercase(),
+            getString(R.string.num_ro_de_t_l_phone).lowercase(),
+            getString(R.string.n_de_la_pi_ce_cmu).lowercase(),
+            getString(R.string.n_de_carte_de_s_curit_sociale).lowercase())
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -726,7 +726,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -739,7 +739,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -843,7 +843,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -857,19 +857,19 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 )
 
                 showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -942,8 +942,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
         )
 
         Commons.setListenerForSpinner(this,
-            "Type d'eaux de toilette",
-            "La liste des eaux de toilette semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.type_d_eaux_de_toilette),
+            getString(R.string.la_liste_des_eaux_de_toilette_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEauToilMenage,
             currentVal = menageUndrafted.eauxToillette,
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -958,8 +958,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Type d'eaux de vaisselle",
-            "La liste des eaux de vaisselle semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.type_d_eaux_de_vaisselle),
+            getString(R.string.la_liste_des_eaux_de_vaisselle_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEauVaissMenage,
             currentVal = menageUndrafted.eauxVaisselle,
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -993,11 +993,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Traitez vous vos champs ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.traitez_vous_vos_champs),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTraitementYesNoMenage,
             currentVal = menageUndrafted.traitementChamps,
-            itemChanged = arrayListOf(Pair(1, "Oui"), Pair(2, "Non")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui)), Pair(2, getString(R.string.non))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1015,8 +1015,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quelle machine est utilisée ?",
-            "La liste des machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_machine_est_utilis_e),
+            getString(R.string.la_liste_des_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMachinePulMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = menageUndrafted.type_machines_id,
@@ -1033,8 +1033,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Lieu de la garde machine ?",
-            "La liste des gardes machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.lieu_de_la_garde_machine),
+            getString(R.string.la_liste_des_gardes_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMachineKeeperMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = menageUndrafted.garde_machines_id,
@@ -1051,11 +1051,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Votre femme fait des activités ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.votre_femme_fait_des_activit_s),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFemmeActiviteYesNoMenage,
             currentVal = menageUndrafted.activiteFemme,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1068,8 +1068,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quelle activité ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_activit),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFemmeActiviteDefMenage,
             itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
             listIem = resources.getStringArray(R.array.femmeActivite)
@@ -1095,10 +1095,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 //        Commons.setListenerForSpinner(this,
 //            "Donnes tu une partie de ton cacao ?",
-//            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectDonCacaoYesNoMenage,
 //            currentVal = menageUndrafted.champFemme,
-//            itemChanged = arrayListOf(Pair(1, "Oui")),
+//            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
 //            listIem = resources.getStringArray(R.array.YesOrNo)
 //                ?.toList() ?: listOf(),
 //            onChanged = {
@@ -1111,11 +1111,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous des équipements de protection individuel (EPI) ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_des_quipements_de_protection_individuel_epi),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEquiDProtIndivMenage,
             currentVal = menageUndrafted.equipements,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1327,7 +1327,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectEauPotablMenage.setTitle("Où procurez-vous l'eau potable ?")
+        selectEauPotablMenage.setTitle(getString(R.string.o_procurez_vous_l_eau_potable))
         selectEauPotablMenage.setItems(eauPotableList.map { it.nom })
         //multiSelectSpinner.hasNoneOption(true)
         selectEauPotablMenage.setSelection(listSelectEauPotablePosList.toIntArray())
@@ -1350,7 +1350,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 //        Commons.setListenerForSpinner(this,
 //            "Précisez le type de l'activité :",
-//            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectFemmeActivitPrecisMenage,
 //            currentVal = currentVal,
 //            listIem = stringArray
@@ -1529,8 +1529,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
         setupOrdurMenagMultiSelection()
 
         Commons.setListenerForSpinner(this,
-            "Type d'eaux de toilette",
-            "La liste des eaux de toilette semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.type_d_eaux_de_toilette),
+            getString(R.string.la_liste_des_eaux_de_toilette_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEauToilMenage,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 1,
@@ -1544,8 +1544,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Type d'eaux de vaisselle",
-            "La liste des eaux de vaisselle semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.type_d_eaux_de_vaisselle),
+            getString(R.string.la_liste_des_eaux_de_vaisselle_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEauVaissMenage,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 1,
@@ -1578,10 +1578,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Traitez vous vos champs ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.traitez_vous_vos_champs),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTraitementYesNoMenage,
-            itemChanged = arrayListOf(Pair(1, "Oui"), Pair(2, "Non")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui)), Pair(2, getString(R.string.non))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1599,8 +1599,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quelle machine est utilisée ?",
-            "La liste des machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_machine_est_utilis_e),
+            getString(R.string.la_liste_des_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMachinePulMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -1616,8 +1616,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Lieu de la garde machine ?",
-            "La liste des gardes machines semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.lieu_de_la_garde_machine),
+            getString(R.string.la_liste_des_gardes_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMachineKeeperMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -1633,10 +1633,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Est-ce que votre conjoint exerce une activité génératrice de revenu ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.est_ce_que_votre_conjoint_exerce_une_activit_g_n_ratrice_de_revenu),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFemmeActiviteYesNoMenage,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1649,8 +1649,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quelle activité ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_activit),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFemmeActiviteDefMenage,
             itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
             listIem = resources.getStringArray(R.array.femmeActivite)
@@ -1676,8 +1676,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Comment avez-vous obtenu le capital de démarrage ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.comment_avez_vous_obtenu_le_capital_de_d_marrage),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectParcelObtenuDefMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.capitalDemarrag)
@@ -1692,10 +1692,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Avez vous bénéficiez d'une formation  ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_b_n_ficiez_d_une_formation),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFormatFemmBenefMenage,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1709,9 +1709,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 //        Commons.setListenerForSpinner(this,
 //            "Donnes tu une partie de ton cacao ?",
-//            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectDonCacaoYesNoMenage,
-//            itemChanged = arrayListOf(Pair(1, "Oui")),
+//            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
 //            listIem = resources.getStringArray(R.array.YesOrNo)
 //                ?.toList() ?: listOf(),
 //            onChanged = {
@@ -1724,10 +1724,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Avez-vous des équipements de protection individuel (EPI) ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.avez_vous_des_quipements_de_protection_individuel_epi),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEquiDProtIndivMenage,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1744,8 +1744,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
     private fun setupNomFemActiviteList(selectNomFemmeActiviteDefMenage: Spinner?, stringArray: Array<String>, currentVal: String? = null) {
 
         Commons.setListenerForSpinner(this,
-            "Quelle est le nom de l'activité ?",
-            "La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_est_le_nom_de_l_activit),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectNomFemmeActiviteDefMenage!!,
             currentVal = currentVal,
             itemChanged = arrayListOf(Pair(1, "Autre")),
@@ -1772,7 +1772,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectOrdureMenagMenage.setTitle("Comment gérez-vous les ordures ménagères ?")
+        selectOrdureMenagMenage.setTitle(getString(R.string.comment_g_rez_vous_les_ordures_m_nag_res))
         selectOrdureMenagMenage.setItems(ordurMenagList)
         //multiSelectSpinner.hasNoneOption(true)
         selectOrdureMenagMenage.setSelection(listordurMenagPosList.toIntArray())
@@ -1803,7 +1803,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectEnergieMenage.setTitle("Choix des sources d'énergies du ménage")
+        selectEnergieMenage.setTitle(getString(R.string.choix_des_sources_d_nergies_du_m_nage))
         selectEnergieMenage.setItems(sourceEnergieList)
         //multiSelectSpinner.hasNoneOption(true)
         selectEnergieMenage.setSelection(listSourceEnergiePosList.toIntArray())
@@ -1837,8 +1837,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionProducteurMenage,
@@ -1872,8 +1872,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteProduMenage,

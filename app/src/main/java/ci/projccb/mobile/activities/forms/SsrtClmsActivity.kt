@@ -109,8 +109,8 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionSsrte,
@@ -145,8 +145,8 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteSsrte,
@@ -182,8 +182,8 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurSsrte,
@@ -240,11 +240,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         if (producteursList!!.isEmpty()) {
             showMessage(
-                "Aucun producteur dans cette localité ! Refaite une mise à jour.",
+                getString(R.string.aucun_producteur_dans_cette_localit_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -296,11 +296,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //                schoolOldYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //
 //                when (schoolOldYesNo.uppercase()) {
-//                    "OUI" -> {
+//                    getString(R.string.oui) -> {
 //                        setupOldSchoolLevelSelection()
 //                        linearNiveauEtudeAtteintContainerSsrt.visibility = VISIBLE
 //                    }
-//                    "NON" -> {
+//                    getString(R.string.non) -> {
 //                        schoolOldLevel = ""
 //                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
 //                    }
@@ -322,7 +322,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //                schoolYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //                setSchoolLevelSelection()
 //                when (schoolYesNo.uppercase()) {
-//                    "OUI" -> {
+//                    getString(R.string.oui) -> {
 //                        setSchoolLevelSelection()
 //                        linearSchoolLevelContainerSsrt.visibility = VISIBLE
 //                        linearSchoolNameContainerSsrt.visibility = VISIBLE
@@ -335,7 +335,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //                        linearNoSchoolRaisonContainerSsrt.visibility = GONE
 //                        linearNiveauEtudeAtteintContainerSsrt.visibility = GONE
 //                    }
-//                    "NON" -> {
+//                    getString(R.string.non) -> {
 //                        linearDejaScolariseContainerSsrt.visibility = VISIBLE
 //                        linearNoSchoolRaisonContainerSsrt.visibility = VISIBLE
 //                        linearNiveauEtudeAtteintContainerSsrt.visibility = VISIBLE
@@ -513,7 +513,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         var listSelectRecentWorkLieu = mutableListOf<Int>()
 
         val multiSelectSpinner = MultiSelectSpinner(this)//selectRecentWorkLieuSsrt
-        multiSelectSpinner.setTitle("Selectionnez les lieux")
+        multiSelectSpinner.setTitle(getString(R.string.selectionnez_les_lieux))
         multiSelectSpinner.setItems(travauxDangereuxResourcesLieu)
         //multiSelectSpinner.hasNoneOption(true)
         multiSelectSpinner.setSelection(listSelectRecentWorkLieu.toIntArray())
@@ -597,7 +597,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         var listSelectLegersLieu = mutableListOf<Int>()
 
         val multiSelectSpinner = MultiSelectSpinner(this)//selectRecentWorkLieuLightSsrt
-        multiSelectSpinner.setTitle("Selectionnez les lieux")
+        multiSelectSpinner.setTitle(getString(R.string.selectionnez_les_lieux))
         multiSelectSpinner.setItems(travauxLegersLieuResources)
         //multiSelectSpinner.hasNoneOption(true)
         multiSelectSpinner.setSelection(listSelectLegersLieu.toIntArray())
@@ -684,10 +684,10 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //                schoolPlaceYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //
 //                when (schoolPlaceYesNo.uppercase()) {
-//                    "OUI" -> {
+//                    getString(R.string.oui) -> {
 //                        linearVillageDistanceContainerSsrt.visibility = GONE
 //                    }
-//                    "NON" -> {
+//                    getString(R.string.non) -> {
 //                        linearVillageDistanceContainerSsrt.visibility = VISIBLE
 //                    }
 //                    else -> {
@@ -729,7 +729,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         setupSectionSelection()
 
         Commons.setListenerForSpinner(this,
-            "Quel est le lien de parenté avec le producteur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quel_est_le_lien_de_parent_avec_le_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectLienParentSsrt,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.parentAffiliation)
@@ -744,7 +744,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
         Commons.setListenerForSpinner(this,
-            "uel niveau d’étude as-tu atteint ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quel_niveau_d_tude_as_tu_atteint),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectSchoolLevelSsrt,
             listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
@@ -756,9 +756,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
 
         Commons.setListenerForSpinner(this,
-            "Va-t-il à l'école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.va_t_il_l_cole),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectSchoolStatusSsrt,
-            itemChanged = arrayListOf(Pair(1, "Non"), Pair(2, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.non)), Pair(2, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -775,9 +775,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
         Commons.setListenerForSpinner(this,
-            "As-tu été à l’école par le passé ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.as_tu_t_l_cole_par_le_pass),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAvoirFrequPasseSsrt,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -790,9 +790,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
         Commons.setListenerForSpinner(this,
-            "Ton école est-elle située dans le village ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.ton_cole_est_elle_situ_e_dans_le_village),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectSchoolInPlaceYesNoSsrt,
-            itemChanged = arrayListOf(Pair(1, "Non")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.non))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -805,7 +805,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel niveau d’étude as-tu atteint ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quel_niveau_d_tude_as_tu_atteint),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectNiveauEtudeAtteintSsrt,
             listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
@@ -837,9 +837,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
 //        Commons.setListenerForSpinner(this,
-//            "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectRaisonArretEcoleSSrte,
-//            itemChanged = arrayListOf(Pair(1, "Oui")),
+//            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
 //            listIem = resources.getStringArray(R.array.YesOrNo)
 //                ?.toList() ?: listOf(),
 //            onChanged = {
@@ -851,27 +851,33 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 //                }
 //            })
 
-        Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte, "Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?", resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte,
+            getString(R.string.pourquoi_ne_vas_tu_pas_l_cole_ou_arr_t_l_cole), resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) }){
             //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte,
+            getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_dangereux_as_tu_effectu), resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte, "Où as-tu effectué ces travaux dangereux ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte,
+            getString(R.string.o_as_tu_effectu_ces_travaux_dangereux), resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?", resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte,
+            getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_dangereux_as_tu_effectu), resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte, "Au cours de ces 2 dernières années, lequel de ces travaux légers as-tu effectué ?", resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte,
+            getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_l_gers_as_tu_effectu), resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) }){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte, "Où as-tu effectué ces travaux légers ?", resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
+        Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte,
+            getString(R.string.o_as_tu_effectu_ces_travaux_l_gers), resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) }){
 
         }
 
@@ -899,7 +905,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     ) {
 
         Commons.setListenerForSpinner(this,
-            "Quelle est sa classe actuelle ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_est_sa_classe_actuelle),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectClasseLevelSsrt!!,
             currentVal = currentVal,
             listIem = classLevels
@@ -1069,7 +1075,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -1077,7 +1083,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -1090,7 +1096,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -1126,7 +1132,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         val ssrteDraft = getEnqueteSsrtObjet()
 
         showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -1140,19 +1146,19 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 )
 
                 showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )

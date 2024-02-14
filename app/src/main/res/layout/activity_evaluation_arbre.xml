@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:textAllCaps="true"
-                android:text="FICHE Evaluation Des Besoins"
+                android:text="@string/fiche_evaluation_des_besoins"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la parcelle"
+                            android:text="@string/informations_sur_la_parcelle"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
@@ -146,7 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section"
+                            android:text="@string/selectionner_une_section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -184,7 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité"
+                            android:text="@string/selectionner_une_localit"
 
                             android:textStyle="bold" />
 
@@ -224,8 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner un producteur"
-
+                            android:text="@string/selectionner_un_producteur"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -465,7 +464,7 @@
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:textAllCaps="true"
                                 android:gravity="center_horizontal"
-                                android:text="ENREGISTRER LA LISTE DES BESOINS EN ARBRES DU PRODUCTEUR"
+                                android:text="@string/enregistrer_la_liste_des_besoins_en_arbres_du_producteur"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -501,7 +500,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Choix de l'arbre"
+                                                    android:text="@string/choix_de_l_arbre"
                                                     android:textStyle="bold" />
 
                                                 <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -536,7 +535,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_5sdp"
-                                                    android:text="Quelle est sa strate ?"
+                                                    android:text="@string/quelle_est_sa_strate"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatSpinner
@@ -560,7 +559,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:text="Qté souhaitée"
+                                                    android:text="@string/qt_souhait_e"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatEditText
@@ -596,7 +595,7 @@
                                         android:paddingStart="@dimen/_10sdp"
                                         android:paddingEnd="@dimen/_10sdp"
                                         android:textColor="@color/white_color"
-                                        android:text="Ajouter"
+                                        android:text="@string/ajouter"
                                         android:textSize="@dimen/_9ssp" />
 
                                 </LinearLayout>
@@ -643,7 +642,7 @@
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
-                    android:text="ANNULER"
+                    android:text="@string/annuler"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
@@ -659,7 +658,7 @@
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
-                    android:text="VÉRIFIER"
+                    android:text="@string/v_rifier"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />

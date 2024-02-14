@@ -41,7 +41,7 @@ android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RECAPITULATIF FORMATION"
+                android:text="RECAPITULATIF FORMATIONS"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />

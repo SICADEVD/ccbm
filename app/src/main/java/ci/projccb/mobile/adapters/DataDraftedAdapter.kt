@@ -1,6 +1,7 @@
 package ci.projccb.mobile.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -155,7 +156,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
         when (draftedData.typeDraft?.uppercase()) {
             "CONTENT_PRODUCTEUR" ->  {
                 val producteurContent = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
-                holder.labelNumberDraft.text = "${producteurContent.nom ?: ""} ${producteurContent.prenoms ?: ""} (${if (producteurContent.codeProdApp.isNullOrBlank()) "INCONNU" else producteurContent.codeProdApp})"
+                holder.labelNumberDraft.text = "${producteurContent.nom ?: ""} ${producteurContent.prenoms ?: ""} (${if (producteurContent.codeProdApp.isNullOrBlank()) context.getString(R.string.inconnu) else producteurContent.codeProdApp})"
             }
             "CONTENT_PARCELLE" ->  {
                 val parcelleContent = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
@@ -165,9 +166,10 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
         }
 
         holder.itemView.setOnClickListener {
-            if(intentUndraftedData!= null)
+            if(intentUndraftedData!= null) {
                 context.startActivity(intentUndraftedData)
-            else Toast.makeText(context, "Aucun intent définit !", Toast.LENGTH_SHORT).show()
+                (context as Activity).finish()
+            }else Toast.makeText(context, "Aucun brouillon définit !", Toast.LENGTH_SHORT).show()
         }
     }
 

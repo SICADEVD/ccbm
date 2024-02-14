@@ -108,4 +108,8 @@ interface LivraisonCentralDao {
     @Transaction
     @Query("DELETE FROM livraison_central WHERE uid = :uId")
     fun deleteByUid(uId: String?)
+
+    @Transaction
+    @Query("SELECT * FROM livraison_central WHERE (isSynced = 0 AND producteursId = :producteurUid)")
+    fun getUnSyncedByProdUid(producteurUid: String?): MutableList<LivraisonCentralModel>
 }

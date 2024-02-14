@@ -61,7 +61,7 @@ class AuthentificationActivity : AppCompatActivity() {
 
 
     fun bindDatas() {
-        inputLogin.text = Editable.Factory.getInstance().newEditable("hamish")
+        inputLogin.text = Editable.Factory.getInstance().newEditable("abole".uppercase())
         //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
         //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
         inputPassword.text = Editable.Factory.getInstance().newEditable("1234567")
@@ -151,7 +151,7 @@ class AuthentificationActivity : AppCompatActivity() {
                                 val agentModel = agentResponseBody?.results
 
                                 //remavoe some feature
-                                roles?.remove("ESTIMATION")
+                                //roles?.remove("ESTIMATION")
 
                                 SPUtils.getInstance().put("menu", GsonUtils.toJson(roles))
                                 agentModel?.isLogged = true

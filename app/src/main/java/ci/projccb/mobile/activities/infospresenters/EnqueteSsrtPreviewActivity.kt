@@ -48,14 +48,14 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
 //                        labelLienParenteEnquetePreview.text = enquete.lienParente
 //                        labelSchoolStatutEnquetePreview.text = enquete.frequente
 //
-//                        if (enquete.frequente == "oui") {
+//                        if (enquete.frequente == getString(R.string.oui)) {
 //                            linearSchoolStatutYesContainerSsrtPreview.visibility = VISIBLE
 //                            linearSchoolStatutNoContainerSsrtPreview.visibility = GONE
 //                            labelSchoolLevelEnquetePreview.text = enquete.niveauEtude
 //                            labelSchoolClasseEnquetePreview.text = enquete.classe
 //                            labelSchoolVillageStatutEnquetePreview.text = enquete.ecoleVillage
 //
-//                            if (enquete.ecoleVillage == "oui") {
+//                            if (enquete.ecoleVillage == getString(R.string.oui)) {
 //                                linearSchoolVillageDistanceContainerSsrtPreview.visibility = GONE
 //                                enquete.distanceEcole = ""
 //                            } else {
@@ -67,7 +67,7 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
 //                            linearSchoolStatutNoContainerSsrtPreview.visibility = VISIBLE
 //                            labelSchoolStatutNoOlderEnquetePreview.text = enquete.avoirFrequente
 //
-//                            if (enquete.avoirFrequente == "oui") {
+//                            if (enquete.avoirFrequente == getString(R.string.oui)) {
 //                                linearSchoolStatutNoOlderLevelContainerSsrtPreview.visibility = VISIBLE
 //                            } else {
 //                                linearSchoolStatutNoOlderLevelContainerSsrtPreview.visibility = GONE

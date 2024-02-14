@@ -110,12 +110,12 @@ class MenagePreviewActivity : AppCompatActivity() {
 //                    labelTraiterChampsMenagePreview.text = menage.traitementChamps
 //
 //                    try {
-//                        if (menage.traitementChamps == "oui") {
+//                        if (menage.traitementChamps == getString(R.string.oui)) {
 //                            labelTraiteYourselfMachineMenagePreview.text = menage.type_machines_id
-//                            labelEquipementProtectionMenagePreview.text = menage.equipements?:"non"
+//                            labelEquipementProtectionMenagePreview.text = menage.equipements?:getString(R.string.non)
 //
 //                            if (menage.machine.toString().uppercase().contains("ATOMISATEUR")) {
-//                                labelTraiteChampsMachineAtomisateurStatusMenagePreview.text = "oui"
+//                                labelTraiteChampsMachineAtomisateurStatusMenagePreview.text = getString(R.string.oui)
 //                                linearTraiteChampsMachineAtomisateurStatusContainerMenagePreview.visibility =
 //                                    VISIBLE
 //                            } else {
@@ -146,7 +146,7 @@ class MenagePreviewActivity : AppCompatActivity() {
 //                    labelFemmeActiviteYesNoMenagePreview.text = menage.champFemme
 //
 //                    try {
-//                        if (menage.activiteFemme.toString().contains("oui")) {
+//                        if (menage.activiteFemme.toString().contains(getString(R.string.oui))) {
 //                            labelFemmeActiviteYesNomMenagePreview.text = menage.nomActiviteFemme
 //                            linearFemmeActiviteYesContainerMenagePreview.visibility = VISIBLE
 //                        } else {
@@ -171,7 +171,7 @@ class MenagePreviewActivity : AppCompatActivity() {
 //                            labelProducteurFemmeDonChampsYesNoMenagePreview.text =
 //                                if (menage.nombreHectareFemme.toString()
 //                                        .toDouble() > 0.0
-//                                ) "oui" else "non"
+//                                ) getString(R.string.oui) else getString(R.string.non)
 //                            labelProducteurFemmeDonChampsYesHectarMenagePreview.text =
 //                                menage.nombreHectareFemme
 //                            linearFemmeCacaoHectarUnderZeroContainerMenagePreview.visibility =

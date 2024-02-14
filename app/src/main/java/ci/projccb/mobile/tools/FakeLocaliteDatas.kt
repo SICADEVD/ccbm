@@ -1,6 +1,7 @@
 package ci.projccb.mobile.tools
 
 import android.content.Context
+import ci.projccb.mobile.R
 import ci.projccb.mobile.models.LocaliteModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import com.blankj.utilcode.util.SPUtils
@@ -24,7 +25,7 @@ object FakeLocaliteDatas {
             centreYesNo = "oui",
             typeCentre = "Publique",
             centreNom = "Centre $number",
-            ecoleYesNo = "non",
+            ecoleYesNo = context.getString(R.string.non),
             ecoleNbre = "0",
             nomsEcolesStringify = "[]",
             source = "Marigot",

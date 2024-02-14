@@ -122,11 +122,11 @@ class DistributionArbreActivity : AppCompatActivity() {
         }else{
 
             Commons.showMessage(
-                "Aucun besoin enrégistré pour ce producteur !",
+                getString(R.string.aucun_besoin_enr_gistr_pour_ce_producteur),
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -160,7 +160,7 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     private fun setupSelectionArbreList(listArbreADistri: MutableList<String>, currentVal: String? = null) {
 //        Commons.setListenerForSpinner(this,
-//            "De quel arbre s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+//            "De quel arbre s'agit-il ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            spinner = selectChoixDeLArbreDistributionArbre,
 //            listIem = listArbreADistri
 //                ?.toList() ?: listOf(),
@@ -254,11 +254,11 @@ class DistributionArbreActivity : AppCompatActivity() {
         if(qteList.isEmpty()){
 
             Commons.showMessage(
-                "Aucun arbre n'a été enrégistré, faite une mise à jour des evaluations !",
+                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -272,11 +272,11 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         if(listApproVi?.isEmpty() == true){
             Commons.showMessage(
-                "Aucune approvisionnement selectionnée, faite une mise à jour des evaluations !",
+                getString(R.string.aucune_approvisionnement_selectionn_e_faite_une_mise_jour_des_evaluations),
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -318,7 +318,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -332,7 +332,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
@@ -343,12 +343,12 @@ class DistributionArbreActivity : AppCompatActivity() {
                             )
                         )
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -368,11 +368,11 @@ class DistributionArbreActivity : AppCompatActivity() {
         if(qteList.isEmpty()){
 
             Commons.showMessage(
-                "Aucun arbre n'a été enrégistré, faite une mise à jour des evaluations !",
+                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -385,11 +385,11 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         if(listApproVi?.isEmpty() == true){
             Commons.showMessage(
-                "Aucune approvisionnement selectionnée, faite une mise à jour des evaluations !",
+                getString(R.string.aucune_approvisionnement_selectionn_e_faite_une_mise_jour_des_evaluations),
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -431,9 +431,9 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair("Les arbres distribués", (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
-            this.add(Pair("Quantité à distribuer", qtelivre))
-            this.add(Pair("Total à enregistrer", total))
+            this.add(Pair(getString(R.string.les_arbres_distribu_s), (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.quantit_distribuer), qtelivre))
+            this.add(Pair(getString(R.string.total_enregistrer), total))
         }.map { MapEntry(it.first, it.second) }
 
         //Commons.printModelValue(suiviDistrArbrDatas as Object, (mapEntries) )
@@ -464,8 +464,8 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionDistributionArbre,
@@ -500,8 +500,8 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteDistributionArbre,
@@ -548,8 +548,8 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurDistributionArbre,
@@ -590,8 +590,8 @@ class DistributionArbreActivity : AppCompatActivity() {
 //        }
 //
 //        Commons.setListenerForSpinner(this,
-//            "Choix de la parcelle !",
-//            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+//            getString(R.string.choix_de_la_parcelle),
+//            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            isEmpty = if (parcellesList?.size!! > 0) false else true,
 //            currentVal = libItem,
 //            spinner = selectParcelleDistributionArbre,
@@ -637,7 +637,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -645,7 +645,7 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -658,7 +658,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )

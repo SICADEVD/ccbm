@@ -120,7 +120,7 @@ class LivraisonActivity : AppCompatActivity() {
         LogUtils.json(magasinsList)
 
         Commons.setListenerForSpinner(this,
-            "Selectionner un magasin de section","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraison_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMagasinSectionLivraison,
             currentVal = magasinsList?.filter { it.id.toString() == currVal }.let {
                 if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
@@ -137,13 +137,13 @@ class LivraisonActivity : AppCompatActivity() {
                     editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
                     editContactDestinataire.setText("${staff.mobile}")
                     editEmailDestinataire.setText("${staff.email}")
-                    editAdressDestinataire.setText("${staff.adresse?:"Inconnu"}")
+                    editAdressDestinataire.setText("${staff.adresse?:getString(R.string.inconnu)}")
                 }
 //
 //                editNomDestinataire.setText("${magasin.nomMagasinsections}")
 //                editContactDestinataire.setText("${magasin.phone}")
 //                editEmailDestinataire.setText("${magasin.email}")
-//                editAdressDestinataire.setText("${magasin.adresse?:"Inconnu"}")
+//                editAdressDestinataire.setText("${magasin.adresse?:getString(R.string.inconnu)}")
 
             },
             onSelected = { itemId, visibility ->
@@ -157,11 +157,11 @@ class LivraisonActivity : AppCompatActivity() {
 
         if (localitesList?.size == 0) {
             showMessage(
-                "La liste des localités est vide ! Refaite une mise à jour.",
+                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -283,7 +283,7 @@ class LivraisonActivity : AppCompatActivity() {
 //        }
 
         Commons.setListenerForSpinner(this,
-            "Choix du délégué","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraison_text2),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectStaffList,
             currentVal = staffList?.filter { it.id.toString() == currVal }.let {
                   if(it?.size!! > 0) it.first().let { "${it?.nom}" } else null
@@ -300,7 +300,7 @@ class LivraisonActivity : AppCompatActivity() {
                 editNomExpediteur.setText("${staff.nom}")
                 editContactExpediteur.setText("${staff.mobile}")
                 editEmailExpediteur.setText("${staff.email}")
-                editAdressExpediteur.setText("${staff.adresse?:"Inconnu"}")
+                editAdressExpediteur.setText("${staff.adresse?:getString(R.string.inconnu)}")
                 //rstDelegue = false
 
                 setupMagasinSelection(staffId, currVal2)
@@ -411,7 +411,7 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
 //        Commons.setListenerForSpinner(this,
-//            "Choix du programme !",
+//            getString(R.string.choix_du_programme),
 //            "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
 //            isEmpty = if (programmeListi?.size!! > 0) false else true,
 //            currentVal = libItem,
@@ -445,8 +445,8 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Dans quel section livrez vous ?",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.dans_quel_section_livrez_vous),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionLivraison,
@@ -482,7 +482,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             "De quelle localité s'agit-il ?",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteLivraison,
@@ -518,8 +518,8 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducLivraison,
@@ -558,8 +558,8 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la parcelle !",
-            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_parcelle),
+            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectParcelleLivraison,
@@ -593,7 +593,7 @@ class LivraisonActivity : AppCompatActivity() {
         //setupTypeProduitSelection()
         //For RecycleView
         Commons.setListenerForSpinner(this,
-            "Choix du type de produit","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraison_text3),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeLivraison,
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             listIem = resources.getStringArray(R.array.type_produit)
@@ -608,7 +608,7 @@ class LivraisonActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Choix du type de certificat","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraison_text4),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeCertifLivraison,
             listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }.toList() ?: listOf(),
             onChanged = {
@@ -624,12 +624,12 @@ class LivraisonActivity : AppCompatActivity() {
     fun collectDatas() {
         if (senderStaffCommon.id.toString().isNullOrEmpty()) {
             showMessage(
-                "Aucun délégué ou staff selectionné !",
+                getString(R.string.aucun_d_l_gu_ou_staff_selectionn),
                 this,
                 finished = false,
                 callback = {},
                 deconnec =    false,
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 showNo = false
             )
             return
@@ -637,12 +637,12 @@ class LivraisonActivity : AppCompatActivity() {
 
         if (magasinSectionCommon.id.toString().isNullOrEmpty()) {
             showMessage(
-                "Aucun magasin selectionné !",
+                getString(R.string.aucun_magasin_selectionn),
                 this,
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 showNo = false
             )
             return
@@ -650,12 +650,12 @@ class LivraisonActivity : AppCompatActivity() {
 
         if(livraisonSousModelList.size == 0){
             showMessage(
-                "Aucune information de livraison saisie !",
+                getString(R.string.aucune_information_de_livraison_saisie),
                 this,
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 showNo = false
             )
             return
@@ -681,7 +681,7 @@ class LivraisonActivity : AppCompatActivity() {
             livraisonSousModelList.forEach {
                 valueMod += "${it.producteurIdName} | ${it.parcelleIdName} | ${it.typeName} | ${it.certificat} | ${it.quantityNb}\n"
             }
-            this.add(Pair("Les produits à livrés", valueMod) as Pair<String, String>)
+            this.add(Pair(getString(R.string.les_produits_livr_s), valueMod) as Pair<String, String>)
         }.map { MapEntry(it.first, it.second) }
 
        try {
@@ -767,7 +767,7 @@ class LivraisonActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -775,7 +775,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -788,7 +788,7 @@ class LivraisonActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -836,7 +836,7 @@ class LivraisonActivity : AppCompatActivity() {
         }
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -850,19 +850,19 @@ class LivraisonActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -873,7 +873,7 @@ class LivraisonActivity : AppCompatActivity() {
         livraisonDrafted = ApiClient.gson.fromJson(draftedData.datas, LivraisonModel::class.java)
 
         Commons.setListenerForSpinner(this,
-            "Choix du type de produit","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraison_text5),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeLivraison,
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             listIem = resources.getStringArray(R.array.type_produit)
@@ -888,7 +888,7 @@ class LivraisonActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Choix du type de certificat","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraison_text6),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeCertifLivraison,
             listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }.toList() ?: listOf(),
             onChanged = {
@@ -975,11 +975,11 @@ class LivraisonActivity : AppCompatActivity() {
             try{
                 if (producteurCommon.id.toString().isNullOrEmpty()) {
                     showMessage(
-                        "Selectionnez le producteur, svp !",
+                        getString(R.string.selectionnez_le_producteur_svp),
                         context = this,
                         finished = false,
                         callback = {},
-                        positive = "OK",
+                        positive = getString(R.string.ok),
                         deconnec = false,
                         showNo = false
                     )
@@ -988,11 +988,11 @@ class LivraisonActivity : AppCompatActivity() {
 
                 if(parcelleCommon.id.toString().isEmpty()){
                     showMessage(
-                        "Selectionnez une parcelle, svp !",
+                        getString(R.string.selectionnez_une_parcelle_svp),
                         context = this,
                         finished = false,
                         callback = {},
-                        positive = "OK",
+                        positive = getString(R.string.ok),
                         deconnec = false,
                         showNo = false
                     )
@@ -1001,11 +1001,11 @@ class LivraisonActivity : AppCompatActivity() {
 
                 if(editQuantity.text.toString().isEmpty()){
                     showMessage(
-                        "Passer la quantité, svp !",
+                        getString(R.string.passer_la_quantit_svp),
                         context = this,
                         finished = false,
                         callback = {},
-                        positive = "OK",
+                        positive = getString(R.string.ok),
                         deconnec = false,
                         showNo = false
                     )

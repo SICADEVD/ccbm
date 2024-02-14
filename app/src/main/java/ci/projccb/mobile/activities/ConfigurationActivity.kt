@@ -191,10 +191,11 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getProducteurs() {
         withContext(IO) {
             val producteursUpdate = async {
-                producteurDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                //producteurDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                producteurDao?.deleteAll()
 
                 try {
-                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = agentModel?.id))
+                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = null))//agentModel?.id
                     val responseProducteurs: Response<MutableList<ProducteurModel>> = clientProducteurs.execute()
                     val produteursList: MutableList<ProducteurModel>? = responseProducteurs.body()
 
@@ -1527,7 +1528,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (oneIssue) {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
-                configCompletedOrError("Type de formation")
+                configCompletedOrError(getString(R.string.type_de_formation))
                 //getTypeIntrans()
                 getCampagnes()
             }

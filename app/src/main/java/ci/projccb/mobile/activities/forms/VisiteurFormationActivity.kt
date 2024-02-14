@@ -112,8 +112,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionProducteurVisitForm,
@@ -147,8 +147,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteProduVisitForm,
@@ -183,8 +183,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurVisitForm,
@@ -219,18 +219,18 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         val formationList = formationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         Commons.setListenerForSpinner(this,
-            "Selectionner la formation !",
-            "La liste des formations semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.selectionner_la_formation),
+            getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
             spinner = selectFormationVisitForm,
-            currentVal = "Formation "+(formationList?.find { it.id == visiteurFormationDrafted.suivi_formation_id?.toInt() } as FormationModel?)?.id.toString() ?: "0",
-            listIem = formationList?.map { "Formation ${it.id}" }
+            currentVal = getString(R.string.formation)+(formationList?.find { it.id == visiteurFormationDrafted.suivi_formation_id?.toInt() } as FormationModel?)?.id.toString() ?: "0",
+            listIem = formationList?.map { getString(R.string.formation)+"${it.id}" }
                 ?.toList() ?: listOf(),
             onChanged = {
 
                 val formation = formationList!![it]
                 //ogUtils.d(section)
-                formationCommon.nom = "Formation ${formation.id}"
+                formationCommon.nom = getString(R.string.formation)+"${formation.id}"
                 formationCommon.id = formation.id!!
 
             },
@@ -239,9 +239,9 @@ class VisiteurFormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Representez vous un producteur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.representez_vous_un_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectReprProducteurVisitForm,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = visiteurFormationDrafted.representer ,
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -255,8 +255,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel est leur lien ?",
-            "La liste des éléments semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quel_est_leur_lien),
+            getString(R.string.la_liste_des_l_ments_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectLienParentVisitForm,
             currentVal = visiteurFormationDrafted.lien,
             itemChanged = arrayListOf(Pair(1, "Autre")),
@@ -285,7 +285,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
         }
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -300,19 +300,19 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -324,18 +324,22 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         val formationList = formationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         Commons.setListenerForSpinner(this,
-            "Selectionner la formation !",
-            "La liste des formations semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.selectionner_la_formation),
+            getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
             spinner = selectFormationVisitForm,
-            listIem = formationList?.map { "Formation ${it.id}" }
+            listIem = formationList?.map { getString(R.string.formation)+(if(it.isSynced) "${it.id}" else "${it.uid} non soumis") }
                 ?.toList() ?: listOf(),
             onChanged = {
 
                 val formation = formationList!![it]
                 //ogUtils.d(section)
-                formationCommon.nom = "Formation ${formation.id}"
-                formationCommon.id = formation.id!!
+                formationCommon.nom = getString(R.string.formation)+(if(formation.isSynced) "${formation.id}" else "${formation.uid} non soumis")
+                formation.isSynced?.let {
+                    if(it){
+                        formationCommon.id = formation.id!!
+                    }else formationCommon.id = formation.uid
+                }
 
             },
             onSelected = { itemId, visibility ->
@@ -343,9 +347,9 @@ class VisiteurFormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Representez vous un producteur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.representez_vous_un_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectReprProducteurVisitForm,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -358,8 +362,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Quel est leur lien ?",
-            "La liste des éléments semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quel_est_leur_lien),
+            getString(R.string.la_liste_des_l_ments_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectLienParentVisitForm,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (resources.getStringArray(R.array.parentAffiliation)?.toList() ?: listOf()) ,
@@ -422,7 +426,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -430,7 +434,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -443,7 +447,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )

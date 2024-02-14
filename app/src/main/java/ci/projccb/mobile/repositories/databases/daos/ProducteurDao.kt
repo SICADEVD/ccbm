@@ -24,6 +24,10 @@ interface ProducteurDao {
     fun getProducteurByUID(producteurUID: Int?) : ProducteurModel
 
     @Transaction
+    @Query("SELECT * FROM producteur WHERE id = :producteurID")
+    fun getProducteurByID(producteurID: Int?) : ProducteurModel
+
+    @Transaction
     @Query("SELECT * FROM producteur WHERE agentId = :agentID")
     fun getAll(agentID: String?): MutableList<ProducteurModel>
 
@@ -50,4 +54,8 @@ interface ProducteurDao {
     @Transaction
     @Query("DELETE FROM producteur WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM producteur")
+    fun deleteAll()
 }

@@ -132,11 +132,11 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         if (localitesList?.size == 0) {
             showMessage(
-                "La liste des localités est vide ! Refaite une mise à jour.",
+                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -220,7 +220,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             ?.getAll()
 
         Commons.setListenerForSpinner(this,
-            "Sélectionner un magasin de section","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMagSecListLivraiCentr,
             currentVal = magasinSecList?.filter { it.id.toString() == currVal }.let {
                   if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
@@ -238,7 +238,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
                     editNomExpediteur.setText("${staff.firstname} ${staff.lastname}")
                     editContactExpediteur.setText("${staff.mobile}")
                     editEmailExpediteur.setText("${staff.email}")
-                    editAdressExpediteur.setText("${staff.adresse?:"Inconnu"}")
+                    editAdressExpediteur.setText("${staff.adresse?: getString(R.string.inconnu)}")
                 }
                 //rstDelegue = false
 
@@ -257,7 +257,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         LogUtils.d(magasinCentralList)
 
         Commons.setListenerForSpinner(this,
-            "Sélectionner un magasin central","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text2),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectMagCentralLivraisonCentral,
             currentVal = magasinCentralList?.filter { it.id.toString() == currVal }.let {
                 if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
@@ -275,7 +275,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
                     editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
                     editContactDestinataire.setText("${staff.mobile}")
                     editEmailDestinataire.setText("${staff.email}")
-                    editAdressDestinataire.setText("${staff.adresse?:"Inconnu"}")
+                    editAdressDestinataire.setText("${staff.adresse?:getString(R.string.inconnu)}")
                 }
                 //rstDelegue = false
 
@@ -385,7 +385,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         }
 
 //        Commons.setListenerForSpinner(this,
-//            "Choix du programme !",
+//            getString(R.string.choix_du_programme),
 //            "La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.",
 //            isEmpty = if (programmeListi?.size!! > 0) false else true,
 //            currentVal = libItem,
@@ -419,8 +419,8 @@ class LivraisonCentralActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducLivraisonCentral,
@@ -459,8 +459,8 @@ class LivraisonCentralActivity : AppCompatActivity() {
         }
 
 //        Commons.setListenerForSpinner(this,
-//            "Choix de la parcelle !",
-//            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+//            getString(R.string.choix_de_la_parcelle),
+//            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            isEmpty = if (parcellesList?.size!! > 0) false else true,
 //            currentVal = libItem,
 //            spinner = selectParcelleLivraisonCentral,
@@ -491,7 +491,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
         Commons.setListenerForSpinner(this,
-            "Choix de l'entreprise","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text3),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEntrepriseLivraisonCentral,
             listIem = entrepList?.map { it.nom }
                 ?.toList() ?: listOf(),
@@ -505,7 +505,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         val vehiculeList = CcbRoomDatabase.getDatabase(this)?.vehiculeDao()?.getAll()
         Commons.setListenerForSpinner(this,
-            "Choix du véhicule","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text4),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectVehiculeLivraisonCentral,
             listIem = vehiculeList?.map { "${it.marque} (${it.vehicule_immat})" }
                 ?.toList() ?: listOf(),
@@ -518,18 +518,19 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         val remorqueList = CcbRoomDatabase.getDatabase(this)?.remorqueDao()?.getAll()
         Commons.setListenerForSpinner(this,
-            "Choix de la remorque","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text5),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectRemorqueLivraisonCentral,
-            listIem = remorqueList?.map { "Immatriculation: ${it.remorque_immat}" }
+            listIem = remorqueList?.map { getString(R.string.immatriculation)+"${it.remorque_immat}" }
                 ?.toList() ?: listOf(),
             onChanged = {
-                  remorqueCommon.nom = "Immatriculation: "+remorqueList!![it].remorque_immat
+                  remorqueCommon.nom = getString(R.string.immatriculation)+remorqueList!![it].remorque_immat
                   remorqueCommon.id = remorqueList[it].id
             },
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit !", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral,
+            getString(R.string.d_signez_le_type_de_produit), resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
             typeCommon.nom = it.toModifString()
             livraisonVerMagCentralModelList.clear()
             it.forEach {produit ->
@@ -554,8 +555,8 @@ class LivraisonCentralActivity : AppCompatActivity() {
 //        }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (livraisonVerMagCentralModelList?.size!! > 0) false else true,
             spinner = selectProducLivraisonCentral,
             listIem = livraisonVerMagCentralModelList?.map { "${it.nom!!} ${it.prenoms!!} - ${it.typeProduit}".plus(if(it.certificat.isNullOrEmpty() == false) " - ${it.certificat}" else "") }
@@ -600,8 +601,8 @@ class LivraisonCentralActivity : AppCompatActivity() {
             ?.getListByEntrpriseId(entrId?.toInt() ?: 0)
 
         Commons.setListenerForSpinner(this,
-            "Choix du transporteur",
-            "La liste des transporteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_transporteur),
+            getString(R.string.la_liste_des_transporteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             currentVal = currVal,
             spinner = selectTransporteurLivraisonCentral,
             listIem = transporteurList?.map { "${it.nom} ${it.prenoms}" }
@@ -622,12 +623,12 @@ class LivraisonCentralActivity : AppCompatActivity() {
     fun collectDatas() {
         if (magasinSectionCommon.id.toString().isNullOrEmpty()) {
             showMessage(
-                "Aucun magasin de section selectionné !",
+                getString(R.string.aucun_magasin_de_section_selectionn),
                 this,
                 finished = false,
                 callback = {},
-                deconnec =    false,
-                positive = "Compris !",
+                deconnec = false,
+                positive = getString(R.string.compris),
                 showNo = false
             )
             return
@@ -635,12 +636,12 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         if (magasinCentralCommon.id.toString().isNullOrEmpty()) {
             showMessage(
-                "Aucun magasin central selectionné !",
+                getString(R.string.aucun_magasin_central_selectionn),
                 this,
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 showNo = false
             )
             return
@@ -648,12 +649,12 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         if(livraisonCentralSousModelList.size == 0){
             showMessage(
-                "Aucune information de livraisonCentral saisie !",
+                getString(R.string.aucune_information_de_livraisoncentral_saisie),
                 this,
                 finished = false,
                 callback = {},
                 deconnec = false,
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 showNo = false
             )
             return
@@ -677,9 +678,15 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
             var valueMod = ""
             livraisonCentralSousModelList.forEach {
-                valueMod += "Producteur: ${it.producteurIdName} | Type: ${it.typeproduit} | Certificat: ${it.typeproduit} | Qté: ${it.quantite}\n"
+                valueMod += getString(
+                    R.string.producteur_type_certificat_qt,
+                    it.producteurIdName,
+                    it.typeproduit,
+                    it.typeproduit,
+                    it.quantite
+                )
             }
-            this.add(Pair("Information sur la livraison", valueMod) as Pair<String, String>)
+            this.add(Pair(getString(R.string.information_sur_la_livraison), valueMod) as Pair<String, String>)
 
         }.map { MapEntry(it.first, it.second) }
 
@@ -759,7 +766,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -767,7 +774,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -780,7 +787,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -828,7 +835,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         }
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -842,19 +849,19 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -869,7 +876,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
         Commons.setListenerForSpinner(this,
-            "Choix de l'entreprise","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text6),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEntrepriseLivraisonCentral,
             currentVal = entrepList?.filter { it.id.toString() == livraisonCentralDrafted?.entreprise_id }?.let {
                 if(it.size > 0) it.first().nom else null
@@ -886,7 +893,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         val vehiculeList = CcbRoomDatabase.getDatabase(this)?.vehiculeDao()?.getAll()
         Commons.setListenerForSpinner(this,
-            "Choix du véhicule","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text7),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectVehiculeLivraisonCentral,
             currentVal = vehiculeList?.filter { it.id.toString() == livraisonCentralDrafted?.sender_vehicule }?.let {
                 if(it.size > 0) "${it.first().marque} (${it.first().vehicule_immat})" else null
@@ -902,15 +909,15 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         val remorqueList = CcbRoomDatabase.getDatabase(this)?.remorqueDao()?.getAll()
         Commons.setListenerForSpinner(this,
-            "Choix de la remorque","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.livraisonc_text8),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectRemorqueLivraisonCentral,
             currentVal = remorqueList?.filter { it.id.toString() == livraisonCentralDrafted?.sender_remorque }?.let {
-                if(it.size > 0) "Immatriculation: ${it.first().remorque_immat}" else null
+                if(it.size > 0) getString(R.string.immatriculation)+"${it.first().remorque_immat}" else null
             },
-            listIem = remorqueList?.map { "Immatriculation: ${it.remorque_immat}" }
+            listIem = remorqueList?.map { getString(R.string.immatriculation)+"${it.remorque_immat}" }
                 ?.toList() ?: listOf(),
             onChanged = {
-                remorqueCommon.nom = "Immatriculation: "+remorqueList!![it].remorque_immat
+                remorqueCommon.nom = getString(R.string.immatriculation)+remorqueList!![it].remorque_immat
                 remorqueCommon.id = remorqueList[it].id
             },
             onSelected = { itemId, visibility ->
@@ -996,11 +1003,11 @@ class LivraisonCentralActivity : AppCompatActivity() {
                     || editQuantityLivraisonCentral.text.isNullOrEmpty()
                     ) {
                     showMessage(
-                        "Vous avez omis d'ajouté des données, svp !",
+                        getString(R.string.vous_avez_omis_d_ajout_des_donn_es_svp),
                         context = this,
                         finished = false,
                         callback = {},
-                        positive = "OK",
+                        positive = getString(R.string.ok),
                         deconnec = false,
                         showNo = false
                     )

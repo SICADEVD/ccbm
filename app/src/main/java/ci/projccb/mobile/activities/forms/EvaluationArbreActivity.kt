@@ -114,7 +114,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
         }
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -129,19 +129,19 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -165,9 +165,9 @@ class EvaluationArbreActivity : AppCompatActivity() {
             editQuantitEvalArbre,
             defaultItemSize = 3,
             libeleList = arrayListOf(
-                "Arbre concerné",
-                "Strate",
-                "Quantité",
+                getString(R.string.arbre_concern),
+                getString(R.string.strate),
+                getString(R.string.quantit),
                 "",
                 "",
             )
@@ -186,13 +186,13 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     private fun setupSelectionArbreList(listArbreADistri: MutableList<ArbreModel>, currentVal: String? = null) {
         Commons.setListenerForSpinner(this,
-            "De quel arbre s'agit-il ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.evalarbre_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectChoixDeLArbreEvalArbre,
             currentVal = currentVal,
             listIem = listArbreADistri?.map { "${it.nom+"|"} ${it.nomScientifique}" }?.toMutableList() ?: listOf(),
             onChanged = {
                 val  listofstrate = mutableListOf<String>()
-                val value = "Strate "+listArbreADistri[it].strate
+                val value = getString(R.string.strate)+listArbreADistri[it].strate
                 listofstrate.add("${value}")
                 //LogUtils.d(listofstrate)
                 setupSelectionStrate(listofstrate)
@@ -203,7 +203,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     private fun setupSelectionStrate(listStrate: MutableList<String>, currentVal: String? = null) {
         Commons.setListenerForSpinner(this,
-            "Quelle est sa strate ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.quelle_est_sa_strate),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectChoixStateArbrEvalArbre,
             currentVal = currentVal,
             listIem = listStrate
@@ -300,7 +300,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -308,7 +308,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -321,7 +321,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -366,8 +366,8 @@ class EvaluationArbreActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionEvaluationArbre,
@@ -402,8 +402,8 @@ class EvaluationArbreActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteEvaluationArbre,
@@ -439,8 +439,8 @@ class EvaluationArbreActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurEvaluationArbre,
@@ -480,8 +480,8 @@ class EvaluationArbreActivity : AppCompatActivity() {
 //        }
 //
 //        Commons.setListenerForSpinner(this,
-//            "Choix de la parcelle !",
-//            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+//            getString(R.string.choix_de_la_parcelle),
+//            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
 //            isEmpty = if (parcellesList?.size!! > 0) false else true,
 //            currentVal = libItem,
 //            spinner = selectParcelleEvaluationArbre,

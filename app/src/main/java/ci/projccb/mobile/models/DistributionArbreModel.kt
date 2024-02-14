@@ -97,4 +97,8 @@ interface DistributionArbreDao {
     @Transaction
     @Query("SELECT * FROM distribution_arbre WHERE isSynced = 1 AND producteurId = :producteurId")
     fun getDistributionByProducteur(producteurId: String): MutableList<DistributionArbreModel>
+
+    @Transaction
+    @Query("SELECT * FROM distribution_arbre WHERE (isSynced = 0 AND producteurId = :producteurUid)")
+    fun getUnSyncedByProdUid(producteurUid: String?): MutableList<DistributionArbreModel>
 }

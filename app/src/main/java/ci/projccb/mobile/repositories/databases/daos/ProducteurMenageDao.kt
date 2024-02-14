@@ -40,4 +40,8 @@ interface ProducteurMenageDao {
     @Transaction
     @Query("DELETE FROM menage WHERE uid = :uId")
     fun deleteUid(uId: String?)
+
+    @Transaction
+    @Query("SELECT * FROM menage WHERE (isSynced = 0 AND producteurs_id = :producteurUid)")
+    fun getUnSyncedByProdUid(producteurUid: String?): MutableList<ProducteurMenageModel>
 }

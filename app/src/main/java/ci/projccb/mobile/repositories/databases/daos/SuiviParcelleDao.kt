@@ -38,4 +38,8 @@ interface SuiviParcelleDao {
     @Transaction
     @Query("DELETE FROM suivi_parcelle WHERE uid = :uid")
     fun deleteByUid(uid: Int)
+
+    @Transaction
+    @Query("SELECT * FROM suivi_parcelle WHERE (isSynced = 0 AND producteursId = :producteurUid)")
+    fun getUnSyncedByProdAndParcUid(producteurUid: String?): MutableList<SuiviParcelleModel>
 }

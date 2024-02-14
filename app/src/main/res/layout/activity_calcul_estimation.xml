@@ -40,7 +40,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE ESTIMATION"
+                android:text="@string/fiche_estimation"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -118,7 +118,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:gravity="center"
-                                android:text="Informations"
+                                android:text="@string/informations"
 
                                 android:textSize="@dimen/_13ssp"
                                 android:textStyle="bold" />
@@ -135,7 +135,7 @@ android:textColor="@color/text_color_white"
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+                        android:layout_height="@dimen/_10sdp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -144,12 +144,11 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localité"
-
+                            android:text="@string/choix_de_la_section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -162,11 +161,11 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectLocaliteEstimation"
+                                android:tag="sectionId"
+                                android:id="@+id/selectSectionEstimation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog"
-                                app:hintText="Localité" />
+                                android:spinnerMode="dialog" />
 
                         </LinearLayout>
 
@@ -187,7 +186,45 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Campagne"
+                            android:text="@string/choix_de_la_localit"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/selectLocaliteEstimation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="@string/campagne"
 
                             android:textStyle="bold" />
 
@@ -225,7 +262,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur"
+                            android:text="@string/producteur"
 
                             android:textStyle="bold" />
 
@@ -263,7 +300,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Parcelle"
+                            android:text="@string/parcelle"
 
                             android:textStyle="bold" />
 
@@ -301,7 +338,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Superficie"
+                            android:text="@string/superficie"
 
                             android:textStyle="bold" />
 
@@ -379,7 +416,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:gravity="center"
-                                android:text="Comptage de Pieds A"
+                                android:text="@string/comptage_de_pieds_a"
 
                                 android:textSize="@dimen/_13ssp"
                                 android:textStyle="bold" />
@@ -405,7 +442,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Sup à 20 Cab"
+                            android:text="@string/sup_20_cab"
 
                             android:textStyle="bold" />
 
@@ -437,7 +474,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De 11 à 20 Cab"
+                            android:text="@string/de_11_20_cab"
 
                             android:textStyle="bold" />
 
@@ -469,7 +506,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De 0 à 10 Cab"
+                            android:text="@string/de_0_10_cab"
 
                             android:textStyle="bold" />
 
@@ -539,7 +576,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:gravity="center"
-                                android:text="Comptage de Pieds B"
+                                android:text="@string/comptage_de_pieds_b"
 
                                 android:textSize="@dimen/_13ssp"
                                 android:textStyle="bold" />
@@ -569,7 +606,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Sup à 20 Cab"
+                            android:text="@string/sup_20_cab"
 
                             android:textStyle="bold" />
 
@@ -601,7 +638,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De 11 à 20 Cab"
+                            android:text="@string/de_11_20_cab"
 
                             android:textStyle="bold" />
 
@@ -633,7 +670,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De 0 à 10 Cab"
+                            android:text="@string/de_0_10_cab"
 
                             android:textStyle="bold" />
 
@@ -703,7 +740,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:gravity="center"
-                                android:text="Comptage de Pieds C"
+                                android:text="@string/comptage_de_pieds_c"
 
                                 android:textSize="@dimen/_13ssp"
                                 android:textStyle="bold" />
@@ -733,7 +770,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Sup à 20 Cab"
+                            android:text="@string/sup_20_cab"
 
                             android:textStyle="bold" />
 
@@ -765,7 +802,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De 11 à 20 Cab"
+                            android:text="@string/de_11_20_cab"
 
                             android:textStyle="bold" />
 
@@ -797,7 +834,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="De 0 à 10 Cab"
+                            android:text="@string/de_0_10_cab"
 
                             android:textStyle="bold" />
 
@@ -837,7 +874,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:text="Date d'estimation"
+                    android:text="@string/date_d_estimation"
 
                     android:textStyle="bold" />
 
@@ -912,7 +949,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
-                    android:text="ANNULER"
+                    android:text="@string/annuler"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
@@ -928,7 +965,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
-                    android:text="VÉRIFIER"
+                    android:text="@string/v_rifier"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />

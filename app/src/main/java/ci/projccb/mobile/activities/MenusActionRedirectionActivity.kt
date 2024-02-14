@@ -180,7 +180,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
         when (actionMenu.uppercase()) {
             "ADD" -> {
                 when (fromMenu.uppercase()) {
-                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false) // ActivityUtils.startActivity(LocaliteActivity::class.java)
+                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = getString(R.string.compris), deconnec = false, showNo = false) // ActivityUtils.startActivity(LocaliteActivity::class.java)
                     "PRODUCTEUR" -> ActivityUtils.startActivity(ProducteurActivity::class.java)
                     "INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                     "MENAGE" -> ActivityUtils.startActivity(ProducteurMenageActivity::class.java)
@@ -209,7 +209,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
 
             "DATAS" -> {
                 when (fromMenu.uppercase()) {
-                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false) //ActivityUtils.startActivity(LocalitesListActivity::class.java)
+                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = getString(R.string.compris), deconnec = false, showNo = false) //ActivityUtils.startActivity(LocalitesListActivity::class.java)
                     "PRODUCTEUR" -> ActivityUtils.startActivity(ProducteursListActivity::class.java)
                     //"INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                     "MENAGE" -> ActivityUtils.startActivity(MenageresListActivity::class.java)

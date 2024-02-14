@@ -212,15 +212,19 @@
     <string-array name="type_intrant">
         <item>Compost</item>
         <item>Déchets animaux</item>
-        <item>Fiente de poulet</item>
+        <item>Fiente</item>
         <item>Bouse de vache</item>
         <item>Engrais chimique</item>
         <item>Engrais foliaire</item>
         <item>Biofertilisant</item>
+        <item>Insecticide</item>
+        <item>Insecticide organique</item>
         <item>Insecticide chimique</item>
         <item>Fongicide</item>
         <item>Nematicide</item>
         <item>Herbicide</item>
+        <item>NPK</item>
+        <item>Pesticides</item>
         <item>Autre</item>
     </string-array>
 
@@ -273,29 +277,27 @@
 
     <string-array name="listeInsectes">
         <item>Mirides</item>
-        <item>Punaise</item>
-        <item>Foreurs de tiges</item>
+        <item>Punaises</item>
+        <item>Foreurs</item>
         <item>Chenilles</item>
         <item>Autre</item>
     </string-array>
 
     <string-array name="maladieList">
-        <item>Pourriture brune</item>
-        <item>ShollenShoot</item>
-        <item>Punaise</item>
-        <item>Miride</item>
-        <item>Foreurs de tiges</item>
+        <item>Punaises</item>
+        <item>Mirides</item>
+        <item>Foreurs</item>
         <item>Chenilles</item>
         <item>Autre</item>
     </string-array>
 
     <string-array name="typeIntrant">
-        <item>Insecticide</item>
-        <item>Fongicide</item>
+        <item>Insecticides</item>
+        <item>Fongicides</item>
         <item>Nematicide</item>
-        <item>Herbicide</item>
-        <item>Acaricide</item>
-        <item>Pesticide</item>
+        <item>Herbicides</item>
+        <item>Acaricides</item>
+        <item>Pesticides</item>
         <item>Autre</item>
     </string-array>
 
@@ -423,7 +425,6 @@
         <item>Sac</item>
         <item>Boîte</item>
         <item>Pôt</item>
-        <item>Autre</item>
     </string-array>
 
     <string-array name="uniteIntrant">
@@ -534,12 +535,13 @@
     </string-array>
 
     <string-array name="parentAffiliation">
-        <item>Fils</item>
+        <item>Conjoint</item>
+        <item>Fils/Fille</item>
         <item>Neveu/Niece</item>
-        <item>Frère/Soeur</item>
+        <item>Frere/Soeur</item>
         <item>Cousin/Cousine</item>
-        <item>Protegé</item>
-        <item>Tuteur</item>
+        <item>Protege</item>
+        <item>Tuteur/Tutrice</item>
         <item>Oncle/Tante</item>
         <item>Autre</item>
     </string-array>
@@ -652,5 +654,285 @@
         </kml>"
     </string>
     <string name="precision_hint">Précision</string>
+    <string name="inspection_text">Choix du ou des certificats</string>
+    <string name="evalarbre_text">De quel arbre s\'agit-il ?</string>
+    <string name="livraison_text">Selectionner un magasin de section</string>
+    <string name="livraison_text2">Choix du délégué</string>
+    <string name="livraison_text3">Choix du type de produit</string>
+    <string name="livraison_text4">Choix du type de certificat</string>
+    <string name="livraison_text5">Choix du type de produit</string>
+    <string name="livraison_text6">Choix du type de certificat</string>
+    <string name="livraisonc_text">Sélectionner un magasin de section</string>
+    <string name="livraisonc_text2">Sélectionner un magasin central</string>
+    <string name="livraisonc_text3">Choix de l\'entreprise</string>
+    <string name="livraisonc_text4">Choix du véhicule</string>
+    <string name="livraisonc_text5">Choix de la remorque</string>
+    <string name="livraisonc_text6">Choix de l\'entreprise</string>
+    <string name="livraisonc_text7">Choix du véhicule</string>
+    <string name="livraisonc_text8">Choix de la remorque</string>
+    <string name="type_de_d_claration_superficie">Type de déclaration superficie</string>
+    <string name="la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="la_parcelle_est_elle_r_g_n_r_e">La parcelle est-elle régénérée ?</string>
+    <string name="quel_type_de_document_poss_des_tu">Quel type de document possèdes-tu ?</string>
+    <string name="d_finit_le_niveau_de_la_pente">Définit le niveau de la pente</string>
+    <string name="y_a_t_il_un_plan_d_eau">Y\'a t\'il un plan d\'eau ?</string>
+    <string name="quel_est_le_cour_ou_plan_d_eau">Quel est le cour ou plan d\'eau ?</string>
+    <string name="y_a_t_il_des_mesures_de_protection">Y\'a t\'il des mesures de protection ?</string>
+    <string name="y_a_t_il_une_pente">Y\'a t\'il une pente ?</string>
+    <string name="y_a_t_il_des_pr_sences_d_rosion">Y\'a t\'il des présences d\'érosion ?</string>
+    <string name="choix_de_l_arbre">Choix de l\'arbre ?</string>
+    <string name="choix_du_producteur">Choix du producteur !</string>
+    <string name="choix_de_la_localit">Choix de la localité !</string>
+    <string name="choix_de_la_section">Choix de la section !</string>
+    <string name="la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="choix_de_l_encadreur">Choix de l\'encadreur !</string>
+    <string name="la_liste_des_encadreurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des encadreurs semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement">Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?</string>
+    <string name="contenu_ajout_aux_brouillons">Contenu ajouté aux brouillons !</string>
+    <string name="oui">OUI</string>
+    <string name="ok">OK</string>
+    <string name="selectionnez_la_date_svp">Selectionnez la date, svp !</string>
+    <string name="renseignez_les_questionnaires_svp_vous_etes">"Renseignez les questionnaires svp ! \nVous etes à "</string>
+    <string name="le_champ_intitul_n_est_pas_renseign">Le champ intitulé : `%1$s` n\'est pas renseigné !</string>
+    <string name="compris">Compris !</string>
+    <string name="choix_du_ou_des_certificats">Choix du ou des certificats</string>
+    <string name="immatriculation">"Immatriculation: "</string>
+    <string name="d_signez_le_type_de_produit">Désignez le type de produit !</string>
+    <string name="choix_du_transporteur">Choix du transporteur</string>
+    <string name="quels_sont_les_producteurs_pr_sents_la_formation">Quels sont les producteurs présents à la formation ?</string>
+    <string name="lieu_de_la_formation">Lieu de la formation</string>
+    <string name="type_de_formation">Type de formation</string>
+    <string name="quels_sont_les_modules_de_la_formation">Quels sont les modules de la formation ?</string>
+    <string name="quels_sont_les_themes_de_la_formation">Quels sont les themes de la formation ?</string>
+    <string name="quels_sont_les_sous_themes_de_la_formation">Quels sont les sous themes de la formation ?</string>
+    <string name="quel_est_le_staff_qui_a_dispens_la_formation">Quel est le staff qui a dispensé la formation ?</string>
+    <string name="source_de_la_photo">Source de la photo ?</string>
+    <string name="gallerie">Gallerie</string>
+    <string name="source_du_rapport">Source du rapport ?</string>
+    <string name="importer_pdf">Importer PDF</string>
+    <string name="importer_doc">Importer DOC WORD</string>
+    <string name="aucune_photo_selectionn_e">Aucune photo selectionnée</string>
+    <string name="importer_csv">Importer EXCEL</string>
+    <string name="selectionnez_la_photo">Selectionnez la photo</string>
+    <string name="selectionnez_le_document">Selectionnez le document</string>
+    <string name="la_date_de_formation_n_est_pas_renseign_e">La date de formation n\'est pas renseignée !</string>
+    <string name="le_rapport">Le rapport</string>
+    <string name="aucun_rapport_n_est_fourni">Aucun rapport n\'est fourni</string>
+    <string name="un_rapport_est_fourni">Un rapport est fourni</string>
+    <string name="les_producteurs">Les producteurs</string>
+    <string name="les_types_de_formation">Les types de formation</string>
+    <string name="les_themes">Les themes</string>
+    <string name="les_sous_themes">Les sous themes</string>
+    <string name="choix_du_programme">Choix du programme !</string>
+    <string name="la_liste_des_programmes_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des programmes semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="cette_culture_est_deja_ajout_e">Cette culture est deja ajoutée</string>
+    <string name="choisir_la_nationalit">Choisir la nationalité...</string>
+    <string name="non">non</string>
+    <string name="choisir_la_piece">Choisir la piece...</string>
+    <string name="en_tant_que">En tant que:</string>
+    <string name="num_ro_de_t_l_phone">Numéro de téléphone</string>
+    <string name="n_de_la_pi_ce_cmu">N° de la pièce CMU</string>
+    <string name="n_de_carte_de_s_curit_sociale">N° de carte de sécurité sociale</string>
+    <string name="habitez_vous_dans_un_campement_ou_village">Habitez-vous dans un campement ou village ?</string>
+    <string name="choix_du_statut">Choix du statut</string>
+    <string name="quelle_est_la_nationalit">Quelle est la nationalité ?</string>
+    <string name="avez_vous_des_proches">Avez vous des proches</string>
+    <string name="votre_niveau_d_etude">Votre niveau d\'etude ?</string>
+    <string name="quel_type_de_pi_ce">Quel type de pièce ?</string>
+    <string name="votre_choix">Votre choix</string>
+    <string name="nom_du_producteur">Nom du producteur</string>
+    <string name="pr_nom_s_du_producteur">Prénom(s) du producteur</string>
+    <string name="quels_sont_les_certificats">Quels sont les certificats ?</string>
+    <string name="les_types_de_culture">Les types de culture</string>
+    <string name="les_op_rateurs_mobile">Les opérateurs mobile</string>
+    <string name="les_types_d_activit_s">Les types d\'activités</string>
+    <string name="v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent">Vérifiez le nombre de travailleur permanent et non permanent !</string>
+    <string name="avez_vous_des_for_ts_ou_jacheres">Avez-vous des forêts ou jacheres ?</string>
+    <string name="y_a_t_il_d_autres_cultures">Y\'a t\'il d\'autres cultures ?</string>
+    <string name="y_a_t_il_d_autres_activit_except_le_cacao">Y\'a t\'il d\'autres activité excepté le cacao ?</string>
+    <string name="y_a_t_il_des_travailleurs_dans_la_famille">Y\'a t\'il des travailleurs dans la famille ?</string>
+    <string name="etes_vous_membre_d_une_soci_t_de_travail">Etes-vous membre d\'une société de travail ?</string>
+    <string name="as_tu_un_compte_mobile_money">As-tu un Compte Mobile Money ?</string>
+    <string name="as_tu_un_compte_dans_une_banque">As-tu un compte dans une banque ?</string>
+    <string name="s_lectionner_la_banque">Sélectionner la banque :</string>
+    <string name="culture">Culture</string>
+    <string name="superficie">Superficie</string>
+    <string name="renseignez_des_donn_es_sur_la_vari_t_svp">Renseignez des données sur la variété, svp !</string>
+    <string name="op_rateur">Opérateur</string>
+    <string name="num_ro">Numéro</string>
+    <string name="cet_op_rateur_est_deja_ajout_e">Cet opérateur est deja ajoutée</string>
+    <string name="renseignez_des_donn_es_sur_les_activit_s_svp">Renseignez des données sur les activités, svp !</string>
+    <string name="cette_activit_est_d_ja_ajout_e">Cette activité est déja ajoutée</string>
+    <string name="la_liste_des_roducteur_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des roducteur semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="selectionner_la_formation">Selectionner la formation !</string>
+    <string name="la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des formations semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="formation">"Formation "</string>
+    <string name="representez_vous_un_producteur">Representez vous un producteur ?</string>
+    <string name="quel_est_leur_lien">Quel est leur lien ?</string>
+    <string name="la_liste_des_l_ments_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des éléments semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="cette_vari_t_est_deja_ajout_e">Cette variété est deja ajoutée</string>
+    <string name="cet_animal_est_deja_ajout">Cet animal est deja ajouté</string>
+    <string name="cet_insecte_est_deja_ajout">Cet insecte est deja ajouté</string>
+    <string name="la_liste_des_producteurs_de_cette_localit_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des producteurs de cette Localité semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="aucun_producteur_enregistr">Aucun producteur enregistré</string>
+    <string name="choisir_la_source">Choisir la source...</string>
+    <string name="pesticides_utilis_s_l_an_dernier">Pesticides utilisés l\'an dernier</string>
+    <string name="intrants_utilis_s_l_an_dernier">Intrants utilisés l\'an dernier</string>
+    <string name="insecte_parasites_ou_ravageurs">Insecte parasites ou ravageurs</string>
+    <string name="autre_insecte_parasites_ou_ravageurs">Autre insecte parasites ou ravageurs</string>
+    <string name="traitements">Traitements</string>
+    <string name="as_tu_b_n_fici_d_arbres_agro_forestiers">As tu bénéficié d\'arbres agro-forestiers</string>
+    <string name="insecte_amis">Insecte amis</string>
+    <string name="animaux_rencontr_s">Animaux rencontrés</string>
+    <string name="fr_quence_activit_de_taille">Fréquence activité de taille ?</string>
+    <string name="fr_quence_activit_d_egourmandage">Fréquence activité d’egourmandage ?</string>
+    <string name="fr_quence_activit_de_r_colte_sanitaire">Fréquence activité de récolte sanitaire ?</string>
+    <string name="y_a_t_il_une_pr_sence_d_insectes_parasites_ou_ravageurs">Y\'a t\'il une présence d\'insectes parasites ou ravageurs ?</string>
+    <string name="avez_vous_observ_d_autres_insectes_ou_ravageur_qui_n_apparaissent_pas_dans_la_liste_pr_c_dente">Avez-vous observé d\'autres insectes ou ravageur qui n\'apparaissent pas dans la liste précédente ?</string>
+    <string name="avez_vous_traiter_votre_parcelle">Avez-vous traiter votre parcelle ?</string>
+    <string name="avez_vous_rencontrer_des_animaux">Avez-vous rencontrer des animaux ?</string>
+    <string name="pr_sence_d_autres_types_d_insecte">Présence d\'autres types d’insecte ?</string>
+    <string name="y_a_t_il_une_pr_sence_de_fourmis_rouges">Y\'a t\'il une présence de fourmis rouges ?</string>
+    <string name="y_a_t_il_une_pr_sence_d_araign_es">Y\'a t\'il une présence d\'araignées ?</string>
+    <string name="y_a_t_il_une_pr_sence_de_verre_de_terres">Y\'a t\'il une présence de verre de terres ?</string>
+    <string name="y_a_t_il_une_pr_sence_de_mentes_religieuses">Y\'a t\'il une présence de mentes religieuses ?</string>
+    <string name="quelle_vari_t_d_arbre_ombrage_souhaiterais_tu_avoir">Quelle variété d’arbre ombrage souhaiterais-tu avoir ?</string>
+    <string name="y_a_t_il_des_insectes_parasites">Y\'a t\'il des insectes parasites ?</string>
+    <string name="renseignez_des_donn_es_sur_l_animal_svp">Renseignez des données sur l\'animal, svp !</string>
+    <string name="cet_animal_est_d_ja_ajout">Cet animal est déja ajouté</string>
+    <string name="choix_de_la_parcelle">Choix de la parcelle !</string>
+    <string name="la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="produits_pythos_enr_gistr_s">Produits pythos enrégistrés</string>
+    <string name="maladies_observ_es_dans_la_parcelle">Maladies observées dans la parcelle</string>
+    <string name="cette_matiere_est_deja_ajout_e">Cette matiere est deja ajoutée</string>
+    <string name="ce_parasite_ou_insecte_est_deja_ajout">Ce parasite ou insecte est deja ajouté</string>
+    <string name="qui_a_r_alis_l_application">Qui a réalisé l\'application ?</string>
+    <string name="qui_est_l_applicateur">Qui est l\'applicateur ?</string>
+    <string name="poss_de_t_il_un_epi">Possède t-il un EPI ?</string>
+    <string name="choisir_sa_parcelle_concern_e">Choisir sa parcelle concernée</string>
+    <string name="aucun_producteur_dans_cette_localit_refaite_une_mise_jour">Aucun producteur dans cette localité ! Refaite une mise à jour.</string>
+    <string name="selectionnez_les_lieux">Selectionnez les lieux</string>
+    <string name="quel_est_le_lien_de_parent_avec_le_producteur">Quel est le lien de parenté avec le producteur ?</string>
+    <string name="quel_niveau_d_tude_as_tu_atteint">Quel niveau d’étude as-tu atteint ?</string>
+    <string name="va_t_il_l_cole">Va-t-il à l\'école ?</string>
+    <string name="as_tu_t_l_cole_par_le_pass">As-tu été à l’école par le passé ?</string>
+    <string name="ton_cole_est_elle_situ_e_dans_le_village">Ton école est-elle située dans le village ?</string>
+    <string name="pourquoi_ne_vas_tu_pas_l_cole_ou_arr_t_l_cole">Pourquoi ne vas-tu pas à l’école ou arrêté l’école ?</string>
+    <string name="au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_dangereux_as_tu_effectu">Au cours de ces 2 dernières années, lequel de ces travaux dangereux as-tu effectué ?</string>
+    <string name="o_as_tu_effectu_ces_travaux_dangereux">Où as-tu effectué ces travaux dangereux ?</string>
+    <string name="au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_l_gers_as_tu_effectu">Au cours de ces 2 dernières années, lequel de ces travaux légers as-tu effectué ?</string>
+    <string name="o_as_tu_effectu_ces_travaux_l_gers">Où as-tu effectué ces travaux légers ?</string>
+    <string name="quelle_est_sa_classe_actuelle">Quelle est sa classe actuelle ?</string>
+    <string name="la_liste_des_localit_s_est_vide_refaite_une_mise_jour">La liste des localités est vide ! Refaite une mise à jour.</string>
+    <string name="la_valeur_des_champs_pour_les_enfants_de_0_5_ans_incorrectes">La valeur des champs pour les enfants de 0 à 5 ans incorrectes !</string>
+    <string name="la_valeur_des_champs_pour_les_enfants_de_6_17_ans_incorrectes">La valeur des champs pour les enfants de 6 à 17 ans incorrectes !</string>
+    <string name="ann_e_certification">Année certification</string>
+    <string name="code_producteur">Code producteur</string>
+    <string name="type_d_eaux_de_toilette">Type d\'eaux de toilette</string>
+    <string name="la_liste_des_eaux_de_toilette_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des eaux de toilette semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="type_d_eaux_de_vaisselle">Type d\'eaux de vaisselle</string>
+    <string name="la_liste_des_eaux_de_vaisselle_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des eaux de vaisselle semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="traitez_vous_vos_champs">Traitez vous vos champs ?</string>
+    <string name="quelle_machine_est_utilis_e">Quelle machine est utilisée ?</string>
+    <string name="la_liste_des_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des machines semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="lieu_de_la_garde_machine">Lieu de la garde machine ?</string>
+    <string name="la_liste_des_gardes_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des gardes machines semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="votre_femme_fait_des_activit_s">Votre femme fait des activités ?</string>
+    <string name="quelle_activit">Quelle activité ?</string>
+    <string name="avez_vous_des_quipements_de_protection_individuel_epi">Avez-vous des équipements de protection individuel (EPI) ?</string>
+    <string name="o_procurez_vous_l_eau_potable">Où procurez-vous l\'eau potable ?</string>
+    <string name="est_ce_que_votre_conjoint_exerce_une_activit_g_n_ratrice_de_revenu">Est-ce que votre conjoint exerce une activité génératrice de revenu ?</string>
+    <string name="comment_avez_vous_obtenu_le_capital_de_d_marrage">Comment avez-vous obtenu le capital de démarrage ?</string>
+    <string name="avez_vous_b_n_ficiez_d_une_formation">Avez vous bénéficiez d\'une formation  ?</string>
+    <string name="quelle_est_le_nom_de_l_activit">Quelle est le nom de l\'activité ?</string>
+    <string name="comment_g_rez_vous_les_ordures_m_nag_res">Comment gérez-vous les ordures ménagères ?</string>
+    <string name="choix_des_sources_d_nergies_du_m_nage">Choix des sources d\'énergies du ménage</string>
+    <string name="la_liste_des_arbres_d_ombrage_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des arbres d\'ombrage semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="s_lectionner_les_m_sures_de_protections">Sélectionner les mésures de protections</string>
+    <string name="arbre">Arbre</string>
+    <string name="nombre">Nombre</string>
+    <string name="renseignez_des_donn_es_d_ombrage_svp">Renseignez des données d\'ombrage, svp !</string>
+    <string name="choisir_le_type">Choisir le type...</string>
+    <string name="la_liste_des_sources_d_eau_est_vide_refaite_une_mise_jour">La liste des sources d\'eau est vide ! Refaite une mise à jour.</string>
+    <string name="la_liste_du_type_de_localit_est_vide_refaite_une_mise_jour">La liste du type de localité est vide ! Refaite une mise à jour.</string>
+    <string name="renseignez_la_localite_svp">Renseignez la localite, svp !</string>
+    <string name="choisir">Choisir</string>
+    <string name="renseignez_la_sous_prefecture_svp">Renseignez la sous-prefecture, svp !</string>
+    <string name="repondez_la_question_sur_le_centre_de_sant_svp">Repondez à la question sur le centre de santé, svp !</string>
+    <string name="repondez_la_question_sur_du_statut_centre_de_sant_svp">Repondez à la question sur du statut centre de santé, svp !</string>
+    <string name="repondez_la_question_sur_l_cole_svp">Repondez à la question sur l\'école, svp !</string>
+    <string name="renseignez_le_type_de_la_localit_svp">Renseignez le type de la localité, svp !</string>
+    <string name="repondez_la_question_source_d_eau_svp">Repondez à la question source d\'eau, svp !</string>
+    <string name="repondez_la_question_de_source_d_lectricit_svp">Repondez à la question de source d\'électricité, svp !</string>
+    <string name="repondez_la_question_de_dechet_svp">Repondez à la question de dechet, svp !</string>
+    <string name="cette_ecole_est_deja_ajout_e">Cette ecole est deja ajoutée</string>
+    <string name="nombre_d_ecoles_saisi_atteint">Nombre d\'ecoles saisi atteint</string>
+    <string name="inconnu">Inconnu</string>
+    <string name="la_liste_des_transporteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des transporteurs semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="aucun_magasin_de_section_selectionn">Aucun magasin de section selectionné !</string>
+    <string name="aucun_magasin_central_selectionn">Aucun magasin central selectionné !</string>
+    <string name="aucune_information_de_livraisoncentral_saisie">Aucune information de livraisonCentral saisie !</string>
+    <string name="producteur_type_certificat_qt">Producteur: %1$s | Type: %2$s | Certificat: %3$s | Qté: %4$s\n</string>
+    <string name="information_sur_la_livraison">Information sur la livraison</string>
+    <string name="vous_avez_omis_d_ajout_des_donn_es_svp">Vous avez omis d\'ajouté des données, svp !</string>
+    <string name="dans_quel_section_livrez_vous">Dans quel section livrez vous ?</string>
+    <string name="aucun_d_l_gu_ou_staff_selectionn">Aucun délégué ou staff selectionné !</string>
+    <string name="aucun_magasin_selectionn">Aucun magasin selectionné !</string>
+    <string name="aucune_information_de_livraison_saisie">Aucune information de livraison saisie !</string>
+    <string name="les_produits_livr_s">Les produits à livrés</string>
+    <string name="selectionnez_le_producteur_svp">Selectionnez le producteur, svp !</string>
+    <string name="selectionnez_une_parcelle_svp">Selectionnez une parcelle, svp !</string>
+    <string name="passer_la_quantit_svp">Passer la quantité, svp !</string>
+    <string name="arbre_concern">Arbre concerné</string>
+    <string name="strate">"Strate "</string>
+    <string name="quantit">Quantité</string>
+    <string name="quelle_est_sa_strate">Quelle est sa strate ?</string>
+    <string name="aucun_besoin_enr_gistr_pour_ce_producteur">Aucun besoin enrégistré pour ce producteur !</string>
+    <string name="aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations">Aucun arbre n\'a été enrégistré, faite une mise à jour des evaluations !</string>
+    <string name="aucune_approvisionnement_selectionn_e_faite_une_mise_jour_des_evaluations">Aucune approvisionnement selectionnée, faite une mise à jour des evaluations !</string>
+    <string name="les_arbres_distribu_s">Les arbres distribués</string>
+    <string name="quantit_distribuer">Quantité à distribuer</string>
+    <string name="total_enregistrer">Total à enregistrer</string>
+    <string name="choisir_la_campagne">Choisir la campagne</string>
+    <string name="choisir_la_parcelle">Choisir la parcelle</string>
+    <string name="choisir_la_localite">Choisir la localite</string>
+    <string name="choisir_le_producteur">Choisir le producteur</string>
+    <string name="fiche_estimation">FICHE ESTIMATION</string>
+    <string name="informations">Informations</string>
+    <string name="localit">Localité</string>
+    <string name="campagne">Campagne</string>
+    <string name="producteur">Producteur</string>
+    <string name="parcelle">Parcelle</string>
+    <string name="comptage_de_pieds_a">Comptage carré A</string>
+    <string name="sup_20_cab">Sup à 20 Cab</string>
+    <string name="de_11_20_cab">De 11 à 20 Cab</string>
+    <string name="de_0_10_cab">De 0 à 10 Cab</string>
+    <string name="comptage_de_pieds_b">Comptage carré B</string>
+    <string name="comptage_de_pieds_c">Comptage carré C</string>
+    <string name="date_d_estimation">Date d\'estimation</string>
+    <string name="annuler">ANNULER</string>
+    <string name="v_rifier">VÉRIFIER</string>
+    <string name="fiche_distribution_des_arbres">FICHE Distribution Des Arbres</string>
+    <string name="informations_sur_la_parcelle">Informations sur la parcelle</string>
+    <string name="selectionner_une_section">Selectionner une section</string>
+    <string name="selectionner_une_localit">Selectionner une localité</string>
+    <string name="selectionner_un_producteur">Selectionner un producteur</string>
+    <string name="liste_des_arbres_evalu_s_aupres_des_producteurs">LISTE DES ARBRES EVALUÉS AUPRES DES PRODUCTEURS</string>
+    <string name="fiche_evaluation_des_besoins">FICHE Evaluation Des Besoins</string>
+    <string name="enregistrer_la_liste_des_besoins_en_arbres_du_producteur">ENREGISTRER LA LISTE DES BESOINS EN ARBRES DU PRODUCTEUR</string>
+    <string name="qt_souhait_e">Qté souhaitée</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="fiche_formation">FICHE FORMATIONS</string>
+    <string name="informations_sur_localit">Informations sur localité</string>
+    <string name="informations_sur_la_formation">Informations sur la formation</string>
+    <string name="quelle_est_l_appelation_de_la_formation">Quelle est l\'appelation de la formation ?</string>
+    <string name="date_de_debut_de_la_formation">Date de debut de la formation</string>
+    <string name="date_de_fin_de_la_formation">Date de fin de la formation</string>
+    <string name="dur_e_de_formation">Durée de formation ?</string>
+    <string name="observations">Observations</string>
+    <string name="pr_cisez">Précisez…</string>
+    <string name="photo_de_la_formation">Photo de la formation</string>
+    <string name="rapport_de_la_formation">Rapport de la formation</string>
 
 </resources>

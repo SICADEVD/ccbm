@@ -42,7 +42,7 @@ android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE SSRTE"
+                android:text="FICHE SSTRE-CLMRS"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -1602,7 +1602,7 @@ android:textColor="@color/text_color_white"
 <!--                        android:layout_height="@dimen/_10sdp" />-->
 
 <!--&lt;!&ndash;                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch&ndash;&gt;-->
-<!--&lt;!&ndash;                        app:hintText="Selectionnez les lieux"&ndash;&gt;-->
+<!--&lt;!&ndash;                        app:hintText=getString(R.string.selectionnez_les_lieux)&ndash;&gt;-->
 <!--&lt;!&ndash;                        android:id="@+id/selectRecentWorkLieuLightSsrt"&ndash;&gt;-->
 <!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
 <!--&lt;!&ndash;                        android:layout_height="@dimen/_37sdp"/>&ndash;&gt;-->
@@ -1639,7 +1639,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
-                    android:text="ANNULER"
+                    android:text="@string/annuler"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
@@ -1655,7 +1655,7 @@ android:textColor="@color/text_color_white"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
-                    android:text="VÉRIFIER"
+                    android:text="@string/v_rifier"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />

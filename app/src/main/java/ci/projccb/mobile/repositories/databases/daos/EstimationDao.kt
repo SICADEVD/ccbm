@@ -30,4 +30,15 @@ interface EstimationDao {
     @Transaction
     @Query("DELETE FROM estimation")
     fun deleteAgentDatas()
+    @Transaction
+    @Query("DELETE FROM estimation WHERE uid = :uid")
+    fun deleteByUid(uid: Int)
+
+    @Transaction
+    @Query("SELECT * FROM estimation WHERE (isSynced = 0 AND producteurId = :producteurUid)")
+    fun getUnSyncedByProdAndParcUid(producteurUid: String?): MutableList<EstimationModel>
+
+    @Transaction
+    @Query("SELECT * FROM estimation WHERE (isSynced = 0 AND parcelleId = :parcUid)")
+    fun getUnSyncedByParcUid(parcUid: String?): MutableList<EstimationModel>
 }

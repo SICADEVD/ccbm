@@ -170,11 +170,11 @@ class FormationActivity : AppCompatActivity() {
 //
 //        if (localitesList?.size == 0) {
 //            showMessage(
-//                "La liste des localités est vide ! Refaite une mise à jour.",
+//                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
 //                this,
 //                finished = false,
 //                callback = {},
-//                "Compris !",
+//                getString(R.string.compris),
 //                false,
 //                showNo = false,
 //            )
@@ -376,8 +376,8 @@ class FormationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionFormation,
@@ -412,8 +412,8 @@ class FormationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteFormation,
@@ -427,7 +427,8 @@ class FormationActivity : AppCompatActivity() {
                     localiteCommon.id = localite.id!!
 
                     val producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { CommonData(it.id, "${it.nom} ${it.prenoms}") }!!
-                    Commons.setupItemMultiSelection(this, selectProducteurFormation, "Quels sont les producteurs présents à la formation ?",
+                    Commons.setupItemMultiSelection(this, selectProducteurFormation,
+                        getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
                         producteurList
                     ){ selected ->
 
@@ -470,7 +471,7 @@ class FormationActivity : AppCompatActivity() {
 //            })
 
         Commons.setListenerForSpinner(this,
-            "Lieu de la formation",
+            getString(R.string.lieu_de_la_formation),
             spinner = selectLieuFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.lieuDeFormation)?.toList() ?: listOf(),
@@ -483,7 +484,7 @@ class FormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Type de formation",
+            getString(R.string.type_de_formation),
             spinner = selectTypeFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.type_formation)?.toList() ?: listOf(),
@@ -498,7 +499,7 @@ class FormationActivity : AppCompatActivity() {
         val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        Commons.setupItemMultiSelection(this, selectModuleMultiFormation, "Quels sont les modules de la formation ?",
+        Commons.setupItemMultiSelection(this, selectModuleMultiFormation, getString(R.string.quels_sont_les_modules_de_la_formation),
             (listTypeFormation)?.map { CommonData(0, it.nom.toString()) }?: arrayListOf()
         ){ typeSelect ->
             //val idOfTypeForm = mutableListOf<Int?>()
@@ -512,7 +513,7 @@ class FormationActivity : AppCompatActivity() {
                 }
             }
 
-            Commons.setupItemMultiSelection(this, selectThemeMultiFormation, "Quels sont les themes de la formation ?",
+            Commons.setupItemMultiSelection(this, selectThemeMultiFormation, getString(R.string.quels_sont_les_themes_de_la_formation),
                 (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }){ themeList ->
 
                 val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
@@ -524,7 +525,7 @@ class FormationActivity : AppCompatActivity() {
                     }
                 }
 
-                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, "Quels sont les sous themes de la formation ?",
+                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, getString(R.string.quels_sont_les_sous_themes_de_la_formation),
                     (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }){
                     listSousThemeFormation?.forEach { sThemeForm ->
                         if( it.contains(sThemeForm.nom) ){
@@ -536,18 +537,18 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        Commons.setupItemMultiSelection(this, selectThemeMultiFormation, "Quels sont les themes de la formation ?",
+        Commons.setupItemMultiSelection(this, selectThemeMultiFormation, getString(R.string.quels_sont_les_themes_de_la_formation),
             arrayListOf()
         ){
         }
 
-        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, "Quels sont les sous themes de la formation ?",
+        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, getString(R.string.quels_sont_les_sous_themes_de_la_formation),
             arrayListOf()){
         }
 
         val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
-            "Quel est le staff qui a dispensé la formation ?",
+            getString(R.string.quel_est_le_staff_qui_a_dispens_la_formation),
             spinner = selectStaffFormation,
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
@@ -574,7 +575,7 @@ class FormationActivity : AppCompatActivity() {
 
         if (editDateDebuFormation.text.isNullOrEmpty() &&  editDateFinFormation.text.isNullOrEmpty()) {
             Commons.showMessage(
-                message = "La date de formation n'est pas renseignée !",
+                message = getString(R.string.la_date_de_formation_n_est_pas_renseign_e),
                 context = this,
                 finished = false,
                 callback = {},
@@ -607,13 +608,14 @@ class FormationActivity : AppCompatActivity() {
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 
-            this.add(Pair("Les producteurs", producteurIdList.map { "${it.nom}" }.toModifString()))
-            this.add(Pair("Les types de formation", typeFormationListCm.map { "${it.nom}" }.toModifString() ))
-            this.add(Pair("Les themes", themeListCm.map { "${it.nom}" }.toModifString()))
-            this.add(Pair("Les sous themes", sousThemeListCm.map { "${it.nom}" }.toModifString()))
+            this.add(Pair(getString(R.string.les_producteurs), producteurIdList.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
+            this.add(Pair(getString(R.string.les_types_de_formation), typeFormationListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n") ))
+            this.add(Pair(getString(R.string.les_themes), themeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
+            this.add(Pair(getString(R.string.les_sous_themes), sousThemeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
 
-            if(endRapport.isNullOrEmpty()) this.add(Pair("Le rapport", "Aucun rapport n'est fourni"))
-            else this.add(Pair("Le rapport", "Un rapport est fourni"))
+            if(endRapport.isNullOrEmpty()) this.add(Pair(getString(R.string.le_rapport),
+                getString(R.string.aucun_rapport_n_est_fourni)))
+            else this.add(Pair(getString(R.string.le_rapport), getString(R.string.un_rapport_est_fourni)))
 
         }.map { MapEntry(it.first, it.second) }
 
@@ -666,7 +668,7 @@ class FormationActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -674,7 +676,7 @@ class FormationActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -687,7 +689,7 @@ class FormationActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -871,7 +873,7 @@ class FormationActivity : AppCompatActivity() {
         }
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -885,19 +887,19 @@ class FormationActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -910,7 +912,7 @@ class FormationActivity : AppCompatActivity() {
         setupSectionSelection(formationDrafted.section, formationDrafted.localitesId)
 
         Commons.setListenerForSpinner(this,
-            "Lieu de la formation",
+            getString(R.string.lieu_de_la_formation),
             spinner = selectLieuFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = formationDrafted.lieuFormation,
@@ -921,7 +923,7 @@ class FormationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Type de formation",
+            getString(R.string.type_de_formation),
             spinner = selectTypeFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = formationDrafted.formationType,
@@ -937,7 +939,8 @@ class FormationActivity : AppCompatActivity() {
         val currentThemeList = listThemeFormation?.filter { GsonUtils.fromJson<MutableList<String>>(formationDrafted.themeStr, object : TypeToken<MutableList<String>>(){}.type).map { it.split("-")[1] }.contains(it.id.toString()) == true }
         val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         val currentSousThemeList = listSousThemeFormation?.filter { GsonUtils.fromJson<MutableList<String>>(formationDrafted.sousThemeStr, object : TypeToken<MutableList<String>>(){}.type).map { it.split("-")[1] }.contains(it.id.toString()) == true }
-        Commons.setupItemMultiSelection(this, selectModuleMultiFormation, "Quels sont les modules de la formation ?",
+        Commons.setupItemMultiSelection(this, selectModuleMultiFormation,
+            getString(R.string.quels_sont_les_modules_de_la_formation),
             (listTypeFormation)?.map { CommonData(0, it.nom.toString())
             }?: arrayListOf(),
             currentList = currentTypeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()
@@ -953,7 +956,8 @@ class FormationActivity : AppCompatActivity() {
                 }
             }
 
-            Commons.setupItemMultiSelection(this, selectThemeMultiFormation, "Quels sont les themes de la formation ?",
+            Commons.setupItemMultiSelection(this, selectThemeMultiFormation,
+                getString(R.string.quels_sont_les_themes_de_la_formation),
                 (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }){ themeList ->
 
                 val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
@@ -965,7 +969,8 @@ class FormationActivity : AppCompatActivity() {
                     }
                 }
 
-                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, "Quels sont les sous themes de la formation ?",
+                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
+                    getString(R.string.quels_sont_les_sous_themes_de_la_formation),
                     (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }){
                     listSousThemeFormation?.forEach { sThemeForm ->
                         if( it.contains(sThemeForm.nom) ){
@@ -977,17 +982,17 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        Commons.setupItemMultiSelection(this, selectThemeMultiFormation, "Quels sont les themes de la formation ?",
+        Commons.setupItemMultiSelection(this, selectThemeMultiFormation, getString(R.string.quels_sont_les_themes_de_la_formation),
             itemList = currentThemeList?.map { CommonData(0, it.nom.toString())}?.toMutableList()?: mutableListOf() ) {
         }
 
-        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, "Quels sont les sous themes de la formation ?",
+        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, getString(R.string.quels_sont_les_sous_themes_de_la_formation),
             itemList = currentSousThemeList?.map { CommonData(0, it.nom.toString())}?: mutableListOf()) {
         }
 
         val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
-            "Quel est le staff qui a dispensé la formation ?",
+            getString(R.string.quel_est_le_staff_qui_a_dispens_la_formation),
             spinner = selectStaffFormation,
             currentVal = listDelegue?.filter { formationDrafted.staffId == it.id.toString() }?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull() ?: "",
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
@@ -1046,10 +1051,12 @@ class FormationActivity : AppCompatActivity() {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     when(whichPhoto){
                         0 -> {
-                            startActivityForResult(Intent.createChooser(intent, "Selectionnez la photo"), pView)
+                            startActivityForResult(Intent.createChooser(intent,
+                                getString(R.string.selectionnez_la_photo)), pView)
                         }
                         1 -> {
-                            startActivityForResult(Intent.createChooser(intent, "Selectionnez le document"), pView)
+                            startActivityForResult(Intent.createChooser(intent,
+                                getString(R.string.selectionnez_le_document)), pView)
                         }
                     }
                 }
@@ -1073,11 +1080,11 @@ class FormationActivity : AppCompatActivity() {
             }
         } else {
             showMessage(
-                "Aucune photo selectionnée",
+                getString(R.string.aucune_photo_selectionn_e),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -1088,31 +1095,31 @@ class FormationActivity : AppCompatActivity() {
         val dialogPicker = AlertDialog.Builder(this)
 
         if(whichPhoto == 0){
-            dialogPicker.setMessage("Source de la photo ?")
+            dialogPicker.setMessage(getString(R.string.source_de_la_photo))
                 .setPositiveButton("Camera") { dialog, _ ->
                     dialog.dismiss()
                     dispatchTakePictureIntent()
                 }
-                .setNegativeButton("Gallerie") { dialog, _ ->
+                .setNegativeButton(getString(R.string.gallerie)) { dialog, _ ->
                     dialog.dismiss()
                     showFileChooser(11)
                 }
         }else if(whichPhoto == 1){
-            dialogPicker.setMessage("Source du rapport ?")
-                .setPositiveButton("Importer CSV") { dialog, _ ->
+            dialogPicker.setMessage(getString(R.string.source_du_rapport))
+                .setPositiveButton(getString(R.string.importer_csv)) { dialog, _ ->
                     dialog.dismiss()
-                    showFileChooser(11, "text/csv",  // CSV
-                        "csv")
+                    showFileChooser(11, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  // CSV
+                        "xlsx")
                 }
-                .setNegativeButton("Importer PDF") { dialog, _ ->
+                .setNegativeButton(getString(R.string.importer_pdf)) { dialog, _ ->
                     dialog.dismiss()
                     showFileChooser(11, "application/pdf",  // PDF
                         "pdf")
                 }
-                .setNeutralButton("Importer DOC") { dialog, _ ->
+                .setNeutralButton(getString(R.string.importer_doc)) { dialog, _ ->
                     dialog.dismiss()
-                    showFileChooser(11, "application/msword",  // PDF
-                        "doc")
+                    showFileChooser(11, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",  // PDF
+                        "docx")
                 }
         }
         dialogPicker.create().show()

@@ -82,8 +82,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         )
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = sectionList?.filter { it.id == currVal?.toInt() }?.map { it.libelle }?.let{
                 if (it.size > 0) {
@@ -123,8 +123,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteInspection,
@@ -160,8 +160,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurInspection,
@@ -188,7 +188,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                         LogUtils.d(listCertif?.certification?.split(",")?.filter { currVal3 == it }?.toString())
 
                         Commons.setListenerForSpinner(this@InspectionActivity,
-                            "Choix du ou des certificats","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                            getString(R.string.inspection_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                             spinner = selectCertifInspection,
                             currentVal = listCertif?.certification?.split(",")?.filter { currVal3 == it }?.toString(),
                             listIem = listCertif?.certification?.split(",")
@@ -374,8 +374,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val encadreurList = CcbRoomDatabase.getDatabase(applicationContext)?.staffFormation()?.getAll( agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString() )
 
         Commons.setListenerForSpinner(this,
-            "Choix de l'encadreur !",
-            "La liste des encadreurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_l_encadreur),
+            getString(R.string.la_liste_des_encadreurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (encadreurList?.size!! > 0) false else true,
             currentVal = encadreurList.filter { it.id == currVal?.toInt() }?.map { "${it.firstname} ${it.lastname}" }?.let{
                 if (it.size > 0) {
@@ -431,7 +431,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         LogUtils.d(draftInsoection)
 
         showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -446,14 +446,14 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     )
 
                     showMessage(
-                        message = "Contenu ajouté aux brouillons !",
+                        message = getString(R.string.contenu_ajout_aux_brouillons),
                         context = this,
                         finished = true,
                         callback = {
                             Commons.playDraftSound(this)
                             imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                         },
-                        positive = "OK",
+                        positive = getString(R.string.ok),
                         deconnec = false,
                         false
                     )
@@ -461,7 +461,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     ex.printStackTrace()
                 }
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -475,7 +475,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 //                context = this,
 //                finished = false,
 //                callback = {},
-//                positive = "Ok",
+//                positive = getString(R.string.ok),
 //                deconnec = false,
 //                showNo = false
 //            )
@@ -488,7 +488,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 //                context = this,
 //                finished = false,
 //                callback = {},
-//                positive = "Ok",
+//                positive = getString(R.string.ok),
 //                deconnec = false,
 //                showNo = false
 //            )
@@ -501,11 +501,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         if (dateInspection.isEmpty()) {
             showMessage(
-                message = "Selectionnez la date, svp !",
+                message = getString(R.string.selectionnez_la_date_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "Ok",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
@@ -557,11 +557,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         if (quizCount > 4) {
             showMessage(
-                message = "Renseignez les questionnaires svp ! \nVous etes à ${cQuestionnairesReviewList?.size?.minus(quizCount)}/${cQuestionnairesReviewList?.size?.minus(4)}",
+                message = getString(R.string.renseignez_les_questionnaires_svp_vous_etes)+"${cQuestionnairesReviewList?.size?.minus(quizCount)}/${cQuestionnairesReviewList?.size?.minus(4)}",
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "Ok",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
@@ -600,7 +600,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
@@ -608,7 +608,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -621,7 +621,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -710,7 +710,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         }
 
         Commons.setListenerForSpinner(this@InspectionActivity,
-            "Choix du ou des certificats","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_ou_des_certificats),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectCertifInspection,
             listIem = arrayListOf(),
             onChanged = {

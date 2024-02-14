@@ -230,10 +230,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
 //                zoneTamponYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //
 //                when (zoneTamponYesNo.uppercase()) {
-//                    "OUI" -> {
+//                    getString(R.string.oui) -> {
 //                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.VISIBLE
 //                    }
-//                    "NON" -> {
+//                    getString(R.string.non) -> {
 //                        linearZoneTamponPhotoContainerSuiviApplication.visibility = View.GONE
 //                    }
 //                    else -> {
@@ -254,10 +254,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
 //                doucheYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 //
 //                when (doucheYesNo.uppercase()) {
-//                    "OUI" -> {
+//                    getString(R.string.oui) -> {
 //                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.VISIBLE
 //                    }
-//                    "NON" -> {
+//                    getString(R.string.non) -> {
 //                        linearZoneDouchePhotoContainerSuiviApplication.visibility = View.GONE
 //                    }
 //                    else -> {
@@ -302,8 +302,8 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair("Produits pythos enrégistrés", (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString() ))
-            this.add(Pair("Maladies observées dans la parcelle", selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
+            this.add(Pair(getString(R.string.produits_pythos_enr_gistr_s), (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.maladies_observ_es_dans_la_parcelle), selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
         }.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(suiviApplicationDatas as Object, mapEntries)
@@ -335,7 +335,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 break
             }
@@ -343,7 +343,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = "Le champ intitulé : `${field.first}` n'est pas renseigné !"
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -356,7 +356,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 this,
                 finished = false,
                 callback = {},
-                positive = "Compris !",
+                positive = getString(R.string.compris),
                 deconnec = false,
                 showNo = false
             )
@@ -393,7 +393,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         matieresList?.forEach {
             if (it.uppercase() == matiere.uppercase()) {
-                ToastUtils.showShort("Cette matiere est deja ajoutée")
+                ToastUtils.showShort(getString(R.string.cette_matiere_est_deja_ajout_e))
                 return
             }
         }
@@ -410,7 +410,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         parasitesList?.forEach {
             if (it.nom?.uppercase() == parasite.nom.uppercase()) {
-                ToastUtils.showShort("Ce parasite ou insecte est deja ajouté")
+                ToastUtils.showShort(getString(R.string.ce_parasite_ou_insecte_est_deja_ajout))
                 return
             }
         }
@@ -640,7 +640,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     )
 
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(Intent.createChooser(intent, "Selectionnez la photo"), pView)
+                    startActivityForResult(Intent.createChooser(intent, getString(R.string.selectionnez_la_photo)), pView)
                 }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
@@ -663,11 +663,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 }
             } else {
                 Commons.showMessage(
-                    "Aucune photo selectionnée",
+                    getString(R.string.aucune_photo_selectionn_e),
                     context = this,
                     finished = false,
                     callback = {},
-                    positive = "Compris !",
+                    positive = getString(R.string.compris),
                     deconnec = false,
                     showNo = false
                 )
@@ -682,12 +682,12 @@ class SuiviApplicationActivity : AppCompatActivity() {
     fun dialogPickerPhoto() {
         try {
             val dialogPicker = AlertDialog.Builder(this)
-                .setMessage("Source de la photo ?")
+                .setMessage(getString(R.string.source_de_la_photo))
                 .setPositiveButton("Camera") { dialog, _ ->
                     dialog.dismiss()
                     dispatchTakePictureIntent()
                 }
-                .setNegativeButton("Gallerie") { dialog, _ ->
+                .setNegativeButton(getString(R.string.gallerie)) { dialog, _ ->
                     dialog.dismiss()
                     showFileChooser(11)
                 }
@@ -731,7 +731,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             }
 
             Commons.showMessage(
-                message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+                message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
                 context = this,
                 finished = false,
                 callback = {
@@ -745,7 +745,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     )
 
                     Commons.showMessage(
-                        message = "Contenu ajouté aux brouillons !",
+                        message = getString(R.string.contenu_ajout_aux_brouillons),
                         context = this,
                         finished = true,
                         callback = {
@@ -756,12 +756,12 @@ class SuiviApplicationActivity : AppCompatActivity() {
                                 )
                             )
                         },
-                        positive = "OK",
+                        positive = getString(R.string.ok),
                         deconnec = false,
                         false
                     )
                 },
-                positive = "OUI",
+                positive = getString(R.string.oui),
                 deconnec = false,
                 showNo = true
             )
@@ -780,7 +780,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             setupSectionSelection(applicationDrafted.section, applicationDrafted.localite, applicationDrafted.producteur, applicationDrafted.parcelle_id)
 
             Commons.setListenerForSpinner(this,
-                "Qui a réalisé l'application ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                getString(R.string.qui_a_r_alis_l_application),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                 spinner = selectPersonApplicSApplic,
                 currentVal = applicationDrafted.personneApplication,
                 listIem = resources.getStringArray(R.array.personne_applicant)
@@ -800,7 +800,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
             val listApplicateur = CcbRoomDatabase.getDatabase(this)?.concernesDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
             Commons.setListenerForSpinner(this,
-                "Qui est l'applicateur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                getString(R.string.qui_est_l_applicateur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                 spinner = selectListApplicSApplic,
                 currentVal = listApplicateur?.filter { it.id.toString() == applicationDrafted.applicateur }?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull(),
                 listIem = listApplicateur?.map { "${it.firstname} ${it.lastname}" }
@@ -813,10 +813,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 })
 
             Commons.setListenerForSpinner(this,
-                "Possède t-il un EPI ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+                getString(R.string.poss_de_t_il_un_epi),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                 spinner = selectIndependantEpiSApplic,
                 currentVal = applicationDrafted.independantEpi,
-                itemChanged = arrayListOf(Pair(1, "Oui")),
+                itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
                     ?.toList() ?: listOf(),
                 onChanged = {
@@ -934,7 +934,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         setupSectionSelection()
 
         Commons.setListenerForSpinner(this,
-            "Qui a réalisé l'application ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.qui_a_r_alis_l_application),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectPersonApplicSApplic,
             listIem = resources.getStringArray(R.array.personne_applicant)
                 ?.toList() ?: listOf(),
@@ -953,7 +953,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         val listApplicateur = CcbRoomDatabase.getDatabase(this)?.concernesDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         Commons.setListenerForSpinner(this,
-            "Qui est l'applicateur ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.qui_est_l_applicateur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectListApplicSApplic,
             listIem = listApplicateur?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
@@ -965,9 +965,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
-            "Possède t-il un EPI ?","La liste des options semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.poss_de_t_il_un_epi),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectIndependantEpiSApplic,
-            itemChanged = arrayListOf(Pair(1, "Oui")),
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -999,8 +999,8 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la section !",
-            "La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
             spinner = selectSectionSApplic,
@@ -1035,8 +1035,8 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix de la localité !",
-            "La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectLocaliteSApplic,
@@ -1072,8 +1072,8 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choix du producteur !",
-            "La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectProducteurSApplic,
@@ -1112,8 +1112,8 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         Commons.setListenerForSpinner(this,
-            "Choisir sa parcelle concernée",
-            "La liste des parcelles semble vide, veuillez procéder à la synchronisation des données svp.",
+            getString(R.string.choisir_sa_parcelle_concern_e),
+            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectParcelleSApplic,

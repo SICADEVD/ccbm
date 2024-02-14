@@ -43,7 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE Distribution Des Arbres"
+                android:text="@string/fiche_distribution_des_arbres"
                 app:textAllCaps="true"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la parcelle"
+                            android:text="@string/informations_sur_la_parcelle"
                             android:textAllCaps="true"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
@@ -146,7 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une section"
+                            android:text="@string/selectionner_une_section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -184,7 +184,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner une localité"
+                            android:text="@string/selectionner_une_localit"
 
                             android:textStyle="bold" />
 
@@ -224,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Selectionner un producteur"
+                            android:text="@string/selectionner_un_producteur"
 
                             android:textStyle="bold" />
 
@@ -370,7 +370,7 @@
                         android:textAllCaps="true"
                         android:gravity="center_horizontal"
                         android:textSize="@dimen/_10sdp"
-                        android:text="LISTE DES ARBRES EVALUÉS AUPRES DES PRODUCTEURS"
+                        android:text="@string/liste_des_arbres_evalu_s_aupres_des_producteurs"
                         android:textStyle="bold" />
 
                     <Space
@@ -409,7 +409,7 @@
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
-                    android:text="ANNULER"
+                    android:text="@string/annuler"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
@@ -425,7 +425,7 @@
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
-                    android:text="VÉRIFIER"
+                    android:text="@string/v_rifier"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />

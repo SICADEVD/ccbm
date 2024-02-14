@@ -46,6 +46,8 @@ import kotlinx.android.synthetic.main.activity_calcul_estimation.selectCampagneE
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectLocaliteEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectParcelleEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectProducteurEstimation
+import kotlinx.android.synthetic.main.activity_calcul_estimation.selectSectionEstimation
+import kotlinx.android.synthetic.main.activity_formation.selectSectionFormation
 import org.joda.time.DateTime
 import java.util.Calendar
 
@@ -70,6 +72,8 @@ class CalculEstimationActivity : AppCompatActivity() {
     var parcelleId = ""
     var parcelleSuperficie = ""
 
+    val sectionCommon = CommonData()
+
     var piedA1 = ""
     var piedA2 = ""
     var piedA3 = ""
@@ -92,7 +96,7 @@ class CalculEstimationActivity : AppCompatActivity() {
         val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList!!)
         selectCampagneEstimation!!.adapter = campagneAdapter
 
-        selectCampagneEstimation.setTitle("Choisir la campagne")
+        selectCampagneEstimation.setTitle(getString(R.string.choisir_la_campagne))
         selectCampagneEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val campagne = campagnesList!![position]
@@ -112,22 +116,22 @@ class CalculEstimationActivity : AppCompatActivity() {
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
 
-        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList!!)
+        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { it.codeParc }?.toList()?: arrayListOf())
         selectParcelleEstimation!!.adapter = parcellesAdapter
 
-        selectParcelleEstimation.setTitle("Choisir la parcelle")
+        selectParcelleEstimation.setTitle(getString(R.string.choisir_la_parcelle))
         selectParcelleEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val parcelle = parcellesList!![position]
 
-                parcelleNom = "${parcelle.culture?:Constants.VIDE} (${parcelle.anneeCreation?:Constants.VIDE})"
-                parcelleSuperficie = parcelle.superficie ?: "0"
+                parcelleNom = "${parcelle.codeParc?:Constants.VIDE}"
+                parcelleSuperficie = parcelle.superficie ?: "0.0"
                 editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
 
                 parcelleId = if (parcelle.isSynced) {
                     parcelle.id.toString()
                 } else {
-                    parcelle.id.toString()
+                    parcelle.uid.toString()
                 }
             }
 
@@ -138,16 +142,53 @@ class CalculEstimationActivity : AppCompatActivity() {
     }
 
 
-    fun setupLocaliteSelection() {
-        localitesList = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionList = sectionDao?.getAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        var libItem: String? = null
+        currVal?.let { idc ->
+            sectionList?.forEach {
+                if(it.id == idc.toInt()) libItem = it.libelle
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            getString(R.string.choix_de_la_section),
+            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            isEmpty = if (sectionList?.size!! > 0) false else true,
+            currentVal = libItem ,
+            spinner = selectSectionEstimation,
+            listIem = sectionList?.map { it.libelle }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                val section = sectionList!![it]
+                //ogUtils.d(section)
+                sectionCommon.nom = section.libelle!!
+                sectionCommon.id = section.id!!
+
+                setupLocaliteSelection(sectionCommon.id!!)
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
+    }
+
+    fun setupLocaliteSelection(id: Int) {
+        localitesList = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()?.getLocaliteBySection(id)
 
         if (localitesList?.size == 0) {
             Commons.showMessage(
-                "La liste des localités est vide ! Refaite une mise à jour.",
+                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -162,7 +203,7 @@ class CalculEstimationActivity : AppCompatActivity() {
         val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
         selectLocaliteEstimation!!.adapter = localiteAdapter
 
-        selectLocaliteEstimation.setTitle("Choisir la localite")
+        selectLocaliteEstimation.setTitle(getString(R.string.choisir_la_localite))
         selectLocaliteEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val locality = localitesList!![position]
@@ -205,7 +246,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             )
         }
 
-        selectProducteurEstimation.setTitle("Choisir le producteur")
+        selectProducteurEstimation.setTitle(getString(R.string.choisir_le_producteur))
         selectProducteurEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val producteur = producteursList!![position]
@@ -242,7 +283,7 @@ class CalculEstimationActivity : AppCompatActivity() {
 
 
     fun setAll() {
-        setupLocaliteSelection()
+        setupSectionSelection()
         setupCampagneSelection()
     }
 
@@ -293,7 +334,7 @@ class CalculEstimationActivity : AppCompatActivity() {
         val estimationModelDraft = getEstimationObjet()
 
         Commons.showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -307,19 +348,19 @@ class CalculEstimationActivity : AppCompatActivity() {
                 )
 
                 Commons.showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )

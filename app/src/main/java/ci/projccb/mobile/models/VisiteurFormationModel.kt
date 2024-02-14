@@ -70,4 +70,18 @@ interface VisiteurFormationDao {
     @Query("DELETE FROM visiteur_formation WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: Int?)
 
+
+    @Transaction
+    @Query("DELETE FROM visiteur_formation WHERE uid = :uid")
+    fun deleteByUid(uid: Int)
+
+    @Transaction
+    @Query("SELECT * FROM visiteur_formation WHERE (isSynced = 0 AND producteurId = :producteurUid)")
+    fun getUnSyncedByProdAndFormUid(producteurUid: String?): MutableList<VisiteurFormationModel>
+
+    @Transaction
+    @Query("SELECT * FROM visiteur_formation WHERE (isSynced = 0 AND formationId = :formationID)")
+    fun getUnSyncedByFormUid(formationID: String?): MutableList<VisiteurFormationModel>
+
+
 }

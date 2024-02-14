@@ -30,4 +30,8 @@ interface LivraisonDao {
     @Transaction
     @Query("DELETE FROM livraison WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("SELECT * FROM livraison WHERE (isSynced = 0 AND producteursId = :producteurUid)")
+    fun getUnSyncedByProdUid(producteurUid: String?): MutableList<LivraisonModel>
 }

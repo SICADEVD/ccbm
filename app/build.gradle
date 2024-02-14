@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "ci.projccb.mobile"
         minSdkVersion 21
-        versionCode 25
+        versionCode 29
         versionName "CCB-v1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
