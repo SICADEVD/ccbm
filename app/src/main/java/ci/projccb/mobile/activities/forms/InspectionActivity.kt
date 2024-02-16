@@ -155,7 +155,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         var libItem: String? = null
         currVal2?.let { idc ->
             producteursList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                if(it.id == 0){
+                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                } else {
+                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                }
             }
         }
 

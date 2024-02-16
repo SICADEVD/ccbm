@@ -178,7 +178,11 @@ class VisiteurFormationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal2?.let { idc ->
             producteursList?.forEach {
-                if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                if(it.id == 0){
+                    if(it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                }else{
+                    if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                }
             }
         }
 
@@ -231,7 +235,12 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val formation = formationList!![it]
                 //ogUtils.d(section)
                 formationCommon.nom = getString(R.string.formation)+"${formation.id}"
-                formationCommon.id = formation.id!!
+
+                if(formation.isSynced){
+                    formationCommon.id = formation.id!!
+                }else{
+                    formationCommon.id = formation.uid
+                }
 
             },
             onSelected = { itemId, visibility ->

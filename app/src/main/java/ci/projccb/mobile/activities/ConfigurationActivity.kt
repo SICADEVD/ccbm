@@ -849,6 +849,8 @@ class ConfigurationActivity : AppCompatActivity() {
                         val data = LivraisonVerMagCentralModel(
                             id = data.id,
                             section = data.section,
+                            parcelle = data.parcelle,
+                            producteur = data.producteur,
                             magasinier = data.magasinier,
                             magasinSection = data.magasinSection,
                             codeMagasinSection = data.codeMagasinSection,
@@ -860,6 +862,8 @@ class ConfigurationActivity : AppCompatActivity() {
                             nom = data.nom,
                             prenoms = data.prenoms,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                            isSynced = true,
+                            origin = "remote",
                             uid = 0
                         )
 
@@ -948,6 +952,8 @@ class ConfigurationActivity : AppCompatActivity() {
                     dataList?.map {
                         val formModel = FormationModel(
                             id = it.id,
+                            isSynced = true,
+                            origin = "remote",
                             uid = 0,
                             localitesId = it.localitesId,
                             lieuFormation = it.lieuFormation,

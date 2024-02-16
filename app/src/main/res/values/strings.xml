@@ -8,11 +8,11 @@
     </string-array>
 
     <string-array name="lieuDeFormation">
-        <item>Dans le menage</item>
-        <item>Place publique</item>
-        <item>Champs ecole</item>
-        <item>En salle</item>
-        <item>Autre</item>
+        <item>Dans le ménage</item>
+        <item>Place Publique</item>
+        <item>Champs Ecole</item>
+<!--        <item>En salle</item>-->
+<!--        <item>Autre</item>-->
     </string-array>
 
     <string-array name="nomScienArbreConseille">
@@ -253,8 +253,8 @@
     </string-array>
 
     <string-array name="type_formation">
-        <item>Ciblé</item>
-        <item>Groupé</item>
+        <item>Cible</item>
+        <item>Groupe</item>
     </string-array>
 
     <string-array name="InsectQuantifie">
@@ -483,12 +483,12 @@
 
 
     <string-array name="IntrantDesigne">
-        <item>Déchets Animal</item>
+        <item>Dechets animaux</item>
         <item>NPK</item>
         <item>Compost</item>
         <item>Biofertilisant/Bio stimulant</item>
         <item>Engrais organique préfabriqué</item>
-        <item>Engrais foliaire</item>
+<!--        <item>Engrais foliaire</item>-->
     </string-array>
 
     <string-array name="maternelleLevel">
@@ -536,14 +536,14 @@
 
     <string-array name="parentAffiliation">
         <item>Conjoint</item>
-        <item>Fils/Fille</item>
         <item>Neveu/Niece</item>
-        <item>Frere/Soeur</item>
-        <item>Cousin/Cousine</item>
-        <item>Protege</item>
-        <item>Tuteur/Tutrice</item>
+        <item>Fils/Fille</item>
         <item>Oncle/Tante</item>
+        <item>Frere/Soeur</item>
         <item>Autre</item>
+<!--        <item>Cousin/Cousine</item>-->
+<!--        <item>Protege</item>-->
+<!--        <item>Tuteur/Tutrice</item>-->
     </string-array>
 
     <string-array name="IntrantList">

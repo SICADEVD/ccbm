@@ -22,6 +22,8 @@ data class LivraisonVerMagCentralModel(
     @Expose @PrimaryKey(autoGenerate = true) var uid: Int,
     @Expose val id: Int? = 0,
     @Expose val section: String? = null,
+    @Expose val parcelle: String? = null,
+    @Expose val producteur: String? = null,
     @Expose val magasinier: String? = null,
     @Expose val magasinSection: String? = null,
     @Expose val codeMagasinSection: String? = null,

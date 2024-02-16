@@ -317,7 +317,9 @@ class LivraisonActivity : AppCompatActivity() {
         producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = pLocaliteId)
         val producteursDatas: MutableList<CommonData> = mutableListOf()
         producteursList?.map {
-            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
+            if(it.isSynced){
+                CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
+            }else CommonData(id = it.uid, nom = "${it.nom} ${it.prenoms}")
         }?.let {
             producteursDatas.addAll(it)
         }
@@ -513,7 +515,11 @@ class LivraisonActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal2?.let { idc ->
             producteursList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                if(it.id == 0){
+                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                } else {
+                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                }
             }
         }
 

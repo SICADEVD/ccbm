@@ -281,13 +281,14 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                             formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
                                 if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
                                     if( producteurDao.getProducteurByID(producteur.uid) == null ) {
-                                        formMod.producteursIdList = formMod.producteursIdList?.map {
+                                        formMod.producteursIdStr = formMod.producteursIdStr?.let {
 
                                             var curValue = it
-                                            if (curValue == producteur.uid.toString()) curValue = producteurSynced.id.toString()
+                                            if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
+                                            LogUtils.d(curValue)
                                             curValue
 
-                                        } as MutableList<String>?
+                                        }
 
                                     }
                                 }
@@ -968,12 +969,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
 
 
-            syncVisiteurFormation(visiteurFormationDao!!)
-
-            if (Build.VERSION.SDK_INT >= 26) {
-                stopForeground(true)
-                notificationManager?.cancel(1)
-            }
+            syncEvaluationBesoin(evaluationArbreDao!!)
 
 
         } catch (uhex: UnknownHostException) {
@@ -1002,7 +998,14 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     quantiteList = livraisonList.map { "${it.quantite}" }.toMutableList()
                     certificatList  = livraisonList.map { "${it.certificat}" }.toMutableList()
                     typeproduitList = livraisonList.map { "${it.typeproduit}" }.toMutableList()
-                    typeList = GsonUtils.fromJson<MutableList<String>>(typeStr, object : TypeToken<MutableList<String>>(){}.type)
+                    typeList = arrayListOf()
+                    GsonUtils.fromJson<MutableList<String>>(typeStr, object : TypeToken<MutableList<String>>(){}.type).map {
+                        it.split(",").forEach {
+                            if(it != null && it != "null"){
+                                (typeList as ArrayList<String>).add(it.trim())
+                            }
+                        }
+                    }
 
                     poidsnet = livraisonList.sumBy { it?.quantite?.toInt()?:0 }.toString()
 

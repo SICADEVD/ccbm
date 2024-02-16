@@ -1067,7 +1067,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal2?.let { idc ->
             producteursList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                if(it.id == 0){
+                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                } else {
+                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                }
             }
         }
 
@@ -1107,7 +1111,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
+                if(it.isSynced){
+                    if (it.id == idc.toInt()) libItem = "${it.codeParc}"
+                }else{
+                    if (it.uid == idc.toLong()) libItem = "${it.codeParc}"
+                }
             }
         }
 
@@ -1124,7 +1132,12 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 parcellesList?.let { list ->
                     var parcelle = list.get(it)
                     parcelleCommon.nom = "${parcelle.codeParc}"
-                    parcelleCommon.id = parcelle.id!!
+
+                    if(parcelle.isSynced){
+                        parcelleCommon.id = parcelle.id!!
+                    }else{
+                        parcelleCommon.id = parcelle.uid.toString().toInt()
+                    }
 
                     //setupParcelleSelection(parcelleCommon.id, currVal3)
                 }

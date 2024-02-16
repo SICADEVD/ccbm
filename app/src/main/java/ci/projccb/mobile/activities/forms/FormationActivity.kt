@@ -426,7 +426,8 @@ class FormationActivity : AppCompatActivity() {
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    val producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { CommonData(it.id, "${it.nom} ${it.prenoms}") }!!
+                    var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
+
                     Commons.setupItemMultiSelection(this, selectProducteurFormation,
                         getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
                         producteurList

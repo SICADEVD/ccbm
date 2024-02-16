@@ -407,44 +407,48 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
 
 
-    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
-        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
-            ?.getProducteursByLocalite(localite = id.toString())
-
-        var libItem: String? = null
-        currVal2?.let { idc ->
-            producteursList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
-            }
-        }
-
-        Commons.setListenerForSpinner(this,
-            getString(R.string.choix_du_producteur),
-            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if (producteursList?.size!! > 0) false else true,
-            currentVal = libItem,
-            spinner = selectProducLivraisonCentral,
-            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
-                ?.toList() ?: listOf(),
-            onChanged = {
-
-                producteursList?.let { list ->
-                    var producteur = list.get(it)
-                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    if(producteur.isSynced == true){
-                        producteurCommon.id = producteur.id!!
-                    }else producteurCommon.id = producteur.uid
-
-                    setupParcelleSelection(producteurCommon.id.toString(), currVal3)
-                }
-
-
-            },
-            onSelected = { itemId, visibility ->
-
-            })
-
-    }
+//    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
+//        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+//            ?.getProducteursByLocalite(localite = id.toString())
+//
+//        var libItem: String? = null
+//        currVal2?.let { idc ->
+//            producteursList?.forEach {
+//                if(it.id == 0){
+//                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                } else {
+//                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                }
+//            }
+//        }
+//
+//        Commons.setListenerForSpinner(this,
+//            getString(R.string.choix_du_producteur),
+//            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+//            isEmpty = if (producteursList?.size!! > 0) false else true,
+//            currentVal = libItem,
+//            spinner = selectProducLivraisonCentral,
+//            listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//                producteursList?.let { list ->
+//                    var producteur = list.get(it)
+//                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+//                    if(producteur.isSynced == true){
+//                        producteurCommon.id = producteur.id!!
+//                    }else producteurCommon.id = producteur.uid
+//
+//                    //setupParcelleSelection(producteurCommon.id.toString(), currVal3)
+//                }
+//
+//
+//            },
+//            onSelected = { itemId, visibility ->
+//
+//            })
+//
+//    }
 
     fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
         var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
@@ -531,7 +535,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral,
             getString(R.string.d_signez_le_type_de_produit), resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
-            typeCommon.nom = it.toModifString()
+            typeCommon.nom = it.toModifString(false)
             livraisonVerMagCentralModelList.clear()
             it.forEach {produit ->
                 LogUtils.d(produit, magasinSectionCommon.nom)
@@ -550,7 +554,11 @@ class LivraisonCentralActivity : AppCompatActivity() {
 //        var libItem: String? = null
 //        currVal2?.let { idc ->
 //            producteursList?.forEach {
-//                if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                if(it.id == 0){
+//                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                } else {
+//                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                }
 //            }
 //        }
 
@@ -564,13 +572,15 @@ class LivraisonCentralActivity : AppCompatActivity() {
             onChanged = {
 
                 livraisonVerMagCentralModelList?.let { list ->
-                    var producteur = list.get(it)
-                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!} - ${producteur.typeProduit}"
-                    if(producteur.isSynced == true){
-                        producteurCommon.id = producteur.id!!
-                    }else producteurCommon.id = producteur.uid
+                    var producteurlivraisonVerMagCentral = list.get(it)
+                    producteurCommon.nom = "${producteurlivraisonVerMagCentral.nom!!} ${producteurlivraisonVerMagCentral.prenoms!!} - ${producteurlivraisonVerMagCentral.typeProduit}"
+                    //if(producteur.isSynced == true){
+                    producteurCommon.id = producteurlivraisonVerMagCentral.producteur?.toInt()
+                    //}else producteurCommon.id = producteur.uid
 
-                    setupProducteurView(producteur)
+                    parcelleCommon.id = producteurlivraisonVerMagCentral.parcelle.toString().toInt()
+
+                    setupProducteurView(producteurlivraisonVerMagCentral)
                 }
 
 
@@ -584,10 +594,10 @@ class LivraisonCentralActivity : AppCompatActivity() {
     private fun setupProducteurView(producteur: LivraisonVerMagCentralModel) {
 
         if(producteur.typeProduit != "Ordinaire") {
-            containerCertificat.visibility = View.GONE
+            containerCertificat.visibility = View.VISIBLE
             editCertificatLivraisonCentral.setText(producteur.certificat ?: "")
         }else{
-            containerCertificat.visibility = View.VISIBLE
+            containerCertificat.visibility = View.GONE
         }
         editTypProduitLivraisonCentral.setText(producteur.typeProduit?:"")
         var qteEnStock = if(producteur.quantiteMagasinSection?.toInt()?:0 > 0) producteur.quantiteMagasinSection?.toInt()  else 0
@@ -669,6 +679,11 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 senderMagasin = magasinSectionCommon.id.toString()
                 magasinCentral = magasinCentralCommon.id.toString()
+
+                entreprise_id = entrepriseCommon.id.toString()
+                sender_vehicule = vehiculeCommon.id.toString()
+                sender_remorque = remorqueCommon.id.toString()
+                sender_transporteur = transporteurCommon.id.toString()
 
                 itemsStringify = GsonUtils.toJson(livraisonCentralSousModelList)
             }
@@ -830,6 +845,11 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 senderMagasin = magasinSectionCommon.id.toString()
                 magasinCentral = magasinCentralCommon.id.toString()
 
+                entreprise_id = entrepriseCommon.id.toString()
+                sender_vehicule = vehiculeCommon.id.toString()
+                sender_remorque = remorqueCommon.id.toString()
+                sender_transporteur = transporteurCommon.id.toString()
+
                 itemsStringify = GsonUtils.toJson(livraisonCentralSousModelList)
             }
         }
@@ -843,7 +863,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
                     DataDraftedModel(
                         uid = draftModel?.uid ?: 0,
                         datas = ApiClient.gson.toJson(livraisonCentralModelDraft),
-                        typeDraft = "livraison_central",
+                        typeDraft = "suivi_livraison_central",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
                 )
@@ -924,7 +944,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             })
 
         Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit !", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
-            typeCommon.nom = it.toModifString()
+            typeCommon.nom = it.toModifString(false)
 
             livraisonVerMagCentralModelList.clear()
             it.forEach {produit ->

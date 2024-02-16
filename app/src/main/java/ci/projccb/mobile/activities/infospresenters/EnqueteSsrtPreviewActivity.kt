@@ -142,7 +142,7 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
                             if(it.key.isNullOrEmpty()==false){
                                 Commons.addItemsToList(
                                     if(it.key=="null") "Autre" else it.key,
-                                    it.value,
+                                    it.value.replace(", ", "\n"),
                                     producteurItemsListPrev
                                 )
                             }
