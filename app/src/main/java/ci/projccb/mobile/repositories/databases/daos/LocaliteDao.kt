@@ -42,4 +42,9 @@ interface LocaliteDao {
     @Transaction
     @Query("DELETE FROM localite WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM localite")
+    fun deleteAll()
+
 }

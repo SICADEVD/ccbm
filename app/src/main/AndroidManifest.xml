@@ -37,6 +37,9 @@
             android:name=".activities.infospresenters.DistributionArbrePreviewActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.infospresenters.EvaluationPostPlantPreviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.infospresenters.VisiteurFormationPreviewActivity"
             android:exported="false" />
         <activity
@@ -53,6 +56,9 @@
             android:exported="false" />
         <activity
             android:name=".activities.forms.DistributionArbreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.forms.PostPlantingEvalActivity"
             android:exported="false" />
         <activity
             android:name=".activities.cartographies.FarmDelimiterActivity"

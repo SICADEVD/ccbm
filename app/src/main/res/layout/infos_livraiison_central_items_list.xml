@@ -21,20 +21,20 @@
             android:weightSum="4">
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_title_dim11"
                 android:text="Producteur" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_title_dim11"
                 android:text="Type produit" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -43,7 +43,7 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_title_dim11"
                 android:text="Certificat" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -52,7 +52,7 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_title_dim11"
                 android:text="Quantité" />
 
         </LinearLayout>
@@ -63,38 +63,35 @@ android:textColor="@color/text_color_white"
             android:weightSum="4">
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:id="@+id/labelLivraisModProducteurItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:textStyle="bold"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_content_dim13"
                 tools:text="HEVEA" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:id="@+id/labelLivraisModTypeItem"
                 android:layout_width="0dp"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:textStyle="bold"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_content_dim13"
                 tools:text="HEVEA" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:id="@+id/labelLivraisModCertifItem"
                 android:layout_width="0dp"
                 android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-
                 android:textStyle="bold"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_content_dim13"
                 tools:text="HEVEA" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -104,9 +101,8 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-
                 android:textStyle="bold"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/page_input_content_dim13"
                 tools:text="1 024" />
 
         </LinearLayout>

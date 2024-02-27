@@ -200,7 +200,7 @@ class LivraisonActivity : AppCompatActivity() {
         parcelleDao = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
         parcellesList = parcelleDao?.getParcellesProducteur(producteurId = producteurId, agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList!!)
+        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }!!)
         selectParcelleLivraison!!.adapter = parcellesAdapter
 
         selectParcelleLivraison.setTitle("Choisir la parcelle")
@@ -208,7 +208,7 @@ class LivraisonActivity : AppCompatActivity() {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val parcelle = parcellesList!![position]
 
-                parcelleNom = "${parcelle.culture?:Constants.VIDE} (${parcelle.anneeCreation?:Constants.VIDE})"
+                parcelleNom = Commons.getParcelleNotSyncLibel(parcelle).toString()
                 parcelleSuperficie = parcelle.superficie!!
 
                 if (parcelle.isSynced) {
@@ -559,7 +559,7 @@ class LivraisonActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {
-                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
+                if (it.id == idc.toInt()) libItem = Commons.getParcelleNotSyncLibel(it)
             }
         }
 
@@ -773,7 +773,7 @@ class LivraisonActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
@@ -781,7 +781,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
                 break

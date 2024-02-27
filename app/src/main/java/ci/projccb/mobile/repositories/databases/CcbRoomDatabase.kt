@@ -19,7 +19,7 @@ import ci.projccb.mobile.tools.ListConverters
  */
 
 @Database(
-    version = 7, exportSchema = false,
+    version = 9, exportSchema = false,
     entities = [
         AgentModel::class,
         EauUseeModel::class,
@@ -83,6 +83,8 @@ import ci.projccb.mobile.tools.ListConverters
         LivraisonCentralModel::class,
         LivraisonVerMagCentralModel::class,
         ApprovisionnementModel::class,
+        PostPlantingModel::class,
+        PostPlantingArbrDistribModel::class,
     ],
 )
 @TypeConverters(ListConverters::class)
@@ -150,6 +152,8 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun livraisonCentralDao(): LivraisonCentralDao
     abstract fun livraisonVerMagCentralDao(): LivraisonVerMagCentralDao
     abstract fun approvisionnementDao(): ApprovisionnementDao
+    abstract fun postplantingDao(): PostplantingDao
+    abstract fun postPlantingArbrDistribDao(): PostPlantingArbrDistribDao
 
 
     companion object {

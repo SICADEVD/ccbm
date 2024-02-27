@@ -42,6 +42,9 @@ interface ParcelleDao {
     @Transaction
     @Query("DELETE FROM parcelle WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+    @Transaction
+    @Query("DELETE FROM parcelle")
+    fun deleteAll()
 
     @Transaction
     @Query("DELETE FROM parcelle WHERE uid = :uid")
@@ -50,4 +53,5 @@ interface ParcelleDao {
     @Transaction
     @Query("SELECT * FROM parcelle WHERE (isSynced = 0 AND producteurId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<ParcelleModel>
+
 }

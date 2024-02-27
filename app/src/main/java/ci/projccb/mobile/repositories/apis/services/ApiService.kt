@@ -39,6 +39,9 @@ interface ApiService {
     @POST("apidistribution")
     fun synchronisationDistributionArbre(@Body distributionArbreModel: DistributionArbreModel): Call<DistributionArbreModel>
 
+    @POST("postplanting")
+    fun synchronisationPostPlanting(@Body postPlantingModel: PostPlantingModel): Call<PostPlantingModel>
+
     @POST("apiagroevaluation")
     fun synchronisationEvaluationBesoin(@Body evaluationArbreModel: EvaluationArbreModel): Call<EvaluationArbreModel>
 
@@ -142,7 +145,7 @@ interface ApiService {
     fun getArbreList(): Call<MutableList<ArbreModel>>
 
     @POST("getbesoinprod")
-    fun getProductEvalList(): Call<QuantiteArbrDistribuer>
+    fun getProductEvalList(@Body commonData: CommonData): Call<QuantiteArbrDistribuer>
 
     @POST("gettransporteurs")
     fun getTransporteurList(): Call<MutableList<TransporteurModel>>
@@ -155,5 +158,8 @@ interface ApiService {
 
     @POST("livraisonbroussebymagasinsection")
     fun getLivraisonVerMagCentralList(): Call<MutableList<LivraisonVerMagCentralModel>>
+
+    @POST("getproducteursdistribues")
+    fun getProducteursPostPlantingArbrDistribList(@Body commonData: CommonData): Call<MutableList<PostPlantingArbrDistribSecModel>>
 
 }

@@ -4,98 +4,85 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
-import ci.projccb.mobile.activities.forms.SuiviApplicationActivity
+import ci.projccb.mobile.activities.forms.DistributionArbreActivity
+import ci.projccb.mobile.activities.forms.FormationActivity
+import ci.projccb.mobile.activities.forms.PostPlantingEvalActivity
 import ci.projccb.mobile.adapters.PreviewItemAdapter
-import ci.projccb.mobile.models.SuiviApplicationModel
+import ci.projccb.mobile.models.DistributionArbreModel
+import ci.projccb.mobile.models.PostPlantingModel
+import ci.projccb.mobile.models.VisiteurFormationModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.ListConverters
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_suivi_application_preview.*
+import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_distribution_arbre_preview.*
+
+import kotlinx.android.synthetic.main.activity_producteur_preview.imageProfileProdPreview
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class SuiviApplicationPreviewActivity : AppCompatActivity() {
+class EvaluationPostPlantPreviewActivity : AppCompatActivity() {
 
 
+    var postPlantingDatas: PostPlantingModel? = null
     val draftDao = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
-
-    suspend fun loadFileToBitmap(pPath: String?, viewTarget: AppCompatImageView) {
-        try {
-            if (pPath?.isEmpty()!!) return
-
-            val imgFile = File(pPath)
-            LogUtils.d(pPath)
-
-            if (imgFile.exists()) {
-                val options = BitmapFactory.Options()
-                options.inSampleSize = 8
-                val myBitmap = BitmapFactory.decodeFile(imgFile.absolutePath, options)
-
-                MainScope().launch {
-                    viewTarget.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 80, 80, false))
-                }
-            }
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suivi_application_preview)
+        setContentView(R.layout.activity_post_planting_preview)
+
+        clickCloseBtn.setOnClickListener { finish() }
 
         intent?.let {
             try {
-                val suiviApplication: SuiviApplicationModel? = it.getParcelableExtra("preview")
-                draftID = it.getIntExtra("draft_id", 0)
+                val infoItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
+                val infoItemListData = it.getParcelableArrayListExtra<MapEntry>("previewitem")
 
-
-                val suiviParcelleItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
-                val suiviParcelleItemListData = it.getParcelableArrayListExtra<MapEntry>("previewitem")
-
-                suiviParcelleItemListData?.forEach {
+                infoItemListData?.forEach {
                     if(it.key.isNullOrEmpty()==false){
                         Commons.addItemsToList(
                             if(it.key=="null") "Autre" else it.key,
                             it.value.replace(", ", "\n"),
-                            suiviParcelleItemsListPrev
+                            infoItemsListPrev
                         )
                     }
                 }
+                //LogUtils.json(infosProducteur)
+                //                LogUtils.d(producteurItemsListPrev)
 
-                val rvPrevAdapter = PreviewItemAdapter(suiviParcelleItemsListPrev)
+                val rvPrevAdapter = PreviewItemAdapter(infoItemsListPrev)
                 recyclerInfoPrev.adapter = rvPrevAdapter
                 recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+                postPlantingDatas = it.getParcelableExtra("preview")
+                draftID = it.getIntExtra("draft_id", 0)
 
-                clickCloseBtn.setOnClickListener {
-                    finish()
-                }
+                //LogUtils.d(Commons.TAG, GsonUtils.toJson(postPlantingDatas))
 
-                clickSaveSApplicPreview.setOnClickListener {
+                clickSaveDistributionArbrePreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,
                         showNo = true,
                         callback = {
-                            CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.insert(suiviApplication!!)
+                            CcbRoomDatabase.getDatabase(this)?.postplantingDao()
+                                ?.insert(postPlantingDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "application", this)
+                            Commons.synchronisation(type = "postplanting", this)
                             Commons.showMessage(
-                                "Suivi d'application effectué avec succes !",
+                                "Evaluation post-planting enregistrée !",
                                 this,
                                 finished = true,
                                 callback = {})
@@ -103,7 +90,8 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
                         finished = false
                     )
 
-                    ActivityUtils.finishActivity(SuiviApplicationActivity::class.java)
+
+                    ActivityUtils.finishActivity(PostPlantingEvalActivity::class.java)
                 }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)

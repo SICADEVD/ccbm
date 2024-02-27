@@ -76,6 +76,8 @@ object Constants {
     const val TABLE_SUIVI_PARCELLES             =                   "suivi_parcelle"
     const val TABLE_SUIVI_APPLICATION           =                   "suivi_application"
     const val TABLE_DISTRIBUTION_ARBRE           =                   "distribution_arbre"
+    const val TABLE_POSTPLANTING           =                   "post_planting"
+    const val TABLE_POSTPLANTING_DISTRIB           =                   "post_planting_distrib"
     const val TABLE_EVALUATION_ARBRE           =                   "evaluation_arbre"
     const val TABLE_VISTEUR_FORMATION           =                   "visiteur_formation"
     const val TABLE_ARBRE_LIST           =                   "arbre_list"

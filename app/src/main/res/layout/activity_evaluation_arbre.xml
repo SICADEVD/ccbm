@@ -18,8 +18,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -45,15 +45,15 @@
                 android:layout_height="wrap_content"
                 app:textAllCaps="true"
                 android:text="@string/fiche_evaluation_des_besoins"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -119,7 +119,7 @@
                             android:gravity="center"
                             android:text="@string/informations_sur_la_parcelle"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -146,6 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="@string/selectionner_une_section"
                             android:textStyle="bold" />
 
@@ -185,7 +186,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="@string/selectionner_une_localit"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -224,6 +225,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="@string/selectionner_un_producteur"
                             android:textStyle="bold" />
 
@@ -464,6 +466,7 @@
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:textAllCaps="true"
                                 android:gravity="center_horizontal"
+                                android:textSize="@dimen/page_title_dim14"
                                 android:text="@string/enregistrer_la_liste_des_besoins_en_arbres_du_producteur"
                                 android:textStyle="bold" />
 
@@ -500,6 +503,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/page_input_title_dim11"
                                                     android:text="@string/choix_de_l_arbre"
                                                     android:textStyle="bold" />
 
@@ -535,10 +539,12 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_5sdp"
+                                                    android:textSize="@dimen/page_input_title_dim11"
                                                     android:text="@string/quelle_est_sa_strate"
                                                     android:textStyle="bold" />
 
                                                 <androidx.appcompat.widget.AppCompatSpinner
+                                                    style="@style/SpinnerItemStyle"
                                                     android:id="@+id/selectChoixStateArbrEvalArbre"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="@dimen/_37sdp"
@@ -559,6 +565,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/page_input_title_dim11"
                                                     android:text="@string/qt_souhait_e"
                                                     android:textStyle="bold" />
 
@@ -573,7 +580,7 @@
                                                     android:inputType="number"
                                                     android:paddingStart="@dimen/_10sdp"
                                                     android:paddingEnd="@dimen/_10sdp"
-                                                    android:textSize="@dimen/_13ssp"
+                                                    android:textSize="@dimen/page_input_content_dim13"
                                                     tools:text="Quantité: 12" />
                                             </LinearLayout>
 
@@ -632,6 +639,7 @@
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelEvaluationArbre"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -643,11 +651,13 @@
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveEvaluationArbre"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -659,7 +669,8 @@
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

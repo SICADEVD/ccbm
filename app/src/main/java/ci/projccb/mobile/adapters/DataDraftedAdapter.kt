@@ -95,7 +95,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "formation")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "CALCUL_ESTIMATION" -> {
+            "ESTIMATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_applications)
                 intentUndraftedData = Intent(context, CalculEstimationActivity::class.java)
                 intentUndraftedData.putExtra("from", "estimation")
@@ -104,7 +104,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
             "APPLICATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_applicateurs)
                 intentUndraftedData = Intent(context, SuiviApplicationActivity::class.java)
-                intentUndraftedData.putExtra("from", "suivi_application")
+                intentUndraftedData.putExtra("from", "application")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "LIVRAISON" -> {
@@ -141,6 +141,12 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
                 intentUndraftedData = Intent(context, DistributionArbreActivity::class.java)
                 intentUndraftedData.putExtra("from", "distribution_arbre")
+                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+            }
+            "POSTPLANTING" -> {
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_evaluation_black)
+                intentUndraftedData = Intent(context, PostPlantingEvalActivity::class.java)
+                intentUndraftedData.putExtra("from", "postplanting")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "LIVRAISON_MAGCENTRAL" -> {

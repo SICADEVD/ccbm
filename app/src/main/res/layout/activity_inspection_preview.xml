@@ -16,8 +16,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -36,14 +36,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RECAPITULATIF INSPECTION"
-                
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -84,18 +83,46 @@ android:textColor="@color/text_color_white"
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Campagne :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:layout_weight="2.0"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:textColor="@color/text_color_white"
                     android:id="@+id/labelCampagneInspectionPreview"
                     android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:textSize="@dimen/page_input_content_dim13"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:text="Encadreur"
+                    android:layout_weight="2.0"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:layout_height="wrap_content"
+                    android:text="Inspecteur :"
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:layout_weight="1.5"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:id="@+id/labelEncadrInspectionPreview"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
 
                     android:layout_height="match_parent"
@@ -112,21 +139,20 @@ android:textColor="@color/text_color_white"
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Producteur :"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelProducteurNomInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
-                    
                     android:layout_height="match_parent"
                     android:text="Producteur"
                     android:layout_weight="2.5"/>
@@ -145,15 +171,15 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total conformité (%):"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                    android:textColor="@color/text_color_white"
                     android:id="@+id/labelTauConformInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:text="12"
@@ -173,7 +199,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total question conforme:"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -181,7 +207,7 @@ android:textColor="@color/text_color_white"
                     android:id="@+id/labelNbConformInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:text="12"
@@ -201,7 +227,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total question non conforme:"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -209,7 +235,7 @@ android:textColor="@color/text_color_white"
                     android:id="@+id/labelNbNonConformInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:text="12"
@@ -229,7 +255,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total question non applicable:"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -237,7 +263,7 @@ android:textColor="@color/text_color_white"
                     android:id="@+id/labelNonApplicableInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:text="12"
@@ -257,7 +283,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total question:"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -265,7 +291,7 @@ android:textColor="@color/text_color_white"
                     android:id="@+id/labelTotalInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:text="12"
@@ -285,7 +311,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="La production (an dernier):"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -293,7 +319,7 @@ android:textColor="@color/text_color_white"
                     android:id="@+id/labelNrbProdInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:textStyle="bold"
                     android:layout_height="match_parent"
                     android:text="12"
@@ -322,7 +348,7 @@ android:textColor="@color/text_color_white"
                     android:layout_weight="3"
                     android:gravity="center"
                     android:text="QUESTIONNAIRES"
-                    
+
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold" />
 
@@ -353,7 +379,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Date inspection :"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:layout_weight="1.5"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -361,9 +387,9 @@ android:textColor="@color/text_color_white"
                     android:id="@+id/labelDateInspectionPreview"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/_11ssp"
                     android:textStyle="bold"
-                    
+
                     android:layout_height="match_parent"
                     android:text="00-00-0000"
                     android:layout_weight="2.5"/>
@@ -384,6 +410,7 @@ android:textColor="@color/text_color_white"
         android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
+            android:textSize="@dimen/page_button_text_dim13"
             android:id="@+id/clickCancelInspectionPreview"
             style="@style/OptionsButton_Active"
             android:layout_width="wrap_content"
@@ -396,11 +423,13 @@ android:textColor="@color/text_color_white"
             android:paddingHorizontal="20dp"
             android:textColor="@color/black"
             android:text="@string/annuler"
-            app:cornerRadius="50dp"
+            app:cornerRadius="@dimen/_37sdp"
+            app:iconSize="@dimen/page_icon_other_dim20"
             app:icon="@drawable/ic_cancel_mapping"
             app:iconGravity="start" />
 
         <com.google.android.material.button.MaterialButton
+            android:textSize="@dimen/page_button_text_dim13"
             android:id="@+id/clickSaveInspectionPreview"
             style="@style/OptionsButton_Active"
             android:layout_width="wrap_content"
@@ -413,7 +442,8 @@ android:textColor="@color/text_color_white"
             android:paddingHorizontal="20dp"
             app:iconTint="@color/white_color"
             android:text="ENREGISTRER"
-            app:cornerRadius="50dp"
+            app:cornerRadius="@dimen/_37sdp"
+            app:iconSize="@dimen/page_icon_other_dim20"
             app:icon="@drawable/ic_save_work"
             app:iconGravity="start" />
 

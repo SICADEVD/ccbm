@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.infospresenters.LivraisonPreviewActivity">
+    tools:context=".activities.infospresenters.EvaluationPostPlantPreviewActivity">
 
     <RelativeLayout
         android:background="@color/ccb_gris"
@@ -25,8 +25,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
             android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -36,17 +36,17 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
-            android:textColor="@color/text_color_white"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RECAPITULATIF STOCK MAGASINS SECTION"
-                android:textSize="@dimen/page_title_dim14"
+                android:layout_gravity="center_horizontal"
+                android:text="RECAPITULATIF EVALUATION POST-PLANTING"
+                android:textColor="@color/text_color_white"
+
+                android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
         </LinearLayout>
-
 
     </RelativeLayout>
 
@@ -71,7 +71,7 @@
             android:layout_height="@dimen/_200sdp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerInfoLivraison"
+                android:id="@+id/recyclerInfoPrev"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -86,12 +86,12 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="2">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
                     android:textSize="@dimen/page_button_text_dim13"
-                    android:id="@+id/clickSaveLivraisonPreview"
+                    android:id="@+id/clickSaveDistributionArbrePreview"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"

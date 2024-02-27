@@ -431,7 +431,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             getString(R.string.n_de_carte_de_s_curit_sociale).lowercase())
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
@@ -439,7 +439,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
                 break

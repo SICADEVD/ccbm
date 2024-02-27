@@ -15,8 +15,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -48,8 +48,8 @@ android:textColor="@color/text_color_white"
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"

@@ -64,6 +64,6 @@ interface LivraisonVerMagCentralDao {
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
-    @Query("DELETE FROM livraison_ver_mag_central WHERE agentId = :agentID")
-    fun deleteAll(agentID: String?)
+    @Query("DELETE FROM livraison_ver_mag_central")
+    fun deleteAll()
 }

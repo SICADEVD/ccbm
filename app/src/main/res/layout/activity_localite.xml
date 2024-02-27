@@ -18,8 +18,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -45,15 +45,15 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:text="FICHE LOCALITE"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -103,7 +103,7 @@ android:textColor="@color/text_color_white"
                     tools:text="LOCALITE"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:layout_height="@dimen/_37sdp"
@@ -140,6 +140,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectTypeLocalite"
                         android:spinnerMode="dialog"
                         android:layout_width="match_parent"
@@ -176,7 +177,7 @@ android:textColor="@color/text_color_white"
                     tools:text="SOUS_PREFECTURE"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:layout_height="@dimen/_37sdp"
@@ -211,7 +212,7 @@ android:textColor="@color/text_color_white"
                     tools:text="POPULATION ESTIME"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="phone"
                     android:layout_height="@dimen/_37sdp"
@@ -248,6 +249,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectCentreYesNoLocalite"
                         android:spinnerMode="dialog"
                         android:entries="@array/YesOrNo"
@@ -293,7 +295,7 @@ android:textColor="@color/text_color_white"
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/editCentreKmLocalite"
                         android:paddingStart="@dimen/_10sdp"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         android:paddingEnd="@dimen/_10sdp"
                         tools:text="KM CENTRE DE SANTE"
                         android:ellipsize="end"
@@ -335,6 +337,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectCentreSanteNoTypeLocalite"
                         android:spinnerMode="dialog"
                         android:entries="@array/typeCentre"
@@ -373,7 +376,7 @@ android:textColor="@color/text_color_white"
                     tools:text="NOM DE CENTRE DE SANTE"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="textCapCharacters|textNoSuggestions"
                     android:layout_height="@dimen/_37sdp"
@@ -410,6 +413,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectEcoleYesNoLocalite"
                         android:spinnerMode="dialog"
                         android:entries="@array/YesOrNo"
@@ -455,7 +459,7 @@ android:textColor="@color/text_color_white"
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/editNbreEcolesLocalite"
                             android:paddingStart="@dimen/_10sdp"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:paddingEnd="@dimen/_10sdp"
                             tools:text="COMBIEN D'ECOLES"
                             android:ellipsize="end"
@@ -496,7 +500,7 @@ android:textColor="@color/text_color_white"
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:id="@+id/editNomCustomEcoleLocalite"
                                 android:paddingStart="@dimen/_10sdp"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:ellipsize="end"
                                 android:imeOptions="actionDone"
@@ -582,7 +586,7 @@ android:textColor="@color/text_color_white"
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/editEcoleDistanceLocalite"
                             android:paddingStart="@dimen/_10sdp"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:paddingEnd="@dimen/_10sdp"
                             tools:text="COMBIEN KM L'ECOLE"
                             android:ellipsize="end"
@@ -626,7 +630,7 @@ android:textColor="@color/text_color_white"
                         tools:text="NOM ECOLE PRIMAIRE"
                         android:ellipsize="end"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         android:layout_width="0dp"
                         android:inputType="textCapCharacters|textNoSuggestions"
                         android:layout_weight="6.5"
@@ -666,6 +670,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectSourceEauLocalite"
                         android:spinnerMode="dialog"
                         android:layout_width="match_parent"
@@ -714,6 +719,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp"/>
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:id="@+id/selectEtatPompeYesNoLocalite"
                             android:spinnerMode="dialog"
                             android:entries="@array/YesOrNo"
@@ -755,6 +761,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectCieYesNoLocalite"
                         android:spinnerMode="dialog"
                         android:entries="@array/YesOrNo"
@@ -795,6 +802,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectMarketYesNoLocalite"
                         android:spinnerMode="dialog"
                         android:entries="@array/YesOrNo"
@@ -844,6 +852,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp"/>
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:id="@+id/selectMarketDayLocalite"
                             android:spinnerMode="dialog"
                             android:entries="@array/dayMarket"
@@ -892,7 +901,7 @@ android:textColor="@color/text_color_white"
                         tools:text="1000"
                         android:ellipsize="end"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         android:layout_width="0dp"
                         android:inputType="phone"
                         android:layout_weight="6.5"
@@ -932,6 +941,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
                         android:id="@+id/selectDechetYesyNoLocalite"
                         android:spinnerMode="dialog"
                         android:entries="@array/YesOrNo"
@@ -969,7 +979,7 @@ android:textColor="@color/text_color_white"
                     tools:text="LOCALITE"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="phone"
                     android:layout_height="@dimen/_37sdp"
@@ -1004,7 +1014,7 @@ android:textColor="@color/text_color_white"
                     tools:text="LOCALITE"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="phone"
                     android:layout_height="@dimen/_37sdp"
@@ -1039,7 +1049,7 @@ android:textColor="@color/text_color_white"
                     tools:text="LOCALITE"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="match_parent"
                     android:inputType="phone"
                     android:layout_height="@dimen/_37sdp"
@@ -1086,7 +1096,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"/>
+                        android:textSize="@dimen/page_input_content_dim13"/>
 
                 </LinearLayout>
 
@@ -1117,7 +1127,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         android:hint="Longitude"/>
 
                 </LinearLayout>
@@ -1144,6 +1154,7 @@ android:textColor="@color/text_color_white"
                 android:weightSum="2">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelLocalite"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1155,11 +1166,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveLocalite"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1171,7 +1184,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

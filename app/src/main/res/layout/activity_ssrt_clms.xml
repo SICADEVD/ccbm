@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -44,15 +44,15 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:text="FICHE SSTRE-CLMRS"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -159,10 +159,10 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations Personnelles"
+                            android:text="INFORMATIONS PERSONNELLES"
                             android:textColor="@color/text_color_white"
 
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -441,6 +441,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="sexeMembre"
                                 android:id="@+id/selectSexeSsrt"
                                 android:layout_width="match_parent"
@@ -530,6 +531,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="lienParente"
                                 android:spinnerMode="dialog"
                                 android:entries="@array/parentAffiliation"
@@ -628,6 +630,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="frequente"
                                 android:spinnerMode="dialog"
                                 android:entries="@array/YesOrNo"
@@ -674,6 +677,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="niveauEtude"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/schoolLevelFull"
@@ -712,6 +716,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="classe"
                                     android:spinnerMode="dialog"
                                     android:id="@+id/selectClasseLevelSsrt"
@@ -749,6 +754,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="ecoleVillage"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/YesOrNo"
@@ -857,6 +863,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="moyenTransport"
                                     android:spinnerMode="dialog"
                                     android:entries="@array/moyenDeplacement"
@@ -1354,8 +1361,9 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations sur l'enquêteur"
+                            android:textAllCaps="true"
                             android:textColor="@color/text_color_white"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -1629,6 +1637,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelSsrt"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1640,11 +1649,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickReviewEnqueteSsrt"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1656,7 +1667,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

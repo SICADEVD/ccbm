@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -44,15 +44,15 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:text="FICHE INSPECTIONS"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -109,7 +109,8 @@ android:textColor="@color/text_color_white"
                             android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="@string/selectionner_une_section"
                             android:textStyle="bold" />
 
@@ -143,12 +144,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
         
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
+                            android:paddingLeft="@dimen/page_input_title_dim11"
                             android:text="Selectionner la localite"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
         
                         <LinearLayout
@@ -179,12 +180,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
         
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="@string/selectionner_un_producteur"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
         
                         <LinearLayout
@@ -221,12 +222,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
         
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Choix du ou des certificats"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
         
                         <LinearLayout
@@ -239,6 +240,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="certificatStr"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectCertifInspection"
@@ -274,8 +276,8 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:text="Selectionner l'encadreur"
-
+                    android:text="Selectionner l'inspecteur"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -311,7 +313,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="0dp"
                     android:layout_weight="6"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:text="Quel est votre production de l' année précedente ? (Kg)"/>
@@ -326,7 +328,7 @@ android:textColor="@color/text_color_white"
                     android:hint="1000"
                     android:ellipsize="end"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/_13ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="0dp"
                     android:inputType="number"
                     android:layout_weight="4"
@@ -344,12 +346,12 @@ android:textColor="@color/text_color_white"
                     android:weightSum="10">
     
                     <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                        android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3.5"
                         android:text="Date inspection"
-
+                        android:textSize="@dimen/page_input_title_dim11"
                         android:textStyle="bold" />
     
                     <RelativeLayout
@@ -371,7 +373,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp" />
+                            android:textSize="@dimen/page_input_content_dim13" />
     
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/_35sdp"
@@ -399,6 +401,7 @@ android:textColor="@color/text_color_white"
         android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
+            android:textSize="@dimen/page_button_text_dim13"
             android:id="@+id/clickCancelInspection"
             style="@style/OptionsButton_Active"
             android:layout_width="wrap_content"
@@ -411,11 +414,13 @@ android:textColor="@color/text_color_white"
             android:paddingHorizontal="20dp"
             android:textColor="@color/black"
             android:text="@string/annuler"
-            app:cornerRadius="50dp"
+            app:cornerRadius="@dimen/_37sdp"
+            app:iconSize="@dimen/page_icon_other_dim20"
             app:icon="@drawable/baseline_cancel_send_white"
             app:iconGravity="start" />
 
         <com.google.android.material.button.MaterialButton
+            android:textSize="@dimen/page_button_text_dim13"
             android:id="@+id/clickSaveInspection"
             style="@style/OptionsButton_Active"
             android:layout_width="wrap_content"
@@ -428,7 +433,8 @@ android:textColor="@color/text_color_white"
             android:paddingHorizontal="20dp"
             app:iconTint="@color/white_color"
             android:text="@string/v_rifier"
-            app:cornerRadius="50dp"
+            app:cornerRadius="@dimen/_37sdp"
+            app:iconSize="@dimen/page_icon_other_dim20"
             app:icon="@drawable/baseline_schedule_send_prev_white"
             app:iconGravity="start" />
 

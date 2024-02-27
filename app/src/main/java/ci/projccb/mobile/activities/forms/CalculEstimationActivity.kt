@@ -116,7 +116,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
 
-        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { it.codeParc }?.toList()?: arrayListOf())
+        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }?.toList()?: arrayListOf())
         selectParcelleEstimation!!.adapter = parcellesAdapter
 
         selectParcelleEstimation.setTitle(getString(R.string.choisir_la_parcelle))
@@ -124,7 +124,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val parcelle = parcellesList!![position]
 
-                parcelleNom = "${parcelle.codeParc?:Constants.VIDE}"
+                parcelleNom = Commons.getParcelleNotSyncLibel(parcelle).toString()
                 parcelleSuperficie = parcelle.superficie ?: "0.0"
                 editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
 
@@ -259,6 +259,7 @@ class CalculEstimationActivity : AppCompatActivity() {
                 }
 
                 editSuperficieEstimation.text = null
+
                 setupParcellesProducteurSelection(producteurId)
             }
 

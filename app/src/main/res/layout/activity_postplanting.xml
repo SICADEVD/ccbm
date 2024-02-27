@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/layout_DistributionArbre"
+    android:id="@+id/layout_EvalPostPlant"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
-    tools:context=".activities.forms.DistributionArbreActivity">
+    tools:context=".activities.forms.PostPlantingEvalActivity">
 
     <RelativeLayout
         android:background="@color/ccb_gris"
@@ -43,7 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fiche_distribution_des_arbres"
+                android:text="FICHE EVALUATION POST-PLANTING"
                 app:textAllCaps="true"
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -160,7 +160,7 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:tag="section"
-                                android:id="@+id/selectSectionDistributionArbre"
+                                android:id="@+id/selectSectionEvalPostPlant"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -199,7 +199,7 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:tag="localite"
-                                android:id="@+id/selectLocaliteDistributionArbre"
+                                android:id="@+id/selectLocaliteEvalPostPlant"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -239,7 +239,7 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:tag="producteurId"
-                                android:id="@+id/selectProducteurDistributionArbre"
+                                android:id="@+id/selectProducteurEvalPostPlant"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -251,46 +251,6 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <androidx.appcompat.widget.AppCompatTextView-->
-<!--                            android:textColor="@color/text_color_white"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:paddingLeft="@dimen/_12sdp"-->
-<!--                            android:text="Choisir sa parcelle concernée"-->
-
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@drawable/rounded_background">-->
-
-<!--                            <Space-->
-<!--                                android:layout_width="@dimen/_5sdp"-->
-<!--                                android:layout_height="@dimen/_10sdp" />-->
-
-<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
-<!--                                android:tag="parcelle_id"-->
-<!--                                android:id="@+id/selectParcelleDistributionArbre"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="@dimen/_37sdp"-->
-<!--                                android:spinnerMode="dialog" />-->
-
-<!--                        </LinearLayout>-->
-
-<!--                    </LinearLayout>-->
-
-                    <!--                    <Space-->
-                    <!--                        android:layout_width="@dimen/_5sdp"-->
-                    <!--                        android:layout_height="@dimen/_10sdp" />-->
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -313,54 +273,10 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_cardview_with_border_brown"
                     android:orientation="vertical"
-                    android:padding="@dimen/_20sdp">
-
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center_vertical"-->
-<!--                            android:weightSum="10"-->
-<!--                            android:orientation="horizontal">-->
-
-<!--                            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                                android:textColor="@color/text_color_white"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_weight="6"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:paddingLeft="@dimen/_12sdp"-->
-<!--                                android:text="Combien d'arbre avez vous dénombrer ou collecter dans la parcelle / Ha ?"-->
-<!--                                android:textStyle="bold" />-->
-
-<!--                            <Space-->
-<!--                                android:layout_width="@dimen/_8sdp"-->
-<!--                                android:layout_height="wrap_content"/>-->
-
-<!--                            <androidx.appcompat.widget.AppCompatEditText-->
-<!--                                android:tag=""-->
-<!--                                android:id="@+id/editNbrCacaoHecParcelle"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="@dimen/_37sdp"-->
-<!--                                android:layout_weight="4"-->
-<!--                                android:background="@drawable/rounded_background"-->
-<!--                                android:hint="100"-->
-<!--                                android:ellipsize="end"-->
-<!--                                android:imeOptions="actionDone"-->
-<!--                                android:inputType="number"-->
-<!--                                android:paddingStart="@dimen/_10sdp"-->
-<!--                                android:paddingEnd="@dimen/_10sdp"-->
-<!--                                android:textAllCaps="true"-->
-<!--                                android:textSize="@dimen/_13ssp"-->
-<!--                                tools:text="100" />-->
-
-<!--                        </LinearLayout>-->
-
-<!--                    </LinearLayout>-->
-
+                    android:paddingTop="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_20sdp"
+                    android:paddingHorizontal="@dimen/_2sdp"
+                    >
 
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -369,8 +285,8 @@
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/_10sdp"
-                        android:text="@string/liste_des_arbres_evalu_s_aupres_des_producteurs"
+                        android:textSize="@dimen/page_title_dim14"
+                        android:text="LISTE DES ESPECES D'ARBRE"
                         android:textStyle="bold" />
 
                     <Space
@@ -378,15 +294,65 @@
                         android:layout_height="@dimen/_5sdp" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerArbreListDistrArbre"
+                        android:id="@+id/recyclerArbreListEvalPostPlant"
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="3"
-                        tools:listitem="@layout/arbre_distribuee_list" />
+                        tools:listitem="@layout/evaluat_postplant_item_list" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:text="Date d'evaluation"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="date_planting"
+                        android:id="@+id/editDateEvalPostPlant"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_background"
+                        android:editable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:hint="JJ-MM-AAAA"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/page_input_content_dim13" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_date_calendar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
@@ -400,7 +366,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:textSize="@dimen/page_button_text_dim13"
-                    android:id="@+id/clickCancelDistributionArbre"
+                    android:id="@+id/clickCancelEvalPostPlant"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"
@@ -418,7 +384,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:textSize="@dimen/page_button_text_dim13"
-                    android:id="@+id/clickSaveDistributionArbre"
+                    android:id="@+id/clickSaveEvalPostPlanting"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_40sdp"

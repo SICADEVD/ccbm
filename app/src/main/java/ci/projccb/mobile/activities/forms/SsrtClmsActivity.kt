@@ -1084,7 +1084,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
@@ -1092,7 +1092,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
                 break

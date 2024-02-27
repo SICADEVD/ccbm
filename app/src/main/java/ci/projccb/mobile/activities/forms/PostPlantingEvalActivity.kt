@@ -3,26 +3,34 @@ package ci.projccb.mobile.activities.forms
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.DistributionArbrePreviewActivity
+import ci.projccb.mobile.activities.infospresenters.EvaluationPostPlantPreviewActivity
 import ci.projccb.mobile.adapters.DistribArbreAdapter
+import ci.projccb.mobile.adapters.EvaluationPostPlantAdapter
 import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.DistributionArbreDao
 import ci.projccb.mobile.models.DistributionArbreModel
-import ci.projccb.mobile.models.EvaluationArbreModel
-import ci.projccb.mobile.models.ProducteurModel
+import ci.projccb.mobile.models.ListeEspeceArbrePostPlantModel
+import ci.projccb.mobile.models.PostPlantingArbrDistribModel
+import ci.projccb.mobile.models.PostPlantingItem
+import ci.projccb.mobile.models.PostPlantingModel
 import ci.projccb.mobile.models.QuantiteDistribuer
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.calculateTotalHeight
+import ci.projccb.mobile.tools.Commons.Companion.configDate
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
@@ -32,15 +40,11 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistributionArbre
-import kotlinx.android.synthetic.main.activity_distribution_arbre.*
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
-
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
+import kotlinx.android.synthetic.main.activity_postplanting.*
+import kotlinx.android.synthetic.main.activity_postplanting.clickSaveEvalPostPlanting
 import java.util.ArrayList
 
-class DistributionArbreActivity : AppCompatActivity() {
+class PostPlantingEvalActivity : AppCompatActivity() {
     var listArbreAndState: MutableList<ArbreModel>? = mutableListOf()
     val sectionCommon = CommonData();
     val localiteCommon = CommonData();
@@ -51,7 +55,7 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_distribution_arbre)
+        setContentView(R.layout.activity_postplanting)
 
         distributionArbreDao = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
 
@@ -59,11 +63,11 @@ class DistributionArbreActivity : AppCompatActivity() {
             finish()
         }
 
-        clickSaveDistributionArbre.setOnClickListener {
+        clickSaveEvalPostPlanting.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelDistributionArbre.setOnClickListener {
+        clickCancelEvalPostPlant.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
@@ -72,6 +76,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             draftData(draftedDataDistribution ?: DataDraftedModel(uid = 0))
         }
 
+        editDateEvalPostPlant.setOnClickListener { configDate(editDateEvalPostPlant) }
         ///setOtherListenner()
 
         try {
@@ -93,36 +98,29 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     private fun setupRvOtherListenner(
         producteur_id: String,
-        evaluationsList: MutableList<EvaluationArbreModel>?
+        evaluationsList: MutableList<PostPlantingArbrDistribModel>?
     ) {
-        //LogUtils.d(evaluationsList, producteur_id)
-        val getAllElavOfProd = evaluationsList?.filter { it.producteurId == producteur_id }
-        //LogUtils.d(getAllElavOfProd)
 
-        if(getAllElavOfProd?.isEmpty() == false){
+        var listOfItemsPostPlantAdapt: MutableList<ListeEspeceArbrePostPlantModel> = mutableListOf()
+        listArbreAndState = CcbRoomDatabase.getDatabase(applicationContext)?.arbreDao()?.getAll()
+        val getAllElavOfProdPostPlant = evaluationsList?.filter { it.id.toString() == producteur_id }
 
-            val listArbreEvalAndTotaux = mutableMapOf<String, Int>()
-            getAllElavOfProd.map {
-                val keyy : MutableList<String> = GsonUtils.fromJson(it.especesarbreStr, object : TypeToken<MutableList<String>>(){}.type)
-                val valuey : MutableList<String> = GsonUtils.fromJson(it.quantiteStr, object : TypeToken<MutableList<String>>(){}.type)
+        if(getAllElavOfProdPostPlant?.isEmpty() == false){
 
-                keyy.forEachIndexed { index, s ->
-                    listArbreEvalAndTotaux.put(s, valuey[index].toInt())
+            (getAllElavOfProdPostPlant).map {
+                var arbrePostPlant = GsonUtils.fromJson<MutableList<PostPlantingItem>>(it.arbresStr, object : TypeToken<MutableList<PostPlantingItem>>(){}.type)
+                arbrePostPlant.map {item ->
+                    var currArbre = listArbreAndState?.filter { it.id.toString() == item.id_arbre.toString() }
+                    currArbre?.forEach {
+                        listOfItemsPostPlantAdapt.add(ListeEspeceArbrePostPlantModel(it.id, it.nom, item.quantite.toString(), item.quantite.toString(), item.quantite.toString(),""))
+                    }
                 }
             }
-            LogUtils.d(listArbreEvalAndTotaux)
-
-            listArbreAndState = listArbreAndState?.map {
-                listArbreEvalAndTotaux.get(it.id.toString())?.let { value ->
-                    it.limited_count = value.toString()
-                }
-                it
-            }?.filter { it.limited_count.equals("0") == false }?.toMutableList()
 
         }else{
 
             Commons.showMessage(
-                getString(R.string.aucun_besoin_enr_gistr_pour_ce_producteur),
+                getString(R.string.aucune_distribution_post_planting_list_veuillez_faire_une_synchronisation),
                 this,
                 finished = false,
                 callback = {},
@@ -135,11 +133,18 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         }
 
-        recyclerArbreListDistrArbre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerArbreListDistrArbre.adapter = DistribArbreAdapter(listArbreAndState)
-        recyclerArbreListDistrArbre.adapter?.notifyDataSetChanged()
+        recyclerArbreListEvalPostPlant.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerArbreListEvalPostPlant.adapter = EvaluationPostPlantAdapter(listOfItemsPostPlantAdapt)
+        recyclerArbreListEvalPostPlant.adapter?.notifyDataSetChanged()
 
-        fixFullSizeAtRv(recyclerArbreListDistrArbre)
+        var view = LayoutInflater.from(this@PostPlantingEvalActivity).inflate(R.layout.evaluat_postplant_item_list, null, false)
+        val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        val heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.findViewById<RelativeLayout>(R.id.postplant_height).measure(widthMeasureSpec, heightMeasureSpec)
+        val height = view.findViewById<RelativeLayout>(R.id.postplant_height).measuredHeight
+
+        LogUtils.d(view.findViewById<RelativeLayout>(R.id.postplant_height).height, height)
+        fixFullSizeAtRv(recyclerArbreListEvalPostPlant, height+200)
 
     }
 
@@ -149,26 +154,17 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     }
 
-    private fun fixFullSizeAtRv(recyclerArbreListDistrArbre: RecyclerView?) {
+    private fun fixFullSizeAtRv(recyclerArbreListDistrArbre: RecyclerView?, height:Int = 80) {
 
-        val totalHeight = calculateTotalHeight(this, recyclerArbreListDistrArbre!!, 80)
+        //val totalHeight = calculateTotalHeight(this, recyclerArbreListDistrArbre!!, height)
         val params = recyclerArbreListDistrArbre?.layoutParams
-        params?.height = totalHeight
+        params?.height = height
         recyclerArbreListDistrArbre?.layoutParams = params
 
     }
 
     private fun setupSelectionArbreList(listArbreADistri: MutableList<String>, currentVal: String? = null) {
-//        Commons.setListenerForSpinner(this,
-//            "De quel arbre s'agit-il ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = selectChoixDeLArbreDistributionArbre,
-//            listIem = listArbreADistri
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//            })
+
     }
 
     fun getAllRVItemInList(
@@ -177,6 +173,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         mutableListOfNom: MutableList<String>,
         mutableListOfLimit: MutableList<String>,
         mutableListOfQte: MutableList<String>,
+        mutableqteCommentList: MutableList<String>,
     ) {
         val childCount = viewGroup.childCount
 
@@ -188,15 +185,16 @@ class DistributionArbreActivity : AppCompatActivity() {
                 //LogUtils.d("Spinner ${value} "+ childView::class.java.simpleName)
                 when(childView.tag){
                     "arbreId" -> mutableListOfId.add(value)
-                    "arbreNom" -> mutableListOfNom.add(value)
-                    "arbreLimit" -> mutableListOfLimit.add(value)
+                    "arbreQteList" -> mutableListOfNom.add(value)
                 }
             } else if ( childView is AppCompatEditText && childView.tag != null ) {
                 // You've found an EditText with the specified tag, get its value
                 val editText = childView as AppCompatEditText
                 val value = editText.text.toString()
                 when(childView.tag){
-                    "arbreQte" -> mutableListOfQte.add(value)
+                    "qtePlante" -> mutableListOfLimit.add(value)
+                    "qteSurvecue" -> mutableListOfQte.add(value)
+                    "qteComment" -> mutableqteCommentList.add(value)
                 }
                 //countField++
             } else if (childView is ViewGroup) {
@@ -209,6 +207,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                         mutableListOfNom,
                         mutableListOfLimit,
                         mutableListOfQte,
+                        mutableqteCommentList,
                     )
 //                }
             }
@@ -235,7 +234,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             arbre
         }
 
-        (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
+        (recyclerArbreListEvalPostPlant.adapter as DistribArbreAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
 
         //passSetupDistribArbrModel(distributionArbreDraft)
     }
@@ -243,15 +242,15 @@ class DistributionArbreActivity : AppCompatActivity() {
     private fun draftData(dataDraftedModel: DataDraftedModel) {
 
         val idList = mutableListOf<String>()
-        val nomList = mutableListOf<String>()
-        val limitList = mutableListOf<String>()
-        val qteList = mutableListOf<String>()
-        getAllRVItemInList(recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
+        val qteRecuList = mutableListOf<String>()
+        val qtePlanteList = mutableListOf<String>()
+        val qteSurveList = mutableListOf<String>()
+        val qteCommentList = mutableListOf<String>()
+        getAllRVItemInList(recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
-
-        if(qteList.isEmpty()){
+        if(idList.isEmpty()){
 
             Commons.showMessage(
                 getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
@@ -266,54 +265,40 @@ class DistributionArbreActivity : AppCompatActivity() {
             return ;
 
         }
-        //brouad02@gmail.com
 
-        val listApproVi = CcbRoomDatabase.getDatabase(applicationContext)?.approvisionnementDao()?.getApproBySect(sectionCommon.id)
-
-        if(listApproVi?.isEmpty() == true){
-            Commons.showMessage(
-                getString(R.string.aucune_approvisionnement_selectionn_e_faite_une_mise_jour_des_evaluations),
-                this,
-                finished = false,
-                callback = {},
-                positive = getString(R.string.compris),
-                deconnec = false,
-                showNo = false
-            )
-
-            return ;
-        }
-
-
-        val itemModelOb = getDistributArbreObjet(false)
+        val itemModelOb = getEvaluationPostPlantObjet()
 
         if(itemModelOb == null) return
 
-        val mapQteList = idList.map { id ->
-            id to qteList[idList.indexOf(id)]
-        }.toMap().filter { it.value.toInt() > 0 }
+        var qteRecuListObj: MutableMap<String, String> = mutableMapOf()
+        var qtePlanteListObj: MutableMap<String, String> = mutableMapOf()
+        var qteSurvecuListObj: MutableMap<String, String> = mutableMapOf()
+        var commentListObj: MutableMap<String, String> = mutableMapOf()
+        //var idListObj: MutableMap<String, String> = mutableMapOf()
+        val idListObj = idList.map {
+            qteRecuListObj.put(it, qteRecuList[idList.indexOf(it)].toString())
+            qtePlanteListObj.put(it, qtePlanteList[idList.indexOf(it)].toString())
+            qteSurvecuListObj.put(it, qteSurveList[idList.indexOf(it)].toString())
+            commentListObj.put(it, qteCommentList[idList.indexOf(it)].toString())
+        }
+        var totalQt = qteRecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        var qtPlante = qtePlanteListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        var qtSurvec = qteSurvecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        //LogUtils.d( GsonUtils.toJson(quantiteDistribuer.variableKey) )
 
-        val qtelivre = qteList.sumBy { it.toInt() }.toString()
-        val total = limitList.sumBy { it.toInt() }.toString()
-
-        val quantiteDistribuer = QuantiteDistribuer(
-            mapOf(
-                producteurCommon.id.toString() to mapQteList
-            )
-        )
-
-        val suiviDistrArbrDatasDraft = itemModelOb?.first.apply {
+        val itemsDatasDraft = itemModelOb?.first.apply {
             this?.apply {
                 section = sectionCommon.id.toString()
                 this.localite = localiteCommon.id.toString()
                 producteurId = producteurCommon.id.toString()
 
-                quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
-                this.qtelivre = qtelivre
-                listApproVi?.first()?.let {
-                    this.agroapprovisionnementsection = it.id.toString()
-                }
-                this.total = total
+                quantiterecueStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to qteRecuListObj)).variableKey)
+                quantiteStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to qtePlanteListObj)).variableKey)
+                quantitesurvecueeStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to qteSurvecuListObj)).variableKey)
+                commentaireStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to commentListObj)).variableKey)
+                this.total = totalQt.toString()
+                this.qteplante = qtPlante.toString()
+                this.qtesurvecue = qtSurvec.toString()
             }
         }
 
@@ -325,8 +310,8 @@ class DistributionArbreActivity : AppCompatActivity() {
                 CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
                     DataDraftedModel(
                         uid = dataDraftedModel?.uid ?: 0,
-                        datas = ApiClient.gson.toJson(suiviDistrArbrDatasDraft),
-                        typeDraft = "distribution_arbre",
+                        datas = ApiClient.gson.toJson(itemsDatasDraft),
+                        typeDraft = "postplanting",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
                 )
@@ -358,14 +343,15 @@ class DistributionArbreActivity : AppCompatActivity() {
     private fun collectDatas() {
 
         val idList = mutableListOf<String>()
-        val nomList = mutableListOf<String>()
-        val limitList = mutableListOf<String>()
-        val qteList = mutableListOf<String>()
-        getAllRVItemInList(recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
+        val qteRecuList = mutableListOf<String>()
+        val qtePlanteList = mutableListOf<String>()
+        val qteSurveList = mutableListOf<String>()
+        val qteCommentList = mutableListOf<String>()
+        getAllRVItemInList(recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
-        if(qteList.isEmpty()){
+        if(idList.isEmpty()){
 
             Commons.showMessage(
                 getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
@@ -381,38 +367,24 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         }
 
-        val listApproVi = CcbRoomDatabase.getDatabase(applicationContext)?.approvisionnementDao()?.getApproBySect(sectionCommon.id)
-
-        if(listApproVi?.isEmpty() == true){
-            Commons.showMessage(
-                getString(R.string.aucune_approvisionnement_selectionn_e_faite_une_mise_jour_des_evaluations),
-                this,
-                finished = false,
-                callback = {},
-                positive = getString(R.string.compris),
-                deconnec = false,
-                showNo = false
-            )
-
-            return ;
-        }
-
-        val itemModelOb = getDistributArbreObjet()
+        val itemModelOb = getEvaluationPostPlantObjet()
 
         if(itemModelOb == null) return
 
-        val mapQteList = idList.map { id ->
-            id to qteList[idList.indexOf(id)]
-        }.toMap().filter { it.value.toInt() > 0 }
-
-        val qtelivre = qteList.sumBy { it.toInt() }.toString()
-        val total = limitList.sumBy { it.toInt() }.toString()
-
-        val quantiteDistribuer = QuantiteDistribuer(
-            mapOf(
-                producteurCommon.id.toString() to mapQteList
-            )
-        )
+        var qteRecuListObj: MutableMap<String, String> = mutableMapOf()
+        var qtePlanteListObj: MutableMap<String, String> = mutableMapOf()
+        var qteSurvecuListObj: MutableMap<String, String> = mutableMapOf()
+        var commentListObj: MutableMap<String, String> = mutableMapOf()
+        //var idListObj: MutableMap<String, String> = mutableMapOf()
+        val idListObj = idList.map {
+            qteRecuListObj.put(it, qteRecuList[idList.indexOf(it)].toString())
+            qtePlanteListObj.put(it, qtePlanteList[idList.indexOf(it)].toString())
+            qteSurvecuListObj.put(it, qteSurveList[idList.indexOf(it)].toString())
+            commentListObj.put(it, qteCommentList[idList.indexOf(it)].toString())
+        }
+        var totalQt = qteRecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        var qtPlante = qtePlanteListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        var qtSurvec = qteSurvecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
         //LogUtils.d( GsonUtils.toJson(quantiteDistribuer.variableKey) )
 
         val suiviDistrArbrDatas = itemModelOb?.first.apply {
@@ -421,25 +393,27 @@ class DistributionArbreActivity : AppCompatActivity() {
                 this.localite = localiteCommon.id.toString()
                 producteurId = producteurCommon.id.toString()
 
-                quantiteStr = GsonUtils.toJson(quantiteDistribuer.variableKey)
-                this.qtelivre = qtelivre
-                listApproVi?.first()?.let {
-                    this.agroapprovisionnementsection = it.id.toString()
-                }
-                this.total = total
+                quantiterecueStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to qteRecuListObj)).variableKey)
+                quantiteStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to qtePlanteListObj)).variableKey)
+                quantitesurvecueeStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to qteSurvecuListObj)).variableKey)
+                commentaireStr = GsonUtils.toJson(QuantiteDistribuer(mapOf(producteurCommon.id.toString() to commentListObj)).variableKey)
+                this.total = totalQt.toString()
+                this.qteplante = qtPlante.toString()
+                this.qtesurvecue = qtSurvec.toString()
             }
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair(getString(R.string.les_arbres_distribu_s), (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.quantit_distribuer), qtelivre))
-            this.add(Pair(getString(R.string.total_enregistrer), total))
+            this.add(Pair(getString(R.string.liste_des_arbres_valu_s), (recyclerArbreListEvalPostPlant.adapter as EvaluationPostPlantAdapter).getArbreListAdded().map { "Arbre: ${it.nom_arbre}| Qte reçu: ${it.qte_recu}| Qte plantée: ${it.qte_plant}| Qte survécue: ${it.qte_survec}| Commentaire: ${it.commentaire}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.quantit_plant_e), qtPlante.toString()))
+            this.add(Pair(getString(R.string.quantit_surv_cue), qtSurvec.toString()))
+            this.add(Pair(getString(R.string.total_enregistrer), totalQt.toString()))
         }.map { MapEntry(it.first, it.second) }
 
         //Commons.printModelValue(suiviDistrArbrDatas as Object, (mapEntries) )
 
         try {
-            val intentDistribArbrPreview = Intent(this, DistributionArbrePreviewActivity::class.java)
+            val intentDistribArbrPreview = Intent(this, EvaluationPostPlantPreviewActivity::class.java)
             intentDistribArbrPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
             intentDistribArbrPreview.putExtra("preview", suiviDistrArbrDatas)
             intentDistribArbrPreview.putExtra("draft_id", draftedDataDistribution?.uid)
@@ -468,7 +442,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionDistributionArbre,
+            spinner = selectSectionEvalPostPlant,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -504,7 +478,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteDistributionArbre,
+            spinner = selectLocaliteEvalPostPlant,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -529,17 +503,13 @@ class DistributionArbreActivity : AppCompatActivity() {
         var producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
             ?.getProducteursByLocalite(localite = id.toString())
 
-        val evaluationsList = CcbRoomDatabase.getDatabase(applicationContext)?.evaluationArbreDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID))
-        val prodEvaluationsList = evaluationsList?.map { if(it.isSynced) it.producteurId else -1 }?.toMutableList()
-        LogUtils.d(prodEvaluationsList)
+        var postPlantProducteursList = CcbRoomDatabase.getDatabase(applicationContext)?.postPlantingArbrDistribDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        var allListingProd = postPlantProducteursList?.map { "${it.id}" }
 
-        val producteursList2 = mutableListOf<ProducteurModel>()
-        producteursList?.forEach {
-            if( prodEvaluationsList?.contains(it.id?.toString()) == true ) producteursList2.add(it)
-        }
-        LogUtils.d(producteursList2)
-        producteursList = producteursList2
 
+        producteursList = producteursList?.filter { allListingProd?.contains(it.id.toString()) == true }?.toMutableList()
+
+        LogUtils.d(allListingProd, producteursList)
         var libItem: String? = null
         currVal2?.let { idc ->
             producteursList?.forEach {
@@ -556,7 +526,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurDistributionArbre,
+            spinner = selectProducteurEvalPostPlant,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -569,7 +539,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                     }else producteurCommon.id = producteur.uid
 
                     listArbreAndState = CcbRoomDatabase.getDatabase(applicationContext)?.arbreDao()?.getAll()
-                    setupRvOtherListenner(producteurCommon.id.toString(), evaluationsList)
+                    setupRvOtherListenner(producteurCommon.id.toString(), postPlantProducteursList)
                 }
 
 
@@ -580,50 +550,12 @@ class DistributionArbreActivity : AppCompatActivity() {
 
     }
 
-//    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
-//        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
-//            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(
-//                Constants.AGENT_ID, 0).toString())
-//
-////        LogUtils.json(parcellesList)
-//        var libItem: String? = null
-//        currVal3?.let { idc ->
-//            parcellesList?.forEach {
-//                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
-//            }
-//        }
-//
-//        Commons.setListenerForSpinner(this,
-//            getString(R.string.choix_de_la_parcelle),
-//            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            isEmpty = if (parcellesList?.size!! > 0) false else true,
-//            currentVal = libItem,
-//            spinner = selectParcelleDistributionArbre,
-//            listIem = parcellesList?.map { "${it.codeParc}" }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//                parcellesList?.let { list ->
-//                    var parcelle = list.get(it)
-//                    parcelleCommon.nom = "${it.codeParc}"
-//                    parcelleCommon.id = parcelle.id!!
-//
-//                    //setupParcelleSelection(parcelleCommon.id, currVal3)
-//                }
-//
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//
-//            })
-//    }
-
-    fun getDistributArbreObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<DistributionArbreModel, MutableList<Pair<String, String>>>? {
+    fun getEvaluationPostPlantObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<PostPlantingModel, MutableList<Pair<String, String>>>? {
         var isMissingDial2 = false
 
 
-        var itemList = getSetupDistribArbrModel(
-            DistributionArbreModel(
+        var itemList = getSetupEvaluationPostPlantModel(
+            PostPlantingModel(
                 uid = 0,
                 id = 0,
                 isSynced = false,
@@ -673,21 +605,21 @@ class DistributionArbreActivity : AppCompatActivity() {
         return  itemList
     }
 
-    fun getSetupDistribArbrModel(
-        prodModel: DistributionArbreModel,
+    fun getSetupEvaluationPostPlantModel(
+        prodModel: PostPlantingModel,
         mutableListOf: MutableList<Pair<String, String>>
-    ): Pair<DistributionArbreModel, MutableList<Pair<String, String>>> {
+    ): Pair<PostPlantingModel, MutableList<Pair<String, String>>> {
         //LogUtils.d(prodModel.nom)
-        val mainLayout = findViewById<ViewGroup>(R.id.layout_DistributionArbre)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_EvalPostPlant)
         Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
         return Pair(prodModel, mutableListOf)
     }
 
-    fun passSetupDistribArbrModel(
-        prodModel: DistributionArbreModel?
+    fun passSetupEvaluationPostPlantModel(
+        prodModel: PostPlantingModel?
     ){
         //LogUtils.d(prodModel.nom)
-        val mainLayout = findViewById<ViewGroup>(R.id.layout_DistributionArbre)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_EvalPostPlant)
         prodModel?.let {
             Commons.setAllValueOfTextViews(mainLayout, prodModel)
         }

@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -44,15 +44,15 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:text="FICHE INFOS PRODUCTEUR"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -114,10 +114,10 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations Personnelles"
+                            android:text="INFORMATIONS PERSONNELLES"
                             android:textColor="@color/text_color_white"
 
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -369,6 +369,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="foretsjachere"
                                 android:id="@+id/selectJachereInfosProducteur"
                                 android:layout_width="match_parent"
@@ -451,6 +452,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="autresCultures"
                                 android:id="@+id/selectCulturesInfosProducteur"
                                 android:layout_width="match_parent"
@@ -630,6 +632,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="autreActivite"
                                 android:id="@+id/selectActiviteOrCacaoInfosProducteur"
                                 android:layout_width="match_parent"
@@ -931,6 +934,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="mainOeuvreFamilial"
                                 android:id="@+id/selectTravaiFamilleInfosProducteur"
                                 android:layout_width="match_parent"
@@ -1854,6 +1858,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelInfosProducteur"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1865,11 +1870,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickReviewInfosProducteur"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1881,7 +1888,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

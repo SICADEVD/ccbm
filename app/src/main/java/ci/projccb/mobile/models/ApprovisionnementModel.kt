@@ -44,8 +44,8 @@ interface ApprovisionnementDao {
     fun getAll(agentID: String?): MutableList<ApprovisionnementModel>
 
     @Transaction
-    @Query("DELETE FROM approvisionnement WHERE agentId = :agentID")
-    fun deleteAll(agentID: String?)
+    @Query("DELETE FROM approvisionnement")
+    fun deleteAll()
 
 
     @Transaction

@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.FormationActivity
+import ci.projccb.mobile.activities.forms.VisiteurFormationActivity
 import ci.projccb.mobile.adapters.PreviewItemAdapter
 import ci.projccb.mobile.models.VisiteurFormationModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -87,7 +88,7 @@ class VisiteurFormationPreviewActivity : AppCompatActivity() {
                     )
 
 
-                    ActivityUtils.finishActivity(FormationActivity::class.java)
+                    ActivityUtils.finishActivity(VisiteurFormationActivity::class.java)
                 }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)

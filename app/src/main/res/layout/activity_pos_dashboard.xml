@@ -199,8 +199,7 @@ android:textColor="@color/text_color_white"
             android:layout_width="match_parent"
             android:hint="Rechercher PDV"
             android:gravity="center_vertical"
-            
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/page_input_content_dim13"
             android:paddingStart="@dimen/_10sdp"
             android:layout_height="@dimen/_35sdp"/>
 
@@ -584,6 +583,7 @@ android:textColor="@color/text_color_white"
                 android:layout_height="@dimen/_10sdp"/>
 
             <com.google.android.material.button.MaterialButton
+                android:textSize="@dimen/page_button_text_dim13"
                 android:text="LOCALISER MES PDV"
                 android:backgroundTint="@color/orange"
                 android:layout_marginStart="@dimen/_25sdp"

@@ -18,8 +18,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseProducteur"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -38,22 +38,21 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE PRODUCTEUR"
-
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftProducteur"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -117,9 +116,8 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="Informations Personnelles"
-
-                        android:textSize="@dimen/_14ssp"
+                        android:text="INFORMATIONS PERSONNELLES"
+                        android:textSize="@dimen/page_title_dim14"
                         android:textStyle="bold" />
 
                     <View
@@ -141,12 +139,12 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-    android:textColor="@color/text_color_white"
+                        android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
                         android:text="Accord de consentement du producteur"
-
+                        android:textSize="@dimen/page_input_title_dim11"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -159,6 +157,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="consentement"
                             android:id="@+id/selectConsentementProducteur"
                             android:entries="@array/YesOrNo"
@@ -186,7 +185,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
                         android:text="Comment-vous vous définissez ?"
-
+                        android:textSize="@dimen/page_input_title_dim11"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -199,6 +198,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="proprietaires"
                             android:id="@+id/selectTitreDUProducteur"
                             android:entries="@array/YesOrNo"
@@ -226,7 +226,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_12sdp"
                         android:text="Donnez son statut"
-
+                        android:textSize="@dimen/page_input_title_dim11"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -239,6 +239,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="statutCertification"
                             android:id="@+id/selectStatutProducteur"
                             android:layout_width="match_parent"
@@ -280,6 +281,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3.5"
                                 android:text="Année de certification"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
@@ -302,7 +304,7 @@ android:textColor="@color/text_color_white"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
                                     android:textAllCaps="true"
-                                    android:textSize="@dimen/_13ssp" />
+                                    android:textSize="@dimen/page_input_content_dim13" />
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="@dimen/_35sdp"
@@ -334,6 +336,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3.5"
                             android:text="Code du producteur"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -352,7 +355,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp" />
+                            android:textSize="@dimen/page_input_content_dim13" />
 
                     </LinearLayout>
 
@@ -372,7 +375,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Quels sont les certificats ?"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -410,7 +413,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Autre certificat"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -427,7 +430,7 @@ android:textColor="@color/text_color_white"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
                             android:hint="@string/precision_hint"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             tools:text="" />
 
                     </LinearLayout>
@@ -461,7 +464,7 @@ android:textColor="@color/text_color_white"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
                         android:hint="@string/precision_hint"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="" />
 
                 </LinearLayout>
@@ -727,7 +730,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="" />
 
                 </LinearLayout>
@@ -764,7 +767,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="KADJO SERGE DIDIER CEDRIC" />
 
                 </LinearLayout>
@@ -797,6 +800,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="sexeProducteur"
                             android:id="@+id/selectSexeProducteur"
                             android:layout_width="match_parent"
@@ -837,6 +841,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="statutMatrimonial"
                             android:id="@+id/selectStatutMatProducteur"
                             android:layout_width="match_parent"
@@ -923,7 +928,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp" />
+                            android:textSize="@dimen/page_input_content_dim13" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/_35sdp"
@@ -969,7 +974,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="0757187963" />
 
                 </LinearLayout>
@@ -1002,6 +1007,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="autreMembre"
                             android:id="@+id/selectProcheProducteur"
                             android:layout_width="match_parent"
@@ -1046,6 +1052,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="autrePhone"
                             android:id="@+id/selectEntantqueProducteur"
                             android:entries="@array/typeAutreMembre"
@@ -1093,7 +1100,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="0757187963" />
 
                 </LinearLayout>
@@ -1127,6 +1134,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="etude"
                             android:id="@+id/selectEtudeProducteur"
                             android:layout_width="match_parent"
@@ -1166,6 +1174,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="piece"
                             android:id="@+id/selectPieceProducteur"
                             android:layout_width="match_parent"
@@ -1212,7 +1221,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="" />
 
                 </LinearLayout>
@@ -1248,7 +1257,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="" />
 
                 </LinearLayout>
@@ -1282,6 +1291,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="carteCMU"
                             android:id="@+id/selectCarteCMUProducteur"
                             android:layout_width="match_parent"
@@ -1328,7 +1338,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="" />
 
                 </LinearLayout>
@@ -1362,6 +1372,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_10sdp" />
 
                         <androidx.appcompat.widget.AppCompatSpinner
+                            style="@style/SpinnerItemStyle"
                             android:tag="typeCarteSecuriteSociale"
                             android:id="@+id/selectTypeCarteCSSProducteur"
                             android:layout_width="match_parent"
@@ -1407,7 +1418,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         tools:text="" />
 
                 </LinearLayout>
@@ -2352,6 +2363,7 @@ android:textColor="@color/text_color_white"
                 android:weightSum="2">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelProducteur"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -2363,11 +2375,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveProducteur"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -2379,7 +2393,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

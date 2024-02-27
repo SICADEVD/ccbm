@@ -62,7 +62,7 @@ android:textColor="@color/text_color_white"
                     android:paddingEnd="@dimen/_10sdp"
                     android:maxLength="7"
                     android:singleLine="true"
-                    android:textSize="@dimen/_17ssp"
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textStyle="bold"
                     tools:text="SCO-001" />
 

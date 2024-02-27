@@ -166,7 +166,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
             "MENAGE",
             "PARCELLES",
             "FORMATION",
-            "CALCUL_ESTIMATION",
+            "ESTIMATION",
             "APPLICATION",
             "LIVRAISON" -> {
                 linearUpdateContentMenuAction.visibility = View.GONE
@@ -189,9 +189,11 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
                     "INSPECTION" -> ActivityUtils.startActivity(InspectionActivity::class.java)
                     "SSRTECLMRS" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                     "FORMATION" -> ActivityUtils.startActivity(FormationActivity::class.java)
-                    "CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
+                    "ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
                     "APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                     "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
+                    "LIVRAISON" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
+                    "LIVRAISON" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
                 }
             }
 
@@ -218,8 +220,8 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
                     //"INSPECTION" -> ActivityUtils.startActivity(EvaluationActivity::class.java)
                     //"SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                     "FORMATION" -> ActivityUtils.startActivity(FormationsListActivity::class.java)
-                    //"CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
-                    //"SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
+                    //"ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
+                    //"APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                     "LIVRAISON" -> ActivityUtils.startActivity(LivraisonsListActivity::class.java)
                 }
             }

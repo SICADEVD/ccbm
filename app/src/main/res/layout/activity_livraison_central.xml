@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -37,22 +37,21 @@
                 app:srcCompat="@drawable/fav_bandama" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="FICHE DE STOCK MAGASINS CENTRAUX"
-                
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/_7sdp"
@@ -103,7 +102,7 @@ android:textColor="@color/text_color_white"
                         android:gravity="center_horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/page_title_dim14"
                         android:textColor="@color/text_color_white"
                         android:text="Information Expéditeur(Magasin de Section)">
 
@@ -120,12 +119,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Sélectionner un magasin de section"/>
 
@@ -161,10 +159,10 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:text="Nom"/>
@@ -178,7 +176,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Nom"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -198,12 +196,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Contact"/>
 
@@ -216,7 +213,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Contact Expediteur"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="number|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -236,12 +233,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Email"/>
 
@@ -254,7 +250,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Email Expediteur"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -274,12 +270,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Adresse"/>
 
@@ -292,7 +287,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Adresse Expediteur"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -332,7 +327,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold"
                         android:textAllCaps="true"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/page_title_dim14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_color_white"
@@ -351,12 +346,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Selectionner un magasin central"/>
 
@@ -392,12 +386,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Nom"/>
 
@@ -410,7 +403,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Nom"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -430,12 +423,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Contact"/>
 
@@ -448,7 +440,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Contact Destinataire"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="number|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -468,12 +460,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Email"/>
 
@@ -486,7 +477,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Email Destinataire"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -506,12 +497,11 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
-
                             android:textStyle="bold"
                             android:text="Adresse"/>
 
@@ -524,7 +514,7 @@ android:textColor="@color/text_color_white"
                             tools:text="Adresse Destinataire"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:inputType="textCapCharacters|textNoSuggestions"
                             android:layout_weight="6.5"
@@ -568,7 +558,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Désignez le type de produit !"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
@@ -638,8 +628,9 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations sur le transport"
+                            android:textAllCaps="true"
                             android:textColor="@color/text_color_white"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -664,7 +655,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Choix de l'entreprise"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
@@ -748,7 +739,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Choix du véhicule"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
@@ -787,7 +778,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Choix du remorque"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
@@ -842,7 +833,7 @@ android:textColor="@color/text_color_white"
                         android:textStyle="bold"
                         android:textAllCaps="true"
                         android:gravity="center_horizontal"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/page_title_dim14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_color_white"
@@ -865,7 +856,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Choix du producteur"
                             android:textStyle="bold" />
 
@@ -905,7 +896,7 @@ android:textColor="@color/text_color_white"
                         <androidx.appcompat.widget.AppCompatTextView
                             android:textColor="@color/text_color_white"
                             android:layout_width="wrap_content"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_15sdp"
                             android:textStyle="bold"
@@ -920,7 +911,7 @@ android:textColor="@color/text_color_white"
                             android:enabled="false"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:height="0dp"
                             android:hint="Rainforest"
@@ -945,7 +936,7 @@ android:textColor="@color/text_color_white"
                         <androidx.appcompat.widget.AppCompatTextView
                             android:textColor="@color/text_color_white"
                             android:layout_width="wrap_content"
-                            android:textSize="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_15sdp"
                             android:textStyle="bold"
@@ -960,7 +951,7 @@ android:textColor="@color/text_color_white"
                             android:enabled="false"
                             android:ellipsize="end"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             android:layout_width="match_parent"
                             android:height="0dp"
                             android:hint="Certifie"
@@ -989,9 +980,9 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content">
 
                             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                                android:textColor="@color/text_color_white"
                                 android:layout_width="wrap_content"
-                                android:textSize="@dimen/_10sdp"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_15sdp"
                                 android:textStyle="bold"
@@ -1005,7 +996,7 @@ android:textColor="@color/text_color_white"
                                 tools:text="16"
                                 android:ellipsize="end"
                                 android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 android:layout_width="match_parent"
                                 android:height="0dp"
                                 android:hint="20"
@@ -1073,7 +1064,7 @@ android:textColor="@color/text_color_white"
                     <androidx.appcompat.widget.AppCompatTextView
                         android:textColor="@color/text_color_white"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/page_input_title_dim11"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/_15sdp"
                         android:textStyle="bold"
@@ -1088,7 +1079,7 @@ android:textColor="@color/text_color_white"
                         tools:text="3"
                         android:ellipsize="end"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp"
+                        android:textSize="@dimen/page_input_content_dim13"
                         android:layout_width="match_parent"
                         android:height="0dp"
                         android:hint="13"
@@ -1118,7 +1109,7 @@ android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/page_input_title_dim11"
                     android:text="Date de la livraison central"
                     android:textStyle="bold" />
 
@@ -1140,7 +1131,7 @@ android:textColor="@color/text_color_white"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
                         android:textAllCaps="true"
-                        android:textSize="@dimen/_13ssp" />
+                        android:textSize="@dimen/page_input_content_dim13" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_35sdp"
@@ -1164,6 +1155,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelLivraisonCentral"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1175,11 +1167,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveLivraisonCentral"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1191,7 +1185,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

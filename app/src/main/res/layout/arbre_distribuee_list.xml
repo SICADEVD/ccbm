@@ -94,7 +94,7 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textAllCaps="true"
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_input_content_dim13"
                 tools:text="500" />
 
         </LinearLayout>

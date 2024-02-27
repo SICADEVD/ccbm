@@ -26,6 +26,7 @@ import ci.projccb.mobile.activities.infospresenters.SuiviParcellePreviewActivity
 import ci.projccb.mobile.adapters.InsecteAdapter
 import ci.projccb.mobile.adapters.MatiereAdapter
 import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.NineItemAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
 import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.adapters.SixItemAdapter
@@ -189,12 +190,12 @@ class SuiviApplicationActivity : AppCompatActivity() {
     }
 
 
-    fun setMatiereParcelle() {
-        matieresList = mutableListOf()
-        matiereAdapter = MatiereAdapter(matieresList!!)
-        recyclerMatiereListSuiviApplication.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerMatiereListSuiviApplication.adapter = matiereAdapter
-    }
+//    fun setMatiereParcelle() {
+//        matieresList = mutableListOf()
+//        matiereAdapter = MatiereAdapter(matieresList!!)
+//        recyclerMatiereListSuiviApplication.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        recyclerMatiereListSuiviApplication.adapter = matiereAdapter
+//    }
 
 
     fun setParasitesList() {
@@ -288,21 +289,24 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
                 maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
 
-                pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map {
+                pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
                     PesticidesApplicationModel(
                         nom = it.value,
                         toxicicologie = it.value1,
                         nomCommercial = it.value2,
                         matiereActive = it.value3,
-                        dose = it.value4,
-                        frequence = it.value5
+                        dosage = it.value4,
+                        doseUnite = it.value5,
+                        quantite = it.value6,
+                        quantiteUnite = it.value7,
+                        frequence = it.value8
                     )
                 } )
             }
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair(getString(R.string.produits_pythos_enr_gistr_s), (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.produits_pythos_enr_gistr_s), (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString(commaReplace = "\n") ))
             this.add(Pair(getString(R.string.maladies_observ_es_dans_la_parcelle), selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
         }.map { MapEntry(it.first, it.second) }
 
@@ -335,7 +339,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
@@ -343,7 +347,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -430,7 +434,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             //setupCampagneSelection()
             setupApplicateurSelection()
             //setupLocaliteSelection()
-            setMatiereParcelle()
+            //setMatiereParcelle()
             setParasitesList()
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -717,13 +721,16 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
                     maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
 
-                    pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as SixItemAdapter).getMultiItemAdded().map {
+                    pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
                         PesticidesApplicationModel(
                             nom = it.value,
                             toxicicologie = it.value1,
                             nomCommercial = it.value2,
                             matiereActive = it.value3,
-                            dose = it.value4,
+                            dosage = it.value4,
+                            doseUnite = it.value5,
+                            quantite = it.value6,
+                            quantiteUnite = it.value7,
                             frequence = it.value5
                         )
                     } )
@@ -739,7 +746,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                         DataDraftedModel(
                             uid = draftModel?.uid ?: 0,
                             datas = ApiClient.gson.toJson(suiviApplicationDatasDraft),
-                            typeDraft = "suivi_application",
+                            typeDraft = "application",
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                         )
                     )
@@ -788,7 +795,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 onChanged = {
                     if(it == 1){
                         containerListApplicSApplic.visibility = View.VISIBLE
+                        containerIndepenSApplic.visibility = View.GONE
                     }else if(it == 2){
+                        containerListApplicSApplic.visibility = View.GONE
                         containerIndepenSApplic.visibility = View.VISIBLE
                     }else{
                         containerListApplicSApplic.visibility = View.GONE
@@ -827,14 +836,14 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     }
                 })
 
-            Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+            Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
                 ){
 
             }
 
             selectListMaladieSuiviApplication.setItems(GsonUtils.fromJson<List<String>>(applicationDrafted.maladiesStr, object : TypeToken<List<String>>() {}.type))
 
-            (recyclerPestListSApplic.adapter as SixItemAdapter).setDataToRvItem(
+            (recyclerPestListSApplic.adapter as NineItemAdapter).setDataToRvItem(
                 (GsonUtils.fromJson<MutableList<PesticidesApplicationModel>>(applicationDrafted.pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)).map {
                     AdapterItemModel(
                         id=0,
@@ -842,8 +851,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
                         value1 = it.toxicicologie,
                         value2 = it.nomCommercial,
                         value3 = it.matiereActive,
-                        value4 = it.dose,
-                        value5 = it.frequence
+                        value4 = it.dosage,
+                        value5 = it.doseUnite,
+                        value6 = it.quantite,
+                        value7 = it.quantiteUnite,
+                        value8 = it.frequence
                     )
                 }.toMutableList()
             )
@@ -871,31 +883,37 @@ class SuiviApplicationActivity : AppCompatActivity() {
             configDate(editDateSuiviApplication)
         }
 
-        setOnlyOneITemSApplicRV(this,
-            recyclerMatiereListSuiviApplication,
-            clickSaveMatiereSuiviApplication,
-            editMatiereActiveSuiviApplication){
+//        setOnlyOneITemSApplicRV(this,
+//            recyclerMatiereListSuiviApplication,
+//            clickSaveMatiereSuiviApplication,
+//            editMatiereActiveSuiviApplication){
+//
+//            Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", (recyclerMatiereListSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().toMutableList() ){
+//
+//            }
+//
+//        }
 
-            Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", (recyclerMatiereListSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().toMutableList() ){
+//        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", arrayListOf() ){
+//
+//        }
 
-            }
-
-        }
-
-        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", arrayListOf() ){
-
-        }
-
-        Commons.setSixItremRV(this,
+        Commons.setNineItremRV(this,
             recyclerPestListSApplic,
             clickAddPestListSApplic,
             selectPestNomSApplic,
             selectPestToxicoSApplic,
-            selectMatActivPestSApplic,
+            selectDoseUniteAppliPhyt,
+            selectQuantUniteAppliPhyt,
+            null,
             editNomComPestSApplic,
             editDosePestSApplic,
+            editQuantPestSApplic,
             editFrequencPestSApplic,
-            libeleList = arrayListOf())
+            editMatiereActiveSuiviApplication,
+            engageItem = 2,
+            libeleList = arrayListOf()
+        )
 
         clickSaveSuiviApplication.setOnClickListener {
             collectDatas()
@@ -939,14 +957,16 @@ class SuiviApplicationActivity : AppCompatActivity() {
             listIem = resources.getStringArray(R.array.personne_applicant)
                 ?.toList() ?: listOf(),
             onChanged = {
-                        if(it == 1){
-                            containerListApplicSApplic.visibility = View.VISIBLE
-                        }else if(it == 2){
-                            containerIndepenSApplic.visibility = View.VISIBLE
-                        }else{
-                            containerListApplicSApplic.visibility = View.GONE
-                            containerIndepenSApplic.visibility = View.GONE
-                        }
+                if(it == 1){
+                    containerListApplicSApplic.visibility = View.VISIBLE
+                    containerIndepenSApplic.visibility = View.GONE
+                }else if(it == 2){
+                    containerListApplicSApplic.visibility = View.GONE
+                    containerIndepenSApplic.visibility = View.VISIBLE
+                }else{
+                    containerListApplicSApplic.visibility = View.GONE
+                    containerIndepenSApplic.visibility = View.GONE
+                }
             },
             onSelected = { itemId, visibility ->
             })
@@ -1112,9 +1132,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
         currVal3?.let { idc ->
             parcellesList?.forEach {
                 if(it.isSynced){
-                    if (it.id == idc.toInt()) libItem = "${it.codeParc}"
+                    if (it.id == idc.toInt()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }else{
-                    if (it.uid == idc.toLong()) libItem = "${it.codeParc}"
+                    if (it.uid == idc.toLong()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }
             }
         }
@@ -1125,13 +1145,13 @@ class SuiviApplicationActivity : AppCompatActivity() {
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectParcelleSApplic,
-            listIem = parcellesList?.map { "${it.codeParc}" }
+            listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
                 ?.toList() ?: listOf(),
             onChanged = {
 
                 parcellesList?.let { list ->
                     var parcelle = list.get(it)
-                    parcelleCommon.nom = "${parcelle.codeParc}"
+                    parcelleCommon.nom = Commons.getParcelleNotSyncLibel(parcelle)
 
                     if(parcelle.isSynced){
                         parcelleCommon.id = parcelle.id!!

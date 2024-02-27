@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -44,15 +44,15 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:text="FICHE DES APPLICATIONS PHYTOS"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -115,8 +115,8 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations sur l'application phyto"
-
-                            android:textSize="@dimen/_14ssp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -347,6 +347,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="personneApplication"
                                 android:id="@+id/selectPersonApplicSApplic"
                                 android:entries="@array/personne_applicant"
@@ -442,6 +443,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="suiviFormation"
                                     android:id="@+id/selectSuiviFormationSApplic"
                                     android:entries="@array/YesOrNo"
@@ -481,6 +483,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="attestion"
                                     android:id="@+id/selectAttestionSApplic"
                                     android:entries="@array/YesOrNo"
@@ -520,6 +523,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="bilanSante"
                                     android:id="@+id/selectBilanSanteSApplic"
                                     android:entries="@array/YesOrNo"
@@ -564,6 +568,7 @@ android:textColor="@color/text_color_white"
                                         android:layout_height="@dimen/_10sdp" />
 
                                     <androidx.appcompat.widget.AppCompatSpinner
+                                        style="@style/SpinnerItemStyle"
                                         android:tag="independantEpi"
                                         android:id="@+id/selectIndependantEpiSApplic"
                                         android:entries="@array/YesOrNo"
@@ -606,6 +611,7 @@ android:textColor="@color/text_color_white"
                                         android:layout_height="@dimen/_10sdp" />
 
                                     <androidx.appcompat.widget.AppCompatSpinner
+                                        style="@style/SpinnerItemStyle"
                                         android:tag="etatEpi"
                                         android:id="@+id/selectEtatEpiSApplic"
                                         android:entries="@array/YesOrNo"
@@ -666,8 +672,8 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations sur l'application"
-
-                            android:textSize="@dimen/_14ssp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -682,78 +688,78 @@ android:textColor="@color/text_color_white"
                         android:layout_width="@dimen/_5sdp"
                         android:layout_height="@dimen/_10sdp" />
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                    <LinearLayout-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:weightSum="10">-->
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="4"
-                                android:text="Quelles sont les matières actives à renseigner ?"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:textStyle="bold" />
+<!--                            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                                android:textColor="@color/text_color_white"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="4"-->
+<!--                                android:text="Quelles sont les matières actives à renseigner ?"-->
+<!--                                android:paddingLeft="@dimen/_10sdp"-->
+<!--                                android:textStyle="bold" />-->
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/editMatiereActiveSuiviApplication"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="6"
-                                android:background="@drawable/rounded_background"
-                                android:ellipsize="end"
-                                android:hint="Précisez"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
+<!--                            <androidx.appcompat.widget.AppCompatEditText-->
+<!--                                android:id="@+id/editMatiereActiveSuiviApplication"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:layout_weight="6"-->
+<!--                                android:background="@drawable/rounded_background"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:hint="Précisez"-->
+<!--                                android:imeOptions="actionDone"-->
+<!--                                android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                                android:paddingStart="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_10sdp"-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:textSize="@dimen/_13ssp"-->
+<!--                                tools:text="" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
-                        <Space
-                            android:layout_width="@dimen/_5sdp"
-                            android:layout_height="@dimen/_10sdp" />
+<!--                        <Space-->
+<!--                            android:layout_width="@dimen/_5sdp"-->
+<!--                            android:layout_height="@dimen/_10sdp" />-->
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/clickSaveMatiereSuiviApplication"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_gravity="end"
-                            android:textColor="@color/white_color"
-                            android:background="@drawable/submit_button_bg"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:text="Valider"
+<!--                        <androidx.appcompat.widget.AppCompatButton-->
+<!--                            android:id="@+id/clickSaveMatiereSuiviApplication"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="@dimen/_25sdp"-->
+<!--                            android:layout_gravity="end"-->
+<!--                            android:textColor="@color/white_color"-->
+<!--                            android:background="@drawable/submit_button_bg"-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingEnd="@dimen/_10sdp"-->
+<!--                            android:text="Valider"-->
 
-                            android:textSize="@dimen/_9ssp" />
+<!--                            android:textSize="@dimen/_9ssp" />-->
 
-                        <Space
-                            android:layout_width="@dimen/_5sdp"
-                            android:layout_height="@dimen/_10sdp" />
+<!--                        <Space-->
+<!--                            android:layout_width="@dimen/_5sdp"-->
+<!--                            android:layout_height="@dimen/_10sdp" />-->
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerMatiereListSuiviApplication"
-                            tools:listitem="@layout/matiere_items_list"
-                            tools:itemCount="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/recyclerMatiereListSuiviApplication"-->
+<!--                            tools:listitem="@layout/matiere_items_list"-->
+<!--                            tools:itemCount="1"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp"/>
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp"/>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -806,9 +812,10 @@ android:textColor="@color/text_color_white"
                                                 android:textStyle="bold" />
 
                                             <androidx.appcompat.widget.AppCompatSpinner
+                                                style="@style/SpinnerItemStyle"
                                                 android:id="@+id/selectPestNomSApplic"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="@dimen/_25sdp"
+                                                android:layout_height="@dimen/_30sdp"
                                                 android:background="@drawable/rounded_background"
                                                 android:entries="@array/typeIntrant"
                                                 android:spinnerMode="dialog" />
@@ -835,6 +842,7 @@ android:textColor="@color/text_color_white"
                                                 android:textStyle="bold" />
 
                                             <androidx.appcompat.widget.AppCompatSpinner
+                                                style="@style/SpinnerItemStyle"
                                                 android:id="@+id/selectPestToxicoSApplic"
                                                 android:layout_width="0dp"
                                                 android:layout_weight=".4"
@@ -875,85 +883,13 @@ android:textColor="@color/text_color_white"
                                                     android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:ellipsize="end"
-                                                    android:hint="Nom commercial"
+                                                    android:hint="FerBio"
                                                     android:imeOptions="actionDone"
                                                     android:inputType="text"
                                                     android:paddingStart="@dimen/_10sdp"
                                                     android:paddingEnd="@dimen/_10sdp"
                                                     android:textSize="@dimen/_13ssp"
-                                                    tools:text="Nom commercial" />
-                                            </LinearLayout>
-
-                                            <LinearLayout
-                                                android:layout_width="0dp"
-                                                android:layout_weight="2.5"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
-
-                                                <androidx.appcompat.widget.AppCompatTextView
-                                                    android:textColor="@color/text_color_white"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
-                                                    android:text="Matières actives"
-                                                    android:textStyle="bold" />
-                                                
-                                                <LinearLayout
-                                                    android:orientation="vertical"
-                                                    android:layout_width="match_parent"
-                                                    android:background="@drawable/rounded_background"
-                                                    android:layout_height="match_parent">
-
-                                                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                                        android:id="@+id/selectMatActivPestSApplic"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="match_parent"
-                                                        android:spinnerMode="dialog" />
-
-                                                </LinearLayout>
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                        <Space
-                                            android:layout_width="match_parent"
-                                            android:layout_height="@dimen/_10sdp" />
-
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:weightSum="5"
-                                            android:layout_height="wrap_content">
-
-                                            <LinearLayout
-                                                android:layout_width="0dp"
-                                                android:layout_weight="2.50"
-                                                android:layout_height="wrap_content"
-                                                android:orientation="vertical">
-
-                                                <androidx.appcompat.widget.AppCompatTextView
-                                                    android:textColor="@color/text_color_white"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
-                                                    android:text="La dose (L/Ha)"
-                                                    android:textStyle="bold" />
-
-                                                <androidx.appcompat.widget.AppCompatEditText
-                                                    android:id="@+id/editDosePestSApplic"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_30sdp"
-                                                    android:background="@drawable/rounded_background"
-                                                    android:ellipsize="end"
-                                                    android:hint="12"
-                                                    android:imeOptions="actionDone"
-                                                    android:inputType="number"
-                                                    android:paddingStart="@dimen/_10sdp"
-                                                    android:paddingEnd="@dimen/_10sdp"
-                                                    android:textSize="@dimen/_13ssp"
-                                                    tools:text="24" />
+                                                    tools:text="FerBio" />
                                             </LinearLayout>
 
                                             <LinearLayout
@@ -984,6 +920,164 @@ android:textColor="@color/text_color_white"
                                                     android:paddingEnd="@dimen/_10sdp"
                                                     android:textSize="@dimen/_13ssp"
                                                     tools:text="12" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_10sdp" />
+
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:weightSum="5"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="5"
+                                                android:layout_height="match_parent"
+                                                android:orientation="vertical">
+
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/_10ssp"
+                                                    android:text="Matières actives"
+                                                    android:textStyle="bold" />
+
+                                                <androidx.appcompat.widget.AppCompatEditText
+                                                    android:id="@+id/editMatiereActiveSuiviApplication"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:background="@drawable/rounded_background"
+                                                    android:ellipsize="end"
+                                                    android:hint="Matière1,Matière1,Matière3"
+                                                    android:imeOptions="actionDone"
+                                                    android:inputType="textCapCharacters|textNoSuggestions"
+                                                    android:paddingStart="@dimen/_10sdp"
+                                                    android:paddingEnd="@dimen/_10sdp"
+                                                    android:textAllCaps="true"
+                                                    android:textSize="@dimen/_13ssp"
+                                                    tools:text="" />
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_10sdp" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:weightSum="5"
+                                            android:layout_height="wrap_content">
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="2.40"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/_10ssp"
+                                                    android:text="La dose"
+                                                    android:textStyle="bold" />
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:weightSum="2"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:orientation="horizontal">
+
+                                                    <androidx.appcompat.widget.AppCompatEditText
+                                                        android:id="@+id/editDosePestSApplic"
+                                                        android:layout_weight="1"
+                                                        android:layout_width="0dp"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@drawable/semi_rounded_background"
+                                                        android:ellipsize="end"
+                                                        android:hint="12"
+                                                        android:imeOptions="actionDone"
+                                                        android:inputType="number"
+                                                        android:paddingStart="@dimen/_10sdp"
+                                                        android:paddingEnd="@dimen/_10sdp"
+                                                        android:textSize="@dimen/_13ssp"
+                                                        tools:text="24" />
+
+                                                    <androidx.appcompat.widget.AppCompatSpinner
+                                                        android:id="@+id/selectDoseUniteAppliPhyt"
+                                                        android:layout_weight="1"
+                                                        android:layout_width="0dp"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@drawable/semi_rounded_background"
+                                                        android:entries="@array/doseUnite"
+                                                        android:spinnerMode="dialog" />
+
+                                                </LinearLayout>
+
+                                            </LinearLayout>
+
+                                            <Space
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="0.20" />
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="2.40"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:textSize="@dimen/_10ssp"
+                                                    android:text="La quantité"
+                                                    android:textStyle="bold" />
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:weightSum="2"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:orientation="horizontal">
+
+                                                    <androidx.appcompat.widget.AppCompatEditText
+                                                        android:id="@+id/editQuantPestSApplic"
+                                                        android:layout_weight="1"
+                                                        android:layout_width="0dp"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@drawable/semi_rounded_background"
+                                                        android:ellipsize="end"
+                                                        android:hint="12"
+                                                        android:imeOptions="actionDone"
+                                                        android:inputType="number"
+                                                        android:paddingStart="@dimen/_10sdp"
+                                                        android:paddingEnd="@dimen/_10sdp"
+                                                        android:textSize="@dimen/_13ssp"
+                                                        tools:text="24" />
+
+                                                    <androidx.appcompat.widget.AppCompatSpinner
+                                                        android:id="@+id/selectQuantUniteAppliPhyt"
+                                                        android:layout_weight="1"
+                                                        android:layout_width="0dp"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@drawable/semi_rounded_background"
+                                                        android:entries="@array/uniteIntrant"
+                                                        android:spinnerMode="dialog" />
+
+                                                </LinearLayout>
+
                                             </LinearLayout>
 
                                         </LinearLayout>
@@ -1042,7 +1136,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quelles sont les maladies observées ?"
+                            android:text="Quelles sont les maladies observées dans la parcelle ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1133,6 +1227,53 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Durée d'application ?"
+
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="heureApplication"
+                                android:id="@+id/editHeureDebutSuiviApplication"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/rounded_background"
+                                android:editable="false"
+                                android:ellipsize="end"
+                                android:focusable="false"
+                                android:hint="HH-MM"
+                                android:inputType="textCapCharacters"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_35sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                app:srcCompat="@drawable/ic_time_black" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_marginBottom="@dimen/_10sdp"
@@ -1181,54 +1322,6 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Heure d'application ?"
-
-                            android:textStyle="bold" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="heureApplication"
-                                android:id="@+id/editHeureDebutSuiviApplication"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/rounded_background"
-                                android:editable="false"
-                                android:ellipsize="end"
-                                android:focusable="false"
-                                android:hint="HH-MM"
-                                android:inputType="textCapCharacters"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_35sdp"
-                                android:layout_height="@dimen/_35sdp"
-                                android:padding="@dimen/_5sdp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"
-                                app:srcCompat="@drawable/ic_time_black" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -1244,6 +1337,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelSuiviApplication"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1255,11 +1349,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveSuiviApplication"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1271,7 +1367,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

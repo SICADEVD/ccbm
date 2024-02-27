@@ -84,11 +84,16 @@ interface EvaluationArbreDao {
     fun deleteAgentDatas(agentID: Int)
 
     @Transaction
+    @Query("DELETE FROM evaluation_arbre")
+    fun deleteAll()
+
+    @Transaction
     @Query("DELETE FROM evaluation_arbre WHERE producteurId = :producteurId")
     fun deleteByProducteurId(producteurId: String?)
 
     @Transaction
     @Query("SELECT * FROM evaluation_arbre WHERE (isSynced = 0 AND producteurId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<EvaluationArbreModel>
+
 
 }

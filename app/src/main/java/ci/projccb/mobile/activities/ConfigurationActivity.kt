@@ -92,6 +92,8 @@ class ConfigurationActivity : AppCompatActivity() {
     var arbreDao: ArbreDao? = null
     var approvisionnementDao: ApprovisionnementDao? = null
     var evaluationArbreDao: EvaluationArbreDao? = null
+    var postplantingDao: PostplantingDao? = null
+    var postPlantingArbrDistribDao: PostPlantingArbrDistribDao? = null
     var agentID: Int = 0
     var oneIssue = false
 
@@ -149,7 +151,7 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getLocalites() {
         withContext(IO) {
             val localitesUpdate = async {
-                localiteDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                localiteDao?.deleteAll()
 
                 try {
                     val clientLocalite = ApiClient.apiService.getLocalites(CommonData(userid = agentID, table = "localites"))
@@ -838,7 +840,7 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getLivraisonVerMagCentral() {
         withContext(IO) {
             val dataUpdate = async {
-                livraisonVerMagCentralDao?.deleteAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+                livraisonVerMagCentralDao?.deleteAll()
 
                 try {
                     var clientData = ApiClient.apiService.getLivraisonVerMagCentralList()
@@ -2040,7 +2042,7 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getApprovisionnementList() {
         withContext(IO) {
             val approvisionnementListFetch = async {
-                approvisionnementDao?.deleteAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+                approvisionnementDao?.deleteAll()
 
                 try {
                     val clientArbreListData = ApiClient.apiService.getApprovisionnement()
@@ -2083,10 +2085,10 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getProductEvalArbrList() {
         withContext(IO) {
             val distArbreListFetch = async {
-                evaluationArbreDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID))
+                evaluationArbreDao?.deleteAll()
 
                 try {
-                    val clientProductEvalListData = ApiClient.apiService.getProductEvalList()
+                    val clientProductEvalListData = ApiClient.apiService.getProductEvalList(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
 
                     val responseProductEvalListData: Response<QuantiteArbrDistribuer> = clientProductEvalListData.execute()
                     val datasProductEval: QuantiteArbrDistribuer? = responseProductEvalListData.body()
@@ -2134,6 +2136,53 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Liste des arbres distribués")
+                //configFlow()
+                getProductArbrDistribPostPlantingList()
+            }
+        }
+    }
+
+
+    suspend fun getProductArbrDistribPostPlantingList() {
+        withContext(IO) {
+            val postPlantListFetch = async {
+                postPlantingArbrDistribDao?.deleteAll()
+
+                try {
+                    val clientPostPlantingArbrDistribData = ApiClient.apiService.getProducteursPostPlantingArbrDistribList(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
+
+                    val responseProductPostPlantingArbrDistribDataData: Response<MutableList<PostPlantingArbrDistribSecModel>> = clientPostPlantingArbrDistribData.execute()
+                    val datasProductPostPlanting: MutableList<PostPlantingArbrDistribSecModel>? = responseProductPostPlantingArbrDistribDataData.body()
+
+
+                    datasProductPostPlanting?.map {
+                        LogUtils.d(it.arbres)
+                        val dataProductPostPlantingModel = PostPlantingArbrDistribModel(
+                            uid = 0,
+                            nom = it.nom,
+                            prenoms = it.prenoms,
+                            arbresStr = GsonUtils.toJson(it.arbres),
+                            id = it.id,
+                            isSynced = true,
+                            origin = "remote",
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                        )
+
+                        postPlantingArbrDistribDao?.insert(dataProductPostPlantingModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            postPlantListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des producteurs en post-planting")
                 //configFlow()
                 getLiensParenteSection()
             }
@@ -2561,7 +2610,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagLocaliteSynchroErreur) {
                 configCompletedOrError(hasError = true, info = "impossible de synchroniser les localités")
             } else {
-                localiteDao?.deleteAgentDatas(agentID = agentID.toString())
+                localiteDao?.deleteAll()
                 synchronizeProducteurs()
             }
         }
@@ -2650,7 +2699,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagProducteurSynchroErreur) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les producteurs")
             } else {
-                producteurDao?.deleteAgentDatas(agentID = agentID.toString())
+                producteurDao?.deleteAll()
                 sychronisationParcelles()
             }
         }
@@ -2713,7 +2762,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagParcelleSynchroErreur) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les parcelles des producteurs")
             } else {
-                parcelleDao?.deleteAgentDatas(agentID = agentID.toString())
+                parcelleDao?.deleteAll()
                 synchronisationSuiviParcelles()
             }
         }
@@ -2781,7 +2830,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagSuiviParcelleSynchroError) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les suivis des parcelles")
             } else {
-                suiviParcelleDao?.deleteAgentDatas(agentID = agentID.toString())
+                suiviParcelleDao?.deleteAll()
                 synchronisationMenages()
             }
         }
@@ -2835,7 +2884,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagMenageSynchroError) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les menages des producteurs")
             } else {
-                menageDao?.deleteAgentDatas(agentID = agentID.toString())
+                menageDao?.deleteAll()
                 //synchronisationMenages()
                 synchtonisationFormations()
             }
@@ -2988,7 +3037,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagLivraisonSynchroError) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les livraisons")
             } else {
-                livraisonDao?.deleteAgentDatas(agentID = agentID.toString())
+                livraisonDao?.deleteAll()
                 getLocalites()
             }
 
@@ -3053,6 +3102,8 @@ class ConfigurationActivity : AppCompatActivity() {
         sectionsDao = database?.sectionsDao()
         arbreDao = database?.arbreDao()
         evaluationArbreDao = database?.evaluationArbreDao()
+        postplantingDao = database?.postplantingDao()
+        postPlantingArbrDistribDao = database?.postPlantingArbrDistribDao()
         approvisionnementDao = database?.approvisionnementDao()
 
         if (intent != null) {

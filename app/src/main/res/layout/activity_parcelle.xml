@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -37,23 +37,22 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FICHE PARCELLE"
-                
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_37sdp"
-            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
             android:visibility="visible"
@@ -117,8 +116,8 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="3"
                             android:gravity="center"
                             android:text="Informations sur la parcelle"
-
-                            android:textSize="@dimen/_14ssp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -145,6 +144,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="@string/selectionner_une_section"
                             android:textStyle="bold" />
 
@@ -184,7 +184,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="@string/selectionner_une_localit"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -224,7 +224,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="@string/selectionner_un_producteur"
-
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -274,6 +274,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:text="Quelle est l'année de création de la parcelle"
                                 android:textStyle="bold" />
 
@@ -295,7 +296,7 @@ android:textColor="@color/text_color_white"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
                                     android:textAllCaps="true"
-                                    android:textSize="@dimen/_13ssp" />
+                                    android:textSize="@dimen/page_input_content_dim13" />
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="@dimen/_35sdp"
@@ -333,6 +334,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_weight="6"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:text="Quel est l'âge moyen des cacaoyers ? (année)"
                                 android:textStyle="bold" />
 
@@ -350,7 +352,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 tools:text="1" />
 
                         </LinearLayout>
@@ -373,6 +375,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Quelle est la variété de culture ?"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -385,6 +388,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="variete"
                                 android:id="@+id/spinnerVarieteParcelle"
                                 android:layout_width="match_parent"
@@ -413,6 +417,7 @@ android:textColor="@color/text_color_white"
                             android:paddingLeft="@dimen/_12sdp"
                             android:layout_weight="6"
                             android:text="Est ce que la parcelle a été régenerer ?"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -426,6 +431,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="parcelleRegenerer"
                                 android:id="@+id/selectParcRegenParcelle"
                                 android:entries="@array/YesOrNo"
@@ -463,6 +469,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
                                 android:text="Année de régéneration"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:textStyle="bold" />
 
                             <RelativeLayout
@@ -484,7 +491,7 @@ android:textColor="@color/text_color_white"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
                                     android:textAllCaps="true"
-                                    android:textSize="@dimen/_13ssp" />
+                                    android:textSize="@dimen/page_input_content_dim13" />
 
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="@dimen/_35sdp"
@@ -540,7 +547,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             tools:text="0.0" />
 
                     </LinearLayout>
@@ -608,6 +615,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="presenceCourDeau"
                                 android:id="@+id/selectPresentCourEauParcelle"
                                 android:entries="@array/YesOrNo"
@@ -650,6 +658,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="courDeau"
                                 android:id="@+id/selectCourEauParcelle"
                                 android:layout_width="match_parent"
@@ -689,7 +698,7 @@ android:textColor="@color/text_color_white"
                                 android:inputType="textCapCharacters|textNoSuggestions"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 tools:text="" />
 
                         </LinearLayout>
@@ -726,6 +735,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="existeMesureProtection"
                                 android:id="@+id/selectMesurProtectParcelle"
                                 android:entries="@array/YesOrNo"
@@ -804,7 +814,7 @@ android:textColor="@color/text_color_white"
                                 android:inputType="textCapCharacters|textNoSuggestions"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 tools:text="" />
 
                         </LinearLayout>
@@ -841,6 +851,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="existePente"
                                 android:id="@+id/selectYaPenteParcelle"
                                 android:entries="@array/YesOrNo"
@@ -880,6 +891,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="niveauPente"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -922,6 +934,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="erosion"
                                 android:id="@+id/selectSignErosParcelle"
                                 android:entries="@array/YesOrNo"
@@ -987,6 +1000,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_height="@dimen/_10sdp" />
 
                                         <androidx.appcompat.widget.AppCompatSpinner
+                                            style="@style/SpinnerItemStyle"
                                             android:id="@+id/selectArbrOmbrParcel"
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/_35sdp"
@@ -1025,6 +1039,7 @@ android:textColor="@color/text_color_white"
                                         android:gravity="center_vertical"
                                         android:imeOptions="actionDone"
                                         android:inputType="number"
+                                        android:textSize="@dimen/page_input_content_dim13"
                                         android:paddingStart="@dimen/_10sdp"
                                         android:paddingEnd="@dimen/_10sdp"
                                         android:textAllCaps="true"
@@ -1117,7 +1132,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center"
                             android:text="Information gps de la parcelle"
 
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -1238,6 +1253,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="typedeclaration"
                                 android:id="@+id/selectDeclarationTypeParcelle"
                                 android:layout_width="match_parent"
@@ -1284,7 +1300,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/page_input_content_dim13"
                             tools:text="0.0" />
 
                     </LinearLayout>
@@ -1327,7 +1343,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"/>
+                                android:textSize="@dimen/page_input_content_dim13"/>
 
                         </LinearLayout>
 
@@ -1360,7 +1376,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 android:hint="-4.2562522"/>
 
                         </LinearLayout>
@@ -1419,7 +1435,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 tools:text="1" />
 
                         </LinearLayout>
@@ -1509,7 +1525,7 @@ android:textColor="@color/text_color_white"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/page_input_content_dim13"
                                 tools:text="WAYPOINT" />
 
                         </LinearLayout>
@@ -1573,6 +1589,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelParcelle"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1584,11 +1601,13 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     android:textColor="@color/text_color_white"
                     android:text="@string/annuler"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveParcelle"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1600,7 +1619,8 @@ android:textColor="@color/text_color_white"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"
-                    app:cornerRadius="50dp"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

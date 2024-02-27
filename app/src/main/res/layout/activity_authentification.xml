@@ -72,6 +72,7 @@ android:textColor="@color/text_color_white"-->
 <!--                    android:textColor="@color/black" />-->
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:id="@+id/inputLogin"
                     android:hint="NOM D'UTILISATEUR"
                     android:singleLine="true"
@@ -79,7 +80,7 @@ android:textColor="@color/text_color_white"-->
                     android:layout_gravity="center_horizontal"
                     android:inputType="textCapCharacters|textNoSuggestions|textEmailAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="@dimen/_37sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
@@ -107,13 +108,14 @@ android:textColor="@color/text_color_white"-->
 <!--                    android:textColor="@color/black" />-->
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:textSize="@dimen/page_input_content_dim13"
                     android:textAllCaps="true"
                     android:id="@+id/inputPassword"
                     android:layout_gravity="center_horizontal"
                     android:inputType="textNoSuggestions|textPassword"
                     android:singleLine="true"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="@dimen/_37sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
@@ -129,20 +131,22 @@ android:textColor="@color/text_color_white"-->
                 android:layout_height="@dimen/_16sdp" />
 
             <com.google.android.material.button.MaterialButton
+                android:textSize="@dimen/page_button_text_dim13"
+                android:maxLines="1"
                 android:id="@+id/actionAuthentification"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_220sdp"
                 android:layout_height="wrap_content"
                 android:text="Accéder à mon compte"
                 app:icon="@drawable/ic_sync"
+                app:iconSize="@dimen/page_icon_other_dim20"
                 app:iconGravity="start"
                 style="@style/OptionsButton_Active"
                 app:iconTint="@color/white_color"
-                app:cornerRadius="50dp"
+                app:cornerRadius="@dimen/_37sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:backgroundTint="@color/ccb_green"
                 android:layout_gravity="center"
-                android:paddingHorizontal="20dp"
-                android:layout_marginRight="0dp"
-                android:elevation="0dp"/>
+                android:elevation="8dp"/>
 
         </LinearLayout>
 
@@ -153,8 +157,8 @@ android:textColor="@color/text_color_white"-->
         android:visibility="gone"
             tools:visibility="visible"
         android:id="@+id/imgBackAuth"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_width="@dimen/page_icon_head_dim35"
+        android:layout_height="@dimen/page_icon_head_dim35"
         android:padding="@dimen/_5sdp"
         app:srcCompat="@drawable/ic_back_black" />
 

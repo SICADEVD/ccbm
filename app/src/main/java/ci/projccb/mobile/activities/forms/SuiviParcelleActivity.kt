@@ -926,7 +926,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         var notNecessaire = listOf<String>()
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
@@ -934,7 +934,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         for (field in allField){
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
-                message = getString(R.string.le_champ_intitul_n_est_pas_renseign)
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
                 break
@@ -1838,9 +1838,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         currVal3?.let { idc ->
             parcellesList?.forEach {
                 if(it.isSynced){
-                    if (it.id == idc.toInt()) libItem = "${it.codeParc}"
+                    if (it.id == idc.toInt()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }else{
-                    if (it.uid == idc.toLong()) libItem = "${it.codeParc}"
+                    if (it.uid == idc.toLong()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }
             }
         }
@@ -1851,13 +1851,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
             spinner = selectParcelleSParcelle,
-            listIem = parcellesList?.map { "${it.codeParc}" }
+            listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
                 ?.toList() ?: listOf(),
             onChanged = {
 
                 parcellesList?.let { list ->
                     var parcelle = list.get(it)
-                    parcelleCommon.nom = "${parcelle.codeParc}"
+                    parcelleCommon.nom = Commons.getParcelleNotSyncLibel(parcelle)
 
                     if(parcelle.isSynced){
                         parcelleCommon.id = parcelle.id!!

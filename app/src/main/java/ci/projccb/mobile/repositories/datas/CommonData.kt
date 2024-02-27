@@ -66,7 +66,10 @@ data class PesticidesApplicationModel (
     @Expose val nomCommercial: String? = null,
     @Expose val matiereActive: String? = null,
     @Expose val toxicicologie: String? = null,
-    @Expose val dose: String? = null,
+    @Expose val dosage: String? = null,
+    @Expose val doseUnite: String? = null,
+    @Expose val quantite: String? = null,
+    @Expose val quantiteUnite: String? = null,
     @Expose val frequence: String? = null,
 ) {
     override fun toString(): String {

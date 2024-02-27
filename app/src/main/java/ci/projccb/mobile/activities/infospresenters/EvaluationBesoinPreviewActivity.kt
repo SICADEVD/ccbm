@@ -80,7 +80,7 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
                             draftDao?.completeDraft(draftID)
                             Commons.synchronisation(type = "evaluation_besoin", this)
                             Commons.showMessage(
-                                "Evaluation enregistrée !",
+                                "Evaluation des besoins du producteur enregistrée !",
                                 this,
                                 finished = true,
                                 callback = {})
