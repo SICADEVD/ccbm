@@ -24,6 +24,14 @@ interface MagasinDao {
     fun getConcerneeMagasins(concernes: Int): MutableList<MagasinModel>
 
     @Transaction
+    @Query("SELECT * FROM magasin where section_id != 0")
+    fun getMagasinsSections(): MutableList<MagasinModel>
+
+    @Transaction
+    @Query("SELECT * FROM magasin where cooperative_id != 0")
+    fun getMagasinsCentraux(): MutableList<MagasinModel>
+
+    @Transaction
     @Query("DELETE FROM magasin")
     fun deleteAll()
 }

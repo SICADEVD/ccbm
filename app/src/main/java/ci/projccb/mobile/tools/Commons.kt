@@ -2,6 +2,8 @@ package ci.projccb.mobile.tools
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +11,7 @@ import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
@@ -19,33 +22,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
+import androidx.documentfile.provider.DocumentFile
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
+import ci.projccb.mobile.activities.forms.DistributionArbreActivity
+import ci.projccb.mobile.activities.forms.EvaluationArbreActivity
 import ci.projccb.mobile.activities.forms.FormationActivity
 import ci.projccb.mobile.activities.forms.InspectionActivity
 import ci.projccb.mobile.activities.forms.LivraisonActivity
+import ci.projccb.mobile.activities.forms.LivraisonCentralActivity
 import ci.projccb.mobile.activities.forms.ParcelleActivity
+import ci.projccb.mobile.activities.forms.PostPlantingEvalActivity
 import ci.projccb.mobile.activities.forms.ProducteurActivity
 import ci.projccb.mobile.activities.forms.ProducteurMenageActivity
 import ci.projccb.mobile.activities.forms.SsrtClmsActivity
 import ci.projccb.mobile.activities.forms.SuiviApplicationActivity
 import ci.projccb.mobile.activities.forms.SuiviParcelleActivity
 import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
+import ci.projccb.mobile.activities.forms.VisiteurFormationActivity
+import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
 import ci.projccb.mobile.activities.lists.FormationsListActivity
 import ci.projccb.mobile.activities.lists.LivraisonsListActivity
@@ -54,26 +67,41 @@ import ci.projccb.mobile.activities.lists.ParcellesListActivity
 import ci.projccb.mobile.activities.lists.ProducteursListActivity
 import ci.projccb.mobile.activities.lists.SuiviPacellesListActivity
 import ci.projccb.mobile.activities.lists.UpdateContentsListActivity
-import ci.projccb.mobile.models.ProducteurModel
+import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.NineItemAdapter
+import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
+import ci.projccb.mobile.adapters.SixItemAdapter
+import ci.projccb.mobile.models.AdapterItemModel
+import ci.projccb.mobile.models.OmbrageVarieteModel
+import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.services.SynchronisationIntentService
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
-import kotlinx.android.synthetic.main.activity_producteur.editAnneeCertificationProducteur
+//import kotlinx.android.synthetic.main.activity_suivi_application.clickSaveMatiereSuiviApplication
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editAnimalSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import org.joda.time.DateTime
 import org.json.JSONException
 import java.io.*
 import java.lang.Math.log10
 import java.math.RoundingMode
+import java.net.UnknownHostException
 import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.pow
-import kotlin.reflect.KClass
-import ci.projccb.mobile.tools.Commons.Companion.getAllTitleAndValueViews as getAllTitleAndValueViews1
-import ci.projccb.mobile.tools.Commons.Companion.setAllValueOfTextViews as setAllValueOfTextViews1
 
 
 class Commons {
@@ -140,9 +168,70 @@ class Commons {
 //                }
 //            }
 //        }
+        fun setOnlyOneITemSApplicRV(ctx: Context, recycler:RecyclerView, button:Button, editT: EditText, libeleList:MutableList<String> = arrayListOf(), clickItem: () -> Unit?) {
+            val itemList = mutableListOf<CommonData>()
+            var countN = 0
+            libeleList.forEach {
+                itemList.add(CommonData(0, it))
+                countN++
+            }
+
+            val itemAdapter = OnlyFieldAdapter(itemList)
+            try {
+                recycler.layoutManager =
+                    LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
+                recycler.adapter = itemAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            button.setOnClickListener {
+                try {
+                    if (editT.text.toString()
+                            .isEmpty()
+                    ) {
+                        Commons.showMessage("Renseignez des données sur l'animal, svp !", ctx, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    val item = CommonData(
+                        0,
+                        editT.text.toString().trim(),
+                    )
+
+                    if(item.nom?.length?:0 > 0){
+                        itemList?.forEach {
+                            if (it.nom?.uppercase() == item.nom?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        itemList?.add(item)
+                        itemAdapter?.notifyDataSetChanged()
+
+                        editT.text?.clear()
+                    }
+
+                    clickItem.invoke()
+
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
         fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, isEmpty:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
 
-            if(spinner is SearchableSpinner) (spinner as SearchableSpinner).setTitle(title)
+            if(spinner is SearchableSpinner) {
+                (spinner as SearchableSpinner).setTitle(title)
+                (spinner as SearchableSpinner).setPositiveButton("Fermer !")
+            }
+
             if(listIem.size > 0) {
                 spinner.adapter =
                     ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
@@ -170,7 +259,7 @@ class Commons {
                     selectedItem.let {
                         itemChanged?.let { changedText ->
                             if(changedText.size == 1){
-                                if(changedText.get(0).second.equals(it, ignoreCase = true)) {
+                                if(changedText.get(0).second.contains(it, ignoreCase = true)) {
                                     onSelected.invoke(changedText.get(0).first, View.VISIBLE)
                                 }else onSelected.invoke(changedText.get(0).first, View.GONE)
                             }else{
@@ -200,6 +289,16 @@ class Commons {
                     curr++
                 }
             }
+        }
+
+        fun calculateTotalHeight(context:Context, recyclerView: RecyclerView, childHeiht: Int = 50): Int {
+            val layoutManager = recyclerView.layoutManager
+            val pixels: Int = (childHeiht * context.resources.displayMetrics.density).toInt()
+            var totalHeight = pixels*layoutManager!!.itemCount
+
+            LogUtils.d(totalHeight)
+
+            return totalHeight
         }
 
         fun <T : Any>  getAllTitleAndValueViews(
@@ -332,7 +431,7 @@ class Commons {
                 }
 
                 if (showNo) {
-                    builder.setNegativeButton("Non") { dialog, _ ->
+                    builder.setNegativeButton(context.getString(R.string.non)) { dialog, _ ->
                         dialog.dismiss()
                     }
                 }
@@ -360,8 +459,28 @@ class Commons {
             }
         }
 
-        fun List<String>?.toModifString(): String {
-            return this.toString().replace("]", "").replace("[", "").replace(",", "")
+        fun List<String>?.toModifString(isComma:Boolean = true, commaReplace:String = ""): String {
+            val values = this.toString().replace("]", "").replace("[", "")
+            return if(isComma) values.replace(", ", commaReplace) else values
+        }
+        fun String.toUtilInt(): Int? {
+            if( (this as String).isNullOrEmpty() ) return null
+            return (this as String).toInt()
+        }
+        fun returnStringList(value: String?): MutableList<String>? {
+            if(value != null){
+               //value = null
+                return GsonUtils.fromJson<MutableList<String>>(value, object: TypeToken<MutableList<String>>(){}.type)
+            }
+            return mutableListOf()
+        }
+
+        fun Spinner.isSpinnerEmpty(): Boolean {
+            return (this as Spinner).selectedItem.toString().isNullOrBlank()
+        }
+
+        fun Spinner.getSpinnerContent(): String {
+            return (this as Spinner).selectedItem.toString().trim()
         }
 
         fun Context.showYearPickerDialog(editText: EditText) {
@@ -390,6 +509,33 @@ class Commons {
 
             val dialog = builder.create()
             dialog.show()
+        }
+
+        fun Context.configDate(viewClciked: AppCompatEditText, isDateMax: Boolean = true) {
+            val calendar: Calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
+                viewClciked.setText(convertDate("${day}-${(month + 1)}-$year", false))
+            }, year, month, dayOfMonth)
+
+            if(isDateMax) datePickerDialog.datePicker.maxDate = DateTime.now().millis
+            datePickerDialog.show()
+        }
+
+        fun Context.configHour(viewClciked: AppCompatEditText) {
+            // Get Current Time
+            val c: Calendar = Calendar.getInstance()
+            val mHour = c.get(Calendar.HOUR_OF_DAY)
+            val mMinute = c.get(Calendar.MINUTE)
+            val timePickerDialog = TimePickerDialog(
+                this, { timePickerView, hourOfDay, minute -> viewClciked.setText("$hourOfDay:$minute") },
+                mHour,
+                mMinute,
+                true
+            )
+            timePickerDialog.show()
         }
 
         fun Context.limitEDTMaxLength(editText: EditText, minLength:Int = 225, maxLength:Int = 225){
@@ -519,15 +665,21 @@ class Commons {
             return file.absolutePath
         }
 
+        fun fileToBase64(filePath: String?): String? {
+            if (filePath.isNullOrEmpty()) return ""
+            val fileBytes: ByteArray = FileUtils.getFileByPath(filePath).readBytes()
+            return Base64.encodeToString(fileBytes, Base64.DEFAULT)
+        }
 
         fun convertPathBase64(filePath: String?, which: Int): String {
-            if (filePath == null) return ""
+            if (filePath.isNullOrEmpty()) return ""
 
             LogUtils.d(filePath)
             val imgFile = File(filePath)
             val options = BitmapFactory.Options()
             options.inSampleSize = 8
-            val myBitmap = if (which == 3) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
+            var myBitmap = if (which == 3) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
+            myBitmap = if (which == 0) BitmapFactory.decodeFile(imgFile.absolutePath) else BitmapFactory.decodeFile(imgFile.absolutePath, options)
 
             val byteArrayOutputStream = ByteArrayOutputStream()
             try{
@@ -590,14 +742,14 @@ class Commons {
             var isUpdated = true
             when (fromMenu.uppercase()) {
                 "INSPECTION",
-                "SSRTE",
+                "SSRTECLMRS",
                 "LOCALITE",
                 "INFOS_PRODUCTEUR",
                 "MENAGE",
-                "SUIVI_PARCELLE",
+                "PARCELLES",
                 "FORMATION",
-                "CALCUL_ESTIMATION",
-                "SUIVI_APPLICATION",
+                "ESTIMATION",
+                "APPLICATION",
                 "LIVRAISON" -> {
                     isUpdated = false
                 }
@@ -608,6 +760,26 @@ class Commons {
         }
 
         fun redirectMenu(fromMenu: String, actionMenu: String, activity: Activity) {
+//            MainScope().launch {
+//                checkNetworkAvailablility()
+//            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                var networkFlag = false
+                try {
+                    networkFlag = NetworkUtils.isAvailable()
+                } catch (ex: UnknownHostException) {
+                    networkFlag = false
+                    LogUtils.e("Internet error !")
+                }
+
+                if (networkFlag) {
+                    MainScope().launch {
+                        Commons.synchronisation("all",  activity)
+                    }
+                }
+            }
+
             when (actionMenu.uppercase()) {
                 "ADD" -> {
                     when (fromMenu.uppercase()) {
@@ -617,13 +789,18 @@ class Commons {
                             UniteAgricoleProducteurActivity::class.java)
                         "MENAGE" -> ActivityUtils.startActivity(ProducteurMenageActivity::class.java)
                         "PARCELLE" -> ActivityUtils.startActivity(ParcelleActivity::class.java)
-                        "SUIVI_PARCELLE" -> ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
+                        "PARCELLES" -> ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
                         "INSPECTION" -> ActivityUtils.startActivity(InspectionActivity::class.java)
-                        "SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
+                        "SSRTECLMRS" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                         "FORMATION" -> ActivityUtils.startActivity(FormationActivity::class.java)
-                        "CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
-                        "SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
+                        "ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
+                        "APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
+                        "AGRO_DISTRIBUTION" -> ActivityUtils.startActivity(DistributionArbreActivity::class.java)
+                        "POSTPLANTING" -> ActivityUtils.startActivity(PostPlantingEvalActivity::class.java)
+                        "AGRO_EVALUATION" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
+                        "FORMATION_VISITEUR" -> ActivityUtils.startActivity(VisiteurFormationActivity::class.java)
+                        "LIVRAISON_MAGCENTRAL" -> ActivityUtils.startActivity(LivraisonCentralActivity::class.java)
                     }
                 }
 
@@ -646,12 +823,12 @@ class Commons {
                         //"INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                         "MENAGE" -> ActivityUtils.startActivity(MenageresListActivity::class.java)
                         "PARCELLE" -> ActivityUtils.startActivity(ParcellesListActivity::class.java)
-                        "SUIVI_PARCELLE" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
+                        "PARCELLES" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
                         //"INSPECTION" -> ActivityUtils.startActivity(EvaluationActivity::class.java)
                         //"SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                         "FORMATION" -> ActivityUtils.startActivity(FormationsListActivity::class.java)
-                        //"CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
-                        //"SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
+                        //"ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
+                        //"APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonsListActivity::class.java)
                     }
                 }
@@ -678,7 +855,586 @@ class Commons {
             imgProfileDashboard.colorFilter = colorFilter
         }
 
+        fun setEditAndSpinnerRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            editItem: AppCompatEditText,
+            selectItem: AppCompatSpinner,
+            libelle: String = "Libellé",
+            valeur: String = "Valeur",
+            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf(), isInverted:Boolean = false ) {
+            val itemList = mutableListOf<OmbrageVarieteModel>()
+            var countN = 0
+            libeleList.forEach {
+                if(isInverted){
+                    itemList.add(OmbrageVarieteModel(0, valueList.get(countN), it))
+                }else itemList.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+                countN++
+            }
+            val itemAdapter = OmbrageAdapter(itemList, libelle, valeur)
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = itemAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (editItem.text.toString()
+                            .isEmpty() || selectItem.isSpinnerEmpty()
+                    ) {
+                        Commons.showMessage("Renseignez des données sur l'autre insecte, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    var modelAdd: OmbrageVarieteModel? = null
+                    if(isInverted){
+                        modelAdd = OmbrageVarieteModel(
+                            0,
+                            selectItem.selectedItem.toString().trim(),
+                            editItem.text.toString().trim()
+                        )
+                    }else{
+                        modelAdd = OmbrageVarieteModel(
+                            0,
+                            editItem.text.toString().trim(),
+                            selectItem.selectedItem.toString().trim()
+                        )
+                    }
+
+                    if(modelAdd.variete?.length?:0 > 0){
+                        itemList?.forEach {
+                            if (it.variete?.uppercase() == modelAdd.variete?.uppercase() && it.nombre == modelAdd.nombre) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        itemList?.add(modelAdd)
+                        itemAdapter?.notifyDataSetChanged()
+
+                        selectItem.setSelection(0)
+                        editItem.text?.clear()
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setSpinnerAndSpinnerRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            selectItem2: AppCompatSpinner,
+            selectItem: AppCompatSpinner,
+            libelle: String = "Libellé",
+            valeur: String = "Valeur",
+            libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+            val itemList = mutableListOf<OmbrageVarieteModel>()
+            var countN = 0
+            libeleList.forEach {
+                itemList.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+                countN++
+            }
+            val itemAdapter = OmbrageAdapter(itemList, libelle, valeur)
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = itemAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (selectItem2.isSpinnerEmpty() || selectItem.isSpinnerEmpty()
+                    ) {
+                        Commons.showMessage("Renseignez des données sur l'autre insecte, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    val modelAdd = OmbrageVarieteModel(
+                        0,
+                        selectItem2.getSpinnerContent(),
+                        selectItem.getSpinnerContent().trim()
+                    )
+
+                    if(modelAdd.variete?.length?:0 > 0){
+                        itemList?.forEach {
+                            if (it.variete?.uppercase() == modelAdd.variete?.uppercase() && it.nombre == modelAdd.nombre) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        itemList?.add(modelAdd)
+                        itemAdapter?.notifyDataSetChanged()
+
+                        selectItem.setSelection(0)
+                        selectItem2.setSelection(0)
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setFiveItremRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            selectNom: Spinner,
+            selectContenant: Spinner,
+            selectUnite: Spinner,
+            editQte: AppCompatEditText,
+            editFreq: AppCompatEditText,
+            defaultItemSize: Int = 5,
+            libeleList:MutableList<String> = arrayListOf(),
+            valueList:MutableList<String> = arrayListOf() ) {
+            val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
+            var countN = 0
+//        libeleList.forEach {
+//            pesticideListSParcelle.add(AdapterItemModel(0, it, valueList.get(countN)))
+//            countN++
+//        }
+            var pesticideSParcelleAdapter: MultipleItemAdapter? = MultipleItemAdapter(
+                pesticideListSParcelle
+            )
+
+            if(libeleList.size > 0){
+                pesticideSParcelleAdapter = MultipleItemAdapter(pesticideListSParcelle, libeleList[0], libeleList[1], libeleList[2], libeleList[3], libeleList[4])
+            }
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = pesticideSParcelleAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (selectNom.isSpinnerEmpty()
+                        || selectContenant.isSpinnerEmpty()
+                        || selectUnite.isSpinnerEmpty()
+                        || editQte.text.toString().isNullOrBlank()
+                        || editFreq.text.toString().isNullOrBlank()
+                    ) {
+                        Commons.showMessage("Renseignez des données, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    var pesticideParRav = AdapterItemModel(
+                        0,
+                        selectNom.getSpinnerContent(),
+                        selectContenant.getSpinnerContent(),
+                        selectUnite.getSpinnerContent(),
+                        editQte.text.toString(),
+                        editFreq.text.toString(),
+                    )
+
+                    if(defaultItemSize == 4){
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            selectNom.getSpinnerContent(),
+                            selectContenant.getSpinnerContent(),
+                            editQte.text.toString(),
+                            editFreq.text.toString(),
+                            ""
+                        )
+                    }
+
+                    if(defaultItemSize == 3){
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            selectNom.getSpinnerContent(),
+                            selectContenant.getSpinnerContent(),
+                            editQte.text.toString(),
+                            "",
+                            "",
+                        )
+                    }
+
+                    if(pesticideParRav.value?.length?:0 > 0){
+                        pesticideListSParcelle?.forEach {
+                            if (it.value?.uppercase() == pesticideParRav.value?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        pesticideListSParcelle?.add(pesticideParRav)
+                        pesticideSParcelleAdapter?.notifyDataSetChanged()
+
+                        selectNom.setSelection(0)
+                        selectContenant.setSelection(0)
+                        selectUnite.setSelection(0)
+                        editQte.text?.clear()
+                        editFreq.text?.clear()
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setSixItremRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            select: Spinner,
+            select2: Spinner,
+            select3: Spinner,
+            edit: AppCompatEditText,
+            edit2: AppCompatEditText,
+            edit3: AppCompatEditText,
+            defaultItemSize: Int = 5,
+            libeleList:MutableList<String> = arrayListOf(),
+            valueList:MutableList<String> = arrayListOf() ) {
+            val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
+            var countN = 0
+
+            var pesticideSParcelleAdapter: SixItemAdapter? = SixItemAdapter(
+                pesticideListSParcelle
+            )
+
+            if(libeleList.size > 0){
+                pesticideSParcelleAdapter = SixItemAdapter(pesticideListSParcelle,
+                    libeleList[0], libeleList[1],
+                    libeleList[2], libeleList[3],
+                    libeleList[4], libeleList[5])
+            }
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = pesticideSParcelleAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    if (select.isSpinnerEmpty()
+                        || select2.isSpinnerEmpty()
+                        || select3.isSpinnerEmpty()
+                        || edit.text.toString().isNullOrBlank()
+                        || edit2.text.toString().isNullOrBlank()
+                        || edit3.text.toString().isNullOrBlank()
+                    ) {
+                        Commons.showMessage("Renseignez des données, svp !", context, callback = {})
+                        return@setOnClickListener
+                    }
+
+                    var pesticideParRav = AdapterItemModel(
+                        0,
+                        select.getSpinnerContent(),
+                        select2.getSpinnerContent(),
+                        edit.text.toString(),
+                        select3.getSpinnerContent(),
+                        edit2.text.toString(),
+                        edit3.text.toString(),
+                    )
+
+                    if(pesticideParRav.value?.length?:0 > 0){
+                        pesticideListSParcelle?.forEach {
+                            if (it.value?.uppercase() == pesticideParRav.value?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        pesticideListSParcelle?.add(pesticideParRav)
+                        pesticideSParcelleAdapter?.notifyDataSetChanged()
+
+                        select.setSelection(0)
+                        select2.setSelection(0)
+                        select3.setSelection(0)
+                        edit.setSelection(0)
+                        edit2.text?.clear()
+                        edit3.text?.clear()
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setNineItremRV(
+            context: Activity,
+            recyclerList: RecyclerView,
+            addBtn: AppCompatButton,
+            select: Spinner?,
+            select2: Spinner?,
+            select3: Spinner?,
+            select4: Spinner?,
+            select5: Spinner?,
+            edit: AppCompatEditText?,
+            edit2: AppCompatEditText?,
+            edit3: AppCompatEditText?,
+            edit4: AppCompatEditText?,
+            edit5: AppCompatEditText?,
+            engageItem: Int = 1, //0 = same, 1 = 5 slect, 2 = 5 edit
+            defaultItemSize: Int = 9,
+            libeleList:MutableList<String> = arrayListOf(),
+            valueList:MutableList<String> = arrayListOf() ) {
+            val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
+            var countN = 0
+
+            var pesticideSParcelleAdapter: NineItemAdapter? = NineItemAdapter(
+                pesticideListSParcelle
+            )
+
+            if(libeleList.size > 0){
+                pesticideSParcelleAdapter = NineItemAdapter(pesticideListSParcelle,
+                    libeleList[0], libeleList[1],
+                    libeleList[2], libeleList[3],
+                    libeleList[4], libeleList[5],
+                    libeleList[6], libeleList[7],
+                    libeleList[8]
+                )
+            }
+            try {
+                recyclerList.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                recyclerList.adapter = pesticideSParcelleAdapter
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+
+            addBtn.setOnClickListener {
+                try {
+                    var pesticideParRav = AdapterItemModel(0)
+                    if(engageItem == 1){
+                        if (select?.isSpinnerEmpty() == true
+                            || select2?.isSpinnerEmpty() == true
+                            || select3?.isSpinnerEmpty() == true
+                            || select4?.isSpinnerEmpty() == true
+                            || select5?.isSpinnerEmpty() == true
+                            || edit?.text.toString().isNullOrBlank()
+                            || edit2?.text.toString().isNullOrBlank()
+                            || edit3?.text.toString().isNullOrBlank()
+                            || edit4?.text.toString().isNullOrBlank()
+                        ) {
+                            Commons.showMessage("Renseignez des données, svp !", context, callback = {})
+                            return@setOnClickListener
+                        }
+
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            select?.getSpinnerContent(),
+                            select2?.getSpinnerContent(),
+                            edit?.text.toString(),
+                            select3?.getSpinnerContent(),
+                            edit2?.text.toString(),
+                            select4?.getSpinnerContent(),
+                            edit3?.text.toString(),
+                            select5?.getSpinnerContent(),
+                            edit4?.text.toString(),
+                        )
+                    }else if(engageItem == 2){
+                        if (select?.isSpinnerEmpty() == true
+                            || select2?.isSpinnerEmpty() == true
+                            || select3?.isSpinnerEmpty() == true
+                            || select4?.isSpinnerEmpty() == true
+                            || edit?.text.toString().isNullOrBlank()
+                            || edit2?.text.toString().isNullOrBlank()
+                            || edit3?.text.toString().isNullOrBlank()
+                            || edit4?.text.toString().isNullOrBlank()
+                            || edit5?.text.toString().isNullOrBlank()
+                        ) {
+                            Commons.showMessage("Renseignez des données, svp !", context, callback = {})
+                            return@setOnClickListener
+                        }
+
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            select?.getSpinnerContent(),
+                            select2?.getSpinnerContent(),
+                            edit?.text.toString(),
+                            edit5?.text.toString(),
+                            edit2?.text.toString(),
+                            select3?.getSpinnerContent(),
+                            edit3?.text.toString(),
+                            select4?.getSpinnerContent(),
+                            edit4?.text.toString(),
+                        )
+                    }
+
+                    if(pesticideParRav.value?.length?:0 > 0){
+                        pesticideListSParcelle?.forEach {
+                            if (it.value?.uppercase() == pesticideParRav.value?.uppercase()) {
+                                ToastUtils.showShort("Cet élément est déja ajouté")
+
+                                return@setOnClickListener
+                            }
+                        }
+
+                        pesticideListSParcelle?.add(pesticideParRav)
+                        pesticideSParcelleAdapter?.notifyDataSetChanged()
+
+                        if(engageItem == 1){
+                            select?.setSelection(0)
+                            select2?.setSelection(0)
+                            select3?.setSelection(0)
+                            select4?.setSelection(0)
+                            select5?.setSelection(0)
+                            edit?.setSelection(0)
+                            edit2?.text?.clear()
+                            edit3?.text?.clear()
+                            edit4?.text?.clear()
+                        }else if(engageItem == 2){
+                            select?.setSelection(0)
+                            select2?.setSelection(0)
+                            select3?.setSelection(0)
+                            select4?.setSelection(0)
+
+                            edit?.setSelection(0)
+                            edit2?.text?.clear()
+                            edit3?.text?.clear()
+                            edit4?.text?.clear()
+                            edit5?.text?.clear()
+                        }
+
+                    }
+                    //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }
+
+        fun setupItemMultiSelection(
+            context: Activity,
+            selectItemMulti: MultiSelectSpinner,
+            title: String  = "Faites vos choix !",
+            itemList: List<CommonData>,
+            currentList : MutableList<String> = mutableListOf(),
+            onValueChanged: ((MutableList<String>) -> Unit)) {
+
+            var listSelectVarieteArbrePosList = mutableListOf<Int>()
+            var listSelectVarieteArbreList = mutableListOf<String>()
+
+            var indItem = 0
+            (itemList)?.forEach {
+                if(currentList.size > 0){ if(currentList.contains(it.nom)) listSelectVarieteArbrePosList.add(indItem) }
+                indItem++
+            }
+
+            selectItemMulti.setTitle(title)
+            selectItemMulti.setItems(itemList.map { it.nom })
+            //multiSelectSpinner.hasNoneOption(true)
+            selectItemMulti.setSelection(listSelectVarieteArbrePosList.toIntArray())
+            selectItemMulti.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+                override fun selectedIndices(indices: MutableList<Int>?) {
+                    listSelectVarieteArbrePosList.clear()
+                    listSelectVarieteArbrePosList.addAll(indices?.toMutableList() ?: mutableListOf())
+                }
+
+                override fun selectedStrings(strings: MutableList<String>?) {
+                    listSelectVarieteArbreList.clear()
+                    listSelectVarieteArbreList.addAll(strings?.toMutableList() ?: arrayListOf())
+
+                    onValueChanged(listSelectVarieteArbreList)
+                }
+
+            })
+        }
+
+        fun printModelValue(producteurMenage: Object, mapEntries: List<MapEntry>?) {
+
+            LogUtils.json(producteurMenage)
+            LogUtils.e("*********************************************************")
+            LogUtils.json(ArrayList(mapEntries))
+
+        }
+
+        fun getFileExtension(filePath: String): String {
+            val mimeTypeMap = MimeTypeMap.getSingleton()
+            val extension = MimeTypeMap.getFileExtensionFromUrl(filePath)
+            return mimeTypeMap.getMimeTypeFromExtension(extension)?.split("/")?.lastOrNull() ?: ""
+        }
+
+        fun getFilePathFromUri(uri: Uri, context: Context): String? {
+            val documentFile = DocumentFile.fromSingleUri(context, uri)
+            return documentFile?.uri?.path
+        }
+
+        fun copyFile(sourceUri: Uri?, pPath: String?, context: Context) {
+            try {
+                // Open an input stream from the selected file URI
+                val inputStream: InputStream? = context.getContentResolver().openInputStream(
+                    sourceUri!!
+                )
+
+                // Create the destination file
+                val destinationFile = File(pPath)
+
+                // Open an output stream to the destination file
+                val outputStream: OutputStream = FileOutputStream(destinationFile)
+
+                // Copy the bytes from the input stream to the output stream
+                val buffer = ByteArray(1024)
+                var length: Int
+                while ( inputStream?.read(buffer).also { length = it!! }!! > 0) {
+                    outputStream.write(buffer, 0, length)
+                }
+
+                inputStream?.close()
+                outputStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                LogUtils.e(e.message)
+            }
+        }
+
+        fun getParcelleNotSyncLibel(parcelle: ParcelleModel): String? {
+
+            return if(parcelle.codeParc.isNullOrEmpty() == false) parcelle.codeParc.toString() else "CODE EN COUR, N "+(parcelle.uid)
+
+        }
+
+        fun formatTitleOfNavView(title: String?): String? {
+            return title?.let {
+                var returner = it
+                if(it.contains(" ")){
+                    val velo = it.split(" ".toRegex(), it.lastIndexOf(" "))
+                    if(velo.size > 1)
+                        returner = velo[0].plus("\n"+velo[1])
+                    else
+                        returner = velo[0]
+                }
+                returner
+            }
+        }
     }
+
 
 }
 

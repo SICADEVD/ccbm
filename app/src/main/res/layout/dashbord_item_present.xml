@@ -8,7 +8,7 @@
     android:layout_margin="@dimen/_1sdp"
     android:layout_gravity="center_horizontal"
     android:id="@+id/mainerScroll"
-    android:alpha=".1"
+    android:alpha="1"
     app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="2dp"
     app:cardElevation="8dp"
@@ -31,7 +31,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="220dp"
+                android:layout_height="160dp"
                 android:src="@drawable/producteurc"
                 android:scaleType="centerCrop"
                 android:id="@+id/image_current" />
@@ -73,7 +73,7 @@
                         android:visibility="gone"
                         tools:visibility="visible"
                         android:background="@drawable/border_shape_selector_btn"
-                        android:textColor="@color/text_color_white"
+                        android:textColor="@color/white_color"
                         android:fontFamily="@font/montserrat_medium"
                         android:layout_weight="1"
                         android:layout_width="0dp"

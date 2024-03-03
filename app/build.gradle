@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "ci.projccb.mobile"
         minSdkVersion 21
-        versionCode 9
+        versionCode 33
         versionName "CCB-v1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -138,6 +138,11 @@ dependencies {
     //expandle menu
     //implementation project(":expandablenavigation")
    implementation("com.github.nirwannursabda:expandable-navigation:0.1.2")
+
+    //Expamdable view
+    implementation "com.github.skydoves:expandablelayout:1.0.7"
+
+    //implementation "com.github.ChochaNaresh:FilePicker:1.0.0"
 
 }
 

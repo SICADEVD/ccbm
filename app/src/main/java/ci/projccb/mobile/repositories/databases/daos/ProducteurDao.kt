@@ -24,6 +24,10 @@ interface ProducteurDao {
     fun getProducteurByUID(producteurUID: Int?) : ProducteurModel
 
     @Transaction
+    @Query("SELECT * FROM producteur WHERE id = :producteurID")
+    fun getProducteurByID(producteurID: Int?) : ProducteurModel
+
+    @Transaction
     @Query("SELECT * FROM producteur WHERE agentId = :agentID")
     fun getAll(agentID: String?): MutableList<ProducteurModel>
 
@@ -36,6 +40,10 @@ interface ProducteurDao {
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
+    @Query("UPDATE producteur SET isSynced = :synced, origin = 'remote' WHERE uid = :localID")
+    fun syncDataOnExist(synced: Int, localID: Int)
+
+    @Transaction
     @Query("SELECT * FROM producteur WHERE (isSynced = 0 AND localitesId = :localiteUid AND origin = 'local' AND agentId = :agentId)")
     fun getProducteursUnSynchronizedLocal(localiteUid: String?, agentId: String?): MutableList<ProducteurModel>
 
@@ -46,4 +54,8 @@ interface ProducteurDao {
     @Transaction
     @Query("DELETE FROM producteur WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM producteur")
+    fun deleteAll()
 }

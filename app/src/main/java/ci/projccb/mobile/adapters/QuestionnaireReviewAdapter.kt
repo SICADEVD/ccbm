@@ -94,7 +94,7 @@ class QuestionnaireReviewAdapter(
                     questionnaireResponseInfo.note = selectedNote.point?.toString()
                     questionnaireResponseInfo.reponseId = positionSelection
                     questionnaireResponseInfo.noteLabel = selectedNote.nom
-                    LogUtils.d("${questionnaireResponseInfo.reponseId}")
+//                    LogUtils.d("${questionnaireResponseInfo.reponseId}")
                     questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
                 }
 
@@ -105,6 +105,11 @@ class QuestionnaireReviewAdapter(
             questionnaireInfosHolder.labelQuestionInspection.text = questionnaireResponseInfo.label
             questionnaireInfosHolder.selectionNotationInspection.setSelection(questionnaireResponseInfo.reponseId ?: 0)
         }
+    }
+
+    fun setListQuestion(pQuestionnaireList: MutableList<QuestionResponseModel>){
+        pQuestionnaireResponsesList.addAll(pQuestionnaireList)
+        notifyDataSetChanged()
     }
 
 

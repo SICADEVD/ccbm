@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layout_formation"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,8 +18,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -42,8 +43,8 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE FORMATION"
-                
+                android:text="@string/fiche_formation"
+
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
 
@@ -51,8 +52,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -115,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur localité"
+                            android:text="@string/informations_sur_localit"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -142,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Section *"
+                            android:text="@string/choix_de_la_section"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -155,7 +156,8 @@
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectSectionProducteur"
+                                android:tag="sectionId"
+                                android:id="@+id/selectSectionFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -179,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localité *"
+                            android:text="@string/choix_de_la_localit"
 
                             android:textStyle="bold" />
 
@@ -192,13 +194,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <!--<androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectProducteurParcelle"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />-->
-
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="localitesId"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectLocaliteFormation"
                                 android:layout_width="match_parent"
@@ -208,44 +205,81 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Campagne *"
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Selectionner la campagne"-->
+<!--                            android:textStyle="bold" />-->
 
-                            android:textStyle="bold" />
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
 
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:spinnerMode="dialog"-->
+<!--                                android:id="@+id/selectCampagneFormation"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"/>-->
 
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectCampagneFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>
+<!--                        </LinearLayout>-->
 
-                        </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    </LinearLayout>
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Quel est le pilier ?"-->
+
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
+
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:spinnerMode="dialog"-->
+<!--                                android:id="@+id/selectPilierFormation"-->
+<!--                                android:entries="@array/example_pilier"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
@@ -261,27 +295,26 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Pilier *"
+                            android:text="@string/quels_sont_les_producteurs_pr_sents_la_formation"
 
                             android:textStyle="bold" />
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            android:id="@+id/editPilierFormation"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:layout_weight="6.5"
-                            android:background="@drawable/rounded_background"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:imeOptions="actionDone"
-                            android:inputType="textCapCharacters|textNoSuggestions"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp"
-                            tools:text="" />
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:id="@+id/selectProducteurFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -330,7 +363,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la formation"
+                            android:text="@string/informations_sur_la_formation"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -347,6 +380,7 @@ android:textColor="@color/text_color_white"
                         android:layout_height="@dimen/_10sdp"/>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -357,8 +391,79 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="La cible"
+                            android:text="@string/quelle_est_l_appelation_de_la_formation"
 
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editAppelationFormation"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:layout_weight="6.5"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:hint="Formation CacaoTrace"
+                            android:gravity="center_vertical"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="" />
+
+                    </LinearLayout>
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="La formation concerne :"-->
+
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
+
+<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:id="@+id/selectCibleFormation"-->
+<!--                                android:entries="@array/cible_formation"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:spinnerMode="dialog" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="@string/type_de_formation"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -371,8 +476,9 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectCibleFormation"
-                                android:entries="@array/cible_formation"
+                                android:tag="formationType"
+                                android:id="@+id/selectTypeFormation"
+                                android:entries="@array/type_formation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:spinnerMode="dialog" />
@@ -396,52 +502,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Lieu de la formation"
-
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectLieuFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                            <!--<com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectLieuFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>-->
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Type de formation"
-
+                            android:text="@string/lieu_de_la_formation"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -454,9 +515,11 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:id="@+id/selectTypeFormation"
+                                android:tag="lieuFormation"
+                                android:id="@+id/selectLieuFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
+                                android:entries="@array/lieuDeFormation"
                                 android:spinnerMode="dialog" />
 
                         </LinearLayout>
@@ -465,229 +528,251 @@ android:textColor="@color/text_color_white"
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+                        android:layout_height="@dimen/_10sdp"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/containerAutreLieuFormation"-->
+<!--                        android:visibility="gone"-->
+<!--                        tools:visibility="visible"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:weightSum="5">-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Module de la formation"
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical">-->
 
-                            android:textStyle="bold" />
+<!--                            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                                android:textColor="@color/text_color_white"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:paddingLeft="@dimen/_10sdp"-->
+<!--                                android:text="Autre lieu"-->
+<!--                                android:textStyle="bold" />-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background">
+<!--                            <androidx.appcompat.widget.AppCompatEditText-->
+<!--                                android:textAllCaps="true"-->
+<!--                                android:id="@+id/editAutreLieuFormation"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:background="@drawable/background_present"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:hint="Précisez…"-->
+<!--                                android:imeOptions="actionDone"-->
+<!--                                android:inputType="textCapCharacters|textNoSuggestions"-->
+<!--                                android:paddingStart="@dimen/_10sdp"-->
+<!--                                android:paddingEnd="@dimen/_10sdp"-->
+<!--                                android:textSize="@dimen/_13ssp"-->
+<!--                                tools:text="" />-->
 
-                            <!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
-                            <!--                        android:id="@+id/selectThemeFormation"-->
-                            <!--                        android:layout_width="match_parent"-->
-                            <!--                        app:hintText="Choisir les themes"-->
-                            <!--                        android:layout_height="@dimen/_37sdp"/>-->
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectModuleFormation"
-                                />
-
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Theme de la formation"
-
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background">
-
-        <!--                    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch-->
-        <!--                        android:id="@+id/selectThemeFormation"-->
-        <!--                        android:layout_width="match_parent"-->
-        <!--                        app:hintText="Choisir les themes"-->
-        <!--                        android:layout_height="@dimen/_37sdp"/>-->
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectThemeFormation"
-                                />
-
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Liste de présence (producteurs)"
-
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectListePresenceFormation"
-                                />
-
-                            <!--<com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectLieuFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>-->
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center_horizontal"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:weightSum="10">-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="3.5"-->
-<!--                    android:text="Liste de présence"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--                <LinearLayout-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="6.5"-->
-<!--                    android:background="@drawable/rounded_background">-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
 
 <!--                    <Space-->
-<!--                        android:layout_width="@dimen/_5sdp"-->
+<!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="@dimen/_10sdp" />-->
 
-<!--                    &lt;!&ndash;<androidx.appcompat.widget.AppCompatSpinner-->
-<!--                        android:id="@+id/selectListePresenceFormation"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/_37sdp"-->
-<!--                        android:spinnerMode="dialog" />&ndash;&gt;-->
-
-<!--                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
-<!--                        android:spinnerMode="dialog"-->
-<!--                        android:id="@+id/selectListePresenceFormation"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/_37sdp"/>-->
-
-<!--                </LinearLayout>-->
-
-<!--                <Space-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="@dimen/_5sdp"/>-->
-
-<!--            </LinearLayout>-->
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:orientation="vertical">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvProducteurPresenceFormation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="1"
-                            tools:listitem="@layout/producteur_presence_items_list">
-
-                        </androidx.recyclerview.widget.RecyclerView>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
+                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Visiteurs\n(Séparer les noms par des virgules)"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="@string/quels_sont_les_modules_de_la_formation"
 
                             android:textStyle="bold" />
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:textAllCaps="true"
-                            android:id="@+id/editVisiteursFormation"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/background_present"
-                            android:lines="5"
-                            android:inputType="text|textMultiLine"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:gravity="start|top"
-                            android:textSize="@dimen/_13ssp" />
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:id="@+id/selectModuleMultiFormation"
+                                />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="@string/quels_sont_les_themes_de_la_formation"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:id="@+id/selectThemeMultiFormation"
+                                />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="@string/quels_sont_les_sous_themes_de_la_formation"
+
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:id="@+id/selectSousThemeMultiFormation"
+                                />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+
+                    </LinearLayout>
+
+<!--                    <LinearLayout-->
+<!--                        android:visibility="gone"-->
+<!--                        tools:visibility="visible"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:paddingLeft="@dimen/_12sdp"-->
+<!--                            android:text="Liste de présence (producteurs)"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/rounded_background">-->
+
+<!--                            <Space-->
+<!--                                android:layout_width="@dimen/_5sdp"-->
+<!--                                android:layout_height="@dimen/_10sdp" />-->
+
+<!--                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"-->
+<!--                                android:id="@+id/selectListePresenceFormation"-->
+<!--                                />-->
+
+<!--                            &lt;!&ndash;<com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
+<!--                                android:spinnerMode="dialog"-->
+<!--                                android:id="@+id/selectLieuFormation"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="@dimen/_37sdp"/>&ndash;&gt;-->
+
+<!--                        </LinearLayout>-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:visibility="gone"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="top"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/rvProducteurPresenceFormation"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                            tools:itemCount="1"-->
+<!--                            tools:listitem="@layout/producteur_presence_items_list">-->
+
+<!--                        </androidx.recyclerview.widget.RecyclerView>-->
+
+<!--                    </LinearLayout>-->
+
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
+
+<!--                    <LinearLayout-->
+<!--                        android:visibility="gone"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="top"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Visiteurs\n(Séparer les noms par des virgules)"-->
+
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <androidx.appcompat.widget.AppCompatEditText-->
+<!--                            android:textAllCaps="true"-->
+<!--                            android:id="@+id/editVisiteursFormation"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/background_present"-->
+<!--                            android:lines="5"-->
+<!--                            android:inputType="text|textMultiLine"-->
+<!--                            android:paddingStart="@dimen/_10sdp"-->
+<!--                            android:paddingEnd="@dimen/_10sdp"-->
+<!--                            android:gravity="start|top"-->
+<!--                            android:textSize="@dimen/_13ssp" />-->
+
+<!--                    </LinearLayout>-->
 
 <!--                    <Space-->
 <!--                        android:layout_width="match_parent"-->
@@ -770,7 +855,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations sur la date"
+                            android:text="@string/informations_sur_la_formation"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="bold" />
 
@@ -797,7 +882,45 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Date de debut de la formation"
+                            android:text="@string/quel_est_le_staff_qui_a_dispens_la_formation"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="staffId"
+                                android:id="@+id/selectStaffFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="@string/date_de_debut_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -805,6 +928,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="multiStartDate"
                                 android:id="@+id/editDateDebuFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -845,7 +969,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Date de fin de la formation"
+                            android:text="@string/date_de_fin_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -853,6 +977,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="multiEndDate"
                                 android:id="@+id/editDateFinFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -894,7 +1019,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Durée de formation ?"
+                            android:text="@string/dur_e_de_formation"
 
                             android:textStyle="bold" />
 
@@ -903,6 +1028,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="dureeFormation"
                                 android:id="@+id/editDureeFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -910,7 +1036,8 @@ android:textColor="@color/text_color_white"
                                 android:editable="false"
                                 android:ellipsize="end"
                                 android:focusable="false"
-                                android:hint="HH-MM"
+                                android:hint="HH:MM"
+                                android:digits="0123456789:"
                                 android:inputType="textCapCharacters"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
@@ -932,6 +1059,48 @@ android:textColor="@color/text_color_white"
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:text="@string/observations"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:textAllCaps="true"
+                                android:tag="observationFormation"
+                                android:id="@+id/editObservationFormation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_80sdp"
+                                android:background="@drawable/background_present"
+                                android:ellipsize="end"
+                                android:hint="@string/pr_cisez"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -939,7 +1108,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:text="Photo de la formation"
+                            android:text="@string/photo_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -976,7 +1145,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:text="Rapport de la formation"
+                            android:text="@string/rapport_de_la_formation"
                             android:textStyle="bold" />
 
                         <RelativeLayout
@@ -999,48 +1168,6 @@ android:textColor="@color/text_color_white"
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:text="Observations"
-                                android:textStyle="bold" />
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:textAllCaps="true"
-                                android:id="@+id/editObservationFormation"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_80sdp"
-                                android:background="@drawable/background_present"
-                                android:ellipsize="end"
-                                android:hint="Précisez…"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -1056,6 +1183,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelFormation"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1065,13 +1193,15 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="ANNULER"
-                    app:cornerRadius="50dp"
+                    android:textColor="@color/text_color_white"
+                    android:text="@string/annuler"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveFormation"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1081,9 +1211,10 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="VÉRIFIER"
-                    app:cornerRadius="50dp"
+                    app:iconTint="@color/white_color"
+                    android:text="@string/v_rifier"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

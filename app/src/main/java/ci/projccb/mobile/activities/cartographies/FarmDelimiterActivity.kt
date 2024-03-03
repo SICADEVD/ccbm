@@ -23,8 +23,10 @@ import ci.projccb.mobile.R
 import ci.projccb.mobile.models.ParcelleMappingModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -459,7 +461,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     finished = false,
                     callback = {},
                     context = this,
-                    positive = "Compris !",
+                    positive = getString(R.string.compris),
                     deconnec = false,
                     showNo = false
                 )
@@ -691,9 +693,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
+
+
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-            labelOwnerFarmDelimiter.text = "Didier BOKA"
+            labelOwnerFarmDelimiter.text = agentDoa?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID)).let { "${it?.firstname} ${it?.lastname}" }.toString() //"Didier BOKA"
 
             val mapsDelimiterFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.googleMapsFarmDelimiter) as SupportMapFragment
             mapsDelimiterFragment.getMapAsync(this)
@@ -829,6 +834,14 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
+
+        fabMenuFarmDelimiter.setImageResource(R.drawable.baseline_add_white_24);
+        // Set background tint color (adjust this according to your design)
+        fabMenuFarmDelimiter.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+        // Set ripple color (optional, adjust according to your design)
+        fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
+        // Set other attributes as needed (e.g., elevation, translationZ)
+        fabMenuFarmDelimiter.setElevation(0.8f);
     }
 
 }

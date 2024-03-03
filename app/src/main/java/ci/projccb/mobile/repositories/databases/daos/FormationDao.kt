@@ -16,11 +16,11 @@ interface FormationDao {
     fun insert(formationModel: FormationModel)
 
     @Transaction
-    @Query("SELECT * FROM formation WHERE usersId = :agentID")
+    @Query("SELECT * FROM formation WHERE agentId = :agentID")
     fun getAll(agentID: String?): MutableList<FormationModel>
 
     @Transaction
-    @Query("SELECT * FROM formation WHERE isSynced = 0 AND usersId = :agentID")
+    @Query("SELECT * FROM formation WHERE isSynced = 0 AND id = 0 AND agentId = :agentID")
     fun getUnSyncedAll(agentID: String?): MutableList<FormationModel>
 
     @Transaction
@@ -28,6 +28,14 @@ interface FormationDao {
     fun syncData(id: Int, synced: Boolean, localID: Int)
 
     @Transaction
-    @Query("DELETE FROM formation WHERE usersId = :agentID")
+    @Query("DELETE FROM formation WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("DELETE FROM formation")
+    fun deleteAll()
+
+    @Transaction
+    @Query("DELETE FROM formation WHERE uid = :uId")
+    fun deleteByUid(uId: Int)
 }

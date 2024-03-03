@@ -16,7 +16,7 @@ data class ThemeFormationModel(
     @SerializedName("id") @Expose var id: Int? = 0,
     @SerializedName("nom") @Expose var nom: String? = "",
     @SerializedName("agentId") @Expose var agentId: String? = "",
-    @SerializedName("type_formations_id") @Expose var typeFormationsId: Int? = 0
+    @SerializedName("type_formation_id") @Expose var typeFormationsId: Int? = 0
 ) {
     override fun toString(): String {
         return nom!!

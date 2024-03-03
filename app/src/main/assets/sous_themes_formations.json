@@ -1,0 +1,97 @@
+[
+    {
+        "id": "2",
+        "theme_formation_id": "5",
+        "nom": "Technique de récolte"
+    },
+    {
+        "id": "3",
+        "theme_formation_id": "5",
+        "nom": "Opérations post-récoltes"
+    },
+    {
+        "id": "4",
+        "theme_formation_id": "4",
+        "nom": "Gestion intégrée des maladies et des ravageurs"
+    },
+    {
+        "id": "5",
+        "theme_formation_id": "4",
+        "nom": "Lutte contre la pourriture brune"
+    },
+    {
+        "id": "6",
+        "theme_formation_id": "4",
+        "nom": "Lutte contre les Insectes ravageurs"
+    },
+    {
+        "id": "7",
+        "theme_formation_id": "4",
+        "nom": "Lutte contre le Swollen Shoot"
+    },
+    {
+        "id": "8",
+        "theme_formation_id": "4",
+        "nom": "Utilisation rationnelle et sécurisée des substances agrochimiques"
+    },
+    {
+        "id": "9",
+        "theme_formation_id": "3",
+        "nom": "Symptômes du déficit nutritionnel des sols"
+    },
+    {
+        "id": "10",
+        "theme_formation_id": "3",
+        "nom": "Fertilisation minérale (type, dosage, méthode d’application et de conservation)"
+    },
+    {
+        "id": "11",
+        "theme_formation_id": "3",
+        "nom": "Conservation des sols/ Augmentation de la qualité du sol"
+    },
+    {
+        "id": "12",
+        "theme_formation_id": "3",
+        "nom": "Fertilisation par système d'agroforesterie"
+    },
+    {
+        "id": "13",
+        "theme_formation_id": "3",
+        "nom": "Compostage"
+    },
+    {
+        "id": "15",
+        "theme_formation_id": "2",
+        "nom": "Taille"
+    },
+    {
+        "id": "16",
+        "theme_formation_id": "2",
+        "nom": "Ombrages et structure idéale de la canopée"
+    },
+    {
+        "id": "17",
+        "theme_formation_id": "2",
+        "nom": "Entretien de la Cacaoyère (Désherbage, égourmandage, suppression des plantes parasites)"
+    },
+    {
+        "id": "18",
+        "theme_formation_id": "2",
+        "nom": "Récolte sanitaire"
+    },
+    {
+        "id": "19",
+        "theme_formation_id": "1",
+        "nom": "Piquetage, trouaison et planting du cacaoyer"
+    },
+    {
+        "id": "20",
+        "theme_formation_id": "1",
+        "nom": "Réhabilitation d'une cacaoyère"
+    },
+    {
+        "id": "21",
+        "theme_formation_id": "1",
+        "nom": "Système d’AgroForesterie (SAF)"
+    }
+]

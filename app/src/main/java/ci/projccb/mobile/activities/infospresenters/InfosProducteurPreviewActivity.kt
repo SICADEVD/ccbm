@@ -41,7 +41,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
 //
 //                    labelJachereYesNoInfosProducteurPreview.text = this.foretsjachere
 //
-//                    if (foretsjachere == "oui") {
+//                    if (foretsjachere == getString(R.string.oui)) {
 //                        linearJachereYesSuperficieContainerInfosProducteurPreview.visibility =
 //                            VISIBLE
 //                        labelJachereYesSuperficieInfosProducteurPreview.text = this.superficie
@@ -51,7 +51,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
 //
 //                    labelOthersFarmsYesNoInfosProducteurPreview.text = this.autresCultures
 //
-//                    if (autresCultures == "oui") {
+//                    if (autresCultures == getString(R.string.oui)) {
 //                        this.typeculture =
 //                            ListConverters.stringToMutableList(this.typecultureStringify)
 //                        typeculture?.let { cultures ->
@@ -94,7 +94,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
 //
 //                    labelMobileMoneyYesNoInfosProducteurPreview.text = this.mobileMoney
 //
-//                    if (this.mobileMoney == "oui") {
+//                    if (this.mobileMoney == getString(R.string.oui)) {
 //                        labelMobileMoneyOperateurInfosProducteurPreview.text = this.operateurMM
 //                        labelMobieMoneyNumberInfosProducteurPreview.text = this.numeroCompteMM
 //
@@ -113,8 +113,8 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                     infoProdItemListData?.forEach {
                         if(it.key.isNullOrEmpty()==false){
                             Commons.addItemsToList(
-                                it.key,
-                                it.value,
+                                if(it.key=="null") "Autre" else it.key,
+                                it.value.replace(", ", "\n"),
                                 infoProdItemsListPrev
                             )
                         }

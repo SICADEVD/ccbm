@@ -16,8 +16,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -41,7 +41,7 @@ android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RECAPITULATIF FORMATION"
+                android:text="RECAPITULATIF FORMATIONS"
                 
                 android:textSize="@dimen/_13ssp"
                 android:textStyle="bold" />
@@ -70,34 +70,17 @@ android:textColor="@color/text_color_white"
             android:paddingStart="@dimen/_10sdp"
             android:layout_height="@dimen/_200sdp">
 
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerInfoPrev"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="10"
+                tools:listitem="@layout/infos_livraiison_prev_items_list" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Localité :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelLocaliteNomFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="match_parent"
-                    android:text="LOCALITE"
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
 
             <LinearLayout
                 android:layout_marginBottom="@dimen/_5sdp"
@@ -107,195 +90,35 @@ android:textColor="@color/text_color_white"
                 android:weightSum="4">
 
                 <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Campagne :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelCampagneNomFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="match_parent"
-                    android:text="LOCALITE"
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Date de formation :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelDateFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="match_parent"
-                    android:text="LOCALITE"
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Theme :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelThemeFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lieu de formation :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelLieuFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Liste de presence :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelListePresenceFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:maxLines="10"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Visiteurs :"
-                    android:textSize="@dimen/_13ssp"
-                    android:layout_weight="1.5"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                    android:id="@+id/labelVisiteursFormationPreview"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/_13ssp"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="match_parent"
-                    android:text="LOCALITE"
-                    android:layout_weight="2.5"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4">
-
-                <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Photo :"
                     android:textSize="@dimen/_13ssp"
                     android:layout_weight="1.5"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imagePhotoFormationPreview"
-                    android:gravity="center_vertical"
+                <Space
                     android:layout_width="match_parent"
-                    android:textStyle="bold"
-                    
-                    android:layout_height="@dimen/_100sdp"
-                    android:text="LOCALITE"
-                    android:layout_weight="2.5"/>
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imagePhotoFormationPreview"
+                        android:background="@drawable/rounded_background"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_weight="2"
+                        android:src="@drawable/ic_suivi_parcel"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_80sdp"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -311,6 +134,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveFormationPreview"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -320,9 +144,10 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"
-                    app:cornerRadius="50dp"
+                    app:iconTint="@color/white_color"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/ic_save_work"
                     app:iconGravity="start" />
 

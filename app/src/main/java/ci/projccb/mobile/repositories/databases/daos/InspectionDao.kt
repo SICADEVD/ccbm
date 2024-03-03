@@ -30,4 +30,8 @@ interface InspectionDao {
     @Transaction
     @Query("DELETE FROM inspection WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
+
+    @Transaction
+    @Query("SELECT * FROM inspection WHERE (isSynced = 0 AND producteursId = :producteurUid)")
+    fun getUnSyncedByProdUid(producteurUid: String?): MutableList<InspectionDTO>
 }

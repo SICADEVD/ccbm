@@ -35,6 +35,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight=".8"
                 android:visibility="visible"
+                android:contentDescription="Menu opener"
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <LinearLayout
@@ -80,10 +81,12 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgBackDashboard"
                 android:background="@drawable/border_shape"
+                android:backgroundTint="@color/ccb_gris_sec"
                 android:layout_width="0dp"
                 android:minWidth="@dimen/_60sdp"
                 android:layout_height="@dimen/_38sdp"
                 android:layout_gravity="end"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_marginLeft="@dimen/_14sdp"
                 android:layout_weight=".8"
                 android:padding="@dimen/_10sdp"
@@ -130,37 +133,221 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_60sdp" />
-
-
-                <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview
-                    android:layout_below="@+id/linear_toolbar_dashboard"
-                    android:layout_above="@+id/imgProfileDashboard"
+                <LinearLayout
+                    android:id="@+id/lexpand0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    tools:listitem="@layout/dashbord_item_present"
-                    tools:itemCount="2"
-                    android:id="@+id/carouselRecyclerview"/>
+                    android:orientation="vertical">
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand0"
+                        android:id="@+id/expandIdentif"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view"
+                        app:expandable_secondLayout="@layout/hided_view" />
+                </LinearLayout>
 
-                <me.relex.circleindicator.CircleIndicator2
-                    android:id="@+id/indicator"
+                <LinearLayout
+                    android:id="@+id/lexpand1"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    app:ci_width="@dimen/_5sdp"
-                    app:ci_height="@dimen/_5sdp"
-                    app:ci_margin="@dimen/_5sdp"
-                    app:ci_drawable="@drawable/blue_radius"
-                    app:ci_drawable_unselected="@drawable/gray_radius"
-                    app:ci_orientation="horizontal"
-                    app:ci_gravity="center"
-                    />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand1"
+                        android:id="@+id/expandIdentif2"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view2"
+                        app:expandable_secondLayout="@layout/hided_view2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lexpand2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand2"
+                        android:id="@+id/expandIdentif3"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lexpand3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand3"
+                        android:id="@+id/expandIdentif4"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lexpand4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.skydoves.expandablelayout.ExpandableLayout
+                        android:tag="expand4"
+                        android:id="@+id/expandIdentif5"
+                        android:layout_marginHorizontal="@dimen/_35sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:expandable_spinner_gravity="start"
+                        app:expandable_animation="bounce"
+                        app:expandable_duration="300"
+                        app:expandable_isExpanded="false"
+                        app:expandable_spinner_size="@dimen/_20sdp"
+                        app:expandable_parentLayout="@layout/showed_view5" />
+                </LinearLayout>
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/lexpand5"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <com.skydoves.expandablelayout.ExpandableLayout-->
+<!--                        android:tag="expand5"-->
+<!--                        android:id="@+id/expandIdentif6"-->
+<!--                        android:layout_marginHorizontal="@dimen/_35sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        app:expandable_spinner_gravity="start"-->
+<!--                        app:expandable_animation="bounce"-->
+<!--                        app:expandable_duration="300"-->
+<!--                        app:expandable_isExpanded="false"-->
+<!--                        app:expandable_spinner_size="@dimen/_20sdp"-->
+<!--                        app:expandable_parentLayout="@layout/showed_view6" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/lexpand6"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
+<!--                    <com.skydoves.expandablelayout.ExpandableLayout-->
+<!--                        android:tag="expand6"-->
+<!--                        android:id="@+id/expandIdentif7"-->
+<!--                        android:layout_marginHorizontal="@dimen/_35sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="3dp"-->
+<!--                        app:expandable_spinner_gravity="start"-->
+<!--                        app:expandable_animation="bounce"-->
+<!--                        app:expandable_duration="300"-->
+<!--                        app:expandable_isExpanded="false"-->
+<!--                        app:expandable_spinner_size="@dimen/_20sdp"-->
+<!--                        app:expandable_parentLayout="@layout/showed_view7" />-->
+<!--                </LinearLayout>-->
+
+
+<!--                <com.skydoves.expandablelayout.ExpandableLayout-->
+<!--                    android:tag="expand6"-->
+<!--                    android:id="@+id/expandIdentif7"-->
+<!--                    android:layout_marginHorizontal="@dimen/_35sdp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="3dp"-->
+<!--                    app:expandable_spinner_gravity="start"-->
+<!--                    app:expandable_animation="bounce"-->
+<!--                    app:expandable_duration="300"-->
+<!--                    app:expandable_isExpanded="false"-->
+<!--                    app:expandable_spinner_size="@dimen/_50sdp"-->
+<!--                    app:expandable_parentLayout="@layout/showed_view7" />-->
+
+                <LinearLayout
+                    android:id="@+id/containerFeatureDash"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_6sdp" />
+
+
+<!--                    <com.jackandphantom.carouselrecyclerview.CarouselRecyclerview-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="@dimen/_20sdp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginRight="@dimen/_20sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_20sdp"-->
+<!--                        tools:listitem="@layout/dashbord_item_present"-->
+<!--                        tools:itemCount="2"-->
+<!--                        android:id="@+id/carouselRecyclerview"/>-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewFeature"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:scrollbars="none"
+                        tools:listitem="@layout/home_item"
+                        tools:itemCount="2"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+<!--                    <me.relex.circleindicator.CircleIndicator2-->
+<!--                        android:id="@+id/indicator"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="48dp"-->
+<!--                        app:ci_width="@dimen/_5sdp"-->
+<!--                        app:ci_height="@dimen/_5sdp"-->
+<!--                        app:ci_margin="@dimen/_5sdp"-->
+<!--                        app:ci_drawable="@drawable/blue_radius"-->
+<!--                        app:ci_drawable_unselected="@drawable/gray_radius"-->
+<!--                        app:ci_orientation="horizontal"-->
+<!--                        app:ci_gravity="center"-->
+<!--                        />-->
+
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_6sdp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -1285,10 +1472,12 @@ android:textColor="@color/text_color_white"-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:background="@drawable/border_shape_selector"
+                android:backgroundTint="@color/ccb_gris_sec"
                 android:id="@+id/linearSync"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_38sdp"
                 android:layout_gravity="end"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_marginRight="@dimen/_2sdp"
                 android:layout_weight=".8"
                 android:padding="@dimen/_8sdp"
@@ -1296,10 +1485,12 @@ android:textColor="@color/text_color_white"-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:background="@drawable/border_shape_selector"
+                android:backgroundTint="@color/ccb_gris_sec"
                 android:id="@+id/imgProfileDashboard"
                 android:layout_width="@dimen/_88sdp"
                 android:layout_height="@dimen/_38sdp"
                 android:layout_gravity="end"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_marginRight="@dimen/_2sdp"
                 android:layout_weight=".8"
                 android:padding="@dimen/_8sdp"
@@ -1346,7 +1537,7 @@ android:textColor="@color/text_color_white"-->
                     android:layout_width="50dp"
                     android:layout_height="@dimen/_50sdp"
                     android:contentDescription="logo account"
-                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingTop="@dimen/_8sdp"
                     app:srcCompat="@drawable/baseline_account_circle_white" />
 
                 <LinearLayout
@@ -1388,7 +1579,8 @@ android:textColor="@color/text_color_white"-->
                     android:layout_marginRight="@dimen/_6sdp"
                     android:background="?android:attr/selectableItemBackground"
                     android:id="@+id/imgProfileDashboardNDrawer"
-                    android:layout_width="@dimen/_8sdp"
+                    android:layout_width="@dimen/_10sdp"
+                    android:maxWidth="@dimen/_12sdp"
                     android:layout_height="@dimen/_40sdp"
                     app:srcCompat="@drawable/ic_shutdown"
                     />

@@ -24,6 +24,10 @@ interface ConcernesDao {
     fun getAll(agentID: String?): MutableList<ConcernesModel>
 
     @Transaction
+    @Query("SELECT * FROM concernes WHERE id = :id")
+    fun getConcernesById(id: Int?): ConcernesModel
+
+    @Transaction
     @Query("DELETE FROM concernes")
     fun deleteAll()
 }

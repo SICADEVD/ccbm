@@ -27,6 +27,7 @@ data class InspectionDTO(
     @SerializedName("campagne_id") @Expose var campagnesId: String? = "",
     @SerializedName("campagnes_label") @Expose var campagnesLabel: String? = "",
     @Expose @SerializedName("localite") var localiteId: String? = "",
+    @Expose var section: String? = "",
     @Expose var localiteNom: String? = "",
     @SerializedName("date_evaluation") @Expose var dateEvaluation: String? = "",
     @SerializedName("formateur_id") @Expose var formateursId: String? = "",
@@ -34,6 +35,12 @@ data class InspectionDTO(
     @SerializedName("producteurs_nom") @Expose var producteurNomPrenoms: String? = "",
     @SerializedName("note") @Expose var noteInspection: String? = "",
     @SerializedName("encadreur") @Expose var encadreur: String? = "",
+    @Expose var production: String? = "",
+    @Expose var certificatStr: String? = "",
+    @Expose var total_question: String? = "",
+    @Expose var total_question_conforme: String? = "",
+    @Expose var total_question_non_conforme: String? = "",
+    @Expose var total_question_non_applicable: String? = "",
     @SerializedName("reponseStringify") @Expose var reponseStringify: String? = "",
     @SerializedName("userid") @Expose var userid: Int? = 0,
     var origin: String? = "local",
@@ -41,4 +48,5 @@ data class InspectionDTO(
     @Expose @SerializedName("agentId") var agentId: String? = "",
 ): Parcelable {
     @SerializedName("reponse") @Expose(serialize = true, deserialize = false) @Ignore var reponse: MutableMap<String, String> = mutableMapOf()
+    @SerializedName("certificat") @Expose(serialize = true, deserialize = false) @Ignore var certificatList: MutableList<String> = mutableListOf()
 }

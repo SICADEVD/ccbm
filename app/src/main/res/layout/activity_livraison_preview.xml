@@ -16,8 +16,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -41,9 +41,8 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RECAPITULATIF LIVRAISON"
-                
-                android:textSize="@dimen/_13ssp"
+                android:text="RECAPITULATIF STOCK MAGASINS SECTION"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -91,6 +90,7 @@
                 android:weightSum="2">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveLivraisonPreview"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -100,9 +100,10 @@
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
                     android:text="ENREGISTRER"
-                    app:cornerRadius="50dp"
+                    app:iconTint="@color/white_color"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/ic_save_work"
                     app:iconGravity="start" />
 

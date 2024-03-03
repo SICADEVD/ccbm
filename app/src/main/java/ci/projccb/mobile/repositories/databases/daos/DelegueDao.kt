@@ -20,6 +20,10 @@ interface DelegueDao {
     fun getAll(agentID: String?): MutableList<DelegueModel>
 
     @Transaction
+    @Query("SELECT * FROM delegue WHERE id = :id")
+    fun getDelegueById(id: Int?): DelegueModel
+
+    @Transaction
     @Query("DELETE FROM delegue")
     fun deleteAll()
 }

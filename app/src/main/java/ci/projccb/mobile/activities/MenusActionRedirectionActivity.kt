@@ -66,7 +66,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
-            "SUIVI_PARCELLE" -> {
+            "PARCELLES" -> {
                 labelUnsyncDatasCountCountenuAction.text = suiviParcelleDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
@@ -77,7 +77,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
                         SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )?.size.toString()
             }
-            "SSRTE" -> {
+            "SSRTECLMRS" -> {
                 labelUnsyncDatasCountCountenuAction.text = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()
                     ?.getUnSyncedAll()?.size.toString()
             }
@@ -90,7 +90,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
                 labelUnsyncDatasCountCountenuAction.text = CcbRoomDatabase.getDatabase(this)?.estimationDao()
                     ?.getUnSyncedAll()?.size.toString()
             }
-            "SUIVI_APPLICATION" -> {
+            "APPLICATION" -> {
                 labelUnsyncDatasCountCountenuAction.text = CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()
                     ?.getUnSyncedAll()?.size.toString()
             }
@@ -160,14 +160,14 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
     fun buildInterfaceAccordingAction(fromMenu: String) {
         when (fromMenu.uppercase()) {
             "INSPECTION",
-            "SSRTE",
+            "SSRTECLMRS",
             "LOCALITE",
             "INFOS_PRODUCTEUR",
             "MENAGE",
-            "SUIVI_PARCELLE",
+            "PARCELLES",
             "FORMATION",
-            "CALCUL_ESTIMATION",
-            "SUIVI_APPLICATION",
+            "ESTIMATION",
+            "APPLICATION",
             "LIVRAISON" -> {
                 linearUpdateContentMenuAction.visibility = View.GONE
             }
@@ -180,18 +180,20 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
         when (actionMenu.uppercase()) {
             "ADD" -> {
                 when (fromMenu.uppercase()) {
-                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false) // ActivityUtils.startActivity(LocaliteActivity::class.java)
+                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = getString(R.string.compris), deconnec = false, showNo = false) // ActivityUtils.startActivity(LocaliteActivity::class.java)
                     "PRODUCTEUR" -> ActivityUtils.startActivity(ProducteurActivity::class.java)
                     "INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                     "MENAGE" -> ActivityUtils.startActivity(ProducteurMenageActivity::class.java)
                     "PARCELLE" -> ActivityUtils.startActivity(ParcelleActivity::class.java)
-                    "SUIVI_PARCELLE" -> ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
+                    "PARCELLES" -> ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
                     "INSPECTION" -> ActivityUtils.startActivity(InspectionActivity::class.java)
-                    "SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
+                    "SSRTECLMRS" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                     "FORMATION" -> ActivityUtils.startActivity(FormationActivity::class.java)
-                    "CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
-                    "SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
+                    "ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
+                    "APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                     "LIVRAISON" -> ActivityUtils.startActivity(LivraisonActivity::class.java)
+                    "LIVRAISON" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
+                    "LIVRAISON" -> ActivityUtils.startActivity(EvaluationArbreActivity::class.java)
                 }
             }
 
@@ -209,17 +211,17 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
 
             "DATAS" -> {
                 when (fromMenu.uppercase()) {
-                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false) //ActivityUtils.startActivity(LocalitesListActivity::class.java)
+                    "LOCALITE" -> Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = getString(R.string.compris), deconnec = false, showNo = false) //ActivityUtils.startActivity(LocalitesListActivity::class.java)
                     "PRODUCTEUR" -> ActivityUtils.startActivity(ProducteursListActivity::class.java)
                     //"INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                     "MENAGE" -> ActivityUtils.startActivity(MenageresListActivity::class.java)
                     "PARCELLE" -> ActivityUtils.startActivity(ParcellesListActivity::class.java)
-                    "SUIVI_PARCELLE" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
+                    "PARCELLES" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
                     //"INSPECTION" -> ActivityUtils.startActivity(EvaluationActivity::class.java)
                     //"SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                     "FORMATION" -> ActivityUtils.startActivity(FormationsListActivity::class.java)
-                    //"CALCUL_ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
-                    //"SUIVI_APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
+                    //"ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
+                    //"APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                     "LIVRAISON" -> ActivityUtils.startActivity(LivraisonsListActivity::class.java)
                 }
             }

@@ -33,8 +33,23 @@ interface ApiService {
     @POST("apisuiviformation")
     fun synchronisationFormation(@Body formationModel: FormationModel): Call<FormationModel>
 
-    @POST("apilivraison")
-    fun synchronisationLivraison(@Body livraisonModel: LivraisonModel): Call<LivraisonModel>
+    @POST("apivisiteur")
+    fun synchronisationVisiteurFormation(@Body visiteurFormationModel: VisiteurFormationModel): Call<VisiteurFormationModel>
+
+    @POST("apidistribution")
+    fun synchronisationDistributionArbre(@Body distributionArbreModel: DistributionArbreModel): Call<DistributionArbreModel>
+
+    @POST("postplanting")
+    fun synchronisationPostPlanting(@Body postPlantingModel: PostPlantingModel): Call<PostPlantingModel>
+
+    @POST("apiagroevaluation")
+    fun synchronisationEvaluationBesoin(@Body evaluationArbreModel: EvaluationArbreModel): Call<EvaluationArbreModel>
+
+    @POST("apilivraisonmagasinsection")
+    fun synchronisationLivraisonSection(@Body livraisonModel: LivraisonModel): Call<LivraisonModel>
+
+    @POST("apilivraisonmagasincentral")
+    fun synchronisationLivraisonCentral(@Body livraisonCentralModel: LivraisonCentralModel): Call<LivraisonCentralModel>
 
     @POST("apievaluation")
     fun synchronisationInspection(@Body questionDTO: InspectionDTO): Call<InspectionDTO>
@@ -43,12 +58,11 @@ interface ApiService {
     fun synchronisationInfosProducteur(@Body infosProducteurDTO: InfosProducteurDTO): Call<InfosProducteurDTO>
     // endregion
 
-
-
     @POST("getmagasinsection")
     fun getMagasins(@Body commonData: CommonData): Call<MutableList<MagasinModel>>
 
-
+    @POST("getmagasincentraux")
+    fun getMagasinsCentraux(@Body commonData: CommonData): Call<MutableList<MagasinModel>>
 
     // region SERVICE WITH COROUTINES
 
@@ -66,6 +80,9 @@ interface ApiService {
 
     @POST("getapplicateurs")
     fun getApplicateurs(@Body table: CommonData): Call<MutableList<ApplicateurModel>>
+
+    @POST("getapprovisionnementsection")
+    fun getApprovisionnement(): Call<MutableList<ApprovisionnementModel>>
 
     @POST("getlocalite")
     fun getLocalites(@Body table: CommonData): Call<MutableList<LocaliteModel>>
@@ -94,6 +111,9 @@ interface ApiService {
     @POST("getthemes")
     fun getThemes(): Call<MutableList<ThemeFormationModel>>
 
+    @POST("getsousthemes")
+    fun getSousThemes(): Call<MutableList<SousThemeFormationModel>>
+
     @POST("apiestimation")
     fun synchronisationEstimation(@Body estimationModel: EstimationModel): Call<EstimationModel>
 
@@ -112,10 +132,34 @@ interface ApiService {
     @POST("getstaff")
     fun getStaff(@Body table: CommonData): Call<MutableList<ConcernesModel>>
 
+    @POST("getformationsbyuser")
+    fun getFormationByUser(@Body table: CommonData): Call<MutableList<FormationModel>>
+
     @POST("getsections")
     fun getSections(@Body table: CommonData): Call<MutableList<SectionModel>>
 
     @POST("getprogrammes")
     fun getProgrammes(): Call<MutableList<ProgrammeModel>>
+
+    @POST("getarbre")
+    fun getArbreList(): Call<MutableList<ArbreModel>>
+
+    @POST("getbesoinprod")
+    fun getProductEvalList(@Body commonData: CommonData): Call<QuantiteArbrDistribuer>
+
+    @POST("gettransporteurs")
+    fun getTransporteurList(): Call<MutableList<TransporteurModel>>
+
+    @POST("getvehicules")
+    fun getVehiculeList(): Call<MutableList<VehiculeModel>>
+
+    @POST("getremorques")
+    fun getRemorqueList(): Call<MutableList<RemorqueModel>>
+
+    @POST("livraisonbroussebymagasinsection")
+    fun getLivraisonVerMagCentralList(): Call<MutableList<LivraisonVerMagCentralModel>>
+
+    @POST("getproducteursdistribues")
+    fun getProducteursPostPlantingArbrDistribList(@Body commonData: CommonData): Call<MutableList<PostPlantingArbrDistribSecModel>>
 
 }

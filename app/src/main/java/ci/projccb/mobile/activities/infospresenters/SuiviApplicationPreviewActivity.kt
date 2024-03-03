@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.SuiviApplicationActivity
+import ci.projccb.mobile.adapters.PreviewItemAdapter
 import ci.projccb.mobile.models.SuiviApplicationModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -60,60 +63,29 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
                 draftID = it.getIntExtra("draft_id", 0)
 
 
-                suiviApplication?.let { suiviApp ->
-                    try {
-                        labelApplicateurNomSuiviApplicationPreview.text = suiviApp.applicateurNom
-                        labelLocaliteNomSuiviApplicationPreview.text = suiviApp.localiteNom
-                        labelProducteurNomSuiviApplicationPreview.text = suiviApp.producteurNom
+                val suiviParcelleItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
+                val suiviParcelleItemListData = it.getParcelableArrayListExtra<MapEntry>("previewitem")
 
-                        labelCampagneNomSuiviApplicationPreview.text = suiviApp.campagneNom
-                        labelCultureNomSuiviApplicationPreview.text = suiviApp.cultureNom
-
-                        labelSuperficieSuiviApplicationPreview.text = suiviApp.superficiePulverisee
-                        labelProduitNomSuiviApplicationPreview.text = suiviApp.marqueProduitPulverise
-
-                        labelDegreDangerositeSuiviApplicationPreview.text = suiviApp.degreDangerosite
-                        labelRaisonApplicationSuiviApplicationPreview.text = suiviApp.raisonApplication
-
-                        labelDelaiReentreSuiviApplicationPreview.text = suiviApp.delaisReentree
-                        labelTamponYesNoSuiviApplicationPreview.text = suiviApp.zoneTampons
-
-                        if (suiviApp.zoneTampons == "oui") linearTamponPhotoContainerSuiviApplicationPreview.visibility = View.VISIBLE
-                        else linearTamponPhotoContainerSuiviApplicationPreview.visibility = View.GONE
-
-                        labelDoucheApplicateurYesNoSuiviApplicationPreview.text = suiviApp.presenceDouche
-
-                        if (suiviApp.presenceDouche == "oui") linearDouchePhotoContainerSuiviApplicationPreview.visibility = View.VISIBLE
-                        else linearDouchePhotoContainerSuiviApplicationPreview.visibility = View.GONE
-
-                        labelDateApplicationSuiviApplicationPreview.text = suiviApp.dateApplication
-                        labelHeureDebutApplicationSuiviApplicationPreview.text = suiviApp.heureApplication
-                        labelHeureFinApplicationSuiviApplicationPreview.text = suiviApp.heureFinApplication
-
-                        labelRaisonApplicationSuiviApplicationPreview
-
-                        suiviApp.photoTamponPath?.let {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                loadFileToBitmap(suiviApp.photoTamponPath, imageTamponPhotoSuiviApplicationPreview)
-                            }
-                        }
-
-                        suiviApp.photoDouchePath?.let {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                loadFileToBitmap(suiviApp.photoDouchePath, imageDouchePhotoSuiviApplicationPreview)
-                            }
-                        }
-                    } catch (ex: Exception) {
-                        LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+                suiviParcelleItemListData?.forEach {
+                    if(it.key.isNullOrEmpty()==false){
+                        Commons.addItemsToList(
+                            if(it.key=="null") "Autre" else it.key,
+                            it.value.replace(", ", "\n"),
+                            suiviParcelleItemsListPrev
+                        )
                     }
                 }
+
+                val rvPrevAdapter = PreviewItemAdapter(suiviParcelleItemsListPrev)
+                recyclerInfoPrev.adapter = rvPrevAdapter
+                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
 
                 clickCloseBtn.setOnClickListener {
                     finish()
                 }
 
-                clickSaveApplicationSuiviPreview.setOnClickListener {
+                clickSaveSApplicPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,
@@ -121,7 +93,7 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
                         callback = {
                             CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.insert(suiviApplication!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "suiviapplication", this)
+                            Commons.synchronisation(type = "application", this)
                             Commons.showMessage(
                                 "Suivi d'application effectué avec succes !",
                                 this,

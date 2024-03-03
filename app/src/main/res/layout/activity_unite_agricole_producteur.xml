@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -44,15 +44,15 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 android:text="FICHE INFOS PRODUCTEUR"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -114,10 +114,10 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations Personnelles"
+                            android:text="INFORMATIONS PERSONNELLES"
                             android:textColor="@color/text_color_white"
 
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -142,7 +142,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Section *"
+                            android:text="@string/selectionner_une_section"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
@@ -181,7 +181,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localite *"
+                            android:text="@string/selectionner_une_localit"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -215,7 +215,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nom et prénom producteur"
+                            android:text="@string/selectionner_un_producteur"
                             android:textColor="@color/text_color_white"
 
                             android:textStyle="bold" />
@@ -309,37 +309,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur l'exploitation"
-                            
-                            android:textSize="@dimen/_13ssp"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations sur l'exploitation"-->
+<!--                            -->
+<!--                            android:textSize="@dimen/_13ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -356,7 +356,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Avez-vous des\nforêts ou jacheres ?"
+                            android:text="Avez-vous des forêts ou jacheres ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -369,6 +369,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="foretsjachere"
                                 android:id="@+id/selectJachereInfosProducteur"
                                 android:layout_width="match_parent"
@@ -437,7 +438,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il d'autres cultures ?"
+                            android:text="Avez-vous d’autres cultures en dehors du cacao ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -451,6 +452,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="autresCultures"
                                 android:id="@+id/selectCulturesInfosProducteur"
                                 android:layout_width="match_parent"
@@ -498,7 +500,7 @@ android:textColor="@color/text_color_white"
 
                                         <LinearLayout
                                             android:layout_width="0dp"
-                                            android:layout_weight="3.50"
+                                            android:layout_weight="3.0"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
 
@@ -507,7 +509,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_10sdp"
-                                                android:text="Le type"
+                                                android:text="Le nom de la culture"
                                                 android:textStyle="bold" />
 
                                             <androidx.appcompat.widget.AppCompatEditText
@@ -530,11 +532,11 @@ android:textColor="@color/text_color_white"
                                         <Space
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="0.25" />
+                                            android:layout_weight="0.15" />
 
                                         <LinearLayout
                                             android:layout_width="0dp"
-                                            android:layout_weight="1.25"
+                                            android:layout_weight="1.85"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
 
@@ -576,7 +578,7 @@ android:textColor="@color/text_color_white"
                                     android:background="@drawable/submit_button_bg"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
-                                    android:textColor="@color/text_color_white"
+                                    android:textColor="@color/white_color"
                                     android:text="Ajouter"
                                     android:textSize="@dimen/_9ssp" />
 
@@ -616,7 +618,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il d'autres activité excepté le cacao ?"
+                            android:text="Avez-vous d’autres activités en dehors des cultures ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -630,6 +632,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="autreActivite"
                                 android:id="@+id/selectActiviteOrCacaoInfosProducteur"
                                 android:layout_width="match_parent"
@@ -681,7 +684,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingLeft="@dimen/_10sdp"
-                                            android:text="Le type d'activité"
+                                            android:text="Le nom de l'activité"
                                             android:textStyle="bold" />
 
                                         <androidx.appcompat.widget.AppCompatEditText
@@ -714,7 +717,7 @@ android:textColor="@color/text_color_white"
                                     android:background="@drawable/submit_button_bg"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
-                                    android:textColor="@color/text_color_white"
+                                    android:textColor="@color/white_color"
                                     android:text="Ajouter"
                                     android:textSize="@dimen/_9ssp" />
 
@@ -868,37 +871,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur la main d'œuvre"
-                            
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations sur la main d'œuvre"-->
+<!--                            -->
+<!--                            android:textSize="@dimen/_14ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -917,7 +920,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a t'il des travailleurs dans la famille ?"
+                            android:text="Avez-vous recours à une main d'œuvre familiale ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -931,6 +934,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="mainOeuvreFamilial"
                                 android:id="@+id/selectTravaiFamilleInfosProducteur"
                                 android:layout_width="match_parent"
@@ -962,7 +966,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleur (Famille) ?"
+                            android:text="Combien de personnes (de la famille travaillent) ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1001,7 +1005,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleurs rémunérés ?"
+                            android:text="Combien de travailleurs (rémunéré) avez-vous ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1040,7 +1044,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Combien de travailleurs permanents (+12 mois) ?"
+                            android:text="Nombre de travailleurs permanents (plus de 12mois) ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1079,7 +1083,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le nombre de travailleurs temporaires ?"
+                            android:text="Nombre de travailleurs non permanents ?"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1132,7 +1136,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:tag="travailSociete"
+                                android:tag="societeTravail"
                                 android:id="@+id/selectTravaiSocietInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"
@@ -1167,7 +1171,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:tag="travailleurssociale"
+                            android:tag="nombrePersonne"
                             android:id="@+id/editNbrTravSocieteInfosProducteur"
                             android:layout_weight="4"
                             android:layout_width="0dp"
@@ -1503,37 +1507,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations Bancaires"
-                            
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations Bancaires"-->
+<!--                            -->
+<!--                            android:textSize="@dimen/_14ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -1620,7 +1624,7 @@ android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:paddingLeft="@dimen/_10sdp"
-                                            android:text="Opérateur"
+                                            android:text="Opérateur Téléphonique"
                                             android:textStyle="bold" />
 
                                         <LinearLayout
@@ -1651,6 +1655,7 @@ android:textColor="@color/text_color_white"
                                     <LinearLayout
                                         android:layout_width="0dp"
                                         android:layout_weight="2.25"
+                                        android:gravity="bottom"
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
@@ -1658,7 +1663,7 @@ android:textColor="@color/text_color_white"
                                             android:textColor="@color/text_color_white"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="Numéro"
+                                            android:text="Téléphone"
                                             android:paddingLeft="@dimen/_10sdp"
                                             android:textStyle="bold" />
 
@@ -1692,7 +1697,7 @@ android:textColor="@color/text_color_white"
                                     android:background="@drawable/submit_button_bg"
                                     android:paddingStart="@dimen/_10sdp"
                                     android:paddingEnd="@dimen/_10sdp"
-                                    android:textColor="@color/text_color_white"
+                                    android:textColor="@color/white_color"
                                     android:text="Ajouter"
                                     android:textSize="@dimen/_9ssp" />
 
@@ -1734,8 +1739,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="As-tu un compte\ndans une banque ?"
-
+                            android:text="As-tu un compte bancaire (dans une banque) ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1777,7 +1781,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Sélectionner la banque :"
+                            android:text="Sélectionner le nom de la banque :"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1817,7 +1821,7 @@ android:textColor="@color/text_color_white"
                             android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Nom de la banque"
+                            android:text="Précisez le nom de la banque"
                             android:paddingLeft="@dimen/_10sdp"
                             android:textStyle="bold" />
 
@@ -1854,6 +1858,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelInfosProducteur"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1863,13 +1868,15 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="ANNULER"
-                    app:cornerRadius="50dp"
+                    android:textColor="@color/text_color_white"
+                    android:text="@string/annuler"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickReviewInfosProducteur"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1879,9 +1886,10 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="VÉRIFIER"
-                    app:cornerRadius="50dp"
+                    app:iconTint="@color/white_color"
+                    android:text="@string/v_rifier"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

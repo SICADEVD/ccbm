@@ -61,7 +61,7 @@ class AuthentificationActivity : AppCompatActivity() {
 
 
     fun bindDatas() {
-        inputLogin.text = Editable.Factory.getInstance().newEditable("CARYN")
+        inputLogin.text = Editable.Factory.getInstance().newEditable("abole".uppercase())
         //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
         //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
         inputPassword.text = Editable.Factory.getInstance().newEditable("1234567")
@@ -147,15 +147,20 @@ class AuthentificationActivity : AppCompatActivity() {
                                 showMessage(messageError!! , this@AuthentificationActivity, callback = {})
                             } else {
                                 val agentResponseBody = response.body()
-                                val roles = agentResponseBody?.menu //arrayListOf<String>()
+                                var roles = agentResponseBody?.menu //arrayListOf<String>()
                                 val agentModel = agentResponseBody?.results
 
-//                                roles?.addAll(arrayOf(
-//                                    "PRODUCTEUR",
-//                                    "PARCELLE",
-//                                ))
+                                //remavoe some feature
+                                //roles?.remove("ESTIMATION")
+                                val rolesCopy = arrayListOf<String>()
 
-                                SPUtils.getInstance().put("menu", GsonUtils.toJson(roles))
+                                roles?.forEachIndexed { index,item ->
+                                    if(item.equals("EVALUATION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_EVALUATION")
+                                    if(item.equals("DISTRIBUTION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_DISTRIBUTION")
+                                    rolesCopy.add(item)
+                                }
+
+                                SPUtils.getInstance().put("menu", GsonUtils.toJson(rolesCopy))
                                 agentModel?.isLogged = true
 
                                 SPUtils.getInstance().put(Constants.HAS_USER_LOGGED, "yes")

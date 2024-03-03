@@ -78,15 +78,15 @@ class LocaliteActivity : AppCompatActivity() {
         sourceEauxList = AssetFileHelper.getListDataFromAsset(16, this@LocaliteActivity) as MutableList<SourceEauModel>?
                 //sourceEaDao?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()) ?: mutableListOf()
 
-        arraySourceEau.add("Choisir le type...")
+        arraySourceEau.add(getString(R.string.choisir_le_type))
 
         if (sourceEauxList!!.isEmpty()) {
             showMessage(
-                "La liste des sources d'eau est vide ! Refaite une mise à jour.",
+                getString(R.string.la_liste_des_sources_d_eau_est_vide_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -123,15 +123,15 @@ class LocaliteActivity : AppCompatActivity() {
         typeLocalitesList = AssetFileHelper.getListDataFromAsset(15, this@LocaliteActivity) as MutableList<TypeLocaliteModel>?
                 //typeLocaliteDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()) ?: mutableListOf()
 
-        arrayTypeLocalite.add("Choisir le type...")
+        arrayTypeLocalite.add(getString(R.string.choisir_le_type))
 
         if (typeLocalitesList!!.isEmpty()) {
             showMessage(
-                "La liste du type de localité est vide ! Refaite une mise à jour.",
+                getString(R.string.la_liste_du_type_de_localit_est_vide_refaite_une_mise_jour),
                 this,
                 finished = false,
                 callback = {},
-                "Compris !",
+                getString(R.string.compris),
                 false,
                 showNo = false,
             )
@@ -210,11 +210,11 @@ class LocaliteActivity : AppCompatActivity() {
                 marketYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (marketYesNo) {
-                    "oui" -> {
+                    getString(R.string.oui) -> {
                         linearMarketDayContainerLocalite.visibility = View.VISIBLE
                         linearMarketDistanceContainerLocalite.visibility = View.GONE
                     }
-                    "non" -> {
+                    getString(R.string.non) -> {
                         linearMarketDistanceContainerLocalite.visibility = View.VISIBLE
                         linearMarketDayContainerLocalite.visibility = View.GONE
                     }
@@ -249,12 +249,12 @@ class LocaliteActivity : AppCompatActivity() {
                 centreYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (centreYesNo) {
-                    "oui" -> {
+                    getString(R.string.oui) -> {
                         linearCentreKmContainerLocalite.visibility = View.GONE
                         linearCentreSanteNoTypeContainerLocalite.visibility = View.VISIBLE
                         linearCentreSanteYesNomContainerLocalite.visibility = View.VISIBLE
                     }
-                    "non" -> {
+                    getString(R.string.non) -> {
                         linearCentreKmContainerLocalite.visibility = View.VISIBLE
                         linearCentreSanteYesNomContainerLocalite.visibility = View.VISIBLE
                         linearCentreSanteNoTypeContainerLocalite.visibility = View.VISIBLE
@@ -279,13 +279,13 @@ class LocaliteActivity : AppCompatActivity() {
                 ecoleYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (ecoleYesNo) {
-                    "oui" -> {
+                    getString(R.string.oui) -> {
                         linearNbreEcoleContainerLocalite.visibility = View.VISIBLE
                         linearEcoleDistanceContainerLocalite.visibility = View.GONE
 
                         nbreEcole = ""
                     }
-                    "non" -> {
+                    getString(R.string.non) -> {
                         linearNbreEcoleContainerLocalite.visibility = View.GONE
                         linearEcoleDistanceContainerLocalite.visibility = View.VISIBLE
 
@@ -360,24 +360,24 @@ class LocaliteActivity : AppCompatActivity() {
 
         if (nomLocalite.isEmpty()) {
             showMessage(
-                "Renseignez la localite, svp !",
+                getString(R.string.renseignez_la_localite_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (typeLocalite.contains("Choisir", ignoreCase = true)) {
+        if (typeLocalite.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Renseignez le type de la localité, svp !",
+                getString(R.string.renseignez_le_type_de_la_localit_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
@@ -386,89 +386,89 @@ class LocaliteActivity : AppCompatActivity() {
 
         if (sousPrefecture.isEmpty()) {
             showMessage(
-                "Renseignez la sous-prefecture, svp !",
+                getString(R.string.renseignez_la_sous_prefecture_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (centreYesNo.contains("choisir", ignoreCase = true)) {
+        if (centreYesNo.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Repondez à la question sur le centre de santé, svp !",
+                getString(R.string.repondez_la_question_sur_le_centre_de_sant_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (centreStatut.contains("choisir", ignoreCase = true)) {
+        if (centreStatut.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Repondez à la question sur du statut centre de santé, svp !",
+                getString(R.string.repondez_la_question_sur_du_statut_centre_de_sant_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (ecoleYesNo.contains("choisir", ignoreCase = true)) {
+        if (ecoleYesNo.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Repondez à la question sur l'école, svp !",
+                getString(R.string.repondez_la_question_sur_l_cole_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (sourecEau.contains("choisir", ignoreCase = true)) {
+        if (sourecEau.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Repondez à la question source d'eau, svp !",
+                getString(R.string.repondez_la_question_source_d_eau_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (cieYesNo.contains("choisir", ignoreCase = true)) {
+        if (cieYesNo.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Repondez à la question de source d'électricité, svp !",
+                getString(R.string.repondez_la_question_de_source_d_lectricit_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
             return
         }
 
-        if (lieuDechetYesNo.contains("choisir", ignoreCase = true)) {
+        if (lieuDechetYesNo.contains(getString(R.string.choisir), ignoreCase = true)) {
             showMessage(
-                "Repondez à la question de dechet, svp !",
+                getString(R.string.repondez_la_question_de_dechet_svp),
                 context = this,
                 finished = false,
                 callback = {},
-                positive = "OK",
+                positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
             )
@@ -532,7 +532,7 @@ class LocaliteActivity : AppCompatActivity() {
         if (ecolesList.size < editNbreEcolesLocalite.text.toString().toInt()) {
             ecolesList.forEach {
                 if (it.trim().uppercase() == ecole.trim().uppercase()) {
-                    ToastUtils.showShort("Cette ecole est deja ajoutée")
+                    ToastUtils.showShort(getString(R.string.cette_ecole_est_deja_ajout_e))
                     return
                 }
             }
@@ -544,7 +544,7 @@ class LocaliteActivity : AppCompatActivity() {
         } else {
 
             showMessage(
-                message = "Nombre d'ecoles saisi atteint",
+                message = getString(R.string.nombre_d_ecoles_saisi_atteint),
                 context = this,
                 finished = false,
                 callback = {},
@@ -559,7 +559,7 @@ class LocaliteActivity : AppCompatActivity() {
         val localDraft = getLocaliteObjet()
 
         showMessage(
-            message = "Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?",
+            message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
             context = this,
             finished = false,
             callback = {
@@ -573,19 +573,19 @@ class LocaliteActivity : AppCompatActivity() {
                 )
 
                 showMessage(
-                    message = "Contenu ajouté aux brouillons !",
+                    message = getString(R.string.contenu_ajout_aux_brouillons),
                     context = this,
                     finished = true,
                     callback = {
                         playDraftSound(this)
                         imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
-                    positive = "OK",
+                    positive = getString(R.string.ok),
                     deconnec = false,
                     false
                 )
             },
-            positive = "OUI",
+            positive = getString(R.string.oui),
             deconnec = false,
             showNo = true
         )
@@ -615,7 +615,7 @@ class LocaliteActivity : AppCompatActivity() {
         // Localite type
         val typeLists = CcbRoomDatabase.getDatabase(this)?.typeLocaliteDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         val typeLocalitesDatas: MutableList<CommonData> = mutableListOf()
-        typeLocalitesDatas.add(CommonData(id = 0, nom = "Choisir le type"))
+        typeLocalitesDatas.add(CommonData(id = 0, nom = getString(R.string.choisir_le_type)))
         typeLists?.map {CommonData(id = 0, nom = it.nom)}?.let { typeLocalitesDatas.addAll(it) }
         provideDatasSpinnerSelection(selectTypeLocalite, localiteDrafted.type, typeLocalitesDatas)
 
@@ -637,7 +637,7 @@ class LocaliteActivity : AppCompatActivity() {
         //  Source d'eau
         val eauLists = CcbRoomDatabase.getDatabase(this)?.sourceEauDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         val eauxDatas: MutableList<CommonData> = mutableListOf()
-        eauxDatas.add(CommonData(id = 0, nom = "Choisir la source"))
+        eauxDatas.add(CommonData(id = 0, nom = getString(R.string.choisir_la_source)))
         eauLists?.map {CommonData(id = 0, nom = it.nom)}?.let { eauxDatas.addAll(it) }
         provideDatasSpinnerSelection(selectSourceEauLocalite, localiteDrafted.source, eauxDatas)
 
