@@ -102,8 +102,8 @@ class SuiviParcellePreviewActivity : AppCompatActivity() {
                 suiviParcelleItemListData?.forEach {
                     if(it.key.isNullOrEmpty()==false){
                         Commons.addItemsToList(
-                            it.key,
-                            it.value,
+                            if(it.key=="null") "Autre" else it.key,
+                            it.value.replace(", ", "\n"),
                             suiviParcelleItemsListPrev
                         )
                     }

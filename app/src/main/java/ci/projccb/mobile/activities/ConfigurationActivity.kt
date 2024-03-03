@@ -8,6 +8,7 @@ import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
+import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Constants
@@ -45,13 +46,15 @@ class ConfigurationActivity : AppCompatActivity() {
     var typeDocuDocumentDao: TypeDocumentDao? = null
     var typeFormationDao: TypeFormationDao? = null
     var themeFormationDao: ThemeFormationDao? = null
+    var sousThemeFormationDao: SousThemeFormationDao? = null
     var parcelleDao: ParcelleDao? = null
     var intrantDao: IntrantDao? = null
     var campagneDao: CampagneDao? = null
     var applicateurDao: ApplicateurDao? = null
     var questionnaireDao: QuestionnaireDao? = null
     var notationDao: NotationDao? = null
-    var magasinDao: MagasinDao? = null
+    var magasinDao: MagasinCentralDao? = null
+    var magasinSectionDao: MagasinDao? = null
     var menageDao: ProducteurMenageDao? = null
     var livraisonDao: LivraisonDao? = null
     var formationDao: FormationDao? = null
@@ -77,9 +80,20 @@ class ConfigurationActivity : AppCompatActivity() {
     var recuDao: RecuDao? = null
     var delegueDao: DelegueDao? = null
     var concernesDao: ConcernesDao? = null
+    var transporteurDao: TransporteurDao? = null
+    var entrepriseDao: EntrepriseDao? = null
+    var vehiculeDao: VehiculeDao? = null
+    var remorqueDao: RemorqueDao? = null
+    var livraisonVerMagCentralDao: LivraisonVerMagCentralDao? = null
+    var staffFormationDao: StaffFormationDao? = null
     var programmesDao: ProgrammesDao? = null
     var sectionsDao: SectionsDao? = null
     var agentModel: AgentModel? = null
+    var arbreDao: ArbreDao? = null
+    var approvisionnementDao: ApprovisionnementDao? = null
+    var evaluationArbreDao: EvaluationArbreDao? = null
+    var postplantingDao: PostplantingDao? = null
+    var postPlantingArbrDistribDao: PostPlantingArbrDistribDao? = null
     var agentID: Int = 0
     var oneIssue = false
 
@@ -137,7 +151,7 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getLocalites() {
         withContext(IO) {
             val localitesUpdate = async {
-                localiteDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                localiteDao?.deleteAll()
 
                 try {
                     val clientLocalite = ApiClient.apiService.getLocalites(CommonData(userid = agentID, table = "localites"))
@@ -179,10 +193,11 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getProducteurs() {
         withContext(IO) {
             val producteursUpdate = async {
-                producteurDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                //producteurDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
+                producteurDao?.deleteAll()
 
                 try {
-                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = agentModel?.id))
+                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = null))//agentModel?.id
                     val responseProducteurs: Response<MutableList<ProducteurModel>> = clientProducteurs.execute()
                     val produteursList: MutableList<ProducteurModel>? = responseProducteurs.body()
 
@@ -194,6 +209,8 @@ class ConfigurationActivity : AppCompatActivity() {
                             prenoms = it.prenoms,
                             localitesId = it.localitesId,
                             codeProd = it.codeProd,
+                            certification = it.certification,
+                            statutCertification = it.statutCertification,
                             uid = 0,
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
@@ -240,6 +257,10 @@ class ConfigurationActivity : AppCompatActivity() {
                             producteurId = it.producteurId,
                             anneeCreation = it.anneeCreation,
                             superficie = it.superficie,
+                            codeParc = it.codeParc,
+                            nbCacaoParHectare = it.nbCacaoParHectare,
+                            latitude = it.latitude,
+                            longitude = it.longitude,
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"
@@ -543,7 +564,8 @@ class ConfigurationActivity : AppCompatActivity() {
                 concernesDao?.deleteAll()
 
                 try {
-                    var clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "applicateur"))
+                    var clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID),
+                        role = "applicateur", is_different = false))
                     var responseData: Response<MutableList<ConcernesModel>> = clientData.execute()
                     val dataList: MutableList<ConcernesModel>? = responseData.body()
 
@@ -581,6 +603,287 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Applicateurs, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Applicateurs")
+                //getStaffDelegue()
+                getListeTransporteurs()
+            }
+
+        }
+    }
+
+    suspend fun getListeTransporteurs() {
+
+        val listOfEntreprise = mutableListOf<EntrepriseModel>()
+
+        withContext(IO) {
+            val dataUpdate = async {
+                transporteurDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getTransporteurList()
+                    var responseData: Response<MutableList<TransporteurModel>> = clientData.execute()
+                    val dataList: MutableList<TransporteurModel>? = responseData.body()
+
+                    val entrepriseNameList = mutableListOf<String>()
+
+                    dataList?.map {
+
+                        if (!entrepriseNameList.contains(it.entreprise.toString())) {
+                            entrepriseNameList.add(it.entreprise.toString())
+                            val entreprise = EntrepriseModel(
+                                id = it.entreprise_id,
+                                nom = it.entreprise.toString(),
+                                uid = 0,
+                                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                            )
+                            listOfEntreprise.add(entreprise)
+                        }
+
+                        val data = TransporteurModel(
+                            id = it.id,
+                            entreprise_id = it.entreprise_id,
+                            nom = it.nom,
+                            prenoms = it.prenoms,
+                            date_naiss = it.date_naiss,
+                            phone1 = it.phone1,
+                            num_piece = it.num_piece,
+                            num_permis = it.num_permis,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        transporteurDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Transporteurs, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Transporteurs")
+                //getStaffDelegue()
+                getEntrepriseFormation(listOfEntreprise)
+                //getStaffFormation()
+            }
+
+        }
+    }
+
+    suspend fun getEntrepriseFormation(listOfEntreprise: MutableList<EntrepriseModel>) {
+
+        withContext(IO) {
+            val dataUpdate = async {
+                entrepriseDao?.deleteAll()
+
+                try {
+
+                    listOfEntreprise?.map {
+                        entrepriseDao?.insert(it)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Entreprises, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Entreprises")
+                //getStaffDelegue()
+                getStaffFormation()
+            }
+
+        }
+    }
+
+    suspend fun getStaffFormation() {
+        withContext(IO) {
+            val dataUpdate = async {
+                staffFormationDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID),
+                        role = "manager", is_different = true))
+                    var responseData: Response<MutableList<ConcernesModel>> = clientData.execute()
+                    val dataList: MutableList<ConcernesModel>? = responseData.body()
+
+//                    clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "delegue"))
+//                    responseData = clientData.execute()
+//                    dataList?.addAll(responseData.body()?: arrayListOf())
+
+                    dataList?.map {
+                        val data = StaffFormationModel(
+                            id = it.id,
+                            firstname = it.firstname,
+                            lastname = it.lastname,
+                            username = it.username,
+                            email = it.email,
+                            mobile = it.mobile,
+                            adresse = it.adresse,
+                            role = it.role,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        staffFormationDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Staff de la formation, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Staff de la formation")
+                getVehicule()
+            }
+
+        }
+    }
+
+    suspend fun getVehicule() {
+        withContext(IO) {
+            val dataUpdate = async {
+                vehiculeDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getVehiculeList()
+                    var responseData: Response<MutableList<VehiculeModel>> = clientData.execute()
+                    val dataList: MutableList<VehiculeModel>? = responseData.body()
+
+                    dataList?.map {
+                        val data = VehiculeModel(
+                            id = it.id,
+                            marque_id = it.marque_id,
+                            marque = it.marque,
+                            vehicule_immat = it.vehicule_immat,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        vehiculeDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Vehicules, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Vehicules")
+                getRemorque()
+            }
+
+        }
+    }
+
+    suspend fun getRemorque() {
+        withContext(IO) {
+            val dataUpdate = async {
+                remorqueDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getRemorqueList()
+                    var responseData: Response<MutableList<RemorqueModel>> = clientData.execute()
+                    val dataList: MutableList<RemorqueModel>? = responseData.body()
+
+                    dataList?.map {
+                        val data = RemorqueModel(
+                            id = it.id,
+                            remorque_immat = it.remorque_immat,
+                            cooperativesId = it.cooperativesId,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )
+
+                        remorqueDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Remorques, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Remorques")
+                getLivraisonVerMagCentral()
+            }
+
+        }
+    }
+
+    suspend fun getLivraisonVerMagCentral() {
+        withContext(IO) {
+            val dataUpdate = async {
+                livraisonVerMagCentralDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getLivraisonVerMagCentralList()
+                    var responseData: Response<MutableList<LivraisonVerMagCentralModel>> = clientData.execute()
+                    val dataList: MutableList<LivraisonVerMagCentralModel>? = responseData.body()
+
+                    dataList?.map { data ->
+                        val data = LivraisonVerMagCentralModel(
+                            id = data.id,
+                            section = data.section,
+                            parcelle = data.parcelle,
+                            producteur = data.producteur,
+                            magasinier = data.magasinier,
+                            magasinSection = data.magasinSection,
+                            codeMagasinSection = data.codeMagasinSection,
+                            Delegue = data.Delegue,
+                            typeProduit = data.typeProduit,
+                            certificat = data.certificat,
+                            quantiteMagasinSection = data.quantiteMagasinSection,
+                            quantiteLivreMagCentral = data.quantiteLivreMagCentral,
+                            nom = data.nom,
+                            prenoms = data.prenoms,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                            isSynced = true,
+                            origin = "remote",
+                            uid = 0
+                        )
+
+                        livraisonVerMagCentralDao?.insert(data)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Livraison vers magasin central, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Livraison vers magasin central")
                 getStaffDelegue()
             }
 
@@ -606,6 +909,9 @@ class ConfigurationActivity : AppCompatActivity() {
                             id = it.id,
                             uid = 0,
                             nom = "${it.firstname} ${it.lastname}",
+                            mobile = it.mobile,
+                            adresse = it.adresse,
+                            email = it.email,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
                         )
 
@@ -624,6 +930,54 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Délégué")
+                //getTypeThemeFormations()
+                getListFormation()
+            }
+
+        }
+    }
+
+    suspend fun getListFormation() {
+        withContext(IO) {
+            val dataUpdate = async {
+                formationDao?.deleteAll()
+
+                try {
+                    var clientData = ApiClient.apiService.getFormationByUser(table = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
+                    var responseData: Response<MutableList<FormationModel>> = clientData.execute()
+                    val dataList: MutableList<FormationModel>? = responseData.body()
+
+//                    clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "delegue"))
+//                    responseData = clientData.execute()
+//                    dataList?.addAll(responseData.body()?: arrayListOf())
+
+                    dataList?.map {
+                        val formModel = FormationModel(
+                            id = it.id,
+                            isSynced = true,
+                            origin = "remote",
+                            uid = 0,
+                            localitesId = it.localitesId,
+                            lieuFormation = it.lieuFormation,
+                            formationType = it.formationType,
+                            observationFormation = it.observationFormation,
+                            agentId = it.agentId
+                        )
+                        formationDao?.insert(formModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            dataUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des formations")
                 //getTypeThemeFormations()
                 getSections()
             }
@@ -1150,7 +1504,7 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun getTypeThemeFormations() {
         withContext(IO) {
             val dataUpdate = async {
-                themeFormationDao?.deleteAll()
+                //themeFormationDao?.deleteAll()
                 typeFormationDao?.deleteAll()
 
 
@@ -1182,7 +1536,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (oneIssue) {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
-                configCompletedOrError("Type de formation")
+                configCompletedOrError(getString(R.string.type_de_formation))
                 //getTypeIntrans()
                 getCampagnes()
             }
@@ -1280,15 +1634,21 @@ class ConfigurationActivity : AppCompatActivity() {
                     val responseCampagneData: Response<MutableList<CampagneModel>> = clientCampagneData.execute()
                     val datasCampagneList: MutableList<CampagneModel>? = responseCampagneData.body()
 
-                    datasCampagneList?.map {
-                        val dataCampagneModel = CampagneModel(
-                            campagnesNom = it.campagnesNom,
-                            id = it.id,
-                            uid = 0
-                        )
+                    datasCampagneList?.map { model ->
+                        model?.let {
+                            if(it.campagnesNom!=null)
+                            {
+                                val dataCampagneModel = CampagneModel(
+                                    campagnesNom = it.campagnesNom,
+                                    id = it.id,
+                                    uid = 0
+                                )
 
-                        campagneDao?.insert(dataCampagneModel)
+                                campagneDao?.insert(dataCampagneModel)
+                            }
+                        }
                     }
+
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
@@ -1420,7 +1780,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Notations, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Notations")
-                getMagasinsSection()
+                getMagasinsCentral()
             }
 
 
@@ -1428,10 +1788,54 @@ class ConfigurationActivity : AppCompatActivity() {
     }
 
 
-    suspend fun getMagasinsSection() {
+    suspend fun getMagasinsCentral() {
         withContext(IO) {
             val magasinsFetch = async {
                 magasinDao?.deleteAll()
+                var magasinList = mutableListOf<MagasinModel>()
+
+                try {
+                    val clientMagasinData = ApiClient.apiService.getMagasinsCentraux(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
+                    val responseMagasinData: Response<MutableList<MagasinModel>> = clientMagasinData.execute()
+                    val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
+
+                    datasMagasinList?.map {
+                        val dataMagasinModel = MagasinCentralModel(
+                            codeMagasinsections = it.codeMagasinsections,
+                            nomMagasinsections = it.nomMagasinsections,
+                            staffId = it.staffId,
+                            phone = it.phone,
+                            status = it.status,
+                            id = it.id,
+                            uid = 0
+                        )
+                        magasinDao?.insert(dataMagasinModel)
+                        //magasinDao?.insert(it)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+
+            }
+
+            magasinsFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Magasins centraux")
+                getMagasinsSection()
+            }
+        }
+    }
+
+    suspend fun getMagasinsSection() {
+        withContext(IO) {
+            val magasinsFetch = async {
+                magasinSectionDao?.deleteAll()
+                var magasinList = mutableListOf<MagasinModel>()
 
                 try {
                     val clientMagasinData = ApiClient.apiService.getMagasins(commonData = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)))
@@ -1439,24 +1843,13 @@ class ConfigurationActivity : AppCompatActivity() {
                     val datasMagasinList: MutableList<MagasinModel>? = responseMagasinData.body()
 
                     datasMagasinList?.map {
-                        val dataMagasinModel = MagasinModel(
-                            codeMagasinsections = it.codeMagasinsections,
-                            nomMagasinsections = it.nomMagasinsections,
-                            staffId = it.staffId,
-                            phone = it.phone,
-                            email = it.email,
-                            adresse = it.adresse,
-                            status = it.status,
-                            id = it.id,
-                            uid = 0
-                        )
-
-                        magasinDao?.insert(dataMagasinModel)
+                        magasinSectionDao?.insert(it)
+                        //magasinDao?.insert(it)
                     }
                 } catch (ex: Exception) {
                     oneIssue = true
                     LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
 
@@ -1465,7 +1858,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (oneIssue) {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
-                configCompletedOrError("Magasins de section")
+                configCompletedOrError("Magasins sections")
                 getThemesFormationSelection()
             }
         }
@@ -1508,6 +1901,48 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("themes")
+                getSousThemesFormationSelection()
+            }
+
+
+        }
+    }
+
+    suspend fun getSousThemesFormationSelection() {
+        withContext(IO) {
+            val themeFormationFetch = async {
+                sousThemeFormationDao?.deleteAll()
+
+
+                try {
+                    val clientSousThemeFormationData = ApiClient.apiService.getSousThemes()
+                    val responseThemeFormationData: Response<MutableList<SousThemeFormationModel>> = clientSousThemeFormationData.execute()
+                    val datasSousThemeFormationList: MutableList<SousThemeFormationModel>? = responseThemeFormationData.body()
+
+                    datasSousThemeFormationList?.map {
+                        val dataSousThemeFormationModel = SousThemeFormationModel(
+                            id = it.id,
+                            nom = it.nom,
+                            uid = 0,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                            themeFormationsId = it.themeFormationsId
+                        )
+
+                        sousThemeFormationDao?.insert(dataSousThemeFormationModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            themeFormationFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("sous themes")
                 getTypeFormationsSection()
             }
 
@@ -1555,6 +1990,199 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Type de formations")
+                //configFlow()
+                //getLiensParenteSection()
+                getArbreList()
+            }
+        }
+    }
+
+    suspend fun getArbreList() {
+        withContext(IO) {
+            val arbreListFetch = async {
+                arbreDao?.deleteAll()
+
+                try {
+                    val clientArbreListData = ApiClient.apiService.getArbreList()
+
+                    val responseArbreListData: Response<MutableList<ArbreModel>> = clientArbreListData.execute()
+                    val datasArbreListList: MutableList<ArbreModel>? = responseArbreListData.body()
+
+                    datasArbreListList?.map {
+                        val dataArbreListModel = ArbreModel(
+                            uid = 0,
+                            nom = it.nom,
+                            nomScientifique = it.nomScientifique,
+                            strate = it.strate,
+                            id = it.id,
+                        )
+
+                        arbreDao?.insert(dataArbreListModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            arbreListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des arbres")
+                //configFlow()
+                getApprovisionnementList()
+            }
+        }
+    }
+
+
+    suspend fun getApprovisionnementList() {
+        withContext(IO) {
+            val approvisionnementListFetch = async {
+                approvisionnementDao?.deleteAll()
+
+                try {
+                    val clientArbreListData = ApiClient.apiService.getApprovisionnement()
+
+                    val responseArbreListData: Response<MutableList<ApprovisionnementModel>> = clientArbreListData.execute()
+                    val datasArbreListList: MutableList<ApprovisionnementModel>? = responseArbreListData.body()
+
+                    datasArbreListList?.map {
+                        val dataArbreListModel = ApprovisionnementModel(
+                            uid = 0,
+                            id = it.id,
+                            section_id = it.section_id,
+                            agroapprovisionnement_id = it.agroapprovisionnement_id,
+                            bon_livraison = it.bon_livraison,
+                            total = it.total,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
+                        )
+
+                        approvisionnementDao?.insert(dataArbreListModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            approvisionnementListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des approvisionnements")
+                //configFlow()
+                getProductEvalArbrList()
+            }
+        }
+    }
+
+    suspend fun getProductEvalArbrList() {
+        withContext(IO) {
+            val distArbreListFetch = async {
+                evaluationArbreDao?.deleteAll()
+
+                try {
+                    val clientProductEvalListData = ApiClient.apiService.getProductEvalList(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
+
+                    val responseProductEvalListData: Response<QuantiteArbrDistribuer> = clientProductEvalListData.execute()
+                    val datasProductEval: QuantiteArbrDistribuer? = responseProductEvalListData.body()
+
+                    var variableKey: MutableMap<String, MutableMap<String, String>> = mutableMapOf()
+                    datasProductEval?.evaluations?.map {
+                        val item = variableKey.get(it.producteur_id)
+                        if(item != null)
+                            variableKey.get(it.producteur_id)?.put(it.agroespecesarbre_id.toString(), it.total.toString())
+                        else {
+                            val value = mutableMapOf<String, String>()
+                            value.put(it.agroespecesarbre_id.toString(), it.total.toString())
+                            variableKey.put(it.producteur_id.toString(), value)
+                        }
+                    }
+
+                    variableKey.map {
+
+                        val curreProd = it.key
+                        val currentInfoArbre = it.value.map { it.key }.toMutableList()
+                        val currentInfoArbreEval = it.value.map { it.value }.toMutableList()
+                        val dataEvalProdListModel = EvaluationArbreModel(
+                            uid = 0,
+                            producteurId = curreProd,
+                            especesarbreStr = GsonUtils.toJson(currentInfoArbre),
+                            quantiteStr = GsonUtils.toJson(currentInfoArbreEval),
+                            id = curreProd.toInt(),
+                            isSynced = true,
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID),
+                            origin = "remote"
+                        )
+
+                        evaluationArbreDao?.insert(dataEvalProdListModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            distArbreListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des arbres distribués")
+                //configFlow()
+                getProductArbrDistribPostPlantingList()
+            }
+        }
+    }
+
+
+    suspend fun getProductArbrDistribPostPlantingList() {
+        withContext(IO) {
+            val postPlantListFetch = async {
+                postPlantingArbrDistribDao?.deleteAll()
+
+                try {
+                    val clientPostPlantingArbrDistribData = ApiClient.apiService.getProducteursPostPlantingArbrDistribList(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
+
+                    val responseProductPostPlantingArbrDistribDataData: Response<MutableList<PostPlantingArbrDistribSecModel>> = clientPostPlantingArbrDistribData.execute()
+                    val datasProductPostPlanting: MutableList<PostPlantingArbrDistribSecModel>? = responseProductPostPlantingArbrDistribDataData.body()
+
+
+                    datasProductPostPlanting?.map {
+                        LogUtils.d(it.arbres)
+                        val dataProductPostPlantingModel = PostPlantingArbrDistribModel(
+                            uid = 0,
+                            nom = it.nom,
+                            prenoms = it.prenoms,
+                            arbresStr = GsonUtils.toJson(it.arbres),
+                            id = it.id,
+                            isSynced = true,
+                            origin = "remote",
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
+                        )
+
+                        postPlantingArbrDistribDao?.insert(dataProductPostPlantingModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            postPlantListFetch.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Liste des producteurs en post-planting")
                 //configFlow()
                 getLiensParenteSection()
             }
@@ -1982,7 +2610,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagLocaliteSynchroErreur) {
                 configCompletedOrError(hasError = true, info = "impossible de synchroniser les localités")
             } else {
-                localiteDao?.deleteAgentDatas(agentID = agentID.toString())
+                localiteDao?.deleteAll()
                 synchronizeProducteurs()
             }
         }
@@ -2016,78 +2644,42 @@ class ConfigurationActivity : AppCompatActivity() {
                     val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
                     val producteurSynced: ProducteurModel? = responseProducteur.body()
 
-                    producteurDao?.syncData(
-                        id = producteurSynced?.id!!,
-                        synced = true,
-                        localID = producteur.uid
-                    )
+                    producteurSynced?.let {
+                        producteurDao?.syncData(
+                            id = producteurSynced?.id!!,
+                            synced = true,
+                            localID = producteur.uid
+                        )
 
-                    val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
-                        producteur.uid.toString(),
-                        SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                    )!!
+                        val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
+                            producteur.uid.toString(),
+                            SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )!!
 
-                    for (prodMenage in producteurMenagesList) {
-                        prodMenage.producteurs_id = producteurSynced?.id.toString()
-                        menageDao?.insert(prodMenage)
-                    }
-
-                    val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
-                        producteur.uid.toString(),
-                        SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                    )!!
-
-                    for (parcelle in producteurParcellesList) {
-                        parcelle.producteurId = producteurSynced?.id.toString()
-                        parcelleDao?.insert(parcelle)
-                    }
-
-                    val livraisonsList = livraisonDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                    )!!
-
-                    livraisonsList.map { livraisonModel ->
-                        livraisonModel.producteursId = producteurSynced?.id.toString()
-                        livraisonDao?.insert(livraisonModel)
-                    }
-
-                    val formationsList = formationDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
-                    )!!
-
-                    for (formation in formationsList) {
-                        try {
-                            // deserialize datas producteurs
-                            val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                            formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                            val cleanList = formation.producteursId?.toMutableList()
-
-                            var positionLoop = 0
-                            var positionFound: Int
-
-                            formation.producteursId?.map {
-                                val producteurId = it.split("-")[0]
-                                val typeId = it.split("-")[1]
-
-                                if (typeId == "uid") {
-                                    if (producteurId.toInt() == producteurSynced?.uid) {
-                                        positionFound = positionLoop
-                                        cleanList?.removeAt(positionFound)
-                                        cleanList?.add("${producteurSynced.id}-id")
-                                    }
-                                }
-
-                                positionLoop += 1
-                            }
-
-                            formation.producteursId = mutableListOf()
-                            formation.producteursId = cleanList
-                            formation.producteursIdStringify = GsonUtils.toJson(cleanList)
-
-                            formationDao?.insert(formation)
-                        } catch (ex: Exception) {
-                            ex.printStackTrace()
+                        for (prodMenage in producteurMenagesList) {
+                            prodMenage.producteurs_id = producteurSynced?.id.toString()
+                            menageDao?.insert(prodMenage)
                         }
+
+                        val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
+                            producteur.uid.toString(),
+                            SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )!!
+
+                        for (parcelle in producteurParcellesList) {
+                            parcelle.producteurId = producteurSynced?.id.toString()
+                            parcelleDao?.insert(parcelle)
+                        }
+
+                        val livraisonsList = livraisonDao?.getUnSyncedAll(
+                            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString()
+                        )!!
+
+                        livraisonsList.map { livraisonModel ->
+                            livraisonModel.producteursId = producteurSynced?.id.toString()
+                            livraisonDao?.insert(livraisonModel)
+                        }
+
                     }
                 }
             }
@@ -2107,7 +2699,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagProducteurSynchroErreur) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les producteurs")
             } else {
-                producteurDao?.deleteAgentDatas(agentID = agentID.toString())
+                producteurDao?.deleteAll()
                 sychronisationParcelles()
             }
         }
@@ -2134,6 +2726,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         parcelleDao?.syncData(
                             id = parcelleSync.id!!,
                             synced = true,
+                            codeparc = parcelleSync.codeParc.toString(),
                             localID = parcelle.uid.toInt()
                         )
 
@@ -2169,7 +2762,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagParcelleSynchroErreur) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les parcelles des producteurs")
             } else {
-                parcelleDao?.deleteAgentDatas(agentID = agentID.toString())
+                parcelleDao?.deleteAll()
                 synchronisationSuiviParcelles()
             }
         }
@@ -2237,7 +2830,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagSuiviParcelleSynchroError) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les suivis des parcelles")
             } else {
-                suiviParcelleDao?.deleteAgentDatas(agentID = agentID.toString())
+                suiviParcelleDao?.deleteAll()
                 synchronisationMenages()
             }
         }
@@ -2291,7 +2884,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagMenageSynchroError) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les menages des producteurs")
             } else {
-                menageDao?.deleteAgentDatas(agentID = agentID.toString())
+                menageDao?.deleteAll()
                 //synchronisationMenages()
                 synchtonisationFormations()
             }
@@ -2310,89 +2903,89 @@ class ConfigurationActivity : AppCompatActivity() {
                 )
 
                 formationDatas?.map { formation ->
-                    try {
-                        // deserialize datas producteurs
-                        val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                        formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                        val cleanList = formation.producteursId?.toMutableList()
-
-                        formation.dateFormation = Commons.convertDate(formation.dateFormation, true)
-
-                        var positionLoop = 0
-                        var positionFound = 0
-
-                        formation.producteursId?.map {
-                            val producteurId = it.split("-")[0]
-                            val typeId = it.split("-")[1]
-
-                            if (typeId == "uid") {
-                                val producteurCheck = producteurDao?.getProducteurByUID(producteurUID = producteurId.toInt())
-
-                                if (producteurCheck?.isSynced!!) {
-                                    positionFound = positionLoop
-                                    cleanList?.removeAt(positionFound)
-                                    cleanList?.add("${producteurCheck.id}-id")
-                                } else {
-                                    suncFormationsFlag = false
-                                }
-                            }
-
-                            positionLoop += 1
-                        }
-
-                        formation.producteursId = mutableListOf()
-                        formation.producteursId = cleanList
-                    } catch (ex: Exception) {
-                        ex.printStackTrace()
-                    }
+//                    try {
+//                        // deserialize datas producteurs
+//                        val producteursType = object : TypeToken<MutableList<String>>() {}.type
+//                        formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
+//                        val cleanList = formation.producteursId?.toMutableList()
+//
+//                        formation.dateFormation = Commons.convertDate(formation.dateFormation, true)
+//
+//                        var positionLoop = 0
+//                        var positionFound = 0
+//
+//                        formation.producteursId?.map {
+//                            val producteurId = it.split("-")[0]
+//                            val typeId = it.split("-")[1]
+//
+//                            if (typeId == "uid") {
+//                                val producteurCheck = producteurDao?.getProducteurByUID(producteurUID = producteurId.toInt())
+//
+//                                if (producteurCheck?.isSynced!!) {
+//                                    positionFound = positionLoop
+//                                    cleanList?.removeAt(positionFound)
+//                                    cleanList?.add("${producteurCheck.id}-id")
+//                                } else {
+//                                    suncFormationsFlag = false
+//                                }
+//                            }
+//
+//                            positionLoop += 1
+//                        }
+//
+//                        formation.producteursId = mutableListOf()
+//                        formation.producteursId = cleanList
+//                    } catch (ex: Exception) {
+//                        ex.printStackTrace()
+//                    }
 
                 }
 
-                if (suncFormationsFlag) { // all is done bring synchronization
-                    formationDatas?.map { formationModel ->
-                        // deserialize datas producteurs
-                        val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                        formationModel.producteursId = GsonUtils.fromJson<MutableList<String>>(formationModel.producteursIdStringify, producteursType)
-
-                        val listM = formationModel.producteursId?.map {
-                            it.replace("-id", "")
-                        }
-
-                        formationModel.producteursId = listM?.toMutableList()
-
-                        val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formationModel)
-
-                        val responseFormation: Response<FormationModel> = clientFormation.execute()
-                        val formationSynced: FormationModel? = responseFormation.body()
-
-                        formationDao?.syncData(
-                            formationSynced?.id!!,
-                            true,
-                            formationModel.uid
-                        )
-                    }
-                }
+//                if (suncFormationsFlag) { // all is done bring synchronization
+//                    formationDatas?.map { formationModel ->
+//                        // deserialize datas producteurs
+//                        val producteursType = object : TypeToken<MutableList<String>>() {}.type
+//                        formationModel.producteursId = GsonUtils.fromJson<MutableList<String>>(formationModel.producteursIdStringify, producteursType)
+//
+//                        val listM = formationModel.producteursId?.map {
+//                            it.replace("-id", "")
+//                        }
+//
+//                        formationModel.producteursId = listM?.toMutableList()
+//
+//                        val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formationModel)
+//
+//                        val responseFormation: Response<FormationModel> = clientFormation.execute()
+//                        val formationSynced: FormationModel? = responseFormation.body()
+//
+//                        formationDao?.syncData(
+//                            formationSynced?.id!!,
+//                            true,
+//                            formationModel.uid
+//                        )
+//                    }
+//                }
 
             }
 
-            formationSynchronisation.invokeOnCompletion {
-                if (it == null) {
-                    flagFormationSynchroError = false
-                } else {
-                    flagFormationSynchroError = true
-                    //LogUtils.e(TAG, "Erreur")
-                    it.printStackTrace()
-                }
-            }
-
-            formationSynchronisation.join()
-
-            if (flagFormationSynchroError) {
-                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les formations")
-            } else {
-                formationDao?.deleteAgentDatas(agentID = agentID.toString())
-                synchronisationLivraisons()
-            }
+//            formationSynchronisation.invokeOnCompletion {
+//                if (it == null) {
+//                    flagFormationSynchroError = false
+//                } else {
+//                    flagFormationSynchroError = true
+//                    //LogUtils.e(TAG, "Erreur")
+//                    it.printStackTrace()
+//                }
+//            }
+//
+//            formationSynchronisation.join()
+//
+//            if (flagFormationSynchroError) {
+//                configCompletedOrError(hasError = true, info = "Impossible de synchroniser les formations")
+//            } else {
+//            }
+            //formationDao?.deleteAgentDatas(agentID = agentID.toString())
+            synchronisationLivraisons()
         }
     }
 
@@ -2409,7 +3002,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 livraisonDatas?.map { livraisonPojo ->
                     livraisonPojo.dateLivre = Commons.convertDate(livraisonPojo.dateLivre, true)
 
-                    val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraison(livraisonModel = livraisonPojo)
+                    val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraisonSection(livraisonModel = livraisonPojo)
 
                     val responseLivraison: Response<LivraisonModel> = clientLivraison.execute()
                     val livraisonSynced: LivraisonModel? = responseLivraison.body()
@@ -2444,7 +3037,7 @@ class ConfigurationActivity : AppCompatActivity() {
             if (flagLivraisonSynchroError) {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les livraisons")
             } else {
-                livraisonDao?.deleteAgentDatas(agentID = agentID.toString())
+                livraisonDao?.deleteAll()
                 getLocalites()
             }
 
@@ -2482,6 +3075,7 @@ class ConfigurationActivity : AppCompatActivity() {
         delegueDao = database?.delegueDao()
         formationDao = database?.formationDao()
         themeFormationDao = database?.themeFormationDao()
+        sousThemeFormationDao = database?.sousThemeFormationDao()
         livraisonDao = database?.livraisonDao()
         suiviParcelleDao = database?.suiviParcelleDao()
         intrantDao = database?.intrantDao()
@@ -2489,7 +3083,8 @@ class ConfigurationActivity : AppCompatActivity() {
         applicateurDao = database?.applicateurDao()
         notationDao = database?.notationDao()
         questionnaireDao = database?.questionnaireDao()
-        magasinDao = database?.magasinSectionDao()
+        magasinDao = database?.magasinCentralDao()
+        magasinSectionDao = database?.magasinSectionDao()
         typeFormationDao = database?.typeFormationDao()
         lienParenteDao = database?.lienParenteDao()
         paiementMobileDao = database?.paiementMobileDao()
@@ -2497,8 +3092,19 @@ class ConfigurationActivity : AppCompatActivity() {
         typeDocuDocumentDao = database?.typeDocumentDao()
         typeProduitDao = database?.typeProduitDao()
         concernesDao = database?.concernesDao()
+        transporteurDao = database?.transporteurDao()
+        entrepriseDao = database?.entrepriseDao()
+        vehiculeDao = database?.vehiculeDao()
+        remorqueDao = database?.remorqueDao()
+        livraisonVerMagCentralDao = database?.livraisonVerMagCentralDao()
+        staffFormationDao = database?.staffFormation()
         programmesDao = database?.programmesDao()
         sectionsDao = database?.sectionsDao()
+        arbreDao = database?.arbreDao()
+        evaluationArbreDao = database?.evaluationArbreDao()
+        postplantingDao = database?.postplantingDao()
+        postPlantingArbrDistribDao = database?.postPlantingArbrDistribDao()
+        approvisionnementDao = database?.approvisionnementDao()
 
         if (intent != null) {
             agentID = intent.getIntExtra(Constants.AGENT_ID, 0)

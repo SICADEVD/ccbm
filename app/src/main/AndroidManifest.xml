@@ -7,8 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<!--    <uses-permission android:name="android.permission." />-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- <uses-permission android:name="android.permission." /> -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -18,6 +17,7 @@
         android:required="false" />
 
     <application
+        android:name=".Application"
         android:allowBackup="true"
         android:debuggable="true"
         android:hardwareAccelerated="false"
@@ -26,186 +26,213 @@
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:name="ci.projccb.mobile.Application"
         android:theme="@style/Theme.CCBMobile"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode"
         tools:targetApi="n">
         <activity
-            android:name="ci.projccb.mobile.activities.cartographies.FarmDelimiterActivity"
-            android:exported="false">
-        </activity>
-        <activity
-            android:name="ci.projccb.mobile.tests.TestExportKmlActivity"
+            android:name=".activities.infospresenters.LivraisonCentralPreviewActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.contents.UpdateProducteurContentActivity"
+            android:name=".activities.infospresenters.DistributionArbrePreviewActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.contents.UpdateParcelleContentActivity"
+            android:name=".activities.infospresenters.EvaluationPostPlantPreviewActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.UpdateContentsListActivity"
+            android:name=".activities.infospresenters.VisiteurFormationPreviewActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.MenusActionRedirectionActivity"
+            android:name=".activities.infospresenters.EvaluationBesoinPreviewActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.DatasDraftedListActivity"
+            android:name=".activities.forms.LivraisonCentralActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.InfosProducteurPreviewActivity"
+            android:name=".activities.forms.VisiteurFormationActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.InspectionPreviewActivity"
+            android:name=".activities.forms.EvaluationArbreActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.tests.TestLabActivity"
+            android:name=".activities.forms.DistributionArbreActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.EnqueteSsrtPreviewActivity"
+            android:name=".activities.forms.PostPlantingEvalActivity"
             android:exported="false" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.CalculEstimationPreviewActivity"
+            android:name=".activities.cartographies.FarmDelimiterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tests.TestExportKmlActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.contents.UpdateProducteurContentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.contents.UpdateParcelleContentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.lists.UpdateContentsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MenusActionRedirectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.lists.DatasDraftedListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.infospresenters.InfosProducteurPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.infospresenters.InspectionPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tests.TestLabActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.infospresenters.EnqueteSsrtPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.infospresenters.CalculEstimationPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity"
+            android:name=".activities.forms.UniteAgricoleProducteurActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.InspectionActivity"
+            android:name=".activities.forms.InspectionActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.SsrtClmsActivity"
+            android:name=".activities.forms.SsrtClmsActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.CalculEstimationActivity"
+            android:name=".activities.forms.CalculEstimationActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.SuiviApplicationPreviewActivity"
+            android:name=".activities.infospresenters.SuiviApplicationPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.SuiviApplicationActivity"
+            android:name=".activities.forms.SuiviApplicationActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.SuiviParcellePreviewActivity"
+            android:name=".activities.infospresenters.SuiviParcellePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.LivraisonPreviewActivity"
+            android:name=".activities.infospresenters.LivraisonPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.FormationPreviewActivity"
+            android:name=".activities.infospresenters.FormationPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.MenagePreviewActivity"
+            android:name=".activities.infospresenters.MenagePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.LocalitePreviewActivity"
+            android:name=".activities.infospresenters.LocalitePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.ParcellePreviewActivity"
+            android:name=".activities.infospresenters.ParcellePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.cartographies.ParcelleMappingActivity"
+            android:name=".activities.cartographies.ParcelleMappingActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.infospresenters.ProducteurPreviewActivity"
+            android:name=".activities.infospresenters.ProducteurPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.tests.GoogleMapsActivity"
+            android:name=".tests.GoogleMapsActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.ConfigurationBaseUrlActivity"
+            android:name=".activities.ConfigurationBaseUrlActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.POSDashboardActivity"
+            android:name=".activities.POSDashboardActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.LivraisonsListActivity"
+            android:name=".activities.lists.LivraisonsListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.FormationsListActivity"
+            android:name=".activities.lists.FormationsListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.LivraisonActivity"
+            android:name=".activities.forms.LivraisonActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.FormationActivity"
+            android:name=".activities.forms.FormationActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.SuiviPacellesListActivity"
+            android:name=".activities.lists.SuiviPacellesListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.SuiviParcelleActivity"
+            android:name=".activities.forms.SuiviParcelleActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.ParcelleActivity"
+            android:name=".activities.forms.ParcelleActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.ParcellesListActivity"
+            android:name=".activities.lists.ParcellesListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.MenageresListActivity"
+            android:name=".activities.lists.MenageresListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.ProducteurMenageActivity"
+            android:name=".activities.forms.ProducteurMenageActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.LocalitesListActivity"
+            android:name=".activities.lists.LocalitesListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.lists.ProducteursListActivity"
+            android:name=".activities.lists.ProducteursListActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.LocaliteActivity"
+            android:name=".activities.forms.LocaliteActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="ci.projccb.mobile.activities.SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.forms.ProducteurActivity"
+            android:name=".activities.forms.ProducteurActivity"
             android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="ci.projccb.mobile.activities.DashboardAgentActivity"
+            android:name=".activities.DashboardAgentActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.ConfigurationActivity"
+            android:name=".activities.ConfigurationActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="ci.projccb.mobile.activities.AuthentificationActivity"
+            android:name=".activities.AuthentificationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
@@ -215,17 +242,18 @@
             android:required="false" />
 
         <activity
-            android:name="ci.projccb.mobile.activities.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--<receiver
+        <!--
+<receiver
             android:name=".broadcasts.LoopAlarmReceiver"
             android:enabled="true"
             android:exported="false" />
@@ -238,20 +266,19 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>-->
-
+        </receiver>
+        -->
         <service
-            android:name="ci.projccb.mobile.services.SynchronisationIntentService"
-            android:foregroundServiceType="dataSync"
-            android:exported="false" />
+            android:name=".services.SynchronisationIntentService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
         <service
-            android:name="ci.projccb.mobile.services.GpsService"
+            android:name=".services.GpsService"
             android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBwIB5W5-fA6oy7iWfPbYYO8qgpZQaFzgQ"
-            />
+            android:value="AIzaSyBwIB5W5-fA6oy7iWfPbYYO8qgpZQaFzgQ" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -30,6 +30,7 @@ android:textColor="@color/text_color_white"
             android:layout_height="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
+            style="@style/SpinnerItemStyle"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:id="@+id/selectParentModify"
@@ -42,6 +43,7 @@ android:textColor="@color/text_color_white"
             android:layout_height="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:textSize="@dimen/page_input_content_dim13"
             android:textAllCaps="true"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_37sdp"
@@ -58,6 +60,7 @@ android:textColor="@color/text_color_white"
             android:layout_height="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:textSize="@dimen/page_input_content_dim13"
             android:textAllCaps="true"
             android:inputType="textNoSuggestions"
             android:layout_width="@dimen/_200sdp"
@@ -117,6 +120,7 @@ android:textColor="@color/text_color_white"
             android:layout_height="@dimen/_10sdp"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
+            style="@style/SpinnerItemStyle"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:id="@+id/selectParent"

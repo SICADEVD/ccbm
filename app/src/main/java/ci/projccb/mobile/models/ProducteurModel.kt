@@ -15,7 +15,8 @@ data class ProducteurModel(
     @SerializedName("codeProdapp") @Expose var codeProdApp: String? = "",
     @Expose var id: Int? = 0,
     @SerializedName(value = "section") @Expose var section: String? = "0",
-    @SerializedName(value = "localite_id", alternate = ["localites_id"]) @Expose var localitesId: String? = "0",
+    @SerializedName(value = "localite_id", alternate = ["localites_id"])
+    @Expose var localitesId: String? = "0",
     @SerializedName(value = "programme_id") @Expose var programme_id: String? = "0",
     @SerializedName(value = "autreProgramme") @Expose var autreProgramme: String? = "0",
     @Expose var nom: String? =  "",
@@ -26,6 +27,7 @@ data class ProducteurModel(
     @SerializedName("habitationProducteur") @Expose var habitationProducteur: String? = "",
     @SerializedName("variete") @Expose var variete: String? = "",
     @SerializedName("autreVariete") @Expose var autreVariete: String? = "",
+    @SerializedName("certification") @Expose var certification: String? = "",
     @SerializedName("certificat") @Expose var anneeCertification: String? = "",
     @SerializedName(value = "statut", alternate = ["status"]) @Expose var statutCertification: String? = "",
     @SerializedName("consentement") @Expose var consentement: String? = "",

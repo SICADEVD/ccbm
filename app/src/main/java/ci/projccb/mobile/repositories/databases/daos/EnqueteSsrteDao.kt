@@ -30,4 +30,8 @@ interface EnqueteSsrteDao {
     @Transaction
     @Query("DELETE FROM ssrte_clms")
     fun deleteAgentDatas()
+
+    @Transaction
+    @Query("SELECT * FROM ssrte_clms WHERE (isSynced = 0 AND producteursId = :producteurUid)")
+    fun getUnSyncedByProdUid(producteurUid: String?): MutableList<EnqueteSsrtModel>
 }

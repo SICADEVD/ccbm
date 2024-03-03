@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_40sdp"
+    android:layout_height="@dimen/_50sdp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -75,6 +75,6 @@ android:textColor="@color/text_color_white"
         android:layout_height="@dimen/_20sdp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ic_delete_red" />
+        app:srcCompat="@drawable/baseline_delete_red_forever_24" />
 
 </RelativeLayout>

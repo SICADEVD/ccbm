@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/container_inspection"
     tools:context=".activities.forms.InspectionActivity">
 
     <RelativeLayout
@@ -16,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -41,17 +42,17 @@ android:textColor="@color/text_color_white"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE EVALUATION"
+                android:text="FICHE INSPECTIONS"
                 
-                android:textSize="@dimen/_13ssp"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -97,6 +98,41 @@ android:textColor="@color/text_color_white"
                     android:background="@drawable/rounded_cardview_with_border_brown"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="@string/selectionner_une_section"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="section"
+                                android:id="@+id/selectSectionInspection"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 
                     <LinearLayout
                         android:layout_marginTop="@dimen/_15sdp"
@@ -108,12 +144,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
         
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localite *"
-
+                            android:paddingLeft="@dimen/page_input_title_dim11"
+                            android:text="Selectionner la localite"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
         
                         <LinearLayout
@@ -126,6 +162,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
         
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="localiteId"
                                 android:id="@+id/selectLocaliteInspection"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -143,12 +180,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
         
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur *"
-
+                            android:text="@string/selectionner_un_producteur"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
         
                         <LinearLayout
@@ -167,6 +204,7 @@ android:textColor="@color/text_color_white"
                                 android:spinnerMode="dialog" />-->
         
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="producteursId"
                                 android:spinnerMode="dialog"
                                 android:id="@+id/selectProducteurInspection"
                                 android:layout_width="match_parent"
@@ -184,12 +222,12 @@ android:textColor="@color/text_color_white"
                         android:orientation="vertical">
         
                         <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                            android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Encadreur *"
-
+                            android:text="Choix du ou des certificats"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
         
                         <LinearLayout
@@ -200,51 +238,12 @@ android:textColor="@color/text_color_white"
                             <Space
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
-        
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:spinnerMode="dialog"
-                                android:id="@+id/selectEncadreurList"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"/>
-        
-                        </LinearLayout>
-        
-                    </LinearLayout>
-        
-                    <LinearLayout
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-        
-                        <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Campagne *"
 
-                            android:textStyle="bold" />
-        
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-        
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-        
-                            <!--<androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/selectProducteurParcelle"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />-->
-        
-                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
+                                android:tag="certificatStr"
                                 android:spinnerMode="dialog"
-                                android:id="@+id/selectCampagneInspection"
+                                android:id="@+id/selectCertifInspection"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"/>
         
@@ -264,6 +263,79 @@ android:textColor="@color/text_color_white"
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Selectionner l'inspecteur"
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:tag="encadreur"
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectEncadreurList"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="0dp"
+                    android:layout_weight="6"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Quel est votre production de l' année précedente ? (Kg)"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:tag="production"
+                    android:id="@+id/editNbrProductionEvalBesoin"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:imeOptions="actionDone"
+                    tools:text="20"
+                    android:hint="1000"
+                    android:ellipsize="end"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/page_input_content_dim13"
+                    android:layout_width="0dp"
+                    android:inputType="number"
+                    android:layout_weight="4"
+                    android:layout_height="@dimen/_37sdp"
+                    android:background="@drawable/rounded_background"/>
+
+            </LinearLayout>
             
             <LinearLayout
                     android:layout_marginBottom="@dimen/_10sdp"
@@ -274,12 +346,12 @@ android:textColor="@color/text_color_white"
                     android:weightSum="10">
     
                     <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                        android:textColor="@color/text_color_white"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3.5"
                         android:text="Date inspection"
-
+                        android:textSize="@dimen/page_input_title_dim11"
                         android:textStyle="bold" />
     
                     <RelativeLayout
@@ -288,6 +360,7 @@ android:textColor="@color/text_color_white"
                         android:layout_weight="6.5">
     
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="dateEvaluation"
                             android:id="@+id/editDateInspection"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -300,7 +373,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/_13ssp" />
+                            android:textSize="@dimen/page_input_content_dim13" />
     
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/_35sdp"
@@ -328,6 +401,7 @@ android:textColor="@color/text_color_white"
         android:gravity="center">
 
         <com.google.android.material.button.MaterialButton
+            android:textSize="@dimen/page_button_text_dim13"
             android:id="@+id/clickCancelInspection"
             style="@style/OptionsButton_Active"
             android:layout_width="wrap_content"
@@ -338,12 +412,15 @@ android:textColor="@color/text_color_white"
             android:backgroundTint="@color/divider"
             android:elevation="0dp"
             android:paddingHorizontal="20dp"
-            android:text="ANNULER"
-            app:cornerRadius="50dp"
+            android:textColor="@color/black"
+            android:text="@string/annuler"
+            app:cornerRadius="@dimen/_37sdp"
+            app:iconSize="@dimen/page_icon_other_dim20"
             app:icon="@drawable/baseline_cancel_send_white"
             app:iconGravity="start" />
 
         <com.google.android.material.button.MaterialButton
+            android:textSize="@dimen/page_button_text_dim13"
             android:id="@+id/clickSaveInspection"
             style="@style/OptionsButton_Active"
             android:layout_width="wrap_content"
@@ -354,8 +431,10 @@ android:textColor="@color/text_color_white"
             android:backgroundTint="@color/ccb_green"
             android:elevation="0dp"
             android:paddingHorizontal="20dp"
-            android:text="VÉRIFIER"
-            app:cornerRadius="50dp"
+            app:iconTint="@color/white_color"
+            android:text="@string/v_rifier"
+            app:cornerRadius="@dimen/_37sdp"
+            app:iconSize="@dimen/page_icon_other_dim20"
             app:icon="@drawable/baseline_schedule_send_prev_white"
             app:iconGravity="start" />
 

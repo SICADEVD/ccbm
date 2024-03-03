@@ -16,6 +16,7 @@ import kotlinx.android.parcel.Parcelize
 data class LivraisonModel(
     @Expose @PrimaryKey(autoGenerate = true) var uid: Int,
     @Expose val id: Int? = 0,
+    @Expose val programme_id: String? = null,
     @SerializedName("dateLivre")
     @Expose var dateLivre: String? = "",
     @SerializedName("nomDelegue") @Expose var delegueId: String? = "",
@@ -36,7 +37,7 @@ data class LivraisonModel(
     @Expose @SerializedName("userid") var agentId: String? = "",
     @Expose @SerializedName("magasinsections_id") var magasinSectionId: String? = "",
     @Expose var magasinSectionLabel: String? = "",
-    @SerializedName("cooperative") @Expose var cooperativeId: String? = "",
+    @SerializedName("cooperative_id") @Expose var cooperativeId: String? = "",
     @SerializedName("estimate_date") @Expose var estimatDate: String? = "",
     @SerializedName("payment_status") @Expose var paymentStatus: String? = "",
     @SerializedName("sender_staff") @Expose var senderStaff: String? = "",
@@ -58,9 +59,12 @@ data class LivraisonModel(
      @Expose var livraisonSousModelParcellesStringify: String? = null,
      @Expose var livraisonSousModelParcelleIdsStringify: String? = null,
      @Expose var livraisonSousModelTypesStringify: String? = null,
+     @Expose var livraisonSousModelCertifStringify: String? = null,
      @Expose var livraisonSousModelQuantitysStringify: String? = null,
      @Expose var livraisonSousModelAmountsStringify: String? = null,
      @Expose var livraisonSousModelScellesStringify: String? = null,
+     @Expose var staffLab: String? = null,
+     @Expose var magasinLab: String? = null,
     var origin: String? = "local"
 ) : Parcelable {
     @Expose(serialize = true, deserialize = false) @Ignore @SerializedName("items") var itemList: MutableList<LivraisonSousModel>? = null

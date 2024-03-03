@@ -1,0 +1,1198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout_livraisonCentral"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.forms.LivraisonCentralActivity">
+
+    <RelativeLayout
+        android:background="@color/ccb_gris"
+        android:id="@+id/linealToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clickCloseBtn"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_back_black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/fav_bandama" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:id="@+id/labelTitleMenuAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="FICHE DE STOCK MAGASINS CENTRAUX"
+                android:textSize="@dimen/page_title_dim14"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageDraftBtn"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_7sdp"
+            android:visibility="visible"
+            android:src="@drawable/baseline_send_and_archive_white" />
+
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp" />
+
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_30sdp">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_20sdp"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/page_title_dim14"
+                        android:textColor="@color/text_color_white"
+                        android:text="Information Expéditeur(Magasin de Section)">
+
+                    </TextView>
+
+                     <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Sélectionner un magasin de section"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp"/>
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="senderMagasin"
+                                android:id="@+id/selectMagSecListLivraiCentr"
+                                android:spinnerMode="dialog"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Nom"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderName"
+                            android:id="@+id/editNomExpediteur"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Nom"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Contact"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderPhone"
+                            android:id="@+id/editContactExpediteur"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Contact Expediteur"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="number|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Email"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderEmail"
+                            android:id="@+id/editEmailExpediteur"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Email Expediteur"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Adresse"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="senderAddress"
+                            android:id="@+id/editAdressExpediteur"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Adresse Expediteur"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_20sdp"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:gravity="center_horizontal"
+                        android:textSize="@dimen/page_title_dim14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_white"
+                        android:text="Information Destinataire\n(Magasin Central)">
+
+                    </TextView>
+
+                     <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Selectionner un magasin central"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp"/>
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="magasinCentral"
+                                android:id="@+id/selectMagCentralLivraisonCentral"
+                                android:spinnerMode="dialog"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_35sdp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Nom"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverName"
+                            android:id="@+id/editNomDestinataire"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Nom"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Contact"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverPhone"
+                            android:id="@+id/editContactDestinataire"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Contact Destinataire"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="number|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Email"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverEmail"
+                            android:id="@+id/editEmailDestinataire"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Email Destinataire"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Adresse"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="receiverAddress"
+                            android:id="@+id/editAdressDestinataire"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Adresse Destinataire"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:inputType="textCapCharacters|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Désignez le type de produit !"
+                            android:textColor="@color/text_color_white"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                android:tag="typeStr"
+                                android:id="@+id/selectTypProduitLivraisonCentral"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Informations sur le transport"
+                            android:textAllCaps="true"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="@dimen/page_title_dim14"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_weight="1"
+                            android:background="@color/dark_gray" />
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Choix de l'entreprise"
+                            android:textColor="@color/text_color_white"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="entreprise_id"
+                                android:id="@+id/selectEntrepriseLivraisonCentral"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/_10sdp"
+                            android:text="Choix du transporteur"
+                            android:textColor="@color/text_color_white"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="sender_transporteur"
+                                android:id="@+id/selectTransporteurLivraisonCentral"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_weight="1"
+                        android:background="@color/dark_gray" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Choix du véhicule"
+                            android:textColor="@color/text_color_white"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="sender_vehicule"
+                                android:id="@+id/selectVehiculeLivraisonCentral"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Choix du remorque"
+                            android:textColor="@color/text_color_white"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="sender_remorque"
+                                android:id="@+id/selectRemorqueLivraisonCentral"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardCornerRadius="25dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="false"
+                app:cardPreventCornerOverlap="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_20sdp"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:gravity="center_horizontal"
+                        android:textSize="@dimen/page_title_dim14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_color_white"
+                        android:text="Information sur la Livraison Central">
+
+                    </TextView>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Choix du producteur"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:id="@+id/selectProducLivraisonCentral"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/containerCertificat"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            android:text="Certificat"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editCertificatLivraisonCentral"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="RA"
+                            android:enabled="false"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:height="0dp"
+                            android:hint="Rainforest"
+                            android:inputType="text|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            android:text="Type de produit"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/editTypProduitLivraisonCentral"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:imeOptions="actionDone"
+                            tools:text="Ordinaire"
+                            android:enabled="false"
+                            android:ellipsize="end"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            android:layout_width="match_parent"
+                            android:height="0dp"
+                            android:hint="Certifie"
+                            android:inputType="text|textNoSuggestions"
+                            android:layout_weight="6.5"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="wrap_content"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_15sdp"
+                                android:textStyle="bold"
+                                android:text="Quantité (Kg)"/>
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editQuantityLivraisonCentral"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:imeOptions="actionDone"
+                                tools:text="16"
+                                android:ellipsize="end"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/page_input_content_dim13"
+                                android:layout_width="match_parent"
+                                android:height="0dp"
+                                android:hint="20"
+                                android:inputType="number|textNoSuggestions"
+                                android:layout_weight="6.5"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"/>
+
+                        </LinearLayout>
+
+                       <Space android:layout_width="@dimen/_10sdp"  android:layout_height="match_parent"/>
+
+                   </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/clickAddLivraisonInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/submit_button_bg"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textColor="@color/white_color"
+                            android:text="Ajouter"
+                            android:textSize="@dimen/_9ssp" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_5sdp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerInfoLivraisonCentral"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/infos_livraiison_central_items_list" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:textColor="@color/text_color_white"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/page_input_title_dim11"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/_15sdp"
+                        android:textStyle="bold"
+                        android:text="Nombre de sacs:"/>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="nombresacs"
+                        android:id="@+id/editNbrSacLivraisonCentral"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:imeOptions="actionDone"
+                        tools:text="3"
+                        android:ellipsize="end"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/page_input_content_dim13"
+                        android:layout_width="match_parent"
+                        android:height="0dp"
+                        android:hint="13"
+                        android:inputType="number|textNoSuggestions"
+                        android:layout_weight="6.5"
+                        android:layout_height="@dimen/_37sdp"
+                        android:background="@drawable/rounded_background"/>
+
+                </LinearLayout>
+
+                <Space android:layout_width="@dimen/_10sdp"  android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:text="Date de la livraison central"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_37sdp">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="estimatDate"
+                        android:id="@+id/editDateLivraisonCentral"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_background"
+                        android:editable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:hint="JJ-MM-AAAA"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/page_input_content_dim13" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_date_calendar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
+                    android:id="@+id/clickCancelLivraisonCentral"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/divider"
+                    android:elevation="0dp"
+                    android:textColor="@color/text_color_white"
+                    android:text="@string/annuler"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
+                    app:icon="@drawable/baseline_cancel_send_white"
+                    app:iconGravity="start" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
+                    android:id="@+id/clickSaveLivraisonCentral"
+                    style="@style/OptionsButton_Active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:backgroundTint="@color/ccb_green"
+                    android:elevation="0dp"
+                    app:iconTint="@color/white_color"
+                    android:text="@string/v_rifier"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
+                    app:icon="@drawable/baseline_schedule_send_prev_white"
+                    app:iconGravity="start" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

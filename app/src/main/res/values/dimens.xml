@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="shadow_size">@dimen/_2sdp</dimen>
+
+    <dimen name="page_title_dim14">@dimen/_14ssp</dimen>
+    <dimen name="page_input_title_dim11">@dimen/_11ssp</dimen>
+    <dimen name="page_input_content_dim13">@dimen/_13ssp</dimen>
+    <dimen name="page_button_text_dim13">@dimen/_13ssp</dimen>
+    <dimen name="page_button_padding_dim13">@dimen/_15sdp</dimen>
+    <dimen name="page_icon_head_dim35">@dimen/_35sdp</dimen>
+    <dimen name="page_icon_other_dim20">@dimen/_20sdp</dimen>
 </resources>

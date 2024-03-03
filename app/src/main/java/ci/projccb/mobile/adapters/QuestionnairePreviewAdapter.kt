@@ -98,7 +98,7 @@ class QuestionnairePreviewAdapter(var pContext: Context, var pQuestionnaires: Mu
                                     questionnaireInfosHolder.labelResponse.text = "Tres Conforme"
                                 }
                                 else -> {
-                                    questionnaireInfosHolder.labelResponse.text = "Non defini"
+                                    questionnaireInfosHolder.labelResponse.text = "N/A"
                                 }
                             }
 

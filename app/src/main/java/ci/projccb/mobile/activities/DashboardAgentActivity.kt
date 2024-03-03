@@ -10,19 +10,20 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.view.size
+import androidx.recyclerview.widget.GridLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
-import ci.projccb.mobile.adapters.ExpandableListAdapter
 
 import ci.projccb.mobile.adapters.FeatureAdapter
 import ci.projccb.mobile.broadcasts.LoopAlarmReceiver
@@ -37,15 +38,14 @@ import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.reflect.TypeToken
-import com.jackandphantom.carouselrecyclerview.CarouselLayoutManager
+import com.skydoves.expandablelayout.ExpandableLayout
 import com.techatmosphere.expandablenavigation.model.ChildModel
 import com.techatmosphere.expandablenavigation.model.HeaderModel
 import kotlinx.android.synthetic.main.activity_dashboard_agent.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import me.relex.circleindicator.CircleIndicator2
 import java.net.UnknownHostException
 
 
@@ -59,6 +59,8 @@ class DashboardAgentActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
 
 
+    private var listOfFeatureCloned: MutableList<FeatureModel> = arrayListOf()
+    private var listOfFeatureClonedNav: MutableList<FeatureModel> = arrayListOf()
     private val listOfFeatures = mutableListOf<FeatureModel>()
     var ccbRoomDatabase: CcbRoomDatabase? = null
     var agentDao: AgentDao? = null;
@@ -75,10 +77,9 @@ class DashboardAgentActivity : AppCompatActivity(),
 
 
     fun bindDatas(agentModel: AgentModel?) {
-        labelUserDashboard.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString()))
-        titleAccount.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString()))
+        labelUserDashboard.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
+        titleAccount.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
     }
-
 
     fun refreshDatas() {
         /*labelProducteurCount.text = producteurDao?.getUnSyncedAll(
@@ -280,7 +281,18 @@ class DashboardAgentActivity : AppCompatActivity(),
     @SuppressLint("MissingPermission")
     suspend fun checkNetworkAvailablility() {
 
-        CoroutineScope(IO).launch {
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        //refreshDatas()
+
+        askLocationPermission()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var networkFlag = false
             try {
                 networkFlag = NetworkUtils.isAvailable()
             } catch (ex: UnknownHostException) {
@@ -294,18 +306,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 }
             }
         }
-    }
 
-
-    override fun onResume() {
-        super.onResume()
-        //refreshDatas()
-        updateListOfFeature()
-
-        MainScope().launch {
-            checkNetworkAvailablility()
-        }
-        askLocationPermission()
     }
 
 
@@ -361,13 +362,13 @@ class DashboardAgentActivity : AppCompatActivity(),
         bindDatas(agentModel = agentLogged)
 
         // .setNavigationItemSelectedListener(this)
-        Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.white)
+        Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
 
-            builder.setPositiveButton("Oui") { dialog, _ ->
+            builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
                 dialog.dismiss()
                 this.finish()
 
@@ -376,7 +377,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 ActivityUtils.startActivity(SplashActivity::class.java)
             }
 
-            builder.setNegativeButton("Non") { dialog, _ ->
+            builder.setNegativeButton(getString(R.string.non)) { dialog, _ ->
                 dialog.dismiss()
             }
 
@@ -389,7 +390,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
 
-            builder.setPositiveButton("Oui") { dialog, _ ->
+            builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
                 dialog.dismiss()
                 this.finish()
 
@@ -398,7 +399,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 ActivityUtils.startActivity(SplashActivity::class.java)
             }
 
-            builder.setNegativeButton("Non") { dialog, _ ->
+            builder.setNegativeButton(getString(R.string.non)) { dialog, _ ->
                 dialog.dismiss()
             }
 
@@ -406,18 +407,18 @@ class DashboardAgentActivity : AppCompatActivity(),
             dialog.show()
         }
 
-        Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.white)
+        Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
         imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Voulez-vous quitter ?")
             builder.setCancelable(false)
 
-            builder.setPositiveButton("Oui") { dialog, _ ->
+            builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
                 dialog.dismiss()
                 this.finish()
             }
 
-            builder.setNegativeButton("Non") { dialog, _ ->
+            builder.setNegativeButton(getString(R.string.non)) { dialog, _ ->
                 dialog.dismiss()
             }
 
@@ -426,7 +427,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
 
         /*linearLocalite.setOnClickListener {
-            Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = "Compris !", deconnec = false, showNo = false)
+            Commons.showMessage("Cette fonctionnalité est désactivé", this, finished = true, callback = {}, positive = getString(R.string.compris), deconnec = false, showNo = false)
             return@setOnClickListener;
             //  val intentLocalite = Intent(this, MenusActionRedirectionActivity::class.java)
             //  intentLocalite.putExtra("from", "localite")
@@ -437,7 +438,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             drawer_layout.openDrawer(GravityCompat.START);
         }
 
-        Commons.modifyIcColor(this@DashboardAgentActivity, linearSync, R.color.white)
+        Commons.modifyIcColor(this@DashboardAgentActivity, linearSync, R.color.black)
         linearSync.setOnClickListener {
             var message = "Mettre à jour la base de données... ?"
 
@@ -450,7 +451,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             builder.setCancelable(false)
 
             if (networkFlag) {
-                builder.setPositiveButton("Oui") { dialog, _ ->
+                builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
                     dialog.dismiss()
                     this.finish()
 
@@ -463,11 +464,11 @@ class DashboardAgentActivity : AppCompatActivity(),
                     ActivityUtils.startActivity(intentConfiguration)
                 }
 
-                builder.setNegativeButton("Non") { dialog, _ ->
+                builder.setNegativeButton(getString(R.string.non)) { dialog, _ ->
                     dialog.dismiss()
                 }
             } else {
-                builder.setPositiveButton("OK") { dialog, _ ->
+                builder.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                     dialog.dismiss()
                 }
             }
@@ -497,20 +498,50 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
 
         //setDataClickListener()
-        val listOrderItem = arrayListOf<Int>()
+        val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), object : TypeToken<MutableList<String>>(){}.type)
 
-        updateListOfFeature()
-        setViewFeatureListing()
+        val expandableList = arrayListOf<ExpandableLayout>(
+            expandIdentif,
+            expandIdentif2,
+            expandIdentif3,
+            expandIdentif4,
+            expandIdentif5,
+            //expandIdentif6,
+            //expandIdentif7,
+        )
 
-        if(carouselRecyclerview.adapter?.itemCount!! > 0){
-            val pagerSnapHelper = PagerSnapHelper()
-            pagerSnapHelper.attachToRecyclerView(carouselRecyclerview)
+        expandableList.forEach {
+            it.apply {
+                setOnExpandListener {
+                    if (it) {
+                        containerFeatureDash.visibility = View.GONE
+                        showAllExpandable(this, expandableList)
+                    } else {
+                        containerFeatureDash.visibility = View.VISIBLE
+                        hideOtherExpandable(this, expandableList)
+                    }
+                    //LogUtils.d("Expand : ${it}")
+                    hideNotExistFeature(roles, this)
 
-            (indicator as CircleIndicator2).attachToRecyclerView(carouselRecyclerview, pagerSnapHelper)
-            carouselRecyclerview.adapter?.registerAdapterDataObserver(indicator.getAdapterDataObserver());
+                }
+                parentLayout.setOnClickListener { this.toggleLayout() }
+            }
+
+            hideNotExistFeature(roles, it)
         }
 
-        setNavViewItems()
+        //updateListOfFeature()
+        updateListOfFeature()
+        setNavViewItems(roles)
+        setViewFeatureListing()
+
+//        if(carouselRecyclerview?.adapter?.itemCount!! > 0){
+//            val pagerSnapHelper = PagerSnapHelper()
+//            pagerSnapHelper.attachToRecyclerView(carouselRecyclerview)
+//
+//            (indicator as CircleIndicator2).attachToRecyclerView(carouselRecyclerview!!, pagerSnapHelper)
+//            carouselRecyclerview?.adapter?.registerAdapterDataObserver(indicator!!.getAdapterDataObserver());
+//        }
 
         /*if(
             listOrderItem.containsAll(listOf(1,2,3,4))
@@ -529,13 +560,75 @@ class DashboardAgentActivity : AppCompatActivity(),
         }*/
     }
 
+    private fun hideNotExistFeature(
+        roles: MutableList<String>,
+        expandableLayout: ExpandableLayout
+    ) {
+        if( (roles.containsAll(listOf("PRODUCTEUR")) == false && roles.containsAll(listOf("PARCELLE")) == false && roles.containsAll(listOf("ESTIMATION")) == false) && expandableLayout.tag.toString().equals("expand0") ) lexpand0.visibility = View.GONE
+        if( (roles.containsAll(listOf("PARCELLES")) == false && roles.containsAll(listOf("PARCELLES")) == false && roles.containsAll(listOf("FORMATION")) == false && roles.containsAll(listOf("FORMATION_VISITEUR")) == false && roles.containsAll(listOf("APPLICATION")) == false && roles.containsAll(listOf("INSPECTION")) == false) && expandableLayout.tag.toString().equals("expand1") ) lexpand1.visibility = View.GONE
+        if( (roles.containsAll(listOf("LIVRAISON")) == false && roles.containsAll(listOf("LIVRAISON_MAGCENTRAL")) == false) && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
+        if( (roles.containsAll(listOf("MENAGE")) == false && roles.containsAll(listOf("SSRTECLMRS")) == false) && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
+        if( (roles.containsAll(listOf("AGRO_EVALUATION")) == false && roles.containsAll(listOf("AGRO_DISTRIBUTION")) == false && roles.containsAll(listOf("POSTPLANTING")) == false) && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
+        //if( () && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
+        //if(roles.containsAll(listOf("APPLICATION", "INSPECTION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
+    }
+
+    private fun hideOtherExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
+        expandableList.forEach {
+            if(it.id != expandableLayout.id){
+                it.visibility = View.GONE
+            }else{
+                val position = (it.tag as String).replace("expand", "").toInt()
+
+                //carouselRecyclerview?.adapter?.unregisterAdapterDataObserver(indicator!!.getAdapterDataObserver())
+
+                listOfFeatures.clear()
+//                LogUtils.d(listOfFeatureCloned.size)
+//                LogUtils.d("Pos "+position)
+                var isThereItem = false
+
+                listOfFeatureCloned.forEach {
+                    if(it.categorie == position) {
+                        listOfFeatures.add(it)
+                        //LogUtils.d(it.title)
+                        isThereItem = true
+                    }
+                }
+                if(isThereItem) {
+                    containerFeatureDash.visibility = VISIBLE
+                    //carouselRecyclerview.scrollToPosition(0)
+                }else containerFeatureDash.visibility = GONE
+                (recyclerViewFeature.adapter as FeatureAdapter) ?.notifyDataSetChanged()
+
+//                if(carouselRecyclerview?.adapter?.itemCount!! > 0){
+//                    val pagerSnapHelper = PagerSnapHelper()
+//                    pagerSnapHelper.attachToRecyclerView(carouselRecyclerview)
+//
+//                    (indicator as CircleIndicator2).attachToRecyclerView(carouselRecyclerview!!, pagerSnapHelper)
+//                    carouselRecyclerview?.adapter?.registerAdapterDataObserver(indicator!!.getAdapterDataObserver());
+//                }
+            }
+        }
+    }
+
+    private fun showAllExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
+        expandableList.forEach {
+            it.visibility = View.VISIBLE
+        }
+//        listOfFeatures.clear()
+//        (carouselRecyclerview.adapter as FeatureAdapter) ?.notifyDataSetChanged()
+    }
+
     private fun updateListOfFeature() {
 
         listOfFeatures.clear()
+        listOfFeatureCloned.clear()
         val menuToken = object : TypeToken<MutableList<String>>() {}.type
         val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), menuToken)
 
+        LogUtils.d(roles)
         roles.map {
+            //LogUtils.d(it)
             when (it.uppercase()) {
                 "LOCALITES","LOCALITE" -> {
                     // linearLocalite.visibility = View.VISIBLE
@@ -547,6 +640,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //setClickListenForFeature(2);
 //                    linealProducteur.visibility = View.VISIBLE
 //                    linearUniteAgricole.visibility = View.VISIBLE
+
                     listOfFeatures.add(FeatureModel("PRODUCTEUR",
                         countSync = producteurDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "producteur")!!,
@@ -559,6 +653,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canViewDraft = true,
                         canViewSync = true //can be false
                     ).apply { this.image = image.plus("producteurc.png")})
+
                     listOfFeatures.add(FeatureModel("INFOS PRODUCTEUR",
                         countSync = CcbRoomDatabase.getDatabase(this)?.infosProducteurDao()
                             ?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
@@ -576,10 +671,11 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(4)
                     //setClickListenForFeature(4);
                     //linealParcel.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("PARCELLE",
+                    listOfFeatures.add(FeatureModel("IDENTIFICATIONS PARCELLES",
                         countSync = parcelleDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "parcelle")!!,
                         type = "PARCELLE",
+                        categorie = 0,
                         //image = R.drawable.parcelles,
                         icon = R.drawable.ic_parcel,
                         canAdd = true,
@@ -592,10 +688,11 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(3)
                     //setClickListenForFeature(3);
                     //linealMenage.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("MENAGE",
+                    listOfFeatures.add(FeatureModel("ENQUÊTE MÉNAGE",
                         countSync = producteurMenageDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "menage")!!,
                         type = "MENAGE",
+                        categorie = 3,
                         //image = R.drawable.menage,
                         icon = R.drawable.ic_menage,
                         canAdd = true,
@@ -608,27 +705,29 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(10)
                     //setClickListenForFeature(10);
                     //linealSuiviApplictions.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("SUIVI APPLICATION",
+                    listOfFeatures.add(FeatureModel("APPLICATIONS PHYTOS",
                         countSync = CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.getUnSyncedAll()?.size!!,
-                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_application")!!,
-                        type = "SUIVI_APPLICATION",
-                        placeholder = R.drawable.suiviapplication,
-                        icon = R.drawable.ic_applicateurs,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "application")!!,
+                        type = "APPLICATION",
+                        categorie = 1,
+                        //placeholder = R.drawable.suiviapplication,
+                        icon = R.drawable.application_phyto,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
                         canViewSync = false //can be false
-                    ).apply { this.image = image.plus("suiviapplication.png")})
+                    ).apply { this.image = image.plus("application_phyto.png")})
                 }
-                "EVALUATIONS","EVALUATION" -> {
+                "EVALUATIONS","INSPECTION" -> {
                     //listOrderItem.add(6)
                     //setClickListenForFeature(6);
                     //linearEvaluation.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("EVALUATION",
+                    listOfFeatures.add(FeatureModel("INSPECTIONS",
                         countSync =  CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "inspection")!!,
                         type = "INSPECTION",
                         //image = R.drawable.evaluation,
+                        categorie = 1,
                         icon = R.drawable.baseline_elevator,
                         canAdd = true,
                         canEdit = true,
@@ -640,10 +739,11 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(9)
                     //setClickListenForFeature(9);
                     //linearCalculEstimation.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("ESTIMATION",
+                    listOfFeatures.add(FeatureModel("ESTIMATIONS",
                         countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
-                        type = "CALCUL_ESTIMATION",
+                        type = "ESTIMATION",
+                        categorie = 0,
                         //image = R.drawable.estimations,
                         icon = R.drawable.ic_suivi_parcel,
                         canAdd = true,
@@ -651,15 +751,17 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canViewDraft = true,
                         canViewSync = false //can be false
                     ).apply { this.image = image.plus("estimations.png")})
+
                 }
                 "SUIVIPARCELLES","PARCELLES" -> {
                     //listOrderItem.add(5)
                     //setClickListenForFeature(5);
                     //linealSuiviParcelle.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("SUIVI PARCELLE",
+                    listOfFeatures.add(FeatureModel("SUIVIS PARCELLES",
                         countSync = suiviParcelleDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_parcelle")!!,
-                        type = "SUIVI_PARCELLE",
+                        type = "PARCELLES",
+                        categorie = 1,
                         //image = R.drawable.suiviparcelle,
                         icon = R.drawable.ic_suivi_parcel,
                         canAdd = true,
@@ -672,10 +774,11 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(8)
                     //setClickListenForFeature(8);
                     //linearFormation.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("SUIVI FORMATION",
+                    listOfFeatures.add(FeatureModel("FORMATIONS",
                         countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")!!,
                         type = "FORMATION",
+                        categorie = 1,
                         //image = R.drawable.formation,
                         icon = R.drawable.ic_formation,
                         canAdd = true,
@@ -688,12 +791,13 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(7)
                     //setClickListenForFeature(7);
                     //linearSSRT.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("SSRTECLMR",
+                    listOfFeatures.add(FeatureModel("SSTRE-CLMRS",
                         countSync = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "ssrte")!!,
-                        type = "SSRTE",
+                        type = "SSRTECLMRS",
+                        categorie = 3,
                         //image = R.drawable.ssrte,
-                        icon = R.drawable.baseline_follow,
+                        icon = R.drawable.ssrte_ic,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
@@ -704,139 +808,178 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(11)
                     //setClickListenForFeature(11);
                     //linearLivraison.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("LIVRAISON",
+                    listOfFeatures.add(FeatureModel("STOCK MAGASINS_SECTION",
                         countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "livraison")!!,
                         type = "LIVRAISON",
+                        categorie = 2,
                         //image = R.drawable.livraison,
-                        icon = R.drawable.ic_shipped,
+                        icon = R.drawable.livrais_mag_sect,
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = true //can be false
-                    ).apply { this.image = image.plus("livraison.png")})
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("livrais_mag_sect.png")})
                 }
-
+                "AGRO_EVALUATION" -> {
+                    listOfFeatures.add(FeatureModel("EVALUATION BESOINS",
+                        countSync = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")!!,
+                        type = "AGRO_EVALUATION",
+                        categorie = 4,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.arbre_black,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("arbre_black.png")})
+                }
+                "AGRO_DISTRIBUTION" -> {
+                    listOfFeatures.add(FeatureModel("DISTRIBUTION D'ARBRE",
+                        countSync = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "distribution_arbre")!!,
+                        type = "AGRO_DISTRIBUTION",
+                        categorie = 4,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.distrib_arbre,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("distrib_arbre.png")})
+                }
+                "POSTPLANTING" -> {
+                    listOfFeatures.add(FeatureModel("EVALUATION POST-PLANTING",
+                        countSync = CcbRoomDatabase.getDatabase(this)?.postplantingDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "postplanting")!!,
+                        type = "POSTPLANTING",
+                        categorie = 4,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.distrib_arbre,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("distrib_arbre.png")})
+                }
+                "LIVRAISON_MAGCENTRAL" -> {
+                    listOfFeatures.add(FeatureModel("STOCK MAGASINS_CENTRAUX",
+                        countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison_central")!!,
+                        type = "LIVRAISON_MAGCENTRAL",
+                        categorie = 2,
+                        //image = R.drawable.livraison,
+                        icon = R.drawable.livrais_mag_central,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("livrais_mag_central.png")})
+                }
+                "FORMATION_VISITEUR" -> {
+                    listOfFeatures.add(FeatureModel("VISITEUR FORMATION",
+                        countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
+                        type = "FORMATION_VISITEUR",
+                        categorie = 1,
+                        //image = R.drawable.formation,
+                        icon = R.drawable.visitor_form,
+                        canAdd = true,
+                        canEdit = false,
+                        canViewDraft = true,
+                        canViewSync = false //can be false
+                    ).apply { this.image = image.plus("visitor_form.png")})
+                }
                 else -> {}
             }
-
-            carouselRecyclerview.adapter?.notifyDataSetChanged()
+            //carouselRecyclerview?.adapter?.notifyDataSetChanged()
         }
 
-        carouselRecyclerview.adapter?.let {
+        listOfFeatures.map {
+            listOfFeatureCloned.add(it)
+        }
+
+        //LogUtils.d(listOfFeatures.map { it.type })
+
+        recyclerViewFeature?.adapter?.let {
             it.notifyDataSetChanged()
         }
 
     }
 
-    private fun setNavViewItems() {
+    private fun setNavViewItems(roles: MutableList<String>) {
 
         var expandableLV = expandable_navigation1.init(this@DashboardAgentActivity)
         val listHeaders = mutableListOf<HeaderModel>()
-        listOfFeatures.forEach {
-            val featured = HeaderModel(it.title, it.icon, true)
-                .addChildModel(ChildModel("AJOUTER"))
+        //LogUtils.d(roles)
+        listOfFeatureCloned.forEach {
 
-            if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
-            if(it.canViewUpdate) featured.addChildModel(ChildModel("LISTE MODIFIABLE"))
-            if(it.canViewSync) featured.addChildModel(ChildModel("DONNEES ENVOYEES"))
-            listHeaders.add(featured)
-            expandableLV.addHeaderModel(featured)
+
+            if(roles.contains(it.type)){
+                listOfFeatureClonedNav.add(it)
+                var titlo = Commons.formatTitleOfNavView(it.title)
+
+                val featured = HeaderModel(titlo  , it.icon, true)
+                    .addChildModel(ChildModel("NOUVEAU"))
+
+                if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
+                if(it.canViewUpdate) featured.addChildModel(ChildModel("A MODIFIER"))
+                if(it.canViewSync) featured.addChildModel(ChildModel("A ENVOYER"))
+                listHeaders.add(featured)
+                expandableLV.addHeaderModel(featured)
+            }
+
+            if(roles.contains("PRODUCTEUR") && it.type == "INFOS_PRODUCTEUR"){
+                listOfFeatureClonedNav.add(it)
+                var titlo = Commons.formatTitleOfNavView(it.title)
+                val featured = HeaderModel(titlo  , it.icon, true)
+                    .addChildModel(ChildModel("NOUVEAU"))
+
+                if(it.canViewDraft) featured.addChildModel(ChildModel("BROUILLON"))
+                if(it.canViewUpdate) featured.addChildModel(ChildModel("A MODIFIER"))
+                if(it.canViewSync) featured.addChildModel(ChildModel("A ENVOYER"))
+                listHeaders.add(featured)
+                expandableLV.addHeaderModel(featured)
+            }
+
         }
-
-//        val tvmain = this.findViewById<ImageView>(com.techatmosphere.R.id.icon_menu)
-//        Commons.modifyIcColor(this@DashboardAgentActivity, tvmain, R.color.text_color_white)
 
         expandableLV.build()
         //expandableLV.setAdapter(ExpandableListAdapter(this, listHeaders))
         expandableLV.addOnGroupClickListener(OnGroupClickListener { parent, v, groupPosition, id ->
                 expandable_navigation1.setSelected(groupPosition)
                 //drawer_layout.closeDrawer(GravityCompat.START)
+                //LogUtils.d(listOfFeatureCloned.get(groupPosition).title)
+
                 false
             })
             .addOnChildClickListener(OnChildClickListener { parent, v, groupPosition, childPosition, id ->
                 expandable_navigation1.setSelected(groupPosition, childPosition)
                 drawer_layout.closeDrawer(GravityCompat.START)
-                val currentGroup = listOfFeatures.get(groupPosition)
+                val currentGroup = listOfFeatureClonedNav.get(groupPosition)
                 val btnList = mutableListOf<String>("ADD")
 
                 if(currentGroup.canViewDraft) btnList.add("DRAFTS")
                 if(currentGroup.canViewUpdate) btnList.add("UPDATE")
                 if(currentGroup.canViewSync) btnList.add("DATAS")
                 val currName = btnList.get(childPosition)
-                Commons.redirectMenu(currentGroup.type.toString(), "${currName}", this@DashboardAgentActivity)
-
-//                when(childPosition){
-//                    0 -> {
-//                    }
-//
-//                    1 -> {
-//                        if(){
-//                            Commons.redirectMenu(currentGroup.type.toString(), "UPDATE", this@DashboardAgentActivity)
-//                        }
-//                    }
-//                }
-//                if(currentGroup.canViewDraft == false && currentGroup.canViewSync == false && currentGroup.canViewUpdate == false){
-//
-//                }else if(currentGroup.canViewDraft == false){
-//                    when(childPosition){
-//                        0 -> {
-//                            Commons.redirectMenu(currentGroup.type.toString(), "ADD", this@DashboardAgentActivity)
-//                        }
-//
-//                        1 -> {
-//                            Commons.redirectMenu(currentGroup.type.toString(), "UPDATE", this@DashboardAgentActivity)
-//                        }
-//
-//                        2 -> {
-//                            Commons.redirectMenu(currentGroup.type.toString(), "DATAS", this@DashboardAgentActivity)
-//                        }
-//                    }
-//                }else if(currentGroup.canViewSync == false){
-//                    when(childPosition){
-//                        0 -> {
-//                            Commons.redirectMenu(currentGroup.type.toString(), "ADD", this@DashboardAgentActivity)
-//                        }
-//
-//                        1 -> {
-//                            Commons.redirectMenu(currentGroup.type.toString(), "UPDATE", this@DashboardAgentActivity)
-//                        }
-//
-//                        2 -> {
-//                            Commons.redirectMenu(currentGroup.type.toString(), "DRAFTS", this@DashboardAgentActivity)
-//                        }
-//                    }
-//                }
+//                LogUtils.d(currName)
+//                LogUtils.d(currentGroup.type)
+                Commons.redirectMenu(currentGroup.type.toString().lowercase(), "${currName}", this@DashboardAgentActivity)
 
                 false
             })
 
-        if(listOfFeatures.size > 0) expandable_navigation1.setSelected(0)
+        if(listOfFeatureClonedNav.size > 0 && expandable_navigation1.size > 0) expandable_navigation1.setSelected(0)
 
     }
 
     private fun setViewFeatureListing() {
 
-        carouselRecyclerview.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
-        //carouselRecyclerview.set3DItem(true)
-        carouselRecyclerview.setInfinite(true)
-        carouselRecyclerview.setAlpha(true)
-        //carouselRecyclerview.setFlat(true)
-        carouselRecyclerview.setIsScrollingEnabled(true)
-
-        carouselRecyclerview.setItemSelectListener(object : CarouselLayoutManager.OnSelected {
-            override fun onItemSelected(position: Int) {
-                LogUtils.d(position)
-                (carouselRecyclerview.adapter as FeatureAdapter).setPositionSelected(position)
-            }
-        })
-
-        carouselRecyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-            }
-        })
+        val manager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        recyclerViewFeature!!.setLayoutManager(manager)
+        recyclerViewFeature?.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
 
     }
 

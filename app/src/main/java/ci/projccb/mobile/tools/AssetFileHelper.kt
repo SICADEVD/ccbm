@@ -15,6 +15,7 @@ import ci.projccb.mobile.models.PersonneBlesseeModel
 import ci.projccb.mobile.models.RecuModel
 import ci.projccb.mobile.models.SourceEauModel
 import ci.projccb.mobile.models.SourceEnergieModel
+import ci.projccb.mobile.models.SousThemeFormationModel
 import ci.projccb.mobile.models.ThemeFormationModel
 import ci.projccb.mobile.models.TypeDocumentModel
 import ci.projccb.mobile.models.TypeLocaliteModel
@@ -62,6 +63,7 @@ class AssetFileHelper {
             "arbre_ombrage",
             "titre_producteur",
             "type_css",
+            "sous_themes_formations",
         );
 
 
@@ -95,6 +97,7 @@ class AssetFileHelper {
            *         25 = "arbre_ombrage",
            *         26 = "titre_producteur",
            *         27 = "type_css",
+           *         28 = "sous_themes_formations",
         */
         fun getListDataFromAsset(position: Int = 0, context: Activity): MutableList<*>? {
             val typer : Type? = when(position) {
@@ -126,6 +129,7 @@ class AssetFileHelper {
                 25 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 26 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 27 -> object : TypeToken<MutableList<CommonData>>() {}.type
+                28 -> object : TypeToken<MutableList<SousThemeFormationModel>>() {}.type
                 else -> {
                     null
                 }

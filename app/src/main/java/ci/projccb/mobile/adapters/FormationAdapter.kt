@@ -23,7 +23,6 @@ class FormationAdapter(private var formations: List<FormationModel>?) : Recycler
 
         holder.formationThemeLabel.text = formationModel.themeStringify
         holder.formationDate.text = formationModel.dateFormation
-        holder.formationLieu.text = formationModel.lieuFormationsId
 
         if (formationModel.isSynced) holder.imgSyncedFormation.setImageResource(R.drawable.ic_sync_donz)
         else holder.imgSyncedFormation.setImageResource(R.drawable.ic_sync_error)

@@ -3,23 +3,50 @@ package ci.projccb.mobile.services
 import android.app.IntentService
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import ci.projccb.mobile.R
+import ci.projccb.mobile.adapters.MultipleItemAdapter
+import ci.projccb.mobile.adapters.OmbrageAdapter
+import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
+import ci.projccb.mobile.repositories.datas.ArbreData
+import ci.projccb.mobile.repositories.datas.InsectesParasitesData
+import ci.projccb.mobile.repositories.datas.PesticidesAnneDerniereModel
+import ci.projccb.mobile.repositories.datas.PesticidesApplicationModel
+import ci.projccb.mobile.repositories.datas.PresenceAutreInsecteData
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.returnStringList
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
+import ci.projccb.mobile.tools.SendErrorOnline
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectEndroitTrav2EffectSSrte
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectEndroitTravEffectSSrte
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectLequelTrav2EffectSSrte
+import kotlinx.android.synthetic.main.activity_ssrt_clms.selectLequelTravEffectSSrte
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAutreInsecteParOuRavSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteParOuRavSuiviParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerIntantAnDerListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerTraitInsecteParOuRavListSuiviParcel
+import okio.Buffer
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import java.lang.reflect.Type
 import java.net.UnknownHostException
 
 
@@ -37,14 +64,22 @@ import java.net.UnknownHostException
 class SynchronisationIntentService : IntentService("SynchronisationIntentService") {
 
 
+    var postplantingDao: PostplantingDao? = null
+    var postPlantingArbrDistribDao: PostPlantingArbrDistribDao? = null
+    private var contextAct: Context? = null
     var inspectionDao: InspectionDao? = null
     var infosProducteurDao: InfosProducteurDao? = null
     var localiteDao: LocaliteDao? = null
+    var campagneDao: CampagneDao? = null
     var producteurDao: ProducteurDao? = null
     var parcelleDao: ParcelleDao? = null
     var livraisonDao: LivraisonDao? = null
+    var livraisonCentralDao: LivraisonCentralDao? = null
     var menageDao: ProducteurMenageDao? = null
     var formationDao: FormationDao? = null
+    var evaluationArbreDao: EvaluationArbreDao? = null
+    var visiteurFormationDao: VisiteurFormationDao? = null
+    var distributionArbreDao: DistributionArbreDao? = null
     var suiviParcelleDao: SuiviParcelleDao? = null
     var suiviApplicationDao: SuiviApplicationDao? = null
     var enqueteSsrtDao: EnqueteSsrteDao? = null
@@ -112,30 +147,16 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         val producteurDatas = producteurDao.getUnSyncedAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
-        LogUtils.json(producteurDatas)
         for (producteur in producteurDatas) {
             try {
-                // deserialize datas producteurs
-//                val culturesType = object : TypeToken<MutableList<CultureProducteurModel>>() {}.type
-//                producteur.producteursCultures = GsonUtils.fromJson<MutableList<CultureProducteurModel>>(producteur.cultures, culturesType)
-//                producteur.typeculture = mutableListOf()
-//                producteur.superficieculture = mutableListOf()
-
-                //reform producteur
-                //producteur.localitesId
 
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
                 producteur.certificats = GsonUtils.fromJson(producteur.certificatsStr, object : TypeToken<MutableList<String>>(){}.type)
 
-                if (!producteur.photo.isNullOrEmpty()) producteur.photo = Commons.convertPathBase64(producteur.photo, 1)
-//                if (!producteur.rectoPath.isNullOrEmpty()) producteur.recto = Commons.convertPathBase64(producteur.rectoPath, 1)
-//                if (!producteur.versoPath.isNullOrEmpty()) producteur.verso = Commons.convertPathBase64(producteur.versoPath, 1)
-//                if (!producteur.esignaturePath.isNullOrEmpty()) producteur.esignature = Commons.convertPathBase64(producteur.esignaturePath, 3)
-
-//                producteur.producteursCultures?.map { culture ->
-//                    producteur.typeculture?.add(culture.label!!)
-//                    producteur.superficieculture?.add(culture.superficie.toString())
-//                }
+                if (!producteur.photo.isNullOrEmpty()) {
+                    val photoPath = producteur.photo
+                    producteur.photo = Commons.convertPathBase64(photoPath, 1)
+                }
 
 
                 producteur.apply {
@@ -149,10 +170,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     mobileMoney = null
                     hasMobileMoney = null
                     hasOtherFarms = null
-                    localite = null
                     mobileMoney = null
                     paperGuards = null
-                    photo = null
                     rectoPath = null
                     versoPath = null
                     recuAchat = null
@@ -164,402 +183,134 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 }
 
                 val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
-                val responseProducteur: Response<ProducteurModel> = clientProducteur.execute()
-                val producteurSynced: ProducteurModel? = responseProducteur.body()
+                clientProducteur.enqueue(object: Callback<ProducteurModel>{
+                    override fun onResponse(
+                        call: Call<ProducteurModel>,
+                        response: Response<ProducteurModel>
+                    ) {
+                        var producteurSynced = response.body()
 
-                if(responseProducteur.isSuccessful){
+                        if(response.code().toString().contains("422")){
+                            //val buffer = Buffer()
+                            val respText = response.errorBody()?.string().toString()
+                            if(respText.contains("phone1", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
+//                                LogUtils.d(respText)
+                                producteurDao.syncDataOnExist(
+                                    synced = 1,
+                                    localID = producteur.uid
+                                )
+                            }
+                        }
 
-                    producteurDao.syncData(
-                        id = producteurSynced?.id!!,
-                        synced = true,
-                        localID = producteur.uid
-                    )
+                        producteurSynced?.let {
+//                            LogUtils.d(producteurSynced?.id)
+//                            LogUtils.d(response.code())
 
-                    val producteurMenagesList = menageDao?.getMenagesUnSynchronizedLocal(
-                        producteur.uid.toString(),
-                        SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
+                            producteurDao.syncData(
+                                id = producteurSynced?.id!!,
+                                synced = true,
+                                localID = producteur.uid
+                            )
 
-                    for (prodMenage in producteurMenagesList) {
-                        prodMenage.producteurs_id = producteurSynced.id.toString()
-                        menageDao?.insert(prodMenage)
-                    }
+                            infosProducteurDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                infosProducteurDao?.insert(it)
+                            }
 
-                    val producteurParcellesList = parcelleDao?.getParcellesUnSynchronizedLocal(
-                        producteur.uid.toString(),
-                        SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
+                            inspectionDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                inspectionDao?.insert(it)
+                            }
 
-                    for (parcelle in producteurParcellesList) {
-                        parcelle.producteurId = producteurSynced.id.toString()
-                        parcelleDao?.insert(parcelle)
-                    }
+                            livraisonDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                livraisonDao?.insert(it)
+                            }
 
-                    val livraisonsList = livraisonDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
+                            livraisonCentralDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                livraisonCentralDao?.insert(it)
+                            }
 
-                    livraisonsList.map { livraisonModel ->
-                        livraisonModel.producteursId = producteurSynced.id.toString()
-                        livraisonDao?.insert(livraisonModel)
-                    }
+                            menageDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurs_id = producteurSynced.id.toString()
+                                menageDao?.insert(it)
+                            }
 
-                    val formationsList = formationDao?.getUnSyncedAll(
-                        agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-                    )!!
+                            enqueteSsrtDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                enqueteSsrtDao?.insert(it)
+                            }
 
-                    for (formation in formationsList) {
-                        try {
-                            // deserialize datas producteurs
-                            val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                            formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                            val cleanList = formation.producteursId?.toMutableList()
+                            parcelleDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                parcelleDao?.insert(it)
+                            }
 
-                            var positionLoop = 0
-                            var positionFound: Int
+                            distributionArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                distributionArbreDao?.insert(it)
+                            }
 
-                            formation.producteursId?.map {
-                                val producteurId = it.split("-")[0]
-                                val typeId = it.split("-")[1]
+                            evaluationArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                evaluationArbreDao?.insert(it)
+                            }
 
-                                if (typeId == "uid") {
-                                    if (producteurId.toInt() == producteurSynced.uid) {
-                                        positionFound = positionLoop
-                                        cleanList?.removeAt(positionFound)
-                                        cleanList?.add("${producteurSynced.id}-id")
+
+                            // THIS SYNC DEPEND TO PRODUCTEUR_ID AND PARCELLE_ID
+
+                            estimationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                estimationDao?.insert(it)
+                            }
+
+                            suiviParcelleDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                it.producteursId = producteurSynced.id.toString()
+                                suiviParcelleDao?.insert(it)
+                            }
+
+                            suiviApplicationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                it.producteur = producteurSynced.id.toString()
+                                suiviApplicationDao?.insert(it)
+                            }
+
+                            // THIS SYNC DEPEND TO PRODUCTEUR_ID AND FORMATION_ID
+
+                            visiteurFormationDao?.getUnSyncedByProdAndFormUid(producteur.uid.toString())?.forEach {
+                                it.producteurId = producteurSynced.id.toString()
+                                visiteurFormationDao?.insert(it)
+                            }
+
+                            // THIS SYNC DEPEND TO PRODUCTEUR_ID
+                            formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
+                                if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
+                                    if( producteurDao.getProducteurByID(producteur.uid) == null ) {
+                                        formMod.producteursIdStr = formMod.producteursIdStr?.let {
+
+                                            var curValue = it
+                                            if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
+                                            LogUtils.d(curValue)
+                                            curValue
+
+                                        }
+
                                     }
                                 }
 
-                                positionLoop += 1
+                                formationDao?.insert(formMod)
+
                             }
 
-                            formation.producteursId = mutableListOf()
-                            formation.producteursId = cleanList
-                            formation.producteursIdStringify = GsonUtils.toJson(cleanList)
-
-                            formationDao?.insert(formation)
-                        } catch (uhex: UnknownHostException) {
-                            FirebaseCrashlytics.getInstance().recordException(uhex)
-                        } catch (ex: Exception) {
-                            LogUtils.e(ex.message)
-                            FirebaseCrashlytics.getInstance().recordException(ex)
                         }
+
                     }
 
-                }
-
-            } catch (uhex: UnknownHostException) {
-                FirebaseCrashlytics.getInstance().recordException(uhex)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        syncMenage(menageDao!!)
-    }
-
-
-    fun syncMenage(menageDao: ProducteurMenageDao) {
-        val menageDatas = menageDao.getUnSyncedAll(
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
-
-        for (menage in menageDatas) {
-            menage.apply {
-                localiteNom = null
-                machine = null
-                gardeEmpruntMachine = null
-                id = null
-                empruntMachine = null
-                if(activiteFemme.isNullOrBlank()) {
-                    activiteFemme = "non"
-                }
-            }
-
-            LogUtils.d("VAR MENAGE : "+menage.equipements)
-
-            try {
-                //LogUtils.e(TAG, "menage ID before -> ${menage.id}")
-                val clientMenage: Call<ProducteurMenageModel> =
-                    ApiClient.apiService.synchronisationMenage(menage)
-
-                val responseMenage: Response<ProducteurMenageModel> = clientMenage.execute()
-                val menageSync: ProducteurMenageModel = responseMenage.body()!!
-
-                menageDao.syncData(
-                    id = menageSync.id!!.toInt(),
-                    synced = true,
-                    localID = menage.uid.toInt()
-                )
-                //LogUtils.e(TAG, "menage ID after -> ${menageSync.id}")
-            } catch (uhex: UnknownHostException) {
-                FirebaseCrashlytics.getInstance().recordException(uhex)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        syncParcelle(parcelleDao!!)
-    }
-
-
-    fun syncParcelle(parcelleDao: ParcelleDao) {
-        val parcelleDatas = parcelleDao.getUnSyncedAll(
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
-
-        val parcelleWayPointsMappedToken = object : TypeToken<MutableList<String>>() {}.type
-
-        for (parcelle in parcelleDatas) {
-            try {
-                if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
-
-                //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
-                val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)
-
-                val responseParcelle: Response<ParcelleModel> = clientParcelle.execute()
-                val parcelleSync: ParcelleModel = responseParcelle.body()!!
-
-                parcelleDao.syncData(
-                    id = parcelleSync.id!!,
-                    synced = true,
-                    localID = parcelle.uid.toInt()
-                )
-
-                val suiviParcellesList = suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
-                    parcelleUid = parcelle.uid.toString(),
-                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-                )!!
-
-                for (suivi in suiviParcellesList) {
-                    suivi.parcellesId = parcelleSync.id.toString()
-                    suivi.producteursId = parcelleSync.producteurId
-                    suiviParcelleDao?.insert(suivi)
-                }
-
-            } catch (uhex: UnknownHostException) {
-                FirebaseCrashlytics.getInstance().recordException(uhex)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        syncSuivi(suiviParcelleDao!!)
-    }
-
-
-    fun syncSuivi(suiviParcelleDao: SuiviParcelleDao) {
-        val suiviDatas = suiviParcelleDao.getUnSyncedAll(
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
-
-        if (suiviDatas.size > 0) {
-            for (suivi in suiviDatas) {
-                try {
-                    // deserialize datas producteurs
-                    val ombragesType = object : TypeToken<MutableList<OmbrageVarieteModel>>() {}.type
-                    suivi.ombrages = GsonUtils.fromJson<MutableList<OmbrageVarieteModel>>(suivi.varieteOmbragesTemp, ombragesType)
-
-                    val arbreType = object : TypeToken<MutableList<OmbrageVarieteModel>>() {}.type
-                    val arbres = GsonUtils.fromJson<MutableList<OmbrageVarieteModel>>(suivi.arbreAgroForestierStringify, arbreType)
-
-
-                    val animauxType = object : TypeToken<MutableList<String>>() {}.type
-                    suivi.animauxRencontres = GsonUtils.fromJson<MutableList<String>>(suivi.animauxRencontresStringify, animauxType)
-
-                    suivi.varietesOmbrage = mutableListOf()
-                    suivi.nombreOmbrage = mutableListOf()
-
-                    suivi.nombreArbresAgro = mutableListOf()
-                    suivi.agroForestiers = mutableListOf()
-
-                    suivi.ombrages?.map { ombrage ->
-                        suivi.varietesOmbrage?.add(ombrage.variete!!)
-                        suivi.nombreOmbrage?.add(ombrage.nombre.toString())
+                    override fun onFailure(call: Call<ProducteurModel>, t: Throwable) {
+                        LogUtils.e(t.message)
                     }
 
-                    arbres?.map { arbre ->
-                        suivi.agroForestiers?.add(arbre.variete!!)
-                        suivi.nombreArbresAgro?.add(arbre.nombre!!)
-                    }
-
-                    suivi.dateVisite = Commons.convertDate(suivi.dateVisite, true)
-
-                    val clientSuivi: Call<SuiviParcelleModel> = ApiClient.apiService.synchronisationSuivi(suivi)
-
-                    val responseSuivi: Response<SuiviParcelleModel> = clientSuivi.execute()
-                    val suiviSynced: SuiviParcelleModel? = responseSuivi.body()
-
-
-
-                    suiviParcelleDao.syncData(
-                        id = suiviSynced?.id!!,
-                        synced = true,
-                        localID = suivi.uid
-                    )
-                } catch (uhex: UnknownHostException) {
-                    FirebaseCrashlytics.getInstance().recordException(uhex)
-                } catch (ex: Exception) {
-                    LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-                }
-            }
-            syncFormations(formationDao!!)
-        } else {
-            syncFormations(formationDao!!)
-        }
-    }
-
-
-    fun syncFormations(formationDao: FormationDao) {
-        val formationDatas = formationDao.getUnSyncedAll(
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        );
-
-        for (formation in formationDatas) {
-            try {
-                // deserialize datas producteurs
-                val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                formation.producteursId = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStringify, producteursType)
-                val cleanList = formation.producteursId?.toMutableList()
-
-                formation.dateFormation = Commons.convertDate(formation.dateFormation, true)
-                formation.themeIds = ListConverters.stringToMutableList(formation.themeStringify)
-
-                var positionLoop = 0
-                var positionFound = 0
-
-                formation.producteursId?.map {
-                    val producteurId = it.split("-")[0]
-                    val typeId = it.split("-")[1]
-
-                    if (typeId == "uid") {
-                        val producteurCheck = producteurDao?.getProducteurByUID(producteurUID = producteurId.toInt())
-
-                        if (producteurCheck?.isSynced!!) {
-                            positionFound = positionLoop
-                            cleanList?.removeAt(positionFound)
-                            cleanList?.add("${producteurCheck.id}-id")
-                        } else {
-                            suncFormationsFlag = false
-                        }
-                    }
-
-                    positionLoop += 1
-                }
-
-                formation.producteursId = mutableListOf()
-                formation.producteursId = cleanList
-            } catch (uhex: UnknownHostException) {
-                FirebaseCrashlytics.getInstance().recordException(uhex)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-        if (suncFormationsFlag) { // all is done bring synchronization
-            formationDatas.map { formationModel ->
-                // deserialize datas producteurs
-                val producteursType = object : TypeToken<MutableList<String>>() {}.type
-                formationModel.producteursId = GsonUtils.fromJson<MutableList<String>>(formationModel.producteursIdStringify, producteursType)
-                formationModel.photoFormation = Commons.convertPathBase64(formationModel.photoPath, 0)
-                //LogUtils.e(TAG, GsonUtils.toJson(formationModel.producteurs))
-
-                formationModel.visiteursNom = mutableListOf<String>()
-                formationModel.visiteurs?.split(",")?.map {
-                    formationModel.visiteursNom?.add(it.toString())
-                }
-
-                val listM = formationModel.producteursId?.map {
-                    it.replace("-id", "")
-                }
-
-                formationModel.producteursId = listM?.toMutableList()
-
-                val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formationModel)
-
-                val responseFormation: Response<FormationModel> = clientFormation.execute()
-                val formationSynced: FormationModel? = responseFormation.body()
-
-                formationDao.syncData(
-                    formationSynced?.id!!,
-                    true,
-                    formationModel.uid
-                )
-            }
-        }
-
-        syncLivraison(livraisonDao!!)
-    }
-
-
-    fun syncLivraison(livraisonDao: LivraisonDao) {
-        val livraisonDatas = livraisonDao.getUnSyncedAll(
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
-
-        livraisonDatas.map { livraisonPojo ->
-            livraisonPojo.estimatDate = Commons.convertDate(livraisonPojo.estimatDate, true)
-
-            val livraisonSModList:ArrayList<LivraisonSousModel> = arrayListOf()
-            val producteursId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)
-            val parcelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcellesStringify)
-            val parcellesId = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelParcelleIdsStringify)
-            val quantites = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelQuantitysStringify)
-            val types = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelTypesStringify)
-            val amounts = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelAmountsStringify)
-            val scelles = ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelScellesStringify)
-            var counter = 0
-            ListConverters.stringToMutableList(livraisonPojo.livraisonSousModelProdNamesStringify)?.forEach {
-                livraisonSModList.add(
-                    LivraisonSousModel(
-                        producteurId = producteursId!![counter],
-                        producteurIdName = it,
-                        parcelleIdName = parcelles!![counter],
-                        parcelleId = parcellesId!![counter],
-                        quantityNb = quantites!![counter].toInt(),
-                        amountNb = amounts!![counter].toInt(),
-                        typeName = types!![counter]
-                        //nsumScelle = scelles!![counter],
-                    ).apply {
-                        scelleList = mutableListOf<String>()
-                        scelleList!!.add(numScelle.toString())
-                    }
-                )
-                counter++
-            }
-
-            val listLivrSModJson = ApiClient.gson.toJson(livraisonSModList)
-            livraisonPojo.apply {
-                itemList = livraisonSModList
-                itemsStringify = null
-                 livraisonSousModelProdNamesStringify = null
-                 livraisonSousModelProdIdsStringify = null
-                 livraisonSousModelParcellesStringify = null
-                 livraisonSousModelParcelleIdsStringify = null
-                 livraisonSousModelTypesStringify = null
-                 livraisonSousModelQuantitysStringify = null
-                 livraisonSousModelAmountsStringify = null
-                 livraisonSousModelScellesStringify = null
-            }
-
-            val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraison(livraisonModel = livraisonPojo)
-
-            val responseLivraison: Response<LivraisonModel> = clientLivraison.execute()
-            val livraisonSynced: LivraisonModel? = responseLivraison.body()
-
-            try {
-                if (livraisonSynced != null) {
-                    livraisonDao.syncData(
-                        livraisonSynced.id!!,
-                        true,
-                        livraisonPojo.uid
-                    )
-                }
+                })
 
             } catch (uhex: UnknownHostException) {
                 LogUtils.e(uhex.message)
@@ -570,236 +321,1149 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
         }
 
+
+        syncParcelle(parcelleDao!!)
+    }
+
+
+    fun syncMenage(menageDao: ProducteurMenageDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            val menageDatas = menageDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            )
+
+            for (menage in menageDatas) {
+                menage.apply {
+                    localiteNom = null
+                    machine = null
+                    gardeEmpruntMachine = null
+                    id = null
+                    empruntMachine = null
+                    if(activiteFemme.isNullOrBlank()) {
+                        activiteFemme = getString(R.string.non)
+                    }
+                }
+
+                menage.apply {
+
+                    sourcesEnergieList = returnStringList(sources_energies_id)
+                    ordureMenageresList = returnStringList(ordures_menageres_id)
+
+                }
+
+                //LogUtils.d("VAR MENAGE : "+menage.equipements)
+
+                try {
+                    //LogUtils.e(TAG, "menage ID before -> ${menage.id}")
+                    val clientMenage: Call<ProducteurMenageModel> =
+                        ApiClient.apiService.synchronisationMenage(menage)
+
+                    val responseMenage: Response<ProducteurMenageModel> = clientMenage.execute()
+                    val menageSync: ProducteurMenageModel = responseMenage.body()!!
+
+                    if(responseMenage.isSuccessful){
+                        menageDao.syncData(
+                            id = menageSync.id!!.toInt(),
+                            synced = true,
+                            localID = menage.uid.toInt()
+                        )
+                    }else if(responseMenage.code() == 501){
+                        menageDao.syncData(
+                            id = menageSync.id!!.toInt(),
+                            synced = true,
+                            localID = menage.uid.toInt()
+                        )
+                    }
+                    //LogUtils.e(TAG, "menage ID after -> ${menageSync.id}")
+                } catch (uhex: UnknownHostException) {
+                    menageDao.deleteUid(
+                        uId = menage.uid.toString()
+                    )
+                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                } catch (ex: Exception) {
+                    menageDao.deleteUid(
+                        uId = menage.uid.toString()
+                    )
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }else recallServiceIntent()
+
+
+        syncEnqueteSsrt(enqueteSsrtDao!!)
+
+    }
+
+
+    fun syncParcelle(parcelleDao: ParcelleDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0){
+            val parcelleDatas = parcelleDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            )
+
+            val parcelleWayPointsMappedToken = object : TypeToken<MutableList<String>>() {}.type
+
+            for (parcelle in parcelleDatas) {
+                try {
+                    parcelle?.apply {
+                        codeParc = null
+                        id = 0
+                        localiteNom = null
+                        nom = null
+                        perimeter = null
+                        prenoms = null
+                        producteurNom = null
+                    }
+
+                    if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
+
+                    parcelle.apply {
+                        protectionList = returnStringList(protectionStr)?: arrayListOf()
+                        arbreList = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
+                    }
+
+                    //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
+                    val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)
+
+                    clientParcelle.enqueue(object : Callback<ParcelleModel>{
+
+                        override fun onResponse(
+                            call: Call<ParcelleModel>,
+                            response: Response<ParcelleModel>
+                        ) {
+                            if(response.isSuccessful){
+
+                                val parcelleSync: ParcelleModel = response.body()!!
+
+                                parcelleDao.syncData(
+                                    id = parcelleSync.id!!,
+                                    synced = true,
+                                    codeparc = parcelleSync.codeParc.toString(),
+                                    localID = parcelle.uid.toInt()
+                                )
+
+                                estimationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
+                                    it.parcelleId = parcelleSync.id.toString()
+                                    estimationDao?.insert(it)
+                                }
+
+                                suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
+                                    parcelleUid = parcelle.uid.toString(),
+                                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+                                )?.forEach {
+                                    it.parcellesId = parcelleSync.id.toString()
+                                    suiviParcelleDao?.insert(it)
+                                }
+
+                                suiviApplicationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
+                                    it.parcelle_id = parcelleSync.id.toString()
+                                    suiviApplicationDao?.insert(it)
+                                }
+
+                            }else{
+
+                                parcelleDao.deleteUid(parcelle.uid)
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ParcelleModel>, t: Throwable) {
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+
+                } catch (uhex: UnknownHostException) {
+                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+        }else recallServiceIntent()
+
         syncEstimation(estimationDao!!)
+
+    }
+
+
+    fun syncSuivi(suiviParcelleDao: SuiviParcelleDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        val parcelleDatas = parcelleDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0 && parcelleDatas?.size == 0) {
+
+            val suiviDatas = suiviParcelleDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            )
+
+            if (suiviDatas.size > 0) {
+                for (suivi in suiviDatas) {
+                    try {
+                        // deserialize datas producteurs
+
+                        suivi.apply {
+                            campagneId = campagneDao!!.getAll()[0].id.toString()
+                            pesticidesAnneDerniereList = GsonUtils.fromJson(pesticidesAnneDerniereStr, object : TypeToken<MutableList<PesticidesAnneDerniereModel>>() {}.type)
+                            intrantsAnneDerniereList = GsonUtils.fromJson(intrantsAnneDerniereStr, object : TypeToken<MutableList<PesticidesAnneDerniereModel>>() {}.type)
+
+                            insectesParasitesList = GsonUtils.fromJson(insectesParasitesStr, object : TypeToken<MutableList<InsectesParasitesData>>() {}.type)
+
+                            presenceAutreInsecteList = GsonUtils.fromJson(presenceAutreInsecteStr, object : TypeToken<MutableList<PresenceAutreInsecteData>>() {}.type)
+
+                            traitementList = GsonUtils.fromJson(traitementStr, object : TypeToken<MutableList<PesticidesAnneDerniereModel>>() {}.type)
+                            insectesAmisList = GsonUtils.fromJson(insectesAmisStr, object : TypeToken<MutableList<String>>() {}.type)
+                            nombreinsectesAmisList = GsonUtils.fromJson(nombreinsectesAmisStr, object : TypeToken<MutableList<String>>() {}.type)
+
+                            animauxRencontres = GsonUtils.fromJson(animauxRencontresStringify, object : TypeToken<MutableList<String>>() {}.type)
+
+                            arbreList = GsonUtils.fromJson(arbreStr, object : TypeToken<MutableList<String>>() {}.type)
+                            arbreItemsList = GsonUtils.fromJson(arbreItemStr, object : TypeToken<MutableList<ArbreData>>() {}.type)
+                        }
+
+
+                        suivi.dateVisite = Commons.convertDate(suivi.dateVisite, true)
+
+                        val clientSuivi: Call<SuiviParcelleModel> = ApiClient.apiService.synchronisationSuivi(suivi)
+
+                        clientSuivi.enqueue(object : Callback<SuiviParcelleModel>{
+                            override fun onResponse(
+                                call: Call<SuiviParcelleModel>,
+                                response: Response<SuiviParcelleModel>
+                            ) {
+                                if(response.isSuccessful){
+
+                                    val suiviSynced: SuiviParcelleModel? = response.body()
+
+                                    suiviParcelleDao.syncData(
+                                        id = suiviSynced?.id!!,
+                                        synced = true,
+                                        localID = suivi.uid
+                                    )
+                                }else{
+                                    suiviParcelleDao.deleteByUid(
+                                        suivi.uid
+                                    )
+                                }
+                            }
+
+                            override fun onFailure(call: Call<SuiviParcelleModel>, t: Throwable) {
+                                LogUtils.e(t.message)
+                            }
+
+                        })
+
+                    } catch (uhex: UnknownHostException) {
+                        FirebaseCrashlytics.getInstance().recordException(uhex)
+                    } catch (ex: Exception) {
+                        LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                    }
+                }
+                //syncVisiteurFormation(visiteurFormationDao!!)
+            } else {
+            }
+        }else recallServiceIntent()
+
+
+        syncSuiviApplication(suiviApplicationDao!!)
+
+    }
+
+    fun syncVisiteurFormation(visiteurFormationDao: VisiteurFormationDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        val formationDatas = formationDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        );
+
+        if(producteurDatas?.size == 0 && formationDatas?.size == 0 ) {
+
+            val suiviDatas = visiteurFormationDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
+            )
+    //        LogUtils.json(suiviDatas)
+            if (suiviDatas.size > 0) {
+                for (suivi in suiviDatas) {
+                    try {
+                        // deserialize datas producteurs
+
+                        val clientSuivi: Call<VisiteurFormationModel> = ApiClient.apiService.synchronisationVisiteurFormation(suivi)
+
+                        clientSuivi.enqueue(object : Callback<VisiteurFormationModel>{
+                            override fun onResponse(
+                                call: Call<VisiteurFormationModel>,
+                                response: Response<VisiteurFormationModel>
+                            ) {
+
+                                if(response.isSuccessful){
+                                    val visiteurFormationModel: VisiteurFormationModel? = response.body()
+
+                                    visiteurFormationDao.syncData(
+                                        id = visiteurFormationModel?.id!!,
+                                        synced = true,
+                                        localID = suivi.uid
+                                    )
+                                }else{
+                                    visiteurFormationDao.deleteByUid(suivi.uid)
+                                }
+
+                            }
+
+                            override fun onFailure(call: Call<VisiteurFormationModel>, t: Throwable) {
+    //                            try{
+    //                                visiteurFormationDao.deleteByUid(suivi.uid)
+    //                            }catch (ex: Exception){
+    //
+    //                            }
+                            }
+
+                        })
+
+
+                    } catch (uhex: UnknownHostException) {
+                        FirebaseCrashlytics.getInstance().recordException(uhex)
+                    } catch (ex: Exception) {
+                        LogUtils.e(ex.message)
+                        FirebaseCrashlytics.getInstance().recordException(ex)
+                    }
+                }
+                //syncEvaluationBesoin(evaluationArbreDao!!)
+            } else {
+            }
+
+        }else recallServiceIntent()
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            stopForeground(true)
+            notificationManager?.cancel(1)
+        }
+
+
+    }
+
+    fun syncEvaluationBesoin(evaluationArbreDao: EvaluationArbreDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            val suiviDatas = evaluationArbreDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
+            )
+
+            if (suiviDatas.size > 0) {
+                for (suivi in suiviDatas) {
+                    try {
+                        // deserialize datas producteurs
+                        suivi.apply {
+                            especesarbreList = returnStringList(especesarbreStr)
+                            quantiteList = returnStringList(quantiteStr)
+                        }
+
+                        val clientSuivi: Call<EvaluationArbreModel> = ApiClient.apiService.synchronisationEvaluationBesoin(suivi)
+
+                        clientSuivi.enqueue(object : Callback<EvaluationArbreModel>{
+                            override fun onResponse(
+                                call: Call<EvaluationArbreModel>,
+                                response: Response<EvaluationArbreModel>
+                            ) {
+                                if(response.isSuccessful){
+                                    val evaluationArbreModel: EvaluationArbreModel? = response.body()
+
+                                    evaluationArbreDao.syncData(
+                                        id = evaluationArbreModel?.id!!,
+                                        synced = true,
+                                        localID = suivi.uid
+                                    )
+                                }else{
+                                    evaluationArbreDao.deleteByUid(
+                                        suivi.uid
+                                    )
+                                }
+                            }
+
+                            override fun onFailure(call: Call<EvaluationArbreModel>, t: Throwable) {
+                                LogUtils.e(t.message)
+                            }
+
+                        })
+                    } catch (uhex: UnknownHostException) {
+                        FirebaseCrashlytics.getInstance().recordException(uhex)
+                    } catch (ex: Exception) {
+                        LogUtils.e(ex.message)
+                        FirebaseCrashlytics.getInstance().recordException(ex)
+                    }
+                }
+                //syncFormations(formationDao!!)
+            } else {
+            }
+
+        }else recallServiceIntent()
+
+        syncPostPlanting(postplantingDao!!)
+    }
+
+    fun syncPostPlanting(postplantingDao: PostplantingDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            val suiviDatas = postplantingDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            )
+
+            if (suiviDatas.size > 0) {
+                for (suivi in suiviDatas) {
+                    try {
+                        // deserialize datas producteurs
+                        suivi.apply {
+                            quantiterecueList = GsonUtils.fromJson(suivi.quantiterecueStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type) //returnStringList(especesarbreStr)
+                            quantiteList = GsonUtils.fromJson(suivi.quantiteStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+                            quantitesurvecueeList = GsonUtils.fromJson(suivi.quantitesurvecueeStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+                            commentaireList = GsonUtils.fromJson(suivi.commentaireStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+                        }
+
+                        val postplantDistr = postPlantingArbrDistribDao?.getPostPlantByPId(suivi.producteurId)
+                        var listArbrItem = GsonUtils.fromJson<MutableList<PostPlantingItem>>(postplantDistr?.arbresStr, object : TypeToken<MutableList<PostPlantingItem>>(){}.type)
+
+                        listArbrItem.map { postit ->
+                            val liliModif = suivi.quantitesurvecueeList?.get(suivi.producteurId.toString())
+                            var itemo = liliModif?.filter { it.key.equals(postit.id_arbre) }
+                            itemo?.let {
+                                it.values.first()?.let {
+                                    postit.quantite = it
+                                }
+                            }
+                        }
+
+                        //LogUtils.d(listArbrItem)
+                        postplantDistr?.arbresStr = GsonUtils.toJson(listArbrItem)
+                        val clientSuivi: Call<PostPlantingModel> = ApiClient.apiService.synchronisationPostPlanting(suivi)
+
+                        clientSuivi.enqueue(object : Callback<PostPlantingModel>{
+                            override fun onResponse(
+                                call: Call<PostPlantingModel>,
+                                response: Response<PostPlantingModel>
+                            ) {
+                                if(response.isSuccessful){
+                                    val postPlantingModel: PostPlantingModel? = response.body()
+
+                                    postplantingDao.syncData(
+                                        id = postPlantingModel?.id!!,
+                                        synced = true,
+                                        localID = suivi.uid
+                                    )
+
+                                    postplantDistr?.let {
+                                        postPlantingArbrDistribDao?.insert(it)
+                                    }
+                                    //postPlantingArbrDistribDao?.deleteById(suivi.producteurId)
+                                }else{
+                                    postplantingDao.deleteByUid(
+                                        suivi.uid
+                                    )
+                                }
+                            }
+
+                            override fun onFailure(call: Call<PostPlantingModel>, t: Throwable) {
+                                LogUtils.e(t.message)
+                            }
+
+                        })
+                    } catch (uhex: UnknownHostException) {
+                        FirebaseCrashlytics.getInstance().recordException(uhex)
+                    } catch (ex: Exception) {
+                        LogUtils.e(ex.message)
+                        FirebaseCrashlytics.getInstance().recordException(ex)
+                    }
+                }
+                //syncFormations(formationDao!!)
+            } else {
+            }
+
+        }else recallServiceIntent()
+
+        syncFormations(formationDao!!)
+    }
+
+
+    fun syncFormations(formationDao: FormationDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            val formationDatas = formationDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            );
+
+            for (formation in formationDatas) {
+                try {
+                    // deserialize datas producteurs
+
+                    formation.apply {
+                        producteursIdList = GsonUtils.fromJson(formation.producteursIdStr, object : TypeToken<MutableList<String>>() {}.type)
+                        typeFormationList = GsonUtils.fromJson(formation.typeFormationStr, object : TypeToken<MutableList<String>>() {}.type)
+                        themeList = GsonUtils.fromJson(formation.themeStr, object : TypeToken<MutableList<String>>() {}.type)
+                        sousThemeList = GsonUtils.fromJson(formation.sousThemeStr, object : TypeToken<MutableList<String>>() {}.type)
+
+                        dureeFormation?.split(":").let {
+                            hour = it?.get(0)?.toString()
+                            minute = it?.get(1)?.toString()
+                        }
+
+                        dureeFormation = (if(hour?.length == 1) "0$hour:" else "$hour:")+(if(minute?.length == 1) "0$minute" else "$minute")
+
+                        multiStartDate = Commons.convertDate(multiStartDate, true)
+                        multiEndDate = Commons.convertDate(multiEndDate, true)
+
+
+                        photo_filename = photoFormation
+                        rapport_filename = rapportFormation
+                        photoFormation = Commons.convertPathBase64(photoFormation, 1)
+                        rapportFormation = Commons.fileToBase64(rapportFormation)
+                    }
+
+                    val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)
+
+                    clientFormation.enqueue(object : Callback<FormationModel>{
+                        override fun onResponse(
+                            call: Call<FormationModel>,
+                            response: Response<FormationModel>
+                        ) {
+                            if(response.isSuccessful){
+                                val formationSynced: FormationModel? = response.body()
+
+                                formationDao.syncData(
+                                    formationSynced?.id!!,
+                                    true,
+                                    formation.uid
+                                )
+
+                                visiteurFormationDao?.getUnSyncedByFormUid(formation.uid.toString())?.forEach {
+                                    it.producteurId = formationSynced.id.toString()
+                                    visiteurFormationDao?.insert(it)
+                                }
+
+                            }else{
+                                formationDao.deleteByUid(
+                                    formation.uid
+                                )
+                            }
+                        }
+
+                        override fun onFailure(call: Call<FormationModel>, t: Throwable) {
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+
+
+                } catch (uhex: UnknownHostException) {
+                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+        }else recallServiceIntent()
+
+        syncVisiteurFormation(visiteurFormationDao!!)
+
+    }
+
+
+    fun syncLivraison(livraisonDao: LivraisonDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            val livraisonDatas = livraisonDao.getUnSyncedAll(
+                agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+            )
+
+            livraisonDatas.map { livraisonPojo ->
+                livraisonPojo.estimatDate = Commons.convertDate(livraisonPojo.estimatDate, true)
+
+                livraisonPojo.itemList = GsonUtils.fromJson<MutableList<LivraisonSousModel>>(livraisonPojo.itemsStringify, object : TypeToken<MutableList<LivraisonSousModel>>() {}.type)
+
+                //val listLivrSModJson = ApiClient.gson.toJson(livraisonSModList)
+                livraisonPojo.apply {
+                     itemsStringify = null
+                     livraisonSousModelProdNamesStringify = null
+                     livraisonSousModelProdIdsStringify = null
+                     livraisonSousModelParcellesStringify = null
+                     livraisonSousModelParcelleIdsStringify = null
+                     livraisonSousModelTypesStringify = null
+                     livraisonSousModelQuantitysStringify = null
+                     livraisonSousModelAmountsStringify = null
+                     livraisonSousModelScellesStringify = null
+                }
+
+                val clientLivraison: Call<LivraisonModel> = ApiClient.apiService.synchronisationLivraisonSection(livraisonModel = livraisonPojo)
+
+                val responseLivraison: Response<LivraisonModel> = clientLivraison.execute()
+                val livraisonSynced: LivraisonModel? = responseLivraison.body()
+
+                try {
+                    if (livraisonSynced != null) {
+                        livraisonDao.syncData(
+                            livraisonSynced.id!!,
+                            true,
+                            livraisonPojo.uid
+                        )
+                    }
+
+                } catch (uhex: UnknownHostException) {
+                    LogUtils.e(uhex.message)
+                    FirebaseCrashlytics.getInstance().recordException(uhex)
+                } catch (ex: Exception) {
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+        }else recallServiceIntent()
+
+        syncLivraisonMagCentral(livraisonCentralDao!!)
+
     }
 
 
     fun syncEstimation(estimationDao: EstimationDao) {
-        try {
-            val estimationDatas = estimationDao.getUnSyncedAll()
 
-            estimationDatas.map { estimationPojo ->
-                estimationPojo.dateEstimation = Commons.convertDate(estimationPojo.dateEstimation, toEng = true)
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-                val clientEstimation: Call<EstimationModel> = ApiClient.apiService.synchronisationEstimation(estimationPojo)
-                val responseEstimation: Response<EstimationModel> = clientEstimation.execute()
+        val parcelleDatas = parcelleDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-                val estimationSynced: EstimationModel? = responseEstimation.body()
-                estimationDao.syncData(
-                    estimationSynced?.id!!,
-                    true,
-                    estimationPojo.uid!!
-                )
-            }
+        if(producteurDatas?.size == 0 && parcelleDatas?.size == 0) {
+            try {
+                val estimationDatas = estimationDao.getUnSyncedAll()
 
-            syncSuiviApplication(suiviApplicationDao!!)
-        } catch (uhex: UnknownHostException) {
-            FirebaseCrashlytics.getInstance().recordException(uhex)
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
+                estimationDatas.map { estimationPojo ->
+                    estimationPojo.dateEstimation =
+                        Commons.convertDate(estimationPojo.dateEstimation, toEng = true)
+
+                    val clientEstimation: Call<EstimationModel> =
+                        ApiClient.apiService.synchronisationEstimation(estimationPojo)
+
+                    clientEstimation.enqueue(object : Callback<EstimationModel> {
+                        override fun onResponse(
+                            call: Call<EstimationModel>,
+                            response: Response<EstimationModel>
+                        ) {
+                            if (response.isSuccessful) {
+                                val responseEstimation: EstimationModel? = response.body()
+                                estimationDao.syncData(
+                                    responseEstimation?.id!!,
+                                    true,
+                                    estimationPojo.uid!!
+                                )
+                            } else {
+                                estimationDao?.deleteByUid(
+                                    estimationPojo.uid
+                                )
+                            }
+                        }
+
+                        override fun onFailure(call: Call<EstimationModel>, t: Throwable) {
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+                }
+
+
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+            }
+        }else recallServiceIntent()
+
+        syncSuivi(suiviParcelleDao!!)
+
 
     }
 
 
     fun syncSuiviApplication(suiviApplicationDao: SuiviApplicationDao) {
-        try {
-            val suiviApplicationDatas = suiviApplicationDao.getUnSyncedAll()
 
-            suiviApplicationDatas.map { suiviApplication ->
-                suiviApplication.dateApplication = Commons.convertDate(suiviApplication.dateApplication, toEng = true)
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-                if (!suiviApplication.matieresActivesStringify.isNullOrEmpty()) suiviApplication.matieresActives = ListConverters.stringToMutableList(suiviApplication.matieresActivesStringify)
+        val parcelleDatas = parcelleDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-                if (!suiviApplication.nomInsectesCiblesStringify.isNullOrEmpty()) {
-                    val insecteType = object : TypeToken<MutableList<InsecteRavageurModel>>() {}.type
-                    val insectesRavs: MutableList<InsecteRavageurModel> = ApiClient.gson.fromJson(suiviApplication.nomInsectesCiblesStringify, insecteType)
+        if(producteurDatas?.size == 0 && parcelleDatas?.size == 0) {
+            try {
+                val suiviApplicationDatas = suiviApplicationDao.getUnSyncedAll()
 
-                    suiviApplication.nomInsectesCibles = mutableListOf()
+                suiviApplicationDatas.map { suiviApplication ->
+                    suiviApplication.dateApplication = Commons.convertDate(suiviApplication.dateApplication, toEng = true)
 
-                    insectesRavs.map { insecte ->
-                        suiviApplication.nomInsectesCibles?.add(insecte.nom!!)
+
+                    suiviApplication.apply {
+                        campagnesId = campagneDao?.getAll()?.get(0)?.id
+                        hour = heureApplication?.split(":")?.get(0).toString()
+                        minute = heureApplication?.split(":")?.get(1).toString()
+
+                        pesticidesList = GsonUtils.fromJson(pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)
+                        maladiesList = GsonUtils.fromJson(maladiesStr, object : TypeToken<MutableList<String>>() {}.type)
                     }
+
+                    val clientSuiviApplication: Call<SuiviApplicationModel> = ApiClient.apiService.synchronisationSuiviApplication(suiviApplication)
+                    clientSuiviApplication.enqueue(object : Callback<SuiviApplicationModel>{
+                        override fun onResponse(
+                            call: Call<SuiviApplicationModel>,
+                            response: Response<SuiviApplicationModel>
+                        ) {
+                            if(response.isSuccessful){
+                                val suiviApplicationSynced: SuiviApplicationModel? = response.body()
+                                suiviApplicationDao.syncData(
+                                    suiviApplicationSynced?.id!!,
+                                    true,
+                                    suiviApplication.uid
+                                )
+                            }else{
+                                suiviApplicationDao.deleteByUid(
+                                    suiviApplication.uid
+                                )
+                            }
+                        }
+
+                        override fun onFailure(call: Call<SuiviApplicationModel>, t: Throwable) {
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+
+
                 }
 
-                if (!suiviApplication.photoDouchePath.isNullOrEmpty()) suiviApplication.photoDouche = Commons.convertPathBase64(suiviApplication.photoDouchePath, 0)
-                if (!suiviApplication.photoTamponPath.isNullOrEmpty()) suiviApplication.photoZoneTampons = Commons.convertPathBase64(suiviApplication.photoTamponPath, 0)
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }else recallServiceIntent()
 
-                suiviApplication.apply {
-                    parcellesIds = parcellesId?.toInt()
-                    applicateursIds = applicateursId?.toInt()
-                    parcellesId = null
-                    applicateursId = null
+        syncInfosProducteur(infosProducteurDao!!)
+
+
+    }
+
+
+    fun syncDistributionDarbre(distributionArbreDao: DistributionArbreDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+            try {
+                val distribArbrDatas = distributionArbreDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+    //            LogUtils.d("DISTRIBUTION ARBRE : ", distribArbrDatas)
+
+                distribArbrDatas.map {distrib ->
+
+                    GsonUtils.fromJson<Map<String, Map<String, String>>>(distrib.quantiteStr, object : TypeToken<Map<String, Map<String, String>>>(){}.type)?.let {
+                        distrib.quantiteList = it
+                    }
+
+                    val clientRequ: Call<DistributionArbreModel> = ApiClient.apiService.synchronisationDistributionArbre(distrib)
+                    clientRequ.enqueue(object : Callback<DistributionArbreModel>{
+                        override fun onResponse(
+                            call: Call<DistributionArbreModel>,
+                            response: Response<DistributionArbreModel>
+                        ) {
+                            if(response.isSuccessful){
+
+                                val responseItem = response.body()
+
+                                distributionArbreDao.syncData(
+                                    responseItem?.id!!,
+                                    true,
+                                    distrib.uid
+                                )
+
+                                evaluationArbreDao?.deleteByProducteurId(distrib.producteurId)
+
+                            }else{
+
+                                distributionArbreDao.deleteByUid(
+                                    distrib.uid
+                                )
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<DistributionArbreModel>, t: Throwable) {
+    //                        distributionArbreDao.deleteByUid(
+    //                            distrib.uid
+    //                        )
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+
+
                 }
 
-                val clientSuiviApplication: Call<SuiviApplicationModel> = ApiClient.apiService.synchronisationSuiviApplication(suiviApplication)
-                val responseSuiviApplication: Response<SuiviApplicationModel> = clientSuiviApplication.execute()
-
-                val suiviApplicationSynced: SuiviApplicationModel? = responseSuiviApplication.body()
-                suiviApplicationDao.syncData(
-                    suiviApplicationSynced?.id!!,
-                    true,
-                    suiviApplication.uid
-                )
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
             }
 
-            syncEnqueteSsrt(enqueteSsrtDao!!)
-        } catch (uhex: UnknownHostException) {
-            FirebaseCrashlytics.getInstance().recordException(uhex)
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
+        }else recallServiceIntent()
+
+        syncEvaluationBesoin(evaluationArbreDao!!)
+
+    }
+
+
+    fun syncLivraisonMagCentral(livraisonCentralDao: LivraisonCentralDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            try {
+                val livraisonCentralDatas = livraisonCentralDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+    //            LogUtils.d("livraisonVerMagCentralDao : ", livraisonCentralDatas)
+
+                livraisonCentralDatas.map {
+
+                    val livraisonList = GsonUtils.fromJson<MutableList<LivraisonCentralSousModel>>(it.itemsStringify, object : TypeToken<MutableList<LivraisonCentralSousModel>>(){}.type)
+
+                    it.apply {
+                        producteur_idList = livraisonList.map { "${it.producteur_id}" }.toMutableList()
+                        producteursList = livraisonList.map { "${it.producteurs}" }.toMutableList()
+                        parcelleList = livraisonList.map { "${it.parcelle}" }.toMutableList()
+                        quantiteList = livraisonList.map { "${it.quantite}" }.toMutableList()
+                        certificatList  = livraisonList.map { "${it.certificat}" }.toMutableList()
+                        typeproduitList = livraisonList.map { "${it.typeproduit}" }.toMutableList()
+                        typeList = arrayListOf()
+                        GsonUtils.fromJson<MutableList<String>>(typeStr, object : TypeToken<MutableList<String>>(){}.type).map {
+                            it.split(",").forEach {
+                                if(it != null && it != "null"){
+                                    (typeList as ArrayList<String>).add(it.trim())
+                                }
+                            }
+                        }
+
+                        poidsnet = livraisonList.sumBy { it?.quantite?.toInt()?:0 }.toString()
+
+                        estimatDate = Commons.convertDate(estimatDate, toEng = true)
+                    }
+
+                    val clientRequ: Call<LivraisonCentralModel> = ApiClient.apiService.synchronisationLivraisonCentral(it)
+                    clientRequ.enqueue(object : Callback<LivraisonCentralModel>{
+                        override fun onResponse(
+                            call: Call<LivraisonCentralModel>,
+                            response: Response<LivraisonCentralModel>
+                        ) {
+                            if(response.isSuccessful){
+
+                                val responseItem = response.body()
+
+                                livraisonCentralDao.syncData(
+                                    responseItem?.id!!,
+                                    true,
+                                    it.uid
+                                )
+
+                            }else{
+
+                                livraisonCentralDao.deleteByUid(
+                                    it.uid.toString()
+                                )
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LivraisonCentralModel>, t: Throwable) {
+                            LogUtils.e(t.message)
+                        }
+
+                    })
+
+
+                }
+
+
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+            }
+        }else recallServiceIntent()
+
+        syncMenage(menageDao!!)
+
 
     }
 
 
     fun syncEnqueteSsrt(enqueteSsrteDao: EnqueteSsrteDao) {
-        try {
-            val enquetesDatas = enqueteSsrteDao.getUnSyncedAll()
 
-            enquetesDatas.map { enquete ->
-                enquete.dateEnquete = Commons.convertDate(enquete.dateEnquete, toEng = true)
-                enquete.datenaissMembre = Commons.convertDate(enquete.datenaissMembre, toEng = true)
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-                enquete.travauxLegers = ListConverters.stringToMutableList(enquete.travauxLegersStringify)
-                enquete.travauxDangereux = ListConverters.stringToMutableList(enquete.travauxDangereuxStringify)
+        if(producteurDatas?.size == 0) {
 
-                enquete.lieuTravauxDangereux = ListConverters.stringToMutableList(enquete.lieuTravauxDangereuxStringify)
-                enquete.lieuTravauxLegers = ListConverters.stringToMutableList(enquete.lieuTravauxLegersStringify)
+            try {
+                val enquetesDatas = enqueteSsrteDao.getUnSyncedAll()
 
-                enquete.raisonArretEcole = ListConverters.stringToMutableList(enquete.raisonArretEcoleStringify)
+                enquetesDatas.map { enquete ->
+                    enquete.dateEnquete = Commons.convertDate(enquete.dateEnquete, toEng = true)
+                    enquete.datenaissMembre = Commons.convertDate(enquete.datenaissMembre, toEng = true)
 
-                LogUtils.json(enquete)
+                    enquete.travauxLegers = ListConverters.stringToMutableList(enquete.travauxLegersStringify)
+                    enquete.travauxDangereux = ListConverters.stringToMutableList(enquete.travauxDangereuxStringify)
 
-                val clientEnqueteSsrt: Call<EnqueteSsrtModel> = ApiClient.apiService.synchronisationEnqueteSsrt(enquete)
-                val responseEnqueteSsrt: Response<EnqueteSsrtModel> = clientEnqueteSsrt.execute()
+                    enquete.lieuTravauxDangereux = ListConverters.stringToMutableList(enquete.lieuTravauxDangereuxStringify)
+                    enquete.lieuTravauxLegers = ListConverters.stringToMutableList(enquete.lieuTravauxLegersStringify)
 
-                val enqueteSsrtSynced: EnqueteSsrtModel? = responseEnqueteSsrt.body()
-                enqueteSsrteDao.syncData(
-                    enqueteSsrtSynced?.id!!,
-                    true,
-                    enquete.uid
-                )
+                    //enquete.raisonArretEcole = ListConverters.stringToMutableList(enquete.raisonArretEcoleStringify)
+
+    //                travauxDangereuxStringify = GsonUtils.toJson(selectLequelTravEffectSSrte.selectedStrings)
+    //                travauxLegersStringify = GsonUtils.toJson(selectLequelTrav2EffectSSrte.selectedStrings)
+    //
+    //                lieuTravauxDangereuxStringify = GsonUtils.toJson(selectEndroitTravEffectSSrte.selectedStrings)
+    //                lieuTravauxLegersStringify = GsonUtils.toJson(selectEndroitTrav2EffectSSrte.selectedStrings)
+    //                LogUtils.json(enquete)
+
+                    val clientEnqueteSsrt: Call<EnqueteSsrtModel> = ApiClient.apiService.synchronisationEnqueteSsrt(enquete)
+                    val responseEnqueteSsrt: Response<EnqueteSsrtModel> = clientEnqueteSsrt.execute()
+
+                    val enqueteSsrtSynced: EnqueteSsrtModel? = responseEnqueteSsrt.body()
+                    enqueteSsrteDao.syncData(
+                        enqueteSsrtSynced?.id!!,
+                        true,
+                        enquete.uid
+                    )
+                }
+
+
+
+
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
             }
 
-            syncInspection(inspectionDao!!)
-        } catch (uhex: UnknownHostException) {
-            FirebaseCrashlytics.getInstance().recordException(uhex)
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+        }else recallServiceIntent()
+
+        syncDistributionDarbre(distributionArbreDao!!)
+
     }
 
 
     fun syncInspection(inspectionDao: InspectionDao) {
-        try {
-            val inspectionsDatas = inspectionDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-            val inspectionsToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
 
-            inspectionsDatas.map { inspection ->
-                inspection.dateEvaluation = Commons.convertDate(inspection.dateEvaluation, toEng = true)
-                inspection.reponse = mutableMapOf()
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
 
-                var counter = 1;
-                var note = 0;
-                ApiClient.gson.fromJson<MutableList<QuestionResponseModel>>(inspection.reponseStringify, inspectionsToken).map {
-                    if(it.isTitle == false) {
-                        inspection.reponse[counter.toString()] = it.note!!
-                        counter++
-                        note += it.note!!.toInt()
+        if(producteurDatas?.size == 0) {
+
+            try {
+                val inspectionsDatas = inspectionDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+                val inspectionsToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
+
+                inspectionsDatas.map { inspection ->
+                    inspection.dateEvaluation = Commons.convertDate(inspection.dateEvaluation, toEng = true)
+                    inspection.certificatList = mutableListOf<String>()
+                    inspection.certificatList?.add(inspection.certificatStr!!)
+    //                inspection.reponse = mutableMapOf()
+
+                    var counter = 1;
+    //                var note = 0;
+                    ApiClient.gson.fromJson<MutableList<QuestionResponseModel>>(inspection.reponseStringify, inspectionsToken).map {
+                        if(it.isTitle == false) {
+                            inspection.reponse[counter.toString()] = it.note!!
+                            counter++
+                            //note += it.note!!.toInt()
+                        }
                     }
+    //
+    //                inspection.noteInspection = note.toString()
+
+                    inspection.reponseStringify = null
+
+                    val clientInspection: Call<InspectionDTO> = ApiClient.apiService.synchronisationInspection(inspection)
+                    val responseInspection: Response<InspectionDTO> = clientInspection.execute()
+
+                    val inspectionSynced: InspectionDTO? = responseInspection.body()
+                    inspectionDao.syncData(
+                        inspectionSynced?.id!!,
+                        true,
+                        inspection.uid
+                    )
                 }
 
-                inspection.noteInspection = note.toString()
 
-                inspection.reponseStringify = null
 
-                val clientInspection: Call<InspectionDTO> = ApiClient.apiService.synchronisationInspection(inspection)
-                val responseInspection: Response<InspectionDTO> = clientInspection.execute()
-
-                val inspectionSynced: InspectionDTO? = responseInspection.body()
-                inspectionDao.syncData(
-                    inspectionSynced?.id!!,
-                    true,
-                    inspection.uid
-                )
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
             }
+        }else recallServiceIntent()
 
-            syncInfosProducteur(infosProducteurDao!!)
-        } catch (uhex: UnknownHostException) {
-            FirebaseCrashlytics.getInstance().recordException(uhex)
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+        syncLivraison(livraisonDao!!)
 
 
     }
 
 
     fun syncInfosProducteur(infosProducteurDao: InfosProducteurDao) {
-        try {
-            val infosDatas = infosProducteurDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-            infosDatas.map { info ->
-                try {
-                    info.typeculture = ListConverters.stringToMutableList(info.typecultureStringify)
-                    info.superficieculture = ListConverters.stringToMutableList(info.superficiecultureStringify)
-                    info.numerosMM = ListConverters.stringToMutableList(info.numerosMMStr)
-                    info.operateurMM = ListConverters.stringToMutableList(info.operateurMMStr)
-                    info.typeactiviteList = ListConverters.stringToMutableList(info.typeactiviteStr)
-                }catch (e:Exception){
-                    println(e.message)
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            try {
+                val infosDatas = infosProducteurDao.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+                infosDatas.map { info ->
+                    try {
+                        info.typeculture = ListConverters.stringToMutableList(info.typecultureStringify)
+                        info.superficieculture = ListConverters.stringToMutableList(info.superficiecultureStringify)
+                        info.numerosMM = ListConverters.stringToMutableList(info.numerosMMStr)
+                        info.operateurMM = ListConverters.stringToMutableList(info.operateurMMStr)
+                        info.typeactiviteList = ListConverters.stringToMutableList(info.typeactiviteStr)
+                    }catch (e:Exception){
+                        println(e.message)
+                    }
+
+                    // This field will be ignored
+                    info.apply {
+                        agentID = null
+                        isSynced = null
+                        maladiesenfantsStringify = null
+                        typecultureStringify = null
+                        superficiecultureStringify = null
+                        id = null
+                        localiteNom = null
+                        producteursCode = null
+                        producteursNom = null
+                        typeactiviteStr = null
+                        typeDocuments = null
+                        scolarisesExtrait = null
+                        recuAchat = null
+                        personneBlessee = null
+                        persEcole = null
+                        paiementMM = null
+                        operateurMMStr = null
+                        numerosMMStr = null
+                        numeroCompteMM = null
+                        age18 = null
+                    }
+
+                    val clientInfos: Call<InfosProducteurDTO> = ApiClient.apiService.synchronisationInfosProducteur(info)
+
+                    clientInfos.enqueue(object: Callback<InfosProducteurDTO>{
+                        override fun onResponse(
+                            call: Call<InfosProducteurDTO>,
+                            response: Response<InfosProducteurDTO>
+                        ) {
+    //                        val responseInfos: Response<InfosProducteurDTO> = clientInfos.execute()
+    //                        LogUtils.d("RESPONSE CODE "+responseInfos.code())
+                            if(response.isSuccessful){
+
+                                if(response.raw().message.contains("info existe", ignoreCase = true)){
+                                    infosProducteurDao.deleteProducteurInfo(
+                                        info.uid
+                                    )
+                                }else{
+                                    infosProducteurDao.syncData(
+                                        response.body()?.id!!,
+                                        true,
+                                        info.uid
+                                    )
+                                }
+
+                            }else{
+
+                                infosProducteurDao.deleteProducteurInfo(
+                                    info.uid
+                                )
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<InfosProducteurDTO>, t: Throwable) {
+
+                        }
+
+                    });
                 }
 
-                // This field will be ignored
-                info.apply {
-                    agentID = null
-                    isSynced = null
-                    maladiesenfantsStringify = null
-                    typecultureStringify = null
-                    superficiecultureStringify = null
-                    id = null
-                    localiteNom = null
-                    producteursCode = null
-                    producteursNom = null
-                    typeactiviteStr = null
-                    typeDocuments = null
-                    scolarisesExtrait = null
-                    recuAchat = null
-                    personneBlessee = null
-                    persEcole = null
-                    paiementMM = null
-                    operateurMMStr = null
-                    numerosMMStr = null
-                    numeroCompteMM = null
-                    age18 = null
-                }
 
-                val clientInfos: Call<InfosProducteurDTO> = ApiClient.apiService.synchronisationInfosProducteur(info)
-                val responseInfos: Response<InfosProducteurDTO> = clientInfos.execute()
-
-                val infoSynced: InfosProducteurDTO? = responseInfos.body()
-                infosProducteurDao.syncData(
-                    infoSynced?.id!!,
-                    true,
-                    info.uid
-                )
-            }
-
-            if (Build.VERSION.SDK_INT >= 26) {
-                stopForeground(true)
-                notificationManager?.cancel(1)
-            }
-        } catch (uhex: UnknownHostException) {
-            FirebaseCrashlytics.getInstance().recordException(uhex)
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+            }
+        }else recallServiceIntent()
+
+        syncInspection(inspectionDao!!)
+
 
     }
 
@@ -820,11 +1484,17 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 startForeground(1, notification)
             }
 
+            contextAct = this.applicationContext
+
+            campagneDao = CcbRoomDatabase.getDatabase(this)?.campagneDao()
             localiteDao = CcbRoomDatabase.getDatabase(this)?.localiteDoa()
             producteurDao = CcbRoomDatabase.getDatabase(this)?.producteurDoa()
             parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
             menageDao = CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
             formationDao = CcbRoomDatabase.getDatabase(this)?.formationDao()
+            evaluationArbreDao = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
+            visiteurFormationDao = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
+            distributionArbreDao = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
             suiviParcelleDao = CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()
             livraisonDao = CcbRoomDatabase.getDatabase(this)?.livraisonDao()
             estimationDao = CcbRoomDatabase.getDatabase(this)?.estimationDao()
@@ -832,6 +1502,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             enqueteSsrtDao = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()
             inspectionDao = CcbRoomDatabase.getDatabase(this)?.inspectionDao()
             infosProducteurDao = CcbRoomDatabase.getDatabase(this)?.infosProducteurDao()
+            livraisonCentralDao = CcbRoomDatabase.getDatabase(this)?.livraisonCentralDao()
+
+            postplantingDao = CcbRoomDatabase.getDatabase(this)?.postplantingDao()
+            postPlantingArbrDistribDao = CcbRoomDatabase.getDatabase(this)?.postPlantingArbrDistribDao()
 
             if (intent != null) {
                 syncLocalite(localiteDao!!)
@@ -841,4 +1515,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
+
+    private fun recallServiceIntent() {
+        //if(NetworkUtils.isAvailable() && NetworkUtils.isConnected()) ;
+    }
+
 }

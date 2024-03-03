@@ -30,4 +30,16 @@ interface SuiviApplicationDao {
     @Transaction
     @Query("DELETE FROM suivi_application")
     fun deleteAgentDatas()
+
+    @Transaction
+    @Query("DELETE FROM suivi_application WHERE uid = :uid")
+    fun deleteByUid(uid: Int)
+
+    @Transaction
+    @Query("SELECT * FROM suivi_application WHERE (isSynced = 0 AND producteur = :producteurUid)")
+    fun getUnSyncedByProdAndParcUid(producteurUid: String?): MutableList<SuiviApplicationModel>
+
+    @Transaction
+    @Query("SELECT * FROM suivi_application WHERE (isSynced = 0 AND parcelle_id = :parcUid)")
+    fun getUnSyncedByParcUid(parcUid: String?): MutableList<SuiviApplicationModel>
 }

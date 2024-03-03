@@ -20,8 +20,9 @@
         <item name="windowActionBar">false</item>
 
         <item name="android:textColor">@color/black</item>
-        <item name="backgroundColor">@color/ccb_gris</item>
-        <item name="android:windowBackground">@color/ccb_gris</item>
+        <item name="android:textSize">@dimen/page_input_title_dim11</item>
+        <item name="backgroundColor">@color/ccb_belge</item>
+        <item name="android:windowBackground">@color/ccb_belge</item>
     </style>
 
 

@@ -50,9 +50,14 @@ data class EnqueteSsrtModel(
     @SerializedName("userid") @Expose var userid: Int? = 0,
     var isSynced: Boolean = false,
     var origin: String? = "local",
+    @Expose var section: String? = "",
     @Expose var localiteNom: String? = "",
-    @Expose var localiteId: String? = "",
+    @SerializedName("localite")  @Expose var localiteId: String? = "",
     @Expose var producteurNom: String? = "",
+    @Expose var autreRaisonArretEcole: String? = "",
+    @Expose var nomEnqueteur: String? = "",
+    @Expose var prenomEnqueteur: String? = "",
+    @Expose var telephoneEnqueteur: String? = "",
 
 ) : Parcelable {
     @Ignore @SerializedName("lieuTravauxDangereux") @Expose(serialize = true, deserialize = false) var lieuTravauxDangereux: MutableList<String>? = mutableListOf()

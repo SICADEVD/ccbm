@@ -18,8 +18,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/ic_back_black" />
@@ -38,22 +38,21 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FICHE MENAGE"
-                
-                android:textSize="@dimen/_13ssp"
+                android:text="FICHE ENQUÊTE MÉNAGE"
+                android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageDraftBtn"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_45sdp"
+            android:layout_width="@dimen/page_icon_head_dim35"
+            android:layout_height="@dimen/page_icon_head_dim35"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/_7sdp"
@@ -118,9 +117,8 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:gravity="center"
-                            android:text="Informations Personnelles"
-
-                            android:textSize="@dimen/_14ssp"
+                            android:text="INFORMATIONS PERSONNELLES"
+                            android:textSize="@dimen/page_title_dim14"
                             android:textStyle="bold" />
 
                         <View
@@ -146,7 +144,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Section *"
+                            android:text="@string/selectionner_une_section"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -183,8 +182,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Localite *"
-
+                            android:text="@string/selectionner_une_localit"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -218,8 +217,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Producteur *"
-
+                            android:text="@string/selectionner_un_producteur"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -250,51 +249,33 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        >
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quartier *"
-
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:text="Renseignez le quartier"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
-                        <LinearLayout
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="quartier"
+                            android:id="@+id/editQuartierMenage"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-<!--                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner-->
-<!--                                android:tag="quartier"-->
-<!--                                android:id="@+id/select"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="@dimen/_37sdp"-->
-<!--                                android:spinnerMode="dialog" />-->
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="quartier"
-                                android:id="@+id/editQuartierMenage"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:background="@drawable/rounded_background"
-                                android:hint="DJAKOBO"
-                                android:ellipsize="end"
-                                android:gravity="center_vertical"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
-
-                        </LinearLayout>
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:hint="Broukro"
+                            android:ellipsize="end"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp"
+                            tools:text="Broukro" />
 
                     </LinearLayout>
 
@@ -326,38 +307,6 @@ android:textColor="@color/text_color_white"
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur les enfants"
-
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <Space
@@ -376,7 +325,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
-                                android:text="Combien d’enfants de 0 à 5 ans ?"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:text="Nombre d’enfants de 0 à 5ans présents dans le ménage ?"
                                 android:textStyle="bold" />
 
                             <Space
@@ -419,7 +369,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
-                                android:text="Combien d’enfants de 6 à 17 ans ?"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:text="Nombre d’enfants de 6 à 17ans présents dans le ménage ? "
                                 android:textStyle="bold" />
 
                             <Space
@@ -462,7 +413,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
-                                android:text="Combien sont scolarisés ?"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:text="Parmi les enfants de 6 à 17 ans, combien sont scolarisés ? "
                                 android:textStyle="bold" />
 
                             <Space
@@ -505,7 +457,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
-                                android:text="Combien n’ont pas d’extrait de naissance (0 à 5 ans) ?"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:text="Parmi les enfants de 0 à 5 ans, combien n’ont pas d’extrait de naissance ?"
                                 android:textStyle="bold" />
 
                             <Space
@@ -548,7 +501,8 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
-                                android:text="Combien n’ont pas d’extrait de naissance (6 à 17 ans) ?"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:text="Parmi les enfants de 6 à 17ans, combien n’ont pas d’extrait de naissance ?"
                                 android:textStyle="bold" />
 
                             <Space
@@ -606,38 +560,6 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur les sources"
-
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -645,8 +567,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Source d'energie du menage"
-
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Sources d'energies du ménage"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -658,7 +580,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <androidx.appcompat.widget.AppCompatSpinner
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="sources_energies_id"
                                 android:id="@+id/selectEnergieMenage"
                                 android:layout_width="match_parent"
@@ -675,6 +597,8 @@ android:textColor="@color/text_color_white"
 
                     <LinearLayout
                         android:id="@+id/containerNbreDBoisMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -686,6 +610,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="6"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Combien de bois par semaine ?"
                             android:textStyle="bold" />
 
@@ -728,6 +654,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Comment gérez-vous les ordures ménagères ?"
                             android:textStyle="bold" />
 
@@ -740,7 +667,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <androidx.appcompat.widget.AppCompatSpinner
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="ordures_menageres_id"
                                 android:id="@+id/selectOrdureMenagMenage"
                                 android:layout_width="match_parent"
@@ -768,6 +695,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Pratiquez-vous la séparation des déchets ?"
                             android:textStyle="bold" />
 
@@ -808,6 +736,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Comment gérez-vous l'eau de toilette ?"
                             android:textStyle="bold" />
 
@@ -821,6 +750,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="eauxToillette"
                                 android:id="@+id/selectEauToilMenage"
                                 android:layout_width="match_parent"
@@ -846,6 +776,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Comment gérez-vous l'eau de vaisselle ?"
                             android:textStyle="bold" />
 
@@ -859,6 +790,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="eauxVaisselle"
                                 android:id="@+id/selectEauVaissMenage"
                                 android:layout_width="match_parent"
@@ -886,6 +818,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Existe-t-il un wc pour le ménage ?"
                             android:textStyle="bold" />
 
@@ -900,6 +833,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="wc"
                                 android:id="@+id/selectYaWCMenage"
                                 android:layout_width="match_parent"
@@ -926,6 +860,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:text="Où procurez-vous l'eau potable ?"
                             android:textStyle="bold" />
 
@@ -938,7 +873,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <androidx.appcompat.widget.AppCompatSpinner
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="sources_eaux_id"
                                 android:id="@+id/selectEauPotablMenage"
                                 android:layout_width="match_parent"
@@ -948,6 +883,43 @@ android:textColor="@color/text_color_white"
                         </LinearLayout>
 
                     </LinearLayout>
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+                    <LinearLayout
+                        android:id="@+id/containerAutreSourceEauMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="autreSourceEau"
+                                android:textAllCaps="true"
+                                android:id="@+id/editAutreSourceEauMenage"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="Autre…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
 
 
                 </LinearLayout>
@@ -975,42 +947,42 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur les champs"
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations sur les champs"-->
 
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
+<!--                            android:textSize="@dimen/_14ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1025,8 +997,8 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Vous traitez vous-même vos champs ?"
-
+                            android:text="Effectuez vous vous-même les traitement phyto sanitaire dans vos champs ?"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1040,6 +1012,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="traitementChamps"
                                 android:id="@+id/selectTraitementYesNoMenage"
                                 android:layout_width="match_parent"
@@ -1069,7 +1042,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Nom de la personne applicatrice"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:text="Donnez le nom de la personne qui éffectue les traitement phyto sanitaire dans vos champs"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1108,8 +1082,8 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Numéro de téléphone"
-
+                            android:text="Donnez son numéro de téléphone"
+                            android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -1149,11 +1123,12 @@ android:textColor="@color/text_color_white"
                             android:weightSum="10">
 
                             <androidx.appcompat.widget.AppCompatTextView
-        android:textColor="@color/text_color_white"
+                                android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3.5"
                                 android:text="Avec quel type de machine ?"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:textStyle="bold" />
 
@@ -1168,6 +1143,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="type_machines_id"
                                     android:id="@+id/selectMachinePulMenage"
                                     android:layout_width="match_parent"
@@ -1178,6 +1154,44 @@ android:textColor="@color/text_color_white"
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerAutreMachineMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="autreMachine"
+                                android:textAllCaps="true"
+                                android:id="@+id/editAutreMachineParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="Autre…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -1201,11 +1215,12 @@ android:textColor="@color/text_color_white"
                             android:weightSum="10">
 
                             <androidx.appcompat.widget.AppCompatTextView
-        android:textColor="@color/text_color_white"
+                                android:textColor="@color/text_color_white"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="6"
                                 android:text="Est-il en bon etat ?"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:textStyle="bold" />
 
@@ -1220,6 +1235,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="etatatomiseur"
                                     android:id="@+id/selectAtomisateurYesNoMenage"
                                     android:layout_width="match_parent"
@@ -1290,6 +1306,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3.5"
                                 android:text="Où gardez-vous cette machine ?"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:paddingLeft="@dimen/_10sdp"
                                 android:textStyle="bold" />
 
@@ -1303,6 +1320,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="garde_machines_id"
                                     android:id="@+id/selectMachineKeeperMenage"
                                     android:layout_width="match_parent"
@@ -1312,6 +1330,44 @@ android:textColor="@color/text_color_white"
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerAutreEndroitMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="5">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="autreEndroit"
+                                android:textAllCaps="true"
+                                android:id="@+id/editAutreEndroitParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="Autre…"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
 <!--                    <Space-->
@@ -1376,6 +1432,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_weight="6"
                                 android:text="Avez-vous des équipements de protection individuel (EPI) ?"
                                 android:paddingLeft="@dimen/_10sdp"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -1389,10 +1446,65 @@ android:textColor="@color/text_color_white"
                                     android:layout_height="@dimen/_10sdp" />
 
                                 <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
                                     android:tag="equipements"
                                     android:id="@+id/selectEquiDProtIndivMenage"
                                     android:layout_width="match_parent"
                                     android:entries="@array/YesOrNo"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:spinnerMode="dialog" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerEquiEtatMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6"
+                                android:text="L'équipement est-il en bon état?"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="4"
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
+                                    android:tag="etatEpi"
+                                    android:id="@+id/selectEquiEtatMenage"
+                                    android:layout_width="match_parent"
+                                    android:entries="@array/etat_epi"
                                     android:layout_height="@dimen/_37sdp"
                                     android:spinnerMode="dialog" />
 
@@ -1427,37 +1539,37 @@ android:textColor="@color/text_color_white"
                     android:orientation="vertical"
                     android:padding="@dimen/_20sdp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:weightSum="5">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:weightSum="5">-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:gravity="center"
-                            android:text="Informations sur les activités"
+<!--                        <androidx.appcompat.widget.AppCompatTextView-->
+<!--                            android:textColor="@color/text_color_white"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="3"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="Informations sur les activités"-->
 
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="bold" />
+<!--                            android:textSize="@dimen/_14ssp"-->
+<!--                            android:textStyle="bold" />-->
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_weight="1"
-                            android:background="@color/dark_gray" />
+<!--                        <View-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="@dimen/_1sdp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:background="@color/dark_gray" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                     <Space
                         android:layout_width="match_parent"
@@ -1476,7 +1588,7 @@ android:textColor="@color/text_color_white"
                             android:layout_weight="6"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Votre partenaire fait une activté qui produit de l'argent ?"
+                            android:text="Est-ce que votre conjoint exerce une activité génératrice de revenu ?"
 
                             android:textStyle="bold" />
 
@@ -1491,6 +1603,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
                                 android:tag="activiteFemme"
                                 android:id="@+id/selectFemmeActiviteYesNoMenage"
                                 android:layout_width="match_parent"
@@ -1503,199 +1616,559 @@ android:textColor="@color/text_color_white"
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/containerFemmeActiviteContainerMenage"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:weightSum="10"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quelle activité ?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="6"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
+                                android:tag="typeActivite"
+                                android:id="@+id/selectFemmeActiviteDefMenage"
+                                android:layout_width="match_parent"
+                                android:entries="@array/femmeActivite"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/containerFemmeActivitPrecisMenage"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone"
-                        tools:visibility="visible"
                         >
 
                         <Space
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_10sdp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center_vertical"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:weightSum="10">-->
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3.5"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:text="Quelle est l'activité?"
+<!--                            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                                android:textColor="@color/text_color_white"-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="3.5"-->
+<!--                                android:text="Précisez: "-->
+<!--                                android:paddingLeft="@dimen/_10sdp"-->
+<!--                                android:textStyle="bold" />-->
 
-                                android:textStyle="bold" />
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="6.5"-->
+<!--                                android:background="@drawable/rounded_background">-->
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="nomActiviteFemme"
-                                android:id="@+id/editFemmeActiviteMenage"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="6.5"
-                                android:background="@drawable/rounded_background"
-                                android:hint="CHAMP DE CAFE"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="" />
+<!--                                <Space-->
+<!--                                    android:layout_width="@dimen/_5sdp"-->
+<!--                                    android:layout_height="@dimen/_10sdp" />-->
 
-                        </LinearLayout>
+<!--                                <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                                    android:entries="@array/agricoleActivite"-->
+<!--                                    android:id="@+id/selectFemmeActivitPrecisMenage"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="@dimen/_37sdp"-->
+<!--                                    android:spinnerMode="dialog" />-->
 
-                    </LinearLayout>
+<!--                            </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        tools:visibility="visible">
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
+<!--                        </LinearLayout>-->
 
                         <LinearLayout
+                            android:id="@+id/containerFemmeAgricoleMenage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="Quel est la superficie cacao  de ta femme ?"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:textStyle="bold" />
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="superficieCacaoFemme"
-                                android:id="@+id/editSuperficieCacaoMenage"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="0.0"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="numberDecimal"
-                                android:digits="0123456789."
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="0.0" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        tools:visibility="visible">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="Peux-tu donner une partie de ton cacao à ta partenaire ?"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:textStyle="bold" />
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            >
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background">
+                                android:gravity="center_vertical"
+                                android:weightSum="10"
+                                android:orientation="horizontal">
 
-                                <Space
-                                    android:layout_width="@dimen/_5sdp"
-                                    android:layout_height="@dimen/_10sdp" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:textColor="@color/text_color_white"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="4"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/_12sdp"
+                                    android:text="Quelle est le nom de l'activité ?"
 
-                                <androidx.appcompat.widget.AppCompatSpinner
-                                    android:tag="champFemme"
-                                    android:id="@+id/selectDonCacaoYesNoMenage"
-                                    android:layout_width="match_parent"
-                                    android:entries="@array/YesOrNo"
-                                    android:layout_height="@dimen/_37sdp"
-                                    android:spinnerMode="dialog" />
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="6"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rounded_background">
+
+                                    <Space
+                                        android:layout_width="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_10sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatSpinner
+                                        style="@style/SpinnerItemStyle"
+                                        android:tag="nomActiviteAgricole"
+                                        android:id="@+id/selectNomFemmeActiviteDefMenage"
+                                        android:layout_width="match_parent"
+                                        android:entries="@array/nomActiviteAgr"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:spinnerMode="dialog" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearDonCacaoFemmeSuperficieContainerMenage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone"
-                        tools:visibility="visible">
-
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_10sdp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:weightSum="10">
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:textColor="@color/text_color_white"
-                                android:layout_width="0dp"
+                            <LinearLayout
+                                android:id="@+id/conatinerFemmeAutrNomActivitMenage"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="6"
-                                android:text="Combien d'hectare ?"
-                                android:paddingLeft="@dimen/_10sdp"
-                                android:textStyle="bold" />
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="nombreHectareFemme"
-                                android:id="@+id/editDonSuperficieCacaoMenage"
-                                android:layout_width="0dp"
-                                android:layout_height="@dimen/_37sdp"
-                                android:layout_weight="4"
-                                android:background="@drawable/rounded_background"
-                                android:hint="0.0"
-                                android:ellipsize="end"
-                                android:imeOptions="actionDone"
-                                android:inputType="numberDecimal"
-                                android:digits="0123456789."
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
-                                android:textSize="@dimen/_13ssp"
-                                tools:text="0.0" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:textColor="@color/text_color_white"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3.5"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:text="Précisez :"
+
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="autreActiviteAgricole"
+                                    android:id="@+id/editFemmeAutrNomActivitMenage"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:layout_weight="6.5"
+                                    android:background="@drawable/rounded_background"
+                                    android:hint="Autre activité"
+                                    android:ellipsize="end"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="textCapCharacters|textNoSuggestions"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:textAllCaps="true"
+                                    android:textSize="@dimen/_13ssp"
+                                    tools:text="" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/editSuperfDefFemmActMenage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Quelle est sa superficie ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:tag="nombreHectareConjoint"
+                                        android:id="@+id/editSuperficieExploiMenage"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background"
+                                        android:hint="0.0"
+                                        android:ellipsize="end"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="numberDecimal"
+                                        android:digits="0123456789."
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="0.0" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                tools:visibility="visible"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:weightSum="10"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:textColor="@color/text_color_white"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="6"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/_12sdp"
+                                    android:text="Comment avez-vous obtenu le capital de démarrage ?"
+                                    android:textStyle="bold" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="4"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rounded_background">
+
+                                    <Space
+                                        android:layout_width="@dimen/_5sdp"
+                                        android:layout_height="@dimen/_10sdp" />
+
+                                    <androidx.appcompat.widget.AppCompatSpinner
+                                        style="@style/SpinnerItemStyle"
+                                        android:tag="capitalDemarrage"
+                                        android:id="@+id/selectParcelObtenuDefMenage"
+                                        android:layout_width="match_parent"
+                                        android:entries="@array/capitalDemarrag"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:spinnerMode="dialog" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/conatinerFemmeAutrCapiDemaMenage"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="10">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:textColor="@color/text_color_white"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3.5"
+                                    android:paddingLeft="@dimen/_10sdp"
+                                    android:text="Précisez :"
+
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="autreCapital"
+                                    android:id="@+id/editFemmeAutrCapiDemaMenage"
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:layout_weight="6.5"
+                                    android:background="@drawable/rounded_background"
+                                    android:hint="Autre"
+                                    android:ellipsize="end"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="textCapCharacters|textNoSuggestions"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:textAllCaps="true"
+                                    android:textSize="@dimen/_13ssp"
+                                    tools:text="" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Dépuis combien de temps(mois) pratiquez vous cette activité ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:tag="dureeActivite"
+                                        android:id="@+id/editTempsDePratiquMenage"
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background"
+                                        android:hint="10"
+                                        android:ellipsize="end"
+                                        android:imeOptions="actionDone"
+                                        android:inputType="number"
+                                        android:paddingStart="@dimen/_10sdp"
+                                        android:paddingEnd="@dimen/_10sdp"
+                                        android:textAllCaps="true"
+                                        android:textSize="@dimen/_13ssp"
+                                        tools:text="10" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Avez vous bénéficiez d'une formation ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background">
+
+                                        <Space
+                                            android:layout_width="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_10sdp" />
+
+                                        <androidx.appcompat.widget.AppCompatSpinner
+                                            style="@style/SpinnerItemStyle"
+                                            android:tag="formation"
+                                            android:id="@+id/selectFormatFemmBenefMenage"
+                                            android:layout_width="match_parent"
+                                            android:entries="@array/YesOrNo"
+                                            android:layout_height="@dimen/_37sdp"
+                                            android:spinnerMode="dialog" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/containerBenefDFormatMenage"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+
+                                    <Space
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_10sdp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal"
+                                        android:weightSum="10">
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:textColor="@color/text_color_white"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="3.5"
+                                            android:paddingLeft="@dimen/_10sdp"
+                                            android:text="De quel structure ?"
+                                            android:textStyle="bold" />
+
+                                        <androidx.appcompat.widget.AppCompatEditText
+                                            android:tag="entite"
+                                            android:id="@+id/editFemmeNomStructMenage"
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/_37sdp"
+                                            android:layout_weight="6.5"
+                                            android:background="@drawable/rounded_background"
+                                            android:hint="Entreprise/Particulier"
+                                            android:ellipsize="end"
+                                            android:imeOptions="actionDone"
+                                            android:inputType="textCapCharacters|textNoSuggestions"
+                                            android:paddingStart="@dimen/_10sdp"
+                                            android:paddingEnd="@dimen/_10sdp"
+                                            android:textAllCaps="true"
+                                            android:textSize="@dimen/_13ssp"
+                                            tools:text="" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_margin="@dimen/_8sdp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="3.5"
+                                        android:text="A quand remonte la formation ?"
+                                        android:textColor="@color/text_color_white"
+                                        android:textStyle="bold" />
+
+                                    <RelativeLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_37sdp"
+                                        android:layout_weight="6.5">
+
+                                        <androidx.appcompat.widget.AppCompatEditText
+                                            android:id="@+id/editAnneeFormatFemmeMenage"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/rounded_background"
+                                            android:editable="false"
+                                            android:focusable="false"
+                                            android:ellipsize="end"
+                                            android:hint="AAAA"
+                                            android:inputType="textCapCharacters"
+                                            android:paddingStart="@dimen/_10sdp"
+                                            android:paddingEnd="@dimen/_10sdp"
+                                            android:textAllCaps="true"
+                                            android:textSize="@dimen/page_input_content_dim13" />
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="@dimen/_35sdp"
+                                            android:layout_height="@dimen/_35sdp"
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_centerVertical="true"
+                                            app:srcCompat="@drawable/ic_date_calendar" />
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                tools:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="10">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:textColor="@color/text_color_white"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6"
+                                        android:text="Est-ce que cette activité vous a permis d'obtenir des revenus supplémentaires ?"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="4"
+                                        android:background="@drawable/rounded_background">
+
+                                        <Space
+                                            android:layout_width="@dimen/_5sdp"
+                                            android:layout_height="@dimen/_10sdp" />
+
+                                        <androidx.appcompat.widget.AppCompatSpinner
+                                            style="@style/SpinnerItemStyle"
+                                            android:id="@+id/selectFemmActPermRevenSuppMenage"
+                                            android:layout_width="match_parent"
+                                            android:entries="@array/YesOrNo"
+                                            android:layout_height="@dimen/_37sdp"
+                                            android:spinnerMode="dialog" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -1716,6 +2189,7 @@ android:textColor="@color/text_color_white"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickCancelMenage"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1725,13 +2199,15 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/divider"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="ANNULER"
-                    app:cornerRadius="50dp"
+                    android:textColor="@color/text_color_white"
+                    android:text="@string/annuler"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_cancel_send_white"
                     app:iconGravity="start" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:textSize="@dimen/page_button_text_dim13"
                     android:id="@+id/clickSaveMenage"
                     style="@style/OptionsButton_Active"
                     android:layout_width="wrap_content"
@@ -1741,9 +2217,10 @@ android:textColor="@color/text_color_white"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:backgroundTint="@color/ccb_green"
                     android:elevation="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="VÉRIFIER"
-                    app:cornerRadius="50dp"
+                    app:iconTint="@color/white_color"
+                    android:text="@string/v_rifier"
+                    app:cornerRadius="@dimen/_37sdp"
+                    app:iconSize="@dimen/page_icon_other_dim20"
                     app:icon="@drawable/baseline_schedule_send_prev_white"
                     app:iconGravity="start" />
 

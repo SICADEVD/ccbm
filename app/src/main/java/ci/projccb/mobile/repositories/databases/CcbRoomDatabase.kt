@@ -19,7 +19,7 @@ import ci.projccb.mobile.tools.ListConverters
  */
 
 @Database(
-    version = 3, exportSchema = false,
+    version = 9, exportSchema = false,
     entities = [
         AgentModel::class,
         EauUseeModel::class,
@@ -45,6 +45,7 @@ import ci.projccb.mobile.tools.ListConverters
         LivraisonModel::class,
         FormationModel::class,
         TypeFormationModel::class,
+        SousThemeFormationModel::class,
         DelegueModel::class,
         SuiviParcelleModel::class,
         IntrantModel::class,
@@ -69,6 +70,21 @@ import ci.projccb.mobile.tools.ListConverters
         ConcernesModel::class,
         SectionModel::class,
         ProgrammeModel::class,
+        DistributionArbreModel::class,
+        EvaluationArbreModel::class,
+        VisiteurFormationModel::class,
+        ArbreModel::class,
+        StaffFormationModel::class,
+        MagasinCentralModel::class,
+        EntrepriseModel::class,
+        TransporteurModel::class,
+        VehiculeModel::class,
+        RemorqueModel::class,
+        LivraisonCentralModel::class,
+        LivraisonVerMagCentralModel::class,
+        ApprovisionnementModel::class,
+        PostPlantingModel::class,
+        PostPlantingArbrDistribModel::class,
     ],
 )
 @TypeConverters(ListConverters::class)
@@ -77,6 +93,7 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun draftedDatasDao(): DraftedDatasDao
     abstract fun typeProduitDao(): TypeProduitDao
     abstract fun themeFormationDao(): ThemeFormationDao
+    abstract fun sousThemeFormationDao(): SousThemeFormationDao
     abstract fun moyenTransport(): MoyenTransportDao
     abstract fun lienParenteDao(): LienParenteDao
     abstract fun infosProducteurDao(): InfosProducteurDao
@@ -88,6 +105,7 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun enqueteSsrtDao(): EnqueteSsrteDao
     abstract fun estimationDao(): EstimationDao
     abstract fun magasinSectionDao(): MagasinDao
+    abstract fun magasinCentralDao(): MagasinCentralDao
     abstract fun notationDao(): NotationDao
     abstract fun courEauDoa(): CourEauDao
     abstract fun applicateurDao(): ApplicateurDao
@@ -122,6 +140,20 @@ abstract class CcbRoomDatabase : RoomDatabase() {
     abstract fun concernesDao(): ConcernesDao
     abstract fun sectionsDao(): SectionsDao
     abstract fun programmesDao(): ProgrammesDao
+    abstract fun distributionArbreDao(): DistributionArbreDao
+    abstract fun evaluationArbreDao(): EvaluationArbreDao
+    abstract fun visiteurFormationDao(): VisiteurFormationDao
+    abstract fun arbreDao(): ArbreDao
+    abstract fun staffFormation(): StaffFormationDao
+    abstract fun entrepriseDao(): EntrepriseDao
+    abstract fun transporteurDao(): TransporteurDao
+    abstract fun vehiculeDao(): VehiculeDao
+    abstract fun remorqueDao(): RemorqueDao
+    abstract fun livraisonCentralDao(): LivraisonCentralDao
+    abstract fun livraisonVerMagCentralDao(): LivraisonVerMagCentralDao
+    abstract fun approvisionnementDao(): ApprovisionnementDao
+    abstract fun postplantingDao(): PostplantingDao
+    abstract fun postPlantingArbrDistribDao(): PostPlantingArbrDistribDao
 
 
     companion object {

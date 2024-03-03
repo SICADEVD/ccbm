@@ -1,15 +1,20 @@
 package ci.projccb.mobile.repositories.apis
 
 import ci.projccb.mobile.repositories.apis.services.ApiService
+import ci.projccb.mobile.tools.SendErrorOnline
+import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import java.lang.Exception
 import java.lang.RuntimeException
+import okio.Buffer
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
@@ -23,14 +28,11 @@ object ApiClient {
         GsonBuilder().excludeFieldsWithoutExposeAnnotation().setLenient().create()
     }
 
-
     fun getLoggin(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return logging
     }
-
-
 
     private fun getUnsafeOkHttpClient(): OkHttpClient.Builder =
         try {
@@ -57,6 +59,7 @@ object ApiClient {
                 .connectTimeout(30, TimeUnit.MINUTES)
                 .readTimeout(30, TimeUnit.MINUTES)
                 .writeTimeout(30, TimeUnit.MINUTES)
+                //.addInterceptor(interceptor = CustomInterceptor())
                 .addInterceptor(interceptor = getLoggin())
             builder
         } catch (e: Exception) {
@@ -70,6 +73,7 @@ object ApiClient {
             .connectTimeout(30, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.MINUTES)
             .writeTimeout(30, TimeUnit.MINUTES)
+            //.addInterceptor(interceptor = CustomInterceptor())
             .addInterceptor(interceptor = getLoggin())
             .build()
     }
@@ -77,8 +81,8 @@ object ApiClient {
 
     internal val retrofit : Retrofit by lazy {
         //  val baseUrl = if (SPUtils.getInstance().getString(Constants.APP_BASE_URL).isBlank()) "https://jularis.com/api/" else SPUtils.getInstance().getString(Constants.APP_BASE_URL)
-        val  baseUrl = "https://ccbw.sicadevd.com/api/"
-        //val  baseUrl = "http://192.168.1.10:5000/api/"
+        val baseUrl = "https://ccbw.sicadevd.com/api/"
+        //val baseUrl = "http://192.168.1.6:5000/api/"
         //val  baseUrl = "https://fieldconnectv3.sicadevd.com/api/"
         //val  baseUrl = "https://demo.sicadevd.com/api/"
         //  val  baseUrl = "https://anouanze.sicadevd.com/api/"
@@ -97,5 +101,27 @@ object ApiClient {
 
     val apiService : ApiService by lazy {
         retrofit.create(ApiService::class.java)
+    }
+}
+
+class CustomInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
+        val request = chain.request()
+        val response = chain.proceed(request)
+
+        val buffer = Buffer()
+        request.body?.writeTo(buffer)
+        val requestBodyJson = buffer.readUtf8()
+
+        // Log response using HttpLoggingInterceptor
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val loggingResponse = loggingInterceptor.intercept(chain)
+
+        // Pass response body to SendErrorOnline
+        SendErrorOnline( requestBodyJson+" -||- "+response.body?.string().toString()).execute()
+
+        return loggingResponse
     }
 }
