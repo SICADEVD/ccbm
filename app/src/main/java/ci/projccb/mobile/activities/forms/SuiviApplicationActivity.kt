@@ -288,6 +288,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 applicateur = applicateurCommon.id.toString()
 
                 maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
+                autreMaladieStr = GsonUtils.toJson((recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" })
 
                 pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
                     PesticidesApplicationModel(
@@ -308,6 +309,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
             this.add(Pair(getString(R.string.produits_pythos_enr_gistr_s), (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString(commaReplace = "\n") ))
             this.add(Pair(getString(R.string.maladies_observ_es_dans_la_parcelle), selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
+            this.add(Pair("Autre maladie/ravageur", (recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" }.toModifString(commaReplace = "\n") ))
         }.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(suiviApplicationDatas as Object, mapEntries)
@@ -685,7 +687,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
     fun dialogPickerPhoto() {
         try {
-            val dialogPicker = AlertDialog.Builder(this)
+            val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
                 .setMessage(getString(R.string.source_de_la_photo))
                 .setPositiveButton("Camera") { dialog, _ ->
                     dialog.dismiss()
@@ -720,6 +722,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     applicateur = applicateurCommon.id.toString()
 
                     maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
+                    autreMaladieStr = GsonUtils.toJson((recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" })
 
                     pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
                         PesticidesApplicationModel(
@@ -836,7 +839,22 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     }
                 })
 
-            Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+            Commons.setListenerForSpinner(this,
+                "Avez-vous d' autres maladies/ravageur ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectAutreMaladRavYesOrNoSuiviAppli,
+                currentVal = applicationDrafted.reponse,
+                itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                },
+                onSelected = { itemId, visibility ->
+                    if(itemId==1){
+                        containerAutreMaladRavSuiviApplication.visibility = visibility
+                    }
+                })
+
+            Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
                 ){
 
             }
@@ -883,16 +901,12 @@ class SuiviApplicationActivity : AppCompatActivity() {
             configDate(editDateSuiviApplication)
         }
 
-//        setOnlyOneITemSApplicRV(this,
-//            recyclerMatiereListSuiviApplication,
-//            clickSaveMatiereSuiviApplication,
-//            editMatiereActiveSuiviApplication){
-//
-//            Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", (recyclerMatiereListSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().toMutableList() ){
-//
-//            }
-//
-//        }
+        Commons.setOnlyOneITemSApplicRV(this,
+            recyclerAutreMaladiRavSuiviApplication,
+            clickSaveAutreMaladiRavSuiviApplication,
+            editAutreMaladiRavSuiviApplication){
+
+        }
 
 //        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", arrayListOf() ){
 //
@@ -985,6 +999,21 @@ class SuiviApplicationActivity : AppCompatActivity() {
             })
 
         Commons.setListenerForSpinner(this,
+            "Avez-vous d' autres maladies/ravageur ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectAutreMaladRavYesOrNoSuiviAppli,
+            //currentVal = applicationDrafted.independantEpi,
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId==1){
+                    containerAutreMaladRavSuiviApplication.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
             getString(R.string.poss_de_t_il_un_epi),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectIndependantEpiSApplic,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
@@ -998,7 +1027,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 }
             })
 
-        Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
 
         }
 

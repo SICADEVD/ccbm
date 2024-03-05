@@ -64,6 +64,7 @@ class AssetFileHelper {
             "titre_producteur",
             "type_css",
             "sous_themes_formations",
+            "approbat_inpect",
         );
 
 
@@ -98,6 +99,7 @@ class AssetFileHelper {
            *         26 = "titre_producteur",
            *         27 = "type_css",
            *         28 = "sous_themes_formations",
+           *         29 = "approbat_inpect",
         */
         fun getListDataFromAsset(position: Int = 0, context: Activity): MutableList<*>? {
             val typer : Type? = when(position) {
@@ -130,6 +132,7 @@ class AssetFileHelper {
                 26 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 27 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 28 -> object : TypeToken<MutableList<SousThemeFormationModel>>() {}.type
+                29 -> object : TypeToken<MutableList<CommonData>>() {}.type
                 else -> {
                     null
                 }

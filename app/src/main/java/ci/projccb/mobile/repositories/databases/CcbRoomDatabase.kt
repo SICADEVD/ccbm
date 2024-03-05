@@ -10,6 +10,7 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 import androidx.room.migration.Migration
+import ci.projccb.mobile.BuildConfig
 import ci.projccb.mobile.tools.ListConverters
 
 
@@ -19,7 +20,7 @@ import ci.projccb.mobile.tools.ListConverters
  */
 
 @Database(
-    version = 9, exportSchema = false,
+    version = BuildConfig.VERSION_CODE, exportSchema = false,
     entities = [
         AgentModel::class,
         EauUseeModel::class,

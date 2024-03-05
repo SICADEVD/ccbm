@@ -60,6 +60,7 @@ import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
 import ci.projccb.mobile.activities.forms.VisiteurFormationActivity
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
+import ci.projccb.mobile.activities.lists.DatasSyncListActivity
 import ci.projccb.mobile.activities.lists.FormationsListActivity
 import ci.projccb.mobile.activities.lists.LivraisonsListActivity
 import ci.projccb.mobile.activities.lists.MenageresListActivity
@@ -369,7 +370,9 @@ class Commons {
 
         fun <T : Any>  setAllValueOfTextViews(
             viewGroup: ViewGroup,
-            prodModel: T
+            prodModel: T,
+            makeDisable: Boolean = false,
+            ignoreDisable: MutableList<String> = mutableListOf<String>()
         ): T {
             val childCount = viewGroup.childCount
             for (i in 0 until childCount) {
@@ -382,9 +385,15 @@ class Commons {
                     //LogUtils.d(childViewClassName+ " "+ currTextView)
                 }
 
-                if ( childView is AppCompatEditText && childView.tag != null ) {
+                if ( (childView is Spinner) && childView.tag != null) {
+
+                    if(makeDisable && ignoreDisable.contains(childView.tag) == false) childView.isEnabled = false
+
+                }else if ( childView is AppCompatEditText && childView.tag != null ) {
                     // You've found an EditText with the specified tag, get its value
                     val editText = childView as AppCompatEditText
+
+                    if(makeDisable && ignoreDisable.contains(editText.tag) == false) editText.isEnabled = false
 
                     val producteurModelClass = prodModel.javaClass
                     val memberProperty = producteurModelClass.declaredFields.find { it.name == editText.tag }
@@ -396,7 +405,7 @@ class Commons {
                     //countField++
                 } else if (childView is ViewGroup) {
                     // If it's a ViewGroup, recursively call this method
-                    setAllValueOfTextViews(childView, prodModel)
+                    setAllValueOfTextViews(childView, prodModel, makeDisable, ignoreDisable)
                 }
             }
             return prodModel
@@ -413,7 +422,7 @@ class Commons {
 
         fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false) {
             try {
-                val builder = AlertDialog.Builder(context)
+                val builder = AlertDialog.Builder(context, R.style.DialogTheme)
                 // Display a message on alert dialog
                 builder.setMessage(message)
                 builder.setCancelable(false)
@@ -484,7 +493,7 @@ class Commons {
         }
 
         fun Context.showYearPickerDialog(editText: EditText) {
-            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+            val builder = androidx.appcompat.app.AlertDialog.Builder(this, R.style.DialogTheme)
             val calendar: Calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val inflater = LayoutInflater.from(this)
@@ -806,6 +815,12 @@ class Commons {
 
                 "UPDATE" -> {
                     val intentUpdateContent = Intent(activity, UpdateContentsListActivity::class.java)
+                    intentUpdateContent.putExtra("fromContent", fromMenu)
+                    ActivityUtils.startActivity(intentUpdateContent)
+                }
+
+                "SYNC_UPDATE" -> {
+                    val intentUpdateContent = Intent(activity, DatasSyncListActivity::class.java)
                     intentUpdateContent.putExtra("fromContent", fromMenu)
                     ActivityUtils.startActivity(intentUpdateContent)
                 }
@@ -1432,6 +1447,19 @@ class Commons {
                 }
                 returner
             }
+        }
+
+        fun invertValue(s: String, s1: String, rolesCopy: MutableList<String>): MutableList<String> {
+            val index1 = rolesCopy.indexOf(s)
+            val index2 = rolesCopy.indexOf(s1)
+
+            if (index1 != -1 && index2 != -1) {
+                val newList = rolesCopy.toMutableList()
+                newList[index1] = rolesCopy[index2]
+                newList[index2] = rolesCopy[index1]
+                return newList
+            }
+            return rolesCopy
         }
     }
 

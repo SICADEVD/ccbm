@@ -19,6 +19,7 @@ import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.AgentDao
 import ci.projccb.mobile.repositories.datas.AgentAuthResponse
+import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
@@ -152,13 +153,15 @@ class AuthentificationActivity : AppCompatActivity() {
 
                                 //remavoe some feature
                                 //roles?.remove("ESTIMATION")
-                                val rolesCopy = arrayListOf<String>()
+                                var rolesCopy = mutableListOf<String>()
 
                                 roles?.forEachIndexed { index,item ->
                                     if(item.equals("EVALUATION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_EVALUATION")
-                                    if(item.equals("DISTRIBUTION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_DISTRIBUTION")
-                                    rolesCopy.add(item)
+                                    else if(item.equals("DISTRIBUTION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_DISTRIBUTION")
+                                    else rolesCopy.add(item)
                                 }
+
+                                rolesCopy = Commons.invertValue("AGRO_EVALUATION", "AGRO_DISTRIBUTION", rolesCopy)
 
                                 SPUtils.getInstance().put("menu", GsonUtils.toJson(rolesCopy))
                                 agentModel?.isLogged = true

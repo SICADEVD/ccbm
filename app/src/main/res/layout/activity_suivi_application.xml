@@ -777,6 +777,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="@dimen/_12sdp"
+                                android:textSize="@dimen/page_input_title_dim11"
                                 android:textAllCaps="true"
                                 android:text="Quels sont les pesticides utilisés ?"
                                 android:textStyle="bold" />
@@ -808,6 +809,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_12sdp"
+                                                android:textSize="@dimen/page_input_title_dim11"
                                                 android:text="Nom du pesticide"
                                                 android:textStyle="bold" />
 
@@ -837,7 +839,7 @@ android:textColor="@color/text_color_white"
                                                 android:layout_weight=".6"
                                                 android:layout_height="wrap_content"
                                                 android:paddingLeft="@dimen/_12sdp"
-                                                android:textSize="@dimen/_10ssp"
+                                                
                                                 android:text="Classe toxicologique"
                                                 android:textStyle="bold" />
 
@@ -873,7 +875,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
+                                                    
                                                     android:text="Nom commercial"
                                                     android:textStyle="bold" />
 
@@ -903,7 +905,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
+                                                    
                                                     android:text="Fréquence"
                                                     android:textStyle="bold" />
 
@@ -945,7 +947,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
+                                                    
                                                     android:text="Matières actives"
                                                     android:textStyle="bold" />
 
@@ -988,7 +990,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
+                                                    
                                                     android:text="La dose"
                                                     android:textStyle="bold" />
 
@@ -1042,7 +1044,7 @@ android:textColor="@color/text_color_white"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="@dimen/_12sdp"
-                                                    android:textSize="@dimen/_10ssp"
+                                                    
                                                     android:text="La quantité"
                                                     android:textStyle="bold" />
 
@@ -1136,7 +1138,7 @@ android:textColor="@color/text_color_white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quelles sont les maladies observées dans la parcelle ?"
+                            android:text="Quelles sont les maladies/ravageurs observées dans la parcelle ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -1158,6 +1160,119 @@ android:textColor="@color/text_color_white"
                         </LinearLayout>
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Avez-vous d' autres maladies/ravageur ?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:tag="reponse"
+                                android:spinnerMode="dialog"
+                                android:entries="@array/YesOrNo"
+                                android:id="@+id/selectAutreMaladRavYesOrNoSuiviAppli"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/containerAutreMaladRavSuiviApplication"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="4"
+                                android:text="Autre maladie/ravageur"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editAutreMaladiRavSuiviApplication"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_37sdp"
+                                android:layout_weight="6"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="Précisez"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/_13ssp"
+                                tools:text="" />
+
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/clickSaveAutreMaladiRavSuiviApplication"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="end"
+                            android:textColor="@color/white_color"
+                            android:background="@drawable/submit_button_bg"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:text="Valider"
+
+                            android:textSize="@dimen/_9ssp" />
+
+                        <Space
+                            android:layout_width="@dimen/_5sdp"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerAutreMaladiRavSuiviApplication"
+                            tools:listitem="@layout/matiere_items_list"
+                            tools:itemCount="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
 
                     <LinearLayout
                         android:layout_marginBottom="@dimen/_10sdp"

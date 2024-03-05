@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.datas
 
+import androidx.room.Ignore
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -16,6 +17,9 @@ data class CommonData (
     @Expose @SerializedName(value = "cooperative_id", alternate = ["cooperatives_id"]) val cooperativeId: Int? = null,
     @Expose @SerializedName(value = "cooperativesid") val cooperativeIdex: Int? = null
 ) {
+    @Ignore @Expose
+    var listOfValue: MutableList<String>? = null
+
     override fun toString(): String {
         return nom!!
     }

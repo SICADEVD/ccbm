@@ -879,7 +879,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun dialogPickerPhoto() {
-        val dialogPicker = AlertDialog.Builder(this)
+        val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
             .setMessage(getString(R.string.source_de_la_photo))
             .setPositiveButton("Camera") { dialog, _ ->
                 dialog.dismiss()

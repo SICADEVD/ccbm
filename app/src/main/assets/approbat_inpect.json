@@ -1,0 +1,22 @@
+[
+    {
+        "id": "0",
+        "nom": "Faites un choix",
+        "point": "0"
+    },
+    {
+        "id": "1",
+        "nom": "Approuvé",
+        "point": "1"
+    },
+    {
+        "id": "2",
+        "nom": "Non Approuvé",
+        "point": "2"
+    },
+    {
+        "id": "3",
+        "nom": "Exclu",
+        "point": "3"
+    }
+]

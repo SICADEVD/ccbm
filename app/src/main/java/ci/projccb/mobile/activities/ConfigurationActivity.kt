@@ -11,6 +11,7 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
@@ -51,6 +52,7 @@ class ConfigurationActivity : AppCompatActivity() {
     var intrantDao: IntrantDao? = null
     var campagneDao: CampagneDao? = null
     var applicateurDao: ApplicateurDao? = null
+    var inspectionDao: InspectionDao? = null
     var questionnaireDao: QuestionnaireDao? = null
     var notationDao: NotationDao? = null
     var magasinDao: MagasinCentralDao? = null
@@ -207,6 +209,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             id = it.id,
                             nom = it.nom,
                             prenoms = it.prenoms,
+                            section = it.section,
                             localitesId = it.localitesId,
                             codeProd = it.codeProd,
                             certification = it.certification,
@@ -1701,6 +1704,61 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError("Une erreur est survenue - Applicateurs, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Applicateurs")
+                getInspections()
+                //getNotations()
+            }
+        }
+    }
+
+    suspend fun getInspections() {
+        withContext(IO) {
+            val fetchDatas = async {
+                inspectionDao?.deleteAll()
+
+                try {
+                    val clientData = ApiClient.apiService.getInspections()
+                    val responseData: Response<MutableList<InspectionDTOExt>> = clientData.execute()
+                    val datasList: MutableList<InspectionDTOExt>? = responseData.body()
+
+                    datasList?.map {
+                        val dataModel = InspectionDTO(
+                            id = it.id,
+                            uid = 0,
+                            producteursId = it.producteursId,
+                            formateursId = it.formateursId,
+                            campagnesId = it.campagnesId,
+                            certificatStr = GsonUtils.fromJson<MutableList<String>>(it.certificatStr, object : TypeToken<MutableList<String>>(){}.type).toModifString(true, ","),
+                            noteInspection = it.noteInspection,
+                            total_question = it.total_question,
+                            total_question_conforme = it.total_question_conforme,
+                            total_question_non_conforme = it.total_question_non_conforme,
+                            total_question_non_applicable = it.total_question_non_applicable,
+                            production = it.production,
+                            dateEvaluation = it.dateEvaluation,
+                            status = it.status,
+                            approbation = it.approbation,
+                            reponse_non_conformeStr = GsonUtils.toJson(it.reponseNonConforme),
+                            reponse_non_applicaleStr = GsonUtils.toJson(it.reponseNonApplicale),
+                            isSynced = true,
+                            origin = "remote",
+                            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
+                        )
+
+                        inspectionDao?.insert(dataModel)
+                    }
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            fetchDatas.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue - Inspections, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("Inspections")
                 getQuestionnaires()
                 //getNotations()
             }
@@ -2156,7 +2214,7 @@ class ConfigurationActivity : AppCompatActivity() {
 
 
                     datasProductPostPlanting?.map {
-                        LogUtils.d(it.arbres)
+                        //LogUtils.d(it.arbres)
                         val dataProductPostPlantingModel = PostPlantingArbrDistribModel(
                             uid = 0,
                             nom = it.nom,
@@ -3081,6 +3139,7 @@ class ConfigurationActivity : AppCompatActivity() {
         intrantDao = database?.intrantDao()
         campagneDao = database?.campagneDao()
         applicateurDao = database?.applicateurDao()
+        inspectionDao = database?.inspectionDao()
         notationDao = database?.notationDao()
         questionnaireDao = database?.questionnaireDao()
         magasinDao = database?.magasinCentralDao()

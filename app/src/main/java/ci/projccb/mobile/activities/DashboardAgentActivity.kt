@@ -364,7 +364,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         // .setNavigationItemSelectedListener(this)
         Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
 
@@ -386,7 +386,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
 
         imgProfileDashboardNDrawer.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
 
@@ -409,7 +409,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
         imgBackDashboard.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             builder.setMessage("Voulez-vous quitter ?")
             builder.setCancelable(false)
 
@@ -446,7 +446,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 message = "Vous n'etes pas connecté à internet pour effectuer cette action !"
             }
 
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             builder.setMessage(message)
             builder.setCancelable(false)
 

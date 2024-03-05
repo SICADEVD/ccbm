@@ -52,7 +52,10 @@ interface ApiService {
     fun synchronisationLivraisonCentral(@Body livraisonCentralModel: LivraisonCentralModel): Call<LivraisonCentralModel>
 
     @POST("apievaluation")
-    fun synchronisationInspection(@Body questionDTO: InspectionDTO): Call<InspectionDTO>
+    fun synchronisationInspection(@Body questionDTO: InspectionDTO): Call<InspectionDTOExt>
+
+    @POST("updateinspection")
+    fun synchronisationInspectionUpdate(@Body data: InspectionUpdateDTO): Call<InspectionDTOExt>
 
     @POST("apiinfosproducteur")
     fun synchronisationInfosProducteur(@Body infosProducteurDTO: InfosProducteurDTO): Call<InfosProducteurDTO>
@@ -80,6 +83,9 @@ interface ApiService {
 
     @POST("getapplicateurs")
     fun getApplicateurs(@Body table: CommonData): Call<MutableList<ApplicateurModel>>
+
+    @POST("getinspections")
+    fun getInspections(): Call<MutableList<InspectionDTOExt>>
 
     @POST("getapprovisionnementsection")
     fun getApprovisionnement(): Call<MutableList<ApprovisionnementModel>>

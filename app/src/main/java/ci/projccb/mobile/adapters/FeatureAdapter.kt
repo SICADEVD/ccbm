@@ -78,7 +78,11 @@ class FeatureAdapter(
 //            .into(holder.image_current);
 
         holder.itemView.setOnClickListener {
-            redirectMenu(currentFeature.type.toString(), "ADD", activity)
+            if("INSPECTION".toLowerCase().equals(currentFeature.type.toString(), ignoreCase = true)){
+                redirectMenu(currentFeature.type.toString(), "SYNC_UPDATE", activity)
+            }else{
+                redirectMenu(currentFeature.type.toString(), "ADD", activity)
+            }
         }
 
 //        if(currentFeature.canAdd){

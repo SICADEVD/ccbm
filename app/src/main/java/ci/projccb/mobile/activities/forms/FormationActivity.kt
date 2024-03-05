@@ -1093,7 +1093,7 @@ class FormationActivity : AppCompatActivity() {
     }
 
     fun dialogPickerPhoto() {
-        val dialogPicker = AlertDialog.Builder(this)
+        val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
 
         if(whichPhoto == 0){
             dialogPicker.setMessage(getString(R.string.source_de_la_photo))

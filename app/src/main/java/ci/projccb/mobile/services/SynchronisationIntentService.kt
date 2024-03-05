@@ -1050,6 +1050,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                         pesticidesList = GsonUtils.fromJson(pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)
                         maladiesList = GsonUtils.fromJson(maladiesStr, object : TypeToken<MutableList<String>>() {}.type)
+                        autreMaladieList = GsonUtils.fromJson(autreMaladieStr, object : TypeToken<MutableList<String>>() {}.type)
                     }
 
                     val clientSuiviApplication: Call<SuiviApplicationModel> = ApiClient.apiService.synchronisationSuiviApplication(suiviApplication)
@@ -1127,6 +1128,23 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                     true,
                                     distrib.uid
                                 )
+
+                                val prod = producteurDao?.getProducteurByID(distrib.producteurId?.toInt())
+
+                                prod?.let {
+                                    var arbres: MutableList<PostPlantingItem>? = distrib.quantiteList?.get(distrib.producteurId.toString())?.map { PostPlantingItem(it.key.toString(), it.value.toString()) }?.toMutableList()
+//                                    LogUtils.d(arbres)
+                                    postPlantingArbrDistribDao?.insert(PostPlantingArbrDistribModel(
+                                        uid = 0,
+                                        nom = it.nom,
+                                        prenoms = it.prenoms,
+                                        arbresStr = GsonUtils.toJson(arbres),
+                                        id = it.id,
+                                        isSynced = true,
+                                        origin = "remote",
+                                        agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+                                    ))
+                                }
 
                                 evaluationArbreDao?.deleteByProducteurId(distrib.producteurId)
 
@@ -1331,7 +1349,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
     //                var note = 0;
                     ApiClient.gson.fromJson<MutableList<QuestionResponseModel>>(inspection.reponseStringify, inspectionsToken).map {
                         if(it.isTitle == false) {
-                            inspection.reponse[counter.toString()] = it.note!!
+                            inspection.reponse[counter.toString()] = it.noteLabel!!
+                            inspection.commentaire[counter.toString()] = it.commentaire!!
                             counter++
                             //note += it.note!!.toInt()
                         }
@@ -1341,15 +1360,43 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                     inspection.reponseStringify = null
 
-                    val clientInspection: Call<InspectionDTO> = ApiClient.apiService.synchronisationInspection(inspection)
-                    val responseInspection: Response<InspectionDTO> = clientInspection.execute()
+                    val clientInspection: Call<InspectionDTOExt> = ApiClient.apiService.synchronisationInspection(inspection)
 
-                    val inspectionSynced: InspectionDTO? = responseInspection.body()
-                    inspectionDao.syncData(
-                        inspectionSynced?.id!!,
-                        true,
-                        inspection.uid
-                    )
+                    clientInspection.enqueue(object: Callback<InspectionDTOExt>{
+                            override fun onResponse(
+                                call: Call<InspectionDTOExt>,
+                                response: Response<InspectionDTOExt>
+                            ) {
+                                if(response.isSuccessful){
+                                    val inspectionSynced = response.body()
+
+                                    inspectionDao.syncData(
+                                        inspectionSynced?.id!!,
+                                        true,
+                                        inspection.uid
+                                    )
+
+                                    inspectionSynced.reponse_non_conformeStr = GsonUtils.toJson(inspectionSynced.reponseNonConforme)
+                                    inspectionSynced.reponse_non_applicaleStr = GsonUtils.toJson(inspectionSynced.reponseNonApplicale)
+
+                                    inspectionDao.updateNConformNApplicable(
+                                        inspection.uid,
+                                        inspectionSynced.reponse_non_conformeStr,
+                                        inspectionSynced.reponse_non_applicaleStr
+                                    )
+
+                                }else{
+
+                                    inspectionDao.deleteByUid(inspection.uid)
+
+                                }
+                            }
+
+                            override fun onFailure(call: Call<InspectionDTOExt>, t: Throwable) {
+
+                            }
+
+                        });
                 }
 
 
@@ -1359,6 +1406,69 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                     FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }else recallServiceIntent()
+
+        syncInspectionUpdate(inspectionDao!!)
+
+
+    }
+
+    fun syncInspectionUpdate(inspectionDao: InspectionDao) {
+
+        val producteurDatas = producteurDao?.getUnSyncedAll(
+            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+        )
+
+        if(producteurDatas?.size == 0) {
+
+            try {
+                val inspectionsDatas = inspectionDao.getAllInspectionToUpdate()
+
+                inspectionsDatas.map { inspection ->
+                    val contentUpdate = GsonUtils.fromJson<InspectionUpdateDTO>(inspection.update_content, InspectionUpdateDTO::class.java)
+
+                    val clientInspection: Call<InspectionDTOExt> = ApiClient.apiService.synchronisationInspectionUpdate(contentUpdate)
+
+                    clientInspection.enqueue(object: Callback<InspectionDTOExt>{
+                        override fun onResponse(
+                            call: Call<InspectionDTOExt>,
+                            response: Response<InspectionDTOExt>
+                        ) {
+                            if(response.isSuccessful){
+                                val inspectionSynced = response.body()
+
+                                inspectionSynced?.reponse_non_conformeStr = GsonUtils.toJson(inspectionSynced?.reponseNonConforme)
+                                inspectionSynced?.reponse_non_applicaleStr = GsonUtils.toJson(inspectionSynced?.reponseNonApplicale)
+
+                                inspectionDao.updateNConformNApplicable(
+                                    inspection.uid,
+                                    inspectionSynced?.reponse_non_conformeStr,
+                                    inspectionSynced?.reponse_non_applicaleStr
+                                )
+
+                                inspectionDao.updateApprobation(inspectionSynced?.approbation, inspection.uid)
+                                inspectionDao.updateContent(null, inspection.uid)
+
+                            }else{
+
+                            }
+                        }
+
+                        override fun onFailure(call: Call<InspectionDTOExt>, t: Throwable) {
+
+                        }
+
+                    });
+                }
+
+
+
+            } catch (uhex: UnknownHostException) {
+                FirebaseCrashlytics.getInstance().recordException(uhex)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
             }
         }else recallServiceIntent()
 

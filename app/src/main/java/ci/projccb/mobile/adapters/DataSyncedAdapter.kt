@@ -11,11 +11,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.*
-import ci.projccb.mobile.adapters.DataDraftedAdapter.DataDraftedHolder
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.repositories.apis.ApiClient
+import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons.Companion.modifyIcColor
 import kotlinx.android.synthetic.main.drafted_items_list.view.*
 
@@ -26,157 +26,157 @@ import kotlinx.android.synthetic.main.drafted_items_list.view.*
  **/
 
 @SuppressLint("All")
-class DataDraftedAdapter(val context: Context, var draftedList: MutableList<DataDraftedModel>?): RecyclerView.Adapter<DataDraftedHolder>() {
+class DataSyncedAdapter(val context: Context, var draftedList: MutableList<CommonData>?): RecyclerView.Adapter<DataSyncedAdapter.DataSyncedHolder>() {
 
 
-    class DataDraftedHolder(viewDataDrafted: View) : RecyclerView.ViewHolder(viewDataDrafted) {
+    class DataSyncedHolder(viewDataDrafted: View) : RecyclerView.ViewHolder(viewDataDrafted) {
 
         val labelNumberDraft = viewDataDrafted.labelDraftedNumberItem
         val labelDateDraft = viewDataDrafted.labelDraftedDateItem
         val imageTypeDraft = viewDataDrafted.imageDraftedTypeItem
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataDraftedHolder {
-        return DataDraftedHolder(LayoutInflater.from(context).inflate(R.layout.drafted_items_list, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataSyncedHolder {
+        return DataSyncedHolder(LayoutInflater.from(context).inflate(R.layout.synced_items_list, parent, false))
     }
 
 
-    override fun onBindViewHolder(holder: DataDraftedHolder, position: Int) {
+    override fun onBindViewHolder(holder: DataSyncedHolder, position: Int) {
         val draftedData = draftedList!![position]
 
-        holder.labelNumberDraft.text = draftedData.uid.toString()
-        holder.labelDateDraft.text = draftedData.dateDraft
+        holder.labelNumberDraft.text = draftedData.listOfValue?.get(0).toString()
+        holder.labelDateDraft.text = draftedData.listOfValue?.get(1).toString()
         var intentUndraftedData: Intent? = null
 
-        when (draftedData.typeDraft?.uppercase()) {
+        when (draftedData.value?.uppercase()) {
             //for update or draft list
             "CONTENT_PRODUCTEUR",
             "PRODUCTEUR" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_farmer)
                 intentUndraftedData = Intent(context, ProducteurActivity::class.java)
-                intentUndraftedData.putExtra("from", if (draftedData.typeDraft.toString().lowercase() ==  "producteur") "producteur" else "content_producteur")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("from", if (draftedData.value.toString().lowercase() ==  "producteur") "producteur" else "content_producteur")
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "INFOS_PRODUCTEUR" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_profile_producteur)
                 intentUndraftedData = Intent(context, UniteAgricoleProducteurActivity::class.java)
                 intentUndraftedData.putExtra("from", "infos_producteur")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             //for sync draft
             "LOCALITE" -> {
                 holder.imageTypeDraft.setImageResource(android.R.drawable.ic_menu_mylocation)
                 intentUndraftedData = Intent(context, LocaliteActivity::class.java)
                 intentUndraftedData.putExtra("from", "localite")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "MENAGE" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_menage)
                 intentUndraftedData = Intent(context, ProducteurMenageActivity::class.java)
                 intentUndraftedData.putExtra("from", "menage")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "CONTENT_PARCELLE",
             "PARCELLE" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_parcel)
                 intentUndraftedData = Intent(context, ParcelleActivity::class.java)
-                intentUndraftedData.putExtra("from", if (draftedData.typeDraft.toString().lowercase() ==  "parcelle") "parcelle" else "content_parcelle")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("from", if (draftedData.value.toString().lowercase() ==  "parcelle") "parcelle" else "content_parcelle")
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "PARCELLES" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_parcel)
                 intentUndraftedData = Intent(context, SuiviParcelleActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_parcelle")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "FORMATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_formation)
                 intentUndraftedData = Intent(context, FormationActivity::class.java)
                 intentUndraftedData.putExtra("from", "formation")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "ESTIMATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.estimations)
                 intentUndraftedData = Intent(context, CalculEstimationActivity::class.java)
                 intentUndraftedData.putExtra("from", "estimation")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "APPLICATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_applicateurs)
                 intentUndraftedData = Intent(context, SuiviApplicationActivity::class.java)
                 intentUndraftedData.putExtra("from", "application")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "LIVRAISON" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.livrais_mag_sect)
                 intentUndraftedData = Intent(context, LivraisonActivity::class.java)
                 intentUndraftedData.putExtra("from", "livraison")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "SSRTECLMRS" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_ssrt_black)
                 intentUndraftedData = Intent(context, SsrtClmsActivity::class.java)
                 intentUndraftedData.putExtra("from", "ssrte")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "INSPECTION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.baseline_elevator)
                 intentUndraftedData = Intent(context, InspectionActivity::class.java)
                 intentUndraftedData.putExtra("from", "inspection")
                 //intentUndraftedData.putExtra("update_type", "sync")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "FORMATION_VISITEUR" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.arbre_black)
                 intentUndraftedData = Intent(context, VisiteurFormationActivity::class.java)
                 intentUndraftedData.putExtra("from", "visiteur_formation")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "AGRO_EVALUATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.arbre_black)
                 intentUndraftedData = Intent(context, EvaluationArbreActivity::class.java)
                 intentUndraftedData.putExtra("from", "evaluation_arbre")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "AGRO_DISTRIBUTION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.distrib_arbre)
                 intentUndraftedData = Intent(context, DistributionArbreActivity::class.java)
                 intentUndraftedData.putExtra("from", "distribution_arbre")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "POSTPLANTING" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.distrib_arbre)
                 intentUndraftedData = Intent(context, PostPlantingEvalActivity::class.java)
                 intentUndraftedData.putExtra("from", "postplanting")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "LIVRAISON_MAGCENTRAL" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.livrais_mag_central)
                 intentUndraftedData = Intent(context, LivraisonCentralActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_livraison_central")
-                intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
+                intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
         }
 
         modifyIcColor(context, holder.imageTypeDraft, R.color.black)
 
-        when (draftedData.typeDraft?.uppercase()) {
-            "CONTENT_PRODUCTEUR" ->  {
-                val producteurContent = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
-                holder.labelNumberDraft.text = "${producteurContent.nom ?: ""} ${producteurContent.prenoms ?: ""} (${if (producteurContent.codeProdApp.isNullOrBlank()) context.getString(R.string.inconnu) else producteurContent.codeProdApp})"
-            }
-            "CONTENT_PARCELLE" ->  {
-                val parcelleContent = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
-                holder.labelNumberDraft.text = "${parcelleContent.producteurNom} (${parcelleContent.codeParc})"
-            }
-            else ->  holder.labelNumberDraft.text = draftedData.uid.toString()
-        }
+//        when (draftedData.value?.uppercase()) {
+//            "CONTENT_PRODUCTEUR" ->  {
+//                //val producteurContent = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
+//                holder.labelNumberDraft.text = "${producteurContent.nom ?: ""} ${producteurContent.prenoms ?: ""} (${if (producteurContent.codeProdApp.isNullOrBlank()) context.getString(R.string.inconnu) else producteurContent.codeProdApp})"
+//            }
+//            "CONTENT_PARCELLE" ->  {
+//                val parcelleContent = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
+//                holder.labelNumberDraft.text = "${parcelleContent.producteurNom} (${parcelleContent.codeParc})"
+//            }
+//            else ->  holder.labelNumberDraft.text = draftedData.id.toString()
+//        }
 
         holder.itemView.setOnClickListener {
             if(intentUndraftedData!= null) {
                 context.startActivity(intentUndraftedData)
                 (context as Activity).finish()
-            }else Toast.makeText(context, "Aucun brouillon définit !", Toast.LENGTH_SHORT).show()
+            }else Toast.makeText(context, "Aucune donnée de synchronisation trouvée !", Toast.LENGTH_SHORT).show()
         }
     }
 

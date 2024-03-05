@@ -23,13 +23,13 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_logo"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/ic_launcher_trans" />
+            app:srcCompat="@drawable/ic_launcher_icon" />
 
         <androidx.appcompat.widget.AppCompatTextView
 android:textColor="@color/text_color_white"
@@ -39,7 +39,7 @@ android:textColor="@color/text_color_white"
             android:fontFamily="@font/montserrat_medium"
             android:text="Configuration en cours…"
 
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/page_input_content_dim13"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"

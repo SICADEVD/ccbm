@@ -46,6 +46,8 @@ data class SuiviApplicationModel(
     @Expose var pesticidesStr: String? = "",
     @Expose var hour: String? = "",
     @Expose var minute: String? = "",
+    @Expose var reponse: String? = "",
+    @Expose var autreMaladieStr: String? = "",
     @SerializedName(value = "date_application", alternate = ["dateApplication"]) @Expose var dateApplication: String? = "",
     @SerializedName("degreDangerosite") @Expose var degreDangerosite: String? = "",
     @SerializedName("delaisReentree") @Expose var delaisReentree: String? = "",
@@ -74,4 +76,5 @@ data class SuiviApplicationModel(
     @Ignore @SerializedName("nomInsectesCibles") @Expose(serialize = true, deserialize = false) var nomInsectesCibles: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("maladies") @Expose(serialize = true, deserialize = false) var maladiesList: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("pesticides") @Expose(serialize = true, deserialize = false) var pesticidesList: MutableList<PesticidesApplicationModel>? = mutableListOf()
+    @Ignore @SerializedName("autreMaladie") @Expose(serialize = true, deserialize = false) var autreMaladieList: MutableList<String>? = mutableListOf()
 }

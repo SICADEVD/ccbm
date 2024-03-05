@@ -98,7 +98,12 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                 draftID = intent.getIntExtra("draft_id", 0)
 
                 inspectionDTO?.let { inspection ->
-                    labelCampagneInspectionPreview.text = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()?.first().let { "${it?.campagnesNom}" }
+                    labelCampagneInspectionPreview.text = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()?.first().let { it?.campagnesNom?.split(" ")?.let {
+                        var value = ""
+                        if(it.size > 1) value = "${it.get(1)}"
+                        else value = "N/A"
+                        value
+                    } }
                     labelEncadrInspectionPreview.text = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(inspection.encadreur?.toInt())?.let { "${it.firstname} ${it.lastname}" }
                     labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
                     val total_question = inspection.total_question?.toInt()

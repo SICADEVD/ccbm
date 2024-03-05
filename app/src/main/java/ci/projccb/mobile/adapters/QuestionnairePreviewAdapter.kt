@@ -77,36 +77,8 @@ class QuestionnairePreviewAdapter(var pContext: Context, var pQuestionnaires: Mu
             val questionnaireInfosHolder: QuesionnaireHolder = holder as QuesionnaireHolder
             questionnaireInfosHolder.labelQuestion.text = questionnaireInfo.label
             questionnaireInfosHolder.labelResponse.text = null
-            questionnaireInfosHolder.labelResponse.text = questionnaireInfo.noteLabel
+            questionnaireInfosHolder.labelResponse.text = "Note: ${questionnaireInfo.noteLabel}\nCommentaire: ${questionnaireInfo.commentaire}"
 
-
-            /*MainScope().launch {
-                LoopItem@for ((key0, _) in questionnaireInfo.iterator()) {
-                    LoopResponse@for ((key1, _) in cInspectionNotation.iterator()) {
-                        if (key0 == key1) {
-                            when (cInspectionNotation[key1]) {
-                                "-1" -> {
-                                    questionnaireInfosHolder.labelResponse.text = "Pas Conforme"
-                                }
-                                "0" -> {
-                                    questionnaireInfosHolder.labelResponse.text = "Non Applicable"
-                                }
-                                "1" -> {
-                                    questionnaireInfosHolder.labelResponse.text = "Moyennement Conforme"
-                                }
-                                "2" -> {
-                                    questionnaireInfosHolder.labelResponse.text = "Tres Conforme"
-                                }
-                                else -> {
-                                    questionnaireInfosHolder.labelResponse.text = "N/A"
-                                }
-                            }
-
-                            break@LoopItem
-                        }
-                    }
-                }
-            }*/
         }
     }
 

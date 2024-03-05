@@ -82,10 +82,16 @@
             android:name=".activities.lists.DatasDraftedListActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.lists.DatasSyncListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.infospresenters.InfosProducteurPreviewActivity"
             android:exported="false" />
         <activity
             android:name=".activities.infospresenters.InspectionPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.infospresenters.InspectionPreviewUpdateActivity"
             android:exported="false" />
         <activity
             android:name=".tests.TestLabActivity"

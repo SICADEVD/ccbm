@@ -13,7 +13,7 @@
         android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp">
+        android:layout_height="@dimen/_80sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
@@ -26,8 +26,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
             android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -37,13 +37,13 @@
                 app:srcCompat="@mipmap/ic_launcher_trans" />
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
-                android:layout_gravity="center_horizontal"
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:text="FICHE INSPECTIONS"
-                
+                android:textColor="@color/text_color_white"
                 android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
@@ -338,53 +338,92 @@ android:textColor="@color/text_color_white"
             </LinearLayout>
             
             <LinearLayout
-                    android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3.5"
+                    android:text="Date inspection"
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:layout_weight="6.5">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="dateEvaluation"
+                        android:id="@+id/editDateInspection"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_background"
+                        android:editable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:hint="JJ-MM-AAAA"
+                        android:inputType="textCapCharacters"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/page_input_content_dim13" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_date_calendar" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerApprobInspect"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:textColor="@color/text_color_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
-    
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:textColor="@color/text_color_white"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3.5"
-                        android:text="Date inspection"
-                        android:textSize="@dimen/page_input_title_dim11"
-                        android:textStyle="bold" />
-    
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_37sdp"
-                        android:layout_weight="6.5">
-    
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:tag="dateEvaluation"
-                            android:id="@+id/editDateInspection"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/rounded_background"
-                            android:editable="false"
-                            android:ellipsize="end"
-                            android:focusable="false"
-                            android:hint="JJ-MM-AAAA"
-                            android:inputType="textCapCharacters"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/page_input_content_dim13" />
-    
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/ic_date_calendar" />
-    
-                    </RelativeLayout>
-    
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:text="Etat d'approbation"
+                    android:textSize="@dimen/page_input_title_dim11"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_background">
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        style="@style/SpinnerItemStyle"
+                        android:spinnerMode="dialog"
+                        android:id="@+id/selectApprobationInspection"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"/>
+
                 </LinearLayout>
+
+            </LinearLayout>
                     
 
         </LinearLayout>
