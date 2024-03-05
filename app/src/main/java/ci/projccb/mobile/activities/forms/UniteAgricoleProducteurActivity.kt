@@ -429,7 +429,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 this.add(Pair(getString(R.string.les_types_de_culture), (recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
                 this.add(Pair(getString(R.string.les_op_rateurs_mobile), (recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
                 this.add(Pair(getString(R.string.les_types_d_activit_s), (recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
-            }.map { MapEntry(it.first, it.second) }
+            }?.map { MapEntry(it.first, it.second) }
 
             val intentInfosProducteurPreview = Intent(this, InfosProducteurPreviewActivity::class.java)
             intentInfosProducteurPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
