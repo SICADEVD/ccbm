@@ -1,2 +1,2 @@
 rootProject.name = "PROJET CCB Mobile"
-include ':app'
+include ':app', ':searchablespinnerlibrary'

@@ -13,7 +13,7 @@
         android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_80sdp">
+        android:layout_height="@dimen/_90sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
@@ -401,7 +401,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:text="Etat d'approbation"
+                    android:text="Décision d'approbation"
                     android:textSize="@dimen/page_input_title_dim11"
                     android:textStyle="bold" />
 

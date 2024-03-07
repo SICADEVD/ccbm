@@ -45,4 +45,6 @@
         <item name="android:textSize">@dimen/page_input_content_dim13</item> <!-- Set your desired text size here -->
     </style>
 
+
+
 </resources>

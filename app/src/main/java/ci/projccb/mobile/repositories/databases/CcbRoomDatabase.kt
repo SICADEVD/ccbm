@@ -22,6 +22,7 @@ import ci.projccb.mobile.tools.ListConverters
 @Database(
     version = BuildConfig.VERSION_CODE, exportSchema = false,
     entities = [
+        CoopModel::class,
         AgentModel::class,
         EauUseeModel::class,
         CourEauModel::class,
@@ -91,6 +92,7 @@ import ci.projccb.mobile.tools.ListConverters
 @TypeConverters(ListConverters::class)
 abstract class CcbRoomDatabase : RoomDatabase() {
 
+    abstract fun coopDao(): CoopDao
     abstract fun draftedDatasDao(): DraftedDatasDao
     abstract fun typeProduitDao(): TypeProduitDao
     abstract fun themeFormationDao(): ThemeFormationDao

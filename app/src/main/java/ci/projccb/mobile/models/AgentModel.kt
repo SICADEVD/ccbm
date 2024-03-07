@@ -1,8 +1,13 @@
 package ci.projccb.mobile.models
 
+import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Index
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
+import androidx.room.Query
+import androidx.room.Transaction
 import ci.projccb.mobile.tools.Constants
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

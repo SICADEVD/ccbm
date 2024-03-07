@@ -688,7 +688,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
     fun dialogPickerPhoto() {
         try {
             val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
-                .setMessage(getString(R.string.source_de_la_photo))
+            Commons.adjustTextViewSizesInDialog(this, dialogPicker, "", this.resources.getDimension(R.dimen._8ssp)
+                ,true)
+            dialogPicker.setMessage(getString(R.string.source_de_la_photo))
                 .setPositiveButton("Camera") { dialog, _ ->
                     dialog.dismiss()
                     dispatchTakePictureIntent()
@@ -891,7 +893,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_suivi_application)
 
-        //setAllConfigurations()
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
 
         editHeureDebutSuiviApplication.setOnClickListener {
             configHour(editHeureDebutSuiviApplication)

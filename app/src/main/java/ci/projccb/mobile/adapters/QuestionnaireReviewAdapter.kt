@@ -1,6 +1,8 @@
 package ci.projccb.mobile.adapters
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +44,7 @@ class QuestionnaireReviewAdapter(
         var labelQuestionInspection = questionnaireView.labelQuestionInspectionItem
         var selectionNotationInspection = questionnaireView.selectResponseInspectionItem
         var commentContainer = questionnaireView.commentContainer
+        var textInspecItemRecommandTitle = questionnaireView.textInspecItemRecommandTitle
         var editCommentItemQuestInspect = questionnaireView.editCommentItemQuestInspect
         var commentNonConforme = questionnaireView.commentNonConforme
         var editDateDelaiInspectItem = questionnaireView.editDateDelaiInspectItem
@@ -122,16 +125,39 @@ class QuestionnaireReviewAdapter(
             }
 
             holder.editCommentItemQuestInspect.doOnTextChanged() { text, start, before, count ->
-                if(text.isNullOrEmpty()) return@doOnTextChanged
-                questionnaireResponseInfo.commentaire = text.toString()
-                questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
-                holder.editCommentItemQuestInspect.clearFocus()
+
             }
+
+            holder.editCommentItemQuestInspect.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                    if(text.isNullOrEmpty()) return
+                    LogUtils.d(text)
+                    questionnaireResponseInfo.commentaire = text.toString()
+                    questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    // Do something after text has changed
+                    val enteredText = s.toString()
+                    holder.editCommentItemQuestInspect.clearFocus()
+                    // Process the entered text here
+                }
+            })
 
             if(questionnaireResponseInfo.id_en_base?.isNullOrEmpty() == false){
                 holder.commentNonConforme.visibility = View.VISIBLE
+                holder.textInspecItemRecommandTitle.text = "Recommandations"
                 holder.editDateDelaiInspectItem.setOnClickListener{
-                    pContext.configDate(holder.editDateDelaiInspectItem)
+                    pContext.configDate(holder.editDateDelaiInspectItem, true, false)
                 }
 
                 holder.editDateVerifInspectItem.setOnClickListener{

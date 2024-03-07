@@ -942,6 +942,11 @@ class LivraisonActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_livraison)
+
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         livraisonDao = CcbRoomDatabase.getDatabase(this)?.livraisonDao()
 
 

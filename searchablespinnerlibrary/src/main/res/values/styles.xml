@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textSize">@dimen/_13ssp</item> <!-- Adjust the text size as needed -->
+        <item name="android:titleTextStyle">@style/MyTitleTextStyle</item>
+        <item name="android:windowBackground">@drawable/semi_rounded_background</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@android:style/TextAppearance.Large">
+        <item name="android:textSize">@dimen/_24ssp</item>
+    </style>
+</resources>

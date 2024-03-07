@@ -62,6 +62,10 @@ class VisiteurFormationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visiteur_formation)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         visiteurFormationDao = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
         formationDao = CcbRoomDatabase.getDatabase(this)?.formationDao()
 

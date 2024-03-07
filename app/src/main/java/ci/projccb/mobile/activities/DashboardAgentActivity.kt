@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
 import android.widget.LinearLayout
@@ -28,11 +29,13 @@ import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
 import ci.projccb.mobile.adapters.FeatureAdapter
 import ci.projccb.mobile.broadcasts.LoopAlarmReceiver
 import ci.projccb.mobile.models.AgentModel
+import ci.projccb.mobile.models.CoopModel
 import ci.projccb.mobile.models.FeatureModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.services.GpsService
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
@@ -76,8 +79,9 @@ class DashboardAgentActivity : AppCompatActivity(),
     var networkFlag = true
 
 
-    fun bindDatas(agentModel: AgentModel?) {
+    fun bindDatas(agentModel: AgentModel?, coopModel: CoopModel?) {
         labelUserDashboard.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
+        labelCoopDashboard.text = coopModel?.name.toString().uppercase()
         titleAccount.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
     }
 
@@ -347,6 +351,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         ccbRoomDatabase = CcbRoomDatabase.getDatabase(this)
         agentDao = ccbRoomDatabase?.agentDoa();
+        val coopDao = ccbRoomDatabase?.coopDao();
         producteurDao = ccbRoomDatabase?.producteurDoa();
         parcelleDao = ccbRoomDatabase?.parcelleDao();
         localiteDao = ccbRoomDatabase?.localiteDoa();
@@ -356,16 +361,23 @@ class DashboardAgentActivity : AppCompatActivity(),
         livraisonDao = ccbRoomDatabase?.livraisonDao()
 
         agentLogged = agentDao?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID, 3))
+        val coopmodel = coopDao?.getAll()?.first()?: CoopModel()
 
         setContentView(R.layout.activity_dashboard_agent)
 
-        bindDatas(agentModel = agentLogged)
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
+        bindDatas(agentModel = agentLogged, coopmodel)
 
         // .setNavigationItemSelectedListener(this)
         Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            builder.setMessage("Deconnexion ?")
+            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?", this.resources.getDimension(R.dimen._8ssp)
+                ,false)
+            //builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
 
             builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
@@ -382,12 +394,15 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val dialog: AlertDialog = builder.create()
+
             dialog.show()
         }
 
         imgProfileDashboardNDrawer.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            builder.setMessage("Deconnexion ?")
+            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?", this.resources.getDimension(R.dimen._8ssp)
+                ,false)
+            //builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
 
             builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
@@ -404,13 +419,16 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val dialog: AlertDialog = builder.create()
+
             dialog.show()
         }
 
         Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
         imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            builder.setMessage("Voulez-vous quitter ?")
+            Commons.adjustTextViewSizesInDialog(this, builder, "Voulez-vous quitter ?", this.resources.getDimension(R.dimen._8ssp)
+                ,false)
+            //builder.setMessage("Voulez-vous quitter ?")
             builder.setCancelable(false)
 
             builder.setPositiveButton(getString(R.string.oui)) { dialog, _ ->
@@ -423,6 +441,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val dialog: AlertDialog = builder.create()
+
             dialog.show()
         }
 
@@ -447,7 +466,9 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            builder.setMessage(message)
+            Commons.adjustTextViewSizesInDialog(this, builder, message, this.resources.getDimension(R.dimen._8ssp)
+                ,false)
+            //builder.setMessage(message)
             builder.setCancelable(false)
 
             if (networkFlag) {
@@ -474,6 +495,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val dialog: AlertDialog = builder.create()
+
             dialog.show()
         }
 

@@ -157,6 +157,7 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:tag="sectionId"
+                                style="@style/DialogTheme"
                                 android:id="@+id/selectSectionFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -1082,10 +1083,10 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_80sdp"
                                 android:background="@drawable/background_present"
+                                android:inputType="textMultiLine"
                                 android:gravity="top"
                                 android:hint="@string/pr_cisez"
                                 android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
                                 android:padding="@dimen/_10sdp"
                                 android:textSize="@dimen/_13ssp"
                                 tools:text="" />

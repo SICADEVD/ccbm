@@ -212,7 +212,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                                             val inpectDraft = ApiClient.gson.fromJson(draftedDataInspection?.datas, InspectionDTO::class.java)
                                             if(inpectDraft.producteursId == producteurCommon.id.toString()){
                                                 val certif = inpectDraft.certificatStr
-                                                LogUtils.d(certif)
+                                                //LogUtils.d(certif)
                                                 if(certif.isNullOrEmpty() == false) {
                                                     cQuestionnairesReviewList?.clear()
                                                     recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
@@ -276,34 +276,27 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 )
 
 //                LogUtils.d(cQuestionnaires!![i - 1].questionnairesStringify, fromCertificat)
+                questionResponseList.add(questionResponseTitleModel)
+                cQuestionnairesReviewList?.add(questionResponseTitleModel)
+
                 val questList = GsonUtils.fromJson<MutableList<QuestionModel>>(cQuestionnaires!![i - 1].questionnairesStringify, object : TypeToken<MutableList<QuestionModel>>(){}.type)
                 val listCertName = questList.map { it.certificat }.toList()
 
-                if(questList.isNotEmpty()){
+                questList.forEach { dbQuestion ->
                     if(listCertName.contains(fromCertificat) == true){
-                        questionResponseList.add(questionResponseTitleModel)
-                        cQuestionnairesReviewList?.add(questionResponseTitleModel)
 
-                        val mQuestionsInfos: MutableList<QuestionModel> =  ApiClient.gson.fromJson(cQuestionnaires!![i - 1].questionnairesStringify!!, mQuestionsToken)
+                        questionNumber += 1
 
-//                        if(draftedDataInspection != null){
-//                            val inpectDraft = ApiClient.gson.fromJson(draftedDataInspection?.datas, InspectionDTO::class.java)
-//                        }
+                        val questionResponseInfoModel = QuestionResponseModel(
+                            id = questionNumber.toString(),
+                            label = dbQuestion.libelle!!,
+                            note = "",
+                            reponseId = 0,
+                            isTitle = false
+                        )
 
-                        for (questionIndex in 0 until mQuestionsInfos.size) {
-                            questionNumber += 1
-
-                            val questionResponseInfoModel = QuestionResponseModel(
-                                id = questionNumber.toString(),
-                                label = mQuestionsInfos[questionIndex].libelle!!,
-                                note = "",
-                                reponseId = 0,
-                                isTitle = false
-                            )
-
-                            questionResponseList.add(questionResponseInfoModel)
-                            cQuestionnairesReviewList?.add(questionResponseInfoModel)
-                        }
+                        questionResponseList.add(questionResponseInfoModel)
+                        cQuestionnairesReviewList?.add(questionResponseInfoModel)
                     }
                 }
 
@@ -845,6 +838,14 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_evaluation)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         clickCloseBtn.setOnClickListener {
             finish()
         }
@@ -929,7 +930,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         }
 
         Commons.setListenerForSpinner(this,
-            "Etat d'approbation",
+            "Décision d'approbation",
             spinner = selectApprobationInspection,
             listIem = listApprob?.map { it.nom }
                 ?.toList() ?: listOf(),

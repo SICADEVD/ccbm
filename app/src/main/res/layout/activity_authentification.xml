@@ -76,9 +76,8 @@ android:textColor="@color/text_color_white"-->
                     android:id="@+id/inputLogin"
                     android:hint="NOM D'UTILISATEUR"
                     android:singleLine="true"
-                    android:textAllCaps="true"
                     android:layout_gravity="center_horizontal"
-                    android:inputType="textCapCharacters|textNoSuggestions|textEmailAddress"
+                    android:inputType="textNoSuggestions|textEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_37sdp"
                     android:layout_marginStart="@dimen/_12sdp"
@@ -109,7 +108,6 @@ android:textColor="@color/text_color_white"-->
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:textSize="@dimen/page_input_content_dim13"
-                    android:textAllCaps="true"
                     android:id="@+id/inputPassword"
                     android:layout_gravity="center_horizontal"
                     android:inputType="textNoSuggestions|textPassword"

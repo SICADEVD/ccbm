@@ -1,6 +1,7 @@
 package ci.projccb.mobile.activities.cartographies
 
 import android.Manifest
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -469,7 +470,9 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     fun showMappingTypeDialog() {
-        val dialog = Dialog(this)
+        val dialog = Dialog(this, R.style.DialogTheme)
+//        Commons.adjustTextViewSizesInDialog(this, dialogBuild, "", this.resources.getDimension(R.dimen._8ssp)
+//            ,true)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true)
         dialog.setContentView(R.layout.linear_maps_type_maneul_gps_view)
@@ -768,9 +771,11 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
         }
 
         // showMappingTypeDialog()
-        val pgs = ProgressDialog(this)
+        val pgs = ProgressDialog(this, R.style.DialogTheme)
+        Commons.adjustTextViewSizesInDialog(this, pgs, "Chargement des parcelles", this.resources.getDimension(R.dimen._8ssp)
+            ,false)
         pgs.setCancelable(false)
-        pgs.setMessage("Chargement des parcelles")
+        //pgs.setMessage("Chargement des parcelles")
         // pgs.show()
 
         // Chargement des parcelles deja enregistrees

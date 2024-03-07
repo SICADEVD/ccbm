@@ -160,6 +160,7 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:tag="section"
+
                                 android:id="@+id/selectSectionDistributionArbre"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"

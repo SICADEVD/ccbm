@@ -814,27 +814,11 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
-
-
-//        editAnneParcelle.doAfterTextChanged {
-//            val textFiedl = it?.toString()
-//
-//            if (textFiedl.toString().length == 4) {
-//                if (textFiedl.toString().trim().toInt() < 1960) {
-//                    showMessage(
-//                        "La date ne doit pas etre inferieur à 1960",
-//                        this,
-//                        finished = false,
-//                        {},
-//                        getString(R.string.ok),
-//                        deconnec = false,
-//                        showNo = false
-//                    )
-//                    return@doAfterTextChanged
-//                }
-//            }
-//        }
 
         clickCloseBtn.setOnClickListener {
             SPUtils.getInstance().remove(Constants.PREFS_POLYGON_CENTER_LAT,)

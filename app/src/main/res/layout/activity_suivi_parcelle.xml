@@ -697,7 +697,9 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:weightSum="5"
-                                            android:layout_height="wrap_content">
+                                            android:orientation="horizontal"
+                                            android:layout_height="match_parent"
+                                            android:gravity="bottom">
 
                                             <LinearLayout
                                                 android:layout_width="0dp"
@@ -728,31 +730,31 @@
                                                     tools:text="Quantité: 12" />
                                             </LinearLayout>
 
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:layout_width="0dp"
-                                            android:layout_weight="2.5"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <androidx.appcompat.widget.AppCompatTextView
-                                                android:textColor="@color/text_color_white"
-                                                android:layout_width="match_parent"
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="2.5"
                                                 android:layout_height="wrap_content"
-                                                android:paddingLeft="@dimen/_12sdp"
-                                                android:text="Unité"
-                                                android:textStyle="bold" />
+                                                android:orientation="vertical">
 
-                                            <androidx.appcompat.widget.AppCompatSpinner
-                                                style="@style/SpinnerItemStyle"
-                                                android:id="@+id/selectPestUniteSParcell"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="@dimen/_25sdp"
-                                                android:background="@drawable/rounded_background"
-                                                android:entries="@array/uniteBio"
-                                                android:spinnerMode="dialog" />
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:text="Unité"
+                                                    android:textStyle="bold" />
+
+                                                <androidx.appcompat.widget.AppCompatSpinner
+                                                    style="@style/SpinnerItemStyle"
+                                                    android:id="@+id/selectPestUniteSParcell"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:background="@drawable/rounded_background"
+                                                    android:entries="@array/uniteBio"
+                                                    android:spinnerMode="dialog" />
+                                            </LinearLayout>
                                         </LinearLayout>
+
 
                                         <Space
                                             android:layout_width="match_parent"
@@ -761,7 +763,8 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:weightSum="5"
-                                            android:layout_height="wrap_content">
+                                            android:layout_height="match_parent"
+                                            android:gravity="bottom">
 
                                             <LinearLayout
                                                 android:layout_width="0dp"
@@ -781,7 +784,7 @@
                                                     style="@style/SpinnerItemStyle"
                                                     android:id="@+id/selectPestContenantSParcell"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_25sdp"
+                                                    android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:entries="@array/contenantIntrant"
                                                     android:spinnerMode="dialog" />
@@ -929,7 +932,8 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:weightSum="5"
-                                            android:layout_height="wrap_content">
+                                            android:layout_height="match_parent"
+                                            android:gravity="bottom">
 
                                             <LinearLayout
                                                 android:layout_width="0dp"
@@ -960,31 +964,30 @@
                                                     tools:text="Quantité: 12" />
                                             </LinearLayout>
 
-
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:layout_width="0dp"
-                                            android:layout_weight="2.5"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <androidx.appcompat.widget.AppCompatTextView
-                                                android:textColor="@color/text_color_white"
-                                                android:layout_width="match_parent"
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_weight="2.5"
                                                 android:layout_height="wrap_content"
-                                                android:paddingLeft="@dimen/_12sdp"
-                                                android:text="Unité"
-                                                android:textStyle="bold" />
+                                                android:orientation="vertical">
 
-                                            <androidx.appcompat.widget.AppCompatSpinner
-                                                style="@style/SpinnerItemStyle"
-                                                android:id="@+id/selectIntantAnDerUniteSParcell"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="@dimen/_25sdp"
-                                                android:background="@drawable/rounded_background"
-                                                android:entries="@array/uniteBio"
-                                                android:spinnerMode="dialog" />
+                                                <androidx.appcompat.widget.AppCompatTextView
+                                                    android:textColor="@color/text_color_white"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingLeft="@dimen/_12sdp"
+                                                    android:text="Unité"
+                                                    android:textStyle="bold" />
+
+                                                <androidx.appcompat.widget.AppCompatSpinner
+                                                    style="@style/SpinnerItemStyle"
+                                                    android:id="@+id/selectIntantAnDerUniteSParcell"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_30sdp"
+                                                    android:background="@drawable/rounded_background"
+                                                    android:entries="@array/uniteBio"
+                                                    android:spinnerMode="dialog" />
+
+                                            </LinearLayout>
 
                                         </LinearLayout>
 
@@ -995,7 +998,8 @@
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:weightSum="5"
-                                            android:layout_height="wrap_content">
+                                            android:layout_height="match_parent"
+                                            android:gravity="bottom">
 
                                             <LinearLayout
                                                 android:layout_width="0dp"
@@ -1015,7 +1019,7 @@
                                                     style="@style/SpinnerItemStyle"
                                                     android:id="@+id/selectIntantAnDerContenantSParcell"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="@dimen/_25sdp"
+                                                    android:layout_height="@dimen/_30sdp"
                                                     android:background="@drawable/rounded_background"
                                                     android:entries="@array/contenantIntrant"
                                                     android:spinnerMode="dialog" />
@@ -1624,7 +1628,8 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="bottom"
                                 android:orientation="horizontal"
                                 android:weightSum="5">
 
@@ -1799,7 +1804,8 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="bottom"
                                 android:orientation="horizontal"
                                 android:weightSum="5">
 
@@ -2020,30 +2026,8 @@
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:weightSum="5"
-                                        android:layout_height="wrap_content">
-
-                                        <LinearLayout
-                                            android:layout_width="0dp"
-                                            android:layout_weight="2.5"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical">
-
-                                            <androidx.appcompat.widget.AppCompatTextView
-                                                android:textColor="@color/text_color_white"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:paddingLeft="@dimen/_12sdp"
-                                                android:text="Unité"
-                                                android:textStyle="bold" />
-
-                                            <androidx.appcompat.widget.AppCompatSpinner
-                                                android:id="@+id/selectTraitInsecteParOuRavUniteSParcell"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="@dimen/_25sdp"
-                                                android:background="@drawable/rounded_background"
-                                                android:entries="@array/uniteBio"
-                                                android:spinnerMode="dialog" />
-                                        </LinearLayout>
+                                        android:layout_height="match_parent"
+                                        android:gravity="bottom">
 
                                         <LinearLayout
                                             android:layout_width="0dp"
@@ -2072,6 +2056,29 @@
                                                 android:paddingEnd="@dimen/_10sdp"
                                                 android:textSize="@dimen/page_input_content_dim13"
                                                 tools:text="Quantité: 12" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_weight="2.5"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <androidx.appcompat.widget.AppCompatTextView
+                                                android:textColor="@color/text_color_white"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:paddingLeft="@dimen/_12sdp"
+                                                android:text="Unité"
+                                                android:textStyle="bold" />
+
+                                            <androidx.appcompat.widget.AppCompatSpinner
+                                                android:id="@+id/selectTraitInsecteParOuRavUniteSParcell"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="@dimen/_30sdp"
+                                                android:background="@drawable/rounded_background"
+                                                android:entries="@array/uniteBio"
+                                                android:spinnerMode="dialog" />
                                         </LinearLayout>
 
 
@@ -2103,7 +2110,7 @@
                                             <androidx.appcompat.widget.AppCompatSpinner
                                                 android:id="@+id/selectTraitInsecteParOuRavContenantSParcell"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="@dimen/_25sdp"
+                                                android:layout_height="@dimen/_30sdp"
                                                 android:background="@drawable/rounded_background"
                                                 android:entries="@array/contenantIntrant"
                                                 android:spinnerMode="dialog" />

@@ -3,10 +3,12 @@ package ci.projccb.mobile.activities
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import ci.projccb.mobile.R
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.AgentDao
+import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.SPUtils
 
@@ -30,7 +32,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
 
         agentDao = CcbRoomDatabase.getDatabase(this)?.agentDoa()!!
         val agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)

@@ -77,7 +77,7 @@ class QuestionnairePreviewAdapter(var pContext: Context, var pQuestionnaires: Mu
             val questionnaireInfosHolder: QuesionnaireHolder = holder as QuesionnaireHolder
             questionnaireInfosHolder.labelQuestion.text = questionnaireInfo.label
             questionnaireInfosHolder.labelResponse.text = null
-            questionnaireInfosHolder.labelResponse.text = "Note: ${questionnaireInfo.noteLabel}\nCommentaire: ${questionnaireInfo.commentaire}"
+            questionnaireInfosHolder.labelResponse.text = "Note: ${questionnaireInfo.noteLabel}\nCommentaire: \n${questionnaireInfo.commentaire}"
 
         }
     }

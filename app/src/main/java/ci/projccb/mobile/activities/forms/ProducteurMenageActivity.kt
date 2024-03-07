@@ -1375,6 +1375,10 @@ class ProducteurMenageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_producteur_menage)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         prodMenagereDao = CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
 
 //        editSuperficieCacaoMenage.doAfterTextChanged {

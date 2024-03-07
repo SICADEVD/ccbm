@@ -66,9 +66,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/_4sdp"
-                    android:lines="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
+                    android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     tools:text="EBI BROU BESSATE" />
 
@@ -1541,19 +1542,42 @@ android:textColor="@color/text_color_white"-->
                     app:srcCompat="@drawable/baseline_account_circle_white" />
 
                 <LinearLayout
-                    android:layout_weight="5.5"
+                    android:layout_weight="8.0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingLeft="@dimen/_8sdp"
-                        android:text="Connectée …"
-                        android:textColor="@color/ccb_green"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                        android:orientation="horizontal"
+                        android:weightSum="10"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="7.5"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:paddingLeft="@dimen/_8sdp"
+                            android:text="Connectée …"
+                            android:textSize="@dimen/_11ssp"
+                            android:textColor="@color/ccb_green"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_weight="2.5"
+                            android:layout_marginRight="@dimen/_6sdp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:id="@+id/imgProfileDashboardNDrawer"
+                            android:layout_width="0dp"
+                            android:padding="@dimen/_3sdp"
+                            android:maxWidth="@dimen/_12sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            app:srcCompat="@drawable/ic_shutdown"
+                            />
+
+                    </LinearLayout>
+
 
                     <Space
                         android:layout_width="0dp"
@@ -1566,24 +1590,32 @@ android:textColor="@color/text_color_white"-->
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_extrabold"
                         android:textFontWeight="200"
-                        android:maxLines="2"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/text_color_white"
                         tools:text="Koudio Mano" />
 
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_2sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/labelCoopDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_4sdp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
+                        tools:text="COOP NAME" />
+
                 </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_weight="2.5"
-                    android:minWidth="@dimen/_50sdp"
-                    android:layout_marginRight="@dimen/_6sdp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:id="@+id/imgProfileDashboardNDrawer"
-                    android:layout_width="@dimen/_10sdp"
-                    android:maxWidth="@dimen/_12sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    app:srcCompat="@drawable/ic_shutdown"
-                    />
+
             </LinearLayout>
 
             <Space

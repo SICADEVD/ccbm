@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="field_content_color">#F5F5F5</color>
+    <color name="contour_edit_field">#BCAAA4</color>
+    <color name="ccb_green">#424242</color>
+</resources>

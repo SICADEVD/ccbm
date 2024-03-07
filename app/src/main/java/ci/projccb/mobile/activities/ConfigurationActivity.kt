@@ -3,6 +3,7 @@ package ci.projccb.mobile.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import ci.projccb.mobile.R
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
@@ -3107,6 +3108,10 @@ class ConfigurationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configuration)
+
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
 
         database = CcbRoomDatabase.getDatabase(this)
 

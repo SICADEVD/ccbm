@@ -1191,98 +1191,11 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_unite_agricole_producteur)
 
-        //setupSectionSelection()
-
-//        clickAddFarmInfosProducteur.setOnClickListener {
-//            try {
-//                if (producteurId.isEmpty()) {
-//                    showMessage(
-//                        "Selectionnez le producteur, svp !",
-//                        context = this,
-//                        finished = false,
-//                        callback = {},
-//                        positive = getString(R.string.ok),
-//                        deconnec = false,
-//                        showNo = false
-//                    )
-//                    return@setOnClickListener
-//                }
-//
-//                if (editCultureInfosProducteur.text.toString()
-//                        .isEmpty() || editSuperficeInfosProducteur.text.toString().isEmpty()
-//                ) {
-//                    showMessage(
-//                        "Renseignez une culture, svp !",
-//                        context = this,
-//                        finished = false,
-//                        callback = {},
-//                        positive = getString(R.string.ok),
-//                        deconnec = false,
-//                        showNo = false
-//                    )
-//                    return@setOnClickListener
-//                }
-//
-//                val cultureProducteur = CultureProducteurModel(
-//                    0,
-//                    producteurId.toInt(),
-//                    editCultureInfosProducteur.text.toString().trim(),
-//                    editSuperficeInfosProducteur.text.toString().trim(),
-//                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-//                )
-//                addCultureProducteur(cultureProducteur)
-//            } catch (ex: Exception) {
-//                LogUtils.e(ex.message)
-//                FirebaseCrashlytics.getInstance().recordException(ex)
-//            }
-//        }
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
 
         try {
-//            editForetYesSuperficieInfosProducteur.doAfterTextChanged { editable ->
-//                LogUtils.e(TAG, editable.toString().trim())
-//                jachereYesSuperficie = editable.toString().trim()
-//            }
-
-//            editNbreTravailleursInfosProducteur.doAfterTextChanged { editable ->
-//                travailleursNbre =
-//                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
-//            }
-//
-//            editNbreTravailleursPermanentsInfosProducteur.doAfterTextChanged { editable ->
-//                travailleursPermanentsNbre =
-//                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
-//            }
-//
-//            editNbreTravailleursNonPermanentInfosProducteur.doAfterTextChanged { editable ->
-//                travailleursNonPermanentsNbre =
-//                    if (editable?.toString()?.isEmpty()!!) "0" else editable.toString().trim()
-//            }
-//
-//            editNbreUnder18InfosProducteur.doAfterTextChanged {
-//                nbreEnfantUnder18 = if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
-//            }
-//
-//            editNbreScolariseInfosProducteur.doAfterTextChanged {
-//                nbreEnfantUnder18Scolarise =
-//                    if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
-//            }
-//
-//            editNbreExtraitInfosProducteur.doAfterTextChanged {
-//                nbreEnfantUnder18ScolariseExtrait =
-//                    if (it?.toString()?.isEmpty()!!) "0" else it.toString().trim()
-//            }
-//
-//            editMaladieOneInfosProducteur.doAfterTextChanged {
-//                enfantMaladieOne = it.toString().trim()
-//            }
-//
-//            editMobileYesNumberInfosProducteur.doAfterTextChanged {
-//                mobileMoneyYesNumber = it.toString().trim()
-//            }
-//
-//            editMaladieTwoInfosProducteur.doAfterTextChanged {
-//                enfantMaladieTwo = it.toString().trim()
-//            }
 
             clickReviewInfosProducteur.setOnClickListener {
                 collectDatas()
@@ -1300,25 +1213,6 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             imageDraftBtn.setOnClickListener {
                 draftInfosProducteur(draftedDataInfosProducteur ?: DataDraftedModel(uid = 0))
             }
-
-//            setCultureProducteurs()
-//            setupCultureYesNoSelection()
-//            setupJachereYesNoSelection()
-            //setupProducteurSelection()
-//            setupBlesseeSelection()
-//            setupLocaliteSelection()
-//            setupGestionRecusSelection()
-//            setupTypeDocumentsSelection()
-//            setupOperateursSelection()
-//            setupBankAccountYesNoSelection()
-//            setupMoneyYesNoSelection()
-//            setupBuyMethpdYesNoSelection()
-
-//            applyFilters(editNbreUnder18InfosProducteur)
-//            applyFilters(editNbreTravailleursInfosProducteur)
-//            applyFilters(editNbreTravailleursNonPermanentInfosProducteur)
-//            applyFilters(editNbreTravailleursPermanentsInfosProducteur)
-//            applyFilters(editNbreScolariseInfosProducteur)
 
             if (intent.getStringExtra("from") != null) {
                 draftedDataInfosProducteur =

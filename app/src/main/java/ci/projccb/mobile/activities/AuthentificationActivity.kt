@@ -5,22 +5,26 @@
 
 package ci.projccb.mobile.activities
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ci.projccb.mobile.R
 import ci.projccb.mobile.models.AgentModel
+import ci.projccb.mobile.models.CoopDao
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.AgentDao
 import ci.projccb.mobile.repositories.datas.AgentAuthResponse
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
@@ -52,8 +56,9 @@ class AuthentificationActivity : AppCompatActivity() {
     }
 
 
-    private var progressDialog: ProgressDialog? = null
+    private var progressDialog: AlertDialog? = null
     var agentDoa: AgentDao? = null
+    var coopDao: CoopDao? = null
 
 
     fun checkField(): Boolean {
@@ -147,9 +152,12 @@ class AuthentificationActivity : AppCompatActivity() {
                                 val messageError = response.body()?.message
                                 showMessage(messageError!! , this@AuthentificationActivity, callback = {})
                             } else {
+                                coopDao?.deleteAll()
+
                                 val agentResponseBody = response.body()
                                 var roles = agentResponseBody?.menu //arrayListOf<String>()
                                 val agentModel = agentResponseBody?.results
+                                val coopModel = agentResponseBody?.cooperative
 
                                 //remavoe some feature
                                 //roles?.remove("ESTIMATION")
@@ -171,6 +179,7 @@ class AuthentificationActivity : AppCompatActivity() {
                                 SPUtils.getInstance().put(Constants.AGENT_ID, agentModel.id!!)
 
                                 agentDoa?.insert(agentModel)
+                                coopDao?.insert(coopModel!!)
 
                                 val intentConfiguration = Intent(this@AuthentificationActivity, ConfigurationActivity::class.java)
                                 intentConfiguration.putExtra(Constants.AGENT_ID, agentModel.id)
@@ -202,12 +211,20 @@ class AuthentificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentification)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         bindDatas()
 
         agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
+        coopDao = CcbRoomDatabase.getDatabase(this)?.coopDao()
 
-        progressDialog = ProgressDialog(this, R.style.custom_progress_style)
-        progressDialog!!.setMessage("Connexion en cours...")
+        val progressDialogBuild = AlertDialog.Builder(this, R.style.DialogTheme)
+        Commons.adjustTextViewSizesInDialog(this, progressDialogBuild!!, "Connexion en cours...", this.resources.getDimension(R.dimen._8ssp)
+            ,false, true)
+        progressDialog = progressDialogBuild.create()
+        //progressDialog!!.setMessage(Editable.Factory.getInstance().newEditable("Connexion en cours..."))
 
         imgBackAuth.setOnClickListener {
             finish()

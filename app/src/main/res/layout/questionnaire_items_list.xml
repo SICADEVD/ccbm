@@ -47,19 +47,27 @@
         android:layout_marginVertical="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="5">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textColor="@color/text_color_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_12sdp"
+            android:id="@+id/textInspecItemRecommandTitle"
+            android:text="Commentaire"
+            android:textStyle="bold" />
+
         <androidx.appcompat.widget.AppCompatEditText
-            android:textAllCaps="true"
             android:id="@+id/editCommentItemQuestInspect"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:background="@drawable/background_present"
+            android:inputType="textMultiLine|textNoSuggestions"
             android:gravity="top"
-            android:hint="Commentaire"
+            android:hint=""
             android:imeOptions="actionDone"
-            android:inputType="textCapCharacters|textNoSuggestions"
             android:padding="@dimen/_10sdp"
             android:textSize="@dimen/_13ssp"
             tools:text="" />
@@ -76,15 +84,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
             android:weightSum="4">
 
             <LinearLayout
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="0dp"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -92,10 +101,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:text="Le delai"
+                    android:text="Délai d'exécution"
                     android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:layout_gravity="bottom"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_37sdp">
 
@@ -122,8 +132,8 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_width="0dp"
                 android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -131,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/_12sdp"
-                    android:text="Date verification"
+                    android:text="Date de vérification"
                     android:textStyle="bold" />
 
                 <RelativeLayout
@@ -159,7 +169,17 @@
 
         </LinearLayout>
 
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:textColor="@color/text_color_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_12sdp"
+            android:text="Statut"
+            android:textStyle="bold" />
+
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_background">

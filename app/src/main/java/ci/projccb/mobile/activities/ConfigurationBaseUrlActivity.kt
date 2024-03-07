@@ -8,6 +8,7 @@ import ci.projccb.mobile.R
 import ci.projccb.mobile.models.CommonResponse
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
@@ -90,8 +91,10 @@ class ConfigurationBaseUrlActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configuration_base_url)
 
-        progressDialog = ProgressDialog(this)
-        progressDialog?.setMessage("Connexion en cours...")
+        progressDialog = ProgressDialog(this, R.style.DialogTheme)
+        Commons.adjustTextViewSizesInDialog(this, progressDialog!!, "Connexion en cours...", this.resources.getDimension(R.dimen._8ssp),
+            false)
+        //progressDialog?.setMessage("Connexion en cours...")
 
         btnCodeCheck.setOnClickListener {
             if (checkField()) {

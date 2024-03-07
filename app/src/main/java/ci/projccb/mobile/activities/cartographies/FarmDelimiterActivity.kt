@@ -2,6 +2,7 @@ package ci.projccb.mobile.activities.cartographies
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -278,7 +279,10 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
     fun showMappingTypeDialog() {
         try {
-            val dialog = Dialog(this)
+            val dialog = Dialog(this, R.style.DialogTheme)
+//            Commons.adjustTextViewSizesInDialog(this, dialogBuild, "", this.resources.getDimension(R.dimen._8ssp)
+//                ,true)
+            //val dialog = dialogBuild.create()
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(true)
             dialog.setContentView(R.layout.linear_maps_type_maneul_gps_view)

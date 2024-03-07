@@ -1,8 +1,11 @@
 package ci.projccb.mobile.tools
 
+//import kotlinx.android.synthetic.main.activity_suivi_application.clickSaveMatiereSuiviApplication
+
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -17,9 +20,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputFilter
 import android.util.Base64
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.MimeTypeMap
@@ -37,6 +42,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,16 +93,21 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
-//import kotlinx.android.synthetic.main.activity_suivi_application.clickSaveMatiereSuiviApplication
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.editAnimalSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import org.json.JSONException
-import java.io.*
+import java.io.BufferedOutputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.lang.Math.log10
 import java.math.RoundingMode
 import java.net.UnknownHostException
@@ -227,6 +238,8 @@ class Commons {
         }
 
         fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, isEmpty:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
+
+            if(spinner == null) return
 
             if(spinner is SearchableSpinner) {
                 (spinner as SearchableSpinner).setTitle(title)
@@ -368,6 +381,41 @@ class Commons {
             return prodModel
         }
 
+        fun setSizeOfAllTextViews(
+            context: Context,
+            viewGroup: ViewGroup,
+            textSize:Float? = null,
+            editTextSize:Float? = null
+        ) {
+            val childCount = viewGroup.childCount
+
+            for (i in 0 until childCount) {
+                val childView = viewGroup.getChildAt(i)
+
+                val childViewClassName = childView::class.java.simpleName
+                //LogUtils.d(childViewClassName)
+                if (childViewClassName.contains("AppCompatTextView", ignoreCase = true) && childView.tag == null) {
+                    (childView as TextView).textSize = textSize?:context.resources.getDimension(R.dimen._8ssp)
+                    //LogUtils.d(childViewClassName+ " "+ currTextView)
+                }
+
+                if ( (childView is Spinner) && childView.tag != null) {
+
+                } else if ( childView is AppCompatEditText && childView.tag != null ) {
+                    // You've found an EditText with the specified tag, get its value
+                    childView.textSize = editTextSize?:context.resources.getDimension(R.dimen._8ssp)
+                } else if (childView is ViewGroup) {
+                    // If it's a ViewGroup, recursively call this method
+                    setSizeOfAllTextViews(
+                        context = context,
+                        viewGroup = childView,
+                        textSize = textSize,
+                        editTextSize = editTextSize
+                    )
+                }
+            }
+        }
+
         fun <T : Any>  setAllValueOfTextViews(
             viewGroup: ViewGroup,
             prodModel: T,
@@ -424,7 +472,9 @@ class Commons {
             try {
                 val builder = AlertDialog.Builder(context, R.style.DialogTheme)
                 // Display a message on alert dialog
-                builder.setMessage(message)
+                Commons.adjustTextViewSizesInDialog(context, builder, message, context.resources.getDimension(R.dimen._8ssp)
+                    ,false)
+                //builder.setMessage(message)
                 builder.setCancelable(false)
 
                 // Set a positive button and its click listener on alert dialog
@@ -493,7 +543,7 @@ class Commons {
         }
 
         fun Context.showYearPickerDialog(editText: EditText) {
-            val builder = androidx.appcompat.app.AlertDialog.Builder(this, R.style.DialogTheme)
+            val builder = AlertDialog.Builder(this)
             val calendar: Calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val inflater = LayoutInflater.from(this)
@@ -506,7 +556,9 @@ class Commons {
             yearPicker.value = if(editText.text.isNullOrEmpty()) year else editText.text.toString().toInt()
 
             builder.setView(dialogView)
-            builder.setTitle("Choix de l'année")
+            //builder.setTitle("Choix de l'année")
+            Commons.adjustTextViewSizesInDialog(this, builder, "Choix de l'année", this.resources.getDimension(R.dimen._8ssp)
+            ,true)
             builder.setPositiveButton("Valider !") { _, _ ->
                 val selectedYear = yearPicker.value
                 editText.setText(selectedYear.toString())
@@ -517,10 +569,11 @@ class Commons {
             }
 
             val dialog = builder.create()
+
             dialog.show()
         }
 
-        fun Context.configDate(viewClciked: AppCompatEditText, isDateMax: Boolean = true) {
+        fun Context.configDate(viewClciked: AppCompatEditText, isDateMin: Boolean = false, isDateMax: Boolean = true) {
             val calendar: Calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
@@ -530,6 +583,7 @@ class Commons {
             }, year, month, dayOfMonth)
 
             if(isDateMax) datePickerDialog.datePicker.maxDate = DateTime.now().millis
+            if(isDateMin) datePickerDialog.datePicker.minDate = DateTime.now().millis
             datePickerDialog.show()
         }
 
@@ -547,17 +601,47 @@ class Commons {
             timePickerDialog.show()
         }
 
+        fun adjustTextViewSizesInDialog(context: Context, dialogBuilder: Any, title: String, textSize: Float, isTitle:Boolean = true, isprogress:Boolean = false) {
+            if (dialogBuilder == null) {
+                return  // Handle null dialog case
+            }
+            val className = dialogBuilder::class.java.simpleName
+            val inflater = LayoutInflater.from(context)
+            var customTitleView: View = inflater.inflate(ci.projccb.mobile.R.layout.custom_title_layout, null)
+            if(className.contains("ProgressDialog")) customTitleView = inflater.inflate(ci.projccb.mobile.R.layout.custom_progress_dial, null)
+            if(isprogress) customTitleView = inflater.inflate(ci.projccb.mobile.R.layout.custom_progress_dial, null)
+
+            val titleTextView = customTitleView.findViewById<View>(ci.projccb.mobile.R.id.title_text_view) as AppCompatTextView
+            LogUtils.d(className)
+//            val parentGrp: ViewGroup? = titleTextView.getParent() as (ViewGroup)
+//            parentGrp?.let {
+//                parentGrp?.removeView(titleTextView)
+//            }
+
+            titleTextView.text = title.uppercase()
+            titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+            if(isTitle){
+                if(className.contains("ProgressDialog") == false){
+                    (dialogBuilder as AlertDialog.Builder).setCustomTitle(customTitleView)
+                }else{
+                    (dialogBuilder as ProgressDialog).setCustomTitle(customTitleView)
+                }
+            }else{
+                if(className.contains("ProgressDialog") == false){
+                    (dialogBuilder as AlertDialog.Builder).setView(customTitleView)
+                }else{
+                    (dialogBuilder as ProgressDialog).setContentView(customTitleView)
+                }
+
+            }
+        }
+
+
         fun Context.limitEDTMaxLength(editText: EditText, minLength:Int = 225, maxLength:Int = 225){
             val filterArray = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength),
                                                     InputFilter.LengthFilter(minLength))
             var context = this
             editText.filters = filterArray
-
-//            editText.doAfterTextChanged {
-//
-//
-//
-//            }
 
             editText.setOnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) {
@@ -1461,6 +1545,11 @@ class Commons {
             }
             return rolesCopy
         }
+
+        fun adjustTextViewSizesInDialogExt(Context: Context, builder: AlertDialog.Builder, _title: String, Dimension: Float, isTitle: Boolean) {
+            Commons.adjustTextViewSizesInDialog(Context, builder, _title, Dimension, isTitle)
+        }
+
     }
 
 

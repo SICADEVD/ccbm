@@ -1094,7 +1094,8 @@ class FormationActivity : AppCompatActivity() {
 
     fun dialogPickerPhoto() {
         val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
-
+        Commons.adjustTextViewSizesInDialog(this, dialogPicker, "", this.resources.getDimension(R.dimen._8ssp)
+            ,true)
         if(whichPhoto == 0){
             dialogPicker.setMessage(getString(R.string.source_de_la_photo))
                 .setPositiveButton("Camera") { dialog, _ ->
@@ -1123,13 +1124,19 @@ class FormationActivity : AppCompatActivity() {
                         "docx")
                 }
         }
-        dialogPicker.create().show()
+        val alerte = dialogPicker.create()
+
+        alerte.show()
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formation)
+
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
 
         formationDao = CcbRoomDatabase.getDatabase(applicationContext)?.formationDao()
         producteurDao = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()

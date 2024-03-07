@@ -54,6 +54,10 @@ class EvaluationArbreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_evaluation_arbre)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         evaluationArbreDao = CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
 
         clickCloseBtn.setOnClickListener {

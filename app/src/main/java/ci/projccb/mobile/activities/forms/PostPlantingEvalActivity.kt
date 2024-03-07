@@ -57,6 +57,10 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_postplanting)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         distributionArbreDao = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
 
         clickCloseBtn.setOnClickListener {

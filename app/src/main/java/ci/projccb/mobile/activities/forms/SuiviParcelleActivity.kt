@@ -1495,6 +1495,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_suivi_parcelle)
 
+        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+            resources.getDimension(R.dimen._8ssp),
+            resources.getDimension(R.dimen._8ssp))
+
         suiviParcelleDao = CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()
 
         clickCloseBtn.setOnClickListener {

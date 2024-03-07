@@ -17,6 +17,7 @@ object Constants {
     const val APP_BASE_URL_IS_CONFIGURED        =                   "base_url_is_configured"
     const val HAS_USER_LOGGED                   =                   "has_logged"
 
+    const val TABLE_COOP                  =                   "cooperative"
     const val TABLE_COURS_EAUX                  =                   "cours_eau"
     const val TABLE_DRAFTED_DATAS               =                   "drafted_datas"
     const val TABLE_TYPE_FORMATION              =                   "type_formation"
