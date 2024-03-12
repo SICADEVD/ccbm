@@ -54,4 +54,8 @@ interface ParcelleDao {
     @Query("SELECT * FROM parcelle WHERE (isSynced = 0 AND producteurId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<ParcelleModel>
 
+    @Transaction
+    @Query("SELECT * FROM parcelle WHERE isSynced = 1 AND agentId = :agentID")
+    fun getSyncedAll(agentID: String): MutableList<ParcelleModel>
+
 }

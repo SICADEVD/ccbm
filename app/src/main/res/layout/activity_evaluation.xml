@@ -47,6 +47,21 @@
                 android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"/>
+
+            <com.mackhartley.roundedprogressbar.RoundedProgressBar
+                android:id="@+id/firstBarprogress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_18sdp"
+                app:rpbBackgroundColor="@color/ccb_gris_sec"
+                app:rpbBackgroundTextColor="@color/black"
+                app:rpbCornerRadius="@dimen/_4sdp"
+                app:rpbProgressColor="@color/black"
+                app:rpbProgressTextColor="@color/ccb_gris_sec"
+                app:rpbTextPadding="12dp" />
+
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -65,7 +80,7 @@
         android:layout_below="@+id/linealToolbar"
         android:id="@+id/eval_divider"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_35sdp" />
+        android:layout_height="@dimen/_1sdp" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollingContentContainerInspection"

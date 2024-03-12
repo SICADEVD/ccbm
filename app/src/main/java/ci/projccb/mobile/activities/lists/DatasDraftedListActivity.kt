@@ -35,7 +35,7 @@ class DatasDraftedListActivity : AppCompatActivity(R.layout.activity_datas_draft
                     fromGlobalMenu.toLowerCase()
                 )
 
-            LogUtils.d(draftedDataList)
+//            LogUtils.d(draftedDataList)
 
             val draftedDatasAdapter = DataDraftedAdapter(
                 this,

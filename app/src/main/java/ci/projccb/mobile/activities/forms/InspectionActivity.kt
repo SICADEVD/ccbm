@@ -4,6 +4,8 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
@@ -11,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.InspectionPreviewActivity
 import ci.projccb.mobile.activities.infospresenters.InspectionPreviewUpdateActivity
-import ci.projccb.mobile.activities.infospresenters.ParcellePreviewActivity
 import ci.projccb.mobile.adapters.QuestionnaireReviewAdapter
 import ci.projccb.mobile.interfaces.RecyclerItemListener
 import ci.projccb.mobile.interfaces.SectionCallback
@@ -25,24 +26,33 @@ import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.convertDate
 import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
+import ci.projccb.mobile.tools.Commons.Companion.toCheckEmptyItem
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.LoadProgressListener
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
+import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_evaluation.*
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.roundToInt
 
 class InspectionActivity : AppCompatActivity(), SectionCallback,
     RecyclerItemListener<QuestionResponseModel> {
 
 
+    private var counterMainView: Int = 0
+    private var snackProgressBarManager: SnackProgressBarManager? = null
     private var inspectionData: MutableList<InspectionDTO>? = null
     private var encadreurId: String? = null
     private var encadreurNomPrenoms: String? = null
@@ -188,12 +198,12 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                                 listCertif = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteurByUID(producteurUID = producteur.uid)
                             }
 
-                            LogUtils.d(listCertif?.certification?.split(",")?.filter { currVal3 == it }?.toString())
+//                            LogUtils.d(listCertif?.certification?.split(",")?.filter { currVal3 == it }?.toModifString())
 
                             Commons.setListenerForSpinner(this@InspectionActivity,
                                 getString(R.string.inspection_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                                 spinner = selectCertifInspection,
-                                currentVal = listCertif?.certification?.split(",")?.filter { currVal3 == it }?.toString(),
+                                currentVal = listCertif?.certification?.split(",")?.filter { currVal3 == it }?.first()?:"",
                                 listIem = listCertif?.certification?.split(",")
                                     ?.toList() ?: listOf(),
                                 onChanged = {
@@ -565,6 +575,12 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             total_question_non_applicable = cQuestionnairesReviewList?.filter { it.isTitle == false && it.note == "0" }?.size.toString()
         }
 
+        var allNamed : MutableList<Pair<String, String>> = mutableListOf()
+
+        itemModelOb?.second.forEach {
+            allNamed.add(it)
+        }
+
         itemModelOb?.second.apply {
             cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
                 if (questionResponseModel.label.isNullOrEmpty() == false) {
@@ -572,6 +588,18 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                         "${questionResponseModel.label}" to
                                 "${questionResponseModel.noteLabel}"
                     )
+                }
+            }
+        }
+
+        allNamed.apply {
+            cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+                if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
+                    this?.add(
+                        "${questionResponseModel.label}" to
+                                "${questionResponseModel.noteLabel.toCheckEmptyItem()}"
+                    )
+                    //Log.i("INFO", "${questionResponseModel.label} - ${questionResponseModel.noteLabel.toCheckEmptyItem()} - ${questionResponseModel.noteLabel}")
                 }
             }
         }
@@ -594,6 +622,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 context = this,
                 finished = false,
                 callback = {},
+
                 positive = getString(R.string.ok),
                 deconnec = false,
                 showNo = false
@@ -601,10 +630,26 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             return
         }
 
-        val intentInspectionPreview = Intent(this, InspectionPreviewActivity::class.java)
-        intentInspectionPreview.putExtra("preview", questionnaireDto)
-        intentInspectionPreview.putExtra("draft_id", draftedDataInspection?.uid)
-        ActivityUtils.startActivity(intentInspectionPreview)
+        var dataCountKey = 0
+        var dataCountVal = 0
+        allNamed?.forEach {
+            if(it.first.isNullOrEmpty() == false){
+                dataCountKey++
+                if(it.second.isNullOrBlank() == false) dataCountVal++
+            }
+            //Log.i("INFO", "${it.first} - ${it.second}")
+        }
+        LogUtils.d(dataCountKey, dataCountVal)
+        Commons.showCircularIndicator(snackProgressBarManager = snackProgressBarManager, positionBario = Pair(dataCountKey, dataCountVal), displayId = 2512, buttonLib = "CONFIRMER", callback = {
+
+            val intentInspectionPreview = Intent(this, InspectionPreviewActivity::class.java)
+            intentInspectionPreview.putExtra("preview", questionnaireDto)
+            intentInspectionPreview.putExtra("draft_id", draftedDataInspection?.uid)
+            ActivityUtils.startActivity(intentInspectionPreview)
+
+            Unit
+        })
+
     }
 
     fun collectDatasUpdate(intExtraUid: Int) {
@@ -838,9 +883,10 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_evaluation)
 
-        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+        snackProgressBarManager = SnackProgressBarManager(findViewById(android.R.id.content), lifecycleOwner = this)
+        snackProgressBarManager = Commons.defineSnackBarManager(snackProgressBarManager!!, linearActionContainerInspection, this)
+
+        //counterMainView = 0
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(R.dimen._8ssp),
@@ -908,6 +954,76 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         } else {
             setAllSelection()
         }
+
+        Commons.setListenerForViewsChange(this, findViewById<ViewGroup>(android.R.id.content), object :
+            LoadProgressListener {
+            override fun startLoadProgress(content: String) {
+//                LogUtils.d(content)
+//                if(content.isNotEmpty()) {
+                val itemModelOb = getInspectObjet(false)
+                itemModelOb?.second.apply {
+                    cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+                        if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
+                            this?.add(
+                                "${questionResponseModel.label}" to
+                                        "${questionResponseModel.noteLabel.toCheckEmptyItem()}"
+                            )
+                        }
+                    }
+                }
+                var dataCountKey = 0
+                var dataCountVal = 0
+                itemModelOb?.second?.forEach {
+                    if(it.first.isNullOrEmpty() == false){
+                        dataCountKey++
+                        if(it.second.isNullOrBlank() == false) dataCountVal++
+                    }
+                }
+                //LogUtils.json(itemModelOb?.second)
+                if(dataCountKey>=dataCountVal && dataCountKey!=0){
+                    val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
+                    var tauxFif = (divide.times(100))
+                    var positionBar = tauxFif
+                    firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+                    firstBarprogress.showProgressText(true)
+                }
+            }
+        })
+//        val handler = Handler()
+//        val runnable = object : Runnable {
+//            override fun run() {
+//                MainScope().launch {
+//                    val itemModelOb = getInspectObjet(false)
+//                    itemModelOb?.second.apply {
+//                        cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+//                            if (questionResponseModel.label.isNullOrEmpty() == false) {
+//                                this?.add(
+//                                    "${questionResponseModel.label}" to
+//                                            "${questionResponseModel.noteLabel}"
+//                                )
+//                            }
+//                        }
+//                    }
+//                    var dataCountKey = 0
+//                    var dataCountVal = 0
+//                    itemModelOb?.second?.forEach {
+//                        if(it.first.isNullOrEmpty() == false){
+//                            dataCountKey++
+//                            if(it.second.isNullOrBlank() == false) dataCountVal++
+//                        }
+//                    }
+//                    Commons.showCircularIndicator(snackProgressBarManager, positionBario = Pair(dataCountKey, dataCountVal), 2512)
+//                }
+//                handler.postDelayed(this::run, Constants.COUNT_DOWN_SNACK)
+//            }
+//        }
+//        handler.postDelayed(runnable, Constants.COUNT_DOWN_SNACK)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        snackProgressBarManager?.disable()
     }
 
     private fun lauchForUpdate(inspectionDrafted: InspectionDTO) {

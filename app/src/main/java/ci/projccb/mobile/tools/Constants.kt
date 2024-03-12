@@ -2,6 +2,8 @@ package ci.projccb.mobile.tools
 
 object Constants {
 
+    val COUNT_DOWN_SNACK: Long = 20000
+
     //Ajout à partir 20/07/23
     const val VIDE: String = "VIDE"
     const val CURRENT_PRICE_PER_QUANTITY: Int = 950

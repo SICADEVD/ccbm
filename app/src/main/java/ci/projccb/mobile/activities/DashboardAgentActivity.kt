@@ -1,5 +1,7 @@
 package ci.projccb.mobile.activities
 
+//import com.github.mikephil.charting.utils.Fill
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -7,8 +9,12 @@ import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.RectF
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
@@ -17,6 +23,8 @@ import android.view.ViewGroup
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
 import android.widget.LinearLayout
+import android.widget.SeekBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,7 +33,6 @@ import androidx.core.view.size
 import androidx.recyclerview.widget.GridLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
-
 import ci.projccb.mobile.adapters.FeatureAdapter
 import ci.projccb.mobile.broadcasts.LoopAlarmReceiver
 import ci.projccb.mobile.models.AgentModel
@@ -35,10 +42,30 @@ import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.services.GpsService
 import ci.projccb.mobile.tools.Commons
-import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.MyAxisValueFormatter
+import ci.projccb.mobile.tools.XYMarkerView
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.CombinedChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.XAxis.XAxisPosition
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.CombinedData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.MPPointF
+import com.github.mikephil.charting.utils.ViewPortHandler
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.reflect.TypeToken
 import com.skydoves.expandablelayout.ExpandableLayout
@@ -50,6 +77,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
+import java.text.DecimalFormat
 
 
 /**
@@ -77,6 +105,12 @@ class DashboardAgentActivity : AppCompatActivity(),
     var producteurMenageDao: ProducteurMenageDao? = null
     val TAG = "DashboardAgentActivity.kt"
     var networkFlag = true
+
+    private var chart: BarChart? = null
+    private var seekBarX: SeekBar? = null
+    private  var seekBarY:android.widget.SeekBar? = null
+    private var tvX: TextView? = null
+    private  var tvY:android.widget.TextView? = null
 
 
     fun bindDatas(agentModel: AgentModel?, coopModel: CoopModel?) {
@@ -371,6 +405,8 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         bindDatas(agentModel = agentLogged, coopmodel)
 
+        setupBarChartView()
+
         // .setNavigationItemSelectedListener(this)
         Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
@@ -556,30 +592,196 @@ class DashboardAgentActivity : AppCompatActivity(),
         updateListOfFeature()
         setNavViewItems(roles)
         setViewFeatureListing()
+    }
 
-//        if(carouselRecyclerview?.adapter?.itemCount!! > 0){
-//            val pagerSnapHelper = PagerSnapHelper()
-//            pagerSnapHelper.attachToRecyclerView(carouselRecyclerview)
-//
-//            (indicator as CircleIndicator2).attachToRecyclerView(carouselRecyclerview!!, pagerSnapHelper)
-//            carouselRecyclerview?.adapter?.registerAdapterDataObserver(indicator!!.getAdapterDataObserver());
+    private fun setupBarChartView() {
+
+        val onValueSelectedRectF = RectF()
+        chart = findViewById<BarChart>(R.id.chart_enreg)
+        chart?.setOnChartValueSelectedListener(object: OnChartValueSelectedListener{
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                if (e == null) return
+
+                val bounds: RectF = onValueSelectedRectF
+                chart!!.getBarBounds(e as BarEntry?, bounds)
+                val position = chart!!.getPosition(e, YAxis.AxisDependency.LEFT)
+
+                Log.i("bounds", bounds.toString())
+                Log.i("position", position.toString())
+
+                Log.i(
+                    "x-index",
+                    "low: " + chart!!.lowestVisibleX + ", high: "
+                            + chart!!.highestVisibleX
+                )
+
+                MPPointF.recycleInstance(position)
+            }
+
+            override fun onNothingSelected() {
+
+            }
+
+        })
+
+        chart?.setDrawBarShadow(false)
+        chart?.setDrawValueAboveBar(true)
+        chart?.getDescription()?.setEnabled(false)
+        chart?.setMaxVisibleValueCount(60)
+        chart?.setPinchZoom(false)
+        chart?.setDrawGridBackground(false)
+        chart?.isDoubleTapToZoomEnabled = false
+        chart?.setScaleEnabled(false)
+
+
+//        val dataC = CombinedData()
+//        data.forEach {
+//            dataC.setData(generateBarData(data))
 //        }
+//        dataC.setValueTypeface(Typeface.DEFAULT)
 
-        /*if(
-            listOrderItem.containsAll(listOf(1,2,3,4))
-            || listOrderItem.containsAll(listOf(1,2,3,4,5,6))
-            || listOrderItem.size > 6
+        val data: MutableList<Data> = ArrayList<Data>()
+        data.add(Data(0f, producteurDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
+        data.add(Data(1f, parcelleDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+
+        val xAxisFormatter: ValueFormatter = object: ValueFormatter() {
+            override fun getFormattedValue(value: Float, axis: AxisBase?): String {
+                val vallo = data[Math.min(Math.max(value.toInt(), 0), data.size - 1)].xAxisValue
+                LogUtils.d(vallo)
+                return vallo
+            }
+
+        }
+
+        val xAxis: XAxis = chart!!.getXAxis()
+        xAxis.position = XAxisPosition.BOTTOM
+        xAxis.typeface = Typeface.DEFAULT
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f // only intervals of 1 day
+        xAxis.labelCount = 7
+        xAxis.isEnabled = false
+        xAxis.setValueFormatter(xAxisFormatter)
+
+//        xAxis.axisMaximum = dataC.xMax + 0.25f
+
+        val custom: ValueFormatter = MyAxisValueFormatter()
+
+        val leftAxis: YAxis = chart!!.getAxisLeft()
+        leftAxis.typeface = Typeface.DEFAULT
+        leftAxis.setLabelCount(8, false)
+        leftAxis.setValueFormatter(custom)
+        leftAxis.setPosition(YAxisLabelPosition.OUTSIDE_CHART)
+        leftAxis.spaceTop = 15f
+        leftAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
+
+
+        chart?.axisRight?.isEnabled = false
+        /*val rightAxis = barChart.axisRight
+        rightAxis.setDrawGridLines(false)
+        rightAxis.setLabelCount(8, false)
+        rightAxis.valueFormatter = custom
+        rightAxis.spaceTop = 15f
+        rightAxis.axisMinimum = 0f // this replaces setStartAtZero(true)*/
+
+
+        val l = chart?.legend
+        l!!.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
+        l.setDrawInside(false)
+        l.form = Legend.LegendForm.NONE
+        l.formSize = 9f
+        l.textSize = 11f
+        l.xEntrySpace = 1f
+
+        val mv = XYMarkerView(this, xAxisFormatter)
+        mv.chartView = chart // For bounds control
+        chart!!.marker = mv
+
+        setData(data)
+    }
+
+    private fun setData(dataList: List<Data>) {
+        val entries1 = ArrayList<BarEntry>()
+        val entries2 = ArrayList<BarEntry>()
+        val listBar = ArrayList<String>()
+        val listBar2 = ArrayList<String>()
+        val listBarColor = ArrayList<Int>()
+        val listBarColor2 = ArrayList<Int>()
+
+        dataList.forEach {
+            entries1.add(BarEntry(it.xValue, it.yValue))
+            listBar.add(it.xAxisValue)
+            listBarColor.add(it.xAxisColor)
+        }
+
+        val set: BarDataSet
+        if (chart!!.data != null &&
+            chart!!.data.dataSetCount > 0
         ) {
-            gridLayoutOfDashboard.columnCount = 2
-            gridLayoutOfDashboard.requestLayout()
-        }*/
-        //  WorkManager.getInstance(this).enqueue()
-        // scheduleAlarm()
+            set = chart!!.data.getDataSetByIndex(0) as BarDataSet
+            set.values = entries1
+            chart!!.data.notifyDataChanged()
+            chart!!.notifyDataSetChanged()
+        } else {
+            set = BarDataSet(entries1, "${listBar.toModifString(true, " - ")}")
+            set.colors = listBarColor
+            set.setValueTextColors(listBarColor)
+            val data = BarData(set)
+            data.setValueTextSize(11f)
+            data.setValueTypeface(Typeface.DEFAULT)
+            data.setValueFormatter(ValueFormatter22())
+            data.barWidth = 0.8f
+            chart!!.setData(data)
+            chart!!.invalidate()
+        }
+    }
 
+    private fun generateBarData(dataList:MutableList<Data>): BarData? {
+        val entries1 = ArrayList<BarEntry>()
+        val entries2 = ArrayList<BarEntry>()
+        val listBar = ArrayList<String>()
+        val listBar2 = ArrayList<String>()
+        val listBarColor = ArrayList<Int>()
+        val listBarColor2 = ArrayList<Int>()
 
-        /*for (i in 1..10) {
-            FakeLocaliteDatas.saveLocalite(i, this)
-        }*/
+        for (index in 0 until dataList.size-1 ) {
+            if(dataList.get(index) != null){
+                entries1.add(BarEntry(dataList.get(index).xValue, dataList.get(index).yValue))
+                listBar.add(dataList.get(index).xAxisValue)
+                listBarColor.add(dataList.get(index).xAxisColor)
+            }
+            if(dataList.get(index+1) != null){
+                entries2.add(BarEntry(dataList.get(index+1).xValue, dataList.get(index+1).yValue))
+                listBar2.add(dataList.get(index+1).xAxisValue)
+                listBarColor2.add(dataList.get(index+1).xAxisColor)
+            }
+        }
+
+        val set1 = BarDataSet(entries1, "${listBar.toModifString(true, " - ")}")
+        set1.setStackLabels(listBar.toTypedArray())
+        set1.color = Color.rgb(60, 220, 78)
+        set1.valueTextColor = Color.rgb(60, 220, 78)
+        set1.valueTextSize = 10f
+        set1.axisDependency = YAxis.AxisDependency.LEFT
+
+//        val set2 = BarDataSet(entries2, "")
+//        set1.stackLabels = listBar2.toTypedArray()
+//        set2.setColors(Color.rgb(61, 165, 255), Color.rgb(23, 197, 255))
+//        set2.valueTextColor = Color.rgb(61, 165, 255)
+//        set2.valueTextSize = 10f
+//        set2.axisDependency = YAxis.AxisDependency.LEFT
+
+        val groupSpace = 0.06f
+        val barSpace = 0.02f // x2 dataset
+        val barWidth = 0.45f // x2 dataset
+        // (0.45 + 0.02) * 2 + 0.06 = 1.00 -> interval per "group"
+        val d = BarData(set1)
+        d.barWidth = barWidth
+
+        // make this BarData object grouped
+//        d.groupBars(dataList.first().xValue, groupSpace, barSpace) // start at x = 0
+        return d
     }
 
     private fun hideNotExistFeature(
@@ -1117,5 +1319,29 @@ class DashboardAgentActivity : AppCompatActivity(),
 //        (it?.layoutParams as GridLayout.LayoutParams).columnSpec = GridLayout.spec(
 //            GridLayout.UNDEFINED,GridLayout.FILL, 1f
 //        )
+    }
+}
+
+private class Data constructor(
+    val xValue: Float,
+    val yValue: Float,
+    val xAxisValue: String,
+    val xAxisColor: Int
+)
+
+private class ValueFormatter22 constructor() : ValueFormatter() {
+    private val mFormat: DecimalFormat
+
+    init {
+        mFormat = DecimalFormat("######.0")
+    }
+
+    override fun getFormattedValue(
+        value: Float,
+        entry: Entry,
+        dataSetIndex: Int,
+        viewPortHandler: ViewPortHandler
+    ): String {
+        return mFormat.format(value)
     }
 }

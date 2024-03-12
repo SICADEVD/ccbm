@@ -140,7 +140,7 @@ class QuestionnaireReviewAdapter(
 
                 override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
                     if(text.isNullOrEmpty()) return
-                    LogUtils.d(text)
+//                    LogUtils.d(text)
                     questionnaireResponseInfo.commentaire = text.toString()
                     questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
                 }

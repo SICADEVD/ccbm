@@ -52,6 +52,10 @@ interface ProducteurDao {
     fun getUnSyncedAll(agentID: String?): MutableList<ProducteurModel>
 
     @Transaction
+    @Query("SELECT * FROM producteur WHERE isSynced = 1 AND agentId = :agentID")
+    fun getSyncedAll(agentID: String?): MutableList<ProducteurModel>
+
+    @Transaction
     @Query("DELETE FROM producteur WHERE agentId = :agentID")
     fun deleteAgentDatas(agentID: String?)
 

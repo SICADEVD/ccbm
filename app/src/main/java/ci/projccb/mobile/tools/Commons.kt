@@ -22,9 +22,9 @@ import android.text.InputFilter
 import android.util.Base64
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.MimeTypeMap
@@ -33,6 +33,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.Spinner
@@ -92,6 +93,9 @@ import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import com.tingyik90.snackprogressbar.SnackProgressBar
+import com.tingyik90.snackprogressbar.SnackProgressBarLayout
+import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 
 import kotlinx.coroutines.CoroutineScope
@@ -114,7 +118,12 @@ import java.net.UnknownHostException
 import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.pow
+import kotlin.math.roundToInt
 
+
+interface LoadProgressListener {
+    fun startLoadProgress(content: String = "")
+}
 
 class Commons {
 
@@ -246,14 +255,20 @@ class Commons {
                 (spinner as SearchableSpinner).setPositiveButton("Fermer !")
             }
 
-            if(listIem.size > 0) {
+            var listIemCur = mutableListOf<String>()
+            listIemCur.add("Faites un choix")
+            listIem?.forEach {
+                listIemCur.add(it.toString())
+            }
+
+            if(listIemCur.size > 0) {
                 spinner.adapter =
-                    ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
+                    ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIemCur)
             }else{
                 if(isEmpty){
                     spinner.adapter =
-                        ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIem)
-                    LogUtils.d(listIem)
+                        ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, listIemCur)
+//                    LogUtils.d(listIem)
                     MainScope().launch {
                         showMessage(
                             message,
@@ -269,7 +284,10 @@ class Commons {
             }
             spinner.onItemSelectedListener = object : OnItemSelectedListener{
                 override fun onItemSelected(p0:  AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    val selectedItem: String = p0?.getItemAtPosition(p2).toString()
+                    if (p2 == 0) {
+                        return
+                    }
+                    val selectedItem: String = p0?.getItemAtPosition(p2-1).toString()
                     selectedItem.let {
                         itemChanged?.let { changedText ->
                             if(changedText.size == 1){
@@ -289,7 +307,8 @@ class Commons {
 
                         }
                     }
-                    onChanged.invoke(p2)
+                    onChanged.invoke(p2-1)
+
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -298,7 +317,7 @@ class Commons {
             }
             currentVal?.let {
                 var curr = 0
-                for (item in listIem){
+                for (item in listIemCur){
                     if (it.equals(item, ignoreCase = true)) spinner.setSelection(curr)
                     curr++
                 }
@@ -346,6 +365,7 @@ class Commons {
                     memberProperty?.let {
                         it.isAccessible = true
                         it.set(prodModel, value)
+//                        LogUtils.d(value)
                         mutableListOf.add(Pair(currTextViewIn.toString(), value))
                     }
                 } else if ( childView is AppCompatEditText && childView.tag != null ) {
@@ -411,6 +431,55 @@ class Commons {
                         viewGroup = childView,
                         textSize = textSize,
                         editTextSize = editTextSize
+                    )
+                }
+            }
+        }
+
+        fun setListenerForViewsChange(
+            context: Context,
+            viewGroup: ViewGroup,
+            loadProgressListener: LoadProgressListener
+        ) {
+            val childCount = viewGroup.childCount
+
+            for (i in 0 until childCount) {
+                val childView = viewGroup.getChildAt(i)
+
+                val childViewClassName = childView::class.java.simpleName
+
+                if ( (childView is Spinner) && childView.tag != null) {
+
+                    val listener = childView.onItemSelectedListener
+                    (childView as Spinner).onItemSelectedListener = object : OnItemSelectedListener{
+                        override fun onItemSelected(p0:  AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                            loadProgressListener.startLoadProgress("")
+                            listener?.onItemSelected(p0, p1, p2, p3)
+                        }
+
+                        override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                        }
+                    }
+
+                } else if ( childView is AppCompatEditText) {
+
+                    childView.setOnTouchListener(object : View.OnTouchListener {
+                        override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                            if (event.action == MotionEvent.ACTION_DOWN) {
+                                loadProgressListener.startLoadProgress("")
+                                return false
+                            }
+                            return false
+                        }
+                    })
+
+                } else if (childView is ViewGroup) {
+
+                    setListenerForViewsChange(
+                        context = context,
+                        viewGroup = childView,
+                        loadProgressListener
                     )
                 }
             }
@@ -525,6 +594,10 @@ class Commons {
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null
             return (this as String).toInt()
+        }
+        fun String?.toCheckEmptyItem(): String {
+            if(listOf<String>("Choisir la note", "Faites un choix").contains(this)) return ""
+            return (this as String)
         }
         fun returnStringList(value: String?): MutableList<String>? {
             if(value != null){
@@ -1548,6 +1621,96 @@ class Commons {
 
         fun adjustTextViewSizesInDialogExt(Context: Context, builder: AlertDialog.Builder, _title: String, Dimension: Float, isTitle: Boolean) {
             Commons.adjustTextViewSizesInDialog(Context, builder, _title, Dimension, isTitle)
+        }
+
+        fun showCircularIndicator(
+            libelle: String = "TAUX DE REPONSE:",
+            snackProgressBarManager: SnackProgressBarManager?,
+            positionBario: Pair<Int, Int> = Pair(0, 1),
+            displayId: Int = 2510,
+            buttonLib: String = "",
+            callback: (() -> Unit?)? = null,
+        ) {
+
+            var keyCount = positionBario.first
+            var valCount = positionBario.second
+            var positionBar = 0
+
+            if(keyCount>=valCount && keyCount!=0){
+                val divide = (valCount.toDouble()/keyCount.toDouble())
+                var tauxFif = (divide.times(100))
+                positionBar = tauxFif.roundToInt()
+            }
+
+            val circularTypeWithAction =
+                SnackProgressBar(SnackProgressBar.TYPE_CIRCULAR, libelle)
+                    .setIsIndeterminate(false)
+                    .setProgressMax(100)
+                    .setShowProgressPercentage(true)
+                    .setSwipeToDismiss(true)
+                    .setIconResource(R.mipmap.ic_launcher)
+                    .setShowProgressPercentage(true)
+
+            if(buttonLib.isNotEmpty()){
+                circularTypeWithAction.setAction(buttonLib, object : SnackProgressBar.OnActionClickListener{
+                    override fun onActionClick() {
+                        callback?.invoke()
+                    }
+
+                })
+            }
+
+
+            snackProgressBarManager?.setActionTextColor(R.color.ccb_belge)
+            snackProgressBarManager?.show(circularTypeWithAction, SnackProgressBarManager.LENGTH_LONG, displayId)
+            snackProgressBarManager?.setProgress(progress = positionBar)
+//            object : CountDownTimer((positionBar*15).toLong(), positionBar.toLong()) {
+//                var i = 0
+//
+//                override fun onTick(millisUntilFinished: Long) {
+//                    i++
+//                    //snackProgressBarManager?.setProgress(i)
+//                }
+//
+//                override fun onFinish() {
+//                    snackProgressBarManager?.dismiss()
+//                }
+//            }.start()
+
+        }
+
+        fun defineSnackBarManager(snackProgressBarManager: SnackProgressBarManager, linearActionContainerInspection: View, ctx: Context): SnackProgressBarManager? {
+
+            return snackProgressBarManager.setViewToMove(linearActionContainerInspection)
+                // (Optional) Change progressBar color, default = R.color.colorAccent
+                .setProgressBarColor(R.color.green_3)
+                .setBackgroundColor(R.color.ccb_green)
+                // (Optional) Change text size, default = 14sp
+                .setTextSize(ctx.resources.getDimension(R.dimen._8ssp))
+                // (Optional) Set max lines, default = 2
+                .setProgressTextColor(R.color.white_color)
+                .useRoundedCornerBackground(true)
+                .setMessageMaxLines(2)
+                // (Optional) Register onDisplayListener
+                .setOnDisplayListener(object : SnackProgressBarManager.OnDisplayListener {
+                    override fun onLayoutInflated(
+                        snackProgressBarLayout: SnackProgressBarLayout,
+                        overlayLayout: FrameLayout,
+                        snackProgressBar: SnackProgressBar,
+                        onDisplayId: Int
+                    ) {
+
+                    }
+
+                    override fun onShown(snackProgressBar: SnackProgressBar, onDisplayId: Int) {
+                        if (onDisplayId == 5000) {
+                        }
+                    }
+
+                    override fun onDismissed(snackProgressBar: SnackProgressBar, onDisplayId: Int) {
+                    }
+                })
+
         }
 
     }

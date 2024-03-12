@@ -12,7 +12,6 @@ android:textColor="@color/text_color_white"
         android:id="@+id/labelHeaderInspectionItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        
         tools:text="Header View"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"/>
