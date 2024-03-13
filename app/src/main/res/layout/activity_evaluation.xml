@@ -13,7 +13,7 @@
         android:background="@color/ccb_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_90sdp">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/clickCloseBtn"
@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -401,44 +401,44 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/containerApprobInspect"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/containerApprobInspect"-->
+<!--                android:visibility="gone"-->
+<!--                tools:visibility="visible"-->
+<!--                android:layout_marginBottom="@dimen/_10sdp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="vertical">-->
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:textColor="@color/text_color_white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/_12sdp"
-                    android:text="Décision d'approbation"
-                    android:textSize="@dimen/page_input_title_dim11"
-                    android:textStyle="bold" />
+<!--                <androidx.appcompat.widget.AppCompatTextView-->
+<!--                    android:textColor="@color/text_color_white"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingLeft="@dimen/_12sdp"-->
+<!--                    android:text="Décision d'approbation"-->
+<!--                    android:textSize="@dimen/page_input_title_dim11"-->
+<!--                    android:textStyle="bold" />-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/rounded_background">-->
 
-                    <Space
-                        android:layout_width="@dimen/_5sdp"
-                        android:layout_height="@dimen/_10sdp" />
+<!--                    <Space-->
+<!--                        android:layout_width="@dimen/_5sdp"-->
+<!--                        android:layout_height="@dimen/_10sdp" />-->
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        style="@style/SpinnerItemStyle"
-                        android:spinnerMode="dialog"
-                        android:id="@+id/selectApprobationInspection"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_37sdp"/>
+<!--                    <androidx.appcompat.widget.AppCompatSpinner-->
+<!--                        style="@style/SpinnerItemStyle"-->
+<!--                        android:spinnerMode="dialog"-->
+<!--                        android:id="@+id/selectApprobationInspection"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="@dimen/_37sdp"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
                     
 
         </LinearLayout>

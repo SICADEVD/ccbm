@@ -604,9 +604,9 @@
     </string-array>
 
     <string-array name="statutsInspect">
+        <item>Non Débuté</item>
         <item>En cours</item>
-        <item>Réalisé</item>
-        <item>Non Réalisé</item>
+        <item>Achevé</item>
     </string-array>
 
     <string-array name="typeCentre">

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
@@ -694,13 +695,13 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 statuts.put(questionResponseModel?.id_en_base.toString(), questionResponseModel.statuts.toString())
             }
         }
-        nonConformingResponse = NonConformingResponse(inspectId?.toInt().toString(), recommandations, delai, dateVerification, statuts)
-        var indexApprob = "0"
-//        LogUtils.d(listApprob, selectApprobationInspection.selectedItemPosition)
-        (listApprob.size > 0)?.let {
-            if(it == true) indexApprob =  (listApprob.filterIndexed { index, commonData -> commonData.id?.equals((selectApprobationInspection.selectedItemPosition)) == true }?.first()?.id.toString())
-        }
-        dataList = InspectionUpdateDTO(inspectId.toString(), nonConformingResponse, indexApprob.toInt())
+//        nonConformingResponse = NonConformingResponse(inspectId?.toInt().toString(), recommandations, delai, dateVerification, statuts)
+//        var indexApprob = "0"
+////        LogUtils.d(listApprob, selectApprobationInspection.selectedItemPosition)
+//        (listApprob.size > 0)?.let {
+//            if(it == true) indexApprob =  (listApprob.filterIndexed { index, commonData -> commonData.id?.equals((selectApprobationInspection.selectedItemPosition)) == true }?.first()?.id.toString())
+//        }
+//        dataList = InspectionUpdateDTO(inspectId.toString(), nonConformingResponse, indexApprob.toInt())
 
 //        LogUtils.d(dataList)
 
@@ -715,11 +716,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             total_question_conforme = itemModelOb?.first?.total_question_conforme
             total_question_non_conforme = itemModelOb?.first?.total_question_non_conforme
             total_question_non_applicable = itemModelOb?.first?.total_question_non_applicable
-            approbation = selectApprobationInspection.getSpinnerContent()?.let { content ->
-                var value: String? = "0"
-                if(content.equals("Faites un choix", ignoreCase = true) == false) value = listApprob?.filter { it.nom.equals(content, ignoreCase = true) == true }?.first()?.id?.toString()
-                value
-            }
+//            approbation = selectApprobationInspection.getSpinnerContent()?.let { content ->
+//                var value: String? = "0"
+//                if(content.equals("Faites un choix", ignoreCase = true) == false) value = listApprob?.filter { it.nom.equals(content, ignoreCase = true) == true }?.first()?.id?.toString()
+//                value
+//            }
             update_content = GsonUtils.toJson(dataList)
         }
 
@@ -748,17 +749,50 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     )
                 }
             }
-            this?.add(
-                "Approbation" to "${selectApprobationInspection.getSpinnerContent()}"
-            )
+//            this?.add(
+//                "Approbation" to "${selectApprobationInspection.getSpinnerContent()}"
+//            )
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.map { MapEntry(it.first, it.second) }
 
-        val intentInspectionPreview = Intent(this, InspectionPreviewUpdateActivity::class.java)
-        intentInspectionPreview.putExtra("preview", questionnaireDto)
-        intentInspectionPreview.putExtra("previewitem", ArrayList(mapEntries))
-        ActivityUtils.startActivity(intentInspectionPreview)
+        var listData :MutableList<Pair<String, String>> = mutableListOf()
+        cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+            if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
+                listData.add("Commentaire" to "${questionResponseModel.commentaire}")
+                listData.add("Delai" to "${questionResponseModel.delai}")
+                listData.add("Date" to "${questionResponseModel.date_verification}")
+                listData.add("Status" to "${questionResponseModel.statuts}")
+            }
+        }
+
+        var dataCountKey = 0
+        var dataCountVal = 0
+        listData?.forEach {
+            if(it.first.isNullOrEmpty() == false){
+                dataCountKey++
+                if(it.second.isNullOrBlank() == false) dataCountVal++
+            }
+        }
+        //LogUtils.json(itemModelOb?.second)
+        if(dataCountKey>=dataCountVal && dataCountKey!=0){
+//            val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
+//            var tauxFif = (divide.times(100))
+//            var positionBar = tauxFif
+//            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+//            firstBarprogress.showProgressText(true)
+        }
+
+        Commons.showCircularIndicator(snackProgressBarManager = snackProgressBarManager, positionBario = Pair(dataCountKey, dataCountVal), displayId = 2512, buttonLib = "CONFIRMER", callback = {
+
+            val intentInspectionPreview = Intent(this, InspectionPreviewUpdateActivity::class.java)
+            intentInspectionPreview.putExtra("preview", questionnaireDto)
+            intentInspectionPreview.putExtra("previewitem", ArrayList(mapEntries))
+            ActivityUtils.startActivity(intentInspectionPreview)
+
+            Unit
+        })
+
     }
 
     private fun getInspectObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf(), id:Int = 0):  Pair<InspectionDTO, MutableList<Pair<String, String>>>? {
@@ -955,69 +989,123 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             setAllSelection()
         }
 
-        Commons.setListenerForViewsChange(this, findViewById<ViewGroup>(android.R.id.content), object :
-            LoadProgressListener {
-            override fun startLoadProgress(content: String) {
-//                LogUtils.d(content)
-//                if(content.isNotEmpty()) {
-                val itemModelOb = getInspectObjet(false)
-                itemModelOb?.second.apply {
-                    cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
-                        if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
-                            this?.add(
-                                "${questionResponseModel.label}" to
-                                        "${questionResponseModel.noteLabel.toCheckEmptyItem()}"
-                            )
+        var listenProgressOn = findViewById<ViewGroup>(android.R.id.content)
+
+        if(intent.getIntExtra("sync_uid", 0) != 0){
+//            val layoutManager = recyclerQuesionnairesInspection.layoutManager
+//            val visibleChildCount = layoutManager?.childCount ?: 0
+//            val visibleChildViews = mutableListOf<View>()
+//            for (i in 0 until visibleChildCount) {
+//                val childView = layoutManager?.findViewByPosition(i)
+//                if (childView != null) {
+//                    childView.setOnClickListener{
+//                        if(intent.getIntExtra("sync_uid", 0) != 0){
+//                            updatProgressBar()
+//                        }
+//                    }
+//                }
+//            }
+//            val childView: View? = layoutManager?
+//            listenProgressOn =
+        }else{
+
+            Commons.setListenerForViewsChange(this, listenProgressOn, object :
+                LoadProgressListener {
+                override fun startLoadProgress(content: String) {
+
+                    LogUtils.d("CLICKIK")
+                    if(intent.getIntExtra("sync_uid", 0) != 0){
+                        var listData :MutableList<Pair<String, String>> = mutableListOf()
+                        cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+                            if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
+                                listData.add("Commentaire" to "${questionResponseModel.commentaire}")
+                                listData.add("Delai" to "${questionResponseModel.delai}")
+                                listData.add("Date" to "${questionResponseModel.date_verification}")
+                                listData.add("Status" to "${questionResponseModel.statuts}")
+                            }
+                        }
+
+                        var dataCountKey = 0
+                        var dataCountVal = 0
+                        listData?.forEach {
+                            if(it.first.isNullOrEmpty() == false){
+                                dataCountKey++
+                                if(it.second.isNullOrBlank() == false) dataCountVal++
+                            }
+                        }
+                        //LogUtils.json(itemModelOb?.second)
+                        if(dataCountKey>=dataCountVal && dataCountKey!=0){
+                            val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
+                            var tauxFif = (divide.times(100))
+                            var positionBar = tauxFif
+                            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+                            firstBarprogress.showProgressText(true)
+                        }
+                    }else{
+
+                        val itemModelOb = getInspectObjet(false)
+                        itemModelOb?.second.apply {
+                            cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+                                if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
+                                    this?.add(
+                                        "${questionResponseModel.label}" to
+                                                "${questionResponseModel.noteLabel.toCheckEmptyItem()}"
+                                    )
+                                }
+                            }
+                        }
+                        var dataCountKey = 0
+                        var dataCountVal = 0
+                        itemModelOb?.second?.forEach {
+                            if(it.first.isNullOrEmpty() == false){
+                                dataCountKey++
+                                if(it.second.isNullOrBlank() == false) dataCountVal++
+                            }
+                        }
+                        //LogUtils.json(itemModelOb?.second)
+                        if(dataCountKey>=dataCountVal && dataCountKey!=0){
+                            val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
+                            var tauxFif = (divide.times(100))
+                            var positionBar = tauxFif
+                            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+                            firstBarprogress.showProgressText(true)
                         }
                     }
+
                 }
-                var dataCountKey = 0
-                var dataCountVal = 0
-                itemModelOb?.second?.forEach {
-                    if(it.first.isNullOrEmpty() == false){
-                        dataCountKey++
-                        if(it.second.isNullOrBlank() == false) dataCountVal++
-                    }
-                }
-                //LogUtils.json(itemModelOb?.second)
-                if(dataCountKey>=dataCountVal && dataCountKey!=0){
-                    val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
-                    var tauxFif = (divide.times(100))
-                    var positionBar = tauxFif
-                    firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
-                    firstBarprogress.showProgressText(true)
-                }
+            })
+        }
+
+
+    }
+
+    fun updatProgressBar() {
+        var listData :MutableList<Pair<String, String>> = mutableListOf()
+        cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+            if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {
+                listData.add("Commentaire" to "${questionResponseModel.commentaire}")
+                listData.add("Delai" to "${questionResponseModel.delai}")
+                listData.add("Date" to "${questionResponseModel.date_verification}")
+                listData.add("Status" to "${questionResponseModel.statuts}")
             }
-        })
-//        val handler = Handler()
-//        val runnable = object : Runnable {
-//            override fun run() {
-//                MainScope().launch {
-//                    val itemModelOb = getInspectObjet(false)
-//                    itemModelOb?.second.apply {
-//                        cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
-//                            if (questionResponseModel.label.isNullOrEmpty() == false) {
-//                                this?.add(
-//                                    "${questionResponseModel.label}" to
-//                                            "${questionResponseModel.noteLabel}"
-//                                )
-//                            }
-//                        }
-//                    }
-//                    var dataCountKey = 0
-//                    var dataCountVal = 0
-//                    itemModelOb?.second?.forEach {
-//                        if(it.first.isNullOrEmpty() == false){
-//                            dataCountKey++
-//                            if(it.second.isNullOrBlank() == false) dataCountVal++
-//                        }
-//                    }
-//                    Commons.showCircularIndicator(snackProgressBarManager, positionBario = Pair(dataCountKey, dataCountVal), 2512)
-//                }
-//                handler.postDelayed(this::run, Constants.COUNT_DOWN_SNACK)
-//            }
-//        }
-//        handler.postDelayed(runnable, Constants.COUNT_DOWN_SNACK)
+        }
+
+        var dataCountKey = 0
+        var dataCountVal = 0
+        listData?.forEach {
+            if(it.first.isNullOrEmpty() == false){
+                dataCountKey++
+                if(it.second.isNullOrBlank() == false) dataCountVal++
+            }
+        }
+        //LogUtils.json(itemModelOb?.second)
+        if(dataCountKey>=dataCountVal && dataCountKey!=0){
+            val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
+            var tauxFif = (divide.times(100))
+            var positionBar = tauxFif
+            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+            firstBarprogress.showProgressText(true)
+        }
     }
 
     override fun onDestroy() {
@@ -1029,7 +1117,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     private fun lauchForUpdate(inspectionDrafted: InspectionDTO) {
 
 
-        containerApprobInspect.visibility = View.VISIBLE
+//        containerApprobInspect.visibility = View.VISIBLE
 
         var listApprob = (AssetFileHelper.getListDataFromAsset(
             29,
@@ -1041,22 +1129,22 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         if(inspectionDrafted.approbation.equals("2")){
             listApprob = listApprob.filterIndexed { i, ter ->  arrayOf("0", "1").contains(i.toString()) == true }?.toMutableList()
         }else if(inspectionDrafted.approbation.equals("1") || inspectionDrafted.approbation.equals("3")){
-            containerApprobInspect.visibility = View.GONE
+//            containerApprobInspect.visibility = View.GONE
             clickSaveInspection.visibility = View.GONE
         }
 
-        Commons.setListenerForSpinner(this,
-            "Décision d'approbation",
-            spinner = selectApprobationInspection,
-            listIem = listApprob?.map { it.nom }
-                ?.toList() ?: listOf(),
-            onChanged = {
-            },
-            onSelected = { itemId, visibility ->
-            })
+//        Commons.setListenerForSpinner(this,
+//            "Décision d'approbation",
+//            spinner = selectApprobationInspection,
+//            listIem = listApprob?.map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//            },
+//            onSelected = { itemId, visibility ->
+//            })
 
         val product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(inspectionDrafted.producteursId?.toInt()?:0)
-        val section =
+//        val section =
 
         setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "")
         setupEncareurSelection(inspectionDrafted.formateursId ?: "")
@@ -1101,6 +1189,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     override fun itemSelected(position: Int, item: QuestionResponseModel) {
         cQuestionnairesReviewList!![position] = item
+        updatProgressBar()
 //        LogUtils.d("${position} : ${item.noteLabel}, ${item.reponseId}")
     }
 }

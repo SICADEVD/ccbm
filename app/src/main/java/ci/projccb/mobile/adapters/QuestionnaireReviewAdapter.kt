@@ -12,6 +12,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.forms.InspectionActivity
 import ci.projccb.mobile.interfaces.RecyclerItemListener
 import ci.projccb.mobile.models.NotationModel
 import ci.projccb.mobile.models.QuestionResponseModel
@@ -158,10 +159,12 @@ class QuestionnaireReviewAdapter(
                 holder.textInspecItemRecommandTitle.text = "Recommandations"
                 holder.editDateDelaiInspectItem.setOnClickListener{
                     pContext.configDate(holder.editDateDelaiInspectItem, true, false)
+                    (pContext as InspectionActivity).updatProgressBar()
                 }
 
                 holder.editDateVerifInspectItem.setOnClickListener{
                     pContext.configDate(holder.editDateVerifInspectItem)
+                    (pContext as InspectionActivity).updatProgressBar()
                 }
 
                 holder.editDateDelaiInspectItem.doOnTextChanged { text, start, before, count ->

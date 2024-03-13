@@ -25,7 +25,7 @@ public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterf
     private MultiSelectSpinner.OnMultipleItemsSelectedListener listener;
 
     String[] _items = null;
-    String _title = "Pas de titre", _titlePB = "Valider", _titleNB = "Fermer";
+    String _title = "Pas de titre", _titlePB = "Ajouter", _titleNB = "Fermer";
     boolean[] mSelection = null;
     boolean[] mSelectionAtStart = null;
     String _itemsAtStart = null;

@@ -9,6 +9,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
+import com.github.mikephil.charting.utils.ViewPortHandler
 import java.text.DecimalFormat
 
 @SuppressLint("ViewConstructor")
@@ -40,5 +41,29 @@ class XYMarkerView(context: Context?, private val xAxisValueFormatter: ValueForm
 
     override fun getOffset(): MPPointF {
         return MPPointF(-(width / 2).toFloat(), -height.toFloat())
+    }
+}
+
+public  class Data constructor(
+    val xValue: Float,
+    val yValue: Float,
+    val xAxisValue: String,
+    val xAxisColor: Int
+)
+
+public class ValueFormatter22 constructor() : ValueFormatter() {
+    private val mFormat: DecimalFormat
+
+    init {
+        mFormat = DecimalFormat("######.0")
+    }
+
+    override fun getFormattedValue(
+        value: Float,
+        entry: Entry,
+        dataSetIndex: Int,
+        viewPortHandler: ViewPortHandler
+    ): String {
+        return mFormat.format(value)
     }
 }

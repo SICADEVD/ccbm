@@ -1253,7 +1253,7 @@ android:textColor="@color/text_color_white"
                             android:background="@drawable/submit_button_bg"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
-                            android:text="Valider"
+                            android:text="Ajouter"
 
                             android:textSize="@dimen/_9ssp" />
 

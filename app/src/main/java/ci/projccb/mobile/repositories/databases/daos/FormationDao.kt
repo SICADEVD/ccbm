@@ -38,4 +38,8 @@ interface FormationDao {
     @Transaction
     @Query("DELETE FROM formation WHERE uid = :uId")
     fun deleteByUid(uId: Int)
+
+    @Transaction
+    @Query("SELECT * FROM formation WHERE isSynced = 1 AND agentId = :agentID")
+    fun getSyncedAll(agentID: String): MutableList<FormationModel>
 }

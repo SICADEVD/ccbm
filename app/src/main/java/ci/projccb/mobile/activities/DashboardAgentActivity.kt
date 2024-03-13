@@ -10,11 +10,9 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
@@ -22,7 +20,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
-import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -42,30 +39,18 @@ import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.services.GpsService
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.setData
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
-import ci.projccb.mobile.tools.MyAxisValueFormatter
-import ci.projccb.mobile.tools.XYMarkerView
+import ci.projccb.mobile.tools.Data
+import ci.projccb.mobile.tools.ValueFormatter22
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.CombinedChart
-import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.CombinedData
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.github.mikephil.charting.utils.MPPointF
-import com.github.mikephil.charting.utils.ViewPortHandler
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.reflect.TypeToken
 import com.skydoves.expandablelayout.ExpandableLayout
@@ -77,7 +62,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
-import java.text.DecimalFormat
 
 
 /**
@@ -106,11 +90,6 @@ class DashboardAgentActivity : AppCompatActivity(),
     val TAG = "DashboardAgentActivity.kt"
     var networkFlag = true
 
-    private var chart: BarChart? = null
-    private var seekBarX: SeekBar? = null
-    private  var seekBarY:android.widget.SeekBar? = null
-    private var tvX: TextView? = null
-    private  var tvY:android.widget.TextView? = null
 
 
     fun bindDatas(agentModel: AgentModel?, coopModel: CoopModel?) {
@@ -596,145 +575,48 @@ class DashboardAgentActivity : AppCompatActivity(),
 
     private fun setupBarChartView() {
 
-        val onValueSelectedRectF = RectF()
-        chart = findViewById<BarChart>(R.id.chart_enreg)
-        chart?.setOnChartValueSelectedListener(object: OnChartValueSelectedListener{
-            override fun onValueSelected(e: Entry?, h: Highlight?) {
-                if (e == null) return
 
-                val bounds: RectF = onValueSelectedRectF
-                chart!!.getBarBounds(e as BarEntry?, bounds)
-                val position = chart!!.getPosition(e, YAxis.AxisDependency.LEFT)
+        val chart = findViewById<BarChart>(R.id.chart_enreg)
 
-                Log.i("bounds", bounds.toString())
-                Log.i("position", position.toString())
-
-                Log.i(
-                    "x-index",
-                    "low: " + chart!!.lowestVisibleX + ", high: "
-                            + chart!!.highestVisibleX
-                )
-
-                MPPointF.recycleInstance(position)
-            }
-
-            override fun onNothingSelected() {
-
-            }
-
-        })
-
-        chart?.setDrawBarShadow(false)
-        chart?.setDrawValueAboveBar(true)
-        chart?.getDescription()?.setEnabled(false)
-        chart?.setMaxVisibleValueCount(60)
-        chart?.setPinchZoom(false)
-        chart?.setDrawGridBackground(false)
-        chart?.isDoubleTapToZoomEnabled = false
-        chart?.setScaleEnabled(false)
-
-
-//        val dataC = CombinedData()
-//        data.forEach {
-//            dataC.setData(generateBarData(data))
-//        }
-//        dataC.setValueTypeface(Typeface.DEFAULT)
 
         val data: MutableList<Data> = ArrayList<Data>()
         data.add(Data(0f, producteurDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
         data.add(Data(1f, parcelleDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+        data.add(Data(2f, formationDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
+        data.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
+        data.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
 
-        val xAxisFormatter: ValueFormatter = object: ValueFormatter() {
-            override fun getFormattedValue(value: Float, axis: AxisBase?): String {
-                val vallo = data[Math.min(Math.max(value.toInt(), 0), data.size - 1)].xAxisValue
-                LogUtils.d(vallo)
-                return vallo
-            }
+        Commons.applyChartSetting(this, chart, data)
 
-        }
+        setData(chart, data)
 
-        val xAxis: XAxis = chart!!.getXAxis()
-        xAxis.position = XAxisPosition.BOTTOM
-        xAxis.typeface = Typeface.DEFAULT
-        xAxis.setDrawGridLines(false)
-        xAxis.granularity = 1f // only intervals of 1 day
-        xAxis.labelCount = 7
-        xAxis.isEnabled = false
-        xAxis.setValueFormatter(xAxisFormatter)
-
-//        xAxis.axisMaximum = dataC.xMax + 0.25f
-
-        val custom: ValueFormatter = MyAxisValueFormatter()
-
-        val leftAxis: YAxis = chart!!.getAxisLeft()
-        leftAxis.typeface = Typeface.DEFAULT
-        leftAxis.setLabelCount(8, false)
-        leftAxis.setValueFormatter(custom)
-        leftAxis.setPosition(YAxisLabelPosition.OUTSIDE_CHART)
-        leftAxis.spaceTop = 15f
-        leftAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
+        val chartUnSync = findViewById<BarChart>(R.id.chart_unsync)
 
 
-        chart?.axisRight?.isEnabled = false
-        /*val rightAxis = barChart.axisRight
-        rightAxis.setDrawGridLines(false)
-        rightAxis.setLabelCount(8, false)
-        rightAxis.valueFormatter = custom
-        rightAxis.spaceTop = 15f
-        rightAxis.axisMinimum = 0f // this replaces setStartAtZero(true)*/
+        val dataUnSync: MutableList<Data> = ArrayList<Data>()
+        dataUnSync.add(Data(0f, producteurDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
+        dataUnSync.add(Data(1f, parcelleDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+        dataUnSync.add(Data(2f, formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
+        dataUnSync.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
+        dataUnSync.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID))?.count()?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+
+        Commons.applyChartSetting(this, chartUnSync, dataUnSync)
+
+        setData(chartUnSync, dataUnSync)
+
+        val chartDraft = findViewById<BarChart>(R.id.chart_draft)
 
 
-        val l = chart?.legend
-        l!!.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
-        l.orientation = Legend.LegendOrientation.HORIZONTAL
-        l.setDrawInside(false)
-        l.form = Legend.LegendForm.NONE
-        l.formSize = 9f
-        l.textSize = 11f
-        l.xEntrySpace = 1f
+        val dataDraft: MutableList<Data> = ArrayList<Data>()
+        dataDraft.add(Data(0f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "producteur")?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
+        dataDraft.add(Data(1f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "parcelle")?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+        dataDraft.add(Data(2f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
+        dataDraft.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "menage")?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
+        dataDraft.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
 
-        val mv = XYMarkerView(this, xAxisFormatter)
-        mv.chartView = chart // For bounds control
-        chart!!.marker = mv
+        Commons.applyChartSetting(this, chartDraft, dataDraft)
 
-        setData(data)
-    }
-
-    private fun setData(dataList: List<Data>) {
-        val entries1 = ArrayList<BarEntry>()
-        val entries2 = ArrayList<BarEntry>()
-        val listBar = ArrayList<String>()
-        val listBar2 = ArrayList<String>()
-        val listBarColor = ArrayList<Int>()
-        val listBarColor2 = ArrayList<Int>()
-
-        dataList.forEach {
-            entries1.add(BarEntry(it.xValue, it.yValue))
-            listBar.add(it.xAxisValue)
-            listBarColor.add(it.xAxisColor)
-        }
-
-        val set: BarDataSet
-        if (chart!!.data != null &&
-            chart!!.data.dataSetCount > 0
-        ) {
-            set = chart!!.data.getDataSetByIndex(0) as BarDataSet
-            set.values = entries1
-            chart!!.data.notifyDataChanged()
-            chart!!.notifyDataSetChanged()
-        } else {
-            set = BarDataSet(entries1, "${listBar.toModifString(true, " - ")}")
-            set.colors = listBarColor
-            set.setValueTextColors(listBarColor)
-            val data = BarData(set)
-            data.setValueTextSize(11f)
-            data.setValueTypeface(Typeface.DEFAULT)
-            data.setValueFormatter(ValueFormatter22())
-            data.barWidth = 0.8f
-            chart!!.setData(data)
-            chart!!.invalidate()
-        }
+        setData(chartDraft, dataDraft)
     }
 
     private fun generateBarData(dataList:MutableList<Data>): BarData? {
@@ -1207,141 +1089,4 @@ class DashboardAgentActivity : AppCompatActivity(),
 
     }
 
-    private fun setDataClickListener() {
-        /*linealProducteur.let {
-            it.setOnClickListener {
-                val intentLocalite = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentLocalite.putExtra("from", "producteur")
-                ActivityUtils.startActivity(intentLocalite)
-            }
-
-        }
-        linealParcel.let {
-            it.setOnClickListener {
-                val intentParcelle = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentParcelle.putExtra("from", "parcelle")
-                ActivityUtils.startActivity(intentParcelle)
-            }
-
-        }
-
-        linealSuiviParcelle.let{
-            it.setOnClickListener {
-                val intentSuiviParcelle = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentSuiviParcelle.putExtra("from", "suivi_parcelle")
-                ActivityUtils.startActivity(intentSuiviParcelle)
-            }
-
-        }
-
-        linealMenage.let {
-            it.setOnClickListener {
-                val intentMenage = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentMenage.putExtra("from", "menage")
-                ActivityUtils.startActivity(intentMenage)
-            }
-
-        }
-
-        linearEvaluation.let{
-            it.setOnClickListener {
-                val intentInspection = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentInspection.putExtra("from", "inspection")
-                ActivityUtils.startActivity(intentInspection)
-            }
-
-        }
-
-        // Merci de faire les test de la base de données
-        linearUniteAgricole.let{
-            it.setOnClickListener {
-                val intentInfosProducteur =
-                    Intent(this, MenusActionRedirectionActivity::class.java)
-                intentInfosProducteur.putExtra("from", "infos_producteur")
-                ActivityUtils.startActivity(intentInfosProducteur)
-            }
-
-        }
-        linearFormation.let{
-            it.setOnClickListener {
-                val intentFormation = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentFormation.putExtra("from", "formation")
-                ActivityUtils.startActivity(intentFormation)
-            }
-
-        }
-
-        linearLivraison.let{
-            it.setOnClickListener {
-                val intentLivraison = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentLivraison.putExtra("from", "livraison")
-                ActivityUtils.startActivity(intentLivraison)
-            }
-
-        }
-        linearCalculEstimation.let{
-            it.setOnClickListener {
-                val intentCalculEstimation =
-                    Intent(this, MenusActionRedirectionActivity::class.java)
-                intentCalculEstimation.putExtra("from", "calcul_estimation")
-                ActivityUtils.startActivity(intentCalculEstimation)
-            }
-
-        }
-
-        linealSuiviApplictions.let{
-            it.setOnClickListener {
-                val intentSuiviApplicatio =
-                    Intent(this, MenusActionRedirectionActivity::class.java)
-                intentSuiviApplicatio.putExtra("from", "suivi_application")
-                ActivityUtils.startActivity(intentSuiviApplicatio)
-            }
-
-        }
-        linearSSRT.let{
-            it.setOnClickListener {
-                val intentSsrt = Intent(this, MenusActionRedirectionActivity::class.java)
-                intentSsrt.putExtra("from", "ssrte")
-                ActivityUtils.startActivity(intentSsrt)
-            }
-
-        }*/
-    }
-
-    private fun setClickListenForFeature(position: Int) {
-
-        when(position){
-
-        }
-    }
-
-    private fun getPlaceToViewInGrid(it: LinearLayout?) {
-//        (it?.layoutParams as GridLayout.LayoutParams).columnSpec = GridLayout.spec(
-//            GridLayout.UNDEFINED,GridLayout.FILL, 1f
-//        )
-    }
-}
-
-private class Data constructor(
-    val xValue: Float,
-    val yValue: Float,
-    val xAxisValue: String,
-    val xAxisColor: Int
-)
-
-private class ValueFormatter22 constructor() : ValueFormatter() {
-    private val mFormat: DecimalFormat
-
-    init {
-        mFormat = DecimalFormat("######.0")
-    }
-
-    override fun getFormattedValue(
-        value: Float,
-        entry: Entry,
-        dataSetIndex: Int,
-        viewPortHandler: ViewPortHandler
-    ): String {
-        return mFormat.format(value)
-    }
 }

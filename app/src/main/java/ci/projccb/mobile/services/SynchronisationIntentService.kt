@@ -190,16 +190,23 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     ) {
                         var producteurSynced = response.body()
 
-                        if(response.code().toString().contains("422")){
+                        if(response.code().toString().contains("422") || response.code() == 422){
                             //val buffer = Buffer()
                             val respText = response.errorBody()?.string().toString()
-                            if(respText.contains("phone1", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
-//                                LogUtils.d(respText)
-                                producteurDao.syncDataOnExist(
-                                    synced = 1,
-                                    localID = producteur.uid
-                                )
-                            }
+//                            if(respText.contains("phone1", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
+////                                LogUtils.d(respText)
+//                                producteurDao.syncDataOnExist(
+//                                    synced = 1,
+//                                    localID = producteur.uid
+//                                )
+//                            }
+//                            if(respText.contains("num_ccc", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
+////                                LogUtils.d(respText)
+//                            }
+                            producteurDao.syncDataOnExist(
+                                synced = 1,
+                                localID = producteur.uid
+                            )
                         }
 
                         producteurSynced?.let {

@@ -543,7 +543,7 @@
                                     android:background="@drawable/submit_button_bg"
                                     android:paddingStart="@dimen/_5sdp"
                                     android:paddingEnd="@dimen/_5sdp"
-                                    android:text="Valider"
+                                    android:text="Ajouter"
                                     android:textSize="@dimen/_9ssp" />
 
                                 <Space
@@ -1703,7 +1703,7 @@
                                 android:background="@drawable/submit_button_bg"
                                 android:paddingStart="@dimen/_5sdp"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="Valider"
+                                android:text="Ajouter"
                                 android:textSize="@dimen/_9ssp" />
 
                         </LinearLayout>
@@ -1887,7 +1887,7 @@
                                 android:background="@drawable/submit_button_bg"
                                 android:paddingStart="@dimen/_5sdp"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="Valider"
+                                android:text="Ajouter"
                                 android:textSize="@dimen/_9ssp" />
 
                         </LinearLayout>
@@ -2530,7 +2530,7 @@
                                 android:background="@drawable/submit_button_bg"
                                 android:paddingStart="@dimen/_5sdp"
                                 android:paddingEnd="@dimen/_5sdp"
-                                android:text="Valider"
+                                android:text="Ajouter"
                                 android:textSize="@dimen/_9ssp" />
 
                         </LinearLayout>

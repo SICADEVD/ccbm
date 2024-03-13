@@ -763,7 +763,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this,
             getString(R.string.avez_vous_des_proches), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectProcheProducteur,
-            listIem = listOf(),
+            listIem = resources.getStringArray(R.array.YesOrNo).toList(),
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             onChanged = {
 
@@ -1095,9 +1095,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }, onSelected = { itemId, visibility ->
             })
 
-        setListenerForSpinner(this, getString(R.string.quelle_est_la_nationalit), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+        setListenerForSpinner(this, getString(R.string.avez_vous_des_proches), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectProcheProducteur,
-            listIem = listOf(),
+            listIem = resources.getStringArray(R.array.YesOrNo).toList(),
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = producteurDrafted.autreMembre,
             onChanged = {

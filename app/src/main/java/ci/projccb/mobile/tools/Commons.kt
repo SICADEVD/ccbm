@@ -13,6 +13,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.RectF
+import android.graphics.Typeface
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
@@ -20,6 +22,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.text.InputFilter
 import android.util.Base64
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -91,6 +94,19 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.MPPointF
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import com.tingyik90.snackprogressbar.SnackProgressBar
@@ -246,7 +262,12 @@ class Commons {
 
         }
 
-        fun setListenerForSpinner(context:Context, title:String = "Faite un choix !", message: String = "La liste est vide !", isKill:Boolean = false, isEmpty:Boolean = false, spinner: Spinner, listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null, currentVal:String? = null, onChanged:((value:Int) -> Unit), onSelected:((itemId:Int,visibility:Int) -> Unit)){
+        fun setListenerForSpinner(context:Context, title:String = "Faite un choix !",
+                                  message: String = "La liste est vide !", isKill:Boolean = false,
+                                  isEmpty:Boolean = false, spinner: Spinner,
+                                  listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null,
+                                  currentVal:String? = null, onChanged:((value:Int) -> Unit),
+                                  onSelected:((itemId:Int,visibility:Int) -> Unit)){
 
             if(spinner == null) return
 
@@ -284,10 +305,11 @@ class Commons {
             }
             spinner.onItemSelectedListener = object : OnItemSelectedListener{
                 override fun onItemSelected(p0:  AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    //LogUtils.d("POSITION ", p2)
                     if (p2 == 0) {
                         return
                     }
-                    val selectedItem: String = p0?.getItemAtPosition(p2-1).toString()
+                    val selectedItem: String = p0?.getItemAtPosition(p2).toString()
                     selectedItem.let {
                         itemChanged?.let { changedText ->
                             if(changedText.size == 1){
@@ -1711,6 +1733,137 @@ class Commons {
                     }
                 })
 
+        }
+
+        fun applyChartSetting(context: Context, chart: BarChart?, data: MutableList<Data>) {
+
+            val onValueSelectedRectF = RectF()
+
+            chart?.setOnChartValueSelectedListener(object: OnChartValueSelectedListener {
+                override fun onValueSelected(e: Entry?, h: Highlight?) {
+                    if (e == null) return
+
+                    val bounds: RectF = onValueSelectedRectF
+                    chart!!.getBarBounds(e as BarEntry?, bounds)
+                    val position = chart!!.getPosition(e, YAxis.AxisDependency.LEFT)
+
+                    Log.i("bounds", bounds.toString())
+                    Log.i("position", position.toString())
+
+                    Log.i(
+                        "x-index",
+                        "low: " + chart!!.lowestVisibleX + ", high: "
+                                + chart!!.highestVisibleX
+                    )
+
+                    MPPointF.recycleInstance(position)
+                }
+
+                override fun onNothingSelected() {
+
+                }
+
+            })
+
+            chart?.setDrawBarShadow(false)
+            chart?.setDrawValueAboveBar(true)
+            chart?.getDescription()?.setEnabled(false)
+            chart?.setMaxVisibleValueCount(60)
+            chart?.setPinchZoom(false)
+            chart?.setDrawGridBackground(false)
+            chart?.isDoubleTapToZoomEnabled = false
+            chart?.setScaleEnabled(false)
+
+            val xAxisFormatter: ValueFormatter = object: ValueFormatter() {
+                override fun getFormattedValue(value: Float, axis: AxisBase?): String {
+                    val vallo = data[Math.min(Math.max(value.toInt(), 0), data.size - 1)].xAxisValue
+                    LogUtils.d(vallo)
+                    return vallo
+                }
+
+            }
+
+            val xAxis: XAxis = chart!!.getXAxis()
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.typeface = Typeface.DEFAULT
+            xAxis.setDrawGridLines(false)
+            xAxis.granularity = 1f // only intervals of 1 day
+            xAxis.labelCount = 7
+            xAxis.isEnabled = false
+            xAxis.setValueFormatter(xAxisFormatter)
+
+//        xAxis.axisMaximum = dataC.xMax + 0.25f
+
+            val custom: ValueFormatter = MyAxisValueFormatter()
+
+            val leftAxis: YAxis = chart!!.getAxisLeft()
+            leftAxis.typeface = Typeface.DEFAULT
+            leftAxis.setLabelCount(8, false)
+            leftAxis.setValueFormatter(custom)
+            leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+            leftAxis.spaceTop = 15f
+            leftAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
+
+
+            chart?.axisRight?.isEnabled = false
+            /*val rightAxis = barChart.axisRight
+            rightAxis.setDrawGridLines(false)
+            rightAxis.setLabelCount(8, false)
+            rightAxis.valueFormatter = custom
+            rightAxis.spaceTop = 15f
+            rightAxis.axisMinimum = 0f // this replaces setStartAtZero(true)*/
+
+
+            val l = chart?.legend
+            l!!.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+            l.orientation = Legend.LegendOrientation.HORIZONTAL
+            l.setDrawInside(false)
+            l.form = Legend.LegendForm.NONE
+            l.formSize = 9f
+            l.textSize = 11f
+            l.xEntrySpace = 1f
+
+            val mv = XYMarkerView(context, xAxisFormatter)
+            mv.chartView = chart // For bounds control
+            chart!!.marker = mv
+
+        }
+
+        fun setData(chartData: BarChart?, dataList: List<Data>) {
+            val entries1 = ArrayList<BarEntry>()
+            val entries2 = ArrayList<BarEntry>()
+            val listBar = ArrayList<String>()
+            val listBar2 = ArrayList<String>()
+            val listBarColor = ArrayList<Int>()
+            val listBarColor2 = ArrayList<Int>()
+
+            dataList.forEach {
+                entries1.add(BarEntry(it.xValue, it.yValue))
+                listBar.add(it.xAxisValue)
+                listBarColor.add(it.xAxisColor)
+            }
+
+            val set: BarDataSet
+            if (chartData!!.data != null &&
+                chartData!!.data.dataSetCount > 0
+            ) {
+                set = chartData!!.data.getDataSetByIndex(0) as BarDataSet
+                set.values = entries1
+                chartData!!.data.notifyDataChanged()
+                chartData!!.notifyDataSetChanged()
+            } else {
+                set = BarDataSet(entries1, "${listBar.toModifString(true, " - ")}")
+                set.colors = listBarColor
+                set.setValueTextColors(listBarColor)
+                val data = BarData(set)
+                data.setValueTextSize(11f)
+                data.setValueTypeface(Typeface.DEFAULT)
+                data.setValueFormatter(ValueFormatter22())
+                data.barWidth = 0.8f
+                chartData!!.setData(data)
+                chartData!!.invalidate()
+            }
         }
 
     }

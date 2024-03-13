@@ -95,5 +95,10 @@ interface EvaluationArbreDao {
     @Query("SELECT * FROM evaluation_arbre WHERE (isSynced = 0 AND producteurId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<EvaluationArbreModel>
 
+    @Transaction
+    @Query("SELECT * FROM evaluation_arbre WHERE isSynced = 1 AND agentId = :agentID")
+    fun getSyncedAll(agentID: String): MutableList<EvaluationArbreModel>
+
+
 
 }

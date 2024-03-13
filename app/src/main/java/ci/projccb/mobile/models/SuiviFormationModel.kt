@@ -9,7 +9,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-@Entity(tableName = Constants.TABLE_FORMATIONS)
+//@Entity(tableName = Constants.TABLE_FORMATIONS)
 data class SuiviFormationModel(
     @Expose @PrimaryKey(autoGenerate = true) var uid: Int = 0,
     @Expose @SerializedName("id") var id: Int? = 0,
