@@ -43,6 +43,7 @@
                 android:id="@+id/labelTitleMenuAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAllCaps="true"
                 android:text="FICHE Des Visiteurs De La Formation"
                 android:textSize="@dimen/page_title_dim14"
                 android:textStyle="bold" />
@@ -169,6 +170,27 @@
                                 android:spinnerMode="dialog" />
 
                         </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/editCurrentFormVisitForm"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_present"
+                            android:padding="@dimen/_6sdp"
+                            android:textSize="@dimen/page_input_content_dim13"
+                            tools:text="KOFFI" />
 
                     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -16,7 +17,7 @@ interface FormationDao {
     fun insert(formationModel: FormationModel)
 
     @Transaction
-    @Query("SELECT * FROM formation WHERE agentId = :agentID")
+    @Query("SELECT * FROM formation WHERE agentId = :agentID ORDER BY dateFormation DESC")
     fun getAll(agentID: String?): MutableList<FormationModel>
 
     @Transaction
@@ -42,4 +43,7 @@ interface FormationDao {
     @Transaction
     @Query("SELECT * FROM formation WHERE isSynced = 1 AND agentId = :agentID")
     fun getSyncedAll(agentID: String): MutableList<FormationModel>
+    @Transaction
+    @Query("SELECT * FROM formation WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<FormationModel>>
 }

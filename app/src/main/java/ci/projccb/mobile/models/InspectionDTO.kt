@@ -76,7 +76,7 @@ data class InspectionDTOExt(
     @SerializedName("note") @Expose var noteInspection: String? = "",
     @SerializedName("encadreur") @Expose var encadreur: String? = "",
     @Expose var production: String? = "",
-    @Expose @SerializedName(value = "certificat", alternate = ["certificatStr"]) var certificatStr: String? = "",
+    @Expose @SerializedName(value = "certificat", alternate = ["certificatStr"]) var certificat: String? = "",
     @Expose var total_question: String? = "",
     @Expose var total_question_conforme: String? = "",
     @Expose var total_question_non_conforme: String? = "",

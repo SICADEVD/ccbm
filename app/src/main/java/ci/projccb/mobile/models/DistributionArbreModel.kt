@@ -1,6 +1,7 @@
 package ci.projccb.mobile.models
 
 import android.os.Parcelable
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -101,4 +102,7 @@ interface DistributionArbreDao {
     @Transaction
     @Query("SELECT * FROM distribution_arbre WHERE (isSynced = 0 AND producteurId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<DistributionArbreModel>
+    @Transaction
+    @Query("SELECT * FROM distribution_arbre WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<DistributionArbreModel>>
 }

@@ -249,7 +249,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 //parcelleDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
 
                 try {
-                    val clientParcelles = ApiClient.apiService.getParcelles()
+                    val clientParcelles = ApiClient.apiService.getParcelles(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)))
                     val responseParcelles: Response<MutableList<ParcelleModel>> = clientParcelles.execute()
                     val parcellesList: MutableList<ParcelleModel>? = responseParcelles.body()
 
@@ -265,6 +265,22 @@ class ConfigurationActivity : AppCompatActivity() {
                             nbCacaoParHectare = it.nbCacaoParHectare,
                             latitude = it.latitude,
                             longitude = it.longitude,
+                            typedeclaration = it.typedeclaration,
+                            ageMoyenCacao = it.ageMoyenCacao,
+                            parcelleRegenerer = it.parcelleRegenerer,
+                            anneeRegenerer = it.anneeRegenerer,
+                            superficieConcerne = it.superficieConcerne,
+                            presenceCourDeau = it.presenceCourDeau,
+                            typeDoc = it.typeDoc,
+                            courDeau = it.courDeau,
+                            autreCourDeau = it.autreCourDeau,
+                            existeMesureProtection = it.existeMesureProtection,
+                            autreProtection = it.autreProtection,
+                            existePente = it.existePente,
+                            niveauPente = it.niveauPente,
+                            erosion = it.erosion,
+                            protectionStr = GsonUtils.toJson(it.protectionO),
+                            arbreStr = GsonUtils.toJson(it.itemsO),
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"
@@ -948,13 +964,13 @@ class ConfigurationActivity : AppCompatActivity() {
 
                 try {
                     var clientData = ApiClient.apiService.getFormationByUser(table = CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID)))
-                    var responseData: Response<MutableList<FormationModel>> = clientData.execute()
-                    val dataList: MutableList<FormationModel>? = responseData.body()
+                    var responseData: Response<MutableList<FormationModelExt>> = clientData.execute()
+                    val dataList: MutableList<FormationModelExt>? = responseData.body()
 
 //                    clientData = ApiClient.apiService.getStaff(table = CommonData(cooperativeId = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID), role = "delegue"))
 //                    responseData = clientData.execute()
 //                    dataList?.addAll(responseData.body()?: arrayListOf())
-
+//                    LogUtils.d(dataList)
                     dataList?.map {
                         val formModel = FormationModel(
                             id = it.id,
@@ -965,6 +981,13 @@ class ConfigurationActivity : AppCompatActivity() {
                             lieuFormation = it.lieuFormation,
                             formationType = it.formationType,
                             observationFormation = it.observationFormation,
+                            multiStartDate = it.date_debut_formation,
+                            multiEndDate = it.date_fin_formation,
+                            producteursIdStr = GsonUtils.toJson(it.producteurs_ids),
+                            typeFormationStr = GsonUtils.toJson(it.type_formation_ids),
+                            themeStr = GsonUtils.toJson(it.theme_ids),
+                            sousThemeStr = GsonUtils.toJson(it.sous_themes_ids),
+                            staffId = it.staffId,
                             agentId = it.agentId
                         )
                         formationDao?.insert(formModel)
@@ -979,7 +1002,7 @@ class ConfigurationActivity : AppCompatActivity() {
             dataUpdate.join()
 
             if (oneIssue) {
-                configCompletedOrError("Une erreur est survenue - Délégué, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+                configCompletedOrError("Une erreur est survenue - formations, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
             } else {
                 configCompletedOrError("Liste des formations")
                 //getTypeThemeFormations()
@@ -1722,13 +1745,14 @@ class ConfigurationActivity : AppCompatActivity() {
                     val datasList: MutableList<InspectionDTOExt>? = responseData.body()
 
                     datasList?.map {
+//                        LogUtils.d(it.certificat, GsonUtils.fromJson<MutableList<String>>(it.certificat, object : TypeToken<MutableList<String>>(){}.type))
                         val dataModel = InspectionDTO(
                             id = it.id,
                             uid = 0,
                             producteursId = it.producteursId,
                             formateursId = it.formateursId,
                             campagnesId = it.campagnesId,
-                            certificatStr = GsonUtils.fromJson<MutableList<String>>(it.certificatStr, object : TypeToken<MutableList<String>>(){}.type).toModifString(true, ","),
+                            certificatStr = GsonUtils.fromJson<MutableList<String>>(it.certificat, object : TypeToken<MutableList<String>>(){}.type).toModifString(true, ","),
                             noteInspection = it.noteInspection,
                             total_question = it.total_question,
                             total_question_conforme = it.total_question_conforme,
@@ -3110,8 +3134,8 @@ class ConfigurationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_configuration)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         database = CcbRoomDatabase.getDatabase(this)
 

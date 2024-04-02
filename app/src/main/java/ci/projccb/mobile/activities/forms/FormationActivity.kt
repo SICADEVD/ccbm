@@ -34,6 +34,7 @@ import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.FileUtils.getFileExtension
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import id.zelory.compressor.Compressor
@@ -54,6 +55,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
+import java.lang.reflect.TypeVariable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -426,19 +428,21 @@ class FormationActivity : AppCompatActivity() {
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
+                    if(intent.getStringExtra("from") == null){
+                        var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
 
-                    Commons.setupItemMultiSelection(this, selectProducteurFormation,
-                        getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
-                        producteurList
-                    ){ selected ->
+                        Commons.setupItemMultiSelection(this, selectProducteurFormation,
+                            getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
+                            producteurList
+                        ){ selected ->
 
-                        producteurList?.forEach { product ->
-                            if( selected.contains(product.nom) ){
-                                producteurIdList.add(CommonData(product.id, product.nom.toString()))
+                            producteurList?.forEach { product ->
+                                if( selected.contains(product.nom) ){
+                                    producteurIdList.add(CommonData(product.id, product.nom.toString()))
+                                }
                             }
+                            //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
                         }
-                        //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
                     }
                 }
 
@@ -609,7 +613,8 @@ class FormationActivity : AppCompatActivity() {
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 
-            this.add(Pair(getString(R.string.les_producteurs), producteurIdList.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
+            this.add(Pair("Les participants", producteurIdList.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
+            this.add(Pair("Le nombre total de participant", producteurIdList.size.toString()))
             this.add(Pair(getString(R.string.les_types_de_formation), typeFormationListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n") ))
             this.add(Pair(getString(R.string.les_themes), themeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
             this.add(Pair(getString(R.string.les_sous_themes), sousThemeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
@@ -912,6 +917,23 @@ class FormationActivity : AppCompatActivity() {
 
         setupSectionSelection(formationDrafted.section, formationDrafted.localitesId)
 
+        var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(formationDrafted.localitesId.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
+        var selectStr: MutableList<String> = GsonUtils.fromJson(formationDrafted.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type)
+        var selectProd = producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
+        LogUtils.d(selectStr, selectProd)
+        Commons.setupItemMultiSelection(this, selectProducteurFormation,
+            getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
+            producteurList,
+            currentList = selectProd.map { "${it.nom}" }.toMutableList()
+        ){ selected ->
+
+            producteurList?.forEach { product ->
+                if( selected.contains(product.nom) ){
+                    producteurIdList.add(CommonData(product.id, product.nom.toString()))
+                }
+            }
+        }
+
         Commons.setListenerForSpinner(this,
             getString(R.string.lieu_de_la_formation),
             spinner = selectLieuFormation,
@@ -935,11 +957,14 @@ class FormationActivity : AppCompatActivity() {
             })
 
         val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        val currentTypeList = listTypeFormation?.filter { GsonUtils.fromJson<MutableList<String>>(formationDrafted.typeFormationStr, object : TypeToken<MutableList<String>>(){}.type).contains(it.id.toString()) == true }
+        var currentZip = GsonUtils.fromJson<MutableList<String>>(formationDrafted.typeFormationStr, object : TypeToken<MutableList<String>>(){}.type)
+        val currentTypeList = listTypeFormation?.filter { currentZip.contains(it.id.toString()) == true }
         val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        val currentThemeList = listThemeFormation?.filter { GsonUtils.fromJson<MutableList<String>>(formationDrafted.themeStr, object : TypeToken<MutableList<String>>(){}.type).map { it.split("-")[1] }.contains(it.id.toString()) == true }
+        var currentZip2 = GsonUtils.fromJson<MutableList<String>>(formationDrafted.themeStr, object : TypeToken<MutableList<String>>(){}.type)
+        val currentThemeList = listThemeFormation?.filter { currentZip2.map { it.split("-")[1] }.contains(it.id.toString()) == true }
         val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        val currentSousThemeList = listSousThemeFormation?.filter { GsonUtils.fromJson<MutableList<String>>(formationDrafted.sousThemeStr, object : TypeToken<MutableList<String>>(){}.type).map { it.split("-")[1] }.contains(it.id.toString()) == true }
+        var currentZip3 = GsonUtils.fromJson<MutableList<String>>(formationDrafted.sousThemeStr, object : TypeToken<MutableList<String>>(){}.type)
+        val currentSousThemeList = listSousThemeFormation?.filter { currentZip3.map { it.split("-")[1] }.contains(it.id.toString()) == true }
         Commons.setupItemMultiSelection(this, selectModuleMultiFormation,
             getString(R.string.quels_sont_les_modules_de_la_formation),
             (listTypeFormation)?.map { CommonData(0, it.nom.toString())
@@ -959,7 +984,9 @@ class FormationActivity : AppCompatActivity() {
 
             Commons.setupItemMultiSelection(this, selectThemeMultiFormation,
                 getString(R.string.quels_sont_les_themes_de_la_formation),
-                (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }){ themeList ->
+                (listThemeFormationCustom).map { CommonData(0, "${it.nom}") },
+                currentList = currentThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()
+            ){ themeList ->
 
                 val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
                 themeListCm.clear()
@@ -972,7 +999,8 @@ class FormationActivity : AppCompatActivity() {
 
                 Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
                     getString(R.string.quels_sont_les_sous_themes_de_la_formation),
-                    (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }){
+                    (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") },
+                    currentList = currentSousThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()){
                     listSousThemeFormation?.forEach { sThemeForm ->
                         if( it.contains(sThemeForm.nom) ){
                             sousThemeListCm.add(CommonData(sThemeForm.id, sThemeForm.nom.toString(), value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"))
@@ -983,12 +1011,41 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        Commons.setupItemMultiSelection(this, selectThemeMultiFormation, getString(R.string.quels_sont_les_themes_de_la_formation),
-            itemList = currentThemeList?.map { CommonData(0, it.nom.toString())}?.toMutableList()?: mutableListOf() ) {
+        val listThemeFormationCustom = mutableListOf<ThemeFormationModel>()
+        typeFormationListCm.clear()
+        listTypeFormation?.forEach { typeForm ->
+            if( currentTypeList?.map { "${it.nom}" }?.contains(typeForm.nom) == true ){
+                listThemeFormationCustom.addAll(listThemeFormation?.filter {it.typeFormationsId === typeForm.id}?.toMutableList()?: arrayListOf())
+                typeFormationListCm.add(CommonData(typeForm.id, typeForm.nom.toString()))
+            }
+        }
+        Commons.setupItemMultiSelection(this, selectThemeMultiFormation,
+            getString(R.string.quels_sont_les_themes_de_la_formation),
+            (listThemeFormationCustom).map { CommonData(0, "${it.nom}") },
+            currentList = currentThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()
+        ){ themeList ->
+
+
+
         }
 
-        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, getString(R.string.quels_sont_les_sous_themes_de_la_formation),
-            itemList = currentSousThemeList?.map { CommonData(0, it.nom.toString())}?: mutableListOf()) {
+        val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
+        themeListCm.clear()
+        listThemeFormation?.forEach { themeForm ->
+            if( currentThemeList?.map { "${it.nom}" }?.contains(themeForm.nom) == true){
+                listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter {it.themeFormationsId === themeForm.id}?.toMutableList()?: arrayListOf())
+                themeListCm.add(CommonData(themeForm.id, themeForm.nom.toString(), value = "${themeForm.typeFormationsId}-${themeForm.id}"))
+            }
+        }
+        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
+            getString(R.string.quels_sont_les_sous_themes_de_la_formation),
+            (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") },
+            currentList = currentSousThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()){
+            listSousThemeFormation?.forEach { sThemeForm ->
+                if( it.contains(sThemeForm.nom) ){
+                    sousThemeListCm.add(CommonData(sThemeForm.id, sThemeForm.nom.toString(), value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"))
+                }
+            }
         }
 
         val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
@@ -1094,7 +1151,7 @@ class FormationActivity : AppCompatActivity() {
 
     fun dialogPickerPhoto() {
         val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
-        Commons.adjustTextViewSizesInDialog(this, dialogPicker, "", this.resources.getDimension(R.dimen._8ssp)
+        Commons.adjustTextViewSizesInDialog(this, dialogPicker, "",   this.resources.getDimension(R.dimen._6ssp)
             ,true)
         if(whichPhoto == 0){
             dialogPicker.setMessage(getString(R.string.source_de_la_photo))
@@ -1135,8 +1192,8 @@ class FormationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_formation)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         formationDao = CcbRoomDatabase.getDatabase(applicationContext)?.formationDao()
         producteurDao = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()

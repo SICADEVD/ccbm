@@ -19,6 +19,7 @@ import ci.projccb.mobile.repositories.databases.daos.FormationDao
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.limitListByCount
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
@@ -27,6 +28,7 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.clickCancelEvaluationArbre
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.clickSaveEvaluationArbre
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.recyclerArbreListEvalArbre
@@ -63,8 +65,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_visiteur_formation)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         visiteurFormationDao = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
         formationDao = CcbRoomDatabase.getDatabase(this)?.formationDao()
@@ -225,25 +227,52 @@ class VisiteurFormationActivity : AppCompatActivity() {
         val visiteurFormationDrafted = ApiClient.gson.fromJson(draftedDataVisit.datas, VisiteurFormationModel::class.java)
         setupSectionSelection(visiteurFormationDrafted.section, visiteurFormationDrafted.localite, visiteurFormationDrafted.producteurId)
 
+        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val typeTok = object : TypeToken<MutableList<String>>(){}.type
         val formationList = formationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+        LogUtils.d(formationList)
         Commons.setListenerForSpinner(this,
             getString(R.string.selectionner_la_formation),
             getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
-            spinner = selectFormationVisitForm,
             currentVal = getString(R.string.formation)+(formationList?.find { it.id == visiteurFormationDrafted.suivi_formation_id?.toInt() } as FormationModel?)?.id.toString() ?: "0",
-            listIem = formationList?.map { getString(R.string.formation)+"${it.id}" }
-                ?.toList() ?: listOf(),
+            spinner = selectFormationVisitForm,
+            listIem = formationList?.map { formM ->
+                val participCount = GsonUtils.fromJson<MutableList<String>>(formM.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
+                    if(it.isNullOrEmpty())
+                        0
+                    else it.size
+                }
+                val themeFit = GsonUtils.fromJson<MutableList<String>>(formM.themeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val sousThemeFit = GsonUtils.fromJson<MutableList<String>>(formM.sousThemeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val typeF = listTypeFormation?.filter { formM.typeFormationStr.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val themeF = listThemeFormation?.filter {  themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+            }.toList() ?: listOf(),
             onChanged = {
 
                 val formation = formationList!![it]
                 //ogUtils.d(section)
-                formationCommon.nom = getString(R.string.formation)+"${formation.id}"
+                val participCount = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
+                    if(it.isNullOrEmpty())
+                        0
+                    else it.size
+                }
+                val themeFit = GsonUtils.fromJson<MutableList<String>>(formation.themeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val sousThemeFit = GsonUtils.fromJson<MutableList<String>>(formation.sousThemeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val typeF = listTypeFormation?.filter { formation.typeFormationStr.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val themeF = listThemeFormation?.filter { themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
 
-                if(formation.isSynced){
-                    formationCommon.id = formation.id!!
-                }else{
-                    formationCommon.id = formation.uid
+                formationCommon.nom = "Date de formation: ${formation.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+                editCurrentFormVisitForm.setText(formationCommon.nom)
+                formation.isSynced?.let {
+                    if(it){
+                        formationCommon.id = formation.id!!
+                    }else formationCommon.id = formation.uid
                 }
 
             },
@@ -335,19 +364,47 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         setupSectionSelection()
 
+        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val typeTok = object : TypeToken<MutableList<String>>(){}.type
         val formationList = formationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+        LogUtils.d(formationList)
         Commons.setListenerForSpinner(this,
             getString(R.string.selectionner_la_formation),
             getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
             spinner = selectFormationVisitForm,
-            listIem = formationList?.map { getString(R.string.formation)+(if(it.isSynced) "${it.id}" else "${it.uid} non soumis") }
-                ?.toList() ?: listOf(),
+            listIem = formationList?.map { formM ->
+                val participCount = GsonUtils.fromJson<MutableList<String>>(formM.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
+                    if(it.isNullOrEmpty())
+                        0
+                    else it.size
+                }
+                val themeFit = GsonUtils.fromJson<MutableList<String>>(formM.themeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val sousThemeFit = GsonUtils.fromJson<MutableList<String>>(formM.sousThemeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val typeF = listTypeFormation?.filter { formM.typeFormationStr.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val themeF = listThemeFormation?.filter {  themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+            }.toList() ?: listOf(),
             onChanged = {
 
                 val formation = formationList!![it]
                 //ogUtils.d(section)
-                formationCommon.nom = getString(R.string.formation)+(if(formation.isSynced) "${formation.id}" else "${formation.uid} non soumis")
+                val participCount = GsonUtils.fromJson<MutableList<String>>(formation.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
+                    if(it.isNullOrEmpty())
+                        0
+                    else it.size
+                }
+                val themeFit = GsonUtils.fromJson<MutableList<String>>(formation.themeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val sousThemeFit = GsonUtils.fromJson<MutableList<String>>(formation.sousThemeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+                val typeF = listTypeFormation?.filter { formation.typeFormationStr.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val themeF = listThemeFormation?.filter { themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+                val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+
+                formationCommon.nom = "Date de formation: ${formation.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+                editCurrentFormVisitForm.setText(formationCommon.nom)
                 formation.isSynced?.let {
                     if(it){
                         formationCommon.id = formation.id!!

@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -42,4 +43,7 @@ interface SuiviApplicationDao {
     @Transaction
     @Query("SELECT * FROM suivi_application WHERE (isSynced = 0 AND parcelle_id = :parcUid)")
     fun getUnSyncedByParcUid(parcUid: String?): MutableList<SuiviApplicationModel>
+    @Transaction
+    @Query("SELECT * FROM suivi_application WHERE isSynced = 0 AND userid = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<SuiviApplicationModel>>
 }

@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +19,7 @@ import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons.Companion.modifyIcColor
-import kotlinx.android.synthetic.main.drafted_items_list.view.*
+import kotlinx.android.synthetic.main.synced_items_list.view.*
 
 
 /**
@@ -33,6 +35,7 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
 
         val labelNumberDraft = viewDataDrafted.labelDraftedNumberItem
         val labelDateDraft = viewDataDrafted.labelDraftedDateItem
+        val linearDraftedItemDateContainer = viewDataDrafted.linearDraftedItemDateContainer
         val imageTypeDraft = viewDataDrafted.imageDraftedTypeItem
     }
 
@@ -45,7 +48,10 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
         val draftedData = draftedList!![position]
 
         holder.labelNumberDraft.text = draftedData.listOfValue?.get(0).toString()
-        holder.labelDateDraft.text = draftedData.listOfValue?.get(1).toString()
+        if(draftedData.listOfValue?.size!! > 1){
+            holder.labelDateDraft.text = draftedData.listOfValue?.get(1).toString()
+            holder.linearDraftedItemDateContainer.visibility = VISIBLE
+        }
         var intentUndraftedData: Intent? = null
 
         when (draftedData.value?.uppercase()) {
@@ -178,6 +184,12 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
                 (context as Activity).finish()
             }else Toast.makeText(context, "Aucune donnée de synchronisation trouvée !", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun updateItems(newItems: List<CommonData>) {
+        draftedList?.clear()
+        draftedList?.addAll(newItems)
+        notifyDataSetChanged() // Use cautiously
     }
 
 

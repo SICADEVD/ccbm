@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -38,5 +39,8 @@ interface LivraisonDao {
     @Transaction
     @Query("SELECT * FROM livraison WHERE (isSynced = 0 AND producteursId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<LivraisonModel>
+    @Transaction
+    @Query("SELECT * FROM livraison WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<LivraisonModel>>
 
 }

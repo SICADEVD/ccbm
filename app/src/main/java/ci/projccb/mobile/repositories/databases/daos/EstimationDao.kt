@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -41,4 +42,7 @@ interface EstimationDao {
     @Transaction
     @Query("SELECT * FROM estimation WHERE (isSynced = 0 AND parcelleId = :parcUid)")
     fun getUnSyncedByParcUid(parcUid: String?): MutableList<EstimationModel>
+    @Transaction
+    @Query("SELECT * FROM estimation WHERE isSynced = 0 AND userid = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<EstimationModel>>
 }

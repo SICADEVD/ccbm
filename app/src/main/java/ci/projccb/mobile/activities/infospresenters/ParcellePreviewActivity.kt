@@ -1,5 +1,6 @@
 package ci.projccb.mobile.activities.infospresenters
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -48,16 +49,26 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
 //    }
 
 
-    fun buildExport(parcellePo: ParcelleModel, type: Int, action: Int) {
+    fun buildExport(
+        activity: Activity,
+        parcellePo: ParcelleModel,
+        type: Int,
+        action: Int
+    ) {
 
         MainScope().launch {
             withContext(IO) {
                 try {
-                    if (type == 1) ExportUtils.expotToKml(parcellePo.producteurNom?.lowercase(), parcellePo, action,this@ParcellePreviewActivity)
-                    else ExportUtils.exportToGpx(parcellePo.producteurNom?.lowercase(), parcellePo, action, this@ParcellePreviewActivity)
+                    val product = CcbRoomDatabase.getDatabase(activity)?.producteurDoa()?.getProducteurByID(parcellePo.producteurId?.toInt())
+                    val localite = CcbRoomDatabase.getDatabase(activity)?.localiteDoa()?.getLocalite(product?.localitesId?.toInt()?:0)
+//                    LogUtils.d(product)
+//                    LogUtils.d(localite)
+                    val nomPrenoms = "${localite?.nom}_"+"${product?.nom} ${product?.prenoms}".replace(" ", "_")+"_"
+                    if (type == 1) ExportUtils.expotToKml(nomPrenoms?.lowercase(), parcellePo, action,this@ParcellePreviewActivity)
+                    else ExportUtils.exportToGpx(nomPrenoms?.lowercase(), parcellePo, action, this@ParcellePreviewActivity)
                 } catch (ex: Exception) {
                     LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }
         }
@@ -85,6 +96,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
         intent?.let {
             try {
                 parcellePoo = it.getParcelableExtra("preview")!!
+//                LogUtils.json(parcellePoo)
                 draftID = it.getIntExtra("draft_id", 0)
                 //collecteDatas()
 
@@ -117,7 +129,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
         labelSaving?.setOnClickListener {
             try {
                 dialog.dismiss()
-                buildExport(parcellePoo, whichButton, 2)
+                buildExport(this, parcellePoo, whichButton, 2)
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -127,7 +139,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
         labelSharing?.setOnClickListener {
             try {
                 dialog.dismiss()
-                buildExport(parcellePoo, whichButton, 1)
+                buildExport(this, parcellePoo, whichButton, 1)
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)

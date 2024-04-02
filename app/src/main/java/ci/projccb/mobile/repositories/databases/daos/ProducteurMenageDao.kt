@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -22,6 +23,9 @@ interface ProducteurMenageDao {
     @Transaction
     @Query("SELECT * FROM menage WHERE isSynced = 0 AND agentId = :agentID")
     fun getUnSyncedAll(agentID: String?): MutableList<ProducteurMenageModel>
+    @Transaction
+    @Query("SELECT * FROM menage WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<ProducteurMenageModel>>
 
     @Transaction
     @Query("UPDATE menage SET id = :id, isSynced = :synced, origin = 'remote' WHERE uid = :localID")

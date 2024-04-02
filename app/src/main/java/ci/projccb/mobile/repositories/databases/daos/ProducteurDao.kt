@@ -1,6 +1,9 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
+import ci.projccb.mobile.models.ProdExt
+import ci.projccb.mobile.models.ProducteurMenageModel
 import ci.projccb.mobile.models.ProducteurModel
 
 /**
@@ -62,4 +65,12 @@ interface ProducteurDao {
     @Transaction
     @Query("DELETE FROM producteur")
     fun deleteAll()
+    @Transaction
+    @Query("SELECT * FROM producteur WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<ProducteurModel>>
+
+    @Transaction
+    @Query("SELECT p.uid, p.id, p.nom || ' ' || p.prenoms AS fullName, par.id AS parceId, par.uid AS parceUid, p.isSynced, p.nom, p.prenoms, par.codeParc, par.superficie, par.anneeCreation, par.anneeRegenerer FROM producteur AS p INNER JOIN parcelle AS par ON p.id = par.producteurId WHERE p.isSynced = 1 AND (fullName LIKE '%' || :search || '%' OR par.codeParc LIKE '%' || :search || '%' OR par.superficie LIKE '%' || :search || '%' OR par.anneeCreation LIKE '%' || :search || '%') ORDER BY p.uid DESC LIMIT 100")
+    fun findByName(search: String): MutableList<ProdExt>
+
 }

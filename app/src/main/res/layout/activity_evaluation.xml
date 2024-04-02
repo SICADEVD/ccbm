@@ -364,6 +364,7 @@
                     android:textColor="@color/text_color_white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_12sdp"
                     android:layout_weight="3.5"
                     android:text="Date inspection"
                     android:textSize="@dimen/page_input_title_dim11"

@@ -33,8 +33,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         agentDao = CcbRoomDatabase.getDatabase(this)?.agentDoa()!!
         val agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)

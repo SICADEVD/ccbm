@@ -1192,8 +1192,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         setContentView(R.layout.activity_unite_agricole_producteur)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         try {
 

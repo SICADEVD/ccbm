@@ -212,16 +212,16 @@ class AuthentificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authentification)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
-        bindDatas()
+        //bindDatas()
 
         agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
         coopDao = CcbRoomDatabase.getDatabase(this)?.coopDao()
 
         val progressDialogBuild = AlertDialog.Builder(this, R.style.DialogTheme)
-        Commons.adjustTextViewSizesInDialog(this, progressDialogBuild!!, "Connexion en cours...", this.resources.getDimension(R.dimen._8ssp)
+        Commons.adjustTextViewSizesInDialog(this, progressDialogBuild!!, "Connexion en cours...",   this.resources.getDimension(R.dimen._6ssp)
             ,false, true)
         progressDialog = progressDialogBuild.create()
         //progressDialog!!.setMessage(Editable.Factory.getInstance().newEditable("Connexion en cours..."))

@@ -1,6 +1,7 @@
 package ci.projccb.mobile.models
 
 import android.os.Parcelable
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Index
@@ -82,6 +83,9 @@ interface VisiteurFormationDao {
     @Transaction
     @Query("SELECT * FROM visiteur_formation WHERE (isSynced = 0 AND formationId = :formationID)")
     fun getUnSyncedByFormUid(formationID: String?): MutableList<VisiteurFormationModel>
+    @Transaction
+    @Query("SELECT * FROM visiteur_formation WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<VisiteurFormationModel>>
 
 
 }

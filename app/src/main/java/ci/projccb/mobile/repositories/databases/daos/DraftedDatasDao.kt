@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.DataDraftedModel
 
@@ -36,6 +37,14 @@ interface DraftedDatasDao {
     @Transaction
     @Query("SELECT COUNT(*) FROM drafted_datas WHERE (agentId = :agentID AND typeDraft = :type AND draftCompleted = 0)")
     fun countByType(agentID: String, type:String) : Int?
+
+    @Transaction
+    @Query("SELECT COUNT(*) FROM drafted_datas WHERE (agentId = :agentID AND typeDraft = :type AND draftCompleted = 0)")
+    fun countByTypeLive(agentID: String, type:String) : LiveData<Int?>
+
+    @Transaction
+    @Query("SELECT * FROM drafted_datas WHERE (agentId = :agentID AND draftCompleted = 0) ORDER BY uid DESC")
+    fun getAllLive(agentID: String) : LiveData<MutableList<DataDraftedModel>>
 
     @Transaction
     @Query("DELETE FROM drafted_datas")

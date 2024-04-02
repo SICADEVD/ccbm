@@ -3,19 +3,15 @@ package ci.projccb.mobile.adapters
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.DashboardAgentActivity
 import ci.projccb.mobile.models.FeatureModel
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.redirectMenu
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_dashboard_agent.imgProfileDashboard
 
 class FeatureAdapter(
     private var activity: Activity,
@@ -69,55 +65,30 @@ class FeatureAdapter(
         Commons.modifyIcColor(activity, holder.image_current, R.color.black)
         holder.feature_tv_main.text = currentFeature.title.toString().replace("_", " ")
 
-        //holder.tv_current_sync.text = currentFeature.title.toString()
-
-//        Picasso.get()
-//            .load(currentFeature.image)
-//            .fit()
-//            .placeholder(currentFeature.placeholder)
-//            .into(holder.image_current);
+        val passToModifList = listOf<String>(
+            "INSPECTION",
+            "PARCELLE"
+        )
 
         holder.itemView.setOnClickListener {
-            if("INSPECTION".toLowerCase().equals(currentFeature.type.toString(), ignoreCase = true)){
+            if(passToModifList.toString().toLowerCase().contains(currentFeature.type.toString(), ignoreCase = true)){
                 redirectMenu(currentFeature.type.toString(), "SYNC_UPDATE", activity)
             }else{
                 redirectMenu(currentFeature.type.toString(), "ADD", activity)
             }
+            (activity as DashboardAgentActivity).hideExpandFromAdapter()
         }
-
-//        if(currentFeature.canAdd){
-//            holder.btn_add.visibility = VISIBLE
-//            holder.btn_add.setOnClickListener {
-//                redirectMenu(currentFeature.type.toString(), "ADD", activity)
-//            }
-//        }
-//
-//        if(currentFeature.canViewUpdate){
-//            holder.btn_edit.visibility = VISIBLE
-//            holder.btn_edit.setOnClickListener {
-//                redirectMenu(currentFeature.type.toString(), "UPDATE", activity)
-//            }
-//        }
-//
-//        if(currentFeature.canViewSync){
-//            holder.btn_sync.visibility = VISIBLE
-//            holder.btn_sync.setOnClickListener {
-//                redirectMenu(currentFeature.type.toString(), "DATAS", activity)
-//            }
-//        }
-//
-//        if(currentFeature.canViewDraft){
-//            holder.btn_draft.visibility = VISIBLE
-//            holder.btn_draft.setOnClickListener {
-//                redirectMenu(currentFeature.type.toString(), "DRAFTS", activity)
-//            }
-//        }
     }
 
 
-    fun updateFeature(list: ArrayList<FeatureModel>) {
-        this.listOfFeatures = list
+    fun updateFeatures(list: MutableList<FeatureModel>) {
+        this.listOfFeatures.clear()
+        this.listOfFeatures.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun getListFeatures(): MutableList<FeatureModel> {
+        return this.listOfFeatures
     }
 
 

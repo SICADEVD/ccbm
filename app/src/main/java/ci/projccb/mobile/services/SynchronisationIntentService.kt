@@ -209,106 +209,108 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                             )
                         }
 
-                        producteurSynced?.let {
+                        if(response.isSuccessful){
+                            producteurSynced?.let {
 //                            LogUtils.d(producteurSynced?.id)
 //                            LogUtils.d(response.code())
 
-                            producteurDao.syncData(
-                                id = producteurSynced?.id!!,
-                                synced = true,
-                                localID = producteur.uid
-                            )
+                                producteurDao.syncData(
+                                    id = producteurSynced?.id!!,
+                                    synced = true,
+                                    localID = producteur.uid
+                                )
 
-                            infosProducteurDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteursId = producteurSynced.id.toString()
-                                infosProducteurDao?.insert(it)
-                            }
-
-                            inspectionDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteursId = producteurSynced.id.toString()
-                                inspectionDao?.insert(it)
-                            }
-
-                            livraisonDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteursId = producteurSynced.id.toString()
-                                livraisonDao?.insert(it)
-                            }
-
-                            livraisonCentralDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteursId = producteurSynced.id.toString()
-                                livraisonCentralDao?.insert(it)
-                            }
-
-                            menageDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteurs_id = producteurSynced.id.toString()
-                                menageDao?.insert(it)
-                            }
-
-                            enqueteSsrtDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteursId = producteurSynced.id.toString()
-                                enqueteSsrtDao?.insert(it)
-                            }
-
-                            parcelleDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteurId = producteurSynced.id.toString()
-                                parcelleDao?.insert(it)
-                            }
-
-                            distributionArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteurId = producteurSynced.id.toString()
-                                distributionArbreDao?.insert(it)
-                            }
-
-                            evaluationArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                it.producteurId = producteurSynced.id.toString()
-                                evaluationArbreDao?.insert(it)
-                            }
-
-
-                            // THIS SYNC DEPEND TO PRODUCTEUR_ID AND PARCELLE_ID
-
-                            estimationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
-                                it.producteurId = producteurSynced.id.toString()
-                                estimationDao?.insert(it)
-                            }
-
-                            suiviParcelleDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
-                                it.producteursId = producteurSynced.id.toString()
-                                suiviParcelleDao?.insert(it)
-                            }
-
-                            suiviApplicationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
-                                it.producteur = producteurSynced.id.toString()
-                                suiviApplicationDao?.insert(it)
-                            }
-
-                            // THIS SYNC DEPEND TO PRODUCTEUR_ID AND FORMATION_ID
-
-                            visiteurFormationDao?.getUnSyncedByProdAndFormUid(producteur.uid.toString())?.forEach {
-                                it.producteurId = producteurSynced.id.toString()
-                                visiteurFormationDao?.insert(it)
-                            }
-
-                            // THIS SYNC DEPEND TO PRODUCTEUR_ID
-                            formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
-                                if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
-                                    if( producteurDao.getProducteurByID(producteur.uid) == null ) {
-                                        formMod.producteursIdStr = formMod.producteursIdStr?.let {
-
-                                            var curValue = it
-                                            if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
-                                            LogUtils.d(curValue)
-                                            curValue
-
-                                        }
-
-                                    }
+                                infosProducteurDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteursId = producteurSynced.id.toString()
+                                    infosProducteurDao?.insert(it)
                                 }
 
-                                formationDao?.insert(formMod)
+                                inspectionDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteursId = producteurSynced.id.toString()
+                                    inspectionDao?.insert(it)
+                                }
+
+                                livraisonDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteursId = producteurSynced.id.toString()
+                                    livraisonDao?.insert(it)
+                                }
+
+                                livraisonCentralDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteursId = producteurSynced.id.toString()
+                                    livraisonCentralDao?.insert(it)
+                                }
+
+                                menageDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteurs_id = producteurSynced.id.toString()
+                                    menageDao?.insert(it)
+                                }
+
+                                enqueteSsrtDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteursId = producteurSynced.id.toString()
+                                    enqueteSsrtDao?.insert(it)
+                                }
+
+                                parcelleDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteurId = producteurSynced.id.toString()
+                                    parcelleDao?.insert(it)
+                                }
+
+                                distributionArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteurId = producteurSynced.id.toString()
+                                    distributionArbreDao?.insert(it)
+                                }
+
+                                evaluationArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                                    it.producteurId = producteurSynced.id.toString()
+                                    evaluationArbreDao?.insert(it)
+                                }
+
+
+                                // THIS SYNC DEPEND TO PRODUCTEUR_ID AND PARCELLE_ID
+
+                                estimationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                    it.producteurId = producteurSynced.id.toString()
+                                    estimationDao?.insert(it)
+                                }
+
+                                suiviParcelleDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                    it.producteursId = producteurSynced.id.toString()
+                                    suiviParcelleDao?.insert(it)
+                                }
+
+                                suiviApplicationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                                    it.producteur = producteurSynced.id.toString()
+                                    suiviApplicationDao?.insert(it)
+                                }
+
+                                // THIS SYNC DEPEND TO PRODUCTEUR_ID AND FORMATION_ID
+
+                                visiteurFormationDao?.getUnSyncedByProdAndFormUid(producteur.uid.toString())?.forEach {
+                                    it.producteurId = producteurSynced.id.toString()
+                                    visiteurFormationDao?.insert(it)
+                                }
+
+                                // THIS SYNC DEPEND TO PRODUCTEUR_ID
+                                formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
+                                    if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
+                                        if( producteurDao.getProducteurByID(producteur.uid) == null ) {
+                                            formMod.producteursIdStr = formMod.producteursIdStr?.let {
+
+                                                var curValue = it
+                                                if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
+                                                LogUtils.d(curValue)
+                                                curValue
+
+                                            }
+
+                                        }
+                                    }
+
+                                    formationDao?.insert(formMod)
+
+                                }
 
                             }
-
                         }
 
                     }
@@ -427,19 +429,19 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 try {
                     parcelle?.apply {
                         codeParc = null
-                        id = 0
-                        localiteNom = null
-                        nom = null
-                        perimeter = null
-                        prenoms = null
-                        producteurNom = null
+//                        id = 0
+//                        localiteNom = null
+//                        nom = null
+//                        perimeter = null
+//                        prenoms = null
+//                        producteurNom = null
                     }
 
                     if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
 
                     parcelle.apply {
-                        protectionList = returnStringList(protectionStr)?: arrayListOf()
-                        arbreList = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
+                        protectionO = returnStringList(protectionStr)?: arrayListOf()
+                        itemsO = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
                     }
 
                     //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")

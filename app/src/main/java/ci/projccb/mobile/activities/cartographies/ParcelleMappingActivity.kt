@@ -471,7 +471,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
     fun showMappingTypeDialog() {
         val dialog = Dialog(this, R.style.DialogTheme)
-//        Commons.adjustTextViewSizesInDialog(this, dialogBuild, "", this.resources.getDimension(R.dimen._8ssp)
+//        Commons.adjustTextViewSizesInDialog(this, dialogBuild, "",   this.resources.getDimension(R.dimen._6ssp)
 //            ,true)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true)
@@ -772,7 +772,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
         // showMappingTypeDialog()
         val pgs = ProgressDialog(this, R.style.DialogTheme)
-        Commons.adjustTextViewSizesInDialog(this, pgs, "Chargement des parcelles", this.resources.getDimension(R.dimen._8ssp)
+        Commons.adjustTextViewSizesInDialog(this, pgs, "Chargement des parcelles",   this.resources.getDimension(R.dimen._6ssp)
             ,false)
         pgs.setCancelable(false)
         //pgs.setMessage("Chargement des parcelles")

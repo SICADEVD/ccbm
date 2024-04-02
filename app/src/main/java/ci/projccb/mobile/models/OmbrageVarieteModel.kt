@@ -12,7 +12,7 @@ import com.google.gson.annotations.Expose
 @Entity(tableName = "variete_ombrage")
 data class OmbrageVarieteModel (
     @PrimaryKey(autoGenerate = true) val uid: Int,
-    @Expose val variete: String?,
+    @Expose var variete: String?,
     @Expose val nombre: String?,
 ) {
     override fun toString(): String {

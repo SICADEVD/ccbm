@@ -10,19 +10,13 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.cartographies.FarmDelimiterActivity
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.infospresenters.ParcellePreviewActivity
-import ci.projccb.mobile.activities.infospresenters.ProducteurPreviewActivity
-import ci.projccb.mobile.adapters.CultureProducteurAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
-import ci.projccb.mobile.interfaces.RecyclerItemListener
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -33,8 +27,6 @@ import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
-import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
-import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
@@ -48,20 +40,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_parcelle.*
-import kotlinx.android.synthetic.main.activity_producteur.clickCancelProducteur
-import kotlinx.android.synthetic.main.activity_producteur.containerAutreCertifProducteur
-import kotlinx.android.synthetic.main.activity_producteur.editAnneeCertificationProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectCertifProducteur
-import kotlinx.android.synthetic.main.activity_producteur.selectLocaliteProducteur
-import kotlinx.android.synthetic.main.activity_producteur_menage.selectProducteurMenage
-import kotlinx.android.synthetic.main.activity_producteur_menage.selectSectionProducteurMenage
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.containerArbreAgroSParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectAgroForesterieSParcelle
 
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectInsecteParOuRavSuivi
-import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.recyclerCultureInfosProducteur
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
@@ -72,6 +51,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
 
+    private var commomUpdate: CommonData = CommonData()
     private var arbreOmbrParcelleAdapter: OmbrageAdapter? = null
     private var arbrOmbrListParcelle: MutableList<OmbrageVarieteModel> = arrayListOf()
     var producteurDao: ProducteurDao? = null
@@ -141,7 +121,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString().equals(idc)) libItem = it.nom
             }
         }
 
@@ -179,9 +159,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.uid.toString().equals(idc)) libItem = "${it.nom} ${it.prenoms}"
                 } else {
-                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.id.toString().equals(idc)) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -216,113 +196,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
 
-//        producteursList?.map {
-//            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
-//        }?.let {
-//            producteursDatas.addAll(it)
-//        }
-//
-//        val menageDraftedLocal = ApiClient.gson.fromJson(draftedDataMenage?.datas, ProducteurMenageModel::class.java)
-//        selectProducteurMenage!!.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
-//
-//        if (menageDraftedLocal != null) {
-//            provideDatasSpinnerSelection(
-//                selectProducteurMenage,
-//                menageDraftedLocal.producteurNomPrenoms,
-//                producteursDatas
-//            )
-//        }
-//
-//        selectProducteurMenage.setTitle("Choisir le producteur")
-//        selectProducteurMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-//                val producteur = producteursList!![position]
-//                producteurNomPrenoms = "${producteur.nom} ${producteur.prenoms}"
-//                producteurCode = producteur.codeProd.toString()
-//
-//                producteurId = if (producteur.isSynced) {
-//                    producteur.id.toString()
-//                } else {
-//                    producteur.uid.toString()
-//                }
-//            }
-//
-//            override fun onNothingSelected(arg0: AdapterView<*>) {
-//            }
-//        }
-
-
-
-//    fun setupTyprDeclarationSelection() {
-//        selectDeclarationTypeParcelle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-//                typeDeclaration = resources.getStringArray(R.array.declarationType)[position]
-//                disableField(typeDeclaration)
-//            }
-//
-//            override fun onNothingSelected(arg0: AdapterView<*>) {
-//
-//            }
-//        }
-//    }
-
-
-
     fun collectDatas() {
-
-//        if (producteurId.isEmpty()) {
-//            showMessage(
-//                "Choisissez un producteur svp.",
-//                this,
-//                finished = false,
-//                callback = {},
-//                positive = getString(R.string.compris),
-//                deconnec = false,
-//                showNo = false
-//
-//            )
-//            return
-//        }
-
-//        if (editNomParcelle.text.toString().isEmpty()) {
-//            showMessage(
-//                message = "Renseignez la culture de la parcelle",
-//                context = this,
-//                finished = false,
-//                callback = {},
-//                positive = getString(R.string.ok),
-//                deconnec = false,
-//                showNo = false
-//            )
-//            return
-//        }
-
-//        if (editAnneParcelle.text.toString().isEmpty()) {
-//            showMessage(
-//                message = "Renseignez l'année de la parcelle",
-//                context = this,
-//                finished = false,
-//                callback = {},
-//                positive = getString(R.string.ok),
-//                deconnec = false,
-//                showNo = false
-//            )
-//            return
-//        }
-
-//        if (typeDeclaration == "GPS" && wayPoints.isEmpty()) {
-//            showMessage(
-//                message = "Les données fournes sont insuffisantes !",
-//                context = this,
-//                finished = false,
-//                callback = {},
-//                positive = getString(R.string.ok),
-//                deconnec = false,
-//                showNo = false
-//            )
-//
-//            return
-//        }
 
         val itemModelOb = getParcellObjet()
 
@@ -345,6 +219,17 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.map { MapEntry(it.first, it.second) }
+
+        if(intent.getIntExtra("sync_uid", 0) != 0){
+            parcelle.apply {
+                id = commomUpdate.listOfValue?.first()?.toInt()
+                uid = commomUpdate.listOfValue?.get(1)?.toLong()?:0
+                isSynced = false
+                origin = "local"
+            }
+        }
+
+//        LogUtils.json(parcelle)
 
         val intentParcellePreview = Intent(this, ParcellePreviewActivity::class.java)
         intentParcellePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
@@ -474,7 +359,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             editWayPointsParcelle.isEnabled = false
             clickLatLongParcelle.visibility = GONE
             clickToMappingParcelle.visibility = VISIBLE
-        } else {
+        } else if(typeDeclaration == "Verbale") {
             editSuperficieParcelle.isEnabled = true
             editLatParcelle.isEnabled = true
             editLongParcelle.isEnabled = true
@@ -482,6 +367,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             clickLatLongParcelle.visibility = VISIBLE
             clickToMappingParcelle.visibility = GONE
         }
+
     }
 
 
@@ -549,35 +435,46 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
 
-    fun undraftedDatas(draftedData: DataDraftedModel) {
-        val parcelleDrafted = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
+    fun undraftedDatas(draftedData: DataDraftedModel?, data: ParcelleModel? = null) {
+        var parcelleDrafted: ParcelleModel = ParcelleModel()
+        var product: ProducteurModel?  = null
 
-        //if (parcelleDrafted.codeParc.toString().isNotEmpty()) {
-            //linearCodeContainerParcelle.visibility = VISIBLE
-            //editCodeParcelle.setText(parcelleDrafted.codeParc ?: "")
-        //}
+        draftedData?.let {
+            parcelleDrafted = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
+            val intNullo = parcelleDrafted.section?.toIntOrNull()
+            if(intNullo != null){
+                LogUtils.i(intNullo)
+                setupSectionSelection(parcelleDrafted.section, parcelleDrafted.localite, parcelleDrafted.producteurId)
+            }else setupSectionSelection()
+        }
 
-        // Localite
-//        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-//        val localitesDatas: MutableList<CommonData> = mutableListOf()
-//        localitesLists?.map {
-//            CommonData(id = it.id, nom = it.nom)
-//        }?.let {
-//            localitesDatas.addAll(it)
-//        }
-//        selectLocaliteParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-//        provideDatasSpinnerSelection(
-//            selectLocaliteParcelle,
-//            parcelleDrafted.localiteNom,
-//            localitesDatas
-//        )
+        data?.let {
+            parcelleDrafted = data
+            commomUpdate.listOfValue = listOf<String>(data.id.toString(), data.uid.toString()).toMutableList()
+            product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(data.producteurId?.toInt()?:0)
+//            val sectionIt =  CcbRoomDatabase.getDatabase(this)?.sectionsDao()?.getById(product?.section)
+//            val localiteIt =  CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getLocalite(product?.localite?.toInt()?:0)
+            setupSectionSelection(product?.section.toString(), product?.localitesId.toString(), product?.id.toString())
+        }
 
-        // Type selection superficie
-//        provideStringSpinnerSelection(
-//            selectDeclarationTypeParcelle,
-//            parcelleDrafted.typedeclaration,
-//            resources.getStringArray(R.array.declarationType)
-//        )
+        val listArbresOth = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        parcelleDrafted?.arbreStr?.let {
+            if(it.isNotEmpty()) {
+                val listIt = GsonUtils.fromJson<MutableList<ArbreData>>(it, object : TypeToken<MutableList<ArbreData>>(){}.type )
+                val newArbreLi = listIt.map {ito->
+                    LogUtils.d(ito)
+                    listArbresOth?.filter { it.id.toString().equals(ito.arbre) == true }?.let {
+                        if(it.size > 0){
+                            ito.id = it.first()?.id
+                            ito.arbre = it.first() ?.nom?.trim()+" | "+it.first()?.nomScientifique
+                        }
+                    }
+//                    LogUtils.json(ito)
+                    OmbrageVarieteModel(ito.id?:0, "${ ito.arbre?.replace(" | ", "/")?.replace("| ", "/") }", ito.nombre)
+                }
+                (recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).setOmbragesList(newArbreLi.toMutableList())
+            }
+        }
 
         Commons.setListenerForSpinner(this,
             getString(R.string.type_de_d_claration_superficie),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -593,15 +490,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             onSelected = { itemId, visibility ->
             })
 
-        //editNomParcelle.setText(parcelleDrafted.culture)
-//        editSuperficieParcelle.setText(parcelleDrafted.superficie)
-//        editLatParcelle.setText(parcelleDrafted.latitude)
-//        editLongParcelle.setText(parcelleDrafted.longitude)
-        //editAnneParcelle.setText(parcelleDrafted.anneeCreation)
-
-        setupSectionSelection(parcelleDrafted.section, parcelleDrafted.localite, parcelleDrafted.producteurId)
-
-        setupMoyProtectMultiSelection(GsonUtils.fromJson(parcelleDrafted.protectionStr, object : TypeToken<MutableList<String>>() {}.type))
+        if(parcelleDrafted.protectionStr.isNullOrEmpty() == false){
+            setupMoyProtectMultiSelection(GsonUtils.fromJson(parcelleDrafted.protectionStr, object : TypeToken<MutableList<String>>() {}.type))
+        }
 
         Commons.setListenerForSpinner(this,
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -660,6 +551,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         Commons.setListenerForSpinner(this,
             getString(R.string.d_finit_le_niveau_de_la_pente),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectNiveauPente,
+            currentVal = parcelleDrafted.niveauPente,
             listIem = resources.getStringArray(R.array.niveau_pente)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -687,6 +579,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_cour_ou_plan_d_eau),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectCourEauParcelle,
+            currentVal = parcelleDrafted.courDeau,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }?.toList() ?: listOf(),
             onChanged = {
@@ -815,8 +708,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         super.onCreate(savedInstanceState)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
 
@@ -831,10 +724,13 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             finish()
         }
 
-
         clickCancelParcelle.setOnClickListener {
-            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-            ActivityUtils.getActivityByContext(this)?.finish()
+            if(intent.getIntExtra("sync_uid", 0) != 0){
+                ActivityUtils.getActivityByContext(this)?.finish()
+            }else {
+                ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                ActivityUtils.getActivityByContext(this)?.finish()
+            }
         }
 
         clickSaveParcelle.setOnClickListener {
@@ -857,31 +753,28 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         setOtherListener()
-       // setupTyprDeclarationSelection()
-//        setupLocaliteSelection()
-
-//        editAnneParcelle.setOnClickListener {
-//            datePickerDialog = null
-//            val calendar: Calendar = Calendar.getInstance()
-//            val year = calendar.get(Calendar.YEAR)
-//            val month = 0
-//            val dayOfMonth = 0
-//            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-//                editAnneParcelle.setText("$year")
-//            }, year, month, dayOfMonth)
-//
-//            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
-//            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
-//            datePickerDialog?.show()
-//        }
-
-        //applyFiltersDec(editSuperficieParcelle, withZero = true)
-
 
         if (intent.getStringExtra("from") != null) {
-            fromDatas = intent.getStringExtra("from") ?: ""
-            draftedDataParcelle = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
-            undraftedDatas(draftedDataParcelle!!)
+            if(intent.getIntExtra("drafted_uid", 0) != 0){
+                fromDatas = intent.getStringExtra("from") ?: ""
+                draftedDataParcelle = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
+                undraftedDatas(draftedDataParcelle!!)
+            }else{
+                val dataUid = intent.getIntExtra("sync_uid", 0)
+                //LogUtils.d(inspectUid)
+                if(dataUid != 0) {
+                    labelTitleMenuAction.text = "MISE A JOUR FICHE PARCELLE"
+//                    clickSaveInspection.setOnClickListener {
+//                        collectDatasUpdate(inspectUid)
+//                    }
+                    imageDraftBtn.visibility = View.GONE
+
+                    val updateData = CcbRoomDatabase.getDatabase(this)?.parcelleDao()?.getByUid(dataUid)
+                    updateData?.forEach {
+                        undraftedDatas(null, it)
+                    }
+                }
+            }
         }else{
             setAllListener()
         }

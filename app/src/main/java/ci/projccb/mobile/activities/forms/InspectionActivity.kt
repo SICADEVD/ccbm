@@ -204,7 +204,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                             Commons.setListenerForSpinner(this@InspectionActivity,
                                 getString(R.string.inspection_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
                                 spinner = selectCertifInspection,
-                                currentVal = listCertif?.certification?.split(",")?.filter { currVal3 == it }?.first()?:"",
+                                currentVal = listCertif?.certification?.split(",")?.filter { currVal3 == it }?.let {
+                                    if(it.isNotEmpty())
+                                        it.first()
+                                    else ""
+                                },
                                 listIem = listCertif?.certification?.split(",")
                                     ?.toList() ?: listOf(),
                                 onChanged = {
@@ -671,15 +675,15 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             return
         }
 
-        var listApprob = (AssetFileHelper.getListDataFromAsset(
-            29,
-            this
-        ) as MutableList<CommonData>)
+//        var listApprob = (AssetFileHelper.getListDataFromAsset(
+//            29,
+//            this
+//        ) as MutableList<CommonData>)
 
         val itemModelOb = getInspectObjet(id = intExtraUid)
         //LogUtils.d(intExtraUid, itemModelOb)
 
-        var dataList: InspectionUpdateDTO = InspectionUpdateDTO()
+        var dataInspectionUpdateDTO: InspectionUpdateDTO = InspectionUpdateDTO()
         var nonConformingResponse: NonConformingResponse = NonConformingResponse()
         val inspectId = itemModelOb?.first?.id
         val recommandations: MutableMap<String, String> = mutableMapOf()
@@ -695,13 +699,13 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 statuts.put(questionResponseModel?.id_en_base.toString(), questionResponseModel.statuts.toString())
             }
         }
-//        nonConformingResponse = NonConformingResponse(inspectId?.toInt().toString(), recommandations, delai, dateVerification, statuts)
+        nonConformingResponse = NonConformingResponse(inspectId?.toInt().toString(), recommandations, delai, dateVerification, statuts)
 //        var indexApprob = "0"
 ////        LogUtils.d(listApprob, selectApprobationInspection.selectedItemPosition)
 //        (listApprob.size > 0)?.let {
 //            if(it == true) indexApprob =  (listApprob.filterIndexed { index, commonData -> commonData.id?.equals((selectApprobationInspection.selectedItemPosition)) == true }?.first()?.id.toString())
 //        }
-//        dataList = InspectionUpdateDTO(inspectId.toString(), nonConformingResponse, indexApprob.toInt())
+        dataInspectionUpdateDTO = InspectionUpdateDTO(inspectId.toString(), nonConformingResponse, null)
 
 //        LogUtils.d(dataList)
 
@@ -721,7 +725,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 //                if(content.equals("Faites un choix", ignoreCase = true) == false) value = listApprob?.filter { it.nom.equals(content, ignoreCase = true) == true }?.first()?.id?.toString()
 //                value
 //            }
-            update_content = GsonUtils.toJson(dataList)
+            update_content = GsonUtils.toJson(dataInspectionUpdateDTO)
         }
 
         itemModelOb?.second.apply {
@@ -923,8 +927,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         //counterMainView = 0
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         clickCloseBtn.setOnClickListener {
             finish()
@@ -1013,7 +1017,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 LoadProgressListener {
                 override fun startLoadProgress(content: String) {
 
-                    LogUtils.d("CLICKIK")
+//                    LogUtils.d("CLICKIK")
                     if(intent.getIntExtra("sync_uid", 0) != 0){
                         var listData :MutableList<Pair<String, String>> = mutableListOf()
                         cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
@@ -1119,19 +1123,19 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
 //        containerApprobInspect.visibility = View.VISIBLE
 
-        var listApprob = (AssetFileHelper.getListDataFromAsset(
-            29,
-            this
-        ) as MutableList<CommonData>)
+//        var listApprob = (AssetFileHelper.getListDataFromAsset(
+//            29,
+//            this
+//        ) as MutableList<CommonData>)
 
-        LogUtils.d(inspectionDrafted.approbation)
+//        LogUtils.d(inspectionDrafted.approbation)
 
-        if(inspectionDrafted.approbation.equals("2")){
-            listApprob = listApprob.filterIndexed { i, ter ->  arrayOf("0", "1").contains(i.toString()) == true }?.toMutableList()
-        }else if(inspectionDrafted.approbation.equals("1") || inspectionDrafted.approbation.equals("3")){
-//            containerApprobInspect.visibility = View.GONE
-            clickSaveInspection.visibility = View.GONE
-        }
+//        if(inspectionDrafted.approbation.equals("2")){
+//            listApprob = listApprob.filterIndexed { i, ter ->  arrayOf("0", "1").contains(i.toString()) == true }?.toMutableList()
+//        }else if(inspectionDrafted.approbation.equals("1") || inspectionDrafted.approbation.equals("3")){
+////            containerApprobInspect.visibility = View.GONE
+//            clickSaveInspection.visibility = View.GONE
+//        }
 
 //        Commons.setListenerForSpinner(this,
 //            "Décision d'approbation",

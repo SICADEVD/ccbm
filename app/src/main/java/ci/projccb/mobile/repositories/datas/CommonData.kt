@@ -1,8 +1,10 @@
 package ci.projccb.mobile.repositories.datas
 
+import android.os.Parcelable
 import androidx.room.Ignore
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 data class CommonData (
     @Expose var id: Int? = null,
@@ -21,15 +23,16 @@ data class CommonData (
     var listOfValue: MutableList<String>? = null
 
     override fun toString(): String {
-        return nom!!
+        return nom?.toString()?:"N/A"
     }
 }
 
+@Parcelize
 data class ArbreData (
     @Expose var id: Int? = null,
     @Expose var arbre: String? = null,
     @Expose val nombre: String? = null,
-) {
+): Parcelable {
     override fun toString(): String {
         return arbre!!
     }

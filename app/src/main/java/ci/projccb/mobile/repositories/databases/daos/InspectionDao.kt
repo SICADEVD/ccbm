@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -36,7 +37,7 @@ interface InspectionDao {
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<InspectionDTO>
 
     @Transaction
-    @Query("SELECT * FROM inspection WHERE (isSynced = 1 AND ( (reponse_non_conformeStr IS NOT '' AND reponse_non_conformeStr IS NOT '[]') OR approbation IS '2' OR approbation IS NULL) ) ORDER BY uid DESC")
+    @Query("SELECT * FROM inspection WHERE (isSynced = 1 AND ( (reponse_non_conformeStr IS NOT '' AND reponse_non_conformeStr IS NOT '[]') ) ) ORDER BY uid DESC")
     fun getAllNConformeOrNApplicableSync(): MutableList<InspectionDTO>
 
     @Transaction
@@ -69,4 +70,7 @@ interface InspectionDao {
     @Transaction
     @Query("DELETE FROM inspection")
     fun deleteAll()
+    @Transaction
+    @Query("SELECT * FROM inspection WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<InspectionDTO>>
 }

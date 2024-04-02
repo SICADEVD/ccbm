@@ -124,7 +124,7 @@ object ExportUtils {
 
     suspend fun exportToGpx(fileName: String?, parcelle: ParcelleModel, action: Int, context: Context) {
         parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, object : TypeToken<MutableList<String>>() {}.type)
-        val myExternalFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName.plus(DateTime.now().toString(DateTimeFormat.forPattern("_yyyyMMddHHmmss"))).plus(".gpx").lowercase())
+        val myExternalFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName.plus(DateTime.now().toString(DateTimeFormat.forPattern("yyyyMMddHHmmss"))).plus(".gpx").lowercase())
         val gpxBuilder = StringBuilder()
 
         gpxBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")

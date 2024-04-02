@@ -5,7 +5,6 @@
     android:layout_marginBottom="@dimen/_5sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="bottom"
     android:orientation="horizontal"
     android:weightSum="4">
 
@@ -19,6 +18,7 @@
         android:layout_weight="2.0"/>
 
     <HorizontalScrollView
+        android:layout_gravity="bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2.0">

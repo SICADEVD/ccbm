@@ -58,8 +58,8 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_postplanting)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         distributionArbreDao = CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
 

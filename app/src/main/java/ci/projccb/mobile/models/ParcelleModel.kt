@@ -56,6 +56,8 @@ data class ParcelleModel(
     @Expose var nbCacaoParHectare: String? = "",
     @Expose var courDeau: String? = "",
     @Expose var autreCourDeau: String? = "",
+    @Ignore @Expose @SerializedName(value = "protection") var protectionO: MutableList<String> = mutableListOf(),
+    @Ignore @Expose @SerializedName(value = "items") var itemsO: MutableList<ArbreData> = mutableListOf(),
     var status: Boolean = false,
     var isSynced: Boolean = false,
     @Expose @SerializedName("userid") var agentId: String? = "",
@@ -63,8 +65,8 @@ data class ParcelleModel(
 ) : Parcelable {
 
     @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("waypoints") var mappingPoints: MutableList<String> = mutableListOf()
-    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("items") var arbreList: MutableList<ArbreData> = mutableListOf()
-    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("protection") var protectionList: MutableList<String> = mutableListOf()
+//    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("items") var arbreList: MutableList<ArbreData> = mutableListOf()
+//    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("protection") var protectionList: MutableList<String> = mutableListOf()
 
 
     override fun toString(): String {

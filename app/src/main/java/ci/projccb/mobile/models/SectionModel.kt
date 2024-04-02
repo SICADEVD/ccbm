@@ -45,4 +45,8 @@ interface SectionsDao {
     @Transaction
     @Query("DELETE FROM sections")
     fun deleteAll()
+
+    @Transaction
+    @Query("SELECT * FROM sections WHERE id = :sectionId")
+    fun getById(sectionId: String?): SectionModel
 }

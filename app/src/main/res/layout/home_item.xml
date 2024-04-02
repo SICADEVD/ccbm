@@ -52,7 +52,6 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/labelCount"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_alignParentTop="true"
@@ -65,13 +64,14 @@
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:text="0"
-                android:textColor="@color/black"
+                android:textFontWeight="600"
+                android:textColor="#00D008"
+                android:textSize="@dimen/_16ssp"
                 android:textStyle="bold"
                 tools:text="1 701" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/labelDraftCount"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_alignParentStart="true"
@@ -84,7 +84,9 @@
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:text="0"
-                android:textColor="@color/contour_gray"
+                android:textFontWeight="600"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="#E17731"
                 android:textStyle="bold"
                 tools:text="1 701" />
 

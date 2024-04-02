@@ -73,3 +73,32 @@ data class FormationModel(
     @Expose(serialize = true, deserialize = false) @SerializedName("themesLabel") @Ignore var themesLabel: MutableList<String>? = null
     //@Expose(serialize = true, deserialize = false) @SerializedName("module") @Ignore var moduleList: MutableList<String>? = null
 }
+
+
+@Parcelize
+data class FormationModelExt(
+    @Expose @PrimaryKey(autoGenerate = true) var uid: Int,
+    @Expose var id: Int? = 0,
+    @Expose @SerializedName(value = "date_formation", alternate = ["dateFormation"])
+    var dateFormation: String? = "",
+    @SerializedName(value = "localite", alternate = ["localite_id"]) @Expose var localitesId: String? = "",
+    @Expose @SerializedName("campagne_id") var campagneId: Int? = 0,
+    @Expose @SerializedName("visiteur")  var visiteurs: String? = null,
+    @Expose @SerializedName("formation_type") var formationType: String? = "",
+    @Expose @SerializedName("lieu_formation") var lieuFormation: String? = "",
+    @Expose @SerializedName("staff") var staffId: String? = "",
+    @Expose @SerializedName("duree_formation") var dureeFormation: String? = "",
+    @Expose @SerializedName("observation_formation") var observationFormation: String? = "",
+    @Expose var date_debut_formation: String? = "",
+    @Expose var date_fin_formation: String? = "",
+    @Expose @SerializedName("photo_formation") var photoFormation: String? = "",
+    @Expose @SerializedName("rapport_formation") var rapportFormation: String? = "",
+    @Expose var producteurs_ids: MutableList<String>? = null,
+    @Expose var type_formation_ids: MutableList<String>? = null,
+    @Expose var theme_ids: MutableList<String>? = null,
+    @Expose var sous_themes_ids: MutableList<String>? = null,
+    var isSynced: Boolean = false,
+    @Expose @SerializedName("user_id", alternate = ["userid"]) var agentId: String? = "",
+    var origin: String? = "local"
+) : Parcelable {
+}

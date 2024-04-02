@@ -325,45 +325,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/barcharts"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/barcharts2"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/barcharts3"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"/>
-
-                </LinearLayout>
-
             </LinearLayout>
 
         </ScrollView>

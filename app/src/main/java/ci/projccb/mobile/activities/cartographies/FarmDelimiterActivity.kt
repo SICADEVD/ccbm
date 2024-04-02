@@ -280,7 +280,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     fun showMappingTypeDialog() {
         try {
             val dialog = Dialog(this, R.style.DialogTheme)
-//            Commons.adjustTextViewSizesInDialog(this, dialogBuild, "", this.resources.getDimension(R.dimen._8ssp)
+//            Commons.adjustTextViewSizesInDialog(this, dialogBuild, "",   this.resources.getDimension(R.dimen._6ssp)
 //                ,true)
             //val dialog = dialogBuild.create()
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -391,14 +391,14 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
 
     fun computeSurface() {
-        try {
-            parcelleMapping.parcelleSuperficie =
-                Commons.convertDoubleToString((polygon?.area!!) * 0.0001)
-            labelSurfaceFarmDelimiter.text = parcelleMapping.parcelleSuperficie.plus(" ha")
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+//        try {
+//            parcelleMapping.parcelleSuperficie =
+//                Commons.convertDoubleToString((polygon?.area!!) * 0.0001)
+//            labelSurfaceFarmDelimiter.text = parcelleMapping.parcelleSuperficie.plus(" ha")
+//        } catch (ex: Exception) {
+//            LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//        }
     }
 
 
@@ -524,6 +524,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             markersMap[if (markersMap.keys.isEmpty()) 1 else markersMap.keys.last() + 1] = marker!!
             mapsDelimiter?.animateCamera(CameraUpdateFactory.newLatLng(marker?.position!!))
 
+            LogUtils.d(lineOrZoneDelimiter, "ADD MARKER")
             when (lineOrZoneDelimiter) {
                 1 -> { // Line
                     if (markersMap.size > 1) {
@@ -531,7 +532,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     }
                 }
 
-                2 -> {  // Zone
+                2 -> {  // Surface
+                    LogUtils.d(markersMap.size)
                     if (markersMap.size > 2) {
                         drawPolygone(markersMap)
                     }
@@ -567,6 +569,11 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
            gPolygonCenter = getPolygonCenterPoint(mapPointsList)
 
+           parcelleMapping.parcellePerimeter = Commons.convertDoubleToString(SphericalUtil.computeLength(mapPointsList))
+           LogUtils.d(parcelleMapping.parcellePerimeter)
+           // Compute perimeter
+           labelDistanceFarmDelimiter.text = parcelleMapping.parcellePerimeter.plus("m")
+
            marker = markersMap.values.last()
            // Compute area
            computeSurface()
@@ -599,7 +606,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             marker = markersMap.values.last()
             parcelleMapping.parcellePerimeter =
                 Commons.convertDoubleToString(SphericalUtil.computeLength(mapPointsList))
-
+            LogUtils.d(parcelleMapping.parcellePerimeter)
             // Compute perimeter
             labelDistanceFarmDelimiter.text = parcelleMapping.parcellePerimeter.plus("m")
         } catch (ex: Exception) {
@@ -713,27 +720,27 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
             fabSurfaceFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 2
-                linearSurfaceInfosContainerFarmDelimiter.visibility = View.VISIBLE
+                //linearSurfaceInfosContainerFarmDelimiter.visibility = View.VISIBLE
                 showMappingTypeDialog()
             }
 
             linearSurfaceMappingContainerFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 2
-                linearSurfaceInfosContainerFarmDelimiter.visibility = View.VISIBLE
+                //linearSurfaceInfosContainerFarmDelimiter.visibility = View.VISIBLE
                 showMappingTypeDialog()
             }
 
             fabDistanceFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 1
 
-                linearSurfaceInfosContainerFarmDelimiter.visibility = View.GONE
+                //linearSurfaceInfosContainerFarmDelimiter.visibility = View.GONE
                 showMappingTypeDialog()
             }
 
             linearDistanceMappingContainerFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 1
 
-                linearSurfaceInfosContainerFarmDelimiter.visibility = View.GONE
+//                linearSurfaceInfosContainerFarmDelimiter.visibility = View.GONE
                 showMappingTypeDialog()
             }
 

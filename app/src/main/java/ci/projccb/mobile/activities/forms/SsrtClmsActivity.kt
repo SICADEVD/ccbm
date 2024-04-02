@@ -1241,8 +1241,8 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         super.onCreate(savedInstanceState)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         labelInfosScrollerSsrt.setOnClickListener {
             // scrollableMarquee()

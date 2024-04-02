@@ -1,5 +1,6 @@
 package ci.projccb.mobile.repositories.databases.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ci.projccb.mobile.models.*
 
@@ -34,4 +35,7 @@ interface EnqueteSsrteDao {
     @Transaction
     @Query("SELECT * FROM ssrte_clms WHERE (isSynced = 0 AND producteursId = :producteurUid)")
     fun getUnSyncedByProdUid(producteurUid: String?): MutableList<EnqueteSsrtModel>
+    @Transaction
+    @Query("SELECT * FROM ssrte_clms WHERE isSynced = 0 AND userid = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<EnqueteSsrtModel>>
 }

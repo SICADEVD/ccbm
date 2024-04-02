@@ -10,7 +10,6 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
@@ -20,13 +19,14 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
-import android.widget.SeekBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.size
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
@@ -39,14 +39,11 @@ import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.services.GpsService
 import ci.projccb.mobile.tools.Commons
-import ci.projccb.mobile.tools.Commons.Companion.setData
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.Data
-import ci.projccb.mobile.tools.ValueFormatter22
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.*
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -74,9 +71,13 @@ class DashboardAgentActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
 
 
+    private var currentExpandLayout: ExpandableLayout? = null
     private var listOfFeatureCloned: MutableList<FeatureModel> = arrayListOf()
     private var listOfFeatureClonedNav: MutableList<FeatureModel> = arrayListOf()
     private val listOfFeatures = mutableListOf<FeatureModel>()
+
+    var expandableList: MutableList<ExpandableLayout> = arrayListOf()
+
     var ccbRoomDatabase: CcbRoomDatabase? = null
     var agentDao: AgentDao? = null;
     var formationDao: FormationDao? = null;
@@ -379,18 +380,18 @@ class DashboardAgentActivity : AppCompatActivity(),
         setContentView(R.layout.activity_dashboard_agent)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._8ssp),
-            resources.getDimension(R.dimen._8ssp))
+            resources.getDimension(R.dimen._6ssp),
+            resources.getDimension(R.dimen._5ssp))
 
         bindDatas(agentModel = agentLogged, coopmodel)
 
-        setupBarChartView()
+        //setupBarChartView()
 
         // .setNavigationItemSelectedListener(this)
         Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?", this.resources.getDimension(R.dimen._8ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(R.dimen._6ssp)
                 ,false)
             //builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
@@ -415,7 +416,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         imgProfileDashboardNDrawer.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?", this.resources.getDimension(R.dimen._8ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(R.dimen._6ssp)
                 ,false)
             //builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
@@ -441,7 +442,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
         imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, "Voulez-vous quitter ?", this.resources.getDimension(R.dimen._8ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Voulez-vous quitter ?",   this.resources.getDimension(R.dimen._6ssp)
                 ,false)
             //builder.setMessage("Voulez-vous quitter ?")
             builder.setCancelable(false)
@@ -481,7 +482,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, message, this.resources.getDimension(R.dimen._8ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, message,   this.resources.getDimension(R.dimen._6ssp)
                 ,false)
             //builder.setMessage(message)
             builder.setCancelable(false)
@@ -537,7 +538,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         //setDataClickListener()
         val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), object : TypeToken<MutableList<String>>(){}.type)
 
-        val expandableList = arrayListOf<ExpandableLayout>(
+        expandableList = mutableListOf<ExpandableLayout>(
             expandIdentif,
             expandIdentif2,
             expandIdentif3,
@@ -552,16 +553,20 @@ class DashboardAgentActivity : AppCompatActivity(),
                 setOnExpandListener {
                     if (it) {
                         containerFeatureDash.visibility = View.GONE
+                        currentExpandLayout = this
                         showAllExpandable(this, expandableList)
                     } else {
                         containerFeatureDash.visibility = View.VISIBLE
+                        currentExpandLayout = this
                         hideOtherExpandable(this, expandableList)
                     }
                     //LogUtils.d("Expand : ${it}")
                     hideNotExistFeature(roles, this)
 
                 }
-                parentLayout.setOnClickListener { this.toggleLayout() }
+                parentLayout.setOnClickListener {
+                    this.toggleLayout()
+                }
             }
 
             hideNotExistFeature(roles, it)
@@ -571,53 +576,192 @@ class DashboardAgentActivity : AppCompatActivity(),
         updateListOfFeature()
         setNavViewItems(roles)
         setViewFeatureListing()
+
+        setupLiveData()
     }
 
-    private fun setupBarChartView() {
+    private fun setupLiveData() {
 
+        producteurDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("PRODUCTEUR", length)
+        })
 
-        val chart = findViewById<BarChart>(R.id.chart_enreg)
+        CcbRoomDatabase.getDatabase(this)?.infosProducteurDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("INFOS_PRODUCTEUR", length)
+        })
 
+        parcelleDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("PARCELLE", length)
+        })
 
-        val data: MutableList<Data> = ArrayList<Data>()
-        data.add(Data(0f, producteurDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
-        data.add(Data(1f, parcelleDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
-        data.add(Data(2f, formationDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
-        data.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
-        data.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+        producteurMenageDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("MENAGE", length)
+        })
 
-        Commons.applyChartSetting(this, chart, data)
+        CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("APPLICATION", length)
+        })
 
-        setData(chart, data)
+        CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("INSPECTION", length)
+        })
 
-        val chartUnSync = findViewById<BarChart>(R.id.chart_unsync)
+        CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("ESTIMATION", length)
+        })
 
+        CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("PARCELLES", length)
+        })
 
-        val dataUnSync: MutableList<Data> = ArrayList<Data>()
-        dataUnSync.add(Data(0f, producteurDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
-        dataUnSync.add(Data(1f, parcelleDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
-        dataUnSync.add(Data(2f, formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
-        dataUnSync.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
-        dataUnSync.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID))?.count()?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+        CcbRoomDatabase.getDatabase(this)?.formationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("FORMATION", length)
+        })
 
-        Commons.applyChartSetting(this, chartUnSync, dataUnSync)
+        CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("SSRTECLMRS", length)
+        })
 
-        setData(chartUnSync, dataUnSync)
+        CcbRoomDatabase.getDatabase(this)?.livraisonDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("LIVRAISON", length)
+        })
 
-        val chartDraft = findViewById<BarChart>(R.id.chart_draft)
+        CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("AGRO_EVALUATION", length)
+        })
 
+        CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("AGRO_DISTRIBUTION", length)
+        })
 
-        val dataDraft: MutableList<Data> = ArrayList<Data>()
-        dataDraft.add(Data(0f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "producteur")?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
-        dataDraft.add(Data(1f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "parcelle")?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
-        dataDraft.add(Data(2f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
-        dataDraft.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "menage")?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
-        dataDraft.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+        CcbRoomDatabase.getDatabase(this)?.postplantingDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("POSTPLANTING", length)
+        })
 
-        Commons.applyChartSetting(this, chartDraft, dataDraft)
+        CcbRoomDatabase.getDatabase(this)?.livraisonCentralDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("LIVRAISON_MAGCENTRAL", length)
+        })
 
-        setData(chartDraft, dataDraft)
+        CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
+            val length = items.size
+            updateRVFeatureCount("FORMATION_VISITEUR", length)
+        })
+
+        CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.observe(this, Observer { items ->
+            items.first()?.let {
+                updateRVFeatureCount(it.typeDraft.toString(), 1, false)
+            }
+        })
+
+//        draftCountLive("PRODUCTEUR")
+//        draftCountLive("INFOS_PRODUCTEUR")
+//        draftCountLive("PARCELLE")
+//        draftCountLive("MENAGE")
+//        draftCountLive("APPLICATION")
+//        draftCountLive("INSPECTION")
+//        draftCountLive("ESTIMATION")
+//        draftCountLive("PARCELLES")
+//        draftCountLive("FORMATION")
+//        draftCountLive("SSRTECLMRS")
+//        draftCountLive("LIVRAISON")
+//        draftCountLive("AGRO_EVALUATION")
+//        draftCountLive("AGRO_DISTRIBUTION")
+//        draftCountLive("POSTPLANTING")
+//        draftCountLive("LIVRAISON_MAGCENTRAL")
+//        draftCountLive("FORMATION_VISITEUR")
+
     }
+
+//    fun draftCountLive(featName: String){
+//
+//
+//
+//    }
+
+    fun updateRVFeatureCount(featName:String = "", length:Int = 0, isUnSync:Boolean = true){
+        val lisFeat = (recyclerViewFeature.adapter as FeatureAdapter).getListFeatures()
+        lisFeat.forEach {
+            if(it.type?.lowercase() == featName.lowercase()){
+                if(isUnSync) it.countSync = length
+                else it.countDraft = (it.countDraft + length)
+            }
+        }
+        (recyclerViewFeature.adapter as FeatureAdapter).updateFeatures(lisFeat)
+    }
+
+    fun hideExpandFromAdapter(){
+        val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), object : TypeToken<MutableList<String>>(){}.type)
+        currentExpandLayout?.let {
+            containerFeatureDash.visibility = View.GONE
+            showAllExpandable(it, expandableList)
+
+            hideNotExistFeature(roles, it)
+        }
+        expandableList.forEach {
+            if(it.isExpanded) it.toggleLayout()
+        }
+    }
+
+//    private fun setupBarChartView() {
+//
+//
+//        val chart = findViewById<BarChart>(R.id.chart_enreg)
+//
+//
+//        val data: MutableList<Data> = ArrayList<Data>()
+//        data.add(Data(0f, producteurDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
+//        data.add(Data(1f, parcelleDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+//        data.add(Data(2f, formationDao?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
+//        data.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
+//        data.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+//
+//        Commons.applyChartSetting(this, chart, data)
+//
+//        setData(chart, data)
+//
+//        val chartUnSync = findViewById<BarChart>(R.id.chart_unsync)
+//
+//
+//        val dataUnSync: MutableList<Data> = ArrayList<Data>()
+//        dataUnSync.add(Data(0f, producteurDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
+//        dataUnSync.add(Data(1f, parcelleDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+//        dataUnSync.add(Data(2f, formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
+//        dataUnSync.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.count()?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
+//        dataUnSync.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID))?.count()?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+//
+//        Commons.applyChartSetting(this, chartUnSync, dataUnSync)
+//
+//        setData(chartUnSync, dataUnSync)
+//
+//        val chartDraft = findViewById<BarChart>(R.id.chart_draft)
+//
+//
+//        val dataDraft: MutableList<Data> = ArrayList<Data>()
+//        dataDraft.add(Data(0f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "producteur")?.toFloat()?:0.0f, "PRODUCTEUR", Color.BLACK))
+//        dataDraft.add(Data(1f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "parcelle")?.toFloat()?:0.0f, "PARCELLE", Color.BLUE))
+//        dataDraft.add(Data(2f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "formation")?.toFloat()?:0.0f, "FORMATION", Color.MAGENTA))
+//        dataDraft.add(Data(3f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "menage")?.toFloat()?:0.0f, "MENAGE", Color.GRAY))
+//        dataDraft.add(Data(4f, CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "evaluation_arbre")?.toFloat()?:0.0f, "EVALUATION", Color.GREEN))
+//
+//        Commons.applyChartSetting(this, chartDraft, dataDraft)
+//
+//        setData(chartDraft, dataDraft)
+//    }
 
     private fun generateBarData(dataList:MutableList<Data>): BarData? {
         val entries1 = ArrayList<BarEntry>()
@@ -679,7 +823,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         //if(roles.containsAll(listOf("APPLICATION", "INSPECTION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
     }
 
-    private fun hideOtherExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
+    private fun hideOtherExpandable(expandableLayout: ExpandableLayout, expandableList: MutableList<ExpandableLayout>) {
         expandableList.forEach {
             if(it.id != expandableLayout.id){
                 it.visibility = View.GONE
@@ -717,7 +861,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         }
     }
 
-    private fun showAllExpandable(expandableLayout: ExpandableLayout, expandableList: ArrayList<ExpandableLayout>) {
+    private fun showAllExpandable(expandableLayout: ExpandableLayout, expandableList: MutableList<ExpandableLayout>) {
         expandableList.forEach {
             it.visibility = View.VISIBLE
         }
@@ -732,10 +876,10 @@ class DashboardAgentActivity : AppCompatActivity(),
         val menuToken = object : TypeToken<MutableList<String>>() {}.type
         val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), menuToken)
 
-        LogUtils.d(roles)
+//        LogUtils.d(roles)
         roles.map {
             //LogUtils.d(it)
-            when (it.uppercase()) {
+            when(it.uppercase()) {
                 "LOCALITES","LOCALITE" -> {
                     // linearLocalite.visibility = View.VISIBLE
                 }
@@ -755,7 +899,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         icon = R.drawable.ic_farmer,
                         canAdd = true,
                         canEdit = true,
-                        canViewUpdate = true,
+                        canViewUpdate = false,
                         canViewDraft = true,
                         canViewSync = true //can be false
                     ).apply { this.image = image.plus("producteurc.png")})
@@ -971,7 +1115,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 }
                 "LIVRAISON_MAGCENTRAL" -> {
                     listOfFeatures.add(FeatureModel("STOCK MAGASINS_CENTRAUX",
-                        countSync = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countSync = CcbRoomDatabase.getDatabase(this)?.livraisonCentralDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "suivi_livraison_central")!!,
                         type = "LIVRAISON_MAGCENTRAL",
                         categorie = 2,
@@ -985,7 +1129,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 }
                 "FORMATION_VISITEUR" -> {
                     listOfFeatures.add(FeatureModel("VISITEUR FORMATION",
-                        countSync = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.size!!,
+                        countSync = CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toInt())?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "visiteur_formation")!!,
                         type = "FORMATION_VISITEUR",
                         categorie = 1,

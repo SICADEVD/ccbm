@@ -88,6 +88,7 @@ class InspectionPreviewUpdateActivity : AppCompatActivity(), SectionCallback {
 
                 val itemsDatas: InspectionDTO? = it.getParcelableExtra("preview")
 
+                LogUtils.d(itemsDatas)
 
                 clickSaveFormationPreview.setOnClickListener {
                     Commons.showMessage(

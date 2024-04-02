@@ -15,8 +15,7 @@ data class ProducteurModel(
     @SerializedName("codeProdapp") @Expose var codeProdApp: String? = "",
     @Expose var id: Int? = 0,
     @SerializedName(value = "section", alternate = ["section_id"]) @Expose var section: String? = "0",
-    @SerializedName(value = "localite_id", alternate = ["localites_id"])
-    @Expose var localitesId: String? = "0",
+    @SerializedName(value = "localite_id", alternate = ["localites_id"]) @Expose var localitesId: String? = "0",
     @SerializedName(value = "programme_id") @Expose var programme_id: String? = "0",
     @SerializedName(value = "autreProgramme") @Expose var autreProgramme: String? = "0",
     @Expose var nom: String? =  "",
@@ -87,3 +86,18 @@ data class ProducteurModel(
         return "$nom $prenoms"
     }
 }
+
+data class ProdExt(
+    val uid: Int,
+    val id: Int,
+    val parceId: String,
+    val parceUid: String,
+    val fullName: String,
+    val isSynced: Boolean,
+    val nom: String,
+    val prenoms: String,
+    val codeParc: String?, // Make nullable as it might not be available in all cases
+    val superficie: String?, // Make nullable as it might not be available in all cases
+    val anneeCreation: String?, // Make nullable as it might not be available in all cases
+    val anneeRegenerer: String? // Make nullable as it might not be available in all cases
+)

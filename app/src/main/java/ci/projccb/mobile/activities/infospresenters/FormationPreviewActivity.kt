@@ -56,6 +56,10 @@ class FormationPreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formation_preview)
 
+        clickCloseBtn.setOnClickListener {
+            finish()
+        }
+
         intent?.let {
             try {
                 val infoItemsListPrev: MutableList<Map<String, String>> = arrayListOf()

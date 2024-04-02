@@ -82,6 +82,7 @@ public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterf
         //builder.setTitle(_title);
         builder.setMultiChoiceItems(_items, mSelection, this);
         _itemsAtStart = getSelectedItemsAsString();
+        if(_itemsAtStart == null) return true;
 //        builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {
@@ -263,6 +264,10 @@ public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterf
     public String getSelectedItemsAsString() {
         StringBuilder sb = new StringBuilder();
         boolean foundOne = false;
+
+        if(_items == null) return null;
+
+        if(_items.length == 0) return null;
 
         for (int i = 0; i < _items.length; ++i) {
             if (mSelection[i]) {

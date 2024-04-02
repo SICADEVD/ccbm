@@ -106,7 +106,7 @@ interface ApiService {
     fun getDelegues(@Body table: CommonData): Call<MutableList<CommonData>>
 
     @POST("getparcelles")
-    fun getParcelles(): Call<MutableList<ParcelleModel>>
+    fun getParcelles(@Body table: CommonData): Call<MutableList<ParcelleModel>>
 
     @POST("getquestionnaire")
     fun getQuestionnaires(): Call<MutableList<InspectionQuestionnairesModel>>
@@ -139,7 +139,7 @@ interface ApiService {
     fun getStaff(@Body table: CommonData): Call<MutableList<ConcernesModel>>
 
     @POST("getformationsbyuser")
-    fun getFormationByUser(@Body table: CommonData): Call<MutableList<FormationModel>>
+    fun getFormationByUser(@Body table: CommonData): Call<MutableList<FormationModelExt>>
 
     @POST("getsections")
     fun getSections(@Body table: CommonData): Call<MutableList<SectionModel>>

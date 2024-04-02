@@ -70,7 +70,7 @@ android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="12-12-2021"
-                
+
                 android:textSize="@dimen/_10ssp"/>
 
         </LinearLayout>

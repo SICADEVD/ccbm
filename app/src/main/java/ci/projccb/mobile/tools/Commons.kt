@@ -386,7 +386,7 @@ class Commons {
                     val memberProperty = producteurModelClass.declaredFields.find { it.name == childView.tag }
                     memberProperty?.let {
                         it.isAccessible = true
-                        it.set(prodModel, value)
+                        it.set(prodModel, value.toCheckEmptyItem())
 //                        LogUtils.d(value)
                         mutableListOf.add(Pair(currTextViewIn.toString(), value))
                     }
@@ -403,7 +403,7 @@ class Commons {
                     val memberProperty = producteurModelClass.declaredFields.find { it.name == editText.tag }
                     memberProperty?.let {
                         it.isAccessible = true
-                        it.set(prodModel, value)
+                        it.set(prodModel, value.toCheckEmptyItem())
                         mutableListOf.add(Pair(currTextViewIn.toString(), value))
                     }
                     //countField++
@@ -539,7 +539,9 @@ class Commons {
                     memberProperty?.let {
                         it.isAccessible = true
                         val propertyValue = it.get(prodModel)
-                        editText.setText("$propertyValue")
+                        if(propertyValue != null){
+                            if(propertyValue.toString().lowercase() != "null") editText.setText("$propertyValue") else editText.setText("")
+                        }else editText.setText("")
                     }
                     //countField++
                 } else if (childView is ViewGroup) {
@@ -609,10 +611,24 @@ class Commons {
             }
         }
 
-        fun List<String>?.toModifString(isComma:Boolean = true, commaReplace:String = ""): String {
-            val values = this.toString().replace("]", "").replace("[", "")
+        fun List<String>?.toModifString(isComma:Boolean = true, commaReplace:String = "", prefix:String = ""): String {
+            val list = this?.map {
+                var dani = "${it}"
+                if(prefix.isNotEmpty()) dani = "${prefix} ${it}"
+                dani
+            }
+            val values = list.toString().replace("]", "").replace("[", "")
             return if(isComma) values.replace(", ", commaReplace) else values
         }
+
+        fun List<String>?.limitListByCount(limit:Int = 0): List<String>? {
+            var list = mutableListOf<Int>()
+            for (i in 0 until limit){
+                list.add(i)
+            }
+            return this?.filterIndexed { index, s -> list.contains(index) == true }?.toList()
+        }
+
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null
             return (this as String).toInt()
@@ -648,11 +664,11 @@ class Commons {
             // Change this to your desired initial year
             yearPicker.minValue = (year - 100) // Set the min year as needed
             yearPicker.maxValue = year // Set the max year as needed
-            yearPicker.value = if(editText.text.isNullOrEmpty()) year else editText.text.toString().toInt()
+            yearPicker.value = if(editText.text.isNullOrEmpty()) year else editText.text.toString().toIntOrNull()?:0
 
             builder.setView(dialogView)
             //builder.setTitle("Choix de l'année")
-            Commons.adjustTextViewSizesInDialog(this, builder, "Choix de l'année", this.resources.getDimension(R.dimen._8ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Choix de l'année",   this.resources.getDimension(R.dimen._6ssp)
             ,true)
             builder.setPositiveButton("Valider !") { _, _ ->
                 val selectedYear = yearPicker.value
@@ -707,7 +723,7 @@ class Commons {
             if(isprogress) customTitleView = inflater.inflate(ci.projccb.mobile.R.layout.custom_progress_dial, null)
 
             val titleTextView = customTitleView.findViewById<View>(ci.projccb.mobile.R.id.title_text_view) as AppCompatTextView
-            LogUtils.d(className)
+//            LogUtils.d(className)
 //            val parentGrp: ViewGroup? = titleTextView.getParent() as (ViewGroup)
 //            parentGrp?.let {
 //                parentGrp?.removeView(titleTextView)
@@ -717,13 +733,21 @@ class Commons {
             titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
             if(isTitle){
                 if(className.contains("ProgressDialog") == false){
-                    (dialogBuilder as AlertDialog.Builder).setCustomTitle(customTitleView)
+                    if(dialogBuilder is androidx.appcompat.app.AlertDialog.Builder){
+                        (dialogBuilder as androidx.appcompat.app.AlertDialog.Builder).setCustomTitle(customTitleView)
+                    }else{
+                        (dialogBuilder as AlertDialog.Builder).setCustomTitle(customTitleView)
+                    }
                 }else{
                     (dialogBuilder as ProgressDialog).setCustomTitle(customTitleView)
                 }
             }else{
                 if(className.contains("ProgressDialog") == false){
-                    (dialogBuilder as AlertDialog.Builder).setView(customTitleView)
+                    if(dialogBuilder is androidx.appcompat.app.AlertDialog.Builder){
+                        (dialogBuilder as androidx.appcompat.app.AlertDialog.Builder).setCustomTitle(customTitleView)
+                    }else{
+                        (dialogBuilder as AlertDialog.Builder).setView(customTitleView)
+                    }
                 }else{
                     (dialogBuilder as ProgressDialog).setContentView(customTitleView)
                 }

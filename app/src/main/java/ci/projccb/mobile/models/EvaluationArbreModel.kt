@@ -1,6 +1,7 @@
 package ci.projccb.mobile.models
 
 import android.os.Parcelable
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -98,7 +99,9 @@ interface EvaluationArbreDao {
     @Transaction
     @Query("SELECT * FROM evaluation_arbre WHERE isSynced = 1 AND agentId = :agentID")
     fun getSyncedAll(agentID: String): MutableList<EvaluationArbreModel>
-
+    @Transaction
+    @Query("SELECT * FROM evaluation_arbre WHERE isSynced = 0 AND agentId = :agentID")
+    fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<EvaluationArbreModel>>
 
 
 }
