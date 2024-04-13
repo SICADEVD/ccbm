@@ -182,6 +182,20 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     under18SchooledNoPaperCount = null
                 }
 
+                if(producteur.id != 0){
+                    producteur.apply {
+                        variete = null
+                        section = null
+                        photo = null
+                        localite = null
+                        certificatsStr = null
+                        certification = null
+                        autreVariete = null
+                        autreProgramme = null
+                        num_ccc = null
+                    }
+                }
+
                 val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
                 clientProducteur.enqueue(object: Callback<ProducteurModel>{
                     override fun onResponse(

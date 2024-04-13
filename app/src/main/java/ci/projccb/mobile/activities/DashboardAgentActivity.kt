@@ -663,8 +663,10 @@ class DashboardAgentActivity : AppCompatActivity(),
         })
 
         CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.observe(this, Observer { items ->
-            items.first()?.let {
-                updateRVFeatureCount(it.typeDraft.toString(), 1, false)
+            items?.isNotEmpty()?.let {
+                if (it) items.first()?.let {
+                    updateRVFeatureCount(it.typeDraft.toString(), 1, false)
+                }
             }
         })
 

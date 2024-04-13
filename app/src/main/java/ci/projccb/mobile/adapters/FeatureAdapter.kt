@@ -67,6 +67,7 @@ class FeatureAdapter(
 
         val passToModifList = listOf<String>(
             "INSPECTION",
+            "PRODUCTEUR",
             "PARCELLE"
         )
 

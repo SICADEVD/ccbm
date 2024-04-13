@@ -47,6 +47,8 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
     override fun onBindViewHolder(holder: DataSyncedHolder, position: Int) {
         val draftedData = draftedList!![position]
 
+        if(draftedData == null) return
+
         holder.labelNumberDraft.text = draftedData.listOfValue?.get(0).toString()
         if(draftedData.listOfValue?.size!! > 1){
             holder.labelDateDraft.text = draftedData.listOfValue?.get(1).toString()

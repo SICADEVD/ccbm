@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.forms.InspectionActivity
 import ci.projccb.mobile.activities.forms.ParcelleActivity
+import ci.projccb.mobile.activities.forms.ProducteurActivity
 import ci.projccb.mobile.adapters.DataSyncedAdapter
 import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -135,7 +136,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
 //                                        val prod = ccbBase.producteurDoa().getProducteurByID(it.producteurId?.toIntOrNull())
 //                                        if(prod!=null){
-                                            commonDataList.add(CommonData(id = prod.parceUid.toInt(), value = fromGlobalMenu.toUpperCase() ).apply {
+                                            commonDataList.add(CommonData(id = prod.parceUid?.toInt(), value = fromGlobalMenu.toUpperCase() ).apply {
                                                 var annee = prod.anneeCreation
                                                 if(annee.isNullOrEmpty()) annee = prod.anneeRegenerer
                                                 if(annee.isNullOrEmpty()) annee = "N/A"
@@ -143,13 +144,13 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                                             })
 //                                        }
                                     }
-                                    commonDataListCloned.addAll(commonDataList)
-                                    val listOfParcelUniq = commonDataListCloned.distinctBy { it.id }
 //                                    LogUtils.d(commonDataList.map { "${it.listOfValue?.first()}" })
                                     processedItems++
                                     if (processedItems == dataListProd.size) {
+                                        commonDataListCloned.addAll(commonDataList)
+                                        val listOfParcelUniqOk = commonDataListCloned.distinctBy { it.id }
 //                                        LogUtils.d("onInstructionReceived2", listOfParcelUniq.map { it.id })
-                                        if (commonDataList.size > 0) callback.invoke(listOfParcelUniq.toMutableList())
+                                        if (commonDataList.size > 0) callback.invoke(listOfParcelUniqOk.toMutableList())
                                     }
                                 }
                             }
@@ -177,6 +178,77 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                         }
                     }
                     intentGoToModif = Intent(this@DatasSyncListActivity, ParcelleActivity::class.java)
+                }
+                "PRODUCTEUR" -> {
+                    labelTitleMenuAction.apply {
+                        setText("${this.text} PRODUCTEUR")
+                    }
+                    val dataListLimit = ccbBase.producteurDoa().getSyncedLimit(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), 100)
+                    dataListLimit.forEach {
+//                        LogUtils.d(it.producteursId)
+                        if(it.id != null){
+                            commonDataList.add(CommonData(id = it.uid.toInt(), value = fromGlobalMenu.toUpperCase() ).apply {
+                                val localiteIt = ccbBase.localiteDoa().getLocalite(it.localitesId?.toInt()?:0)
+//                                LogUtils.d(localiteIt, it.localitesId)
+                                if(localiteIt != null) listOfValue = arrayListOf<String>("Localité: ${localiteIt.nom ?: "N/A"}\nCode: ${it.codeProd?:"N/A"}\nProducteur: ${it.nom} ${it.prenoms}")
+                                else listOfValue = arrayListOf<String>("Localité: N/A\nCode: ${it.codeProd?:"N/A"}\nProducteur: ${it.nom} ${it.prenoms}")
+                            })
+                            commonDataListCloned.addAll(commonDataList)
+                        }
+                    }
+
+                    instructionCallback = object : InstructionCallback{
+                        override fun onInstructionReceived(search: String, callback: ((commonDataListCloned: MutableList<CommonData>)->Unit)) {
+                            val dataListProd = ccbBase.producteurDoa().findProdByName(search)
+                            LogUtils.d("onInstructionReceived", dataListProd.map { it.fullName })
+                            recyclerSyncedList.visibility = GONE
+                            if(dataListProd.size > 0){
+                                val listOfParcelUniq = dataListProd
+                                commonDataList.clear()
+                                commonDataListCloned.clear()
+                                var processedItems = 0
+//                                LogUtils.d(listOfParcelUniq.map { "${it.fullName}" })
+                                listOfParcelUniq.forEach {prod->
+                                    if(prod.id != null){
+
+//                                        val prod = ccbBase.producteurDoa().getProducteurByID(it.producteurId?.toIntOrNull())
+//                                        if(prod!=null){
+                                        commonDataList.add(CommonData(id = prod.uid?.toInt(), value = fromGlobalMenu.toUpperCase() ).apply {
+                                            listOfValue = arrayListOf<String>("Localité: ${prod.localite ?: "N/A"}\nCode: ${prod.codeProd?:"N/A"}\nProducteur: ${prod.nom} ${prod.prenoms}")
+                                        })
+//                                        }
+                                    }
+//                                    LogUtils.d(commonDataList.map { "${it.listOfValue?.first()}" })
+                                    processedItems++
+                                    if (processedItems == dataListProd.size) {
+                                        commonDataListCloned.addAll(commonDataList)
+//                                        val listOfItem = commonDataListCloned.toSet().toList()
+//                                        LogUtils.d("onInstructionReceived2", listOfItem.map { it.id }, commonDataListCloned.size)
+                                        if (commonDataList.size > 0) callback.invoke(commonDataListCloned.toMutableList())
+                                    }
+                                }
+                            }
+                        }
+
+                        override fun onInstructionReceivedNoSearch() {
+                            val dataListLimit = ccbBase.producteurDoa().getSyncedLimit(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), 100)
+                            commonDataList.clear()
+                            commonDataListCloned.clear()
+                            dataListLimit.forEach {
+//                        LogUtils.d(it.producteursId)
+                                if(it.id != null){
+                                    commonDataList.add(CommonData(id = it.uid.toInt(), value = fromGlobalMenu.toUpperCase() ).apply {
+                                        val localiteIt = ccbBase.localiteDoa().getLocalite(it.localitesId?.toInt()?:0)
+//                                        LogUtils.d(localiteIt, it.localitesId)
+                                        if(localiteIt != null) listOfValue = arrayListOf<String>("Localité: ${localiteIt.nom ?: "N/A"}\nCode: ${it.codeProd?:"N/A"}\nProducteur: ${it.nom} ${it.prenoms}")
+                                        else listOfValue = arrayListOf<String>("Localité: N/A\nCode: ${it.codeProd?:"N/A"}\nProducteur: ${it.nom} ${it.prenoms}")
+                                    })
+                                    commonDataListCloned.addAll(commonDataList)
+                                }
+                            }
+                        }
+                    }
+                    intentGoToModif = Intent(this@DatasSyncListActivity, ProducteurActivity::class.java)
                 }
             }
 
@@ -312,7 +384,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                             setPageCurrTitle(currIndex)
 
                             var endCount = currIndex*35
-                            if(endCount > currSize) endCount = currSize - 1
+                            if(endCount > currSize) endCount = currSize
 
                             updateListRv(commonDataListClonedF.subList(0, endCount))
                         }else{
@@ -328,7 +400,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
     }
 
     fun updateListRv(list: MutableList<CommonData>){
-//        LogUtils.d(list)
+        LogUtils.d(list.map { it.id })
         if(list.isEmpty()) return
         try{
             (recyclerSyncedList.adapter as DataSyncedAdapter).updateItems(list)

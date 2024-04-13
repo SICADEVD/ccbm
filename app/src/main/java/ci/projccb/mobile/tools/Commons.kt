@@ -386,7 +386,7 @@ class Commons {
                     val memberProperty = producteurModelClass.declaredFields.find { it.name == childView.tag }
                     memberProperty?.let {
                         it.isAccessible = true
-                        it.set(prodModel, value.toCheckEmptyItem())
+                        it.set(prodModel, value.toCheckEmptyItem().returnIfFindEmpty())
 //                        LogUtils.d(value)
                         mutableListOf.add(Pair(currTextViewIn.toString(), value))
                     }
@@ -403,7 +403,7 @@ class Commons {
                     val memberProperty = producteurModelClass.declaredFields.find { it.name == editText.tag }
                     memberProperty?.let {
                         it.isAccessible = true
-                        it.set(prodModel, value.toCheckEmptyItem())
+                        it.set(prodModel, value.toCheckEmptyItem().returnIfFindEmpty())
                         mutableListOf.add(Pair(currTextViewIn.toString(), value))
                     }
                     //countField++
@@ -421,6 +421,15 @@ class Commons {
                 }
             }
             return prodModel
+        }
+
+        fun String.returnIfFindEmpty(): String? {
+            if(this == null){
+                return null
+            }else if(this.equals("0"))
+                return null
+
+            return this
         }
 
         fun setSizeOfAllTextViews(
