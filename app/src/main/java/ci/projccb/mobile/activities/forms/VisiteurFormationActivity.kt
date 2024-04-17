@@ -113,7 +113,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -148,7 +148,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
@@ -185,9 +185,9 @@ class VisiteurFormationActivity : AppCompatActivity() {
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if(it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if(it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }else{
-                    if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if(it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -237,7 +237,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             getString(R.string.selectionner_la_formation),
             getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
-            currentVal = getString(R.string.formation)+(formationList?.find { it.id == visiteurFormationDrafted.suivi_formation_id?.toInt() } as FormationModel?)?.id.toString() ?: "0",
+            currentVal = getString(R.string.formation)+(formationList?.find { it.id.toString() == visiteurFormationDrafted.suivi_formation_id } as FormationModel?)?.id.toString() ?: "0",
             spinner = selectFormationVisitForm,
             listIem = formationList?.map { formM ->
                 val participCount = GsonUtils.fromJson<MutableList<String>>(formM.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {

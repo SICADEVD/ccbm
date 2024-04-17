@@ -192,7 +192,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -441,11 +441,11 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     parcelle.mutableWayPoints = GsonUtils.fromJson(parcelle.parcelleWayPoints, parcelleWayPointsMappedToken)
 
                     parcelle.mutableWayPoints?.map { latlng ->
-                        wayPoints.add("${latlng.longitude},${latlng.latitude},0")
+                        wayPoints.add("${latlng.longitude.toString().formatCorrectlyLatLongPoint()},${latlng.latitude.toString().formatCorrectlyLatLongPoint()},0")
                     }
 
-                    editLatParcelle.setText(parcelle.parcelleLat)
-                    editLongParcelle.setText(parcelle.parcelleLng)
+                    editLatParcelle.setText(parcelle.parcelleLat.toString().formatCorrectlyLatLongPoint())
+                    editLongParcelle.setText(parcelle.parcelleLng.toString().formatCorrectlyLatLongPoint())
                     editSuperficieParcelle.setText(parcelle.parcelleSuperficie)
                     editWayPointsParcelle.text = Editable.Factory.getInstance().newEditable(GsonUtils.toJson(wayPoints))
                 }

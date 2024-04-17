@@ -152,7 +152,7 @@ class CalculEstimationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 

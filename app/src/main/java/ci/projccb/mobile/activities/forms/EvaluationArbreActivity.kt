@@ -365,7 +365,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -401,7 +401,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
@@ -439,9 +439,9 @@ class EvaluationArbreActivity : AppCompatActivity() {
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 } else {
-                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -483,7 +483,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
 //        var libItem: String? = null
 //        currVal3?.let { idc ->
 //            parcellesList?.forEach {
-//                if (it.id == idc.toInt()) libItem = "${it.codeParc}"
+//                if (it.id.toString() == idc.toString()) libItem = "${it.codeParc}"
 //            }
 //        }
 //

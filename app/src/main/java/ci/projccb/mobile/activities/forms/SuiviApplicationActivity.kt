@@ -856,12 +856,25 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     }
                 })
 
-            Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+//            LogUtils.d(applicationDrafted.maladiesStr)
+
+            if(applicationDrafted.maladiesStr.isNullOrEmpty() == false){
+                Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+                    currentList = GsonUtils.fromJson(applicationDrafted.maladiesStr, object : TypeToken<MutableList<String>>(){}.type)
+                    ){
+
+                }
+            }else{
+//                LogUtils.d(maladieList)
+                Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
                 ){
 
+                }
             }
 
-            selectListMaladieSuiviApplication.setItems(GsonUtils.fromJson<List<String>>(applicationDrafted.maladiesStr, object : TypeToken<List<String>>() {}.type))
+            (recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).setupList(GsonUtils.fromJson<MutableList<String>?>(applicationDrafted.autreMaladieStr, object : TypeToken<MutableList<String>>(){}.type).map { CommonData(id=0, nom = it) }?.toMutableList())
+
+//            selectListMaladieSuiviApplication.setItems(GsonUtils.fromJson<List<String>>(applicationDrafted.maladiesStr, object : TypeToken<List<String>>() {}.type))
 
             (recyclerPestListSApplic.adapter as NineItemAdapter).setDataToRvItem(
                 (GsonUtils.fromJson<MutableList<PesticidesApplicationModel>>(applicationDrafted.pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)).map {
@@ -1047,7 +1060,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -1083,7 +1096,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
@@ -1121,9 +1134,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 } else {
-                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -1160,14 +1173,14 @@ class SuiviApplicationActivity : AppCompatActivity() {
         var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
             ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        LogUtils.json(parcellesList)
+//        LogUtils.json(parcellesList)
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {
                 if(it.isSynced){
-                    if (it.id == idc.toInt()) libItem = Commons.getParcelleNotSyncLibel(it)
+                    if (it.id.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }else{
-                    if (it.uid == idc.toLong()) libItem = Commons.getParcelleNotSyncLibel(it)
+                    if (it.uid.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }
             }
         }

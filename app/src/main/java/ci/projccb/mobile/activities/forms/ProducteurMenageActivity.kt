@@ -323,9 +323,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if(it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if(it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }else{
-                    if(it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if(it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -1840,7 +1840,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -1875,7 +1875,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
