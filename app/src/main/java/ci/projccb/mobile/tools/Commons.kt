@@ -693,6 +693,14 @@ class Commons {
             dialog.show()
         }
 
+        fun String.formatCorrectlyLatLongPoint(): String {
+            if(this != null){
+                val formattedLatitude = String.format("%.6f", this)
+                return formattedLatitude
+            }
+            return this
+        }
+
         fun Context.configDate(viewClciked: AppCompatEditText, isDateMin: Boolean = false, isDateMax: Boolean = true) {
             val calendar: Calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)

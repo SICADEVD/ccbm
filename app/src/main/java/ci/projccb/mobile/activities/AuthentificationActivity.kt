@@ -26,8 +26,10 @@ import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.Roles
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_authentification.*
@@ -83,36 +85,36 @@ class AuthentificationActivity : AppCompatActivity() {
     }
 
 
-    private suspend fun authentificateAgentCoroutine() {
-        withContext(Dispatchers.IO) {
-            val postBody = GsonUtils.toJson(
-                AgentModel(codeApp = SPUtils.getInstance().getString(Constants.AGENT_CODE_APP), email = inputLogin.text?.trim().toString(), password = inputPassword.text?.trim().toString())
-            )
-
-            val clientAuth: OkHttpClient = OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.MINUTES)
-                .readTimeout(30, TimeUnit.MINUTES)
-                .writeTimeout(30, TimeUnit.MINUTES)
-                .addInterceptor(interceptor = getLoggin())
-                .build()
-
-            val request = Request.Builder()
-                //.url("${SPUtils.getInstance().getString(Constants.APP_BASE_URL)}connexion")
-                .url("https://fieldconnectv3.sicadevd.com/api/connexion")
-                .post(postBody.toRequestBody(ConfigurationBaseUrlActivity.MEDIA_TYPE_JSON))
-                .build()
-
-            clientAuth.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                val authType = object : TypeToken<AgentAuthResponse>() {}.type
-
-                val authData = GsonUtils.fromJson<AgentAuthResponse>(response.body!!.string(), authType)
-                authData?.run {
-                    handleResponse(status_code, message, agentAuth = results)
-                }
-            }
-        }
-    }
+//    private suspend fun authentificateAgentCoroutine() {
+//        withContext(Dispatchers.IO) {
+//            val postBody = GsonUtils.toJson(
+//                AgentModel(codeApp = SPUtils.getInstance().getString(Constants.AGENT_CODE_APP), email = inputLogin.text?.trim().toString(), password = inputPassword.text?.trim().toString())
+//            )
+//
+//            val clientAuth: OkHttpClient = OkHttpClient.Builder()
+//                .connectTimeout(30, TimeUnit.MINUTES)
+//                .readTimeout(30, TimeUnit.MINUTES)
+//                .writeTimeout(30, TimeUnit.MINUTES)
+//                .addInterceptor(interceptor = getLoggin())
+//                .build()
+//
+//            val request = Request.Builder()
+//                //.url("${SPUtils.getInstance().getString(Constants.APP_BASE_URL)}connexion")
+//                .url("https://fieldconnectv3.sicadevd.com/api/connexion")
+//                .post(postBody.toRequestBody(ConfigurationBaseUrlActivity.MEDIA_TYPE_JSON))
+//                .build()
+//
+//            clientAuth.newCall(request).execute().use { response ->
+//                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+//                val authType = object : TypeToken<AgentAuthResponse>() {}.type
+//
+//                val authData = GsonUtils.fromJson<AgentAuthResponse>(response.body!!.string(), authType)
+//                authData?.run {
+//                    handleResponse(status_code, message, agentAuth = results)
+//                }
+//            }
+//        }
+//    }
 
 
     private suspend fun handleResponse(statusCode: Int?, message: String?, agentAuth: AgentModel?) {
@@ -155,7 +157,42 @@ class AuthentificationActivity : AppCompatActivity() {
                                 coopDao?.deleteAll()
 
                                 val agentResponseBody = response.body()
-                                var roles = agentResponseBody?.menu //arrayListOf<String>()
+                                var roles = arrayListOf<String>() //agentResponseBody?.menu //
+                                var role_name = agentResponseBody?.results?.roles?.let {
+                                    if(it.size > 0) it.first().name?.uppercase()
+                                    else ""
+                                } //arrayListOf<String>()
+                                LogUtils.d(role_name)
+                                when (role_name.toString()){
+                                    "Manager".uppercase() -> {
+                                        roles.addAll(Roles.MANAGER)
+                                    }
+                                    "ADG".uppercase() -> {
+                                        roles.addAll(Roles.MANAGER)
+                                    }
+                                    "Inspecteur".uppercase() -> {
+                                        roles.addAll(Roles.INSPECTEUR)
+                                    }
+                                    "Coach".uppercase() -> {
+                                        roles.addAll(Roles.COACH)
+                                    }
+                                    "Applicateur".uppercase() -> {
+                                        roles.addAll(Roles.APPLICATEUR)
+                                    }
+                                    "Magasinier".uppercase() -> {
+                                        roles.addAll(Roles.MAGASINIERSECTION)
+                                    }
+                                    "Magasinier Central".uppercase() -> {
+                                        roles.addAll(Roles.MAGASINIERCENTRAL)
+                                    }
+                                    "Delegue".uppercase() -> {
+                                        roles.addAll(Roles.DELEGUE)
+                                    }
+                                    else -> {
+
+                                    }
+                                }
+
                                 val agentModel = agentResponseBody?.results
                                 val coopModel = agentResponseBody?.cooperative
 
@@ -178,7 +215,37 @@ class AuthentificationActivity : AppCompatActivity() {
                                 SPUtils.getInstance().put(Constants.AGENT_COOP_ID, agentModel?.cooperativesId!!)
                                 SPUtils.getInstance().put(Constants.AGENT_ID, agentModel.id!!)
 
-                                agentDoa?.insert(agentModel)
+                                val agentModelReal = AgentModel(
+                                    id= agentModel.id,
+                                    cooperativesId = agentModel.cooperativesId,
+                                    createdAt= agentModel.createdAt,
+                                    tp= agentModel.tp,
+                                    dateNaissance = agentModel.dateNaissance,
+                                    login= agentModel.login,
+                                    firstname= agentModel.firstname,
+                                    lastname= agentModel.lastname,
+                                    username= agentModel.username,
+                                    userType= agentModel.userType,
+                                    typeCompte= agentModel.typeCompte,
+                                    email= agentModel.email,
+                                    emailVerifiedAt= agentModel.emailVerifiedAt,
+                                    name = agentModel.name,
+                                    nationalites= agentModel.nationalites,
+                                    niveauxEtudes = agentModel.niveauxEtudes,
+                                    numeroPiece= agentModel.numeroPiece,
+                                    password= agentModel.password,
+                                    phoneUn = agentModel.phoneUn,
+                                    phoneDeux= agentModel.phoneDeux,
+                                    photo= agentModel.photo,
+                                    sexe= agentModel.sexe,
+                                    typePieces= agentModel.typePieces,
+                                    status= agentModel.status,
+                                    adresse= agentModel.adresse,
+                                    userId= agentModel.userId,
+                                    codeApp= agentModel.codeApp,
+                                    isLogged = agentModel.isLogged
+                                )
+                                agentDoa?.insert(agentModelReal)
                                 coopDao?.insert(coopModel!!)
 
                                 val intentConfiguration = Intent(this@AuthentificationActivity, ConfigurationActivity::class.java)

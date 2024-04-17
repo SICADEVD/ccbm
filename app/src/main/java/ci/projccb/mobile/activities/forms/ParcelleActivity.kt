@@ -1,7 +1,12 @@
 package ci.projccb.mobile.activities.forms
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
@@ -11,6 +16,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.cartographies.FarmDelimiterActivity
@@ -26,6 +32,7 @@ import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.formatCorrectlyLatLongPoint
 import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
@@ -75,6 +82,105 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     val sectionCommon = CommonData();
     val localiteCommon = CommonData();
     val producteurCommon = CommonData();
+
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1001
+
+    // Function to check if location permissions are granted
+    private fun isLocationPermissionGranted(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    // Function to request location permissions
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    // Function to check if location is enabled
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    // Function to retrieve current location
+    private fun getCurrentLocation(): Location? {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (isLocationEnabled() && isLocationPermissionGranted()) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return null
+            }
+            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        } else {
+            // Location is not enabled or permission is not granted
+            // Handle the case as needed (e.g., request permission)
+            return null
+        }
+    }
+
+    // Function to handle location permission request result
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted, you can now get the location
+                    val location = getCurrentLocation()
+                    // Use the location as needed
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        // Do something with latitude and longitude
+                        editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                        editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
+                    }else{
+                        editLatParcelle.setText("0.0")
+                        editLongParcelle.setText("-0.0")
+                    }
+                } else {
+                    // Permission denied, handle this case accordingly
+                    editLatParcelle.setText("0.0")
+                    editLongParcelle.setText("-0.0")
+                }
+            }
+        }
+    }
+
+    // Example usage
+    private fun getLocation() {
+        if (isLocationPermissionGranted()) {
+            val location = getCurrentLocation()
+            // Use the location as needed
+            if (location != null) {
+                val latitude = location.latitude
+                val longitude = location.longitude
+                // Do something with latitude and longitude
+                editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
+            }else{
+                editLatParcelle.setText("0.0")
+                editLongParcelle.setText("-0.0")
+            }
+        } else {
+            requestLocationPermission()
+        }
+    }
 
 
     fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null) {
@@ -738,8 +844,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         clickLatLongParcelle.setOnClickListener {
-            editLatParcelle.setText("0.0")
-            editLongParcelle.setText("-0.0")
+
+            getLocation()
         }
 
         clickToMappingParcelle.setOnClickListener {
