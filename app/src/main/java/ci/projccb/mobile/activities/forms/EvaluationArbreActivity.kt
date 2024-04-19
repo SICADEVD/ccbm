@@ -127,7 +127,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                     DataDraftedModel(
                         uid = dataDraftedModel?.uid ?: 0,
                         datas = ApiClient.gson.toJson(formationModelDraft),
-                        typeDraft = "evaluation_besoin",
+                        typeDraft = "AGRO_EVALUATION".lowercase(),
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
                 )

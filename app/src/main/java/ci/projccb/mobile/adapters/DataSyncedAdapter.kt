@@ -106,7 +106,7 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
             "ESTIMATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.estimations)
                 intentUndraftedData = Intent(context, CalculEstimationActivity::class.java)
-                intentUndraftedData.putExtra("from", "estimation")
+                intentUndraftedData.putExtra("from", "calcul_estimation")
                 intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "APPLICATION" -> {
@@ -143,13 +143,13 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
             "AGRO_EVALUATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.arbre_black)
                 intentUndraftedData = Intent(context, EvaluationArbreActivity::class.java)
-                intentUndraftedData.putExtra("from", "evaluation_arbre")
+                intentUndraftedData.putExtra("from", "AGRO_EVALUATION".lowercase())
                 intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "AGRO_DISTRIBUTION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.distrib_arbre)
                 intentUndraftedData = Intent(context, DistributionArbreActivity::class.java)
-                intentUndraftedData.putExtra("from", "distribution_arbre")
+                intentUndraftedData.putExtra("from", "AGRO_DISTRIBUTION".lowercase())
                 intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "POSTPLANTING" -> {

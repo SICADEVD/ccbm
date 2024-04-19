@@ -165,7 +165,7 @@ android:textColor="@color/text_color_white"
                             android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Nom"/>
+                            android:text="Nom et prénoms"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="senderName"
@@ -173,7 +173,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:imeOptions="actionDone"
-                            tools:text="Nom"
+                            tools:text="Nom et prénoms"
                             android:ellipsize="end"
                             android:textAllCaps="true"
                             android:textSize="@dimen/page_input_content_dim13"
@@ -392,7 +392,7 @@ android:textColor="@color/text_color_white"
                             android:textSize="@dimen/page_input_title_dim11"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:text="Nom"/>
+                            android:text="Nom et prénoms"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="receiverName"
@@ -400,7 +400,7 @@ android:textColor="@color/text_color_white"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:imeOptions="actionDone"
-                            tools:text="Nom"
+                            tools:text="Nom et prénoms"
                             android:ellipsize="end"
                             android:textAllCaps="true"
                             android:textSize="@dimen/page_input_content_dim13"

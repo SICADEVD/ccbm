@@ -143,7 +143,7 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                                         ?.infosProducteurDao()?.insert(infosProducteur!!)
                                     draftDao?.completeDraft(draftID)
                                     Commons.synchronisation(
-                                        type = "infos",
+                                        type = "infos_producteur",
                                         this@InfosProducteurPreviewActivity
                                     )
                                     Commons.showMessage(

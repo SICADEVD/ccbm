@@ -133,7 +133,7 @@ class LivraisonActivity : AppCompatActivity() {
                 magasinSectionCommon.nom = magasin.nomMagasinsections!!
                 magasinSectionCommon.id = magasin.id
                 LogUtils.d(magasin.staffId.toString())
-                CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId!!)?.let { staff ->
+                CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId?.toInt()?:0)?.let { staff ->
                     editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
                     editContactDestinataire.setText("${staff.mobile}")
                     editEmailDestinataire.setText("${staff.email}")

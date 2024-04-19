@@ -26,7 +26,7 @@ interface ParcelleDao {
 
     @Transaction
     @Query("SELECT * FROM parcelle WHERE id = :id")
-    fun getParcelle(id: Int): LocaliteModel
+    fun getParcelle(id: Int): ParcelleModel
 
     @Transaction
     @Query("SELECT * FROM parcelle WHERE isSynced = 0 AND agentId = :agentID")

@@ -41,6 +41,7 @@ import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_evaluation.*
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
+import kotlinx.android.synthetic.main.activity_suivi_application.selectParcelleSApplic
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -83,9 +84,10 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     val sectionCommon = CommonData();
     val localiteCommon = CommonData();
     val producteurCommon = CommonData();
+    val parcelleCommon = CommonData();
     val encadreurCommon = CommonData();
 
-    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null, currVal4: String? = null) {
         var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
         var sectionList = sectionDao?.getAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
@@ -112,7 +114,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 sectionCommon.nom = section.libelle!!
                 sectionCommon.id = section.id!!
 
-                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3)
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3, currVal4)
 
             },
             onSelected = { itemId, visibility ->
@@ -120,7 +122,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             })
     }
 
-    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null, currVal4: String? = null) {
 
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
         var localitesListi = localiteDao?.getLocaliteBySection(id)
@@ -147,7 +149,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    setupProducteurSelection(localiteCommon.id!!, currVal2, currVal3)
+                    setupProducteurSelection(localiteCommon.id!!, currVal2, currVal3, currVal4)
                 }
 
 
@@ -158,7 +160,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     }
 
-    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
+    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null, currVal4: String? = null) {
         val producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
             ?.getProducteursByLocalite(localite = id.toString())
 
@@ -198,6 +200,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                                 producteurCommon.id = producteur.uid
                                 listCertif = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteurByUID(producteurUID = producteur.uid)
                             }
+
+                            setupParcelleSelection(producteurCommon.id.toString(), currVal4)
 
 //                            LogUtils.d(listCertif?.certification?.split(",")?.filter { currVal3 == it }?.toModifString())
 
@@ -254,6 +258,51 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     }
 
+    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
+        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+//        LogUtils.json(parcellesList)
+        var libItem: String? = null
+        currVal3?.let { idc ->
+            parcellesList?.forEach {
+                if(it.isSynced){
+                    if (it.id.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
+                }else{
+                    if (it.uid.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
+                }
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            getString(R.string.choisir_sa_parcelle_concern_e),
+            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            isEmpty = if (parcellesList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectParcelleInspection,
+            listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                parcellesList?.let { list ->
+                    var parcelle = list.get(it)
+                    parcelleCommon.nom = Commons.getParcelleNotSyncLibel(parcelle)
+
+                    if(parcelle.isSynced){
+                        parcelleCommon.id = parcelle.id!!
+                    }else{
+                        parcelleCommon.id = parcelle.uid.toString().toInt()
+                    }
+
+                    //setupParcelleSelection(parcelleCommon.id, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+    }
 
     fun configDate(viewClciked: AppCompatEditText) {
         val calendar: Calendar = Calendar.getInstance()
@@ -489,6 +538,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             localiteId = localiteCommon.id.toString()
             producteursId = producteurCommon.id.toString()
             encadreur = encadreurCommon.id.toString()
+            parcelle = parcelleCommon.id.toString()
             noteInspection = cQuestionnairesReviewList?.filter { it.isTitle == false }?.map { it.note?.toInt() ?: 0 }?.sum()?.let {
                 if(it > 0) {
                     it.div(cQuestionnairesReviewList?.filter { it.isTitle == false }?.size ?: 1).toString()
@@ -567,6 +617,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             localiteId = localiteCommon.id.toString()
             producteursId = producteurCommon.id.toString()
             encadreur = encadreurCommon.id.toString()
+            parcelle = parcelleCommon.id.toString()
             noteInspection = cQuestionnairesReviewList?.filter { it.isTitle == false }?.map { it.note?.toInt() ?: 0 }?.sum()?.let {
                 if(it > 0) {
                     it.div(cQuestionnairesReviewList?.filter { it.isTitle == false }?.size ?: 1).toString()
@@ -715,6 +766,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             localiteId = localiteCommon.id.toString()
             producteursId = producteurCommon.id.toString()
             encadreur = encadreurCommon.id.toString()
+            parcelle = parcelleCommon.id.toString()
             noteInspection = itemModelOb?.first?.noteInspection
             total_question = itemModelOb?.first?.total_question
             total_question_conforme = itemModelOb?.first?.total_question_conforme
@@ -811,7 +863,9 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             dateEvaluation = dateInspection,
             formateursId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
             producteursId = producteurCommon.id.toString(),
+            parcelle = parcelleCommon.id.toString(),
             producteurNomPrenoms = producteurCommon.nom.toString(),
+            parcelleLib = parcelleCommon.nom.toString(),
             reponseStringify = ApiClient.gson.toJson(cQuestionnairesReviewList),
             origin = "local",
             isSynced = false,
@@ -889,7 +943,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val inspectionDrafted = ApiClient.gson.fromJson(draftedData.datas, InspectionDTO::class.java)
 
         // Localite
-        setupSectionSelection(inspectionDrafted.section ?: "",inspectionDrafted.localiteId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "")
+        setupSectionSelection(inspectionDrafted.section ?: "",inspectionDrafted.localiteId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.encadreur ?: "")
 
         editDateInspection.setText(inspectionDrafted.dateEvaluation)
@@ -1150,7 +1204,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(inspectionDrafted.producteursId?.toInt()?:0)
 //        val section =
 
-        setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "")
+        setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.formateursId ?: "")
 
         editDateInspection.setText(inspectionDrafted.dateEvaluation)
