@@ -186,7 +186,7 @@ android:textColor="@color/text_color_white"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
-                app:srcCompat="@drawable/ic_loupe_black" />
+                app:srcCompat="@drawable/ic_loupe" />
 
         </LinearLayout>
 
@@ -237,7 +237,7 @@ android:textColor="@color/text_color_white"
                         android:id="@+id/imageRunSearchUpdate"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        app:srcCompat="@drawable/ic_loupe_black"/>
+                        app:srcCompat="@drawable/ic_loupe"/>
 
                 </LinearLayout>
 

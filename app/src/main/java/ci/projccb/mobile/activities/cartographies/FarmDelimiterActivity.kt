@@ -1,5 +1,6 @@
 package ci.projccb.mobile.activities.cartographies
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -48,8 +49,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
-class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener,
-    OnMarkerClickListener {
+class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener, OnMarkerClickListener {
 
 
     private val RESULT_ENABLE_GPS_FEATURE: Int = 101
@@ -132,9 +132,11 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         closed = !closed
     }
 
+
     fun getDeviceLocation() {
         try {
             val locationResult = fusedLocationProviderClient.lastLocation
+
             locationResult.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Set the map's camera position to the current location of the device.

@@ -81,11 +81,11 @@ object ApiClient {
 
     internal val retrofit : Retrofit by lazy {
         //  val baseUrl = if (SPUtils.getInstance().getString(Constants.APP_BASE_URL).isBlank()) "https://jularis.com/api/" else SPUtils.getInstance().getString(Constants.APP_BASE_URL)
-//        val baseUrl = "https://ccbw.sicadevd.com/api/"
-        val baseUrl = "http://192.168.1.11:5000/api/"
-        //val baseUrl = "http://192.168.43.102:5000/api/"
-        //val  baseUrl = "https://fieldconnectv3.sicadevd.com/api/"
-        //val  baseUrl = "https://demo.sicadevd.com/api/"
+        val baseUrl = "https://ccbw.sicadevd.com/api/"
+        //  val baseUrl = "http://192.168.1.11:5000/api/"
+        //  val baseUrl = "http://192.168.43.102:5000/api/"
+        //  val  baseUrl = "https://fieldconnectv3.sicadevd.com/api/"
+        //  val  baseUrl = "https://demo.sicadevd.com/api/"
         //  val  baseUrl = "https://anouanze.sicadevd.com/api/"
         //  val  baseUrl = "https://cemoi.sicadevd.com/api/"
         //  val  baseUrl = "https://ccb.sicadevd.com/api/"

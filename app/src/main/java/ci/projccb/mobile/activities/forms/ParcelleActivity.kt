@@ -327,7 +327,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.map { MapEntry(it.first, it.second) }
 
         if(intent.getIntExtra("sync_uid", 0) != 0){
-            parcelle.apply {
+            parcelle?.apply {
                 id = commomUpdate.listOfValue?.first()?.toInt()
                 uid = commomUpdate.listOfValue?.get(1)?.toLong()?:0
                 isSynced = false
