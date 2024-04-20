@@ -95,7 +95,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             getString(R.string.choix_de_la_section),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
-            currentVal = sectionList?.filter { it.id == currVal?.toInt() }?.map { it.libelle }?.let{
+            currentVal = sectionList?.filter { it.id.toString() == currVal }?.map { it.libelle }?.let{
                 if (it.size > 0) {
                     it[0]
                 } else {
@@ -128,7 +128,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
@@ -166,9 +166,9 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 } else {
-                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -452,7 +452,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             getString(R.string.choix_de_l_encadreur),
             getString(R.string.la_liste_des_encadreurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (encadreurList?.size!! > 0) false else true,
-            currentVal = encadreurList.filter { it.id == currVal?.toInt() }?.map { "${it.firstname} ${it.lastname}" }?.let{
+            currentVal = encadreurList.filter { it.id.toString() == currVal }?.map { "${it.firstname} ${it.lastname}" }?.let{
                 if (it.size > 0) {
                     it[0]
                 } else {

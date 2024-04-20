@@ -380,7 +380,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal2?.let { idc ->
             programmeListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -415,9 +415,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
 //        currVal2?.let { idc ->
 //            producteursList?.forEach {
 //                if(it.id == 0){
-//                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                    if (it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
 //                } else {
-//                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                    if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
 //                }
 //            }
 //        }
@@ -458,7 +458,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal3?.let { idc ->
             parcellesList?.forEach {
-                if (it.id == idc.toInt()) libItem = Commons.getParcelleNotSyncLibel(it)
+                if (it.id.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
             }
         }
 
@@ -555,9 +555,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
 //        currVal2?.let { idc ->
 //            producteursList?.forEach {
 //                if(it.id == 0){
-//                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                    if (it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
 //                } else {
-//                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+//                    if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
 //                }
 //            }
 //        }

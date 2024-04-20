@@ -119,6 +119,11 @@ class OnlyFieldAdapter(private var common: MutableList<CommonData>?, private  va
     override fun getItemCount() = common?.size ?: 0
     fun getCurrenntList(): MutableList<CommonData>? = common
 
+    fun setupList(list: MutableList<CommonData>){
+        common?.addAll(list)
+        notifyDataSetChanged()
+    }
+
 
     class OnlyItemHolder(onlyView: View) : RecyclerView.ViewHolder(onlyView) {
         val libelle = onlyView.libelle

@@ -39,8 +39,8 @@ android:textColor="@color/text_color_white"
     <LinearLayout
         android:id="@+id/linearGpsMesureType"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+
         android:layout_margin="@dimen/_10sdp"
         android:gravity="center_vertical"
         android:orientation="horizontal">

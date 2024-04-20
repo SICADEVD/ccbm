@@ -1725,7 +1725,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -1761,7 +1761,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id == idc.toInt()) libItem = it.nom
+                if(it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
@@ -1799,9 +1799,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         currVal2?.let { idc ->
             producteursList?.forEach {
                 if(it.id == 0){
-                    if (it.uid == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.uid.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 } else {
-                    if (it.id == idc.toInt()) libItem = "${it.nom} ${it.prenoms}"
+                    if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
         }
@@ -1842,9 +1842,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         currVal3?.let { idc ->
             parcellesList?.forEach {
                 if(it.isSynced){
-                    if (it.id == idc.toInt()) libItem = Commons.getParcelleNotSyncLibel(it)
+                    if (it.id.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }else{
-                    if (it.uid == idc.toLong()) libItem = Commons.getParcelleNotSyncLibel(it)
+                    if (it.uid.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
                 }
             }
         }

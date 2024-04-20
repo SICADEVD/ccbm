@@ -695,8 +695,9 @@ class Commons {
 
         fun String.formatCorrectlyLatLongPoint(): String {
             if(this != null){
-                val formattedLatitude = String.format("%.6f", this)
-                return formattedLatitude
+                val indexOfDot = this.indexOf('.') // Find the index of the dot
+                val sixCharsAfterDot = this.substring(0, indexOfDot + 7) // Extract substring with 6 characters after dot
+                return sixCharsAfterDot
             }
             return this
         }

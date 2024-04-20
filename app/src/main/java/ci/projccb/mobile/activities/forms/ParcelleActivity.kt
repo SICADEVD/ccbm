@@ -43,6 +43,9 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
@@ -58,6 +61,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
 
+    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var commomUpdate: CommonData = CommonData()
     private var arbreOmbrParcelleAdapter: OmbrageAdapter? = null
     private var arbrOmbrListParcelle: MutableList<OmbrageVarieteModel> = arrayListOf()
@@ -110,24 +114,41 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
     // Function to retrieve current location
     private fun getCurrentLocation(): Location? {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+
         if (isLocationEnabled() && isLocationPermissionGranted()) {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return null
+            try {
+                val locationResult = fusedLocationProviderClient?.lastLocation
+                locationResult?.addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Set the map's camera position to the current location of the device.
+                        val location = task.result
+                        if (location != null) {
+                            val latitude = location.latitude
+                            val longitude = location.longitude
+                            // Do something with latitude and longitude
+                            editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                            editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
+                        }else{
+                            editLatParcelle.setText("0.0")
+                            editLongParcelle.setText("-0.0")
+                        }
+                    } else {
+                        editLatParcelle.setText("0.0")
+                        editLongParcelle.setText("-0.0")
+                    }
+                }
+            } catch (e: SecurityException) {
+                LogUtils.e(e.message)
+                FirebaseCrashlytics.getInstance().recordException(e)
             }
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        } else {
-            // Location is not enabled or permission is not granted
-            // Handle the case as needed (e.g., request permission)
-            return null
+
+        }else{
+            requestLocationPermission()
+            ToastUtils.showShort("ACTIVER LA LOCALISATION DANS LA BARRE DES TACHES")
         }
+        return null
     }
 
     // Function to handle location permission request result
@@ -143,16 +164,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     // Permission granted, you can now get the location
                     val location = getCurrentLocation()
                     // Use the location as needed
-                    if (location != null) {
-                        val latitude = location.latitude
-                        val longitude = location.longitude
-                        // Do something with latitude and longitude
-                        editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
-                        editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
-                    }else{
-                        editLatParcelle.setText("0.0")
-                        editLongParcelle.setText("-0.0")
-                    }
+
                 } else {
                     // Permission denied, handle this case accordingly
                     editLatParcelle.setText("0.0")
@@ -167,18 +179,19 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         if (isLocationPermissionGranted()) {
             val location = getCurrentLocation()
             // Use the location as needed
-            if (location != null) {
-                val latitude = location.latitude
-                val longitude = location.longitude
-                // Do something with latitude and longitude
-                editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
-                editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
-            }else{
-                editLatParcelle.setText("0.0")
-                editLongParcelle.setText("-0.0")
-            }
+//            if (location != null) {
+//                val latitude = location.latitude
+//                val longitude = location.longitude
+//                // Do something with latitude and longitude
+//                editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
+//                editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
+//            }else{
+//                editLatParcelle.setText("0.0")
+//                editLongParcelle.setText("-0.0")
+//            }
         } else {
             requestLocationPermission()
+            ToastUtils.showShort("ACTIVER LA LOCALISATION DANS LA BARRE DES TACHES")
         }
     }
 
@@ -192,7 +205,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id == idc.toInt()) libItem = it.libelle
+                if(it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -441,11 +454,11 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     parcelle.mutableWayPoints = GsonUtils.fromJson(parcelle.parcelleWayPoints, parcelleWayPointsMappedToken)
 
                     parcelle.mutableWayPoints?.map { latlng ->
-                        wayPoints.add("${latlng.longitude},${latlng.latitude},0")
+                        wayPoints.add("${latlng.longitude.toString().formatCorrectlyLatLongPoint()},${latlng.latitude.toString().formatCorrectlyLatLongPoint()},0")
                     }
 
-                    editLatParcelle.setText(parcelle.parcelleLat)
-                    editLongParcelle.setText(parcelle.parcelleLng)
+                    editLatParcelle.setText(parcelle.parcelleLat.toString().formatCorrectlyLatLongPoint())
+                    editLongParcelle.setText(parcelle.parcelleLng.toString().formatCorrectlyLatLongPoint())
                     editSuperficieParcelle.setText(parcelle.parcelleSuperficie)
                     editWayPointsParcelle.text = Editable.Factory.getInstance().newEditable(GsonUtils.toJson(wayPoints))
                 }
@@ -818,6 +831,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             resources.getDimension(R.dimen._5ssp))
 
         parcelleDao = CcbRoomDatabase.getDatabase(this)?.parcelleDao()
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         clickCloseBtn.setOnClickListener {
             SPUtils.getInstance().remove(Constants.PREFS_POLYGON_CENTER_LAT,)
