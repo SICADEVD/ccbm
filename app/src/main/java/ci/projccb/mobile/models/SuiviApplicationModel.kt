@@ -37,6 +37,7 @@ data class SuiviApplicationModel(
     @Expose var campagneNom: String? = "",
     @Expose var personneApplication: String? = "",
     @Expose var applicateur: String? = "",
+    @Expose var appicateurIndependNom: String? = "",
     @Expose var suiviFormation: String? = "",
     @Expose var attestion: String? = "",
     @Expose var bilanSante: String? = "",

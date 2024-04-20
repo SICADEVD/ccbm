@@ -415,6 +415,44 @@ android:textColor="@color/text_color_white"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="match_parent"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:textSize="@dimen/page_input_title_dim11"
+                                android:layout_height="wrap_content"
+                                android:textStyle="bold"
+                                android:text="Nom et prénoms de l'applicateur indépendant"/>
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:tag="appicateurIndependNom"
+                                android:id="@+id/editNomApplicIndepend"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:imeOptions="actionDone"
+                                tools:text="KONAN GUI"
+                                android:ellipsize="end"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/page_input_content_dim13"
+                                android:layout_width="match_parent"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:layout_weight="6.5"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"/>
+
+                        </LinearLayout>
+
                         <Space
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_10sdp" />

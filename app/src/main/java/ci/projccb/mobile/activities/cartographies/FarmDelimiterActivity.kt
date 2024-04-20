@@ -707,6 +707,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         val agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
 
+        val item = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
+
+        LogUtils.d(item)
 
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)

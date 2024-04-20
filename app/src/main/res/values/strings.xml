@@ -700,7 +700,7 @@
     <string name="choix_de_la_section">Choix de la section !</string>
     <string name="la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des producteurs semble vide, veuillez procéder à la synchronisation des données svp.</string>
     <string name="la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des localités semble vide, veuillez procéder à la synchronisation des données svp.</string>
-    <string name="choix_de_l_encadreur">Choix de l\'encadreur !</string>
+    <string name="choix_de_l_encadreur">Choix de l\'inspecteur !</string>
     <string name="la_liste_des_encadreurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des encadreurs semble vide, veuillez procéder à la synchronisation des données svp.</string>
     <string name="voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement">Voulez-vous vraiment mettre ce contenu au brouillon afin de reprendre ulterieurement ?</string>
     <string name="contenu_ajout_aux_brouillons">Contenu ajouté aux brouillons !</string>
