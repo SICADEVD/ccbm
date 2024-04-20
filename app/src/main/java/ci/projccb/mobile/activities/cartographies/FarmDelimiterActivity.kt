@@ -292,7 +292,6 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
             linearManualType.setOnClickListener {
                 manualOrGpsTrack = 1
-                manualOrGpsTrack = 1
                 dialog.dismiss()
                 onAddButtonClick()
                 startWorkManualMapping()
