@@ -21,7 +21,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 
-import kotlinx.android.synthetic.main.activity_producteur_preview.imageProfileProdPreview
 import kotlinx.android.synthetic.main.activity_visiteur_formation_preview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +38,10 @@ class VisiteurFormationPreviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visiteur_formation_preview)
+
+        clickCloseBtn.setOnClickListener {
+            finish()
+        }
 
         intent?.let {
             try {

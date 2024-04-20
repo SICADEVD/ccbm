@@ -41,6 +41,10 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_eval_besoin_preview)
 
+        clickCloseBtn.setOnClickListener {
+            finish()
+        }
+
         intent?.let {
             try {
                 val infoItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
@@ -78,7 +82,7 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
                                 ?.insert(evaluationArbreDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "evaluation_besoin", this)
+                            Commons.synchronisation(type = "AGRO_EVALUATION".lowercase(), this)
                             Commons.showMessage(
                                 "Evaluation des besoins du producteur enregistrée !",
                                 this,

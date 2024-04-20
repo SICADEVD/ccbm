@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_menage_preview.*
-import kotlinx.android.synthetic.main.activity_producteur_preview.recyclerInfoPrev
 
 class MenagePreviewActivity : AppCompatActivity() {
 
@@ -29,6 +28,10 @@ class MenagePreviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menage_preview)
+
+        clickCloseBtn.setOnClickListener {
+            finish()
+        }
 
         intent?.let {
             try {
@@ -191,9 +194,6 @@ class MenagePreviewActivity : AppCompatActivity() {
 
 //
 //
-                    clickCloseBtn.setOnClickListener {
-                        finish()
-                    }
 //                }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)

@@ -294,7 +294,6 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
             linearManualType.setOnClickListener {
                 manualOrGpsTrack = 1
-                manualOrGpsTrack = 1
                 dialog.dismiss()
                 onAddButtonClick()
                 startWorkManualMapping()
@@ -709,6 +708,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         val agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
 
+        val item = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
+
+        LogUtils.d(item)
 
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)

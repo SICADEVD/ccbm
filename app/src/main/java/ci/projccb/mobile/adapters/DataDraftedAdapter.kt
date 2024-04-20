@@ -98,7 +98,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
             "ESTIMATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.estimations)
                 intentUndraftedData = Intent(context, CalculEstimationActivity::class.java)
-                intentUndraftedData.putExtra("from", "estimation")
+                intentUndraftedData.putExtra("from", "calcul_estimation")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "APPLICATION" -> {
@@ -135,13 +135,13 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
             "AGRO_EVALUATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.arbre_black)
                 intentUndraftedData = Intent(context, EvaluationArbreActivity::class.java)
-                intentUndraftedData.putExtra("from", "evaluation_arbre")
+                intentUndraftedData.putExtra("from", "AGRO_EVALUATION".lowercase())
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "AGRO_DISTRIBUTION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.distrib_arbre)
                 intentUndraftedData = Intent(context, DistributionArbreActivity::class.java)
-                intentUndraftedData.putExtra("from", "distribution_arbre")
+                intentUndraftedData.putExtra("from", "AGRO_DISTRIBUTION".lowercase())
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "POSTPLANTING" -> {

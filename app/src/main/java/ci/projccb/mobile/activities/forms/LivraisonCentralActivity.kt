@@ -234,7 +234,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 magasinSectionCommon.id = magasinSec.id
 
                 //if(!isFirstDelegue){
-                CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasinSec.staffId!!)?.let { staff ->
+                CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasinSec.staffId?.toInt()?:0)?.let { staff ->
                     editNomExpediteur.setText("${staff.firstname} ${staff.lastname}")
                     editContactExpediteur.setText("${staff.mobile}")
                     editEmailExpediteur.setText("${staff.email}")

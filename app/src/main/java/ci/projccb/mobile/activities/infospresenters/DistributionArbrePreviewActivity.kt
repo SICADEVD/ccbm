@@ -41,6 +41,10 @@ class DistributionArbrePreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_distribution_arbre_preview)
 
+        clickCloseBtn.setOnClickListener {
+            finish()
+        }
+
         intent?.let {
             try {
                 val infoItemsListPrev: MutableList<Map<String, String>> = arrayListOf()
@@ -76,7 +80,7 @@ class DistributionArbrePreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
                                 ?.insert(distributionArbreDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "distribution_arbre", this)
+                            Commons.synchronisation(type = "AGRO_DISTRIBUTION".lowercase(), this)
                             Commons.showMessage(
                                 "Distribution d'arbre enregistrée !",
                                 this,

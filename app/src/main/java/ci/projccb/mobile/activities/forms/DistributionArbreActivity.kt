@@ -330,7 +330,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                     DataDraftedModel(
                         uid = dataDraftedModel?.uid ?: 0,
                         datas = ApiClient.gson.toJson(suiviDistrArbrDatasDraft),
-                        typeDraft = "distribution_arbre",
+                        typeDraft = "AGRO_DISTRIBUTION".lowercase(),
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
                 )
@@ -553,6 +553,13 @@ class DistributionArbreActivity : AppCompatActivity() {
                     if (it.id.toString() == idc.toString()) libItem = "${it.nom} ${it.prenoms}"
                 }
             }
+        }
+
+        if(producteursList.size == 0){
+            Commons.showMessage(
+                "Veuillez mettre à jour les données (même si vous venez de faire une evaluation du producteur) car la liste des producteurs dont les besoins ont été évalué pour cette localité est vide !",
+                this@DistributionArbreActivity,
+                callback = {})
         }
 
         Commons.setListenerForSpinner(this,

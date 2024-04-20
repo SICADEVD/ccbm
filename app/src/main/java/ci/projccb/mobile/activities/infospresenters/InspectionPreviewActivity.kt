@@ -13,9 +13,11 @@ import ci.projccb.mobile.models.InspectionDTO
 import ci.projccb.mobile.models.QuestionResponseModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_inspection_preview.*
@@ -106,6 +108,8 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                     } }
                     labelEncadrInspectionPreview.text = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(inspection.encadreur?.toInt())?.let { "${it.firstname} ${it.lastname}" }
                     labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
+
+                    labelParcelleInspectionPreview.text = inspection.parcelleLib
                     val total_question = inspection.total_question?.toInt()
                     val total_question_non_applicable = inspection.total_question_non_applicable?.toInt()
                     val total_question_conforme = inspection.total_question_conforme?.toInt()

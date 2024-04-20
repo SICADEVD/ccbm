@@ -20,8 +20,8 @@ data class RemorqueModel (
     @PrimaryKey(autoGenerate = true) val uid: Int? = null,
     @Expose
     @SerializedName(value = "cooperative_id", alternate = ["cooperatives_id"])
-    val cooperativesId: Int? = null,
-    @Expose val remorque_immat: Int? = null,
+    val cooperativesId: String? = null,
+    @Expose val remorque_immat: String? = null,
     @Expose
     @SerializedName("id")
     val id: Int? = null,

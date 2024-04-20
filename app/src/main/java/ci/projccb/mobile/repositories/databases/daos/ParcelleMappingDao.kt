@@ -16,6 +16,10 @@ interface ParcelleMappingDao {
     fun insert(parcelleMappingModel: ParcelleMappingModel)
 
     @Transaction
+    @Query("SELECT * FROM parcelle_mapping")
+    fun getParcellesMappingList(): MutableList<ParcelleMappingModel>
+
+    @Transaction
     @Query("SELECT * FROM parcelle_mapping WHERE producteurId = :producteurID")
     fun getProducteurParcellesList(producteurID: String?): MutableList<ParcelleMappingModel>
 

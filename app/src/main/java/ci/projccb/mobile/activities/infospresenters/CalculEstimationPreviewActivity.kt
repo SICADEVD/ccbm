@@ -24,6 +24,11 @@ class CalculEstimationPreviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calcul_estimation_preview)
 
+
+        clickCloseBtn.setOnClickListener {
+            finish()
+        }
+
         intent?.let {
             try {
                 estimationDatas = it.getParcelableExtra("preview")

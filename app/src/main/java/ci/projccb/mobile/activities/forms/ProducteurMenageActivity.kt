@@ -1013,8 +1013,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
                     containerAtomisateurContainerMenage.visibility = visibility
                     linearMachinePulKeeperContainerMenage.visibility = visibility
                 }else{
-                    containerNomApplicateurMenage.visibility = visibility
-                    containerTelpApplicateurMenage.visibility = visibility
+                    containerNomApplicateurMenage.visibility = View.GONE
+                    containerTelpApplicateurMenage.visibility = View.GONE
                 }
             })
 
@@ -1601,8 +1601,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
                     containerAtomisateurContainerMenage.visibility = visibility
                     linearMachinePulKeeperContainerMenage.visibility = visibility
                 }else{
-                    containerNomApplicateurMenage.visibility = visibility
-                    containerTelpApplicateurMenage.visibility = visibility
+                    containerNomApplicateurMenage.visibility = View.GONE
+                    containerTelpApplicateurMenage.visibility = View.GONE
                 }
             })
 
