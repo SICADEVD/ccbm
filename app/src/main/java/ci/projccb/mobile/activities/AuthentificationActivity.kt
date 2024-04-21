@@ -167,24 +167,59 @@ class AuthentificationActivity : AppCompatActivity() {
                                     "Manager".uppercase() -> {
                                         roles.addAll(Roles.MANAGER)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "ADG".uppercase() -> {
                                         roles.addAll(Roles.MANAGER)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "Inspecteur".uppercase() -> {
                                         roles.addAll(Roles.INSPECTEUR)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "Coach".uppercase() -> {
                                         roles.addAll(Roles.COACH)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "Applicateur".uppercase() -> {
                                         roles.addAll(Roles.APPLICATEUR)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "Magasinier".uppercase() -> {
                                         roles.addAll(Roles.MAGASINIERSECTION)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "Magasinier Central".uppercase() -> {
                                         roles.addAll(Roles.MAGASINIERCENTRAL)
                                     }
+                                    else -> {
+
+                                    }
+                                }
+                                when (role_name.toString()){
                                     "Delegue".uppercase() -> {
                                         roles.addAll(Roles.DELEGUE)
                                     }
@@ -192,6 +227,10 @@ class AuthentificationActivity : AppCompatActivity() {
 
                                     }
                                 }
+
+                                roles = roles.distinctBy {
+                                    it
+                                }.toList() as ArrayList<String>
 
                                 val agentModel = agentResponseBody?.results
                                 val coopModel = agentResponseBody?.cooperative

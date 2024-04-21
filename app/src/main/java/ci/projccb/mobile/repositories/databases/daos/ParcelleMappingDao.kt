@@ -20,7 +20,7 @@ interface ParcelleMappingDao {
     fun getParcellesMappingList(): MutableList<ParcelleMappingModel>
 
     @Transaction
-    @Query("SELECT * FROM parcelle_mapping WHERE producteurId = :producteurID")
+    @Query("SELECT * FROM parcelle_mapping WHERE producteurId = :producteurID ORDER BY uid DESC")
     fun getProducteurParcellesList(producteurID: String?): MutableList<ParcelleMappingModel>
 
     @Transaction

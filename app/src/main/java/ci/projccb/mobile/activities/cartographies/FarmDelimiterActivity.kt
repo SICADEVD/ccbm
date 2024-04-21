@@ -20,9 +20,13 @@ import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
+import ci.projccb.mobile.adapters.RvMapHistoAdapt
 import ci.projccb.mobile.models.ParcelleMappingModel
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
+import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
@@ -37,6 +41,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.reflect.TypeToken
 import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.addPolygon
@@ -52,6 +57,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     OnMarkerClickListener {
 
 
+    private var dialogMapHito: AlertDialog? = null
     private val RESULT_ENABLE_GPS_FEATURE: Int = 101
     private var mapsDelimiter: GoogleMap? = null
     private var marker: Marker? =  null
@@ -437,6 +443,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         parcelleMapping.parcellePerimeter = labelDistanceFarmDelimiter.text.toString().trim()
         parcelleMapping.parcelleNameTag = manualOrGpsTrack.toString()
+        parcelleMapping.producteurId = CcbRoomDatabase.getDatabase(this)?.agentDoa()?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID)).let { "${it?.firstname} ${it?.lastname}" }.toString()
 
         if (lineOrZoneDelimiter == 2) {
             parcelleMapping.parcelleLat = gPolygonCenter.latitude.toString()
@@ -533,7 +540,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 }
 
                 2 -> {  // Surface
-                    LogUtils.d(markersMap.size)
+//                    LogUtils.d(markersMap.size)
                     if (markersMap.size > 2) {
                         drawPolygone(markersMap)
                     }
@@ -687,12 +694,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 showNo = true
             )
 
-            return true   
+            return true
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
-        
+
         return false
     }
 
@@ -701,14 +708,16 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         getDeviceLocation()
     }
 
+    val itemParcelleMapp = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
 
-        val item = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
+//        val item = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
 
-        LogUtils.d(item)
+//        LogUtils.d(item)
 
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -720,6 +729,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             fabMenuFarmDelimiter.setOnClickListener {
                 onAddButtonClick()
             }
+
+            setUpMappHistorie()
 
             fabSurfaceFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 2
@@ -829,8 +840,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 Commons.showMessage(
                     message = "Enregistrer le tracé ?",
                     context = this,
+                    isCancelebal = true,
                     finished = true,
-                    deconnec = false,
                     callback = ::saveWorkringParcelle
                 )
             }
@@ -838,8 +849,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 Commons.showMessage(
                     message = "Enregistrer le tracé ?",
                     context = this,
+                    isCancelebal = true,
                     finished = true,
-                    deconnec = false,
                     callback = ::saveWorkringParcelle
                 )
             }
@@ -856,6 +867,54 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
         // Set other attributes as needed (e.g., elevation, translationZ)
         fabMenuFarmDelimiter.setElevation(0.8f);
+    }
+
+    private fun setUpMappHistorie() {
+
+        val dialogView = layoutInflater.inflate(R.layout.item_mapping_histo, null)
+        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.mapp_historie_list_rv)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+//        val items = listOf("Item 1", "Item 2", "Item 3") // Replace with your data
+
+
+        val listHisto = itemParcelleMapp?.map {
+            CommonData(it.id, nom = "Parcelle N: ${it.parcelleNameTag} - ${it.parcelleSuperficie} HA", value = "PRODUCTEUR: ${it.producteurId}")
+        }
+
+        recyclerView.adapter = RvMapHistoAdapt(this@FarmDelimiterActivity, listHisto?.toList()?: arrayListOf())
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setTitle("Liste des maps enrégistrés")
+            .setNegativeButton("Annuler") { dialog, _ ->
+                // Handle negative button click
+                dialog.dismiss()
+            }
+
+        dialogMapHito = dialogBuilder.create()
+
+        imageHistoFarmDelimiter.setOnClickListener {
+            dialogMapHito?.show()
+        }
+
+
+    }
+
+    fun onItemHistoSelected(position: Int) {
+
+        val histoMap = itemParcelleMapp?.get(position)
+
+        val wayppointList = GsonUtils.fromJson<List<LatLng>>(histoMap?.parcelleWayPoints, object : TypeToken<List<LatLng>>(){}.type)
+
+        wayppointList?.forEach {
+            MainScope().launch {
+                addMarker(it)
+            }
+        }
+
+        dialogMapHito?.dismiss()
+
     }
 
 }
