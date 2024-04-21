@@ -34,10 +34,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_authentification.*
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -117,7 +114,7 @@ class AuthentificationActivity : AppCompatActivity() {
 //    }
 
 
-    private suspend fun handleResponse(statusCode: Int?, message: String?, agentAuth: AgentModel?) {
+    private fun handleResponse(statusCode: Int?, message: String?, agentAuth: AgentModel?) {
         MainScope().launch(Dispatchers.Main) {
             progressDialog?.dismiss()
 
@@ -339,6 +336,15 @@ class AuthentificationActivity : AppCompatActivity() {
         }
 
         actionAuthentification.setOnClickListener {
+            /*showMessage(
+                message = "Enregistrer le tracé ?",
+                context = this,
+                finished = true,
+                deconnec = false,
+                showNo = true,
+                callback = ::bindDatas
+            )*/
+
             if (checkField()) {
                 Toast.makeText(this@AuthentificationActivity, "Renseignez les champs", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

@@ -840,7 +840,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 Commons.showMessage(
                     message = "Enregistrer le tracé ?",
                     context = this,
-                    isCancelebal = true,
+                    showNo = true,
                     finished = true,
                     callback = ::saveWorkringParcelle
                 )
@@ -849,8 +849,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 Commons.showMessage(
                     message = "Enregistrer le tracé ?",
                     context = this,
-                    isCancelebal = true,
                     finished = true,
+                    showNo = true,
                     callback = ::saveWorkringParcelle
                 )
             }

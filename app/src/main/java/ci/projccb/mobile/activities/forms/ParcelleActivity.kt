@@ -32,7 +32,7 @@ import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
-//import ci.projccb.mobile.tools.Commons.Companion.formatCorrectlyLatLongPoint
+import ci.projccb.mobile.tools.Commons.Companion.formatCorrectlyLatLongPoint
 import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
@@ -128,8 +128,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                             val latitude = location.latitude
                             val longitude = location.longitude
                             // Do something with latitude and longitude
-                            editLatParcelle.setText(latitude.toString()) //.formatCorrectlyLatLongPoint()
-                            editLongParcelle.setText(longitude.toString()) //.formatCorrectlyLatLongPoint()
+                            editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                            editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
                         }else{
                             editLatParcelle.setText("0.0")
                             editLongParcelle.setText("-0.0")
@@ -454,11 +454,11 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                     parcelle.mutableWayPoints = GsonUtils.fromJson(parcelle.parcelleWayPoints, parcelleWayPointsMappedToken)
 
                     parcelle.mutableWayPoints?.map { latlng ->
-                        wayPoints.add("${latlng.longitude.toString()},${latlng.latitude.toString()},0")
+                        wayPoints.add("${latlng.longitude.toString().formatCorrectlyLatLongPoint()}, ${latlng.latitude.toString().formatCorrectlyLatLongPoint()}, 0")
                     }
 
-                    editLatParcelle.setText(parcelle.parcelleLat.toString())
-                    editLongParcelle.setText(parcelle.parcelleLng.toString())
+                    editLatParcelle.setText(parcelle.parcelleLat.toString().formatCorrectlyLatLongPoint())
+                    editLongParcelle.setText(parcelle.parcelleLng.toString().formatCorrectlyLatLongPoint())
                     editSuperficieParcelle.setText(parcelle.parcelleSuperficie)
                     editWayPointsParcelle.text = Editable.Factory.getInstance().newEditable(GsonUtils.toJson(wayPoints))
                 }
@@ -902,7 +902,6 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
     fun setOmbrageParcelleRV() {
-
         val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
 
         try {
