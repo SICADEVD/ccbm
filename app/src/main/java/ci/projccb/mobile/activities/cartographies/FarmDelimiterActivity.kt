@@ -394,8 +394,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
     fun computeSurface() {
 //        try {
-//            parcelleMapping.parcelleSuperficie =
-//                Commons.convertDoubleToString((polygon?.area!!) * 0.0001)
+//            parcelleMapping.parcelleSuperficie = Commons.convertDoubleToString((polygon?.area!!) * 0.0001)
 //            labelSurfaceFarmDelimiter.text = parcelleMapping.parcelleSuperficie.plus(" ha")
 //        } catch (ex: Exception) {
 //            LogUtils.e(ex.message)
@@ -459,7 +458,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    suspend fun removeMarker() {
+    fun removeMarker() {
         try {
             if (marker == null) {
                 Commons.showMessage(
@@ -511,7 +510,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    suspend fun addMarker(latLng: LatLng) {
+    fun addMarker(latLng: LatLng) {
         try {
             marker = null
             marker = mapsDelimiter?.addMarker {
@@ -550,7 +549,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    suspend fun drawPolygone(pMarkersPolygon: MutableMap<Int, Marker>) {
+    fun drawPolygone(pMarkersPolygon: MutableMap<Int, Marker>) {
        try {
            mapPointsList.clear()
            polygon?.remove()
@@ -587,7 +586,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    suspend fun drawPolyline(pMarkersPolyline: MutableMap<Int, Marker>) {
+    fun drawPolyline(pMarkersPolyline: MutableMap<Int, Marker>) {
         try {
             polyline?.remove()
             mapPointsList.clear()
@@ -618,15 +617,15 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    suspend fun selectMaker() {
+    fun selectMaker() {
     }
 
 
-    suspend fun animateCamera() {
+    fun animateCamera() {
     }
 
 
-    suspend fun <T> updateMap(drawType: Int, datas: MutableList<T>) {
+    fun <T> updateMap(drawType: Int, datas: MutableList<T>) {
     }
 
 
@@ -698,10 +697,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         return false
     }
 
+
     override fun onResume() {
         super.onResume()
         getDeviceLocation()
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -833,6 +834,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     context = this,
                     finished = true,
                     deconnec = false,
+                    showNo = true,
                     callback = ::saveWorkringParcelle
                 )
             }
@@ -842,22 +844,23 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     context = this,
                     finished = true,
                     deconnec = false,
+                    showNo = true,
                     callback = ::saveWorkringParcelle
                 )
             }
         } catch (ex: Exception) { // Exception for maps initialization
             ex.printStackTrace()
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
-        fabMenuFarmDelimiter.setImageResource(R.drawable.baseline_add_white_24);
+        fabMenuFarmDelimiter.setImageResource(R.drawable.baseline_add_white_24)
         // Set background tint color (adjust this according to your design)
-        fabMenuFarmDelimiter.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+        fabMenuFarmDelimiter.backgroundTintList = resources.getColorStateList(R.color.colorAccent);
         // Set ripple color (optional, adjust according to your design)
-        fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
+        fabMenuFarmDelimiter.rippleColor = resources.getColor(R.color.white);
         // Set other attributes as needed (e.g., elevation, translationZ)
-        fabMenuFarmDelimiter.setElevation(0.8f);
+        fabMenuFarmDelimiter.elevation = 0.8f;
     }
 
 }
