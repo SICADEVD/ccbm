@@ -84,6 +84,16 @@
                 app:srcCompat="@drawable/ic_cancel_mapping" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageHistoFarmDelimiter"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_60sdp"
+                android:layout_toStartOf="@+id/imageMapTypeActionFarmDelimiter"
+                android:padding="@dimen/_7sdp"
+                app:srcCompat="@drawable/baseline_list_map_histo_24" />
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:visibility="gone"
             tools:visibility="visible"
                 android:id="@+id/imageEditFarmDelimiter"

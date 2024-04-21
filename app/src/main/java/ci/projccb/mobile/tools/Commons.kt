@@ -570,14 +570,20 @@ class Commons {
         }
 
 
-        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false) {
+        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false, isCancelebal: Boolean = false, ) {
             try {
                 val builder = AlertDialog.Builder(context, R.style.DialogTheme)
                 // Display a message on alert dialog
                 Commons.adjustTextViewSizesInDialog(context, builder, message, context.resources.getDimension(R.dimen._8ssp)
                     ,false)
                 //builder.setMessage(message)
-                builder.setCancelable(false)
+                builder.setCancelable(isCancelebal)
+
+                if(isCancelebal){
+                    builder.setNegativeButton("Annuler") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                }
 
                 // Set a positive button and its click listener on alert dialog
                 builder.setPositiveButton(positive) { dialog, _ ->
@@ -693,14 +699,14 @@ class Commons {
             dialog.show()
         }
 
-        fun String.formatCorrectlyLatLongPoint(): String {
-            if(this != null){
-                val indexOfDot = this.indexOf('.') // Find the index of the dot
-                val sixCharsAfterDot = this.substring(0, indexOfDot + 7) // Extract substring with 6 characters after dot
-                return sixCharsAfterDot
-            }
-            return this
-        }
+//        fun String.formatCorrectlyLatLongPoint(): String {
+//            if(this != null){
+//                val indexOfDot = this.indexOf('.') // Find the index of the dot
+//                val sixCharsAfterDot = this.substring(0, indexOfDot + 7) // Extract substring with 6 characters after dot
+//                return sixCharsAfterDot
+//            }
+//            return this
+//        }
 
         fun Context.configDate(viewClciked: AppCompatEditText, isDateMin: Boolean = false, isDateMax: Boolean = true) {
             val calendar: Calendar = Calendar.getInstance()
