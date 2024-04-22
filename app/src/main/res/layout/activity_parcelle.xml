@@ -667,157 +667,162 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/containerAutreCourDeau"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
 
-                    <LinearLayout
-                        android:id="@+id/containerAutreCourDeau"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="5">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="autreCourDeau"
+                                    android:textAllCaps="true"
+                                    android:id="@+id/editAutreCourDeauParcelle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:background="@drawable/rounded_background"
+                                    android:ellipsize="end"
+                                    android:hint="Précisez…"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="textCapCharacters|textNoSuggestions"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:textSize="@dimen/page_input_content_dim13"
+                                    tools:text="" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_weight="10"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:layout_weight="6"
+                                android:text="Est ce qu'il existe des mésures de protection ?"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_weight="4"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
+                                    android:tag="existeMesureProtection"
+                                    android:id="@+id/selectMesurProtectParcelle"
+                                    android:entries="@array/YesOrNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:spinnerMode="dialog" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/containerSelectProtection"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
                             android:orientation="vertical">
 
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Sélectionner les mésures de protections"
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="autreCourDeau"
-                                android:textAllCaps="true"
-                                android:id="@+id/editAutreCourDeauParcelle"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
-                                android:background="@drawable/rounded_background"
-                                android:ellipsize="end"
-                                android:hint="Précisez…"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/page_input_content_dim13"
-                                tools:text="" />
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                    android:tag="protection"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:id="@+id/selectProtectionParcelle"
+                                    />
+
+                            </LinearLayout>
 
                         </LinearLayout>
-                    </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
+                        <Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_10sdp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:layout_weight="10"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:layout_weight="6"
-                            android:text="Est ce qu'il existe des mésures de protection ?"
-                            android:textStyle="bold" />
 
                         <LinearLayout
-                            android:layout_weight="4"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                style="@style/SpinnerItemStyle"
-                                android:tag="existeMesureProtection"
-                                android:id="@+id/selectMesurProtectParcelle"
-                                android:entries="@array/YesOrNo"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/containerSelectProtection"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
+                            android:id="@+id/containerAutreProtectParcelle"
+                            android:visibility="gone"
+                            tools:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Sélectionner les mésures de protections"
+                            android:orientation="horizontal"
+                            android:weightSum="5">
 
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
-                                android:tag="protection"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:id="@+id/selectProtectionParcelle"
-                                />
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:tag="autreProtection"
+                                    android:textAllCaps="true"
+                                    android:id="@+id/editAutreProtectParcelle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:background="@drawable/rounded_background"
+                                    android:ellipsize="end"
+                                    android:hint="Précisez…"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="textCapCharacters|textNoSuggestions"
+                                    android:paddingStart="@dimen/_10sdp"
+                                    android:paddingEnd="@dimen/_10sdp"
+                                    android:textSize="@dimen/page_input_content_dim13"
+                                    tools:text="" />
+
+                            </LinearLayout>
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/containerAutreProtectParcelle"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="5">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="autreProtection"
-                                android:textAllCaps="true"
-                                android:id="@+id/editAutreProtectParcelle"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:background="@drawable/rounded_background"
-                                android:ellipsize="end"
-                                android:hint="Précisez…"
-                                android:imeOptions="actionDone"
-                                android:inputType="textCapCharacters|textNoSuggestions"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textSize="@dimen/page_input_content_dim13"
-                                tools:text="" />
-
-                        </LinearLayout>
                     </LinearLayout>
 
                     <Space

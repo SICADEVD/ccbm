@@ -449,24 +449,24 @@ android:textColor="@color/text_color_white"
         android:orientation="horizontal"
         android:gravity="center">
 
-        <com.google.android.material.button.MaterialButton
-            android:textSize="@dimen/page_button_text_dim13"
-            android:id="@+id/clickCancelInspectionPreview"
-            style="@style/OptionsButton_Active"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:backgroundTint="@color/divider"
-            android:elevation="0dp"
-            android:paddingHorizontal="20dp"
-            android:textColor="@color/black"
-            android:text="@string/annuler"
-            app:cornerRadius="@dimen/_37sdp"
-            app:iconSize="@dimen/page_icon_other_dim20"
-            app:icon="@drawable/ic_cancel_mapping"
-            app:iconGravity="start" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:textSize="@dimen/page_button_text_dim13"-->
+<!--            android:id="@+id/clickCancelInspectionPreview"-->
+<!--            style="@style/OptionsButton_Active"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="@dimen/_40sdp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginStart="@dimen/_5sdp"-->
+<!--            android:layout_marginEnd="@dimen/_5sdp"-->
+<!--            android:backgroundTint="@color/divider"-->
+<!--            android:elevation="0dp"-->
+<!--            android:paddingHorizontal="20dp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:text="@string/annuler"-->
+<!--            app:cornerRadius="@dimen/_37sdp"-->
+<!--            app:iconSize="@dimen/page_icon_other_dim20"-->
+<!--            app:icon="@drawable/ic_cancel_mapping"-->
+<!--            app:iconGravity="start" />-->
 
         <com.google.android.material.button.MaterialButton
             android:textSize="@dimen/page_button_text_dim13"

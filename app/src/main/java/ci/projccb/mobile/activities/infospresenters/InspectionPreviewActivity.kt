@@ -92,7 +92,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inspection_preview)
 
-        clickCancelInspectionPreview.setOnClickListener { finish() }
+//        clickCancelInspectionPreview.setOnClickListener { finish() }
 
         intent?.let { intent ->
             try {

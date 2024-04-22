@@ -1137,7 +1137,29 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     }
 
+    fun checkCommentField() {
+        cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
+            if(questionResponseModel.isTitle == false){
+                if (questionResponseModel.note.equals("-1") && questionResponseModel.commentaire.toString().isNullOrEmpty()){
+                    Commons.showMessage(
+                        message = "Le commentaire 'Pas conforme' de la question, ${questionResponseModel.label} n'est pas renseigné !",
+                        context = this@InspectionActivity,
+                        finished = false,
+                        callback = {
+                        },
+                        positive = "Compris !",
+                        deconnec = false
+                    )
+                }
+            }
+        }
+
+    }
+
     fun updatProgressBar() {
+
+        checkCommentField()
+
         var listData :MutableList<Pair<String, String>> = mutableListOf()
         cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
             if (questionResponseModel.label.isNullOrEmpty() == false && questionResponseModel.isTitle == false) {

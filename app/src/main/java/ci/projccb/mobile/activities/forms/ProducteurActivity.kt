@@ -406,7 +406,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
 
-                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { selectNationaliteProducteur.getSpinnerContent().equals(it.nom) == true }?.let {
+                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { selectNationaliteProducteur.getSpinnerContent().trim().equals(it.nom) == true }?.let {
                     if(it.size > 0){
                         it.first().id
                     }else null
@@ -1100,6 +1100,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
+
+                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { selectNationaliteProducteur.getSpinnerContent().trim().equals(it.nom) == true }?.let {
+                    if(it.size > 0){
+                        it.first().id
+                    }else null
+                }.toString()
 
                 certificatsStr = GsonUtils.toJson(selectCertifProducteur.selectedStrings)
             }

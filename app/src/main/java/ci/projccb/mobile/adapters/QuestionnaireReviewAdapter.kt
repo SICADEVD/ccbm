@@ -119,6 +119,9 @@ class QuestionnaireReviewAdapter(
                     //questionnaireInfosHolder.selectionNotationInspection.requestFocus()
 
                     questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+
+                    (pContext as InspectionActivity).checkCommentField()
+
                 }
 
                 override fun onNothingSelected(arg0: AdapterView<*>) {
