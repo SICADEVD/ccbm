@@ -152,7 +152,7 @@ class ProducteurPreviewActivity : AppCompatActivity() {
 
 
     suspend fun loadFileToBitmap(pPath: String?) {
-        if (pPath?.isEmpty()!!) return
+        if (pPath?.isNullOrEmpty()!!) return
 
         val imgFile = File(pPath)
 

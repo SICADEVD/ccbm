@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -398,6 +399,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         if(producteurModelItem == null) return
 
+//        LogUtils.d(selectNationaliteProducteur.getSpinnerContent().trim())
+
         val producteur = producteurModelItem?.first.apply {
             this?.apply {
                 photo = profilPhotoPath ?: ""
@@ -406,7 +409,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
 
-                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { selectNationaliteProducteur.getSpinnerContent().trim().equals(it.nom) == true }?.let {
+                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { it.nom?.contains(selectNationaliteProducteur.getSpinnerContent().trim()) == true }?.let {
+//                    LogUtils.d(it)
                     if(it.size > 0){
                         it.first().id
                     }else null
@@ -424,6 +428,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 origin = "local"
             }
         }
+
+        Commons.logErrorToFile(producteur)
 
         val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
         intentProducteurPreview.putExtra("preview", producteur)
@@ -1101,7 +1107,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
 
-                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { selectNationaliteProducteur.getSpinnerContent().trim().equals(it.nom) == true }?.let {
+                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter {  it.nom?.contains(selectNationaliteProducteur.getSpinnerContent().trim()) == true }?.let {
                     if(it.size > 0){
                         it.first().id
                     }else null

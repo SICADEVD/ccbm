@@ -122,7 +122,8 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
                     instructionCallback = object : InstructionCallback{
                         override fun onInstructionReceived(search: String, callback: ((commonDataListCloned: MutableList<CommonData>)->Unit)) {
-                            val dataListProd = ccbBase.producteurDoa().findByName(search)
+                            val searchOt = search.replace("'", "''")
+                            val dataListProd = ccbBase.producteurDoa().findByName(searchOt)
 //                            LogUtils.d("onInstructionReceived", dataListProd)
                             recyclerSyncedList.visibility = GONE
                             if(dataListProd.size > 0){
@@ -184,6 +185,9 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                         setText("${this.text} PRODUCTEUR")
                     }
                     val dataListLimit = ccbBase.producteurDoa().getSyncedLimit(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), 100)
+
+//                    LogUtils.d(dataListLimit)
+
                     dataListLimit.forEach {
 //                        LogUtils.d(it.producteursId)
                         if(it.id != null){
@@ -199,7 +203,8 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
                     instructionCallback = object : InstructionCallback{
                         override fun onInstructionReceived(search: String, callback: ((commonDataListCloned: MutableList<CommonData>)->Unit)) {
-                            val dataListProd = ccbBase.producteurDoa().findProdByName(search)
+                            val searchOt = search.replace("'", "''")
+                            val dataListProd = ccbBase.producteurDoa().findProdByName(searchOt)
                             LogUtils.d("onInstructionReceived", dataListProd.map { it.fullName })
                             recyclerSyncedList.visibility = GONE
                             if(dataListProd.size > 0){
