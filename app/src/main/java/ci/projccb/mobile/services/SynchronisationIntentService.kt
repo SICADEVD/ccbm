@@ -8,9 +8,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import ci.projccb.mobile.R
-import ci.projccb.mobile.adapters.MultipleItemAdapter
-import ci.projccb.mobile.adapters.OmbrageAdapter
-import ci.projccb.mobile.adapters.OnlyFieldAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -24,29 +21,16 @@ import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.returnStringList
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.ListConverters
-import ci.projccb.mobile.tools.SendErrorOnline
+import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_ssrt_clms.selectEndroitTrav2EffectSSrte
-import kotlinx.android.synthetic.main.activity_ssrt_clms.selectEndroitTravEffectSSrte
-import kotlinx.android.synthetic.main.activity_ssrt_clms.selectLequelTrav2EffectSSrte
-import kotlinx.android.synthetic.main.activity_ssrt_clms.selectLequelTravEffectSSrte
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAnimauxSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerAutreInsecteParOuRavSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteAmisSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerInsecteParOuRavSuiviParcelle
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerIntantAnDerListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerTraitInsecteParOuRavListSuiviParcel
-import okio.Buffer
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.reflect.Type
+import java.io.IOException
 import java.net.UnknownHostException
 
 
@@ -184,16 +168,21 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 if(producteur.id != 0){
                     producteur.apply {
                         variete = null
-                        section = null
-                        photo = null
-                        localite = null
+//                        section = null
+//                        photo = null
+//                        localite = null
+//                        localite = localitesId
                         certificatsStr = null
                         certification = null
                         autreVariete = null
-                        autreProgramme = null
-                        num_ccc = null
+//                        autreProgramme = null
+//                        num_ccc = null
                     }
                 }
+
+                LogUtils.file(GsonUtils.toJson(producteur))
+//
+                LogUtils.d(LogUtils.getCurrentLogFilePath())
 
                 val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
                 clientProducteur.enqueue(object: Callback<ProducteurModel>{

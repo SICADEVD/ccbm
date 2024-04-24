@@ -200,7 +200,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 producteurDao?.deleteAll()
 
                 try {
-                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = null))//agentModel?.id
+                    val clientProducteurs = ApiClient.apiService.getProducteurs(agent = AgentModel(userId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)))//agentModel?.id
                     val responseProducteurs: Response<MutableList<ProducteurModel>> = clientProducteurs.execute()
                     val produteursList: MutableList<ProducteurModel>? = responseProducteurs.body()
 

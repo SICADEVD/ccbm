@@ -133,6 +133,7 @@ import java.math.RoundingMode
 import java.net.UnknownHostException
 import java.text.DecimalFormat
 import java.util.Calendar
+import java.util.Objects
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -1908,6 +1909,12 @@ class Commons {
                 chartData!!.setData(data)
                 chartData!!.invalidate()
             }
+        }
+
+        fun logErrorToFile(producteur: Any) {
+            LogUtils.file(GsonUtils.toJson(producteur))
+//
+            LogUtils.d(LogUtils.getCurrentLogFilePath())
         }
 
     }

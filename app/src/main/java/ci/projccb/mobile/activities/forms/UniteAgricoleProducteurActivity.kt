@@ -26,6 +26,7 @@ import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.TAG
 import ci.projccb.mobile.tools.Commons.Companion.applyFilters
+import ci.projccb.mobile.tools.Commons.Companion.limitEDTMaxLength
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.setListenerForSpinner
@@ -41,6 +42,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_producteur.editTelOneProducteur
 
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.*
 import java.util.ArrayList
@@ -1196,6 +1198,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             resources.getDimension(R.dimen._5ssp))
 
         try {
+
+            limitEDTMaxLength(editNumMobileInfosProducteur, 10, 10)
 
             clickReviewInfosProducteur.setOnClickListener {
                 collectDatas()
