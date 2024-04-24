@@ -595,6 +595,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     fun collectDatas() {
 
+        checkCommentField()
+
         dateInspection = editDateInspection.text.toString().trim()
 
         if (dateInspection.isEmpty()) {
@@ -1138,27 +1140,33 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     }
 
     fun checkCommentField() {
+        val message = arrayListOf<String>()
         cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
             if(questionResponseModel.isTitle == false){
                 if (questionResponseModel.note.equals("-1") && questionResponseModel.commentaire.toString().isNullOrEmpty()){
-                    Commons.showMessage(
-                        message = "Le commentaire 'Pas conforme' de la question, ${questionResponseModel.label} n'est pas renseigné !",
-                        context = this@InspectionActivity,
-                        finished = false,
-                        callback = {
-                        },
-                        positive = "Compris !",
-                        deconnec = false
-                    )
+                    message.add("Le commentaire 'Pas conforme' de la question, ${questionResponseModel.label} n'est pas renseigné !")
                 }
             }
+        }
+
+        if(message.size > 0){
+            Commons.showMessage(
+                message = message.toModifString(true, "\n"),
+                context = this@InspectionActivity,
+                finished = false,
+                callback = {
+                },
+                positive = "Compris !",
+                deconnec = false,
+                textSizeDim = R.dimen._5ssp
+            )
         }
 
     }
 
     fun updatProgressBar() {
 
-        checkCommentField()
+//        checkCommentField()
 
         var listData :MutableList<Pair<String, String>> = mutableListOf()
         cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->

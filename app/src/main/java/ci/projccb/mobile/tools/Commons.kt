@@ -571,11 +571,11 @@ class Commons {
         }
 
 
-        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false) {
+        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false, textSizeDim: Int = R.dimen._8ssp) {
             try {
                 val builder = AlertDialog.Builder(context, R.style.DialogTheme)
                 // Display a message on alert dialog
-                Commons.adjustTextViewSizesInDialog(context, builder, message, context.resources.getDimension(R.dimen._8ssp)
+                Commons.adjustTextViewSizesInDialog(context, builder, message, context.resources.getDimension(textSizeDim)
                     ,false)
                 //builder.setMessage(message)
                 builder.setCancelable(false)

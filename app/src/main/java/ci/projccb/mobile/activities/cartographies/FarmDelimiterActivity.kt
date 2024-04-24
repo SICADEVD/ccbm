@@ -166,6 +166,26 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         }
     }
 
+    fun getDeviceLocationWithAccurancy() {
+        try {
+            val locationResult = fusedLocationProviderClient.lastLocation
+            locationResult.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Set the map's camera position to the current location of the device.
+                    lastKnownLocation = task.result
+                    if (lastKnownLocation != null) {
+                        labelPrécisionFarmDelimiter.text = lastKnownLocation?.accuracy.toString()?:"N/A"
+                    }
+                } else {
+                    mapsDelimiter?.uiSettings?.isMyLocationButtonEnabled = false
+                }
+            }
+        } catch (e: SecurityException) {
+            LogUtils.e(e.message)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
 
     fun startWorkManualMapping() {
         relativeToolbarFarmDelimiter.startAnimation(outToTop)
@@ -404,6 +424,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
 
     override fun onMyLocationChange(pLocation: Location) {
+
+        getDeviceLocationWithAccurancy()
+
         try {
             mapsDelimiter?.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(LatLng(pLocation.latitude, pLocation.longitude), 15F)
@@ -648,6 +671,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
 
     override fun onMapClick(pLatLng: LatLng) {
+
+        getDeviceLocationWithAccurancy()
+
         try {
             if (cardPopupMenuMapsTypeFarmDelimiter.visibility == View.VISIBLE) {
                 cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
@@ -724,6 +750,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             }
 
             setUpMappHistorie()
+        
+            getDeviceLocationWithAccurancy()
 
             fabSurfaceFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 2
@@ -895,6 +923,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
     fun onItemHistoSelected(position: Int) {
+
+        getDeviceLocationWithAccurancy()
 
         val histoMap = itemParcelleMapp?.get(position)
 
