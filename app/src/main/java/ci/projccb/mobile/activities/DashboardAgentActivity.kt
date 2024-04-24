@@ -99,6 +99,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         titleAccount.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
     }
 
+
     fun refreshDatas() {
         /*labelProducteurCount.text = producteurDao?.getUnSyncedAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()

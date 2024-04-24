@@ -83,11 +83,12 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     private val flip : Animation by lazy { AnimationUtils.loadAnimation(this,R.anim.flip) }
     var fromDatas = ""
 
-    val sectionCommon = CommonData();
-    val localiteCommon = CommonData();
-    val producteurCommon = CommonData();
+    val sectionCommon = CommonData()
+    val localiteCommon = CommonData()
+    val producteurCommon = CommonData()
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
+
 
     // Function to check if location permissions are granted
     private fun isLocationPermissionGranted(): Boolean {
@@ -106,11 +107,13 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         )
     }
 
+
     // Function to check if location is enabled
     private fun isLocationEnabled(): Boolean {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
+
 
     // Function to retrieve current location
     private fun getCurrentLocation(): Location? {
@@ -151,12 +154,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         return null
     }
 
+
     // Function to handle location permission request result
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
@@ -173,6 +173,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             }
         }
     }
+
 
     // Example usage
     private fun getLocation() {
@@ -197,7 +198,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
     fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null) {
-        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao()
         var sectionList = sectionDao?.getAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
@@ -212,14 +213,14 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_de_la_section),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if (sectionList?.size!! > 0) false else true,
+            isEmpty = sectionList?.size!! <= 0,
             currentVal = libItem ,
             spinner = selectSectionParcelle,
-            listIem = sectionList?.map { it.libelle }
+            listIem = sectionList.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
 
-                val section = sectionList!![it]
+                val section = sectionList[it]
                 //ogUtils.d(section)
                 sectionCommon.nom = section.libelle!!
                 sectionCommon.id = section.id!!
@@ -232,9 +233,10 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
     }
 
+
     fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null) {
 
-        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
         var libItem: String? = null
@@ -247,14 +249,14 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_de_la_localit),
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if (localitesListi?.size!! > 0) false else true,
+            isEmpty = localitesListi?.size!! <= 0,
             currentVal = libItem,
             spinner = selectLocaliteParcelle,
-            listIem = localitesListi?.map { it.nom }
+            listIem = localitesListi.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
-                localitesListi?.let { list ->
+                localitesListi.let { list ->
                     var localite = list.get(it)
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
@@ -269,6 +271,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
 
     }
+
 
     fun setupProducteurSelection(id: Int, currVal2: String? = null) {
         producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
@@ -288,19 +291,17 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_du_producteur),
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if (producteursList?.size!! > 0) false else true,
+            isEmpty = producteursList?.size!! <= 0,
             currentVal = libItem,
             spinner = selectProducteurParcelle,
-            listIem = producteursList?.map { "${ it.nom } ${ it.prenoms }" }
-                ?.toList() ?: listOf(),
+            listIem = producteursList?.map { "${ it.nom } ${ it.prenoms }" }?.toList() ?: listOf(),
             onChanged = {
-
                 producteursList?.let { list ->
                     var producteur = list.get(it)
                     producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
-                    if(producteur.isSynced == true){
+                    if (producteur.isSynced == true){
                         producteurCommon.id = producteur.id!!
-                    }else producteurCommon.id = producteur.uid
+                    } else producteurCommon.id = producteur.uid
 
                     //setupPa
                 }
@@ -314,14 +315,13 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
 
-
     fun collectDatas() {
 
         val itemModelOb = getParcellObjet()
 
         if(itemModelOb == null) return
 
-        val parcelle = itemModelOb?.first.apply {
+        val parcelle = itemModelOb.first.apply {
             this?.apply {
                 section = sectionCommon.id.toString()
                 localite = localiteCommon.id.toString()
@@ -337,7 +337,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             }
         }
 
-        val mapEntries: List<MapEntry>? = itemModelOb?.second?.map { MapEntry(it.first, it.second) }
+        val mapEntries: List<MapEntry>? = itemModelOb.second?.map { MapEntry(it.first, it.second) }
 
         if(intent.getIntExtra("sync_uid", 0) != 0){
             parcelle?.apply {
@@ -356,6 +356,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         intentParcellePreview.putExtra("draft_id", draftedDataParcelle?.uid)
         startActivity(intentParcellePreview)
     }
+
 
     private fun getParcellObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()):  Pair<ParcelleModel, MutableList<Pair<String, String>>>? {
         var isMissingDial2 = false
@@ -504,7 +505,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         if(itemModelOb == null) return
 
-        val parcelleDraft = itemModelOb?.first.apply {
+        val parcelleDraft = itemModelOb.first.apply {
             this?.apply {
                 section = sectionCommon.id.toString()
                 localite = localiteCommon.id.toString()
@@ -577,15 +578,15 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         val listArbresOth = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
-        parcelleDrafted?.arbreStr?.let {
+        parcelleDrafted.arbreStr?.let {
             if(it.isNotEmpty()) {
                 val listIt = GsonUtils.fromJson<MutableList<ArbreData>>(it, object : TypeToken<MutableList<ArbreData>>(){}.type )
                 val newArbreLi = listIt.map {ito->
                     LogUtils.d(ito)
                     listArbresOth?.filter { it.id.toString().equals(ito.arbre) == true }?.let {
                         if(it.size > 0){
-                            ito.id = it.first()?.id
-                            ito.arbre = it.first() ?.nom?.trim()+" | "+it.first()?.nomScientifique
+                            ito.id = it.first().id
+                            ito.arbre = it.first().nom?.trim()+" | "+ it.first().nomScientifique
                         }
                     }
 //                    LogUtils.json(ito)
@@ -601,7 +602,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             itemChanged = arrayListOf(Pair(1, "Verbal"), Pair(2, "Gps")),
             currentVal = parcelleDrafted.typedeclaration,
             listIem = resources.getStringArray(R.array.declarationType)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
                 typeDeclaration = resources.getStringArray(R.array.declarationType)[it]
                 disableField(typeDeclaration)
@@ -621,7 +622,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             listIem = (AssetFileHelper.getListDataFromAsset(
                 21,
                 this
-            ) as MutableList<CommonData>)?.map { it.nom }
+            ) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -638,7 +639,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             currentVal = parcelleDrafted.parcelleRegenerer,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -656,7 +657,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             listIem = (AssetFileHelper.getListDataFromAsset(
                 10,
                 this
-            ) as MutableList<TypeDocumentModel>)?.map { it.nom }
+            ) as MutableList<TypeDocumentModel>).map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -672,7 +673,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectNiveauPente,
             currentVal = parcelleDrafted.niveauPente,
             listIem = resources.getStringArray(R.array.niveau_pente)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -685,7 +686,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             currentVal = parcelleDrafted.presenceCourDeau,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -700,7 +701,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectCourEauParcelle,
             currentVal = parcelleDrafted.courDeau,
             itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }?.toList() ?: listOf(),
+            listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }
+                .toList(),
             onChanged = {
 
             },
@@ -716,7 +718,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             currentVal = parcelleDrafted.existeMesureProtection,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -732,7 +734,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             currentVal = parcelleDrafted.existePente,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -748,7 +750,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             currentVal = parcelleDrafted.erosion,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -773,19 +775,16 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         passSetupParcellModel(parcelleDrafted)
     }
 
-    fun getSetupParcelleModel(
-        prodModel: ParcelleModel,
-        mutableListOf: MutableList<Pair<String, String>>
-    ): Pair<ParcelleModel, MutableList<Pair<String, String>>> {
+
+    fun getSetupParcelleModel(prodModel: ParcelleModel, mutableListOf: MutableList<Pair<String, String>>): Pair<ParcelleModel, MutableList<Pair<String, String>>> {
         //LogUtils.d(prodModel.nom)
         val mainLayout = findViewById<ViewGroup>(R.id.layout_parcelle)
         Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
         return Pair(prodModel, mutableListOf)
     }
 
-    fun passSetupParcellModel(
-        prodModel: ParcelleModel?
-    ){
+
+    fun passSetupParcellModel(prodModel: ParcelleModel?) {
         //LogUtils.d(prodModel.nom)
         val mainLayout = findViewById<ViewGroup>(R.id.layout_parcelle)
         prodModel?.let {
@@ -793,13 +792,14 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
     }
 
+
     fun setupMoyProtectMultiSelection(currentList : MutableList<String> = mutableListOf()) {
         val protectList = resources.getStringArray(R.array.mesure_protection)
         var listSelectProtectPosList = mutableListOf<Int>()
         var listSelectProtectList = mutableListOf<String>()
 
         var indItem = 0
-        (protectList)?.forEach {
+        (protectList).forEach {
             if(currentList.size > 0){ if(currentList.contains(it)) listSelectProtectPosList.add(indItem) }
             indItem++
         }
@@ -822,6 +822,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         })
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -859,7 +860,6 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         clickLatLongParcelle.setOnClickListener {
-
             getLocation()
         }
 
@@ -900,6 +900,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             setAllListener()
         }
     }
+
 
     fun setOmbrageParcelleRV() {
         val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
@@ -949,18 +950,19 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
     }
 
+
     fun addOmbrageVariete(ombrageVarieteModel: OmbrageVarieteModel) {
         try {
             if (ombrageVarieteModel.variete?.length == 0) return
 
-            arbrOmbrListParcelle?.forEach {
+            arbrOmbrListParcelle.forEach {
                 if (it.variete?.uppercase() == ombrageVarieteModel.variete?.uppercase() && it.nombre == ombrageVarieteModel.nombre) {
                     ToastUtils.showShort(getString(R.string.cette_vari_t_est_deja_ajout_e))
                     return
                 }
             }
 
-            arbrOmbrListParcelle?.add(ombrageVarieteModel)
+            arbrOmbrListParcelle.add(ombrageVarieteModel)
             arbreOmbrParcelleAdapter?.notifyDataSetChanged()
 
             editQtArbrOmbrParcel.text?.clear()
@@ -969,8 +971,6 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
-
-
 
 
     private fun setOtherListener() {
@@ -1001,6 +1001,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         editAnneeCreationParcelle.setOnClickListener { showYearPickerDialog(editAnneeCreationParcelle) }
     }
 
+
     private fun setAllListener() {
 
         setupSectionSelection()
@@ -1012,7 +1013,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectDeclarationTypeParcelle,
             itemChanged = arrayListOf(Pair(1, "Verbal"), Pair(2, "Gps")),
             listIem = resources.getStringArray(R.array.declarationType)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
                 typeDeclaration = resources.getStringArray(R.array.declarationType)[it]
                 disableField(typeDeclaration)
@@ -1027,7 +1028,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             listIem = (AssetFileHelper.getListDataFromAsset(
                 21,
                 this
-            ) as MutableList<CommonData>)?.map { it.nom }
+            ) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -1043,7 +1044,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectParcRegenParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -1060,7 +1061,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             listIem = (AssetFileHelper.getListDataFromAsset(
                 10,
                 this
-            ) as MutableList<TypeDocumentModel>)?.map { it.nom }
+            ) as MutableList<TypeDocumentModel>).map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
 
@@ -1076,7 +1077,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectPresentCourEauParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -1090,7 +1091,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             getString(R.string.quel_est_le_cour_ou_plan_d_eau),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectCourEauParcelle,
             itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }?.toList() ?: listOf(),
+            listIem = (AssetFileHelper.getListDataFromAsset(0, this) as MutableList<CourEauModel>).map { "${it.nom}" }
+                .toList(),
             onChanged = {
 
             },
@@ -1105,7 +1107,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectMesurProtectParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },
@@ -1120,7 +1122,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             spinner = selectYaPenteParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
-                ?.toList() ?: listOf(),
+                .toList(),
             onChanged = {
 
             },

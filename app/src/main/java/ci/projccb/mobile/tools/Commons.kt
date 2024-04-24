@@ -262,6 +262,7 @@ class Commons {
 
         }
 
+
         fun setListenerForSpinner(context:Context, title:String = "Faite un choix !",
                                   message: String = "La liste est vide !", isKill:Boolean = false,
                                   isEmpty:Boolean = false, spinner: Spinner,

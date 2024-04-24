@@ -149,7 +149,6 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
         )
         for (producteur in producteurDatas) {
             try {
-
                 producteur.dateNaiss = Commons.convertDate(producteur.dateNaiss, true)
                 producteur.certificats = GsonUtils.fromJson(producteur.certificatsStr, object : TypeToken<MutableList<String>>(){}.type)
 
@@ -308,15 +307,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                                 formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
                                     if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
                                         if( producteurDao.getProducteurByID(producteur.uid) == null ) {
-                                            formMod.producteursIdStr = formMod.producteursIdStr?.let {
-
+                                            formMod.producteursIdStr = formMod.producteursIdStr.let {
                                                 var curValue = it
                                                 if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
-                                                LogUtils.d(curValue)
+                                                // LogUtils.d(curValue)
                                                 curValue
-
                                             }
-
                                         }
                                     }
 

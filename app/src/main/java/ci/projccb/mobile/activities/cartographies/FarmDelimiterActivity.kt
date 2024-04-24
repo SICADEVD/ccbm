@@ -53,8 +53,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
-class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener,
-    OnMarkerClickListener {
+class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener, OnMarkerClickListener {
 
 
     private var dialogMapHito: AlertDialog? = null
@@ -283,12 +282,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    fun showMappingTypeDialog() {
+    private fun showMappingTypeDialog() {
         try {
             val dialog = Dialog(this, R.style.DialogTheme)
-//            Commons.adjustTextViewSizesInDialog(this, dialogBuild, "",   this.resources.getDimension(R.dimen._6ssp)
-//                ,true)
-            //val dialog = dialogBuild.create()
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.setCancelable(true)
             dialog.setContentView(R.layout.linear_maps_type_maneul_gps_view)
@@ -318,7 +314,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    fun getLocationPermission() {
+    private fun getLocationPermission() {
         try {
             if (ContextCompat.checkSelfPermission(
                     this.applicationContext,
@@ -342,6 +338,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         }
     }
 
+
     fun checkLocationServices() {
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as (LocationManager)
         if (locationManager != null) {
@@ -349,16 +346,15 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!isGpsEnabled && !isNetworkEnabled) {
-                // Neither GPS nor network-based location services are enabled
-                // You can prompt the user to enable location services
                 showLocationSettings()
-            }else getDeviceLocation()
+            } else getDeviceLocation()
         }
     }
 
+
     // Method to show the location settings screen if location is disabled
     fun showLocationSettings() {
-        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
         startActivityForResult(intent, RESULT_ENABLE_GPS_FEATURE)
     }
 
@@ -398,12 +394,11 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
     fun computeSurface() {
 //        try {
-//            parcelleMapping.parcelleSuperficie =
-//                Commons.convertDoubleToString((polygon?.area!!) * 0.0001)
+//            parcelleMapping.parcelleSuperficie = Commons.convertDoubleToString((polygon?.area!!) * 0.0001)
 //            labelSurfaceFarmDelimiter.text = parcelleMapping.parcelleSuperficie.plus(" ha")
 //        } catch (ex: Exception) {
 //            LogUtils.e(ex.message)
-//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            FirebaseCrashlytics.getInstance().recordException(ex)
 //        }
     }
 
@@ -411,12 +406,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     override fun onMyLocationChange(pLocation: Location) {
         try {
             mapsDelimiter?.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        pLocation.latitude,
-                        pLocation.longitude
-                    ), 15F
-                )
+                CameraUpdateFactory.newLatLngZoom(LatLng(pLocation.latitude, pLocation.longitude), 15F)
             )
 
             MainScope().launch {
@@ -424,12 +414,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
 
 
-    fun deleteAnyMarker() {
+    private fun deleteAnyMarker() {
         MainScope().launch {
             removeMarker()
         }
@@ -507,7 +497,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 }
                 // }
 
-                mapsDelimiter?.animateCamera(CameraUpdateFactory.newLatLng(marker?.position!!))
+                //  mapsDelimiter?.animateCamera(CameraUpdateFactory.newLatLng(marker?.position!!))
+                val cameraPositionPolygon = CameraPosition.fromLatLngZoom(marker?.position!!, 15.0f)
+                mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon))
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -532,6 +524,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             mapsDelimiter?.animateCamera(CameraUpdateFactory.newLatLng(marker?.position!!))
 
             LogUtils.d(lineOrZoneDelimiter, "ADD MARKER")
+
             when (lineOrZoneDelimiter) {
                 1 -> { // Line
                     if (markersMap.size > 1) {
@@ -540,22 +533,22 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 }
 
                 2 -> {  // Surface
-//                    LogUtils.d(markersMap.size)
                     if (markersMap.size > 2) {
                         drawPolygone(markersMap)
                     }
                 }
                 else -> { // Nothing
+
                 }
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
 
 
-    suspend fun drawPolygone(pMarkersPolygon: MutableMap<Int, Marker>) {
+    private fun drawPolygone(pMarkersPolygon: MutableMap<Int, Marker>) {
        try {
            mapPointsList.clear()
            polygon?.remove()
@@ -587,12 +580,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
        } catch (ex: Exception) {
            ex.printStackTrace()
            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+           FirebaseCrashlytics.getInstance().recordException(ex)
        }
     }
 
 
-    suspend fun drawPolyline(pMarkersPolyline: MutableMap<Int, Marker>) {
+    private fun drawPolyline(pMarkersPolyline: MutableMap<Int, Marker>) {
         try {
             polyline?.remove()
             mapPointsList.clear()

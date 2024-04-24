@@ -602,7 +602,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Y'a-t-il un cour ou plan d’eau dans la parcelle ?"
+                            android:text="Y'a-t-il un cour ou point d’eau dans la parcelle ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
