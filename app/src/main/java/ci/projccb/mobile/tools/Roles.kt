@@ -29,7 +29,7 @@ object Roles{
         "FORMATION",
         "INSPECTION",
         "APPLICATION",
-        "LIVRAISON",
+//        "LIVRAISON",
         "SSRTECLMRS",
         "AGRO_DISTRIBUTION",
         "FORMATION_VISITEUR",
