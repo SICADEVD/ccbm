@@ -21,6 +21,9 @@ object Roles{
     )
 
     val COACH = listOf<String>(
+        "PRODUCTEUR",
+        "PARCELLE",
+        "ESTIMATION",
         "MENAGE",
         "PARCELLES",
         "FORMATION",
@@ -30,6 +33,7 @@ object Roles{
         "SSRTECLMRS",
         "AGRO_DISTRIBUTION",
         "FORMATION_VISITEUR",
+        "AGRO_EVALUATION",
         "POSTPLANTING"
     )
 
