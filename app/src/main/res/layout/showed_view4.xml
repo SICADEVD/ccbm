@@ -28,7 +28,7 @@
             android:textAllCaps="true"
             android:textSize="@dimen/_11ssp"
             android:textFontWeight="500"
-            android:text="SSTRE"
+            android:text="SSRTE-CLMRS"
             android:textColor="@color/text_color_white" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -1044,7 +1044,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //listOrderItem.add(7)
                     //setClickListenForFeature(7);
                     //linearSSRT.visibility = View.VISIBLE
-                    listOfFeatures.add(FeatureModel("SSTRE-CLMRS",
+                    listOfFeatures.add(FeatureModel("SSRTE-CLMRS",
                         countSync = CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()?.getUnSyncedAll()?.size!!,
                         countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "ssrte")!!,
                         type = "SSRTECLMRS",
