@@ -120,7 +120,7 @@ class QuestionnaireReviewAdapter(
 
                     questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
 
-                    (pContext as InspectionActivity).checkCommentField()
+                    //(pContext as InspectionActivity).checkCommentField()
 
                 }
 
