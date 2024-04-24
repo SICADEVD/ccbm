@@ -155,79 +155,87 @@ class AuthentificationActivity : AppCompatActivity() {
 
                                 val agentResponseBody = response.body()
                                 var roles = arrayListOf<String>() //agentResponseBody?.menu //
-                                var role_name = agentResponseBody?.results?.roles?.let {
-                                    if(it.size > 0) it.first().name?.uppercase()
-                                    else ""
+                                agentResponseBody?.results?.roles?.let {
+                                    it.forEach { role ->
+
+                                        var role_name = role.name?.uppercase()
+
+                                        LogUtils.d(role_name)
+                                        when (role_name.toString()){
+                                            "Manager".uppercase() -> {
+                                                roles.addAll(Roles.MANAGER)
+                                            }
+                                            "Directeur".uppercase() -> {
+                                                roles.addAll(Roles.MANAGER)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "ADG".uppercase() -> {
+                                                roles.addAll(Roles.MANAGER)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "Inspecteur".uppercase() -> {
+                                                roles.addAll(Roles.INSPECTEUR)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "Coach".uppercase() -> {
+                                                roles.addAll(Roles.COACH)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "Applicateur".uppercase() -> {
+                                                roles.addAll(Roles.APPLICATEUR)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "Magasinier".uppercase() -> {
+                                                roles.addAll(Roles.MAGASINIERSECTION)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "Magasinier Central".uppercase() -> {
+                                                roles.addAll(Roles.MAGASINIERCENTRAL)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                        when (role_name.toString()){
+                                            "Delegue".uppercase() -> {
+                                                roles.addAll(Roles.DELEGUE)
+                                            }
+                                            else -> {
+
+                                            }
+                                        }
+                                    }
+
+
                                 } //arrayListOf<String>()
-                                LogUtils.d(role_name)
-                                when (role_name.toString()){
-                                    "Manager".uppercase() -> {
-                                        roles.addAll(Roles.MANAGER)
-                                    }
-                                    else -> {
 
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "ADG".uppercase() -> {
-                                        roles.addAll(Roles.MANAGER)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "Inspecteur".uppercase() -> {
-                                        roles.addAll(Roles.INSPECTEUR)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "Coach".uppercase() -> {
-                                        roles.addAll(Roles.COACH)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "Applicateur".uppercase() -> {
-                                        roles.addAll(Roles.APPLICATEUR)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "Magasinier".uppercase() -> {
-                                        roles.addAll(Roles.MAGASINIERSECTION)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "Magasinier Central".uppercase() -> {
-                                        roles.addAll(Roles.MAGASINIERCENTRAL)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-                                when (role_name.toString()){
-                                    "Delegue".uppercase() -> {
-                                        roles.addAll(Roles.DELEGUE)
-                                    }
-                                    else -> {
-
-                                    }
-                                }
-
-                                roles = roles.distinctBy {
-                                    it
-                                }.toList() as ArrayList<String>
+//                                roles = roles.distinctBy {
+//                                    it
+//                                }.toList() as ArrayList<String>
 
                                 val agentModel = agentResponseBody?.results
                                 val coopModel = agentResponseBody?.cooperative
