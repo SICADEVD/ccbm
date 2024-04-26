@@ -916,7 +916,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("infosproducteur.png") })
 
                 }
@@ -968,7 +968,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("application_phyto.png")})
                 }
                 "EVALUATIONS","INSPECTION" -> {
@@ -985,7 +985,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("evaluation.png")})
                 }
                 "ESTIMATIONS","ESTIMATION" -> {
@@ -1002,7 +1002,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("estimations.png")})
 
                 }
@@ -1037,7 +1037,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("formation.png")})
                 }
                 "SSRTECLMRS","SSRTECLMR" -> {
@@ -1054,7 +1054,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("ssrte.png")})
                 }
                 "LIVRAISONS","LIVRAISON" -> {
@@ -1071,7 +1071,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = true,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("livrais_mag_sect.png")})
                 }
                 "AGRO_EVALUATION" -> {
@@ -1085,7 +1085,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = false,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("arbre_black.png")})
                 }
                 "AGRO_DISTRIBUTION" -> {
@@ -1099,7 +1099,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = false,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("distrib_arbre.png")})
                 }
                 "POSTPLANTING" -> {
@@ -1113,7 +1113,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = false,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("distrib_arbre.png")})
                 }
                 "LIVRAISON_MAGCENTRAL" -> {
@@ -1127,7 +1127,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = false,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("livrais_mag_central.png")})
                 }
                 "FORMATION_VISITEUR" -> {
@@ -1141,7 +1141,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                         canAdd = true,
                         canEdit = false,
                         canViewDraft = true,
-                        canViewSync = false //can be false
+                        canViewSync = true //can be false
                     ).apply { this.image = image.plus("visitor_form.png")})
                 }
                 else -> {}
