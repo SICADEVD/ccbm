@@ -141,13 +141,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     val REQUEST_IMAGE_PICKED = 2
     var fromAction = ""
 
-    val sectionCommon = CommonData();
-    val localiteCommon = CommonData();
-    val programmeCommon = CommonData();
+    val sectionCommon = CommonData()
+    val localiteCommon = CommonData()
+    val programmeCommon = CommonData()
 
 
     fun setupSectionSelection(currVal:String? = null, currVal1:String? = null) {
-        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
+        var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao()
         var sectionList = sectionDao?.getAll(
                 agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
             )
@@ -160,13 +160,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         setListenerForSpinner(this, getString(R.string.choix_de_la_section), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if(sectionList?.size!! > 0) false else true,
+            isEmpty = sectionList?.size!! <= 0,
             currentVal = libItem,
-            spinner = selectSectionProducteur, listIem = sectionList?.map { it.libelle }
-            ?.toList() ?: listOf(),
+            spinner = selectSectionProducteur,
+            listIem = sectionList.map { it.libelle }?.toList() ?: listOf(),
             onChanged = {
-
-                val section = sectionList!![it]
+                val section = sectionList[it]
                 //ogUtils.d(section)
                 sectionCommon.nom = section.libelle!!
                 sectionCommon.id = section.id!!
@@ -179,8 +178,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     }
 
     private fun setProgrammeSpinner(currVal2:String? = null) {
-
-        var programmesDao = CcbRoomDatabase.getDatabase(applicationContext)?.programmesDao();
+        var programmesDao = CcbRoomDatabase.getDatabase(applicationContext)?.programmesDao()
         var programmeListi = programmesDao?.getAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
         )
@@ -195,14 +193,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this,
             getString(R.string.choix_du_programme),
             getString(R.string.la_liste_des_programmes_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if(programmeListi?.size!! > 0) false else true,
+            isEmpty = programmeListi?.size!! <= 0,
             currentVal = libItem,
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             spinner = selectProgramProducteur,
-            listIem = programmeListi?.map { it.libelle }
+            listIem = programmeListi.map { it.libelle }
             ?.toList() ?: listOf(), onChanged = {
 
-            val programme = programmeListi!![it]
+            val programme = programmeListi[it]
             programmeCommon.nom = programme.libelle!!
             programmeCommon.id = programme.id!!
 
@@ -214,7 +212,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     private fun setLocaliteSpinner(id: Int, currVal1:String? = null) {
 
-        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
         var libItem: String? = null
@@ -225,12 +223,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         setListenerForSpinner(this, getString(R.string.choix_de_la_localit), getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            isEmpty = if(localitesListi?.size!! > 0) false else true,
+            isEmpty = localitesListi?.size!! <= 0,
             currentVal = libItem,
-            spinner = selectLocaliteProducteur, listIem = localitesListi?.map { it.nom }
+            spinner = selectLocaliteProducteur, listIem = localitesListi.map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
-                localitesListi?.let { list ->
+                localitesListi.let { list ->
                     var localite = list.get(it)
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
@@ -401,7 +399,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 //        LogUtils.d(selectNationaliteProducteur.getSpinnerContent().trim())
 
-        val producteur = producteurModelItem?.first.apply {
+        val producteur = producteurModelItem.first.apply {
             this?.apply {
                 photo = profilPhotoPath ?: ""
                 profilPhotoPath = profilPhotoPath ?: ""
@@ -409,7 +407,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
 
-                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter { it.nom?.contains(selectNationaliteProducteur.getSpinnerContent().trim()) == true }?.let {
+                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>).filter { it.nom?.contains(selectNationaliteProducteur.getSpinnerContent().trim()) == true }
+                    ?.let {
 //                    LogUtils.d(it)
                     if(it.size > 0){
                         it.first().id
@@ -421,7 +420,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         if(intent.getIntExtra("sync_uid", 0) != 0){
-            producteur.apply {
+            producteur?.apply {
                 id = commomUpdate.listOfValue?.first()?.toInt()
                 uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
                 isSynced = false
@@ -429,11 +428,11 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }
         }
 
-        Commons.logErrorToFile(producteur)
+        producteur?.let { Commons.logErrorToFile(it) }
 
         val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
         intentProducteurPreview.putExtra("preview", producteur)
-        val mapEntries: List<MapEntry>? = producteurModelItem?.second?.map { MapEntry(it.first, it.second) }
+        val mapEntries: List<MapEntry>? = producteurModelItem.second.map { MapEntry(it.first, it.second) }
         intentProducteurPreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
         intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
         startActivity(intentProducteurPreview)
@@ -711,7 +710,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTitreDUProducteur,
             itemChanged = arrayListOf(Pair(1, "Planté-partager")),
-            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -721,25 +720,15 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
 
         setupCertificatMultiSelection()
-//        setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = selectCertifProducteur,
-//            itemChanged = arrayListOf(Pair(1, "Autre")),
-//            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
-//                ?.toList() ?: listOf(), onChanged = {
-//
-//            }, onSelected = { itemId, visibility ->
-//                if(itemId==1){
-//                    containerAutreCertifProducteur.visibility = visibility
-//                }
-//            })
 
         setupSectionSelection()
+
         setProgrammeSpinner()
 
         setListenerForSpinner(this,
             getString(R.string.habitez_vous_dans_un_campement_ou_village),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectHabitationProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -750,7 +739,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             spinner = selectStatutProducteur,
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             listIem = resources.getStringArray(R.array.status)
-                ?.toList() ?: listOf(), onChanged = {
+                .toList(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
                 if(itemId==1){
@@ -762,7 +751,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectSexeProducteur,
             listIem = resources.getStringArray(R.array.genre)
-                ?.toList() ?: listOf(), onChanged = {
+                .toList(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
             })
@@ -770,7 +759,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this,
             getString(R.string.choix_du_statut), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectStatutMatProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -779,7 +768,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this,
             getString(R.string.quelle_est_la_nationalit), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectNationaliteProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -812,7 +801,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this,
             getString(R.string.quel_type_de_pi_ce), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectPieceProducteur,
-            listIem = listPiece?.map { it.nom },
+            listIem = listPiece.map { it.nom },
             itemChanged = listOf(Pair(1, "Non disponible")),
             onChanged = {
                   //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
@@ -836,7 +825,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeCarteCSSProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom },
+            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>).map { it.nom },
             itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
             onChanged = {
 
@@ -939,8 +928,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             //product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(data.id?.toInt()?:0)
 //            val sectionIt =  CcbRoomDatabase.getDatabase(this)?.sectionsDao()?.getById(product?.section)
 //            val localiteIt =  CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getLocalite(product?.localite?.toInt()?:0)
-            setupSectionSelection(it?.section.toString(), it?.localitesId.toString())
-            LogUtils.d(draftedData, it?.section.toString(), it?.localitesId.toString())
+            setupSectionSelection(it.section.toString(), it.localitesId.toString())
+            LogUtils.d(draftedData, it.section.toString(), it.localitesId.toString())
         }
 
         if(producteurDrafted == null) return
@@ -949,7 +938,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             spinner = selectTitreDUProducteur,
             itemChanged = arrayListOf(Pair(1, "Planté-partager")),
             currentVal = producteurDrafted!!.proprietaires,
-            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(26, this) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -972,7 +961,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, getString(R.string.habitez_vous_dans_un_campement_ou_village),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectHabitationProducteur,
             currentVal = producteurDrafted!!.habitationProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(22, this) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -984,7 +973,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             currentVal = producteurDrafted!!.statutCertification,
             listIem = resources.getStringArray(R.array.status)
-                ?.toList() ?: listOf(), onChanged = {
+                .toList(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
                 if(itemId==1){
@@ -997,7 +986,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             spinner = selectSexeProducteur,
             currentVal = producteurDrafted!!.sexeProducteur,
             listIem = resources.getStringArray(R.array.genre)
-                ?.toList() ?: listOf(), onChanged = {
+                .toList(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
             })
@@ -1005,7 +994,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectStatutMatProducteur,
             currentVal = producteurDrafted!!.statutMatrimonial,
-            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(23, this) as MutableList<CommonData>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -1013,14 +1002,15 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
             })
 
-        val nationVal = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.filter { it.id.toString().equals(producteurDrafted!!.nationalite.toString()) == true }?.let {
+        val nationVal = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>).filter { it.id.toString().equals(producteurDrafted!!.nationalite.toString()) == true }
+            ?.let {
             if(it.size > 0) it.first().nom
             else ""
         }.toString()
         setListenerForSpinner(this, getString(R.string.quelle_est_la_nationalit), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectNationaliteProducteur,
             currentVal = nationVal,
-            listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>)?.map { it.nom }
+            listIem = (AssetFileHelper.getListDataFromAsset(5, this) as MutableList<NationaliteModel>).map { it.nom }
                 ?.toList() ?: listOf(), onChanged = {
 
             }, onSelected = { itemId, visibility ->
@@ -1053,7 +1043,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, getString(R.string.quel_type_de_pi_ce), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectPieceProducteur,
             currentVal = producteurDrafted!!.piece,
-            listIem = listPiece?.map { it.nom },
+            listIem = listPiece.map { it.nom },
             itemChanged = listOf(Pair(1, "Non disponible")),
             onChanged = {
                 //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
@@ -1078,7 +1068,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeCarteCSSProducteur,
             currentVal = producteurDrafted!!.typeCarteSecuriteSociale,
-            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom },
+            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>).map { it.nom },
             itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
             onChanged = {
 
@@ -1100,14 +1090,15 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         if(producteurModelItem == null) return
 
-        val producteurDraft = producteurModelItem?.first.apply {
+        val producteurDraft = producteurModelItem.first.apply {
             this?.apply {
                 profilPhotoPath = profilPhotoPath ?: ""
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 programme_id = programmeCommon.id.toString()
 
-                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>)?.filter {  it.nom?.contains(selectNationaliteProducteur.getSpinnerContent().trim()) == true }?.let {
+                nationalite = (AssetFileHelper.getListDataFromAsset(5, this@ProducteurActivity) as MutableList<NationaliteModel>).filter {  it.nom?.contains(selectNationaliteProducteur.getSpinnerContent().trim()) == true }
+                    ?.let {
                     if(it.size > 0){
                         it.first().id
                     }else null
@@ -1153,12 +1144,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     }
 
     fun setupCertificatMultiSelection(currentList : MutableList<String> = mutableListOf()) {
-        val certificatList = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }?.toList() ?: listOf()
+        val certificatList = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>).map { it.nom }
+            ?.toList() ?: listOf()
         var listSelectCertificatPosList = mutableListOf<Int>()
         var listSelectCertificatList = mutableListOf<String>()
 
         var indItem = 0
-        (certificatList)?.forEach {
+        (certificatList).forEach {
             if(currentList.size > 0){ if(currentList.contains(it)) listSelectCertificatPosList.add(indItem) }
             indItem++
         }

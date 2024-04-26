@@ -896,7 +896,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             this.add(Pair(getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers), (recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
             this.add(Pair(getString(R.string.insecte_amis), (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
             this.add(Pair(getString(R.string.animaux_rencontr_s), (recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(SParcelle as Object, mapEntries)
 
