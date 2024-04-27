@@ -141,7 +141,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                                     CcbRoomDatabase.getDatabase(this)?.inspectionDao()
                                         ?.insert(inspection)
                                     draftDao?.completeDraft(draftID)
-                                    Commons.synchronisation(type = "inspection", this)
+//                                    Commons.synchronisation(type = "inspection", this)
                                     Commons.showMessage(
                                         "Inpection enregistrée avec succes !",
                                         this,

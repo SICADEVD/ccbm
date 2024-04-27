@@ -33,7 +33,7 @@ class SuiviParcellePreviewActivity : AppCompatActivity() {
             callback = {
                 CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()?.insert(suiviParcelleDatas)
                 draftDao?.completeDraft(draftID)
-                Commons.synchronisation(type = "suivi", this)
+//                Commons.synchronisation(type = "suivi", this)
                 Commons.showMessage(
                     "Suivi de parcelle effectué avec succes !",
                     this,

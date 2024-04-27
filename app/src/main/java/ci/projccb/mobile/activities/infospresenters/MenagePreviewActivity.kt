@@ -68,7 +68,7 @@ class MenagePreviewActivity : AppCompatActivity() {
                                     CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
                                         ?.insert(menage)
                                     draftDao?.completeDraft(draftID)
-                                    Commons.synchronisation(type = "menage", this)
+//                                    Commons.synchronisation(type = "menage", this)
                                     Commons.showMessage(
                                         "Menage enregistrée avec succes !",
                                         this,

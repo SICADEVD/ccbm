@@ -997,21 +997,21 @@ class Commons {
 //                checkNetworkAvailablility()
 //            }
 
-            CoroutineScope(Dispatchers.IO).launch {
-                var networkFlag = false
-                try {
-                    networkFlag = NetworkUtils.isAvailable()
-                } catch (ex: UnknownHostException) {
-                    networkFlag = false
-                    LogUtils.e("Internet error !")
-                }
-
-                if (networkFlag) {
-                    MainScope().launch {
-                        Commons.synchronisation("all",  activity)
-                    }
-                }
-            }
+//            CoroutineScope(Dispatchers.IO).launch {
+//                var networkFlag = false
+//                try {
+//                    networkFlag = NetworkUtils.isAvailable()
+//                } catch (ex: UnknownHostException) {
+//                    networkFlag = false
+//                    LogUtils.e("Internet error !")
+//                }
+//
+//                if (networkFlag) {
+//                    MainScope().launch {
+//                        Commons.synchronisation("all",  activity)
+//                    }
+//                }
+//            }
 
             when (actionMenu.uppercase()) {
                 "ADD" -> {

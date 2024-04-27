@@ -167,7 +167,7 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
                         callback = {
                             CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()
                                 ?.insert(enqueteSsrtDatas!!)
-                            Commons.synchronisation(type = "ssrte", this)
+//                            Commons.synchronisation(type = "ssrte", this)
                             Commons.showMessage(
                                 "Enquete enregistrée !",
                                 this,

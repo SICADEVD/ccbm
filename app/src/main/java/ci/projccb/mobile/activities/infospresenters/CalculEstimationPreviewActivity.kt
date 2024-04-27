@@ -61,7 +61,7 @@ class CalculEstimationPreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.estimationDao()
                                 ?.insert(estimationDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "estimation", this)
+//                            Commons.synchronisation(type = "estimation", this)
                             Commons.showMessage(
                                 "Estimation enregistrée !",
                                 this,

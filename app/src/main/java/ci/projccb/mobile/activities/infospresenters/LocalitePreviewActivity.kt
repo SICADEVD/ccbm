@@ -94,7 +94,7 @@ class LocalitePreviewActivity : AppCompatActivity() {
                     callback = {
                         CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.insert(localiteDatas!!)
                         draftDao?.completeDraft(draftID)
-                        Commons.synchronisation(type = "localite", this)
+//                        Commons.synchronisation(type = "localite", this)
                         Commons.showMessage(
                             "Localité enregistrée avec succes !",
                             this,

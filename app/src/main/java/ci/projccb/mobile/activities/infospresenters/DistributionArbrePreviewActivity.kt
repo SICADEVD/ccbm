@@ -80,7 +80,7 @@ class DistributionArbrePreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()
                                 ?.insert(distributionArbreDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "AGRO_DISTRIBUTION".lowercase(), this)
+//                            Commons.synchronisation(type = "AGRO_DISTRIBUTION".lowercase(), this)
                             Commons.showMessage(
                                 "Distribution d'arbre enregistrée !",
                                 this,
