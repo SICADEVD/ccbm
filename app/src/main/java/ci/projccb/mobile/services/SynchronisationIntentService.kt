@@ -185,16 +185,11 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                 LogUtils.d(LogUtils.getCurrentLogFilePath())
 
                 val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
-                clientProducteur.enqueue(object: Callback<ProducteurModel>{
-                    override fun onResponse(
-                        call: Call<ProducteurModel>,
-                        response: Response<ProducteurModel>
-                    ) {
-                        var producteurSynced = response.body()
+                val response = clientProducteur.execute()
 
-                        if(response.code().toString().contains("422") || response.code() == 422){
-                            //val buffer = Buffer()
-                            val respText = response.errorBody()?.string().toString()
+                if(response.code().toString().contains("422") || response.code() == 422){
+                    //val buffer = Buffer()
+                    val respText = response.errorBody()?.string().toString()
 //                            if(respText.contains("phone1", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
 ////                                LogUtils.d(respText)
 //                                producteurDao.syncDataOnExist(
@@ -205,120 +200,131 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 //                            if(respText.contains("num_ccc", ignoreCase = true) && respText.contains("phone2", ignoreCase = true)){
 ////                                LogUtils.d(respText)
 //                            }
-                            producteurDao.syncDataOnExist(
-                                synced = 1,
-                                localID = producteur.uid
-                            )
-                        }
+                    producteurDao.syncDataOnExist(
+                        synced = 1,
+                        localID = producteur.uid
+                    )
+                }
 
-                        if(response.isSuccessful){
-                            producteurSynced?.let {
+                val producteurSynced = response.body()
+                if(response.isSuccessful){
+                    producteurSynced?.let {
 //                            LogUtils.d(producteurSynced?.id)
 //                            LogUtils.d(response.code())
 
-                                producteurDao.syncData(
-                                    id = producteurSynced?.id!!,
-                                    synced = true,
-                                    localID = producteur.uid
-                                )
+                        producteurDao.syncData(
+                            id = producteurSynced?.id!!,
+                            synced = true,
+                            localID = producteur.uid
+                        )
 
-                                infosProducteurDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteursId = producteurSynced.id.toString()
-                                    infosProducteurDao?.insert(it)
-                                }
+                        infosProducteurDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteursId = producteurSynced.id.toString()
+                            infosProducteurDao?.insert(it)
+                        }
 
-                                inspectionDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteursId = producteurSynced.id.toString()
-                                    inspectionDao?.insert(it)
-                                }
+                        inspectionDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteursId = producteurSynced.id.toString()
+                            inspectionDao?.insert(it)
+                        }
 
-                                livraisonDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteursId = producteurSynced.id.toString()
-                                    livraisonDao?.insert(it)
-                                }
+                        livraisonDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteursId = producteurSynced.id.toString()
+                            livraisonDao?.insert(it)
+                        }
 
-                                livraisonCentralDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteursId = producteurSynced.id.toString()
-                                    livraisonCentralDao?.insert(it)
-                                }
+                        livraisonCentralDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteursId = producteurSynced.id.toString()
+                            livraisonCentralDao?.insert(it)
+                        }
 
-                                menageDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteurs_id = producteurSynced.id.toString()
-                                    menageDao?.insert(it)
-                                }
+                        menageDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteurs_id = producteurSynced.id.toString()
+                            menageDao?.insert(it)
+                        }
 
-                                enqueteSsrtDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteursId = producteurSynced.id.toString()
-                                    enqueteSsrtDao?.insert(it)
-                                }
+                        enqueteSsrtDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteursId = producteurSynced.id.toString()
+                            enqueteSsrtDao?.insert(it)
+                        }
 
-                                parcelleDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteurId = producteurSynced.id.toString()
-                                    parcelleDao?.insert(it)
-                                }
+                        parcelleDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteurId = producteurSynced.id.toString()
+                            parcelleDao?.insert(it)
+                        }
 
-                                distributionArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteurId = producteurSynced.id.toString()
-                                    distributionArbreDao?.insert(it)
-                                }
+                        distributionArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteurId = producteurSynced.id.toString()
+                            distributionArbreDao?.insert(it)
+                        }
 
-                                evaluationArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
-                                    it.producteurId = producteurSynced.id.toString()
-                                    evaluationArbreDao?.insert(it)
-                                }
+                        evaluationArbreDao?.getUnSyncedByProdUid(producteur.uid.toString())?.forEach {
+                            it.producteurId = producteurSynced.id.toString()
+                            evaluationArbreDao?.insert(it)
+                        }
 
 
-                                // THIS SYNC DEPEND TO PRODUCTEUR_ID AND PARCELLE_ID
+                        // THIS SYNC DEPEND TO PRODUCTEUR_ID AND PARCELLE_ID
 
-                                estimationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
-                                    it.producteurId = producteurSynced.id.toString()
-                                    estimationDao?.insert(it)
-                                }
+                        estimationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                            it.producteurId = producteurSynced.id.toString()
+                            estimationDao?.insert(it)
+                        }
 
-                                suiviParcelleDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
-                                    it.producteursId = producteurSynced.id.toString()
-                                    suiviParcelleDao?.insert(it)
-                                }
+                        suiviParcelleDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                            it.producteursId = producteurSynced.id.toString()
+                            suiviParcelleDao?.insert(it)
+                        }
 
-                                suiviApplicationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
-                                    it.producteur = producteurSynced.id.toString()
-                                    suiviApplicationDao?.insert(it)
-                                }
+                        suiviApplicationDao?.getUnSyncedByProdAndParcUid(producteur.uid.toString())?.forEach {
+                            it.producteur = producteurSynced.id.toString()
+                            suiviApplicationDao?.insert(it)
+                        }
 
-                                // THIS SYNC DEPEND TO PRODUCTEUR_ID AND FORMATION_ID
+                        // THIS SYNC DEPEND TO PRODUCTEUR_ID AND FORMATION_ID
 
-                                visiteurFormationDao?.getUnSyncedByProdAndFormUid(producteur.uid.toString())?.forEach {
-                                    it.producteurId = producteurSynced.id.toString()
-                                    visiteurFormationDao?.insert(it)
-                                }
+                        visiteurFormationDao?.getUnSyncedByProdAndFormUid(producteur.uid.toString())?.forEach {
+                            it.producteurId = producteurSynced.id.toString()
+                            visiteurFormationDao?.insert(it)
+                        }
 
-                                // THIS SYNC DEPEND TO PRODUCTEUR_ID
-                                formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
-                                    if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
-                                        if( producteurDao.getProducteurByID(producteur.uid) == null ) {
-                                            formMod.producteursIdStr = formMod.producteursIdStr.let {
-                                                var curValue = it
-                                                if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
-                                                // LogUtils.d(curValue)
-                                                curValue
-                                            }
-                                        }
+                        // THIS SYNC DEPEND TO PRODUCTEUR_ID
+                        formationDao?.getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.forEach { formMod ->
+                            if(formMod.producteursIdList?.contains(producteur.uid.toString()) == true){
+                                if( producteurDao.getProducteurByID(producteur.uid) == null ) {
+                                    formMod.producteursIdStr = formMod.producteursIdStr.let {
+                                        var curValue = it
+                                        if (curValue.contains(producteur.uid.toString())) curValue = curValue.replace(producteur.uid.toString(), producteurSynced.id.toString())
+                                        // LogUtils.d(curValue)
+                                        curValue
                                     }
-
-                                    formationDao?.insert(formMod)
-
                                 }
-
                             }
+
+                            formationDao?.insert(formMod)
+
                         }
 
                     }
+                }
 
-                    override fun onFailure(call: Call<ProducteurModel>, t: Throwable) {
-                        LogUtils.e(t.message)
-                    }
-
-                })
+//                clientProducteur.enqueue(object: Callback<ProducteurModel>{
+//
+//                    override fun onResponse(
+//                        call: Call<ProducteurModel>,
+//                        response: Response<ProducteurModel>
+//                    ) {
+//                        var producteurSynced = response.body()
+//
+//
+//
+//                    }
+//
+//                    override fun onFailure(call: Call<ProducteurModel>, t: Throwable) {
+//                        LogUtils.e(t.message)
+//                    }
+//
+//                })
 
             } catch (uhex: UnknownHostException) {
                 LogUtils.e(uhex.message)
@@ -443,56 +449,62 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         itemsO = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
                     }
 
+                    Commons.logErrorToFile(parcelle)
+
                     //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
                     val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)
 
-                    clientParcelle.enqueue(object : Callback<ParcelleModel>{
+                    val response = clientParcelle.execute()
 
-                        override fun onResponse(
-                            call: Call<ParcelleModel>,
-                            response: Response<ParcelleModel>
-                        ) {
-                            if(response.isSuccessful){
+                    if(response.isSuccessful){
 
-                                val parcelleSync: ParcelleModel = response.body()!!
+                        val parcelleSync: ParcelleModel = response.body()!!
 
-                                parcelleDao.syncData(
-                                    id = parcelleSync.id!!,
-                                    synced = true,
-                                    codeparc = parcelleSync.codeParc.toString(),
-                                    localID = parcelle.uid.toInt()
-                                )
+                        parcelleDao.syncData(
+                            id = parcelleSync.id!!,
+                            synced = true,
+                            codeparc = parcelleSync.codeParc.toString(),
+                            localID = parcelle.uid.toInt()
+                        )
 
-                                estimationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
-                                    it.parcelleId = parcelleSync.id.toString()
-                                    estimationDao?.insert(it)
-                                }
-
-                                suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
-                                    parcelleUid = parcelle.uid.toString(),
-                                    SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-                                )?.forEach {
-                                    it.parcellesId = parcelleSync.id.toString()
-                                    suiviParcelleDao?.insert(it)
-                                }
-
-                                suiviApplicationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
-                                    it.parcelle_id = parcelleSync.id.toString()
-                                    suiviApplicationDao?.insert(it)
-                                }
-
-                            }else{
-
-                                parcelleDao.deleteUid(parcelle.uid)
-
-                            }
+                        estimationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
+                            it.parcelleId = parcelleSync.id.toString()
+                            estimationDao?.insert(it)
                         }
 
-                        override fun onFailure(call: Call<ParcelleModel>, t: Throwable) {
-                            LogUtils.e(t.message)
+                        suiviParcelleDao?.getSuiviParcellesUnSynchronizedLocal(
+                            parcelleUid = parcelle.uid.toString(),
+                            SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+                        )?.forEach {
+                            it.parcellesId = parcelleSync.id.toString()
+                            suiviParcelleDao?.insert(it)
                         }
 
-                    })
+                        suiviApplicationDao?.getUnSyncedByParcUid(parcelle.uid.toString())?.forEach {
+                            it.parcelle_id = parcelleSync.id.toString()
+                            suiviApplicationDao?.insert(it)
+                        }
+
+                    }else{
+
+                        parcelleDao.deleteUid(parcelle.uid)
+
+                    }
+
+//                    clientParcelle.enqueue(object : Callback<ParcelleModel>{
+//
+//                        override fun onResponse(
+//                            call: Call<ParcelleModel>,
+//                            response: Response<ParcelleModel>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<ParcelleModel>, t: Throwable) {
+//                            LogUtils.e(t.message)
+//                        }
+//
+//                    })
 
                 } catch (uhex: UnknownHostException) {
                     FirebaseCrashlytics.getInstance().recordException(uhex)
@@ -553,32 +565,35 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                         val clientSuivi: Call<SuiviParcelleModel> = ApiClient.apiService.synchronisationSuivi(suivi)
 
-                        clientSuivi.enqueue(object : Callback<SuiviParcelleModel>{
-                            override fun onResponse(
-                                call: Call<SuiviParcelleModel>,
-                                response: Response<SuiviParcelleModel>
-                            ) {
-                                if(response.isSuccessful){
+                        val response = clientSuivi.execute()
 
-                                    val suiviSynced: SuiviParcelleModel? = response.body()
+                        if(response.isSuccessful){
 
-                                    suiviParcelleDao.syncData(
-                                        id = suiviSynced?.id!!,
-                                        synced = true,
-                                        localID = suivi.uid
-                                    )
-                                }else{
-                                    suiviParcelleDao.deleteByUid(
-                                        suivi.uid
-                                    )
-                                }
-                            }
+                            val suiviSynced: SuiviParcelleModel? = response.body()
 
-                            override fun onFailure(call: Call<SuiviParcelleModel>, t: Throwable) {
-                                LogUtils.e(t.message)
-                            }
-
-                        })
+                            suiviParcelleDao.syncData(
+                                id = suiviSynced?.id!!,
+                                synced = true,
+                                localID = suivi.uid
+                            )
+                        }else{
+                            suiviParcelleDao.deleteByUid(
+                                suivi.uid
+                            )
+                        }
+//                        clientSuivi.enqueue(object : Callback<SuiviParcelleModel>{
+//                            override fun onResponse(
+//                                call: Call<SuiviParcelleModel>,
+//                                response: Response<SuiviParcelleModel>
+//                            ) {
+//
+//                            }
+//
+//                            override fun onFailure(call: Call<SuiviParcelleModel>, t: Throwable) {
+//                                LogUtils.e(t.message)
+//                            }
+//
+//                        })
 
                     } catch (uhex: UnknownHostException) {
                         FirebaseCrashlytics.getInstance().recordException(uhex)
@@ -620,35 +635,37 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                         val clientSuivi: Call<VisiteurFormationModel> = ApiClient.apiService.synchronisationVisiteurFormation(suivi)
 
-                        clientSuivi.enqueue(object : Callback<VisiteurFormationModel>{
-                            override fun onResponse(
-                                call: Call<VisiteurFormationModel>,
-                                response: Response<VisiteurFormationModel>
-                            ) {
+                        val response = clientSuivi.execute()
 
-                                if(response.isSuccessful){
-                                    val visiteurFormationModel: VisiteurFormationModel? = response.body()
+                        if(response.isSuccessful){
+                            val visiteurFormationModel: VisiteurFormationModel? = response.body()
 
-                                    visiteurFormationDao.syncData(
-                                        id = visiteurFormationModel?.id!!,
-                                        synced = true,
-                                        localID = suivi.uid
-                                    )
-                                }else{
-                                    visiteurFormationDao.deleteByUid(suivi.uid)
-                                }
-
-                            }
-
-                            override fun onFailure(call: Call<VisiteurFormationModel>, t: Throwable) {
-    //                            try{
-    //                                visiteurFormationDao.deleteByUid(suivi.uid)
-    //                            }catch (ex: Exception){
-    //
-    //                            }
-                            }
-
-                        })
+                            visiteurFormationDao.syncData(
+                                id = visiteurFormationModel?.id!!,
+                                synced = true,
+                                localID = suivi.uid
+                            )
+                        }else{
+                            visiteurFormationDao.deleteByUid(suivi.uid)
+                        }
+//                        clientSuivi.enqueue(object : Callback<VisiteurFormationModel>{
+//                            override fun onResponse(
+//                                call: Call<VisiteurFormationModel>,
+//                                response: Response<VisiteurFormationModel>
+//                            ) {
+//
+//
+//                            }
+//
+//                            override fun onFailure(call: Call<VisiteurFormationModel>, t: Throwable) {
+//    //                            try{
+//    //                                visiteurFormationDao.deleteByUid(suivi.uid)
+//    //                            }catch (ex: Exception){
+//    //
+//    //                            }
+//                            }
+//
+//                        })
 
 
                     } catch (uhex: UnknownHostException) {
@@ -694,32 +711,34 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         }
 
                         val clientSuivi: Call<EvaluationArbreModel> = ApiClient.apiService.synchronisationEvaluationBesoin(suivi)
+                        val response = clientSuivi.execute()
 
-                        clientSuivi.enqueue(object : Callback<EvaluationArbreModel>{
-                            override fun onResponse(
-                                call: Call<EvaluationArbreModel>,
-                                response: Response<EvaluationArbreModel>
-                            ) {
-                                if(response.isSuccessful){
-                                    val evaluationArbreModel: EvaluationArbreModel? = response.body()
+                        if(response.isSuccessful){
+                            val evaluationArbreModel: EvaluationArbreModel? = response.body()
 
-                                    evaluationArbreDao.syncData(
-                                        id = evaluationArbreModel?.id!!,
-                                        synced = true,
-                                        localID = suivi.uid
-                                    )
-                                }else{
-                                    evaluationArbreDao.deleteByUid(
-                                        suivi.uid
-                                    )
-                                }
-                            }
-
-                            override fun onFailure(call: Call<EvaluationArbreModel>, t: Throwable) {
-                                LogUtils.e(t.message)
-                            }
-
-                        })
+                            evaluationArbreDao.syncData(
+                                id = evaluationArbreModel?.id!!,
+                                synced = true,
+                                localID = suivi.uid
+                            )
+                        }else{
+                            evaluationArbreDao.deleteByUid(
+                                suivi.uid
+                            )
+                        }
+//                        clientSuivi.enqueue(object : Callback<EvaluationArbreModel>{
+//                            override fun onResponse(
+//                                call: Call<EvaluationArbreModel>,
+//                                response: Response<EvaluationArbreModel>
+//                            ) {
+//
+//                            }
+//
+//                            override fun onFailure(call: Call<EvaluationArbreModel>, t: Throwable) {
+//                                LogUtils.e(t.message)
+//                            }
+//
+//                        })
                     } catch (uhex: UnknownHostException) {
                         FirebaseCrashlytics.getInstance().recordException(uhex)
                     } catch (ex: Exception) {
@@ -776,36 +795,39 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         postplantDistr?.arbresStr = GsonUtils.toJson(listArbrItem)
                         val clientSuivi: Call<PostPlantingModel> = ApiClient.apiService.synchronisationPostPlanting(suivi)
 
-                        clientSuivi.enqueue(object : Callback<PostPlantingModel>{
-                            override fun onResponse(
-                                call: Call<PostPlantingModel>,
-                                response: Response<PostPlantingModel>
-                            ) {
-                                if(response.isSuccessful){
-                                    val postPlantingModel: PostPlantingModel? = response.body()
+                        val response = clientSuivi.execute()
 
-                                    postplantingDao.syncData(
-                                        id = postPlantingModel?.id!!,
-                                        synced = true,
-                                        localID = suivi.uid
-                                    )
+                        if(response.isSuccessful){
+                            val postPlantingModel: PostPlantingModel? = response.body()
 
-                                    postplantDistr?.let {
-                                        postPlantingArbrDistribDao?.insert(it)
-                                    }
-                                    //postPlantingArbrDistribDao?.deleteById(suivi.producteurId)
-                                }else{
-                                    postplantingDao.deleteByUid(
-                                        suivi.uid
-                                    )
-                                }
+                            postplantingDao.syncData(
+                                id = postPlantingModel?.id!!,
+                                synced = true,
+                                localID = suivi.uid
+                            )
+
+                            postplantDistr?.let {
+                                postPlantingArbrDistribDao?.insert(it)
                             }
-
-                            override fun onFailure(call: Call<PostPlantingModel>, t: Throwable) {
-                                LogUtils.e(t.message)
-                            }
-
-                        })
+                            //postPlantingArbrDistribDao?.deleteById(suivi.producteurId)
+                        }else{
+                            postplantingDao.deleteByUid(
+                                suivi.uid
+                            )
+                        }
+//                        clientSuivi.enqueue(object : Callback<PostPlantingModel>{
+//                            override fun onResponse(
+//                                call: Call<PostPlantingModel>,
+//                                response: Response<PostPlantingModel>
+//                            ) {
+//
+//                            }
+//
+//                            override fun onFailure(call: Call<PostPlantingModel>, t: Throwable) {
+//                                LogUtils.e(t.message)
+//                            }
+//
+//                        })
                     } catch (uhex: UnknownHostException) {
                         FirebaseCrashlytics.getInstance().recordException(uhex)
                     } catch (ex: Exception) {
@@ -864,37 +886,40 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                     val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)
 
-                    clientFormation.enqueue(object : Callback<FormationModel>{
-                        override fun onResponse(
-                            call: Call<FormationModel>,
-                            response: Response<FormationModel>
-                        ) {
-                            if(response.isSuccessful){
-                                val formationSynced: FormationModel? = response.body()
+                    val response = clientFormation.execute()
 
-                                formationDao.syncData(
-                                    formationSynced?.id!!,
-                                    true,
-                                    formation.uid
-                                )
+                    if(response.isSuccessful){
+                        val formationSynced: FormationModel? = response.body()
 
-                                visiteurFormationDao?.getUnSyncedByFormUid(formation.uid.toString())?.forEach {
-                                    it.producteurId = formationSynced.id.toString()
-                                    visiteurFormationDao?.insert(it)
-                                }
+                        formationDao.syncData(
+                            formationSynced?.id!!,
+                            true,
+                            formation.uid
+                        )
 
-                            }else{
-                                formationDao.deleteByUid(
-                                    formation.uid
-                                )
-                            }
+                        visiteurFormationDao?.getUnSyncedByFormUid(formation.uid.toString())?.forEach {
+                            it.producteurId = formationSynced.id.toString()
+                            visiteurFormationDao?.insert(it)
                         }
 
-                        override fun onFailure(call: Call<FormationModel>, t: Throwable) {
-                            LogUtils.e(t.message)
-                        }
-
-                    })
+                    }else{
+                        formationDao.deleteByUid(
+                            formation.uid
+                        )
+                    }
+//                    clientFormation.enqueue(object : Callback<FormationModel>{
+//                        override fun onResponse(
+//                            call: Call<FormationModel>,
+//                            response: Response<FormationModel>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<FormationModel>, t: Throwable) {
+//                            LogUtils.e(t.message)
+//                        }
+//
+//                    })
 
 
                 } catch (uhex: UnknownHostException) {
@@ -992,30 +1017,33 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     val clientEstimation: Call<EstimationModel> =
                         ApiClient.apiService.synchronisationEstimation(estimationPojo)
 
-                    clientEstimation.enqueue(object : Callback<EstimationModel> {
-                        override fun onResponse(
-                            call: Call<EstimationModel>,
-                            response: Response<EstimationModel>
-                        ) {
-                            if (response.isSuccessful) {
-                                val responseEstimation: EstimationModel? = response.body()
-                                estimationDao.syncData(
-                                    responseEstimation?.id!!,
-                                    true,
-                                    estimationPojo.uid!!
-                                )
-                            } else {
-                                estimationDao?.deleteByUid(
-                                    estimationPojo.uid
-                                )
-                            }
-                        }
+                    val response = clientEstimation.execute()
 
-                        override fun onFailure(call: Call<EstimationModel>, t: Throwable) {
-                            LogUtils.e(t.message)
-                        }
-
-                    })
+                    if (response.isSuccessful) {
+                        val responseEstimation: EstimationModel? = response.body()
+                        estimationDao.syncData(
+                            responseEstimation?.id!!,
+                            true,
+                            estimationPojo.uid!!
+                        )
+                    } else {
+                        estimationDao?.deleteByUid(
+                            estimationPojo.uid
+                        )
+                    }
+//                    clientEstimation.enqueue(object : Callback<EstimationModel> {
+//                        override fun onResponse(
+//                            call: Call<EstimationModel>,
+//                            response: Response<EstimationModel>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<EstimationModel>, t: Throwable) {
+//                            LogUtils.e(t.message)
+//                        }
+//
+//                    })
                 }
 
 
@@ -1062,30 +1090,32 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
 
                     val clientSuiviApplication: Call<SuiviApplicationModel> = ApiClient.apiService.synchronisationSuiviApplication(suiviApplication)
-                    clientSuiviApplication.enqueue(object : Callback<SuiviApplicationModel>{
-                        override fun onResponse(
-                            call: Call<SuiviApplicationModel>,
-                            response: Response<SuiviApplicationModel>
-                        ) {
-                            if(response.isSuccessful){
-                                val suiviApplicationSynced: SuiviApplicationModel? = response.body()
-                                suiviApplicationDao.syncData(
-                                    suiviApplicationSynced?.id!!,
-                                    true,
-                                    suiviApplication.uid
-                                )
-                            }else{
-                                suiviApplicationDao.deleteByUid(
-                                    suiviApplication.uid
-                                )
-                            }
-                        }
-
-                        override fun onFailure(call: Call<SuiviApplicationModel>, t: Throwable) {
-                            LogUtils.e(t.message)
-                        }
-
-                    })
+                    val response = clientSuiviApplication.execute()
+                    if(response.isSuccessful){
+                        val suiviApplicationSynced: SuiviApplicationModel? = response.body()
+                        suiviApplicationDao.syncData(
+                            suiviApplicationSynced?.id!!,
+                            true,
+                            suiviApplication.uid
+                        )
+                    }else{
+                        suiviApplicationDao.deleteByUid(
+                            suiviApplication.uid
+                        )
+                    }
+//                    clientSuiviApplication.enqueue(object : Callback<SuiviApplicationModel>{
+//                        override fun onResponse(
+//                            call: Call<SuiviApplicationModel>,
+//                            response: Response<SuiviApplicationModel>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<SuiviApplicationModel>, t: Throwable) {
+//                            LogUtils.e(t.message)
+//                        }
+//
+//                    })
 
 
                 }
@@ -1122,57 +1152,60 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
 
                     val clientRequ: Call<DistributionArbreModel> = ApiClient.apiService.synchronisationDistributionArbre(distrib)
-                    clientRequ.enqueue(object : Callback<DistributionArbreModel>{
-                        override fun onResponse(
-                            call: Call<DistributionArbreModel>,
-                            response: Response<DistributionArbreModel>
-                        ) {
-                            if(response.isSuccessful){
+                    val response = clientRequ.execute()
 
-                                val responseItem = response.body()
+                    if(response.isSuccessful){
 
-                                distributionArbreDao.syncData(
-                                    responseItem?.id!!,
-                                    true,
-                                    distrib.uid
-                                )
+                        val responseItem = response.body()
 
-                                val prod = producteurDao?.getProducteurByID(distrib.producteurId?.toInt())
+                        distributionArbreDao.syncData(
+                            responseItem?.id!!,
+                            true,
+                            distrib.uid
+                        )
 
-                                prod?.let {
-                                    var arbres: MutableList<PostPlantingItem>? = distrib.quantiteList?.get(distrib.producteurId.toString())?.map { PostPlantingItem(it.key.toString(), it.value.toString()) }?.toMutableList()
+                        val prod = producteurDao?.getProducteurByID(distrib.producteurId?.toInt())
+
+                        prod?.let {
+                            var arbres: MutableList<PostPlantingItem>? = distrib.quantiteList?.get(distrib.producteurId.toString())?.map { PostPlantingItem(it.key.toString(), it.value.toString()) }?.toMutableList()
 //                                    LogUtils.d(arbres)
-                                    postPlantingArbrDistribDao?.insert(PostPlantingArbrDistribModel(
-                                        uid = 0,
-                                        nom = it.nom,
-                                        prenoms = it.prenoms,
-                                        arbresStr = GsonUtils.toJson(arbres),
-                                        id = it.id,
-                                        isSynced = true,
-                                        origin = "remote",
-                                        agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-                                    ))
-                                }
-
-                                evaluationArbreDao?.deleteByProducteurId(distrib.producteurId)
-
-                            }else{
-
-                                distributionArbreDao.deleteByUid(
-                                    distrib.uid
-                                )
-
-                            }
+                            postPlantingArbrDistribDao?.insert(PostPlantingArbrDistribModel(
+                                uid = 0,
+                                nom = it.nom,
+                                prenoms = it.prenoms,
+                                arbresStr = GsonUtils.toJson(arbres),
+                                id = it.id,
+                                isSynced = true,
+                                origin = "remote",
+                                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
+                            ))
                         }
 
-                        override fun onFailure(call: Call<DistributionArbreModel>, t: Throwable) {
-    //                        distributionArbreDao.deleteByUid(
-    //                            distrib.uid
-    //                        )
-                            LogUtils.e(t.message)
-                        }
+                        evaluationArbreDao?.deleteByProducteurId(distrib.producteurId)
 
-                    })
+                    }else{
+
+                        distributionArbreDao.deleteByUid(
+                            distrib.uid
+                        )
+
+                    }
+//                    clientRequ.enqueue(object : Callback<DistributionArbreModel>{
+//                        override fun onResponse(
+//                            call: Call<DistributionArbreModel>,
+//                            response: Response<DistributionArbreModel>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<DistributionArbreModel>, t: Throwable) {
+//    //                        distributionArbreDao.deleteByUid(
+//    //                            distrib.uid
+//    //                        )
+//                            LogUtils.e(t.message)
+//                        }
+//
+//                    })
 
 
                 }
@@ -1229,35 +1262,38 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
 
                     val clientRequ: Call<LivraisonCentralModel> = ApiClient.apiService.synchronisationLivraisonCentral(it)
-                    clientRequ.enqueue(object : Callback<LivraisonCentralModel>{
-                        override fun onResponse(
-                            call: Call<LivraisonCentralModel>,
-                            response: Response<LivraisonCentralModel>
-                        ) {
-                            if(response.isSuccessful){
+                    val response = clientRequ.execute()
 
-                                val responseItem = response.body()
+                    if(response.isSuccessful){
 
-                                livraisonCentralDao.syncData(
-                                    responseItem?.id!!,
-                                    true,
-                                    it.uid
-                                )
+                        val responseItem = response.body()
 
-                            }else{
+                        livraisonCentralDao.syncData(
+                            responseItem?.id!!,
+                            true,
+                            it.uid
+                        )
 
-                                livraisonCentralDao.deleteByUid(
-                                    it.uid.toString()
-                                )
+                    }else{
 
-                            }
-                        }
+                        livraisonCentralDao.deleteByUid(
+                            it.uid.toString()
+                        )
 
-                        override fun onFailure(call: Call<LivraisonCentralModel>, t: Throwable) {
-                            LogUtils.e(t.message)
-                        }
-
-                    })
+                    }
+//                    clientRequ.enqueue(object : Callback<LivraisonCentralModel>{
+//                        override fun onResponse(
+//                            call: Call<LivraisonCentralModel>,
+//                            response: Response<LivraisonCentralModel>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<LivraisonCentralModel>, t: Throwable) {
+//                            LogUtils.e(t.message)
+//                        }
+//
+//                    })
 
 
                 }
@@ -1369,42 +1405,44 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     inspection.reponseStringify = null
 
                     val clientInspection: Call<InspectionDTOExt> = ApiClient.apiService.synchronisationInspection(inspection)
+                    val response = clientInspection.execute()
 
-                    clientInspection.enqueue(object: Callback<InspectionDTOExt>{
-                            override fun onResponse(
-                                call: Call<InspectionDTOExt>,
-                                response: Response<InspectionDTOExt>
-                            ) {
-                                if(response.isSuccessful){
-                                    val inspectionSynced = response.body()
+                    if(response.isSuccessful){
+                        val inspectionSynced = response.body()
 
-                                    inspectionDao.syncData(
-                                        inspectionSynced?.id!!,
-                                        true,
-                                        inspection.uid
-                                    )
+                        inspectionDao.syncData(
+                            inspectionSynced?.id!!,
+                            true,
+                            inspection.uid
+                        )
 
-                                    inspectionSynced.reponse_non_conformeStr = GsonUtils.toJson(inspectionSynced.reponseNonConforme)
-                                    inspectionSynced.reponse_non_applicaleStr = GsonUtils.toJson(inspectionSynced.reponseNonApplicale)
+                        inspectionSynced.reponse_non_conformeStr = GsonUtils.toJson(inspectionSynced.reponseNonConforme)
+                        inspectionSynced.reponse_non_applicaleStr = GsonUtils.toJson(inspectionSynced.reponseNonApplicale)
 
-                                    inspectionDao.updateNConformNApplicable(
-                                        inspection.uid,
-                                        inspectionSynced.reponse_non_conformeStr,
-                                        inspectionSynced.reponse_non_applicaleStr
-                                    )
+                        inspectionDao.updateNConformNApplicable(
+                            inspection.uid,
+                            inspectionSynced.reponse_non_conformeStr,
+                            inspectionSynced.reponse_non_applicaleStr
+                        )
 
-                                }else{
+                    }else{
 
-                                    inspectionDao.deleteByUid(inspection.uid)
+                        inspectionDao.deleteByUid(inspection.uid)
 
-                                }
-                            }
-
-                            override fun onFailure(call: Call<InspectionDTOExt>, t: Throwable) {
-
-                            }
-
-                        });
+                    }
+//                    clientInspection.enqueue(object: Callback<InspectionDTOExt>{
+//                            override fun onResponse(
+//                                call: Call<InspectionDTOExt>,
+//                                response: Response<InspectionDTOExt>
+//                            ) {
+//
+//                            }
+//
+//                            override fun onFailure(call: Call<InspectionDTOExt>, t: Throwable) {
+//
+//                            }
+//
+//                        });
                 }
 
 
@@ -1438,36 +1476,39 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                     val clientInspection: Call<InspectionDTOExt> = ApiClient.apiService.synchronisationInspectionUpdate(contentUpdate)
 
-                    clientInspection.enqueue(object: Callback<InspectionDTOExt>{
-                        override fun onResponse(
-                            call: Call<InspectionDTOExt>,
-                            response: Response<InspectionDTOExt>
-                        ) {
-                            if(response.isSuccessful){
-                                val inspectionSynced = response.body()
+                    val response = clientInspection.execute()
 
-                                inspectionSynced?.reponse_non_conformeStr = GsonUtils.toJson(inspectionSynced?.reponseNonConforme)
-                                inspectionSynced?.reponse_non_applicaleStr = GsonUtils.toJson(inspectionSynced?.reponseNonApplicale)
+                    if(response.isSuccessful){
+                        val inspectionSynced = response.body()
 
-                                inspectionDao.updateNConformNApplicable(
-                                    inspection.uid,
-                                    inspectionSynced?.reponse_non_conformeStr,
-                                    inspectionSynced?.reponse_non_applicaleStr
-                                )
+                        inspectionSynced?.reponse_non_conformeStr = GsonUtils.toJson(inspectionSynced?.reponseNonConforme)
+                        inspectionSynced?.reponse_non_applicaleStr = GsonUtils.toJson(inspectionSynced?.reponseNonApplicale)
 
-                                inspectionDao.updateApprobation(inspectionSynced?.approbation, inspection.uid)
-                                inspectionDao.updateContent(null, inspection.uid)
+                        inspectionDao.updateNConformNApplicable(
+                            inspection.uid,
+                            inspectionSynced?.reponse_non_conformeStr,
+                            inspectionSynced?.reponse_non_applicaleStr
+                        )
 
-                            }else{
+                        inspectionDao.updateApprobation(inspectionSynced?.approbation, inspection.uid)
+                        inspectionDao.updateContent(null, inspection.uid)
 
-                            }
-                        }
+                    }else{
 
-                        override fun onFailure(call: Call<InspectionDTOExt>, t: Throwable) {
-
-                        }
-
-                    });
+                    }
+//                    clientInspection.enqueue(object: Callback<InspectionDTOExt>{
+//                        override fun onResponse(
+//                            call: Call<InspectionDTOExt>,
+//                            response: Response<InspectionDTOExt>
+//                        ) {
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<InspectionDTOExt>, t: Throwable) {
+//
+//                        }
+//
+//                    });
                 }
 
 
@@ -1533,42 +1574,44 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
 
                     val clientInfos: Call<InfosProducteurDTO> = ApiClient.apiService.synchronisationInfosProducteur(info)
+                    val response = clientInfos.execute()
 
-                    clientInfos.enqueue(object: Callback<InfosProducteurDTO>{
-                        override fun onResponse(
-                            call: Call<InfosProducteurDTO>,
-                            response: Response<InfosProducteurDTO>
-                        ) {
-    //                        val responseInfos: Response<InfosProducteurDTO> = clientInfos.execute()
-    //                        LogUtils.d("RESPONSE CODE "+responseInfos.code())
-                            if(response.isSuccessful){
+                    if(response.isSuccessful){
 
-                                if(response.raw().message.contains("info existe", ignoreCase = true)){
-                                    infosProducteurDao.deleteProducteurInfo(
-                                        info.uid
-                                    )
-                                }else{
-                                    infosProducteurDao.syncData(
-                                        response.body()?.id!!,
-                                        true,
-                                        info.uid
-                                    )
-                                }
-
-                            }else{
-
-                                infosProducteurDao.deleteProducteurInfo(
-                                    info.uid
-                                )
-
-                            }
+                        if(response.raw().message.contains("info existe", ignoreCase = true)){
+                            infosProducteurDao.deleteProducteurInfo(
+                                info.uid
+                            )
+                        }else{
+                            infosProducteurDao.syncData(
+                                response.body()?.id!!,
+                                true,
+                                info.uid
+                            )
                         }
 
-                        override fun onFailure(call: Call<InfosProducteurDTO>, t: Throwable) {
+                    }else{
 
-                        }
+                        infosProducteurDao.deleteProducteurInfo(
+                            info.uid
+                        )
 
-                    });
+                    }
+//                    clientInfos.enqueue(object: Callback<InfosProducteurDTO>{
+//                        override fun onResponse(
+//                            call: Call<InfosProducteurDTO>,
+//                            response: Response<InfosProducteurDTO>
+//                        ) {
+//    //                        val responseInfos: Response<InfosProducteurDTO> = clientInfos.execute()
+//    //                        LogUtils.d("RESPONSE CODE "+responseInfos.code())
+//
+//                        }
+//
+//                        override fun onFailure(call: Call<InfosProducteurDTO>, t: Throwable) {
+//
+//                        }
+//
+//                    });
                 }
 
 

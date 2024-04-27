@@ -80,7 +80,7 @@ class VisiteurFormationPreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()
                                 ?.insert(visiteurFormationDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "visiteur_formation", this)
+//                            Commons.synchronisation(type = "visiteur_formation", this)
                             Commons.showMessage(
                                 "Formation enregistrée !",
                                 this,

@@ -142,10 +142,10 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
                                     CcbRoomDatabase.getDatabase(this@InfosProducteurPreviewActivity)
                                         ?.infosProducteurDao()?.insert(infosProducteur!!)
                                     draftDao?.completeDraft(draftID)
-                                    Commons.synchronisation(
-                                        type = "infos_producteur",
-                                        this@InfosProducteurPreviewActivity
-                                    )
+//                                    Commons.synchronisation(
+//                                        type = "infos_producteur",
+//                                        this@InfosProducteurPreviewActivity
+//                                    )
                                     Commons.showMessage(
                                         "Information du producteur enregistrée avec succes !",
                                         this@InfosProducteurPreviewActivity,

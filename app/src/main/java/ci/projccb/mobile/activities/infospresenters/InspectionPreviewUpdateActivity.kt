@@ -98,7 +98,7 @@ class InspectionPreviewUpdateActivity : AppCompatActivity(), SectionCallback {
                         callback = {
                             CcbRoomDatabase.getDatabase(this)?.inspectionDao()
                                 ?.insert(itemsDatas!!)
-                            Commons.synchronisation(type = "inspection", this)
+//                            Commons.synchronisation(type = "inspection", this)
                             Commons.showMessage(
                                 "Inspection mise à jour !",
                                 this,

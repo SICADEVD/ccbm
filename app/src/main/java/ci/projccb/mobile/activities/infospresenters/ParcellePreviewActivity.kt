@@ -155,7 +155,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
                     callback = {
                         CcbRoomDatabase.getDatabase(this)?.parcelleDao()?.insert(parcellePoo)
                         draftDao?.completeDraft(draftID)
-                        Commons.synchronisation(type = "parcelle", this)
+//                        Commons.synchronisation(type = "parcelle", this)
                         showMessage(
                             "Parcelle enregistrée avec succes !",
                             this,

@@ -93,7 +93,7 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
                         callback = {
                             CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.insert(suiviApplication!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "application", this)
+//                            Commons.synchronisation(type = "application", this)
                             Commons.showMessage(
                                 "Suivi d'application effectué avec succes !",
                                 this,

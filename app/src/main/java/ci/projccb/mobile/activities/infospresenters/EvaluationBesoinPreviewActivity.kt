@@ -82,7 +82,7 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()
                                 ?.insert(evaluationArbreDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "AGRO_EVALUATION".lowercase(), this)
+//                            Commons.synchronisation(type = "AGRO_EVALUATION".lowercase(), this)
                             Commons.showMessage(
                                 "Evaluation des besoins du producteur enregistrée !",
                                 this,

@@ -65,7 +65,7 @@ class LivraisonCentralPreviewActivity : AppCompatActivity() {
                                 CcbRoomDatabase.getDatabase(this)?.livraisonCentralDao()
                                     ?.insert(livraisonCentralDatas)
                                 draftDao?.completeDraft(draftID)
-                                Commons.synchronisation(type = "livraison_central", this)
+//                                Commons.synchronisation(type = "livraison_central", this)
                                 Commons.showMessage(
                                     "Livraison central enregistrée !",
                                     this,

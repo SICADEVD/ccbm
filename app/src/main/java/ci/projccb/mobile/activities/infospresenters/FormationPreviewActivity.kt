@@ -109,7 +109,7 @@ class FormationPreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.formationDao()
                                 ?.insert(formationDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "formation", this)
+//                            Commons.synchronisation(type = "formation", this)
                             Commons.showMessage(
                                 "Formation enregistrée !",
                                 this,

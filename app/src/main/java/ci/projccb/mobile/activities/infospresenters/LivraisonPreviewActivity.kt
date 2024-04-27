@@ -63,7 +63,7 @@ class LivraisonPreviewActivity : AppCompatActivity() {
                                 CcbRoomDatabase.getDatabase(this)?.livraisonDao()
                                     ?.insert(livraisonDatas)
                                 draftDao?.completeDraft(draftID)
-                                Commons.synchronisation(type = "livraison", this)
+//                                Commons.synchronisation(type = "livraison", this)
                                 Commons.showMessage(
                                     "Livraison enregistrée !",
                                     this,

@@ -84,6 +84,7 @@ object Constants {
     const val TABLE_EVALUATION_ARBRE           =                   "evaluation_arbre"
     const val TABLE_VISTEUR_FORMATION           =                   "visiteur_formation"
     const val TABLE_ARBRE_LIST           =                   "arbre_list"
+    const val TABLE_UUID_CONTROL           =                   "uuid_list"
 
     const val PREFS_SUPERFICIE                  =                   "superficie_parcelle"
     const val PREFS_WAYPOINTS                   =                   "waypoints_parcelle"

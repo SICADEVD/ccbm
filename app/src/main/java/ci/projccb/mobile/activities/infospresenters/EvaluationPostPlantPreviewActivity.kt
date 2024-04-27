@@ -80,7 +80,7 @@ class EvaluationPostPlantPreviewActivity : AppCompatActivity() {
                             CcbRoomDatabase.getDatabase(this)?.postplantingDao()
                                 ?.insert(postPlantingDatas!!)
                             draftDao?.completeDraft(draftID)
-                            Commons.synchronisation(type = "postplanting", this)
+//                            Commons.synchronisation(type = "postplanting", this)
                             Commons.showMessage(
                                 "Evaluation post-planting enregistrée !",
                                 this,
