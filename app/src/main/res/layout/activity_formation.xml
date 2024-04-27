@@ -1077,13 +1077,11 @@ android:textColor="@color/text_color_white"
                                 android:textStyle="bold" />
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:textAllCaps="true"
                                 android:tag="observationFormation"
                                 android:id="@+id/editObservationFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_80sdp"
                                 android:background="@drawable/background_present"
-                                android:inputType="textMultiLine"
                                 android:gravity="top"
                                 android:hint="@string/pr_cisez"
                                 android:imeOptions="actionDone"

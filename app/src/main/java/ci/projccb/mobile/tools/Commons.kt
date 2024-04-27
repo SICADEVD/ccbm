@@ -428,8 +428,9 @@ class Commons {
         fun String.returnIfFindEmpty(): String? {
             if(this == null){
                 return null
-            }else if(this.equals("0"))
-                return null
+            }
+//            else if(this.equals("0"))
+//                return null
 
             return this
         }

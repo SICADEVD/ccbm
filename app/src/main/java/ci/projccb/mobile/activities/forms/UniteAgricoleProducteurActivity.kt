@@ -536,7 +536,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 //
 //            LogUtils.json(infosProducteursDraft)
 
-            val itemModelOb = getUniteAgricoleProducteurObject(false)
+            val itemModelOb = getUniteAgricoleProducteurObject(false, necessaryItem = mutableListOf())
 
             if(itemModelOb == null) return
 

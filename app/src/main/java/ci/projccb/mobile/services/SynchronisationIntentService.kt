@@ -1573,6 +1573,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         age18 = null
                     }
 
+                    Commons.logErrorToFile(info)
+
                     val clientInfos: Call<InfosProducteurDTO> = ApiClient.apiService.synchronisationInfosProducteur(info)
                     val response = clientInfos.execute()
 
