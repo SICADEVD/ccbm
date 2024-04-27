@@ -406,10 +406,9 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     fun collectDatas() {
         try {
-
             val itemModelOb = getUniteAgricoleProducteurObject()
 
-            if(itemModelOb == null) return
+            if (itemModelOb == null) return
 
             val infosProducteursDTO = itemModelOb?.first.apply {
                 this?.apply {
@@ -440,14 +439,14 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             startActivity(intentInfosProducteurPreview)
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
     }
 
     private fun getUniteAgricoleProducteurObject(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<InfosProducteurDTO, MutableList<Pair<String, String>>>? {
         var isMissingDial2 = false
 
-        if( ((editNbrTravPermanInfosProducteur.text.toString().toInt()?:0) + (editNbrTravNotPermanInfosProducteur.text.toString().toInt()?:0) ) < (editNbrTravRemunInfosProducteur.text.toString().toInt()?:0)){
+        if (((editNbrTravPermanInfosProducteur.text.toString().toInt()?: 0) + (editNbrTravNotPermanInfosProducteur.text.toString().toInt()?:0) ) < (editNbrTravRemunInfosProducteur.text.toString().toInt()?:0)){
 
             Commons.showMessage(
                 getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),

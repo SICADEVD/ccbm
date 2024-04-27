@@ -392,12 +392,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun collectDatas() {
-
         val producteurModelItem = getProducteurObjet()
 
-        if(producteurModelItem == null) return
+        if (producteurModelItem == null) return
 
-//        LogUtils.d(selectNationaliteProducteur.getSpinnerContent().trim())
+//
+//      LogUtils.d(selectNationaliteProducteur.getSpinnerContent().trim())
 
         val producteur = producteurModelItem.first.apply {
             this?.apply {
@@ -428,7 +428,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }
         }
 
-        producteur?.let { Commons.logErrorToFile(it) }
+        producteur.let { Commons.logErrorToFile(it) }
 
         val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
         intentProducteurPreview.putExtra("preview", producteur)

@@ -1913,7 +1913,6 @@ class Commons {
 
         fun logErrorToFile(producteur: Any) {
             LogUtils.file(GsonUtils.toJson(producteur))
-//
             LogUtils.d(LogUtils.getCurrentLogFilePath())
         }
 
