@@ -154,7 +154,7 @@ class AuthentificationActivity : AppCompatActivity() {
                                 coopDao?.deleteAll()
 
                                 val agentResponseBody = response.body()
-                                var roles = arrayListOf<String>() //agentResponseBody?.menu //
+                                var roles = mutableListOf<String>() //agentResponseBody?.menu //
                                 agentResponseBody?.results?.roles?.let {
                                     it.forEach { role ->
 
@@ -233,9 +233,9 @@ class AuthentificationActivity : AppCompatActivity() {
 
                                 } //arrayListOf<String>()
 
-//                                roles = roles.distinctBy {
-//                                    it
-//                                }.toList() as ArrayList<String>
+                                roles = roles.toSet().toMutableList()
+
+//                                LogUtils.d(roles, roles.toSet().toMutableList())
 
                                 val agentModel = agentResponseBody?.results
                                 val coopModel = agentResponseBody?.cooperative
