@@ -641,6 +641,10 @@ class Commons {
             return this?.filterIndexed { index, s -> list.contains(index) == true }?.toList()
         }
 
+        fun String?.checkIfContentIsList(): String {
+            return this?.let { if(it.isNullOrEmpty()) "[]" else this }.toString()
+        }
+
         fun String.toUtilInt(): Int? {
             if( (this as String).isNullOrEmpty() ) return null
             return (this as String).toInt()
@@ -1916,6 +1920,9 @@ class Commons {
             LogUtils.file(GsonUtils.toJson(producteur))
 //
             LogUtils.d(LogUtils.getCurrentLogFilePath())
+        }
+        fun debugModelToJson(model: Any) {
+            LogUtils.d(GsonUtils.toJson(model))
         }
 
     }

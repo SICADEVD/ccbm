@@ -445,6 +445,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     if (!parcelle.wayPointsString.isNullOrEmpty()) parcelle.mappingPoints = ApiClient.gson.fromJson(parcelle.wayPointsString, parcelleWayPointsMappedToken)
 
                     parcelle.apply {
+                        varieteO = returnStringList(varieteStr)?: arrayListOf()
                         protectionO = returnStringList(protectionStr)?: arrayListOf()
                         itemsO = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
                     }

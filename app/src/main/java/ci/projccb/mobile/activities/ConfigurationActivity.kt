@@ -302,6 +302,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             existePente = it.existePente,
                             niveauPente = it.niveauPente,
                             erosion = it.erosion,
+                            varieteStr = GsonUtils.toJson(it.varieteO),
                             protectionStr = GsonUtils.toJson(it.protectionO),
                             arbreStr = GsonUtils.toJson(it.itemsO),
                             isSynced = true,

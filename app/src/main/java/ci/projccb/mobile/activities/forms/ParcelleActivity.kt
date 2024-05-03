@@ -32,6 +32,8 @@ import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.checkIfContentIsList
+import ci.projccb.mobile.tools.Commons.Companion.debugModelToJson
 import ci.projccb.mobile.tools.Commons.Companion.formatCorrectlyLatLongPoint
 import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
@@ -49,6 +51,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_formation.selectSousThemeMultiFormation
 import kotlinx.android.synthetic.main.activity_parcelle.*
 
 import java.util.*
@@ -330,6 +333,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 origin = "local"
 
+                varieteStr = GsonUtils.toJson(spinnerVarieteParcelle.selectedStrings)
                 //mappingPoints = wayPoints
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
@@ -348,7 +352,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             }
         }
 
-//        LogUtils.json(parcelle)
+        debugModelToJson(parcelle)
 
         val intentParcellePreview = Intent(this, ParcellePreviewActivity::class.java)
         intentParcellePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
@@ -514,6 +518,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 origin = "local"
 
+                varieteStr = GsonUtils.toJson(spinnerVarieteParcelle.selectedStrings)
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
@@ -614,24 +619,35 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             setupMoyProtectMultiSelection(GsonUtils.fromJson(parcelleDrafted.protectionStr, object : TypeToken<MutableList<String>>() {}.type))
         }
 
-        Commons.setListenerForSpinner(this,
-            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = spinnerVarieteParcelle,
-            currentVal = parcelleDrafted.variete,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(
+//        Commons.setListenerForSpinner(this,
+//            "Quelle est la variété de culture ?",
+//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+//            spinner = spinnerVarieteParcelle,
+//            currentVal = parcelleDrafted.variete,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            listIem = (AssetFileHelper.getListDataFromAsset(
+//                21,
+//                this
+//            ) as MutableList<CommonData>).map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+////                if (itemId == 1) {
+////                    containerAutreVarieteProducteur.visibility = visibility
+////                }
+//            })
+
+        Commons.setupItemMultiSelection(this, spinnerVarieteParcelle,
+            "Quelles sont les variétés de culture ?",
+            (AssetFileHelper.getListDataFromAsset(
                 21,
                 this
-            ) as MutableList<CommonData>).map { it.nom }
-                ?.toList() ?: listOf(),
-            onChanged = {
+            ) as MutableList<CommonData>).toList(),
+            currentList = GsonUtils.fromJson(parcelleDrafted.varieteStr.checkIfContentIsList(), object : TypeToken<MutableList<String>>(){}.type)){
 
-            },
-            onSelected = { itemId, visibility ->
-//                if (itemId == 1) {
-//                    containerAutreVarieteProducteur.visibility = visibility
-//                }
-            })
+        }
 
         Commons.setListenerForSpinner(this,
             getString(R.string.la_parcelle_est_elle_r_g_n_r_e),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -1020,24 +1036,35 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             },
             onSelected = { itemId, visibility ->
             })
+//
+//        Commons.setListenerForSpinner(this,
+//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+//            spinner = spinnerVarieteParcelle,
+//            itemChanged = arrayListOf(Pair(1, "Autre")),
+//            listIem = (AssetFileHelper.getListDataFromAsset(
+//                21,
+//                this
+//            ) as MutableList<CommonData>).map { it.nom }
+//                ?.toList() ?: listOf(),
+//            onChanged = {
+//
+//            },
+//            onSelected = { itemId, visibility ->
+////                if (itemId == 1) {
+////                    containerAutreVarieteProducteur.visibility = visibility
+////                }
+//            })
 
-        Commons.setListenerForSpinner(this,
-            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = spinnerVarieteParcelle,
-            itemChanged = arrayListOf(Pair(1, "Autre")),
-            listIem = (AssetFileHelper.getListDataFromAsset(
+        Commons.setupItemMultiSelection(this, spinnerVarieteParcelle,
+            "Quelles sont les variétés de culture ?",
+            (AssetFileHelper.getListDataFromAsset(
                 21,
                 this
-            ) as MutableList<CommonData>).map { it.nom }
-                ?.toList() ?: listOf(),
-            onChanged = {
+            ) as MutableList<CommonData>).toList(),
+            currentList = arrayListOf()
+        ){
 
-            },
-            onSelected = { itemId, visibility ->
-//                if (itemId == 1) {
-//                    containerAutreVarieteProducteur.visibility = visibility
-//                }
-            })
+        }
 
         Commons.setListenerForSpinner(this,
             getString(R.string.la_parcelle_est_elle_r_g_n_r_e),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),

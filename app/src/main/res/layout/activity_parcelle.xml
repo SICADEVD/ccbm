@@ -374,7 +374,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quelle est la variété de culture ?"
+                            android:text="Quelles sont les variétés de culture ?"
                             android:textSize="@dimen/page_input_title_dim11"
                             android:textStyle="bold" />
 
@@ -387,9 +387,9 @@
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <androidx.appcompat.widget.AppCompatSpinner
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
                                 style="@style/SpinnerItemStyle"
-                                android:tag="variete"
+                                android:tag="varieteStr"
                                 android:id="@+id/spinnerVarieteParcelle"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -527,7 +527,6 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Superficie concernée (ha)"
-
                             android:textStyle="bold" />
 
                         <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
