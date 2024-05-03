@@ -644,7 +644,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le cour ou plan d'eau ?"
+                            android:text="Quel est le cour ou point d’eau d'eau ?"
                             android:textStyle="bold" />
 
                         <LinearLayout
