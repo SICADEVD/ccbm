@@ -46,10 +46,11 @@ import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.addPolygon
 import com.google.maps.android.ktx.addPolyline
-import com.google.maps.android.ktx.utils.area
 import kotlinx.android.synthetic.main.activity_farm_delimiter.*
 import kotlinx.android.synthetic.main.activity_parcelle_mapping.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
@@ -521,12 +522,32 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 // }
 
                 //  mapsDelimiter?.animateCamera(CameraUpdateFactory.newLatLng(marker?.position!!))
+//                focusOnCurrentDevices()
                 val cameraPositionPolygon = CameraPosition.fromLatLngZoom(marker?.position!!, 15.0f)
                 mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon))
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+    }
+
+    fun focusOnCurrentDevices(callback: () -> Unit) {
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                val cameraPositionPolygon = CameraPosition.fromLatLngZoom(currentLatLng, 15.0f)
+                mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon), object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        // Animation finished, now execute the callback
+                        callback.invoke()
+                    }
+
+                    override fun onCancel() {
+                        // Animation cancelled, if needed handle it
+                    }
+                })
+            }
         }
     }
 
@@ -813,6 +834,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     context = this,
                     finished = false,
                     deconnec = false,
+                    showNo = true,
                     callback = ::cancelWorkMapping
                 )
             }
@@ -852,9 +874,11 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             }
 
             imagePlaceMarkerGPSFarmDelimiter.setOnClickListener {
-                MainScope().launch {
-                    addMarker(mapsDelimiter?.cameraPosition?.target!!)
-                }
+                    MainScope().launch {
+                        focusOnCurrentDevices {
+                            launchAddMarker()
+                        }
+                    }
             }
 
             imageSaveMarkerGPSFarmDelimiter.setOnClickListener {
@@ -888,6 +912,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
         // Set other attributes as needed (e.g., elevation, translationZ)
         fabMenuFarmDelimiter.setElevation(0.8f);
+    }
+
+    private fun launchAddMarker() {
+        MainScope().launch {
+            addMarker(mapsDelimiter?.cameraPosition?.target!!)
+        }
     }
 
     private fun setUpMappHistorie() {
