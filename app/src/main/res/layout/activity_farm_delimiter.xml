@@ -304,29 +304,38 @@
 
         </LinearLayout>
 
-        <!--        <LinearLayout-->
-        <!--            android:id="@+id/linearSurfaceInfosContainerFarmDelimiter"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content">-->
+        <LinearLayout
+            android:id="@+id/linearSurfaceInfosContainerFarmDelimiter"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <!--            <androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:textColor="@color/text_color_white"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Surface: "-->
-        <!--                android:textSize="@dimen/_9ssp"/>-->
+            <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Superficie: "
+                android:textSize="@dimen/_9ssp"/>
 
-        <!--            <androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:textColor="@color/text_color_white"-->
-        <!--                android:id="@+id/labelSurfaceFarmDelimiter"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="0ha"-->
-        <!--                android:textSize="@dimen/_9ssp"-->
-        <!--                />-->
+            <androidx.appcompat.widget.AppCompatTextView
+android:textColor="@color/text_color_white"
+                android:id="@+id/labelSuperficiFarmDelimiter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/_9ssp"
+                />
 
-        <!--        </LinearLayout>-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:textColor="@color/text_color_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ha"
+                android:textSize="@dimen/_9ssp"
+                />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

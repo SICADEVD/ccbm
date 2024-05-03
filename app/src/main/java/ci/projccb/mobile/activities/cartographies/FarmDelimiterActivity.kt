@@ -187,6 +187,20 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         }
     }
 
+    private fun setupAreaOfCurrentMapping() {
+
+        val listPoint = mutableListOf<LatLng>()
+        markersMap.map {
+            listPoint.add(it.value.position)
+        }
+
+//        Commons.debugModelToJson(markersMap.map { it.value.position })
+
+        if(listPoint.size > 2){
+            labelSuperficiFarmDelimiter.text = Commons.convertDoubleToString(SphericalUtil.computeArea(listPoint) * 0.0001)
+        }
+    }
+
 
     fun startWorkManualMapping() {
         relativeToolbarFarmDelimiter.startAnimation(outToTop)
@@ -525,6 +539,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 //                focusOnCurrentDevices()
                 val cameraPositionPolygon = CameraPosition.fromLatLngZoom(marker?.position!!, 15.0f)
                 mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon))
+
+                setupAreaOfCurrentMapping()
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -536,7 +552,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                val cameraPositionPolygon = CameraPosition.fromLatLngZoom(currentLatLng, 15.0f)
+                val cameraPositionPolygon = CameraPosition.fromLatLngZoom(currentLatLng, 17.0f)
                 mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon), object : GoogleMap.CancelableCallback {
                     override fun onFinish() {
                         // Animation finished, now execute the callback
@@ -585,6 +601,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
                 }
             }
+
+            setupAreaOfCurrentMapping()
+
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
