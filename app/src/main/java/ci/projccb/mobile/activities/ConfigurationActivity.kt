@@ -208,8 +208,8 @@ class ConfigurationActivity : AppCompatActivity() {
 
                         val producteur = ProducteurModel(
                             id = it.id,
-                            nom = it.nom,
-                            prenoms = it.prenoms,
+                            nom = it.nom?.replace("\\\'", "'"),
+                            prenoms = it.prenoms?.replace("\\\'", "'"),
                             section = it.section,
                             localitesId = it.localitesId,
                             codeProd = it.codeProd,
