@@ -523,6 +523,12 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
             }
+
+            if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
+                this.id = commomUpdate.listOfValue?.first()?.toInt()
+                this.uid = commomUpdate.listOfValue?.get(1)?.toLong()?:0
+                this.sync_update = true
+            }
         }
 
         showMessage(
@@ -564,11 +570,12 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         var parcelleDrafted: ParcelleModel = ParcelleModel()
         var product: ProducteurModel?  = null
 
+
         draftedData?.let {
             parcelleDrafted = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
             val intNullo = parcelleDrafted.section?.toIntOrNull()
             if(intNullo != null){
-                LogUtils.i(intNullo)
+//                LogUtils.i(intNullo)
                 setupSectionSelection(parcelleDrafted.section, parcelleDrafted.localite, parcelleDrafted.producteurId)
             }else setupSectionSelection()
         }
@@ -580,6 +587,14 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //            val sectionIt =  CcbRoomDatabase.getDatabase(this)?.sectionsDao()?.getById(product?.section)
 //            val localiteIt =  CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getLocalite(product?.localite?.toInt()?:0)
             setupSectionSelection(product?.section.toString(), product?.localitesId.toString(), product?.id.toString())
+        }
+
+//        LogUtils.d(draftedData?.datas)
+//        Commons.debugModelToJson(parcelleDrafted)
+
+        if(parcelleDrafted.sync_update){
+            intent.putExtra("sync_uid", 1)
+            labelTitleMenuAction.text = "MISE A JOUR FICHE PARCELLE"
         }
 
         val listArbresOth = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
@@ -904,7 +919,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //                    clickSaveInspection.setOnClickListener {
 //                        collectDatasUpdate(inspectUid)
 //                    }
-                    imageDraftBtn.visibility = View.GONE
+//                    imageDraftBtn.visibility = View.GONE
 
                     val updateData = CcbRoomDatabase.getDatabase(this)?.parcelleDao()?.getByUid(dataUid)
                     updateData?.forEach {

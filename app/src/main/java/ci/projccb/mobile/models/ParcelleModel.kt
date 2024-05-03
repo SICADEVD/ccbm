@@ -61,6 +61,7 @@ data class ParcelleModel(
     @Ignore @Expose @SerializedName(value = "items") var itemsO: MutableList<ArbreData> = mutableListOf(),
     var status: Boolean = false,
     var isSynced: Boolean = false,
+    @Ignore @Expose var sync_update: Boolean = false,
     @Expose @SerializedName("userid") var agentId: String? = "",
     var origin: String? = "local"
 ) : Parcelable {
