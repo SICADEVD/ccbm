@@ -64,6 +64,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     }
 
 
+    private var valueOfParcelleCode: String? = "N/A"
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var commomUpdate: CommonData = CommonData()
     private var arbreOmbrParcelleAdapter: OmbrageAdapter? = null
@@ -596,6 +597,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             intent.putExtra("sync_uid", 1)
             labelTitleMenuAction.text = "MISE A JOUR FICHE PARCELLE"
         }
+        
+        valueOfParcelleCode = parcelleDrafted.codeParc
 
         val listArbresOth = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
         parcelleDrafted.arbreStr?.let {
@@ -896,7 +899,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         clickToMappingParcelle.setOnClickListener {
             val intentParcelleMaker = Intent(this@ParcelleActivity, FarmDelimiterActivity::class.java)
-            intentParcelleMaker.putExtra("producteur_nom", producteurNomPrenoms)
+            intentParcelleMaker.putExtra("producteur_nom", producteurCommon.nom)
+            intentParcelleMaker.putExtra("parcelle_code", valueOfParcelleCode)
             startActivityForResult(intentParcelleMaker, 202)
         }
 

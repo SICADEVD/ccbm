@@ -16,7 +16,7 @@ interface ParcelleMappingDao {
     fun insert(parcelleMappingModel: ParcelleMappingModel)
 
     @Transaction
-    @Query("SELECT * FROM parcelle_mapping")
+    @Query("SELECT * FROM parcelle_mapping ORDER BY uid DESC LIMIT 8")
     fun getParcellesMappingList(): MutableList<ParcelleMappingModel>
 
     @Transaction
