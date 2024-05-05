@@ -1,6 +1,7 @@
 package ci.projccb.mobile.repositories.apis
 
 import ci.projccb.mobile.repositories.apis.services.ApiService
+import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.SendErrorOnline
 import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.Gson
@@ -31,6 +32,9 @@ object ApiClient {
     fun getLoggin(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+//        logging.intercept(chain = Interceptor.Chain)
+//        logging
+        Commons.logErrorToFile(logging.level)
         return logging
     }
 

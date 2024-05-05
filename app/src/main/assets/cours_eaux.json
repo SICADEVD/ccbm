@@ -15,7 +15,11 @@
         "nom": "Source d’eau"
     },
     {
-        "id": "4",
+        "id": "5",
+        "nom": "Puit"
+    },
+    {
+        "id": "6",
         "nom": "Autre"
     }
 ]

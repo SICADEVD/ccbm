@@ -367,46 +367,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quelle est la variété de culture ?"
-                            android:textSize="@dimen/page_input_title_dim11"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                style="@style/SpinnerItemStyle"
-                                android:tag="variete"
-                                android:id="@+id/spinnerVarieteParcelle"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_10sdp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
                         android:layout_weight="10"
                         android:orientation="horizontal">
 
@@ -511,6 +471,46 @@
                         android:layout_height="@dimen/_10sdp" />
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quelles sont les variétés de culture ?"
+                            android:textSize="@dimen/page_input_title_dim11"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                style="@style/SpinnerItemStyle"
+                                android:tag="varieteStr"
+                                android:id="@+id/spinnerVarieteParcelle"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
                         android:id="@+id/containerSuperfConcernee"
                         android:visibility="gone"
                         tools:visibility="visible"
@@ -527,7 +527,6 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="Superficie concernée (ha)"
-
                             android:textStyle="bold" />
 
                         <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
@@ -645,7 +644,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quel est le cour ou plan d'eau ?"
+                            android:text="Quel est le cour ou point d’eau d'eau ?"
                             android:textStyle="bold" />
 
                         <LinearLayout

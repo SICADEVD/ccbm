@@ -428,8 +428,9 @@ class Commons {
         fun String.returnIfFindEmpty(): String? {
             if(this == null){
                 return null
-            }else if(this.equals("0"))
-                return null
+            }
+//            else if(this.equals("0"))
+//                return null
 
             return this
         }
@@ -638,6 +639,10 @@ class Commons {
                 list.add(i)
             }
             return this?.filterIndexed { index, s -> list.contains(index) == true }?.toList()
+        }
+
+        fun String?.checkIfContentIsList(): String {
+            return this?.let { if(it.isNullOrEmpty()) "[]" else this }.toString()
         }
 
         fun String.toUtilInt(): Int? {
@@ -1914,6 +1919,9 @@ class Commons {
         fun logErrorToFile(producteur: Any) {
             LogUtils.file(GsonUtils.toJson(producteur))
             LogUtils.d(LogUtils.getCurrentLogFilePath())
+        }
+        fun debugModelToJson(model: Any) {
+            LogUtils.d(GsonUtils.toJson(model))
         }
 
     }

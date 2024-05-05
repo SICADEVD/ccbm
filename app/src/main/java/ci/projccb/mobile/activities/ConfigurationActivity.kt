@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import ci.projccb.mobile.R
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
@@ -208,8 +209,8 @@ class ConfigurationActivity : AppCompatActivity() {
 
                         val producteur = ProducteurModel(
                             id = it.id,
-                            nom = it.nom,
-                            prenoms = it.prenoms,
+                            nom = it.nom?.replace("\\\'", "'"),
+                            prenoms = it.prenoms?.replace("\\\'", "'"),
                             section = it.section,
                             localitesId = it.localitesId,
                             codeProd = it.codeProd,
@@ -302,6 +303,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             existePente = it.existePente,
                             niveauPente = it.niveauPente,
                             erosion = it.erosion,
+                            varieteStr = GsonUtils.toJson(it.varieteO),
                             protectionStr = GsonUtils.toJson(it.protectionO),
                             arbreStr = GsonUtils.toJson(it.itemsO),
                             isSynced = true,
@@ -3151,6 +3153,15 @@ class ConfigurationActivity : AppCompatActivity() {
     }
 
     // endregion
+    override fun onResume() {
+        super.onResume()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

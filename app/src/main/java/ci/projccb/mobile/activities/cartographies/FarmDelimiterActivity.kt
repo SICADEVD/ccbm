@@ -15,6 +15,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
@@ -46,9 +47,9 @@ import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.addPolygon
 import com.google.maps.android.ktx.addPolyline
-import com.google.maps.android.ktx.utils.area
 import kotlinx.android.synthetic.main.activity_farm_delimiter.*
 import kotlinx.android.synthetic.main.activity_parcelle_mapping.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -56,6 +57,8 @@ import kotlinx.coroutines.launch
 class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener, OnMarkerClickListener {
 
 
+    private var labelProducteurNomText: String? = null
+    private var labelParcelleCodeText: String? = null
     private var dialogMapHito: AlertDialog? = null
     private val RESULT_ENABLE_GPS_FEATURE: Int = 101
     private var mapsDelimiter: GoogleMap? = null
@@ -183,6 +186,20 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         } catch (e: SecurityException) {
             LogUtils.e(e.message)
             FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
+    private fun setupAreaOfCurrentMapping() {
+
+        val listPoint = mutableListOf<LatLng>()
+        markersMap.map {
+            listPoint.add(it.value.position)
+        }
+
+//        Commons.debugModelToJson(markersMap.map { it.value.position })
+
+        if(listPoint.size > 2){
+            labelSuperficiFarmDelimiter.text = Commons.convertDoubleToString(SphericalUtil.computeArea(listPoint) * 0.0001)
         }
     }
 
@@ -456,7 +473,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         parcelleMapping.parcellePerimeter = labelDistanceFarmDelimiter.text.toString().trim()
         parcelleMapping.parcelleNameTag = manualOrGpsTrack.toString()
-        parcelleMapping.producteurId = CcbRoomDatabase.getDatabase(this)?.agentDoa()?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID)).let { "${it?.firstname} ${it?.lastname}" }.toString()
+        parcelleMapping.parcelleName = labelParcelleCodeText
+        parcelleMapping.producteurId = labelProducteurNomText
 
         if (lineOrZoneDelimiter == 2) {
             parcelleMapping.parcelleLat = gPolygonCenter.latitude.toString()
@@ -521,12 +539,72 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 // }
 
                 //  mapsDelimiter?.animateCamera(CameraUpdateFactory.newLatLng(marker?.position!!))
+//                focusOnCurrentDevices()
+                val cameraPositionPolygon = CameraPosition.fromLatLngZoom(marker?.position!!, 15.0f)
+                mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon))
+
+                setupAreaOfCurrentMapping()
+            }
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+    }
+
+    suspend fun removeMarker(marker: Marker) {
+        try {
+
+            var keyDeletion = 0
+
+            markersMap.map {
+                if (it.value.tag == marker.tag) {
+                    keyDeletion = it.key
+                }
+            }
+
+            marker?.remove()
+            markersMap.remove(keyDeletion)
+//            marker = null
+
+            if (markersMap.isNotEmpty()) {
+                //MainScope().launch {
+                when (lineOrZoneDelimiter) {
+                    1 -> { // Line
+                        drawPolyline(markersMap)
+                    }
+
+                    2 -> {  // Zone
+                        drawPolygone(markersMap)
+                    }
+                    else -> { // Nothing
+                        // Do nothing
+                    }
+                }
                 val cameraPositionPolygon = CameraPosition.fromLatLngZoom(marker?.position!!, 15.0f)
                 mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon))
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+    }
+
+    fun focusOnCurrentDevices(callback: () -> Unit) {
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                val cameraPositionPolygon = CameraPosition.fromLatLngZoom(currentLatLng, 17.0f)
+                mapsDelimiter?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPositionPolygon), object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        // Animation finished, now execute the callback
+                        callback.invoke()
+                    }
+
+                    override fun onCancel() {
+                        // Animation cancelled, if needed handle it
+                    }
+                })
+            }
         }
     }
 
@@ -564,6 +642,9 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
                 }
             }
+
+            setupAreaOfCurrentMapping()
+
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
@@ -724,19 +805,30 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
     override fun onResume() {
         super.onResume()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         getDeviceLocation()
     }
 
+    override fun onPause() {
+        super.onPause()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
     val itemParcelleMapp = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
+    val currentHistoWayppointList: MutableList<LatLng> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         val agentDoa = CcbRoomDatabase.getDatabase(this)?.agentDoa()
 
 //        val item = CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
 
 //        LogUtils.d(item)
+
+        labelProducteurNomText = intent.getStringExtra("producteur_nom")?:"N/A"
+        labelParcelleCodeText = intent.getStringExtra("parcelle_code")?:"N/A"
 
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -813,6 +905,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     context = this,
                     finished = false,
                     deconnec = false,
+                    showNo = true,
                     callback = ::cancelWorkMapping
                 )
             }
@@ -852,9 +945,11 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             }
 
             imagePlaceMarkerGPSFarmDelimiter.setOnClickListener {
-                MainScope().launch {
-                    addMarker(mapsDelimiter?.cameraPosition?.target!!)
-                }
+                    MainScope().launch {
+                        focusOnCurrentDevices {
+                            launchAddMarker()
+                        }
+                    }
             }
 
             imageSaveMarkerGPSFarmDelimiter.setOnClickListener {
@@ -890,6 +985,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         fabMenuFarmDelimiter.setElevation(0.8f);
     }
 
+    private fun launchAddMarker() {
+        MainScope().launch {
+            addMarker(mapsDelimiter?.cameraPosition?.target!!)
+        }
+    }
+
     private fun setUpMappHistorie() {
 
         val dialogView = layoutInflater.inflate(R.layout.item_mapping_histo, null)
@@ -899,8 +1000,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 //        val items = listOf("Item 1", "Item 2", "Item 3") // Replace with your data
 
 
-        val listHisto = itemParcelleMapp?.map {
-            CommonData(it.id, nom = "Parcelle N: ${it.parcelleNameTag} - ${it.parcelleSuperficie} HA", value = "PRODUCTEUR: ${it.producteurId}")
+        var listHisto = itemParcelleMapp?.filter { labelProducteurNomText.equals(it.producteurId, ignoreCase = true) == true }?.map {
+            CommonData(it.id, nom = "Code Parcelle: ${it.parcelleName} - ${it.parcelleSuperficie} HA", value = "PRODUCTEUR: ${it.producteurId}")
         }
 
         recyclerView.adapter = RvMapHistoAdapt(this@FarmDelimiterActivity, listHisto?.toList()?: arrayListOf())
@@ -924,20 +1025,51 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
     fun onItemHistoSelected(position: Int) {
 
-        getDeviceLocationWithAccurancy()
+//        getDeviceLocationWithAccurancy()
 
         val histoMap = itemParcelleMapp?.get(position)
 
         val wayppointList = GsonUtils.fromJson<List<LatLng>>(histoMap?.parcelleWayPoints, object : TypeToken<List<LatLng>>(){}.type)
 
+        if(currentHistoWayppointList.size > 0){
+
+            callMarkerRemover({
+                callMarkerDrawing(wayppointList)
+                currentHistoWayppointList.addAll(wayppointList)
+            })
+
+            currentHistoWayppointList.clear()
+
+        }else{
+            callMarkerDrawing(wayppointList)
+            currentHistoWayppointList.addAll(wayppointList)
+
+        }
+
+        dialogMapHito?.dismiss()
+    }
+
+    private fun callMarkerRemover(function: () -> Unit) {
+
+        val jobs = mutableListOf<Job>()
+        markersMap?.forEach {
+            val job = MainScope().launch {
+                removeMarker(it.value)
+            }
+            jobs.add(job)
+        }
+        MainScope().launch {
+            jobs.forEach { it.join() }
+            function.invoke()
+        }
+    }
+
+    private fun callMarkerDrawing(wayppointList: List<LatLng>) {
         wayppointList?.forEach {
             MainScope().launch {
                 addMarker(it)
             }
         }
-
-        dialogMapHito?.dismiss()
-
     }
 
 }

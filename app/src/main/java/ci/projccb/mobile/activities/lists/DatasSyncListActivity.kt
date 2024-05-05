@@ -2,6 +2,7 @@ package ci.projccb.mobile.activities.lists
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -122,8 +123,8 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
                     instructionCallback = object : InstructionCallback{
                         override fun onInstructionReceived(search: String, callback: ((commonDataListCloned: MutableList<CommonData>)->Unit)) {
-                            val searchOt = search.replace("'", "''")
-                            val dataListProd = ccbBase.producteurDoa().findByName(searchOt)
+                            val searchOt = CcbRoomDatabase.escapeSql(search)//search.replace("'", "''")
+                            val dataListProd = ccbBase.producteurDoa().findProdByNameWithParc(searchOt)
 //                            LogUtils.d("onInstructionReceived", dataListProd)
                             recyclerSyncedList.visibility = GONE
                             if(dataListProd.size > 0){
@@ -203,7 +204,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
                     instructionCallback = object : InstructionCallback{
                         override fun onInstructionReceived(search: String, callback: ((commonDataListCloned: MutableList<CommonData>)->Unit)) {
-                            val searchOt = search.replace("'", "''")
+                            val searchOt = CcbRoomDatabase.escapeSql(search)
                             val dataListProd = ccbBase.producteurDoa().findProdByName(searchOt)
                             LogUtils.d("onInstructionReceived", dataListProd.map { it.fullName })
                             recyclerSyncedList.visibility = GONE

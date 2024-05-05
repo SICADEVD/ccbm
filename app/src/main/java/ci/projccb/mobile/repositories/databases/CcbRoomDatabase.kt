@@ -12,6 +12,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration
 import ci.projccb.mobile.BuildConfig
 import ci.projccb.mobile.tools.ListConverters
+import com.blankj.utilcode.util.LogUtils
+import java.util.concurrent.Executor
 
 
 /**
@@ -161,7 +163,7 @@ abstract class CcbRoomDatabase : RoomDatabase() {
 
 
     companion object {
-        private var INSTANCE: CcbRoomDatabase? = null
+        var INSTANCE: CcbRoomDatabase? = null
 
 
         val MIGRATION_1_2: Migration = object : Migration(1, 2) {
@@ -193,6 +195,18 @@ abstract class CcbRoomDatabase : RoomDatabase() {
             }
         }
 
+
+        fun escapeSql(value: String): String {
+            val builder = StringBuilder()
+            for (char in value) {
+                when (char) {
+                    '\'', '%' -> builder.append(char) // Escape single quote and percent sign builder.append('')
+                    else -> builder.append(char)
+                }
+            }
+//            LogUtils.d(builder.toString())
+            return "%"+builder.toString()+"%"
+        }
 
         fun getDatabase(context: Context): CcbRoomDatabase? {
             return INSTANCE ?: synchronized(CcbRoomDatabase::class) {

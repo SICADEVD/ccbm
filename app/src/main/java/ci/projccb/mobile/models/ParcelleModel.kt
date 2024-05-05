@@ -51,15 +51,17 @@ data class ParcelleModel(
     @Expose var autreProtection: String? = "",
     @Expose var existePente: String? = "",
     @Expose var niveauPente: String? = "",
-    @Expose var variete: String? = "",
+    @Expose var varieteStr: String? = "",
     @Expose var erosion: String? = "",
     @Expose var nbCacaoParHectare: String? = "",
     @Expose var courDeau: String? = "",
     @Expose var autreCourDeau: String? = "",
+    @Ignore @Expose @SerializedName(value = "variete") var varieteO: MutableList<String> = mutableListOf(),
     @Ignore @Expose @SerializedName(value = "protection") var protectionO: MutableList<String> = mutableListOf(),
     @Ignore @Expose @SerializedName(value = "items") var itemsO: MutableList<ArbreData> = mutableListOf(),
     var status: Boolean = false,
     var isSynced: Boolean = false,
+    @Ignore @Expose var sync_update: Boolean = false,
     @Expose @SerializedName("userid") var agentId: String? = "",
     var origin: String? = "local"
 ) : Parcelable {
