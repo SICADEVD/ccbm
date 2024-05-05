@@ -438,7 +438,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             this.add(Pair(getString(R.string.les_arbres_distribu_s), (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
             this.add(Pair(getString(R.string.quantit_distribuer), qtelivre))
             this.add(Pair(getString(R.string.total_enregistrer), total))
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
         //Commons.printModelValue(suiviDistrArbrDatas as Object, (mapEntries) )
 

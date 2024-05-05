@@ -410,8 +410,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             if (itemModelOb == null) return
 
-            val infosProducteursDTO = itemModelOb?.first.apply {
-                this?.apply {
+            val infosProducteursDTO = itemModelOb.first.apply {
+                this.apply {
                     section = sectionCommon.id.toString()
                     localite = localiteCommon.id.toString()
                     producteursId = producteurCommon.id.toString()
