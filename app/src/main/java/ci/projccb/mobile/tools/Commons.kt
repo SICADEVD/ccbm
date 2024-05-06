@@ -20,6 +20,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.Editable
 import android.text.InputFilter
 import android.util.Base64
 import android.util.Log
@@ -974,6 +975,10 @@ class Commons {
                     break
                 }
             }
+        }
+
+        fun addNotZeroAtFirstToET(editText: EditText){
+            editText.addTextChangedListener(NoLeadingZeroTextWatcher(editText))
         }
 
         fun blockUpdateForFeature(fromMenu: String): Boolean {

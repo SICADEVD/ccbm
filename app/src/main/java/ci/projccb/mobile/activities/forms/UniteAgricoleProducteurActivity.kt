@@ -409,6 +409,26 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             val itemModelOb = getUniteAgricoleProducteurObject()
 
+            val vv1 = editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv2 = editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv3 = editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
+
+            if( (vv1+vv2) != vv3 ){
+
+                Commons.showMessage(
+                    getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),
+                    this,
+                    finished = false,
+                    callback = {},
+                    positive = getString(R.string.compris),
+                    deconnec = false,
+                    showNo = false
+                )
+
+                return
+
+            }
+
             if(itemModelOb == null) return
 
             val infosProducteursDTO = itemModelOb?.first.apply {
@@ -447,21 +467,6 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
     private fun getUniteAgricoleProducteurObject(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<InfosProducteurDTO, MutableList<Pair<String, String>>>? {
         var isMissingDial2 = false
 
-        if( ((editNbrTravPermanInfosProducteur.text.toString().toInt()?:0) + (editNbrTravNotPermanInfosProducteur.text.toString().toInt()?:0) ) < (editNbrTravRemunInfosProducteur.text.toString().toInt()?:0)){
-
-            Commons.showMessage(
-                getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),
-                this,
-                finished = false,
-                callback = {},
-                positive = getString(R.string.compris),
-                deconnec = false,
-                showNo = false
-            )
-            return null
-
-        }
-
         var itemList = getSetupInfoProdModel(InfosProducteurDTO(
             uid = 0,
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
@@ -473,7 +478,9 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         var allField = itemList.second
         var isMissing = false
         var message = ""
+
         var notNecessaire = listOf<String>()
+
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
@@ -531,12 +538,17 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
 
     fun draftInfosProducteur(draftModel: DataDraftedModel?) {
-        try {
+//        try {
 //            val infosProducteursDraft = getUniteAgricoleProducteurObject()
 //
 //            LogUtils.json(infosProducteursDraft)
 
-            val itemModelOb = getUniteAgricoleProducteurObject(false, necessaryItem = mutableListOf())
+            val itemModelOb = getUniteAgricoleProducteurObject(false, necessaryItem = mutableListOf(
+                "Selectionner un producteur"
+            ))
+
+            LogUtils.d(itemModelOb?.first)
+            LogUtils.d(itemModelOb?.second)
 
             if(itemModelOb == null) return
 
@@ -586,10 +598,10 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 deconnec = false,
                 showNo = true
             )
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-        }
+//        } catch (ex: Exception) {
+//            LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//        }
     }
 
 
@@ -1227,10 +1239,21 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             }else{
                 setAllListener()
             }
+
+            setOtherListener()
+
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
+    }
+
+    private fun setOtherListener() {
+        Commons.addNotZeroAtFirstToET(editNbrTravFamilleInfosProducteur)
+        Commons.addNotZeroAtFirstToET(editNbrTravRemunInfosProducteur)
+        Commons.addNotZeroAtFirstToET(editNbrTravPermanInfosProducteur)
+        Commons.addNotZeroAtFirstToET(editNbrTravNotPermanInfosProducteur)
+        Commons.addNotZeroAtFirstToET(editNbrTravSocieteInfosProducteur)
     }
 
     private fun setAllListener() {
