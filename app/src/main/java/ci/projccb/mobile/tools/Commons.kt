@@ -390,7 +390,7 @@ class Commons {
                         it.isAccessible = true
                         it.set(prodModel, value.toCheckEmptyItem().returnIfFindEmpty())
 //                        LogUtils.d(value)
-                        mutableListOf.add(Pair(currTextViewIn.toString(), value))
+                        mutableListOf.add(Pair(currTextViewIn.toString(), value.toCheckEmptyItem().returnIfFindEmpty().toString()))
                     }
                 } else if ( childView is AppCompatEditText && childView.tag != null ) {
                     // You've found an EditText with the specified tag, get its value
@@ -406,7 +406,7 @@ class Commons {
                     memberProperty?.let {
                         it.isAccessible = true
                         it.set(prodModel, value.toCheckEmptyItem().returnIfFindEmpty())
-                        mutableListOf.add(Pair(currTextViewIn.toString(), value))
+                        mutableListOf.add(Pair(currTextViewIn.toString(), value.toCheckEmptyItem().returnIfFindEmpty().toString()))
                     }
                     //countField++
                 } else if (childView is ViewGroup) {

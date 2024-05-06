@@ -429,7 +429,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             }
         }
 
-        Commons.logErrorToFile(producteur)
+//        Commons.logErrorToFile(producteur)
 
         val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
         intentProducteurPreview.putExtra("preview", producteur)
@@ -449,11 +449,15 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         var allField = itemList.second
         var isMissing = false
         var message = ""
+
         var notNecessaire = listOf<String>(
             getString(R.string.en_tant_que).lowercase(),
             getString(R.string.num_ro_de_t_l_phone).lowercase(),
             getString(R.string.n_de_la_pi_ce_cmu).lowercase(),
             getString(R.string.n_de_carte_de_s_curit_sociale).lowercase())
+
+        LogUtils.json(allField)
+
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
@@ -943,6 +947,11 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             LogUtils.d(draftedData, it?.section.toString(), it?.localitesId.toString())
         }
 
+        if(producteurDrafted?.sync_update == true){
+            intent.putExtra("sync_uid", 1)
+            labelTitleMenuAction.text = "MISE A JOUR FICHE PRODUCTEUR"
+        }
+
         if(producteurDrafted == null) return
 
         setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -1115,6 +1124,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
                 certificatsStr = GsonUtils.toJson(selectCertifProducteur.selectedStrings)
             }
+
+            if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
+                this.id = commomUpdate.listOfValue?.first()?.toInt()
+                this.uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
+                this.sync_update = true
+            }
         }
 
         //LogUtils.json(producteurDraft)
@@ -1230,7 +1245,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //                    clickSaveInspection.setOnClickListener {
 //                        collectDatasUpdate(inspectUid)
 //                    }
-                    imageDraftProducteur.visibility = View.GONE
+//                    imageDraftProducteur.visibility = View.GONE
 
                     val updateData = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByUID(dataUid)
                     //LogUtils.d(updateData)

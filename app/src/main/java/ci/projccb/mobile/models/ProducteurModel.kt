@@ -73,6 +73,8 @@ data class ProducteurModel(
     @Expose @SerializedName("esignature") var esignature: String? = null,
     @Expose @SerializedName("esignaturePath") var esignaturePath: String? = null,
     var origin: String? = "local",
+    @Expose var sync_update: Boolean = false,
+
 
 ) : Parcelable {
 

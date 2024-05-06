@@ -215,6 +215,38 @@
                     android:layout_height="@dimen/_10sdp" />
 
                 <LinearLayout
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/containerPrecisionTitreProducteur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:tag="plantePartage"
+                        android:id="@+id/editPrecisionTitreProducteur"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_37sdp"
+                        android:background="@drawable/rounded_background"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:textAllCaps="true"
+                        android:hint="Donnez des détails sur Planté-Partager"
+                        android:textSize="@dimen/page_input_content_dim13"
+                        tools:text="" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -438,34 +470,6 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:id="@+id/containerPrecisionTitreProducteur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:tag="plantePartage"
-                        android:id="@+id/editPrecisionTitreProducteur"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_37sdp"
-                        android:background="@drawable/rounded_background"
-                        android:ellipsize="end"
-                        android:gravity="center_vertical"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters|textNoSuggestions"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
-                        android:hint="@string/precision_hint"
-                        android:textSize="@dimen/page_input_content_dim13"
-                        tools:text="" />
 
                 </LinearLayout>
 
