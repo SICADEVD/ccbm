@@ -539,13 +539,12 @@
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background"
                             android:hint="0.0"
-                            android:ellipsize="end"
                             android:imeOptions="actionDone"
+                            android:ellipsize="end"
                             android:inputType="numberDecimal"
                             android:digits="0123456789."
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
                             android:textSize="@dimen/page_input_content_dim13"
                             tools:text="0.0" />
 
@@ -1304,7 +1303,6 @@ android:textColor="@color/text_color_white"
                             android:digits="0123456789."
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
                             android:textSize="@dimen/page_input_content_dim13"
                             tools:text="0.0" />
 
@@ -1348,7 +1346,6 @@ android:textColor="@color/text_color_white"
                                 android:inputType="numberDecimal"
                                 android:paddingStart="@dimen/_10sdp"
                                 android:paddingEnd="@dimen/_10sdp"
-                                android:textAllCaps="true"
                                 android:textSize="@dimen/page_input_content_dim13"/>
 
                         </LinearLayout>

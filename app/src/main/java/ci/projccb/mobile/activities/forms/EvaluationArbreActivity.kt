@@ -270,7 +270,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 //val arbreId = listArbre?.filter { it.nom+" | "+it.nomScientifique == adapItem.value }?.get(0)?.id ?: -1
                 add(Pair(adapItem.value.toString(), adapItem.value2.toString()))
             }
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
         //Commons.printModelValue(formationModel as Object, mapEntries)
 
