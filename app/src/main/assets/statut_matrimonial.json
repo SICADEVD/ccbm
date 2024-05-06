@@ -16,10 +16,14 @@
   },
   {
     "id": "5",
-    "nom": "Divorcé"
+    "nom": "Mariage traditionnel"
   },
   {
     "id": "6",
+    "nom": "Divorcé"
+  },
+  {
+    "id": "7",
     "nom": "Veuf(ve)"
   }
 ]
