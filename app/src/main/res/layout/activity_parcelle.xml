@@ -1004,7 +1004,7 @@
                                             android:layout_width="@dimen/_5sdp"
                                             android:layout_height="@dimen/_10sdp" />
 
-                                        <androidx.appcompat.widget.AppCompatSpinner
+                                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                             style="@style/SpinnerItemStyle"
                                             android:id="@+id/selectArbrOmbrParcel"
                                             android:layout_width="match_parent"
