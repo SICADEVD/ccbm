@@ -574,7 +574,7 @@ class Commons {
         }
 
 
-        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false, textSizeDim: Int = R.dimen._8ssp) {
+        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false, textSizeDim: Int = R.dimen._8ssp, consent: Boolean = false) {
             try {
                 val builder = AlertDialog.Builder(context, R.style.DialogTheme)
                 // Display a message on alert dialog
@@ -598,6 +598,11 @@ class Commons {
                 if (showNo) {
                     builder.setNegativeButton(context.getString(R.string.non)) { dialog, _ ->
                         dialog.dismiss()
+
+                        if (consent) {
+                            //callback
+                            (context as AppCompatActivity).finish()
+                        }
                     }
                 }
 

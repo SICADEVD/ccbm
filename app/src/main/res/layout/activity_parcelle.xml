@@ -529,8 +529,6 @@
                             android:text="Superficie concernée (ha)"
                             android:textStyle="bold" />
 
-                        <!--    android:text="Superficie de la parcelle (m\u00B2)"    -->
-
                         <androidx.appcompat.widget.AppCompatEditText
                             android:tag="superficieConcerne"
                             android:id="@+id/editSuperficieConcernParcelle"
