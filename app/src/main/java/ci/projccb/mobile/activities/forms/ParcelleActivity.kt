@@ -792,7 +792,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
             })
 
-        val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        val listArbres = mutableListOf<ArbreModel>()
+        listArbres.add(0, ArbreModel(uid = 0, nom = "Autres", nomScientifique = "Autres", strate = null))
+        listArbres.addAll(CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll() ?: mutableListOf())
 
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_de_l_arbre),
@@ -938,14 +940,14 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
     fun setOmbrageParcelleRV() {
-        val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        val listArbres = mutableListOf<ArbreModel>()
+        listArbres.add(0, ArbreModel(uid = 0, nom = "Autres", nomScientifique = "Autres", strate = null))
+        listArbres.addAll(CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll() ?: mutableListOf())
 
         try {
             arbrOmbrListParcelle = mutableListOf<OmbrageVarieteModel>()
-            arbreOmbrParcelleAdapter = OmbrageAdapter(arbrOmbrListParcelle,
-                getString(R.string.arbre), getString(R.string.nombre))
-            recyclerArbrOmbrListParcel.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            arbreOmbrParcelleAdapter = OmbrageAdapter(arbrOmbrListParcelle, getString(R.string.arbre), getString(R.string.nombre))
+            recyclerArbrOmbrListParcel.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             recyclerArbrOmbrListParcel.adapter = arbreOmbrParcelleAdapter
 
         } catch (ex: Exception) {
@@ -1192,7 +1194,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //            onSelected = { itemId, visibility ->
 //            })
 
-        val listArbres = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
+        val listArbres = mutableListOf<ArbreModel>()
+        listArbres.add(0, ArbreModel(uid = 0, nom = "Autres", nomScientifique = "Autres", strate = null))
+        listArbres.addAll(CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll() ?: mutableListOf())
 
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_de_l_arbre), getString(R.string.la_liste_des_arbres_d_ombrage_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),

@@ -2,7 +2,7 @@
 <paths>
 
     <external-files-path
-        name="my_images"
-        path="Pictures" />
+        name="*"
+        path="/" />
 
 </paths>

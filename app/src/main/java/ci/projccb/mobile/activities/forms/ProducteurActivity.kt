@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -662,6 +663,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        //  val storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        //  val storageDir = getDir(Environment.DIRECTORY_PICTURES, MODE_PRIVATE)
+        //  val storageDir = File(Environment.DIRECTORY_PICTURES, imageFileName)
 
         val image = File.createTempFile(
             imageFileName,  /* prefix */
@@ -683,6 +687,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     fun testImageTaked(bundleData: Uri?) {
         // Get the dimensions of the View
+
+        LogUtils.e(whichPhoto)
+        LogUtils.e(profilPhotoPath)
 
         try {
             when (whichPhoto) { // Laiss zemoi yan !
@@ -713,7 +720,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun setAllSelection() {
-
         setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTitreDUProducteur,
             itemChanged = arrayListOf(Pair(1, "Planté-partager")),
@@ -1270,16 +1276,18 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             setAllSelection()
         }
 
+        if (intent.getStringExtra("from") == null) {
+            Commons.showMessage(
+                message = "Le producteur accepte t-il la collecte de ses données ?",
+                showNo = true,
+                callback =  {},
+                consent = true,
+                finished = false,
+                positive = "J'accepte",
+                context = this
+            );
+        }
 
-        Commons.showMessage(
-            message = "Le producteur accepte t-il la collecte de ses données ?",
-            showNo = true,
-            callback =  {},
-            consent = true,
-            finished = false,
-            positive = "J'accepte",
-            context = this
-        );
     }
 
     private fun setOtherListener() {
