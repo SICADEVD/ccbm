@@ -27,6 +27,7 @@ data class EstimationModel(
     @Expose var id: Int? = 0,
     @Expose var parcelleNom: String? = "",
     @Expose var producteurNom: String? = "",
+    @Expose var section: String? = "",
     @Expose @SerializedName("producteur") var producteurId: String? = "",
     @Expose @SerializedName("localite") var localiteId: String? = "",
     @Expose var localiteNom: String? = "",

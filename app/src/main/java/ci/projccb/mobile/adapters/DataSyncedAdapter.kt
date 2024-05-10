@@ -106,7 +106,7 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
             "ESTIMATION" -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.estimations)
                 intentUndraftedData = Intent(context, CalculEstimationActivity::class.java)
-                intentUndraftedData.putExtra("from", "calcul_estimation")
+                intentUndraftedData.putExtra("from", "estimation")
                 intentUndraftedData.putExtra("sync_uid", draftedData.id)
             }
             "APPLICATION" -> {

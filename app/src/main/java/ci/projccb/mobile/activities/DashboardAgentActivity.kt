@@ -994,7 +994,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                     //linearCalculEstimation.visibility = View.VISIBLE
                     listOfFeatures.add(FeatureModel("ESTIMATIONS",
                         countSync = CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAll()?.size!!,
-                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "calcul_estimation")!!,
+                        countDraft = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), type = "estimation")!!,
                         type = "ESTIMATION",
                         categorie = 0,
                         //image = R.drawable.estimations,
@@ -1217,8 +1217,8 @@ class DashboardAgentActivity : AppCompatActivity(),
                 if(currentGroup.canViewUpdate) btnList.add("UPDATE")
                 if(currentGroup.canViewSync) btnList.add("DATAS")
                 val currName = btnList.get(childPosition)
-//                LogUtils.d(currName)
-//                LogUtils.d(currentGroup.type)
+                LogUtils.d(currName)
+                LogUtils.d(currentGroup.type)
                 Commons.redirectMenu(currentGroup.type.toString().lowercase(), "${currName}", this@DashboardAgentActivity)
 
                 false

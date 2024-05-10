@@ -19,6 +19,7 @@ import ci.projccb.mobile.models.EstimationModel
 import ci.projccb.mobile.models.LocaliteModel
 import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.models.ProducteurModel
+import ci.projccb.mobile.models.SuiviParcelleModel
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.datas.CommonData
@@ -49,6 +50,9 @@ import kotlinx.android.synthetic.main.activity_calcul_estimation.selectParcelleE
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectProducteurEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectSectionEstimation
 import kotlinx.android.synthetic.main.activity_formation.selectSectionFormation
+import kotlinx.android.synthetic.main.activity_parcelle.selectLocaliteParcelle
+import kotlinx.android.synthetic.main.activity_parcelle.selectProducteurParcelle
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectParcelleSParcelle
 import org.joda.time.DateTime
 import java.util.Calendar
 
@@ -60,20 +64,23 @@ class CalculEstimationActivity : AppCompatActivity() {
     var producteursList: MutableList<ProducteurModel>? = null
     var parcellesList: MutableList<ParcelleModel>? = null
 
-    var producteurNom = ""
-    var producteurId = ""
-
-    var localiteNom = ""
-    var localiteId = ""
-
+//    var producteurNom = ""
+//    var producteurId = ""
+//
+//    var localiteNom = ""
+//    var localiteId = ""
+//
     var campagneNom = ""
     var campagneId = ""
-
-    var parcelleNom = ""
-    var parcelleId = ""
+//
+//    var parcelleNom = ""
+//    var parcelleId = ""
     var parcelleSuperficie = ""
 
     val sectionCommon = CommonData()
+    val localiteCommon = CommonData()
+    val producteurCommon = CommonData()
+    val parcelleCommon = CommonData()
 
     var piedA1 = ""
     var piedA2 = ""
@@ -111,36 +118,36 @@ class CalculEstimationActivity : AppCompatActivity() {
     }
 
 
-    fun setupParcellesProducteurSelection(producteurId: String?) {
-        parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()?.getParcellesProducteur(
-            producteurId = producteurId,
-            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
-        )
-
-        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }?.toList()?: arrayListOf())
-        selectParcelleEstimation!!.adapter = parcellesAdapter
-
-        selectParcelleEstimation.setTitle(getString(R.string.choisir_la_parcelle))
-        selectParcelleEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val parcelle = parcellesList!![position]
-
-                parcelleNom = Commons.getParcelleNotSyncLibel(parcelle).toString()
-                parcelleSuperficie = parcelle.superficie ?: "0.0"
-                editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
-
-                parcelleId = if (parcelle.isSynced) {
-                    parcelle.id.toString()
-                } else {
-                    parcelle.uid.toString()
-                }
-            }
-
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
-
-    }
+//    fun setupParcellesProducteurSelection(producteurId: String?) {
+//        parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()?.getParcellesProducteur(
+//            producteurId = producteurId,
+//            agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
+//        )
+//
+//        val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }?.toList()?: arrayListOf())
+//        selectParcelleEstimation!!.adapter = parcellesAdapter
+//
+//        selectParcelleEstimation.setTitle(getString(R.string.choisir_la_parcelle))
+//        selectParcelleEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val parcelle = parcellesList!![position]
+//
+//                parcelleNom = Commons.getParcelleNotSyncLibel(parcelle).toString()
+//                parcelleSuperficie = parcelle.superficie ?: "0.0"
+//                editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
+//
+//                parcelleId = if (parcelle.isSynced) {
+//                    parcelle.id.toString()
+//                } else {
+//                    parcelle.uid.toString()
+//                }
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//
+//    }
 
 
     fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
@@ -171,7 +178,7 @@ class CalculEstimationActivity : AppCompatActivity() {
                 sectionCommon.nom = section.libelle!!
                 sectionCommon.id = section.id!!
 
-                setupLocaliteSelection(sectionCommon.id!!)
+                setLocaliteSpinner(sectionCommon.id!!, currVal1, currVal2, currVal3)
 
             },
             onSelected = { itemId, visibility ->
@@ -180,94 +187,223 @@ class CalculEstimationActivity : AppCompatActivity() {
 
     }
 
-    fun setupLocaliteSelection(id: Int) {
-        localitesList = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()?.getLocaliteBySection(id)
+    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
 
-        if (localitesList?.size == 0) {
-            Commons.showMessage(
-                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
-                this,
-                finished = false,
-                callback = {},
-                getString(R.string.compris),
-                false,
-                showNo = false,
-            )
-
-            localiteId = ""
-            localiteNom = ""
-            selectLocaliteEstimation?.adapter = null
-
-            return
+        var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()
+        var localitesListi = localiteDao?.getLocaliteBySection(id)
+        //LogUtils.d(localitesListi)
+        var libItem: String? = null
+        currVal1?.let { idc ->
+            localitesListi?.forEach {
+                if(it.id.toString().equals(idc)) libItem = it.nom
+            }
         }
 
-        val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
-        selectLocaliteEstimation!!.adapter = localiteAdapter
+        Commons.setListenerForSpinner(this,
+            getString(R.string.choix_de_la_localit),
+            getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            isEmpty = localitesListi?.size!! <= 0,
+            currentVal = libItem,
+            spinner = selectLocaliteEstimation,
+            listIem = localitesListi.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
 
-        selectLocaliteEstimation.setTitle(getString(R.string.choisir_la_localite))
-        selectLocaliteEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val locality = localitesList!![position]
-                localiteNom = locality.nom!!
+                localitesListi.let { list ->
+                    var localite = list.get(it)
+                    localiteCommon.nom = localite.nom!!
+                    localiteCommon.id = localite.id!!
 
-                localiteId = if (locality.isSynced) {
-                    locality.id!!.toString()
-                } else {
-                    locality.uid.toString()
+                    setupProducteurSelection(localiteCommon.id!!, currVal2, currVal3)
                 }
 
-                LogUtils.e(TAG, "Local -> $localiteId")
-                setupProducteurSelection(localiteId)
-            }
 
-            override fun onNothingSelected(arg0: AdapterView<*>) {
-            }
-        }
+            },
+            onSelected = { itemId, visibility ->
+
+            })
+
     }
 
 
-    fun setupProducteurSelection(localite: String?) {
-        // Producteur
-        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = localite)
-        val producteursDatas: MutableList<CommonData> = mutableListOf()
-        producteursList?.map {
-            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
-        }?.let {
-            producteursDatas.addAll(it)
-        }
+    fun setupProducteurSelection(id: Int, currVal2: String? = null, currVal3: String? = null) {
+        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
+            ?.getProducteursByLocalite(localite = id.toString())
 
-        val estimationDrafted = ApiClient.gson.fromJson(draftedDataEstimation?.datas, EstimationModel::class.java)
-        selectProducteurEstimation.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
-
-        if (draftedDataEstimation != null) {
-            provideDatasSpinnerSelection(
-                selectProducteurEstimation,
-                estimationDrafted.producteurNom,
-                producteursDatas
-            )
-        }
-
-        selectProducteurEstimation.setTitle(getString(R.string.choisir_le_producteur))
-        selectProducteurEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
-                val producteur = producteursList!![position]
-                producteurNom = "${producteur.nom} ${producteur.prenoms}"
-
-                producteurId = if (producteur.isSynced) {
-                    producteur.id!!.toString()
+        var libItem: String? = null
+        currVal2?.let { idc ->
+            producteursList?.forEach {
+                if(it.id == 0){
+                    if (it.uid.toString().equals(idc)) libItem = "${it.nom} ${it.prenoms}"
                 } else {
-                    producteur.uid.toString()
+                    if (it.id.toString().equals(idc)) libItem = "${it.nom} ${it.prenoms}"
+                }
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            getString(R.string.choix_du_producteur),
+            getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            isEmpty = producteursList?.size!! <= 0,
+            currentVal = libItem,
+            spinner = selectProducteurEstimation,
+            listIem = producteursList?.map { "${ it.nom } ${ it.prenoms }" }?.toList() ?: listOf(),
+            onChanged = {
+                producteursList?.let { list ->
+                    var producteur = list.get(it)
+                    producteurCommon.nom = "${producteur.nom!!} ${producteur.prenoms!!}"
+                    if (producteur.isSynced == true){
+                        producteurCommon.id = producteur.id!!
+                    } else producteurCommon.id = producteur.uid
+
+                    setupParcelleSelection(producteurCommon.id.toString(), currVal3)
                 }
 
-                editSuperficieEstimation.text = null
 
-                setupParcellesProducteurSelection(producteurId)
-            }
+            },
+            onSelected = { itemId, visibility ->
 
-            override fun onNothingSelected(arg0: AdapterView<*>) {
+            })
+
+    }
+
+    fun setupParcelleSelection(producteurId: String?, currVal3: String? = null) {
+        var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+            ?.getParcellesProducteur(producteurId = producteurId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+
+//        LogUtils.json(parcellesList)
+        var libItem: String? = null
+        currVal3?.let { idc ->
+            parcellesList?.forEach {
+                if(it.isSynced){
+                    if (it.id.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
+                }else{
+                    if (it.uid.toString() == idc.toString()) libItem = Commons.getParcelleNotSyncLibel(it)
+                }
             }
         }
+
+        Commons.setListenerForSpinner(this,
+            getString(R.string.choix_de_la_parcelle),
+            getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            isEmpty = if (parcellesList?.size!! > 0) false else true,
+            currentVal = libItem,
+            spinner = selectParcelleEstimation,
+            listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+                parcellesList?.let { list ->
+                    var parcelle = list.get(it)
+                    parcelleCommon.nom = Commons.getParcelleNotSyncLibel(parcelle)
+
+                    parcelleSuperficie = parcelle.superficie ?: "0.0"
+                    editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
+
+                    if(parcelle.isSynced){
+                        parcelleCommon.id = parcelle.id!!
+                    }else{
+                        parcelleCommon.id = parcelle.uid.toString().toInt()
+                    }
+
+                    //setupParcelleSelection(parcelleCommon.id, currVal3)
+                }
+
+
+            },
+            onSelected = { itemId, visibility ->
+
+            })
     }
+
+//    fun setupLocaliteSelection(id: Int) {
+//        localitesList = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()?.getLocaliteBySection(id)
+//
+//        if (localitesList?.size == 0) {
+//            Commons.showMessage(
+//                getString(R.string.la_liste_des_localit_s_est_vide_refaite_une_mise_jour),
+//                this,
+//                finished = false,
+//                callback = {},
+//                getString(R.string.compris),
+//                false,
+//                showNo = false,
+//            )
+//
+//            localiteId = ""
+//            localiteNom = ""
+//            selectLocaliteEstimation?.adapter = null
+//
+//            return
+//        }
+//
+//        val localiteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesList!!)
+//        selectLocaliteEstimation!!.adapter = localiteAdapter
+//
+//        selectLocaliteEstimation.setTitle(getString(R.string.choisir_la_localite))
+//        selectLocaliteEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val locality = localitesList!![position]
+//                localiteNom = locality.nom!!
+//
+//                localiteId = if (locality.isSynced) {
+//                    locality.id!!.toString()
+//                } else {
+//                    locality.uid.toString()
+//                }
+//
+//                LogUtils.e(TAG, "Local -> $localiteId")
+//                setupProducteurSelection(localiteId)
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
+
+
+//    fun setupProducteurSelection(localite: String?) {
+//        // Producteur
+//        producteursList = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()?.getProducteursByLocalite(localite = localite)
+//        val producteursDatas: MutableList<CommonData> = mutableListOf()
+//        producteursList?.map {
+//            CommonData(id = it.id, nom = "${it.nom} ${it.prenoms}")
+//        }?.let {
+//            producteursDatas.addAll(it)
+//        }
+//
+//        val estimationDrafted = ApiClient.gson.fromJson(draftedDataEstimation?.datas, EstimationModel::class.java)
+//        selectProducteurEstimation.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, producteursDatas)
+//
+//        if (draftedDataEstimation != null) {
+//            provideDatasSpinnerSelection(
+//                selectProducteurEstimation,
+//                estimationDrafted.producteurNom,
+//                producteursDatas
+//            )
+//        }
+//
+//        selectProducteurEstimation.setTitle(getString(R.string.choisir_le_producteur))
+//        selectProducteurEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+//                val producteur = producteursList!![position]
+//                producteurNom = "${producteur.nom} ${producteur.prenoms}"
+//
+//                producteurId = if (producteur.isSynced) {
+//                    producteur.id!!.toString()
+//                } else {
+//                    producteur.uid.toString()
+//                }
+//
+//                editSuperficieEstimation.text = null
+//
+//                setupParcellesProducteurSelection(producteurId)
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>) {
+//            }
+//        }
+//    }
 
 
     fun configDate(viewClciked: AppCompatEditText) {
@@ -304,6 +440,16 @@ class CalculEstimationActivity : AppCompatActivity() {
         }
     }
 
+    fun passSetupEstimationModel(
+        prodModel: EstimationModel?
+    ){
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_estimation)
+        prodModel?.let {
+            Commons.setAllValueOfTextViews(mainLayout, prodModel)
+        }
+    }
+
     private fun getEstimationObjet(): EstimationModel {
         return EstimationModel(
             campagnesId = campagneId,
@@ -318,13 +464,14 @@ class CalculEstimationActivity : AppCompatActivity() {
             ec1 = editC1Estimation.text.toString(),
             ec2 = editC2Estimation.text.toString(),
             ec3 = editC3Estimation.text.toString(),
-            parcelleId = parcelleId,
+            parcelleId = parcelleCommon.id.toString(),
+            section = sectionCommon.id.toString(),
             superficie = parcelleSuperficie,
-            parcelleNom = parcelleNom,
-            producteurNom = producteurNom,
-            producteurId = producteurId,
-            localiteNom = localiteNom,
-            localiteId = localiteId,
+            parcelleNom = parcelleCommon.nom.toString(),
+            producteurNom = producteurCommon.nom.toString(),
+            producteurId = producteurCommon.id.toString(),
+            localiteNom = localiteCommon.nom.toString(),
+            localiteId = localiteCommon.id.toString(),
             uid = 0,
             userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
             isSynced = false,
@@ -344,7 +491,7 @@ class CalculEstimationActivity : AppCompatActivity() {
                     DataDraftedModel(
                         uid = draftModel?.uid ?: 0,
                         datas = ApiClient.gson.toJson(estimationModelDraft),
-                        typeDraft = "calcul_estimation",
+                        typeDraft = "estimation",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
                 )
@@ -372,39 +519,44 @@ class CalculEstimationActivity : AppCompatActivity() {
     fun undraftedDatas(draftedData: DataDraftedModel) {
         val estimationDrafted = ApiClient.gson.fromJson(draftedData.datas, EstimationModel::class.java)
 
+        Commons.debugModelToJson(estimationDrafted)
+        setupSectionSelection(estimationDrafted.section, estimationDrafted.localiteId, estimationDrafted.producteurId, estimationDrafted.parcelleId)
+
+        passSetupEstimationModel(estimationDrafted)
+
         // Localite
-        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-        val localitesDatas: MutableList<CommonData> = mutableListOf()
-        localitesLists?.map {
-            CommonData(id = it.id, nom = it.nom)
-        }?.let {
-            localitesDatas.addAll(it)
-        }
-        selectLocaliteEstimation.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-        provideDatasSpinnerSelection(
-            selectLocaliteEstimation,
-            estimationDrafted.localiteNom,
-            localitesDatas
-        )
-
-        // Campagne
-        val campagnesLists = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()
-        val campagnesDatas: MutableList<CommonData> = mutableListOf()
-        campagnesLists?.map {
-            CommonData(id = it.id, nom = it.campagnesNom)
-        }?.let {
-            campagnesDatas.addAll(it)
-        }
-        selectCampagneEstimation.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesDatas)
-        provideDatasSpinnerSelection(
-            selectCampagneEstimation,
-            estimationDrafted.campagnesNom,
-            campagnesDatas
-        )
-
-        editSuperficieEstimation.setText(estimationDrafted.superficie)
-        //applyFiltersDec(editSuperficieEstimation, withZero = false)
-
+//        val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+//        val localitesDatas: MutableList<CommonData> = mutableListOf()
+//        localitesLists?.map {
+//            CommonData(id = it.id, nom = it.nom)
+//        }?.let {
+//            localitesDatas.addAll(it)
+//        }
+//        selectLocaliteEstimation.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
+//        provideDatasSpinnerSelection(
+//            selectLocaliteEstimation,
+//            estimationDrafted.localiteNom,
+//            localitesDatas
+//        )
+//
+//        // Campagne
+//        val campagnesLists = CcbRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()
+//        val campagnesDatas: MutableList<CommonData> = mutableListOf()
+//        campagnesLists?.map {
+//            CommonData(id = it.id, nom = it.campagnesNom)
+//        }?.let {
+//            campagnesDatas.addAll(it)
+//        }
+//        selectCampagneEstimation.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesDatas)
+//        provideDatasSpinnerSelection(
+//            selectCampagneEstimation,
+//            estimationDrafted.campagnesNom,
+//            campagnesDatas
+//        )
+//
+//        editSuperficieEstimation.setText(estimationDrafted.superficie)
+//        //applyFiltersDec(editSuperficieEstimation, withZero = false)
+//
         editA1Estimation.setText(estimationDrafted.ea1)
         editA2Estimation.setText(estimationDrafted.ea2)
         editA3Estimation.setText(estimationDrafted.ea3)

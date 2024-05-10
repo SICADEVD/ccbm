@@ -84,7 +84,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "PARCELLES" -> {
-                holder.imageTypeDraft.setImageResource(R.drawable.ic_parcel)
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_suivi_parcel)
                 intentUndraftedData = Intent(context, SuiviParcelleActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_parcelle")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
@@ -96,13 +96,13 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "ESTIMATION" -> {
-                holder.imageTypeDraft.setImageResource(R.drawable.estimations)
+                holder.imageTypeDraft.setImageResource(R.drawable.ic_suivi_parcel)
                 intentUndraftedData = Intent(context, CalculEstimationActivity::class.java)
-                intentUndraftedData.putExtra("from", "calcul_estimation")
+                intentUndraftedData.putExtra("from", "estimation")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "APPLICATION" -> {
-                holder.imageTypeDraft.setImageResource(R.drawable.ic_applicateurs)
+                holder.imageTypeDraft.setImageResource(R.drawable.application_phyto)
                 intentUndraftedData = Intent(context, SuiviApplicationActivity::class.java)
                 intentUndraftedData.putExtra("from", "application")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
@@ -114,7 +114,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "SSRTECLMRS" -> {
-                holder.imageTypeDraft.setImageResource(R.drawable.ic_ssrt_black)
+                holder.imageTypeDraft.setImageResource(R.drawable.ssrte_ic)
                 intentUndraftedData = Intent(context, SsrtClmsActivity::class.java)
                 intentUndraftedData.putExtra("from", "ssrte")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
@@ -127,7 +127,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
             "FORMATION_VISITEUR" -> {
-                holder.imageTypeDraft.setImageResource(R.drawable.arbre_black)
+                holder.imageTypeDraft.setImageResource(R.drawable.visitor_form)
                 intentUndraftedData = Intent(context, VisiteurFormationActivity::class.java)
                 intentUndraftedData.putExtra("from", "visiteur_formation")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)

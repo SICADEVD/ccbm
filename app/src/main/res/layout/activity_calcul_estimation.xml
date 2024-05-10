@@ -88,6 +88,7 @@
                 app:cardUseCompatPadding="false">
 
                 <LinearLayout
+                    android:id="@+id/layout_estimation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_cardview_with_border_brown"
@@ -162,6 +163,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="campagnesNom"
                                 android:id="@+id/selectCampagneEstimation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -199,7 +201,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                android:tag="sectionId"
+                                android:tag="section"
                                 android:id="@+id/selectSectionEstimation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -238,6 +240,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="localiteNom"
                                 android:id="@+id/selectLocaliteEstimation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -276,6 +279,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="producteurNom"
                                 android:id="@+id/selectProducteurEstimation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -314,6 +318,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="parcelleNom"
                                 android:id="@+id/selectParcelleEstimation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -343,6 +348,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="superficie"
                             android:id="@+id/editSuperficieEstimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -447,6 +453,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="EA1"
                             android:id="@+id/editA1Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -479,6 +486,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="EA2"
                             android:id="@+id/editA2Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -511,6 +519,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="EA3"
                             android:id="@+id/editA3Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -611,6 +620,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="eb1"
                             android:id="@+id/editB1Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -643,6 +653,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="eb2"
                             android:id="@+id/editB2Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -675,6 +686,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="eb3"
                             android:id="@+id/editB3Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -775,6 +787,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="ec1"
                             android:id="@+id/editC1Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -807,6 +820,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="ec2"
                             android:id="@+id/editC2Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
@@ -839,6 +853,7 @@ android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="ec3"
                             android:id="@+id/editC3Estimation"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_37sdp"
