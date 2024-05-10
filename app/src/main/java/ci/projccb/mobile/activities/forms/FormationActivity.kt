@@ -920,7 +920,7 @@ class FormationActivity : AppCompatActivity() {
         var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(formationDrafted.localitesId.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
         var selectStr: MutableList<String> = GsonUtils.fromJson(formationDrafted.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type)
         var selectProd = producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
-        LogUtils.d(selectStr, selectProd)
+//        LogUtils.d(selectStr, selectProd)
         Commons.setupItemMultiSelection(this, selectProducteurFormation,
             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
             producteurList,
@@ -931,6 +931,13 @@ class FormationActivity : AppCompatActivity() {
                 if( selected.contains(product.nom) ){
                     producteurIdList.add(CommonData(product.id, product.nom.toString()))
                 }
+            }
+
+        }
+
+        producteurList?.forEach { product ->
+            if( selectProd.map { "${it.nom}" }?.contains(product.nom) == true ){
+                producteurIdList.add(CommonData(product.id, product.nom.toString()))
             }
         }
 
