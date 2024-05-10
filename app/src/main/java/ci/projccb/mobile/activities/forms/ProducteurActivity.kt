@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Environment.getExternalStoragePublicDirectory
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -178,6 +179,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
     }
 
+
     private fun setProgrammeSpinner(currVal2:String? = null) {
 
         var programmesDao = CcbRoomDatabase.getDatabase(applicationContext)?.programmesDao();
@@ -212,6 +214,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     }
 
+
     private fun setLocaliteSpinner(id: Int, currVal1:String? = null) {
 
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
@@ -244,7 +247,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
 
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -421,7 +423,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         if(intent.getIntExtra("sync_uid", 0) != 0){
-            producteur.apply {
+            producteur?.apply {
                 id = commomUpdate.listOfValue?.first()?.toInt()
                 uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
                 isSynced = false
@@ -438,6 +440,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         intentProducteurPreview.putExtra("draft_id", draftedDataProducteur?.uid)
         startActivity(intentProducteurPreview)
     }
+
 
     private fun getProducteurObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<ProducteurModel, MutableList<Pair<String, String>>>? {
 
@@ -642,7 +645,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                ex.printStackTrace()
            }
        }
-    }
+   }
 
 
     @Throws(IOException::class)
@@ -660,6 +663,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }
 
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        //  val storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        //  val storageDir = getDir(Environment.DIRECTORY_PICTURES, MODE_PRIVATE)
+        //  val storageDir = File(Environment.DIRECTORY_PICTURES, imageFileName)
 
         val image = File.createTempFile(
             imageFileName,  /* prefix */
@@ -681,6 +687,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     fun testImageTaked(bundleData: Uri?) {
         // Get the dimensions of the View
+
+        LogUtils.e(whichPhoto)
+        LogUtils.e(profilPhotoPath)
 
         try {
             when (whichPhoto) { // Laiss zemoi yan !
@@ -711,7 +720,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     fun setAllSelection() {
-
         setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTitreDUProducteur,
             itemChanged = arrayListOf(Pair(1, "Planté-partager")),
@@ -813,19 +821,21 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
 
         val listPiece = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)
-        setListenerForSpinner(this,
-            getString(R.string.quel_type_de_pi_ce), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPieceProducteur,
-            listIem = listPiece?.map { it.nom },
-            itemChanged = listOf(Pair(1, "Non disponible")),
-            onChanged = {
-                  //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
-                  if((listPiece.size) - 1 > it) containerPieceProducteur.visibility = View.VISIBLE
-            }, onSelected = { itemId, visibility ->
-                if(itemId == 1){
-                    containerPieceProducteur.visibility = View.GONE
-                }
-            })
+        listPiece.map { it.nom }?.let {
+            setListenerForSpinner(this,
+                getString(R.string.quel_type_de_pi_ce), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectPieceProducteur,
+                listIem = it,
+                itemChanged = listOf(Pair(1, "Non disponible")),
+                onChanged = {
+                    //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
+                    if((listPiece.size) - 1 > it) containerPieceProducteur.visibility = View.VISIBLE
+                }, onSelected = { itemId, visibility ->
+                    if(itemId == 1){
+                        containerPieceProducteur.visibility = View.GONE
+                    }
+                })
+        }
 
         setListenerForSpinner(this,
             getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -838,15 +848,18 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 if(itemId==1) containerNumPieceCMUProducteur.visibility = visibility
             })
 
-        setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTypeCarteCSSProducteur,
-            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom },
-            itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
-            onChanged = {
+        (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom }
+            ?.let {
+                setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectTypeCarteCSSProducteur,
+                listIem = it,
+                itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
+                onChanged = {
 
-            }, onSelected = { itemId, visibility ->
-                containerNumCarteCSSProducteur.visibility = visibility
-            })
+                }, onSelected = { itemId, visibility ->
+                    containerNumCarteCSSProducteur.visibility = visibility
+                })
+            }
 
 //        setupNationaliteSelection()
 //
@@ -861,11 +874,10 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 //        setupStatutCertificationSelection()
     }
 
+
     private fun setupTitreSelection() {
-
-
-
     }
+
 
     fun getSetupProducteurModel(
         prodModel: ProducteurModel,
@@ -876,6 +888,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
         return Pair(prodModel, mutableListOf)
     }
+
 
     fun passSetupProducteurModel(
         prodModel: ProducteurModel?
@@ -1059,19 +1072,21 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
 
         val listPiece = (AssetFileHelper.getListDataFromAsset(13, this) as MutableList<TypePieceModel>)
-        setListenerForSpinner(this, getString(R.string.quel_type_de_pi_ce), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPieceProducteur,
-            currentVal = producteurDrafted!!.piece,
-            listIem = listPiece?.map { it.nom },
-            itemChanged = listOf(Pair(1, "Non disponible")),
-            onChanged = {
-                //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
-                if((listPiece.size) - 1 > it) containerPieceProducteur.visibility = View.VISIBLE
-            }, onSelected = { itemId, visibility ->
-                if(itemId == 1){
-                    containerPieceProducteur.visibility = View.GONE
-                }
-            })
+        listPiece?.map { it.nom }?.let {
+            setListenerForSpinner(this, getString(R.string.quel_type_de_pi_ce), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectPieceProducteur,
+                currentVal = producteurDrafted!!.piece,
+                listIem = it,
+                itemChanged = listOf(Pair(1, "Non disponible")),
+                onChanged = {
+                    //LogUtils.d(((listPiece.size) - 1).toString().plus(" - "+ it))
+                    if((listPiece.size) - 1 > it) containerPieceProducteur.visibility = View.VISIBLE
+                }, onSelected = { itemId, visibility ->
+                    if(itemId == 1){
+                        containerPieceProducteur.visibility = View.GONE
+                    }
+                })
+        }
 
         setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectCarteCMUProducteur,
@@ -1084,16 +1099,19 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 if(itemId==1) containerNumPieceCMUProducteur.visibility = visibility
             })
 
-        setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTypeCarteCSSProducteur,
-            currentVal = producteurDrafted!!.typeCarteSecuriteSociale,
-            listIem = (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom },
-            itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
-            onChanged = {
+        (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom }
+            ?.let {
+                setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectTypeCarteCSSProducteur,
+                currentVal = producteurDrafted!!.typeCarteSecuriteSociale,
+                listIem = it,
+                itemChanged = listOf(Pair(1, "CNPS"), Pair(2, "CMU")),
+                onChanged = {
 
-            }, onSelected = { itemId, visibility ->
-                containerNumCarteCSSProducteur.visibility = visibility
-            })
+                }, onSelected = { itemId, visibility ->
+                    containerNumCarteCSSProducteur.visibility = visibility
+                })
+            }
         //LogUtils.json(producteurDrafted)
         passSetupProducteurModel(producteurDrafted)
 
@@ -1109,8 +1127,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         if(producteurModelItem == null) return
 
-        val producteurDraft = producteurModelItem?.first.apply {
-            this?.apply {
+        val producteurDraft = producteurModelItem.first.apply {
+            this.apply {
                 profilPhotoPath = profilPhotoPath ?: ""
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
@@ -1257,6 +1275,19 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         }else{
             setAllSelection()
         }
+
+        if (intent.getStringExtra("from") == null) {
+            Commons.showMessage(
+                message = "Le producteur accepte t-il la collecte de ses données ?",
+                showNo = true,
+                callback =  {},
+                consent = true,
+                finished = false,
+                positive = "J'accepte",
+                context = this
+            );
+        }
+
     }
 
     private fun setOtherListener() {

@@ -504,6 +504,7 @@ class FormationActivity : AppCompatActivity() {
         val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+
         Commons.setupItemMultiSelection(this, selectModuleMultiFormation, getString(R.string.quels_sont_les_modules_de_la_formation),
             (listTypeFormation)?.map { CommonData(0, it.nom.toString()) }?: arrayListOf()
         ){ typeSelect ->

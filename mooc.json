@@ -1,0 +1,15 @@
+{
+  "message": "Request could not be validated",
+  "error": {
+    "message": "Request could not be validated",
+    "code": 422,
+    "details": {
+      "numPiece": [
+        "Le num\u00e9ro de pi\u00e8ce est obligatoire"
+      ],
+      "num_ccc": [
+        "num\u00e9ro du conseil caf\u00e9 cacao doit contenir 10 chiffres"
+      ]
+    }
+  }
+}

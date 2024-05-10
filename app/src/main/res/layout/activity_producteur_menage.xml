@@ -1835,7 +1835,6 @@
                                         android:digits="0123456789."
                                         android:paddingStart="@dimen/_10sdp"
                                         android:paddingEnd="@dimen/_10sdp"
-                                        android:textAllCaps="true"
                                         android:textSize="@dimen/_13ssp"
                                         tools:text="0.0" />
 
