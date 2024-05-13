@@ -4,9 +4,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
@@ -25,7 +22,6 @@ import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.convertDate
-import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.toCheckEmptyItem
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
@@ -41,18 +37,15 @@ import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_evaluation.*
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
-import kotlinx.android.synthetic.main.activity_suivi_application.selectParcelleSApplic
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.util.*
 import kotlin.collections.HashMap
-import kotlin.math.roundToInt
 
 class InspectionActivity : AppCompatActivity(), SectionCallback,
     RecyclerItemListener<QuestionResponseModel> {
 
 
+    private var dateInspectionParm: String? = null
     private var counterMainView: Int = 0
     private var snackProgressBarManager: SnackProgressBarManager? = null
     private var inspectionData: MutableList<InspectionDTO>? = null
@@ -441,7 +434,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             //CcbRoomDatabase.getDatabase(this)?.notationDao()?.getAll()!!
         )
 
-        cQuestionnaireAdapter = QuestionnaireReviewAdapter(this, cQuestionnairesReviewList!!, notationsList)
+        cQuestionnaireAdapter = QuestionnaireReviewAdapter(this, cQuestionnairesReviewList!!, notationsList, dateInspectionParm)
         recyclerQuesionnairesInspection.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerQuesionnairesInspection.adapter = cQuestionnaireAdapter
 
@@ -944,6 +937,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     fun undraftedDatas(draftedData: DataDraftedModel) {
         val inspectionDrafted = ApiClient.gson.fromJson(draftedData.datas, InspectionDTO::class.java)
 
+        dateInspectionParm = inspectionDrafted.dateEvaluation
         // Localite
         setupSectionSelection(inspectionDrafted.section ?: "",inspectionDrafted.localiteId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.encadreur ?: "")
@@ -1191,6 +1185,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(inspectionDrafted.producteursId?.toInt()?:0)
 
 //        Commons.debugModelToJson(inspectionDrafted)
+        dateInspectionParm = inspectionDrafted.dateEvaluation
 
         setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.formateursId ?: "")

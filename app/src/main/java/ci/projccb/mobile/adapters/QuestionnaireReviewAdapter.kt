@@ -32,8 +32,8 @@ import kotlinx.android.synthetic.main.questionnaire_items_list.view.*
 class QuestionnaireReviewAdapter(
     var pContext: Context, var pQuestionnaireResponsesList: MutableList<QuestionResponseModel>,
     var pNotationsList: MutableList<NotationModel>,
+    var dateInspectionParmPass: String? = null,
 ): RecyclerView.Adapter<ViewHolder>() {
-
 
     private val LAYOUT_ONE = 0
     private val LAYOUT_TWO = 1
@@ -160,8 +160,9 @@ class QuestionnaireReviewAdapter(
             if(questionnaireResponseInfo.id_en_base?.isNullOrEmpty() == false){
                 holder.commentNonConforme.visibility = View.VISIBLE
                 holder.textInspecItemRecommandTitle.text = "Recommandations"
+
                 holder.editDateDelaiInspectItem.setOnClickListener{
-                    pContext.configDate(holder.editDateDelaiInspectItem, true, false)
+                    pContext.configDate(holder.editDateDelaiInspectItem, true, false, minDate = dateInspectionParmPass)
                     (pContext as InspectionActivity).updatProgressBar()
                 }
 

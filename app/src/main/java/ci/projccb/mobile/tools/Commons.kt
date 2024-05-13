@@ -718,7 +718,8 @@ class Commons {
             return this
         }
 
-        fun Context.configDate(viewClciked: AppCompatEditText, isDateMin: Boolean = false, isDateMax: Boolean = true) {
+        fun Context.configDate(viewClciked: AppCompatEditText, isDateMin: Boolean = false, isDateMax: Boolean = true,
+                               minDate: String? = null, maxDate: String? = null) {
             val calendar: Calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
@@ -727,8 +728,18 @@ class Commons {
                 viewClciked.setText(convertDate("${day}-${(month + 1)}-$year", false))
             }, year, month, dayOfMonth)
 
-            if(isDateMax) datePickerDialog.datePicker.maxDate = DateTime.now().millis
-            if(isDateMin) datePickerDialog.datePicker.minDate = DateTime.now().millis
+            if(isDateMax) {
+                datePickerDialog.datePicker.maxDate = DateTime.now().millis
+                maxDate?.let {
+                    datePickerDialog.datePicker.maxDate = DateTime.parse(it).millis
+                }
+            }
+            if(isDateMin) {
+                datePickerDialog.datePicker.minDate = DateTime.now().millis
+                minDate?.let {
+                    datePickerDialog.datePicker.minDate = DateTime.parse(it).millis
+                }
+            }
             datePickerDialog.show()
         }
 
