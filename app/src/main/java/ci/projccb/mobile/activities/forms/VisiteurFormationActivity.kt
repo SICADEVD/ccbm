@@ -455,7 +455,6 @@ class VisiteurFormationActivity : AppCompatActivity() {
             this?.apply {
                 section = sectionCommon.id.toString()
                 localite = localiteCommon.id.toString()
-
                 producteurId = producteurCommon.id.toString()
                 suivi_formation_id = formationCommon.id.toString()
             }
@@ -465,7 +464,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         }.map { MapEntry(it.first, it.second) }
 
-        Commons.printModelValue(formationModel as Object, mapEntries)
+//        Commons.printModelValue(formationModel as Object, mapEntries)
+//        Commons.debugModelToJson(formationModel)
 
         try {
             val intentVisitFormationPreview = Intent(this, VisiteurFormationPreviewActivity::class.java)
