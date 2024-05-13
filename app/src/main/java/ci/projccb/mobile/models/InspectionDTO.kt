@@ -71,6 +71,7 @@ data class InspectionDTOExt(
     @Expose @SerializedName("localite") var localiteId: String? = "",
     @Expose var section: String? = "",
     @Expose var localiteNom: String? = "",
+    @SerializedName("parcelle") @Expose var parcelle: String? = "",
     @SerializedName("date_evaluation") @Expose var dateEvaluation: String? = "",
     @SerializedName("formateur_id") @Expose var formateursId: String? = "",
     @SerializedName(value = "producteur", alternate = ["producteur_id"]) @Expose var producteursId: String? = "",

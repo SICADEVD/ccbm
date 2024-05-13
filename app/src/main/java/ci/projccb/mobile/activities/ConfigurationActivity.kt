@@ -1774,6 +1774,7 @@ class ConfigurationActivity : AppCompatActivity() {
                         val dataModel = InspectionDTO(
                             id = it.id,
                             uid = 0,
+                            parcelle = it.parcelle,
                             producteursId = it.producteursId,
                             formateursId = it.formateursId,
                             campagnesId = it.campagnesId,

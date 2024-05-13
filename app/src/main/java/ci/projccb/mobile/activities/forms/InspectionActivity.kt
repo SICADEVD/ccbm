@@ -953,22 +953,6 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val mQuestionsReviewToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
         cQuestionnairesReviewList = GsonUtils.fromJson(inspectionDrafted.reponseStringify, mQuestionsReviewToken)
 
-        //LogUtils.d(inspectionDrafted.certificatStr.toString())
-        //fetchQuestionnairesReview(true, inspectionDrafted.certificatStr.toString())
-
-//        val inspectionsToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
-//        var counter = 0;
-//        ApiClient.gson.fromJson<MutableList<QuestionResponseModel>>(inspectionDrafted.reponseStringify, inspectionsToken).map {
-//            if(it.isTitle == false) {
-//                inspectionDrafted.reponse[counter.toString()] = it.note!!
-//                counter++
-//            }
-//        }
-
-//        initRvList(cQuestionnairesReviewList)
-//
-        //(recyclerQuesionnairesInspection.adapter as QuestionnaireReviewAdapter).setListQuestion(cQuestionnairesReviewList?.toMutableList()?: arrayListOf())
-
         passSetupInspectModel(inspectionDrafted)
     }
 
@@ -1204,35 +1188,9 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
     private fun lauchForUpdate(inspectionDrafted: InspectionDTO) {
 
-
-//        containerApprobInspect.visibility = View.VISIBLE
-
-//        var listApprob = (AssetFileHelper.getListDataFromAsset(
-//            29,
-//            this
-//        ) as MutableList<CommonData>)
-
-//        LogUtils.d(inspectionDrafted.approbation)
-
-//        if(inspectionDrafted.approbation.equals("2")){
-//            listApprob = listApprob.filterIndexed { i, ter ->  arrayOf("0", "1").contains(i.toString()) == true }?.toMutableList()
-//        }else if(inspectionDrafted.approbation.equals("1") || inspectionDrafted.approbation.equals("3")){
-////            containerApprobInspect.visibility = View.GONE
-//            clickSaveInspection.visibility = View.GONE
-//        }
-
-//        Commons.setListenerForSpinner(this,
-//            "Décision d'approbation",
-//            spinner = selectApprobationInspection,
-//            listIem = listApprob?.map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//            },
-//            onSelected = { itemId, visibility ->
-//            })
-
         val product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(inspectionDrafted.producteursId?.toInt()?:0)
-//        val section =
+
+//        Commons.debugModelToJson(inspectionDrafted)
 
         setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.formateursId ?: "")
