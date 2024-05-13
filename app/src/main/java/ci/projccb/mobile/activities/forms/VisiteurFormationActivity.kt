@@ -250,7 +250,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val typeF = listTypeFormation?.filter { formM.typeFormationStr.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val themeF = listThemeFormation?.filter {  themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
-                "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+                "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${typeF?.size}"}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${themeF?.size}"}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${sousThemeF?.size}"}"
             }.toList() ?: listOf(),
             onChanged = {
 
@@ -267,7 +267,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val themeF = listThemeFormation?.filter { themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
 
-                formationCommon.nom = "Date de formation: ${formation.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+                formationCommon.nom = "Date de formation: ${formation.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF.toModifString(true, "\n", "-")}\nThemes: \n${themeF.toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.toModifString(true, "\n", "-")}"
                 editCurrentFormVisitForm.setText(formationCommon.nom)
                 formation.isSynced?.let {
                     if(it){
@@ -386,7 +386,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val typeF = listTypeFormation?.filter { formM.typeFormationStr.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val themeF = listThemeFormation?.filter {  themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
-                "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
+                "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${typeF?.size}"}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${themeF?.size}"}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${sousThemeF?.size}"}"
             }.toList() ?: listOf(),
             onChanged = {
 
