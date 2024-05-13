@@ -1777,6 +1777,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             parcelle = it.parcelle,
                             producteursId = it.producteursId,
                             formateursId = it.formateursId,
+                            encadreur = it.formateursId,
                             campagnesId = it.campagnesId,
                             certificatStr = GsonUtils.fromJson<MutableList<String>>(it.certificat, object : TypeToken<MutableList<String>>(){}.type).toModifString(true, ","),
                             noteInspection = it.noteInspection,
