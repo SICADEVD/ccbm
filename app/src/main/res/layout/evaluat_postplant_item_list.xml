@@ -167,7 +167,6 @@
                 android:ellipsize="end"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:maxLength="10"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textAllCaps="true"
