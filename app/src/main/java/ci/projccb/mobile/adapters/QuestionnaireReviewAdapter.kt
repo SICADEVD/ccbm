@@ -48,6 +48,8 @@ class QuestionnaireReviewAdapter(
         var textInspecItemRecommandTitle = questionnaireView.textInspecItemRecommandTitle
         var editCommentItemQuestInspect = questionnaireView.editCommentItemQuestInspect
         var commentNonConforme = questionnaireView.commentNonConforme
+        var tvLastCommentNonConform = questionnaireView.tvLastCommentNonConform
+        var lastCommentContainer = questionnaireView.lastCommentContainer
         var editDateDelaiInspectItem = questionnaireView.editDateDelaiInspectItem
         var editDateVerifInspectItem = questionnaireView.editDateVerifInspectItem
         var selectStatutsInspectionItem = questionnaireView.selectStatutsInspectionItem
@@ -159,7 +161,9 @@ class QuestionnaireReviewAdapter(
 
             if(questionnaireResponseInfo.id_en_base?.isNullOrEmpty() == false){
                 holder.commentNonConforme.visibility = View.VISIBLE
+                holder.lastCommentContainer.visibility = View.VISIBLE
                 holder.textInspecItemRecommandTitle.text = "Recommandations"
+                holder.tvLastCommentNonConform.text = questionnaireResponseInfo.commentaireLast
 
                 holder.editDateDelaiInspectItem.setOnClickListener{
                     pContext.configDate(holder.editDateDelaiInspectItem, true, false, minDate = dateInspectionParmPass)

@@ -118,6 +118,7 @@ data class NonConformingResponse(
 data class QuestionnaireNoteModel(
     @Expose val id: String? = null,
     @Expose val questionnaire_id: String? = null,
+    @Expose val commentaire: String? = null,
 ): Parcelable {
 
 }

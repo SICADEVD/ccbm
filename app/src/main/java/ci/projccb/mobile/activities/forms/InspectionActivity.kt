@@ -1030,21 +1030,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         var listenProgressOn = findViewById<ViewGroup>(android.R.id.content)
 
         if(intent.getIntExtra("sync_uid", 0) != 0){
-//            val layoutManager = recyclerQuesionnairesInspection.layoutManager
-//            val visibleChildCount = layoutManager?.childCount ?: 0
-//            val visibleChildViews = mutableListOf<View>()
-//            for (i in 0 until visibleChildCount) {
-//                val childView = layoutManager?.findViewByPosition(i)
-//                if (childView != null) {
-//                    childView.setOnClickListener{
-//                        if(intent.getIntExtra("sync_uid", 0) != 0){
-//                            updatProgressBar()
-//                        }
-//                    }
-//                }
-//            }
-//            val childView: View? = layoutManager?
-//            listenProgressOn =
+
         }else{
 
             Commons.setListenerForViewsChange(this, listenProgressOn, object :
@@ -1204,7 +1190,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 questionResponseModelList.add(QuestionResponseModel(
                     id = it.questionnaire_id?.toString(),
                     id_en_base = it.id.toString(),
-                    noteLabel = "Pas Conforme"
+                    noteLabel = "Pas Conforme",
+                    commentaireLast = it.commentaire?:"N/A"
                 ))
             }
         }
