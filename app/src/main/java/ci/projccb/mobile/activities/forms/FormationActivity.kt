@@ -1,9 +1,14 @@
 package ci.projccb.mobile.activities.forms
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,6 +19,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.FormationPreviewActivity
@@ -25,8 +31,10 @@ import ci.projccb.mobile.repositories.databases.daos.*
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.AssetFileHelper
 import ci.projccb.mobile.tools.Commons
+import ci.projccb.mobile.tools.Commons.Companion.LOCATION_PERMISSION_REQUEST_CODE
 import ci.projccb.mobile.tools.Commons.Companion.configDate
 import ci.projccb.mobile.tools.Commons.Companion.configHour
+import ci.projccb.mobile.tools.Commons.Companion.formatCorrectlyLatLongPoint
 import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
@@ -34,7 +42,10 @@ import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.FileUtils.getFileExtension
+import com.blankj.utilcode.util.PermissionUtils.FullCallback
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import id.zelory.compressor.Compressor
@@ -69,6 +80,7 @@ class FormationActivity : AppCompatActivity() {
     }
 
 
+    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var producteurIdList: MutableList<CommonData> = arrayListOf()
     private var typeFormationListCm: MutableList<CommonData> = arrayListOf()
     private var themeListCm: MutableList<CommonData> = arrayListOf()
@@ -1194,6 +1206,91 @@ class FormationActivity : AppCompatActivity() {
         alerte.show()
     }
 
+    private fun getLocation() {
+        if (isLocationPermissionGranted()) {
+            val location = getCurrentLocation()
+        } else {
+            requestLocationPermission()
+            ToastUtils.showShort("ACTIVER LA LOCALISATION DANS LA BARRE DES TACHES")
+        }
+    }
+
+    private fun getCurrentLocation(): Location? {
+        if (isLocationEnabled() && isLocationPermissionGranted()) {
+            setupLocationPoint()
+        }else{
+//            isLocationPermissionGranted()
+            ToastUtils.showShort("ACTIVER LA LOCALISATION DANS LA BARRE DES TACHES")
+        }
+        return null
+    }
+
+    private fun setupLocationPoint() {
+        try {
+            val locationResult = fusedLocationProviderClient?.lastLocation
+            locationResult?.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Set the map's camera position to the current location of the device.
+                    val location = task.result
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        // Do something with latitude and longitude
+                        editLatFormation.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                        editLongFormation.setText(longitude.toString().formatCorrectlyLatLongPoint())
+                    }else{
+                        editLatFormation.setText("0.0")
+                        editLongFormation.setText("-0.0")
+                    }
+                } else {
+                    editLatFormation.setText("0.0")
+                    editLongFormation.setText("-0.0")
+                }
+            }
+        } catch (e: SecurityException) {
+            LogUtils.e(e.message)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+
+    }
+
+    private fun isLocationPermissionGranted(): Boolean {
+
+        if(PermissionUtils.getPermissions().containsAll(listOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)) == false){
+            PermissionUtils.permission(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION).callback(object :FullCallback{
+                override fun onGranted(granted: MutableList<String>) {
+                    setupLocationPoint()
+                }
+
+                override fun onDenied(
+                    deniedForever: MutableList<String>,
+                    denied: MutableList<String>
+                ) {
+
+                }
+
+            })
+
+
+            return false
+        }
+
+        return true
+    }
+
+    private fun requestLocationPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1222,6 +1319,12 @@ class FormationActivity : AppCompatActivity() {
 
         imageDraftBtn.setOnClickListener {
             draftFormation(draftedDataFormation ?: DataDraftedModel(uid = 0))
+        }
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        clickLatLongFormation.setOnClickListener {
+            getLocation()
         }
 
         setOtherListener()

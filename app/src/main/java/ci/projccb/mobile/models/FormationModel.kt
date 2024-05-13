@@ -52,6 +52,8 @@ data class FormationModel(
     @Expose var sousThemeStr: String? = "",
     @Expose var photo_filename: String? = "",
     @Expose var rapport_filename: String? = "",
+    @Expose var latitude: String? = "",
+    @Expose var longitude: String? = "",
     var photoPath: String? = null,
     @Expose var themeNom: String? = null,
     @Expose var campagneNom: String? = null,

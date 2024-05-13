@@ -153,6 +153,8 @@ class Commons {
         var mpAudio: MediaPlayer? = null
         val CURRENCYLIB: String = "FCFA"
 
+        val LOCATION_PERMISSION_REQUEST_CODE = 1001
+
 
         val filterWithZero = InputFilter { source, start, end, dest, dstart, dend ->
             if (source != null && blockCharacterExcludeZeroSet.contains("" + source)) {

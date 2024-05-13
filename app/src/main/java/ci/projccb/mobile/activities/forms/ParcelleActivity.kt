@@ -43,6 +43,7 @@ import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -96,10 +97,55 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
     // Function to check if location permissions are granted
     private fun isLocationPermissionGranted(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+        if(PermissionUtils.getPermissions().containsAll(listOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)) == false){
+            PermissionUtils.permission(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION).callback(object :
+                PermissionUtils.FullCallback {
+                override fun onGranted(granted: MutableList<String>) {
+                    setupLocationPoint()
+                }
+
+                override fun onDenied(
+                    deniedForever: MutableList<String>,
+                    denied: MutableList<String>
+                ) {
+
+                }
+
+            })
+
+
+            return false
+        }
+
+        return true
+    }
+
+    private fun setupLocationPoint() {
+        try {
+            val locationResult = fusedLocationProviderClient?.lastLocation
+            locationResult?.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Set the map's camera position to the current location of the device.
+                    val location = task.result
+                    if (location != null) {
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        // Do something with latitude and longitude
+                        editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                        editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
+                    }else{
+                        editLatParcelle.setText("0.0")
+                        editLongParcelle.setText("-0.0")
+                    }
+                } else {
+                    editLatParcelle.setText("0.0")
+                    editLongParcelle.setText("-0.0")
+                }
+            }
+        } catch (e: SecurityException) {
+            LogUtils.e(e.message)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
     }
 
     // Function to request location permissions
@@ -125,34 +171,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
         if (isLocationEnabled() && isLocationPermissionGranted()) {
-            try {
-                val locationResult = fusedLocationProviderClient?.lastLocation
-                locationResult?.addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
-                        val location = task.result
-                        if (location != null) {
-                            val latitude = location.latitude
-                            val longitude = location.longitude
-                            // Do something with latitude and longitude
-                            editLatParcelle.setText(latitude.toString().formatCorrectlyLatLongPoint())
-                            editLongParcelle.setText(longitude.toString().formatCorrectlyLatLongPoint())
-                        }else{
-                            editLatParcelle.setText("0.0")
-                            editLongParcelle.setText("-0.0")
-                        }
-                    } else {
-                        editLatParcelle.setText("0.0")
-                        editLongParcelle.setText("-0.0")
-                    }
-                }
-            } catch (e: SecurityException) {
-                LogUtils.e(e.message)
-                FirebaseCrashlytics.getInstance().recordException(e)
-            }
-
+            setupLocationPoint()
         }else{
-            requestLocationPermission()
+//            isLocationPermissionGranted()
             ToastUtils.showShort("ACTIVER LA LOCALISATION DANS LA BARRE DES TACHES")
         }
         return null
