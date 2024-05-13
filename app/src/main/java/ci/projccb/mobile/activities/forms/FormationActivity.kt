@@ -52,6 +52,7 @@ import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import kotlinx.android.synthetic.main.activity_formation.*
+import kotlinx.android.synthetic.main.activity_livraison_central.selectEntrepriseLivraisonCentral
 import kotlinx.android.synthetic.main.activity_producteur.containerPrecisionTitreProducteur
 import kotlinx.android.synthetic.main.activity_producteur.imagePhotoProfilProducteur
 import kotlinx.android.synthetic.main.activity_producteur.selectTitreDUProducteur
@@ -124,6 +125,7 @@ class FormationActivity : AppCompatActivity() {
     val sectionCommon = CommonData()
     val localiteCommon = CommonData()
     val staffCommon = CommonData()
+    val entrepriseCommon = CommonData()
 
     var photoPath = ""
     var fileGlobal: File? = null
@@ -487,6 +489,22 @@ class FormationActivity : AppCompatActivity() {
 //            onSelected = { itemId, visibility ->
 //            })
 
+        val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
+        Commons.setListenerForSpinner(this,
+            "Choix de l'entreprise de formateur",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectEntrepriseFormation,
+//            currentVal = entrepList?.filter { it.id.toString() == formationDrafted?.entreprise_id }?.let {
+//                if(it.size > 0) it.first().nom else null
+//            },
+            listIem = entrepList?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+                entrepriseCommon.nom = entrepList!![it].nom
+                entrepriseCommon.id = entrepList[it].id
+            },
+            onSelected = { itemId, visibility ->
+            })
+
         Commons.setListenerForSpinner(this,
             getString(R.string.lieu_de_la_formation),
             spinner = selectLieuFormation,
@@ -612,6 +630,7 @@ class FormationActivity : AppCompatActivity() {
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 staffId = staffCommon.id.toString()
+                entreprise_id = entrepriseCommon.id.toString()
 
                 producteursIdStr = GsonUtils.toJson(producteurIdList.map { it.id.toString() }.toMutableList())
                 typeFormationStr = GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }.toMutableList())
@@ -880,6 +899,7 @@ class FormationActivity : AppCompatActivity() {
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 staffId = staffCommon.id.toString()
+                entreprise_id = entrepriseCommon.id.toString()
 
                 producteursIdStr = GsonUtils.toJson(producteurIdList.map { it.id.toString() }.toMutableList())
                 typeFormationStr = GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }.toMutableList())
@@ -934,6 +954,23 @@ class FormationActivity : AppCompatActivity() {
         var selectStr: MutableList<String> = GsonUtils.fromJson(formationDrafted.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type)
         var selectProd = producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
 //        LogUtils.d(selectStr, selectProd)
+
+        val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
+        Commons.setListenerForSpinner(this,
+            "Choix de l'entreprise de formateur",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectEntrepriseFormation,
+            currentVal = entrepList?.filter { it.id.toString() == formationDrafted?.entreprise_id }?.let {
+                if(it.size > 0) it.first().nom else null
+            },
+            listIem = entrepList?.map { it.nom }
+                ?.toList() ?: listOf(),
+            onChanged = {
+                entrepriseCommon.nom = entrepList!![it].nom
+                entrepriseCommon.id = entrepList[it].id
+            },
+            onSelected = { itemId, visibility ->
+            })
+
         Commons.setupItemMultiSelection(this, selectProducteurFormation,
             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
             producteurList,

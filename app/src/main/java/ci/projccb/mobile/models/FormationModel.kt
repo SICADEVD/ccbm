@@ -46,6 +46,7 @@ data class FormationModel(
     @Expose @SerializedName("photo_formation") var photoFormation: String? = "",
     @Expose @SerializedName("rapport_formation") var rapportFormation: String? = "",
     @Expose var section: String = "",
+    @Expose var entreprise_id: String = "",
     @Expose var producteursIdStr: String = "",
     @Expose var typeFormationStr: String = "",
     @Expose var themeStr: String? = "",
