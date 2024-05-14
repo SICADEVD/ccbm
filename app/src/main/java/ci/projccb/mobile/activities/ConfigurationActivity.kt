@@ -2155,7 +2155,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 approvisionnementDao?.deleteAll()
 
                 try {
-                    val clientArbreListData = ApiClient.apiService.getApprovisionnement()
+                    val clientArbreListData = ApiClient.apiService.getApprovisionnement(table = CommonData(cooperativeIde = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID)))
 
                     val responseArbreListData: Response<MutableList<ApprovisionnementModel>> = clientArbreListData.execute()
                     val datasArbreListList: MutableList<ApprovisionnementModel>? = responseArbreListData.body()
@@ -2164,10 +2164,12 @@ class ConfigurationActivity : AppCompatActivity() {
                         val dataArbreListModel = ApprovisionnementModel(
                             uid = 0,
                             id = it.id,
-                            section_id = it.section_id,
-                            agroapprovisionnement_id = it.agroapprovisionnement_id,
-                            bon_livraison = it.bon_livraison,
+                            agroapprovisionnement_section_id = it.agroapprovisionnement_section_id,
+                            agroespecesarbre_id = it.agroespecesarbre_id,
                             total = it.total,
+                            total_restant = it.total_restant,
+                            section_id = it.section_id,
+                            bon_livraison = it.bon_livraison,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                         )
 

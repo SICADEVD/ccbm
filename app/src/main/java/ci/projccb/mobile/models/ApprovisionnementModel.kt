@@ -20,10 +20,12 @@ import com.google.gson.annotations.Expose
 data class ApprovisionnementModel (
     @PrimaryKey(autoGenerate = true) val uid: Int,
     @Expose val id: Int?,
-    @Expose val campagne_id: String? = null,
-    @Expose val agroapprovisionnement_id: String? = null,
-    @Expose val section_id: String? = null,
+    @Expose val agroapprovisionnement_section_id: String? = null,
+    @Expose val agroespecesarbre_id: String? = null,
     @Expose val total: String? = null,
+    @Expose val total_restant: String? = null,
+    @Expose val section_id: String? = null,
+    @Expose val campagne_id: String? = null,
     @Expose val bon_livraison: String? = null,
     @Expose val agentId: String? = "0"
 ) {

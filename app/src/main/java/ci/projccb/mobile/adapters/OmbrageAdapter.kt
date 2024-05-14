@@ -512,6 +512,7 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
         holder.item_id.text = multiItModel.id.toString()
         holder.item_title.text =  multiItModel.nom.plus(" /${multiItModel.nomScientifique}")
         holder.item_limit.text =  multiItModel.limited_count
+        holder.item_insection.text =  multiItModel.totalinsection
         holder.item_distrib.setText(multiItModel.qte_distribue)
 
         holder.item_distrib.doOnTextChanged() { text, start, before, count ->
@@ -521,23 +522,6 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
 
         }
 
-
-//        holder.deleteMulti.setOnClickListener {
-//            LogUtils.e(Commons.TAG, "position $position")
-//            LogUtils.e(Commons.TAG, "Adapter position ${holder.adapterPosition}")
-//
-//            try {
-//                if (listItem?.size == 1) {
-//                    listItem?.removeAt(0)
-//                    notifyItemRemoved(0)
-//                } else {
-//                    listItem?.removeAt(holder.adapterPosition)
-//                    notifyItemRemoved(holder.adapterPosition)
-//                }
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
-//        }
     }
 
 
@@ -557,6 +541,7 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
         val item_id = multiItView.findViewById<TextView>(R.id.item_dist_id)
         val item_title = multiItView.findViewById<TextView>(R.id.item_dist_title)
         val item_limit = multiItView.findViewById<TextView>(R.id.item_dist_limit)
+        val item_insection = multiItView.findViewById<TextView>(R.id.item_insection)
         val item_distrib = multiItView.findViewById<EditText>(R.id.item_dist_quant)
     }
 }

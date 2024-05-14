@@ -3,6 +3,7 @@ package ci.projccb.mobile.models
 import android.os.Parcelable
 import androidx.room.Dao
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -34,6 +35,7 @@ data class ArbreModel(
     @Expose var limited_count: String? = "0",
 ): Parcelable {
 
+    @Ignore var totalinsection: String? = "0"
 }
 
 @Dao

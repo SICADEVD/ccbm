@@ -21,7 +21,7 @@
             android:tag="arbreId"
             android:id="@+id/item_dist_id"
             android:textColor="@color/text_color_white"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -30,7 +30,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="5"
+            android:layout_weight="3.5"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
@@ -44,7 +44,7 @@
                 android:textFontWeight="500"
                 android:textColor="@color/text_color_white"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_10ssp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Acajou bassam"
@@ -63,9 +63,9 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:tag="arbreLimit"
-                android:id="@+id/item_dist_limit"
-                android:textColor="@color/red_title"
-                android:textSize="@dimen/_15ssp"
+                android:id="@+id/item_insection"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_12ssp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="51"
@@ -76,6 +76,28 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Space
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="wrap_content"></Space>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:tag="arbreLimit"
+                android:id="@+id/item_dist_limit"
+                android:textColor="@color/red_title"
+                android:textSize="@dimen/_12ssp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="51"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 

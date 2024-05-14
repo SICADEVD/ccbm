@@ -100,28 +100,39 @@ class DistributionArbreActivity : AppCompatActivity() {
         evaluationsList: MutableList<EvaluationArbreModel>?
     ) {
         //LogUtils.d(evaluationsList, producteur_id)
+        val listArbreApprov = CcbRoomDatabase.getDatabase(this@DistributionArbreActivity)?.approvisionnementDao()?.getApproBySect(sectionCommon.id)
         val getAllElavOfProd = evaluationsList?.filter { it.producteurId == producteur_id }
-        //LogUtils.d(getAllElavOfProd)
+        val getAllElavOfProdIds = getAllElavOfProd?.first()
+
+        var prodNotEvalAndArbrInSect = listArbreApprov?.filter { getAllElavOfProdIds?.especesarbreStr?.contains(it.agroespecesarbre_id.toString()) == false }?.toMutableList()
+//        LogUtils.d(getAllElavOfProdIds?.especesarbreStr)
 
         if(getAllElavOfProd?.isEmpty() == false){
 
-            val listArbreEvalAndTotaux = mutableMapOf<String, Int>()
+            val listArbreEvalAndTotaux = mutableMapOf<String, List<String>>()
             getAllElavOfProd.map {
                 val keyy : MutableList<String> = GsonUtils.fromJson(it.especesarbreStr, object : TypeToken<MutableList<String>>(){}.type)
                 val valuey : MutableList<String> = GsonUtils.fromJson(it.quantiteStr, object : TypeToken<MutableList<String>>(){}.type)
 
                 keyy.forEachIndexed { index, s ->
-                    listArbreEvalAndTotaux.put(s, valuey[index].toInt())
+                    val inSection = listArbreApprov?.filter { it.agroespecesarbre_id.equals(s) }?.let { if(it.size>0) it.first().total else "0" }.toString()
+                    listArbreEvalAndTotaux.put(s,
+                        listOf<String>(valuey[index].toString(),inSection)
+                    )
                 }
             }
-            LogUtils.d(listArbreEvalAndTotaux)
+//            LogUtils.d(prodNotEvalAndArbrInSect)
+            prodNotEvalAndArbrInSect?.forEach {
+                listArbreEvalAndTotaux.put(it.agroespecesarbre_id.toString(), listOf<String>("0",it.total.toString()))
+            }
 
             listArbreAndState = listArbreAndState?.map {
                 listArbreEvalAndTotaux.get(it.id.toString())?.let { value ->
-                    it.limited_count = value.toString()
+                    it.limited_count = value.get(0).toString()
+                    it.totalinsection = value.get(1).toString()
                 }
                 it
-            }?.filter { it.limited_count.equals("0") == false }?.toMutableList()
+            }?.filter { it.totalinsection.equals("0") == false }?.toMutableList()
 
         }else{
 
@@ -541,7 +552,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         producteursList?.forEach {
             if( prodEvaluationsList?.contains(it.id?.toString()) == true ) producteursList2.add(it)
         }
-        LogUtils.d(producteursList2)
+//        LogUtils.d(producteursList2)
         producteursList = producteursList2
 
         var libItem: String? = null

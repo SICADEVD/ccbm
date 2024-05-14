@@ -17,6 +17,7 @@ data class CommonData (
     @Expose val userid: Int? = null,
     @Expose val typeFormationId: Int? = null,
     @Expose @SerializedName(value = "cooperative_id", alternate = ["cooperatives_id"]) val cooperativeId: Int? = null,
+    @Expose @SerializedName(value = "cooperativeid") val cooperativeIde: Int? = null,
     @Expose @SerializedName(value = "cooperativesid") val cooperativeIdex: Int? = null
 ) {
     @Ignore @Expose
