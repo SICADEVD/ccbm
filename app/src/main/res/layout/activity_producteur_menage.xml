@@ -1615,45 +1615,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:weightSum="10"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:textColor="@color/text_color_white"
-                            android:layout_width="0dp"
-                            android:layout_weight="4"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="Quelle activité ?"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="6"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_background">
-
-                            <Space
-                                android:layout_width="@dimen/_5sdp"
-                                android:layout_height="@dimen/_10sdp" />
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                style="@style/SpinnerItemStyle"
-                                android:tag="typeActivite"
-                                android:id="@+id/selectFemmeActiviteDefMenage"
-                                android:layout_width="match_parent"
-                                android:entries="@array/femmeActivite"
-                                android:layout_height="@dimen/_37sdp"
-                                android:spinnerMode="dialog" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/containerFemmeActivitPrecisMenage"
@@ -1664,46 +1625,49 @@
                         android:orientation="vertical"
                         >
 
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:weightSum="10"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:textColor="@color/text_color_white"
+                                android:layout_width="0dp"
+                                android:layout_weight="4"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Quelle activité ?"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="6"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    style="@style/SpinnerItemStyle"
+                                    android:tag="typeActivite"
+                                    android:id="@+id/selectFemmeActiviteDefMenage"
+                                    android:layout_width="match_parent"
+                                    android:entries="@array/femmeActivite"
+                                    android:layout_height="@dimen/_37sdp"
+                                    android:spinnerMode="dialog" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                         <Space
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_10sdp" />
-
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center_vertical"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:weightSum="10">-->
-
-<!--                            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                                android:textColor="@color/text_color_white"-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="3.5"-->
-<!--                                android:text="Précisez: "-->
-<!--                                android:paddingLeft="@dimen/_10sdp"-->
-<!--                                android:textStyle="bold" />-->
-
-<!--                            <LinearLayout-->
-<!--                                android:layout_width="0dp"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_weight="6.5"-->
-<!--                                android:background="@drawable/rounded_background">-->
-
-<!--                                <Space-->
-<!--                                    android:layout_width="@dimen/_5sdp"-->
-<!--                                    android:layout_height="@dimen/_10sdp" />-->
-
-<!--                                <androidx.appcompat.widget.AppCompatSpinner-->
-<!--                                    android:entries="@array/agricoleActivite"-->
-<!--                                    android:id="@+id/selectFemmeActivitPrecisMenage"-->
-<!--                                    android:layout_width="match_parent"-->
-<!--                                    android:layout_height="@dimen/_37sdp"-->
-<!--                                    android:spinnerMode="dialog" />-->
-
-<!--                            </LinearLayout>-->
-
-<!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:id="@+id/containerFemmeAgricoleMenage"

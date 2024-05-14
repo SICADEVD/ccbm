@@ -23,6 +23,7 @@ import ci.projccb.mobile.tools.Commons.Companion.provideDatasSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.provideStringSpinnerSelection
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Commons.Companion.toUtilInt
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
@@ -653,6 +654,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 isSynced = false
                 //agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
 
+                sources_eaux_id = GsonUtils.toJson(selectEauPotablMenage.selectedStrings)
                 sources_energies_id = GsonUtils.toJson(selectEnergieMenage.selectedStrings)
                 ordures_menageres_id = GsonUtils.toJson(selectOrdureMenagMenage.selectedStrings)
             }
@@ -660,7 +662,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         val mapEntries: List<MapEntry>? = itemModel?.second?.map { MapEntry(it.first, it.second) }
 
-        Commons.printModelValue(producteurMenage as Object, mapEntries)
+        Commons.debugModelToJson(producteurMenage)
 
         try {
             val intentMenagePreview = Intent(this, MenagePreviewActivity::class.java)
@@ -676,39 +678,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
     private fun getProducteurMenageObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()):  Pair<ProducteurMenageModel, MutableList<Pair<String, String>>>? {
         var isMissingDial2 = false
 
-//        return  ProducteurMenageModel(
-//            uid = 0,
-//            activiteFemme = femmeActivite,
-//            //boisChauffe = editNbreBoisSemaineMenage.text?.trim().toString(),
-//            sources_energies_id = sourceEnergie,
-//            ordures_menageres_id = ordureMenager,
-//            separationMenage = dechetYesNo,
-//            eauxToillette = toiletteEau,
-//            eauxVaisselle = vaisselleEau,
-//            wc = wcYesNo,
-//            sources_eaux_id = eauPotable,
-//            machine = machinePulverisationYesNo,
-//            type_machines_id = machinePulverisation,
-//            garde_machines_id = machinePulveKeeper,
-//            equipements = equipementProtectionYesNo,
-//            producteurNomPrenoms = producteurNomPrenoms,
-//            traitementChamps = traitementSelfYesNo,
-//            nomPersonneTraitant = traitementHolderNom,
-//            empruntMachine = machineEmpruntYesNo,
-//            gardeEmpruntMachine = machineEmpruntKeeper,
-//            champFemme = femmeActiviteYesNo,
-//            nomActiviteFemme = femmeActivite,
-//            superficieCacaoFemme = femmeCacaoSuperficie,
-//            nombreHectareFemme = donFemmeCacaoSuperficie,
-//            //numeroPersonneTraitant = editChampsNoNumeroMenage.text.toString().trim(),
-//            quartier = quartierNom,
-//            producteurs_id = producteurId,
-//            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
-//            origin = "local",
-//            codeProducteur = producteurCode,
-//            localiteNom = localiteNom
-//        )
-        var itemList = getSetupProducteurMenageModel(ProducteurMenageModel(uid = 0, agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),  origin = "local",), mutableListOf<Pair<String,String>>())
+        var itemList = getSetupProducteurMenageModel(ProducteurMenageModel(uid = 0,
+            producteurNomPrenoms = producteurCommon.nom,
+            agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),  origin = "local",), mutableListOf<Pair<String,String>>())
         //LogUtils.d(.toString())
         var allField = itemList.second
         var isMissing = false
@@ -841,6 +813,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 producteurs_id = producteurCommon.id.toString()
                 isSynced = false
 
+                sources_eaux_id = GsonUtils.toJson(selectEauPotablMenage.selectedStrings)
                 sources_energies_id = GsonUtils.toJson(selectEnergieMenage.selectedStrings)
                 ordures_menageres_id = GsonUtils.toJson(selectOrdureMenagMenage.selectedStrings)
             }
@@ -887,59 +860,29 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         setupSectionSelection(menageUndrafted.section, menageUndrafted.localite, menageUndrafted.producteurs_id)
 
-//        Commons.setListenerForSpinner(this,
-//            "Choix le quartier",
-//            "La liste des quartiers semble vide, veuillez procéder à la synchronisation des données svp.",
-//            spinner = selectQuartierMenage,
-//            currentVal = menageUndrafted.quartier,
-//            listIem = listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//
-//            })
-
-//        Commons.setListenerForSpinner(this,
-//            "Choix de l'énergie",
-//            "La liste des énergies semble vide, veuillez procéder à la synchronisation des données svp.",
-//            spinner = selectEnergieMenage,
-//            currentVal = menageUndrafted.sources_energies_id,
-//            itemChanged = arrayListOf(Pair(1, "Bois de chauffe")),
-//            listIem = (AssetFileHelper.getListDataFromAsset(
-//                17,
-//                this
-//            ) as MutableList<SourceEnergieModel>)?.map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//                if(itemId==1){
-//                    containerNbreDBoisMenage.visibility = visibility
-//                }
-//            })
-
         setupSourceEnergieMultiSelection(
             GsonUtils.fromJson(menageUndrafted.sources_energies_id, object: TypeToken<MutableList<String>>(){}.type )
         )
 
-//        Commons.setListenerForSpinner(this,
-//            "Choix des ordures",
-//            "La liste des ordures ménagères semble vide, veuillez procéder à la synchronisation des données svp.",
-//            spinner = selectOrdureMenagMenage,
-//            currentVal = menageUndrafted.ordures_menageres_id,
-//            listIem = (AssetFileHelper.getListDataFromAsset(
-//                7,
-//                this
-//            ) as MutableList<OrdureMenagereModel>)?.map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//
-//            })
+
+        var selectStr: MutableList<String> = mutableListOf()
+        if(menageUndrafted.sources_eaux_id?.contains("[") == true){
+            selectStr = GsonUtils.fromJson(menageUndrafted.sources_eaux_id, object : TypeToken<MutableList<String>>(){}.type)
+        }else{
+            selectStr.addAll(menageUndrafted?.sources_eaux_id?.split(",")?.toMutableList()?: arrayListOf())
+        }
+        Commons.setupItemMultiSelection(this, selectEauPotablMenage, getString(R.string.o_procurez_vous_l_eau_potable),
+            (AssetFileHelper.getListDataFromAsset(
+                16,
+                this
+            ) as MutableList<SourceEauModel>)?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf(),
+            currentList = selectStr){
+
+//                listSelectEauPotableList.clear()
+//                listSelectEauPotableList.addAll(it?.toMutableList() ?: arrayListOf())
+            if(it.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE else containerAutreSourceEauMenage.visibility = View.GONE
+        }
+
 
         setupOrdurMenagMultiSelection(
             GsonUtils.fromJson(menageUndrafted.ordures_menageres_id, object: TypeToken<MutableList<String>>(){}.type )
@@ -1075,6 +1018,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             getString(R.string.quelle_activit),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectFemmeActiviteDefMenage,
+            currentVal = menageUndrafted.typeActivite,
             itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
             listIem = resources.getStringArray(R.array.femmeActivite)
                 ?.toList() ?: listOf(),
@@ -1085,13 +1029,15 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 if (itemId == 1) {
                     //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
                     containerFemmeAgricoleMenage.visibility = visibility
-                    editSuperfDefFemmActMenage.visibility = visibility
+                    editSuperfDefFemmActMenage.visibility = View.VISIBLE
                     //containerFemmeNonAgricoleMenage.visibility = View.GONE
+                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr), currentVal = menageUndrafted.nomActiviteAgricole)
                 }else if(itemId == 2){
                     //setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
                     //containerFemmeNonAgricoleMenage.visibility = visibility
                     containerFemmeAgricoleMenage.visibility = visibility
                     editSuperfDefFemmActMenage.visibility = View.GONE
+                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteNAgr), currentVal = menageUndrafted.nomActiviteAgricole)
                 }
             })
 
@@ -1320,35 +1266,6 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //        }
     }
 
-    fun setupSourceEauPotableMultiSelection(currentList : MutableList<String> = mutableListOf()) {
-        val eauPotableList = AssetFileHelper.getListDataFromAsset(16, this) as MutableList<SourceEauModel>
-        var listSelectEauPotablePosList = mutableListOf<Int>()
-        var listSelectEauPotableList = mutableListOf<String>()
-
-        var indItem = 0
-        (eauPotableList)?.forEach {
-            if(currentList.size > 0){ if(currentList.contains(it.nom)) listSelectEauPotablePosList.add(indItem) }
-            indItem++
-        }
-
-        selectEauPotablMenage.setTitle(getString(R.string.o_procurez_vous_l_eau_potable))
-        selectEauPotablMenage.setItems(eauPotableList.map { it.nom })
-        //multiSelectSpinner.hasNoneOption(true)
-        selectEauPotablMenage.setSelection(listSelectEauPotablePosList.toIntArray())
-        selectEauPotablMenage.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
-            override fun selectedIndices(indices: MutableList<Int>?) {
-                listSelectEauPotablePosList.clear()
-                listSelectEauPotablePosList.addAll(indices?.toMutableList() ?: mutableListOf())
-            }
-
-            override fun selectedStrings(strings: MutableList<String>?) {
-                listSelectEauPotableList.clear()
-                listSelectEauPotableList.addAll(strings?.toMutableList() ?: arrayListOf())
-                if(listSelectEauPotableList.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE else containerAutreSourceEauMenage.visibility = View.GONE
-            }
-
-        })
-    }
 
     private fun setupPrecisionActiv(stringArray: Array<String>, currentVal: String? = null) {
 
@@ -1481,7 +1398,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     private fun setAllSelection() {
 
-        setupSourceEauPotableMultiSelection()
+//        setupSourceEauPotableMultiSelection()
 
         setupSectionSelection()
 
@@ -1550,6 +1467,18 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
             })
+
+        Commons.setupItemMultiSelection(this, selectEauPotablMenage, getString(R.string.o_procurez_vous_l_eau_potable),
+            (AssetFileHelper.getListDataFromAsset(
+                16,
+                this
+            ) as MutableList<SourceEauModel>)?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf() ){
+
+//                listSelectEauPotableList.clear()
+//                listSelectEauPotableList.addAll(it?.toMutableList() ?: arrayListOf())
+                if(it.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE else containerAutreSourceEauMenage.visibility = View.GONE
+        }
+
 
         Commons.setListenerForSpinner(this,
             getString(R.string.type_d_eaux_de_vaisselle),
@@ -1667,7 +1596,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
-                LogUtils.d(itemId, visibility)
+//                LogUtils.d(itemId, visibility)
                 if (itemId == 1) {
                     //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
                     containerFemmeAgricoleMenage.visibility = visibility
