@@ -406,12 +406,13 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                         id_en_base = questionFromServ.id_en_base,
                         label = dbQuestion.libelle!!,
                         noteLabel = questionFromServ.noteLabel,
+                        commentaireLast = questionFromServ.commentaireLast,
                         note = "-1",
                         reponseId = 1,
                         isTitle = false
                     )
 
-                    LogUtils.d(questionResponseInfoModel)
+//                    LogUtils.d(questionResponseInfoModel)
 
                     questionResponseList.add(questionResponseInfoModel)
                     cQuestionnairesReviewList?.add(questionResponseInfoModel)
@@ -938,6 +939,12 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val inspectionDrafted = ApiClient.gson.fromJson(draftedData.datas, InspectionDTO::class.java)
 
         dateInspectionParm = inspectionDrafted.dateEvaluation
+
+        if(inspectionDrafted.parcelle.equals("0")){
+            var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+                ?.getParcellesProducteur(producteurId = inspectionDrafted.producteursId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+            inspectionDrafted.parcelle = parcellesList?.let { if(it.size>0) it.first().id.toString() else "0" }?.toString()
+        }
         // Localite
         setupSectionSelection(inspectionDrafted.section ?: "",inspectionDrafted.localiteId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.encadreur ?: "")
@@ -1000,7 +1007,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         if (intent.getStringExtra("from") != null) {
 
-            LogUtils.d(intent.getStringExtra("from"))
+//            LogUtils.d(intent.getStringExtra("from"))
             if(intent.getIntExtra("drafted_uid", 0) != 0){
                 LogUtils.e("From draft")
                 fromAction = intent.getStringExtra("from") ?: ""
@@ -1173,6 +1180,14 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 //        Commons.debugModelToJson(inspectionDrafted)
         dateInspectionParm = inspectionDrafted.dateEvaluation
 
+        if(inspectionDrafted.parcelle.equals("0") || inspectionDrafted.parcelle == null){
+            var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
+                ?.getParcellesProducteur(producteurId = inspectionDrafted.producteursId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+            inspectionDrafted.parcelle = parcellesList?.let { if(it.size>0) it.first().id.toString() else "0" }?.toString()
+//            LogUtils.d(parcellesList)
+        }
+        LogUtils.d(inspectionDrafted.parcelle, inspectionDrafted.producteursId)
+
         setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.formateursId ?: "")
 
@@ -1184,9 +1199,10 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         val questNonConformList = GsonUtils.fromJson<MutableList<QuestionnaireNoteModel>>(inspectionDrafted.reponse_non_conformeStr, quest_non_conformeOrnon_applicTok)
         val questNonApplicableList = GsonUtils.fromJson<MutableList<QuestionnaireNoteModel>>(inspectionDrafted.reponse_non_applicaleStr, quest_non_conformeOrnon_applicTok)
 
-        LogUtils.d(questNonConformList)
+//        LogUtils.d(questNonConformList)
         questNonConformList?.let { item ->
             item.forEach {
+                LogUtils.d(it.commentaire)
                 questionResponseModelList.add(QuestionResponseModel(
                     id = it.questionnaire_id?.toString(),
                     id_en_base = it.id.toString(),

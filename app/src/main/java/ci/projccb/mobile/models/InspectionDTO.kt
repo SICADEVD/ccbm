@@ -31,7 +31,7 @@ data class InspectionDTO(
     @Expose var localiteNom: String? = "",
     @SerializedName("date_evaluation") @Expose var dateEvaluation: String? = "",
     @SerializedName("formateur_id") @Expose var formateursId: String? = "",
-    @SerializedName("parcelle") @Expose var parcelle: String? = "",
+    @SerializedName(value = "parcelle", alternate = ["parcelle_id"]) @Expose var parcelle: String? = "",
     @SerializedName(value = "producteur", alternate = ["producteur_id"]) @Expose var producteursId: String? = "",
     @SerializedName("producteurs_nom") @Expose var producteurNomPrenoms: String? = "",
     @SerializedName("parcelle_nom") @Expose var parcelleLib: String? = "",

@@ -1765,7 +1765,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 inspectionDao?.deleteAll()
 
                 try {
-                    val clientData = ApiClient.apiService.getInspections()
+                    val clientData = ApiClient.apiService.getInspections(table = CommonData(cooperativeIde = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID)))
                     val responseData: Response<MutableList<InspectionDTOExt>> = clientData.execute()
                     val datasList: MutableList<InspectionDTOExt>? = responseData.body()
 

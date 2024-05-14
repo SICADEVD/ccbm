@@ -85,7 +85,7 @@ interface ApiService {
     fun getApplicateurs(@Body table: CommonData): Call<MutableList<ApplicateurModel>>
 
     @POST("getinspections")
-    fun getInspections(): Call<MutableList<InspectionDTOExt>>
+    fun getInspections(@Body table: CommonData): Call<MutableList<InspectionDTOExt>>
 
     @POST("getapprovisionnementsection")
     fun getApprovisionnement(@Body table: CommonData): Call<MutableList<ApprovisionnementModel>>

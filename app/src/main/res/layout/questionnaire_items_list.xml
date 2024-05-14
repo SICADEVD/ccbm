@@ -56,13 +56,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/_12sdp"
-            android:text="Commentaire:"
+            android:text="Commentaire: "
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLastCommentNonConform"
             android:textColor="@color/text_color_white"
             android:layout_width="0dp"
+            android:paddingLeft="@dimen/_5sdp"
             android:layout_height="wrap_content"
             android:text="Content Producteur"
             android:textSize="@dimen/page_input_title_dim11"
