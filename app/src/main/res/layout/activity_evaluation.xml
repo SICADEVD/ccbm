@@ -376,7 +376,6 @@
                     tools:text="20"
                     android:hint="1000"
                     android:ellipsize="end"
-                    android:textAllCaps="true"
                     android:textSize="@dimen/page_input_content_dim13"
                     android:layout_width="0dp"
                     android:inputType="number"

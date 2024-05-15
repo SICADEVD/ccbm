@@ -1374,7 +1374,6 @@ android:textColor="@color/text_color_white"
                             android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
-                            android:textAllCaps="true"
                             android:textSize="@dimen/_13ssp"
                             tools:text="11" />
 

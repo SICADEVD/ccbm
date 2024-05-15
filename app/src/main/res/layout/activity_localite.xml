@@ -1095,7 +1095,6 @@ android:textColor="@color/text_color_white"
                         android:digits="0123456789"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
                         android:textSize="@dimen/page_input_content_dim13"/>
 
                 </LinearLayout>
@@ -1126,7 +1125,6 @@ android:textColor="@color/text_color_white"
                         android:inputType="number"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
-                        android:textAllCaps="true"
                         android:textSize="@dimen/page_input_content_dim13"
                         android:hint="Longitude"/>
 
