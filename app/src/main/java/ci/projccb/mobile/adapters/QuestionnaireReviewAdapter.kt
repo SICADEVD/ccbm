@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.questionnaire_items_list.view.*
 class QuestionnaireReviewAdapter(
     var pContext: Context, var pQuestionnaireResponsesList: MutableList<QuestionResponseModel>,
     var pNotationsList: MutableList<NotationModel>,
-): RecyclerView.Adapter<ViewHolder>() {
+) : RecyclerView.Adapter<ViewHolder>() {
 
 
     private val LAYOUT_ONE = 0
@@ -41,7 +41,7 @@ class QuestionnaireReviewAdapter(
     lateinit var questionsListener: RecyclerItemListener<QuestionResponseModel>
 
 
-    class QuesionnaireHolder(questionnaireView: View): ViewHolder(questionnaireView) {
+    class QuesionnaireHolder(questionnaireView: View) : ViewHolder(questionnaireView) {
         var labelQuestionInspection = questionnaireView.labelQuestionInspectionItem
         var selectionNotationInspection = questionnaireView.selectResponseInspectionItem
         var commentContainer = questionnaireView.commentContainer
@@ -54,7 +54,8 @@ class QuestionnaireReviewAdapter(
     }
 
 
-    class QuesionnaireTitleHolder(questionnaireTitleView: View): ViewHolder(questionnaireTitleView) {
+    class QuesionnaireTitleHolder(questionnaireTitleView: View) :
+        ViewHolder(questionnaireTitleView) {
         var labelHeaderInspection = questionnaireTitleView.labelHeaderInspectionItem
     }
 
@@ -64,10 +65,12 @@ class QuestionnaireReviewAdapter(
         var viewHolder: ViewHolder? = null
 
         if (viewType == LAYOUT_ONE) {
-            mQuestionnaireView = LayoutInflater.from(parent.context).inflate(R.layout.inspection_header_layout, parent, false)
+            mQuestionnaireView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.inspection_header_layout, parent, false)
             viewHolder = QuesionnaireTitleHolder(mQuestionnaireView)
         } else {
-            mQuestionnaireView = LayoutInflater.from(parent.context).inflate(R.layout.questionnaire_items_list, parent, false)
+            mQuestionnaireView = LayoutInflater.from(parent.context)
+                .inflate(R.layout.questionnaire_items_list, parent, false)
             viewHolder = QuesionnaireHolder(mQuestionnaireView)
         }
 
@@ -92,41 +95,56 @@ class QuestionnaireReviewAdapter(
         val questionnaireResponseInfo = pQuestionnaireResponsesList[position]
 
         if (holder.itemViewType == LAYOUT_ONE) {
-            val questionnaireTitleHolder: QuesionnaireTitleHolder = holder as QuesionnaireTitleHolder
+            val questionnaireTitleHolder: QuesionnaireTitleHolder =
+                holder as QuesionnaireTitleHolder
             questionnaireTitleHolder.labelHeaderInspection.text = questionnaireResponseInfo.label
         } else {
             val questionnaireInfosHolder: QuesionnaireHolder = holder as QuesionnaireHolder
             questionnaireInfosHolder.selectionNotationInspection?.adapter = null
 
-            val notationAdapter = ArrayAdapter(pContext, android.R.layout.simple_dropdown_item_1line, pNotationsList)
-            questionnaireInfosHolder.selectionNotationInspection.selectResponseInspectionItem.adapter = notationAdapter
+            val notationAdapter =
+                ArrayAdapter(pContext, android.R.layout.simple_dropdown_item_1line, pNotationsList)
+            questionnaireInfosHolder.selectionNotationInspection.selectResponseInspectionItem.adapter =
+                notationAdapter
 
             //var questionnaireResponseInfoExt: QuestionResponseModel? = null
 
-            questionnaireInfosHolder.selectionNotationInspection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(adapterView: AdapterView<*>, view: View, positionSelection: Int, l: Long) {
-                    val selectedNote = pNotationsList[positionSelection]
-                    questionnaireResponseInfo.id = questionnaireResponseInfo.id.toString()
-                    questionnaireResponseInfo.note = selectedNote.point?.toString()
-                    questionnaireResponseInfo.reponseId = positionSelection
-                    questionnaireResponseInfo.noteLabel = selectedNote.nom
-                    //  LogUtils.d("${questionnaireResponseInfo.reponseId}")
-                    //  questionnaireResponseInfoExt = questionnaireResponseInfo
-                    if(selectedNote.nom?.equals("Conforme", ignoreCase = true) == false && selectedNote.nom?.equals("Choisir la note", ignoreCase = true) == false){
-                        holder.commentContainer.visibility = View.VISIBLE
-                    }else holder.commentContainer.visibility = View.GONE
+            questionnaireInfosHolder.selectionNotationInspection.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        adapterView: AdapterView<*>,
+                        view: View,
+                        positionSelection: Int,
+                        l: Long
+                    ) {
+                        val selectedNote = pNotationsList[positionSelection]
+                        questionnaireResponseInfo.id = questionnaireResponseInfo.id.toString()
+                        questionnaireResponseInfo.note = selectedNote.point?.toString()
+                        questionnaireResponseInfo.reponseId = positionSelection
+                        questionnaireResponseInfo.noteLabel = selectedNote.nom
+                        //  LogUtils.d("${questionnaireResponseInfo.reponseId}")
+                        //  questionnaireResponseInfoExt = questionnaireResponseInfo
+                        if (selectedNote.nom?.equals(
+                                "Conforme",
+                                ignoreCase = true
+                            ) == false && selectedNote.nom?.equals(
+                                "Choisir la note",
+                                ignoreCase = true
+                            ) == false
+                        ) {
+                            holder.commentContainer.visibility = View.VISIBLE
+                        } else holder.commentContainer.visibility = View.GONE
 
-                    //questionnaireInfosHolder.selectionNotationInspection.requestFocus()
 
-                    questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+                        questionsListener.itemSelected(
+                            holder.getAdapterPosition(),
+                            questionnaireResponseInfo
+                        )
+                    }
 
-                    //(pContext as InspectionActivity).checkCommentField()
-
+                    override fun onNothingSelected(arg0: AdapterView<*>) {
+                    }
                 }
-
-                override fun onNothingSelected(arg0: AdapterView<*>) {
-                }
-            }
 
             holder.editCommentItemQuestInspect.doOnTextChanged() { text, start, before, count ->
                 holder.editCommentItemQuestInspect.clearFocus()
@@ -142,11 +160,19 @@ class QuestionnaireReviewAdapter(
 
                 }
 
-                override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                    if(text.isNullOrEmpty()) return
+                override fun onTextChanged(
+                    text: CharSequence,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    if (text.isNullOrEmpty()) return
 //                    LogUtils.d(text)
                     questionnaireResponseInfo.commentaire = text.toString()
-                    questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+                    questionsListener.itemSelected(
+                        holder.getAdapterPosition(),
+                        questionnaireResponseInfo
+                    )
                 }
 
                 override fun afterTextChanged(s: Editable) {
@@ -157,61 +183,84 @@ class QuestionnaireReviewAdapter(
                 }
             })
 
-            if(questionnaireResponseInfo.id_en_base?.isNullOrEmpty() == false){
+            if (questionnaireResponseInfo.id_en_base?.isNullOrEmpty() == false) {
                 holder.commentNonConforme.visibility = View.VISIBLE
                 holder.textInspecItemRecommandTitle.text = "Recommandations"
-                holder.editDateDelaiInspectItem.setOnClickListener{
+                holder.editDateDelaiInspectItem.setOnClickListener {
                     pContext.configDate(holder.editDateDelaiInspectItem, true, false)
                     (pContext as InspectionActivity).updatProgressBar()
                 }
 
-                holder.editDateVerifInspectItem.setOnClickListener{
+                holder.editDateVerifInspectItem.setOnClickListener {
                     pContext.configDate(holder.editDateVerifInspectItem)
                     (pContext as InspectionActivity).updatProgressBar()
                 }
 
                 holder.editDateDelaiInspectItem.doOnTextChanged { text, start, before, count ->
                     val valSelect = holder.selectStatutsInspectionItem.getSpinnerContent()
-                    questionnaireResponseInfo.delai = holder.editDateDelaiInspectItem.text.toString()
-                    questionnaireResponseInfo.date_verification = holder.editDateVerifInspectItem.text.toString()
+                    questionnaireResponseInfo.delai =
+                        holder.editDateDelaiInspectItem.text.toString()
+                    questionnaireResponseInfo.date_verification =
+                        holder.editDateVerifInspectItem.text.toString()
                     questionnaireResponseInfo.statuts = valSelect
 
-                    questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+                    questionsListener.itemSelected(
+                        holder.getAdapterPosition(),
+                        questionnaireResponseInfo
+                    )
                 }
                 holder.editDateVerifInspectItem.doOnTextChanged { text, start, before, count ->
                     val valSelect = holder.selectStatutsInspectionItem.getSpinnerContent()
-                    questionnaireResponseInfo.delai = holder.editDateDelaiInspectItem.text.toString()
-                    questionnaireResponseInfo.date_verification = holder.editDateVerifInspectItem.text.toString()
+                    questionnaireResponseInfo.delai =
+                        holder.editDateDelaiInspectItem.text.toString()
+                    questionnaireResponseInfo.date_verification =
+                        holder.editDateVerifInspectItem.text.toString()
                     questionnaireResponseInfo.statuts = valSelect
 
-                    questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+                    questionsListener.itemSelected(
+                        holder.getAdapterPosition(),
+                        questionnaireResponseInfo
+                    )
                 }
 
-                holder.selectStatutsInspectionItem.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        val valSelect = holder.selectStatutsInspectionItem.getSpinnerContent()
-                        questionnaireResponseInfo.delai = holder.editDateDelaiInspectItem.text.toString()
-                        questionnaireResponseInfo.date_verification = holder.editDateVerifInspectItem.text.toString()
-                        questionnaireResponseInfo.statuts = valSelect
+                holder.selectStatutsInspectionItem.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            p0: AdapterView<*>?,
+                            p1: View?,
+                            p2: Int,
+                            p3: Long
+                        ) {
+                            val valSelect = holder.selectStatutsInspectionItem.getSpinnerContent()
+                            questionnaireResponseInfo.delai =
+                                holder.editDateDelaiInspectItem.text.toString()
+                            questionnaireResponseInfo.date_verification =
+                                holder.editDateVerifInspectItem.text.toString()
+                            questionnaireResponseInfo.statuts = valSelect
 
-                        questionsListener.itemSelected(holder.getAdapterPosition(), questionnaireResponseInfo)
+                            questionsListener.itemSelected(
+                                holder.getAdapterPosition(),
+                                questionnaireResponseInfo
+                            )
+                        }
+
+                        override fun onNothingSelected(p0: AdapterView<*>?) {
+
+                        }
+
                     }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                    }
-
-                }
                 questionnaireInfosHolder.selectionNotationInspection.isEnabled = false
             }
 
             questionnaireInfosHolder.labelQuestionInspection.text = questionnaireResponseInfo.label
             questionnaireInfosHolder.editCommentItemQuestInspect.setText(questionnaireResponseInfo.commentaire.toString())
-            questionnaireInfosHolder.selectionNotationInspection.setSelection(questionnaireResponseInfo.reponseId ?: 0)
+            questionnaireInfosHolder.selectionNotationInspection.setSelection(
+                questionnaireResponseInfo.reponseId ?: 0
+            )
         }
     }
 
-    fun setListQuestion(pQuestionnaireList: MutableList<QuestionResponseModel>){
+    fun setListQuestion(pQuestionnaireList: MutableList<QuestionResponseModel>) {
         pQuestionnaireResponsesList.addAll(pQuestionnaireList)
         notifyDataSetChanged()
     }
