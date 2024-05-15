@@ -50,6 +50,10 @@ interface ArbreDao {
     fun getAll(): MutableList<ArbreModel>
 
     @Transaction
+    @Query("SELECT * FROM arbre_list WHERE id = :oId")
+    fun getById(oId: String): ArbreModel
+
+    @Transaction
     @Query("DELETE FROM arbre_list")
     fun deleteAll()
 

@@ -12,6 +12,7 @@ import ci.projccb.mobile.activities.infospresenters.EvaluationBesoinPreviewActiv
 import ci.projccb.mobile.activities.infospresenters.VisiteurFormationPreviewActivity
 import ci.projccb.mobile.adapters.MultipleItemAdapter
 import ci.projccb.mobile.adapters.PreviewItemAdapter
+import ci.projccb.mobile.models.AdapterItemModel
 import ci.projccb.mobile.models.ArbreModel
 import ci.projccb.mobile.models.DataDraftedModel
 import ci.projccb.mobile.models.EvaluationArbreDao
@@ -224,10 +225,36 @@ class EvaluationArbreActivity : AppCompatActivity() {
             GsonUtils.fromJson(it, EvaluationArbreModel::class.java)
         }
 
-        setupSectionSelection(evaluationArbreModelDraft?.section, evaluationArbreModelDraft?.localite)
+        setupSectionSelection(evaluationArbreModelDraft?.section, evaluationArbreModelDraft?.localite, evaluationArbreModelDraft?.producteurId)
 
         val listArbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
         setupSelectionArbreList(listArbre?: mutableListOf())
+
+        val idArbre: MutableList<String>? = Commons.returnStringList(evaluationArbreModelDraft?.especesarbreStr)
+        val quantiteArbre: MutableList<String>? = Commons.returnStringList(evaluationArbreModelDraft?.quantiteStr)
+        val listArbreEval: MutableList<AdapterItemModel> = mutableListOf()
+
+//        LogUtils.d(idArbre, quantiteArbre)
+
+        idArbre?.forEachIndexed { index, s ->
+            val arbre = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getById(s)
+//            LogUtils.d(listArbre, arbre, s)
+            arbre?.let {
+                val value = quantiteArbre?.get(index)
+                listArbreEval.add(
+                    AdapterItemModel(
+                        id = 0,
+                        value = "${arbre?.nom} | ${arbre?.nomScientifique}",
+                        value1 = "Strate ${ arbre?.strate }",
+                        value2 = value.toString()
+                    )
+                )
+            }
+        }
+
+//        LogUtils.d(listArbreEval)
+
+        (recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).setDataToRvItem(listArbreEval)
 
     }
 

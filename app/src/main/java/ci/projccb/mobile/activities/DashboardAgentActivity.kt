@@ -310,6 +310,8 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         askLocationPermission()
 
+        setupLiveData()
+
         CoroutineScope(Dispatchers.IO).launch {
             var networkFlag = false
             try {
@@ -578,95 +580,97 @@ class DashboardAgentActivity : AppCompatActivity(),
         setNavViewItems(roles)
         setViewFeatureListing()
 
-        setupLiveData()
+//        setupLiveData()
     }
 
     private fun setupLiveData() {
 
+        val lisFeat = (recyclerViewFeature.adapter as FeatureAdapter).getListFeatures()
+
         producteurDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("PRODUCTEUR", length)
+            updateRVFeatureCount(lisFeat, "PRODUCTEUR", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.infosProducteurDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("INFOS_PRODUCTEUR", length)
+            updateRVFeatureCount(lisFeat, "INFOS_PRODUCTEUR", length)
         })
 
         parcelleDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("PARCELLE", length)
+            updateRVFeatureCount(lisFeat, "PARCELLE", length)
         })
 
         producteurMenageDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("MENAGE", length)
+            updateRVFeatureCount(lisFeat, "MENAGE", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.suiviApplicationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("APPLICATION", length)
+            updateRVFeatureCount(lisFeat, "APPLICATION", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("INSPECTION", length)
+            updateRVFeatureCount(lisFeat, "INSPECTION", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.estimationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("ESTIMATION", length)
+            updateRVFeatureCount(lisFeat, "ESTIMATION", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.suiviParcelleDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("PARCELLES", length)
+            updateRVFeatureCount(lisFeat, "PARCELLES", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.formationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("FORMATION", length)
+            updateRVFeatureCount(lisFeat, "FORMATION", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.enqueteSsrtDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("SSRTECLMRS", length)
+            updateRVFeatureCount(lisFeat, "SSRTECLMRS", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.livraisonDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("LIVRAISON", length)
+            updateRVFeatureCount(lisFeat, "LIVRAISON", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.evaluationArbreDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("AGRO_EVALUATION", length)
+            updateRVFeatureCount(lisFeat, "AGRO_EVALUATION", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.distributionArbreDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("AGRO_DISTRIBUTION", length)
+            updateRVFeatureCount(lisFeat, "AGRO_DISTRIBUTION", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.postplantingDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("POSTPLANTING", length)
+            updateRVFeatureCount(lisFeat, "POSTPLANTING", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.livraisonCentralDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("LIVRAISON_MAGCENTRAL", length)
+            updateRVFeatureCount(lisFeat, "LIVRAISON_MAGCENTRAL", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.visiteurFormationDao()?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
-            updateRVFeatureCount("FORMATION_VISITEUR", length)
+            updateRVFeatureCount(lisFeat, "FORMATION_VISITEUR", length)
         })
 
         CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())?.observe(this, Observer { items ->
             items?.isNotEmpty()?.let {
                 if (it) items.first()?.let {
-                    updateRVFeatureCount(it.typeDraft.toString(), 1, false)
+                    updateRVFeatureCount(lisFeat, it.typeDraft.toString(), 1, false)
                 }
             }
         })
@@ -696,15 +700,27 @@ class DashboardAgentActivity : AppCompatActivity(),
 //
 //    }
 
-    fun updateRVFeatureCount(featName:String = "", length:Int = 0, isUnSync:Boolean = true){
-        val lisFeat = (recyclerViewFeature.adapter as FeatureAdapter).getListFeatures()
-        lisFeat.forEach {
-            if(it.type?.lowercase() == featName.lowercase()){
-                if(isUnSync) it.countSync = length
-                else it.countDraft = (it.countDraft + length)
+    fun updateRVFeatureCount(lisFeat: MutableList<FeatureModel>, featName:String = "", length:Int = 0, isUnSync:Boolean = true){
+//        LogUtils.d(featName, length, isUnSync)
+//        if(length != 0){
+        if(intent != null){
+            if(intent.getBooleanExtra("isliveupdate", false) == false){
+                ActivityUtils.finishActivity(this@DashboardAgentActivity)
+                ActivityUtils.startActivity(Intent(this@DashboardAgentActivity, this@DashboardAgentActivity::class.java).putExtra("isliveupdate", true))
             }
         }
-        (recyclerViewFeature.adapter as FeatureAdapter).updateFeatures(lisFeat)
+//        }
+//        Commons.debugModelToJson(lisFeat)
+//        (recyclerViewFeature.adapter as FeatureAdapter).removeAllFeatures()
+//        lisFeat.forEach {
+//            if(it.type?.lowercase() == featName.lowercase()){
+//                if(isUnSync) it.countSync = length
+//                else it.countDraft = (it.countDraft + length)
+//            }
+//        }
+//        (recyclerViewFeature.adapter as FeatureAdapter).updateFeatures(lisFeat)
+//        (recyclerViewFeature.adapter as FeatureAdapter).notifyDataSetChanged()
+//        (recyclerViewFeature.adapter as FeatureAdapter).notifyDataSetChanged()
     }
 
     fun hideExpandFromAdapter(){
