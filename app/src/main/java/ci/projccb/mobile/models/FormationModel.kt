@@ -45,6 +45,10 @@ data class FormationModel(
     @Expose @SerializedName("multiEndDate") var multiEndDate: String? = "",
     @Expose @SerializedName("photo_formation") var photoFormation: String? = "",
     @Expose @SerializedName("rapport_formation") var rapportFormation: String? = "",
+
+    @Expose @SerializedName("docListePresence") var docListePres: String? = "",
+    @Expose @SerializedName("photo_docListePresence") var photoListePresence: String? = "",
+
     @Expose var section: String = "",
     @Expose var producteursIdStr: String = "",
     @Expose var typeFormationStr: String = "",

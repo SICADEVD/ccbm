@@ -110,8 +110,8 @@ class QuestionnaireReviewAdapter(
                     questionnaireResponseInfo.note = selectedNote.point?.toString()
                     questionnaireResponseInfo.reponseId = positionSelection
                     questionnaireResponseInfo.noteLabel = selectedNote.nom
-//                    LogUtils.d("${questionnaireResponseInfo.reponseId}")
-                    //questionnaireResponseInfoExt = questionnaireResponseInfo
+                    //  LogUtils.d("${questionnaireResponseInfo.reponseId}")
+                    //  questionnaireResponseInfoExt = questionnaireResponseInfo
                     if(selectedNote.nom?.equals("Conforme", ignoreCase = true) == false && selectedNote.nom?.equals("Choisir la note", ignoreCase = true) == false){
                         holder.commentContainer.visibility = View.VISIBLE
                     }else holder.commentContainer.visibility = View.GONE
@@ -129,7 +129,7 @@ class QuestionnaireReviewAdapter(
             }
 
             holder.editCommentItemQuestInspect.doOnTextChanged() { text, start, before, count ->
-
+                holder.editCommentItemQuestInspect.clearFocus()
             }
 
             holder.editCommentItemQuestInspect.addTextChangedListener(object : TextWatcher {

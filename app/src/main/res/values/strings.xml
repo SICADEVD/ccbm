@@ -722,8 +722,10 @@
     <string name="quels_sont_les_sous_themes_de_la_formation">Quels sont les sous themes de la formation ?</string>
     <string name="quel_est_le_staff_qui_a_dispens_la_formation">Quel est le staff qui a dispensé la formation ?</string>
     <string name="source_de_la_photo">Source de la photo ?</string>
+    <string name="source_de_la_photo_liste">Source photo de la liste ?</string>
     <string name="gallerie">Gallerie</string>
     <string name="source_du_rapport">Source du rapport ?</string>
+    <string name="source_du_liste">Source de la liste ?</string>
     <string name="importer_pdf">Importer PDF</string>
     <string name="importer_doc">Importer DOC WORD</string>
     <string name="aucune_photo_selectionn_e">Aucune photo selectionnée</string>
@@ -948,6 +950,8 @@
     <string name="pr_cisez">Précisez…</string>
     <string name="photo_de_la_formation">Photo de la formation</string>
     <string name="rapport_de_la_formation">Rapport de la formation</string>
+    <string name="liste_de_presence">Liste de présence</string>
+    <string name="photo_liste_de_presence">Photo de la liste de présence</string>
     <string name="informations_sur_le_producteur">Informations sur le producteur</string>
     <string name="aucune_distribution_post_planting_list_veuillez_faire_une_synchronisation">Aucune distribution post-planting listé, veuillez faire une synchronisation !</string>
     <string name="liste_des_arbres_valu_s">Liste des arbres évalués</string>
