@@ -87,8 +87,12 @@ class FormationActivity : AppCompatActivity() {
     private var themeListCm: MutableList<CommonData> = arrayListOf()
     private var sousThemeListCm: MutableList<CommonData> = arrayListOf()
     private var documentPath: String = ""
+
     private var endphoto: String = ""
     private var endRapport: String = ""
+    private var endListePresence: String = ""
+    private var endPhotoListePresence: String = ""
+
     private var campagnesList: MutableList<CampagneModel>? = null
     var localiteDao: LocaliteDao? = null
     var typeFormationDao: TypeFormationDao? = null
@@ -120,7 +124,7 @@ class FormationActivity : AppCompatActivity() {
     var lieu = ""
     var dateNaissance = ""
 
-//    var campagneNom = ""
+    //    var campagneNom = ""
 //    var campagneId = ""
     val sectionCommon = CommonData()
     val localiteCommon = CommonData()
@@ -146,39 +150,54 @@ class FormationActivity : AppCompatActivity() {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         var imageFileName = ""
 
-
         when (whichPhoto) {
             0 -> imageFileName = "formation_" + timeStamp + "_"
             1 -> imageFileName = "rapportFormation_" + timeStamp + "_"
+            2 -> imageFileName = "docListePresence_" + timeStamp + "_"
+            3 -> imageFileName = "photoDocListePresence_" + timeStamp + "_"
         }
 
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
-        val image = if(whichPhoto == 0) {
+        val image: File? = when (whichPhoto) {
+            0, 3 -> File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",  /* suffix */
+                storageDir /* directory */
+            )
+            1, 2 -> File.createTempFile(
+                imageFileName,  /* prefix */
+                "." + fileExtension,  /* suffix */
+                storageDir /* directory */
+            )
+            else -> null
+        }
+
+        /*val image = if (whichPhoto == 0) {
             File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",  /* suffix */
                 storageDir /* directory */
             )
 
-        }else{
+        } else {
             File.createTempFile(
                 imageFileName,  /* prefix */
-                "."+fileExtension,  /* suffix */
+                "." + fileExtension,  /* suffix */
                 storageDir /* directory */
             )
-        }
+        }*/
 
         // Save a file: path for use with ACTION_VIEW intents
         when (whichPhoto) {
-            0 -> formationPhotoPath = image.absolutePath
-            1 -> documentPath = image.absolutePath
+            0, 3 -> formationPhotoPath = image?.absolutePath ?: ""
+            1, 2 -> documentPath = image?.absolutePath ?: ""
         }
 
         LogUtils.d(formationPhotoPath, documentPath)
-
         return image
     }
+
 
 //    fun setupLocaliteSelection() {
 //        localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa()
@@ -275,14 +294,23 @@ class FormationActivity : AppCompatActivity() {
 
     fun setupLieuSelection() {
         //lieuFormationDao = CcbRoomDatabase.getDatabase(applicationContext)?.lieuFormationDoa()
-        lieuxList = AssetFileHelper.getListDataFromAsset(4, this@FormationActivity) as MutableList<LieuFormationModel>?
-            //lieuFormationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+        lieuxList = AssetFileHelper.getListDataFromAsset(
+            4,
+            this@FormationActivity
+        ) as MutableList<LieuFormationModel>?
+        //lieuFormationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        val lieuAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lieuxList!!)
+        val lieuAdapter =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lieuxList!!)
         selectLieuFormation!!.adapter = lieuAdapter
 
         selectLieuFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
+            override fun onItemSelected(
+                adapterView: AdapterView<*>,
+                view: View,
+                position: Int,
+                l: Long
+            ) {
                 val lieuFormation = lieuxList!![position]
                 lieu = lieuFormation.nom!!
                 lieuId = lieuFormation.id.toString()
@@ -378,7 +406,12 @@ class FormationActivity : AppCompatActivity() {
 //        }
 //    }
 
-    fun setupSectionSelection(currVal:String? = null, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
+    fun setupSectionSelection(
+        currVal: String? = null,
+        currVal1: String? = null,
+        currVal2: String? = null,
+        currVal3: String? = null
+    ) {
         var sectionDao = CcbRoomDatabase.getDatabase(applicationContext)?.sectionsDao();
         var sectionList = sectionDao?.getAll(
             agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
@@ -387,7 +420,7 @@ class FormationActivity : AppCompatActivity() {
         var libItem: String? = null
         currVal?.let { idc ->
             sectionList?.forEach {
-                if(it.id.toString() == idc.toString()) libItem = it.libelle
+                if (it.id.toString() == idc.toString()) libItem = it.libelle
             }
         }
 
@@ -395,7 +428,7 @@ class FormationActivity : AppCompatActivity() {
             getString(R.string.choix_de_la_section),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
-            currentVal = libItem ,
+            currentVal = libItem,
             spinner = selectSectionFormation,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
@@ -415,15 +448,19 @@ class FormationActivity : AppCompatActivity() {
 
     }
 
-    fun setLocaliteSpinner(id: Int, currVal1:String? = null, currVal2: String? = null, currVal3: String? = null) {
-
+    fun setLocaliteSpinner(
+        id: Int,
+        currVal1: String? = null,
+        currVal2: String? = null,
+        currVal3: String? = null
+    ) {
         var localiteDao = CcbRoomDatabase.getDatabase(applicationContext)?.localiteDoa();
         var localitesListi = localiteDao?.getLocaliteBySection(id)
         //LogUtils.d(localitesListi)
         var libItem: String? = null
         currVal1?.let { idc ->
             localitesListi?.forEach {
-                if(it.id.toString() == idc.toString()) libItem = it.nom
+                if (it.id.toString() == idc.toString()) libItem = it.nom
             }
         }
 
@@ -442,17 +479,29 @@ class FormationActivity : AppCompatActivity() {
                     localiteCommon.nom = localite.nom!!
                     localiteCommon.id = localite.id!!
 
-                    if(intent.getStringExtra("from") == null){
-                        var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(localite.id.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
+                    if (intent.getStringExtra("from") == null) {
+                        var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()
+                            ?.getProducteursByLocalite(localite.id.toString())?.map {
+                            if (it.isSynced) CommonData(
+                                it.id,
+                                "${it.nom} ${it.prenoms}"
+                            ) else CommonData(it.uid, "${it.nom} ${it.prenoms}")
+                        }!!
 
-                        Commons.setupItemMultiSelection(this, selectProducteurFormation,
+                        Commons.setupItemMultiSelection(
+                            this, selectProducteurFormation,
                             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
                             producteurList
-                        ){ selected ->
+                        ) { selected ->
 
                             producteurList?.forEach { product ->
-                                if( selected.contains(product.nom) ){
-                                    producteurIdList.add(CommonData(product.id, product.nom.toString()))
+                                if (selected.contains(product.nom)) {
+                                    producteurIdList.add(
+                                        CommonData(
+                                            product.id,
+                                            product.nom.toString()
+                                        )
+                                    )
                                 }
                             }
                             //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
@@ -470,7 +519,6 @@ class FormationActivity : AppCompatActivity() {
 
 
     fun setAllListener() {
-
         setupSectionSelection()
 
         setupLieuSelection()
@@ -531,41 +579,65 @@ class FormationActivity : AppCompatActivity() {
 //                }
             })
 
-        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
 
-        Commons.setupItemMultiSelection(this, selectModuleMultiFormation, getString(R.string.quels_sont_les_modules_de_la_formation),
-            (listTypeFormation)?.map { CommonData(0, it.nom.toString()) }?: arrayListOf()
-        ){ typeSelect ->
+        Commons.setupItemMultiSelection(
+            this,
+            selectModuleMultiFormation,
+            getString(R.string.quels_sont_les_modules_de_la_formation),
+            (listTypeFormation)?.map { CommonData(0, it.nom.toString()) } ?: arrayListOf()
+        ) { typeSelect ->
             //val idOfTypeForm = mutableListOf<Int?>()
             val listThemeFormationCustom = mutableListOf<ThemeFormationModel>()
             //LogUtils.json(listThemeFormation)
             typeFormationListCm.clear()
             listTypeFormation?.forEach { typeForm ->
-                if( typeSelect.contains(typeForm.nom) ){
-                    listThemeFormationCustom.addAll(listThemeFormation?.filter {it.typeFormationsId === typeForm.id}?.toMutableList()?: arrayListOf())
+                if (typeSelect.contains(typeForm.nom)) {
+                    listThemeFormationCustom.addAll(listThemeFormation?.filter { it.typeFormationsId === typeForm.id }
+                        ?.toMutableList() ?: arrayListOf())
                     typeFormationListCm.add(CommonData(typeForm.id, typeForm.nom.toString()))
                 }
             }
 
-            Commons.setupItemMultiSelection(this, selectThemeMultiFormation, getString(R.string.quels_sont_les_themes_de_la_formation),
-                (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }){ themeList ->
+            Commons.setupItemMultiSelection(this,
+                selectThemeMultiFormation,
+                getString(R.string.quels_sont_les_themes_de_la_formation),
+                (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }) { themeList ->
 
                 val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
                 themeListCm.clear()
                 listThemeFormation?.forEach { themeForm ->
-                    if( themeList.contains(themeForm.nom) ){
-                        listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter {it.themeFormationsId === themeForm.id}?.toMutableList()?: arrayListOf())
-                        themeListCm.add(CommonData(themeForm.id, themeForm.nom.toString(), value = "${themeForm.typeFormationsId}-${themeForm.id}"))
+                    if (themeList.contains(themeForm.nom)) {
+                        listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter { it.themeFormationsId === themeForm.id }
+                            ?.toMutableList() ?: arrayListOf())
+                        themeListCm.add(
+                            CommonData(
+                                themeForm.id,
+                                themeForm.nom.toString(),
+                                value = "${themeForm.typeFormationsId}-${themeForm.id}"
+                            )
+                        )
                     }
                 }
 
-                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, getString(R.string.quels_sont_les_sous_themes_de_la_formation),
-                    (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }){
+                Commons.setupItemMultiSelection(this,
+                    selectSousThemeMultiFormation,
+                    getString(R.string.quels_sont_les_sous_themes_de_la_formation),
+                    (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }) {
                     listSousThemeFormation?.forEach { sThemeForm ->
-                        if( it.contains(sThemeForm.nom) ){
-                            sousThemeListCm.add(CommonData(sThemeForm.id, sThemeForm.nom.toString(), value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"))
+                        if (it.contains(sThemeForm.nom)) {
+                            sousThemeListCm.add(
+                                CommonData(
+                                    sThemeForm.id,
+                                    sThemeForm.nom.toString(),
+                                    value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"
+                                )
+                            )
                         }
                     }
                 }
@@ -573,23 +645,31 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        Commons.setupItemMultiSelection(this, selectThemeMultiFormation, getString(R.string.quels_sont_les_themes_de_la_formation),
+        Commons.setupItemMultiSelection(
+            this,
+            selectThemeMultiFormation,
+            getString(R.string.quels_sont_les_themes_de_la_formation),
             arrayListOf()
-        ){
+        ) {
         }
 
-        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation, getString(R.string.quels_sont_les_sous_themes_de_la_formation),
-            arrayListOf()){
+        Commons.setupItemMultiSelection(
+            this,
+            selectSousThemeMultiFormation,
+            getString(R.string.quels_sont_les_sous_themes_de_la_formation),
+            arrayListOf()
+        ) {
         }
 
-        val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_staff_qui_a_dispens_la_formation),
             spinner = selectStaffFormation,
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
             onChanged = {
-                staffCommon.nom = listDelegue?.get(it)?.let{
+                staffCommon.nom = listDelegue?.get(it)?.let {
                     "${it.firstname} ${it.lastname}"
                 }
                 staffCommon.id = listDelegue?.get(it)?.id!!
@@ -608,8 +688,7 @@ class FormationActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-
-        if (editDateDebuFormation.text.isNullOrEmpty() &&  editDateFinFormation.text.isNullOrEmpty()) {
+        if (editDateDebuFormation.text.isNullOrEmpty() && editDateFinFormation.text.isNullOrEmpty()) {
             Commons.showMessage(
                 message = getString(R.string.la_date_de_formation_n_est_pas_renseign_e),
                 context = this,
@@ -623,7 +702,7 @@ class FormationActivity : AppCompatActivity() {
 
         val itemModelOb = getFormationObjet()
 
-        if(itemModelOb == null) return
+        if (itemModelOb == null) return
 
         val formationModel = itemModelOb?.first.apply {
             this?.apply {
@@ -644,16 +723,44 @@ class FormationActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-
-            this.add(Pair("Les participants", producteurIdList.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
+            this.add(
+                Pair(
+                    "Les participants",
+                    producteurIdList.map { "${it.nom}" }.toModifString(commaReplace = "\n")
+                )
+            )
             this.add(Pair("Le nombre total de participant", producteurIdList.size.toString()))
-            this.add(Pair(getString(R.string.les_types_de_formation), typeFormationListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n") ))
-            this.add(Pair(getString(R.string.les_themes), themeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
-            this.add(Pair(getString(R.string.les_sous_themes), sousThemeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")))
+            this.add(
+                Pair(
+                    getString(R.string.les_types_de_formation),
+                    typeFormationListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")
+                )
+            )
+            this.add(
+                Pair(
+                    getString(R.string.les_themes),
+                    themeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")
+                )
+            )
+            this.add(
+                Pair(
+                    getString(R.string.les_sous_themes),
+                    sousThemeListCm.map { "${it.nom}" }.toModifString(commaReplace = "\n")
+                )
+            )
 
-            if(endRapport.isNullOrEmpty()) this.add(Pair(getString(R.string.le_rapport),
-                getString(R.string.aucun_rapport_n_est_fourni)))
-            else this.add(Pair(getString(R.string.le_rapport), getString(R.string.un_rapport_est_fourni)))
+            if (endRapport.isNullOrEmpty()) this.add(
+                Pair(
+                    getString(R.string.le_rapport),
+                    getString(R.string.aucun_rapport_n_est_fourni)
+                )
+            )
+            else this.add(
+                Pair(
+                    getString(R.string.le_rapport),
+                    getString(R.string.un_rapport_est_fourni)
+                )
+            )
 
         }.map { MapEntry(it.first, it.second) }
 
@@ -670,7 +777,11 @@ class FormationActivity : AppCompatActivity() {
         }
     }
 
-    private fun getFormationObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): Pair<FormationModel, MutableList<Pair<String, String>>>? {
+
+    private fun getFormationObjet(
+        isMissingDial: Boolean = true,
+        necessaryItem: MutableList<String> = arrayListOf()
+    ): Pair<FormationModel, MutableList<Pair<String, String>>>? {
         var isMissingDial2 = false
 //        return FormationModel(
 ////            dateFormation = editDateFormation.text?.trim().toString(),
@@ -698,22 +809,23 @@ class FormationActivity : AppCompatActivity() {
                 isSynced = false,
                 agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
                 origin = "local",
-            ), mutableListOf<Pair<String,String>>())
+            ), mutableListOf<Pair<String, String>>()
+        )
         //LogUtils.d(.toString())
         var allField = itemList.second
         var isMissing = false
         var message = ""
         var notNecessaire = listOf<String>()
-        for (field in allField){
-            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+        for (field in allField) {
+            if (field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false) {
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 break
             }
         }
 
-        for (field in allField){
-            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+        for (field in allField) {
+            if (field.second.isNullOrBlank() && necessaryItem.contains(field.first)) {
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true
                 isMissingDial2 = true
@@ -721,7 +833,7 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        if(isMissing && (isMissingDial || isMissingDial2) ){
+        if (isMissing && (isMissingDial || isMissingDial2)) {
             Commons.showMessage(
                 message,
                 this,
@@ -735,7 +847,7 @@ class FormationActivity : AppCompatActivity() {
             return null
         }
 
-        return  itemList
+        return itemList
     }
 
     fun getSetupFormationModel(
@@ -748,9 +860,10 @@ class FormationActivity : AppCompatActivity() {
         return Pair(prodModel, mutableListOf)
     }
 
+
     fun passSetupFormationModel(
         prodModel: FormationModel?
-    ){
+    ) {
         //LogUtils.d(prodModel.nom)
         val mainLayout = findViewById<ViewGroup>(R.id.layout_formation)
         prodModel?.let {
@@ -778,121 +891,15 @@ class FormationActivity : AppCompatActivity() {
     }
 
 
-    private fun createImageFileCompressed() {
-        var compressedFile: File? = null
-        try {
-            fileGlobal = File(photoPath)
-
-            CoroutineScope(Dispatchers.IO).launch {
-                compressedFile = Compressor.compress(this@FormationActivity, fileGlobal!!) {
-                    quality(75)
-                    format(Bitmap.CompressFormat.JPEG)
-                }
-            }
-
-            if (FileUtils.isFileExists(compressedFile)) {
-                val finalCompressedFile = compressedFile
-                FileUtils.copy(compressedFile, fileGlobal) { srcFile, destFile ->
-                    SPUtils.getInstance().put("formation_",
-                        Commons.encodeFileToBase64Binary(finalCompressedFile)
-                    )
-                    true
-                }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            LogUtils.e("ERREUR -> enter here")
-        }
-    }
-
-
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        var carnetFile: File? = null
-        try {
-            carnetFile = createImageFile()
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-        }
-
-        // Continue only if the File was successfully created
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
-            try {
-                if (carnetFile != null) {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        this,
-                        "ci.projccb.mobile.fileprovider",
-                        carnetFile
-                    )
-
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-    }
-
-    fun testImageTaked(bundleData: Uri?, fileExtension: String = "") {
-        // Get the dimensions of the View
-        try {
-            val options = BitmapFactory.Options()
-            options.inSampleSize = 8
-            //LogUtils.d((bundleData == null), whichPhoto)
-            if (bundleData == null) {
-                when(whichPhoto){
-                    0 -> {
-                        endphoto = formationPhotoPath
-                        imagePhotoFormation.setImageBitmap(
-                            BitmapFactory.decodeFile(
-                                formationPhotoPath,
-                                options
-                            )
-                        )
-                    }
-                }
-            } else {
-                options.inJustDecodeBounds = true
-                options.inPurgeable = true
-                when(whichPhoto){
-                    0 -> {
-                        Commons.copyFile(bundleData, (formationPhotoPath), this@FormationActivity)
-                    }
-                    1 -> {
-                        Commons.copyFile(bundleData, (documentPath), this@FormationActivity)
-                    }
-                }
-
-                //documentPath = UriUtils.uri2File(bundleData).path
-                when(whichPhoto){
-                    0 -> {
-                        endphoto = formationPhotoPath
-                        imagePhotoFormation.setImageURI(bundleData)
-                    }
-                    1 -> {
-                        endRapport = documentPath
-                        imageRapportFormation.setImageResource(R.drawable.document_file_download_done)
-                    }
-                }
-//                LogUtils.e(FormationActivity.TAG, formationPhotoPath)
-            }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }
-
-
     override fun onSaveInstanceState(outState: Bundle) {
         //super.onSaveInstanceState(outState)
     }
 
 
     fun draftFormation(draftModel: DataDraftedModel?) {
-
         val itemModelOb = getFormationObjet(false)
 
-        if(itemModelOb == null) return
+        if (itemModelOb == null) return
 
         val formationModelDraft = itemModelOb?.first.apply {
             this?.apply {
@@ -901,13 +908,17 @@ class FormationActivity : AppCompatActivity() {
                 staffId = staffCommon.id.toString()
                 entreprise_id = entrepriseCommon.id.toString()
 
-                producteursIdStr = GsonUtils.toJson(producteurIdList.map { it.id.toString() }.toMutableList())
-                typeFormationStr = GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }.toMutableList())
+                producteursIdStr =
+                    GsonUtils.toJson(producteurIdList.map { it.id.toString() }.toMutableList())
+                typeFormationStr =
+                    GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }.toMutableList())
                 themeStr = GsonUtils.toJson(themeListCm.map { it.value.toString() }.toMutableList())
-                sousThemeStr = GsonUtils.toJson(sousThemeListCm.map { it.value.toString() }.toMutableList())
+                sousThemeStr =
+                    GsonUtils.toJson(sousThemeListCm.map { it.value.toString() }.toMutableList())
 
                 photoFormation = endphoto
                 rapportFormation = endRapport
+                photoListePresence = endPhotoListePresence
             }
         }
 
@@ -946,10 +957,12 @@ class FormationActivity : AppCompatActivity() {
 
 
     fun undraftedDatas(draftedData: DataDraftedModel) {
-        val formationDrafted = ApiClient.gson.fromJson(draftedData.datas, FormationModel::class.java)
+        val formationDrafted =
+            ApiClient.gson.fromJson(draftedData.datas, FormationModel::class.java)
 
         setupSectionSelection(formationDrafted.section, formationDrafted.localitesId)
 
+<<<<<<< HEAD
         var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(formationDrafted.localitesId.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
         var selectStr: MutableList<String> = GsonUtils.fromJson(formationDrafted.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type)
         var selectProd = producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
@@ -972,13 +985,31 @@ class FormationActivity : AppCompatActivity() {
             })
 
         Commons.setupItemMultiSelection(this, selectProducteurFormation,
+=======
+        var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()
+            ?.getProducteursByLocalite(formationDrafted.localitesId.toString())?.map {
+            if (it.isSynced) CommonData(
+                it.id,
+                "${it.nom} ${it.prenoms}"
+            ) else CommonData(it.uid, "${it.nom} ${it.prenoms}")
+        }!!
+        var selectStr: MutableList<String> = GsonUtils.fromJson(
+            formationDrafted.producteursIdStr,
+            object : TypeToken<MutableList<String>>() {}.type
+        )
+        var selectProd =
+            producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
+        LogUtils.d(selectStr, selectProd)
+        Commons.setupItemMultiSelection(
+            this, selectProducteurFormation,
+>>>>>>> dev/didierboka
             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
             producteurList,
             currentList = selectProd.map { "${it.nom}" }.toMutableList()
-        ){ selected ->
+        ) { selected ->
 
             producteurList?.forEach { product ->
-                if( selected.contains(product.nom) ){
+                if (selected.contains(product.nom)) {
                     producteurIdList.add(CommonData(product.id, product.nom.toString()))
                 }
             }
@@ -1013,54 +1044,91 @@ class FormationActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        var currentZip = GsonUtils.fromJson<MutableList<String>>(formationDrafted.typeFormationStr, object : TypeToken<MutableList<String>>(){}.type)
-        val currentTypeList = listTypeFormation?.filter { currentZip.contains(it.id.toString()) == true }
-        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        var currentZip2 = GsonUtils.fromJson<MutableList<String>>(formationDrafted.themeStr, object : TypeToken<MutableList<String>>(){}.type)
-        val currentThemeList = listThemeFormation?.filter { currentZip2.map { it.split("-")[1] }.contains(it.id.toString()) == true }
-        val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
-        var currentZip3 = GsonUtils.fromJson<MutableList<String>>(formationDrafted.sousThemeStr, object : TypeToken<MutableList<String>>(){}.type)
-        val currentSousThemeList = listSousThemeFormation?.filter { currentZip3.map { it.split("-")[1] }.contains(it.id.toString()) == true }
-        Commons.setupItemMultiSelection(this, selectModuleMultiFormation,
+        val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        var currentZip = GsonUtils.fromJson<MutableList<String>>(
+            formationDrafted.typeFormationStr,
+            object : TypeToken<MutableList<String>>() {}.type
+        )
+        val currentTypeList =
+            listTypeFormation?.filter { currentZip.contains(it.id.toString()) == true }
+        val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        var currentZip2 = GsonUtils.fromJson<MutableList<String>>(
+            formationDrafted.themeStr,
+            object : TypeToken<MutableList<String>>() {}.type
+        )
+        val currentThemeList = listThemeFormation?.filter {
+            currentZip2.map { it.split("-")[1] }.contains(it.id.toString()) == true
+        }
+        val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        var currentZip3 = GsonUtils.fromJson<MutableList<String>>(
+            formationDrafted.sousThemeStr,
+            object : TypeToken<MutableList<String>>() {}.type
+        )
+        val currentSousThemeList = listSousThemeFormation?.filter {
+            currentZip3.map { it.split("-")[1] }.contains(it.id.toString()) == true
+        }
+        Commons.setupItemMultiSelection(
+            this, selectModuleMultiFormation,
             getString(R.string.quels_sont_les_modules_de_la_formation),
-            (listTypeFormation)?.map { CommonData(0, it.nom.toString())
-            }?: arrayListOf(),
-            currentList = currentTypeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()
-        ){ typeSelect ->
+            (listTypeFormation)?.map {
+                CommonData(0, it.nom.toString())
+            } ?: arrayListOf(),
+            currentList = currentTypeList?.map { "${it.nom}" }?.toMutableList() ?: arrayListOf()
+        ) { typeSelect ->
 
             val listThemeFormationCustom = mutableListOf<ThemeFormationModel>()
 
             typeFormationListCm.clear()
             listTypeFormation?.forEach { typeForm ->
-                if( typeSelect.contains(typeForm.nom) ){
-                    listThemeFormationCustom.addAll(listThemeFormation?.filter {it.typeFormationsId === typeForm.id}?.toMutableList()?: arrayListOf())
+                if (typeSelect.contains(typeForm.nom)) {
+                    listThemeFormationCustom.addAll(listThemeFormation?.filter { it.typeFormationsId === typeForm.id }
+                        ?.toMutableList() ?: arrayListOf())
                     typeFormationListCm.add(CommonData(typeForm.id, typeForm.nom.toString()))
                 }
             }
 
-            Commons.setupItemMultiSelection(this, selectThemeMultiFormation,
+            Commons.setupItemMultiSelection(
+                this, selectThemeMultiFormation,
                 getString(R.string.quels_sont_les_themes_de_la_formation),
                 (listThemeFormationCustom).map { CommonData(0, "${it.nom}") },
-                currentList = currentThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()
-            ){ themeList ->
+                currentList = currentThemeList?.map { "${it.nom}" }?.toMutableList()
+                    ?: arrayListOf()
+            ) { themeList ->
 
                 val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
                 themeListCm.clear()
                 listThemeFormation?.forEach { themeForm ->
-                    if( themeList.contains(themeForm.nom) ){
-                        listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter {it.themeFormationsId === themeForm.id}?.toMutableList()?: arrayListOf())
-                        themeListCm.add(CommonData(themeForm.id, themeForm.nom.toString(), value = "${themeForm.typeFormationsId}-${themeForm.id}"))
+                    if (themeList.contains(themeForm.nom)) {
+                        listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter { it.themeFormationsId === themeForm.id }
+                            ?.toMutableList() ?: arrayListOf())
+                        themeListCm.add(
+                            CommonData(
+                                themeForm.id,
+                                themeForm.nom.toString(),
+                                value = "${themeForm.typeFormationsId}-${themeForm.id}"
+                            )
+                        )
                     }
                 }
 
                 Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
                     getString(R.string.quels_sont_les_sous_themes_de_la_formation),
                     (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") },
-                    currentList = currentSousThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()){
+                    currentList = currentSousThemeList?.map { "${it.nom}" }?.toMutableList()
+                        ?: arrayListOf()
+                ) {
                     listSousThemeFormation?.forEach { sThemeForm ->
-                        if( it.contains(sThemeForm.nom) ){
-                            sousThemeListCm.add(CommonData(sThemeForm.id, sThemeForm.nom.toString(), value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"))
+                        if (it.contains(sThemeForm.nom)) {
+                            sousThemeListCm.add(
+                                CommonData(
+                                    sThemeForm.id,
+                                    sThemeForm.nom.toString(),
+                                    value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"
+                                )
+                            )
                         }
                     }
                 }
@@ -1071,17 +1139,18 @@ class FormationActivity : AppCompatActivity() {
         val listThemeFormationCustom = mutableListOf<ThemeFormationModel>()
         typeFormationListCm.clear()
         listTypeFormation?.forEach { typeForm ->
-            if( currentTypeList?.map { "${it.nom}" }?.contains(typeForm.nom) == true ){
-                listThemeFormationCustom.addAll(listThemeFormation?.filter {it.typeFormationsId === typeForm.id}?.toMutableList()?: arrayListOf())
+            if (currentTypeList?.map { "${it.nom}" }?.contains(typeForm.nom) == true) {
+                listThemeFormationCustom.addAll(listThemeFormation?.filter { it.typeFormationsId === typeForm.id }
+                    ?.toMutableList() ?: arrayListOf())
                 typeFormationListCm.add(CommonData(typeForm.id, typeForm.nom.toString()))
             }
         }
-        Commons.setupItemMultiSelection(this, selectThemeMultiFormation,
+        Commons.setupItemMultiSelection(
+            this, selectThemeMultiFormation,
             getString(R.string.quels_sont_les_themes_de_la_formation),
             (listThemeFormationCustom).map { CommonData(0, "${it.nom}") },
-            currentList = currentThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()
-        ){ themeList ->
-
+            currentList = currentThemeList?.map { "${it.nom}" }?.toMutableList() ?: arrayListOf()
+        ) { themeList ->
 
 
         }
@@ -1089,27 +1158,44 @@ class FormationActivity : AppCompatActivity() {
         val listSousThemeFormationCustom = mutableListOf<SousThemeFormationModel>()
         themeListCm.clear()
         listThemeFormation?.forEach { themeForm ->
-            if( currentThemeList?.map { "${it.nom}" }?.contains(themeForm.nom) == true){
-                listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter {it.themeFormationsId === themeForm.id}?.toMutableList()?: arrayListOf())
-                themeListCm.add(CommonData(themeForm.id, themeForm.nom.toString(), value = "${themeForm.typeFormationsId}-${themeForm.id}"))
+            if (currentThemeList?.map { "${it.nom}" }?.contains(themeForm.nom) == true) {
+                listSousThemeFormationCustom.addAll(listSousThemeFormation?.filter { it.themeFormationsId === themeForm.id }
+                    ?.toMutableList() ?: arrayListOf())
+                themeListCm.add(
+                    CommonData(
+                        themeForm.id,
+                        themeForm.nom.toString(),
+                        value = "${themeForm.typeFormationsId}-${themeForm.id}"
+                    )
+                )
             }
         }
         Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
             getString(R.string.quels_sont_les_sous_themes_de_la_formation),
             (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") },
-            currentList = currentSousThemeList?.map { "${ it.nom }" }?.toMutableList()?: arrayListOf()){
+            currentList = currentSousThemeList?.map { "${it.nom}" }?.toMutableList()
+                ?: arrayListOf()
+        ) {
             listSousThemeFormation?.forEach { sThemeForm ->
-                if( it.contains(sThemeForm.nom) ){
-                    sousThemeListCm.add(CommonData(sThemeForm.id, sThemeForm.nom.toString(), value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"))
+                if (it.contains(sThemeForm.nom)) {
+                    sousThemeListCm.add(
+                        CommonData(
+                            sThemeForm.id,
+                            sThemeForm.nom.toString(),
+                            value = "${sThemeForm.themeFormationsId}-${sThemeForm.id}"
+                        )
+                    )
                 }
             }
         }
 
-        val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+        val listDelegue = CcbRoomDatabase.getDatabase(this)?.staffFormation()
+            ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_staff_qui_a_dispens_la_formation),
             spinner = selectStaffFormation,
-            currentVal = listDelegue?.filter { formationDrafted.staffId == it.id.toString() }?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull() ?: "",
+            currentVal = listDelegue?.filter { formationDrafted.staffId == it.id.toString() }
+                ?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull() ?: "",
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1125,27 +1211,31 @@ class FormationActivity : AppCompatActivity() {
     }
 
 
-    private fun showFileChooser(pView: Int, typeFile:String = "application/pdf", fileExtension: String = "") {
+    private fun showFileChooser(pView: Int, typeFile: String = "application/pdf", fileExtension: String = "") {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*" // Set a general MIME type to allow any file type
         // Add specific MIME types for images, Excel, Word, and PDF
-        if(whichPhoto == 1){
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(
-                typeFile  // PDF
-            ))
-        }else if(whichPhoto == 0) {
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(
-                "image/*",  // Excel (xlsx)
-            ))
-        }
 
-        if (intent.resolveActivity(packageManager) != null) {
+        when (whichPhoto) {
+            0, 3 -> {
+                intent.putExtra(
+                    Intent.EXTRA_MIME_TYPES, arrayOf(
+                        "image/*",  // Excel (xlsx)
+                    )
+                )
+            }
 
-        } else {
-            LogUtils.e(ProducteurActivity.TAG, "Error launcher photo")
+            1, 2 -> {
+                intent.putExtra(
+                    Intent.EXTRA_MIME_TYPES, arrayOf(
+                        typeFile  // PDF
+                    )
+                )
+            }
         }
 
         var carnetFile: File? = null
+
         try {
             carnetFile = createImageFile(fileExtension)
         } catch (ex: IOException) {
@@ -1164,14 +1254,23 @@ class FormationActivity : AppCompatActivity() {
                     )
 
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    when(whichPhoto){
-                        0 -> {
-                            startActivityForResult(Intent.createChooser(intent,
-                                getString(R.string.selectionnez_la_photo)), pView)
+
+                    when (whichPhoto) {
+                        0, 3 -> {
+                            startActivityForResult(
+                                Intent.createChooser(
+                                    intent,
+                                    getString(R.string.selectionnez_la_photo)
+                                ), pView
+                            )
                         }
-                        1 -> {
-                            startActivityForResult(Intent.createChooser(intent,
-                                getString(R.string.selectionnez_le_document)), pView)
+                        1, 2 -> {
+                            startActivityForResult(
+                                Intent.createChooser(
+                                    intent,
+                                    getString(R.string.selectionnez_le_document)
+                                ), pView
+                            )
                         }
                     }
                 }
@@ -1182,15 +1281,152 @@ class FormationActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun createImageFileCompressed() {
+        var compressedFile: File? = null
+
+        try {
+            fileGlobal = File(photoPath)
+
+            LogUtils.e("fileGlobal -> ${fileGlobal?.absolutePath}")
+
+            CoroutineScope(Dispatchers.IO).launch {
+                compressedFile = Compressor.compress(this@FormationActivity, fileGlobal!!) {
+                    quality(75)
+                    format(Bitmap.CompressFormat.JPEG)
+                }
+            }
+
+            if (FileUtils.isFileExists(compressedFile)) {
+                val finalCompressedFile = compressedFile
+
+                FileUtils.copy(compressedFile, fileGlobal) { srcFile, destFile ->
+                    SPUtils.getInstance().put(
+                        "ccb_pics_",
+                        Commons.encodeFileToBase64Binary(finalCompressedFile)
+                    )
+                    true
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            LogUtils.e("ERREUR -> enter here")
+        }
+    }
+
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        var carnetFile: File? = null
+
+        try {
+            carnetFile = createImageFile()
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+
+        // Continue only if the File was successfully created
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            try {
+                if (carnetFile != null) {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "ci.projccb.mobile.fileprovider",
+                        carnetFile
+                    )
+
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }
+    }
+
+
+    fun testImageTaked(bundleData: Uri?, fileExtension: String = "") {
+        // Get the dimensions of the View
+        try {
+            val options = BitmapFactory.Options()
+            options.inSampleSize = 8
+
+            LogUtils.d("(bundleData == null) => $whichPhoto")
+            if (bundleData == null) {
+                when (whichPhoto) {
+                    0 -> {
+                        endphoto = formationPhotoPath
+                        photoPath = endphoto
+
+                        imagePhotoFormation.setImageBitmap(
+                            BitmapFactory.decodeFile(
+                                formationPhotoPath,
+                                options
+                            )
+                        )
+                    }
+                    3 -> {
+                        endPhotoListePresence = formationPhotoPath
+                        photoPath = endPhotoListePresence
+
+                        photoListePresenceFormation.setImageBitmap(
+                            BitmapFactory.decodeFile(
+                                formationPhotoPath,
+                                options
+                            )
+                        )
+                    }
+                }
+            } else {
+                options.inJustDecodeBounds = true
+                options.inPurgeable = true
+
+                when (whichPhoto) {
+                    0, 3 -> {
+                        Commons.copyFile(bundleData, (formationPhotoPath), this@FormationActivity)
+                    }
+                    1, 2 -> {
+                        Commons.copyFile(bundleData, (documentPath), this@FormationActivity)
+                    }
+                }
+
+                when (whichPhoto) {
+                    0 -> {
+                        endphoto = formationPhotoPath
+                        imagePhotoFormation.setImageURI(bundleData)
+
+                        //  createImageFileCompressed()
+                    }
+                    1 -> {
+                        endRapport = documentPath
+                        imageRapportFormation.setImageResource(R.drawable.document_file_download_done)
+                    }
+                    2 -> {
+                        endPhotoListePresence = formationPhotoPath
+                        listePresenceFormation.setImageResource(R.drawable.document_file_download_done)
+                    }
+                    3 -> {
+                        endPhotoListePresence = formationPhotoPath
+                        photoListePresenceFormation.setImageURI(bundleData)
+
+                        //  createImageFileCompressed()
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        LogUtils.d(ProducteurActivity.TAG, "OKOKOKOK")
+        LogUtils.d(FormationActivity.TAG, "OKOKOKOK")
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE)  {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 testImageTaked(null)
             } else {
-
-                var fileExtension = ""
+                val fileExtension = ""
                 testImageTaked(data?.data, fileExtension)
             }
         } else {
@@ -1206,41 +1442,64 @@ class FormationActivity : AppCompatActivity() {
         }
     }
 
-    fun dialogPickerPhoto() {
-        val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
-        Commons.adjustTextViewSizesInDialog(this, dialogPicker, "",   this.resources.getDimension(R.dimen._6ssp)
-            ,true)
-        if(whichPhoto == 0){
-            dialogPicker.setMessage(getString(R.string.source_de_la_photo))
-                .setPositiveButton("Camera") { dialog, _ ->
-                    dialog.dismiss()
-                    dispatchTakePictureIntent()
-                }
-                .setNegativeButton(getString(R.string.gallerie)) { dialog, _ ->
-                    dialog.dismiss()
-                    showFileChooser(11)
-                }
-        }else if(whichPhoto == 1){
-            dialogPicker.setMessage(getString(R.string.source_du_rapport))
-                .setPositiveButton(getString(R.string.importer_csv)) { dialog, _ ->
-                    dialog.dismiss()
-                    showFileChooser(11, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  // CSV
-                        "xlsx")
-                }
-                .setNegativeButton(getString(R.string.importer_pdf)) { dialog, _ ->
-                    dialog.dismiss()
-                    showFileChooser(11, "application/pdf",  // PDF
-                        "pdf")
-                }
-                .setNeutralButton(getString(R.string.importer_doc)) { dialog, _ ->
-                    dialog.dismiss()
-                    showFileChooser(11, "application/vnd.openxmlformats-officedocument.wordprocessingml.document",  // PDF
-                        "docx")
-                }
-        }
-        val alerte = dialogPicker.create()
 
-        alerte.show()
+    fun dialogPickerPhoto()  {
+        try {
+            val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
+            Commons.adjustTextViewSizesInDialog(
+                this,
+                dialogPicker,
+                "",
+                this.resources.getDimension(R.dimen._6ssp),
+                true
+            )
+
+            when (whichPhoto) {
+                0, 3 -> {
+                    dialogPicker.setMessage(getString(R.string.source_de_la_photo))
+                        .setPositiveButton("Camera") { dialog, _ ->
+                            dialog.dismiss()
+                            dispatchTakePictureIntent()
+                        }
+                        .setNegativeButton(getString(R.string.gallerie)) { dialog, _ ->
+                            dialog.dismiss()
+                            showFileChooser(11)
+                        }
+                }
+
+                1, 2 -> {
+                    dialogPicker.setMessage(getString(R.string.source_du_rapport))
+                        .setPositiveButton(getString(R.string.importer_csv)) { dialog, _ ->
+                            dialog.dismiss()
+                            showFileChooser(
+                                11,
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  // EXCEL
+                                "xlsx"
+                            )
+                        }
+                        .setNegativeButton(getString(R.string.importer_pdf)) { dialog, _ ->
+                            dialog.dismiss()
+                            showFileChooser(
+                                11, "application/pdf",  // PDF
+                                "pdf"
+                            )
+                        }
+                        .setNeutralButton(getString(R.string.importer_doc)) { dialog, _ ->
+                            dialog.dismiss()
+                            showFileChooser(
+                                11,
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",  // WORD
+                                "docx"
+                            )
+                        }
+                }
+            }
+
+            val alerte = dialogPicker.create()
+            alerte.show()
+        } catch (ex: java.lang.Exception) {
+            ex.printStackTrace()
+        }
     }
 
     private fun getLocation() {
@@ -1333,16 +1592,22 @@ class FormationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formation)
 
-        Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
+        Commons.setSizeOfAllTextViews(
+            this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(R.dimen._5ssp)
+        )
 
         formationDao = CcbRoomDatabase.getDatabase(applicationContext)?.formationDao()
         producteurDao = CcbRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
 
         clickCancelFormation.setOnClickListener {
-//            clearFields()
-            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.startActivity(
+                Intent(
+                    this,
+                    this::class.java
+                ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
@@ -1367,15 +1632,17 @@ class FormationActivity : AppCompatActivity() {
         setOtherListener()
 
         if (intent.getStringExtra("from") != null) {
-            draftedDataFormation = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
+            draftedDataFormation = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()
+                ?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0))
+                ?: DataDraftedModel(uid = 0)
             undraftedDatas(draftedDataFormation!!)
-        }else{
+        } else {
             setAllListener()
         }
     }
 
-    private fun setOtherListener() {
 
+    private fun setOtherListener() {
         imagePhotoFormation.setOnClickListener {
             whichPhoto = 0
             dialogPickerPhoto()
@@ -1386,9 +1653,20 @@ class FormationActivity : AppCompatActivity() {
             dialogPickerPhoto()
         }
 
+        // which = 2 (file)
+        listePresenceFormation.setOnClickListener {
+            whichPhoto = 2
+            dialogPickerPhoto()
+        }
+
+        // which = 3 (photo)
+        photoListePresenceFormation.setOnClickListener {
+            whichPhoto = 3
+            dialogPickerPhoto()
+        }
+
         editDateDebuFormation.setOnClickListener { configDate(editDateDebuFormation, false) }
         editDateFinFormation.setOnClickListener { configDate(editDateFinFormation, false) }
         editDureeFormation.setOnClickListener { configHour(editDureeFormation) }
-
     }
 }
