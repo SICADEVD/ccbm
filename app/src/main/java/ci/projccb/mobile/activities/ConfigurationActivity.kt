@@ -10,11 +10,13 @@ import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
 import ci.projccb.mobile.repositories.databases.daos.*
+import ci.projccb.mobile.repositories.datas.AgentAuthResponse
 import ci.projccb.mobile.repositories.datas.ArbreData
 import ci.projccb.mobile.repositories.datas.CommonData
 import ci.projccb.mobile.tools.Commons
 import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
+import ci.projccb.mobile.tools.Roles
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -65,6 +67,7 @@ class ConfigurationActivity : AppCompatActivity() {
     var suiviParcelleDao: SuiviParcelleDao? = null
     var producteurDao: ProducteurDao? = null
     var agentDoa: AgentDao? = null
+    var coopDao: CoopDao? = null
     var eauUseeDao: EauUseeDao? = null
     var typeProduitDao: TypeProduitDao? = null
     var gardeMachineDao: GardeMachineDao? = null
@@ -141,11 +144,176 @@ class ConfigurationActivity : AppCompatActivity() {
     suspend fun configFlow() {
         // Check if device already used
         if (SPUtils.getInstance().getString(Constants.APP_FIRST_LAUNCH, "yes") == "yes") {
-            getLocalites()
+            getUserRoles()
         } else {
             if (SPUtils.getInstance().getInt(Constants.AGENT_ID, 0) == agentID) {
                 synchronizeLocalite()
             } else {
+                getUserRoles()
+            }
+        }
+    }
+
+    suspend fun getUserRoles() {
+        withContext(IO) {
+            val userUpdate = async {
+                agentDoa?.deleteAll()
+                coopDao?.deleteAll()
+
+                try {
+                    val userRoles = ApiClient.apiService.getUserRoles(CommonData(userid = agentID, cooperativeIde = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID, agentID)))
+                    val responseRoles: Response<AgentAuthResponse> = userRoles.execute()
+                    val agentResponseBody: AgentAuthResponse? = responseRoles.body()
+
+
+                    var roles = mutableListOf<String>() //agentResponseBody?.menu //
+                    agentResponseBody?.results?.roles?.let {
+                        it.forEach { role ->
+
+                            var role_name = role.name?.uppercase()
+
+                            LogUtils.d(role_name)
+                            when (role_name.toString()){
+                                "Manager".uppercase() -> {
+                                    roles.addAll(Roles.MANAGER)
+                                }
+                                "Directeur".uppercase() -> {
+                                    roles.addAll(Roles.MANAGER)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "ADG".uppercase() -> {
+                                    roles.addAll(Roles.MANAGER)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "Inspecteur".uppercase() -> {
+                                    roles.addAll(Roles.INSPECTEUR)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "Coach".uppercase() -> {
+                                    roles.addAll(Roles.COACH)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "Applicateur".uppercase() -> {
+                                    roles.addAll(Roles.APPLICATEUR)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "Magasinier".uppercase() -> {
+                                    roles.addAll(Roles.MAGASINIERSECTION)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "Magasinier Central".uppercase() -> {
+                                    roles.addAll(Roles.MAGASINIERCENTRAL)
+                                }
+                                else -> {
+
+                                }
+                            }
+                            when (role_name.toString()){
+                                "Delegue".uppercase() -> {
+                                    roles.addAll(Roles.DELEGUE)
+                                }
+                                else -> {
+
+                                }
+                            }
+                        }
+
+
+                    }
+                    roles = roles.toSet().toMutableList()
+
+                    val agentModel = agentResponseBody?.results
+                    val coopModel = agentResponseBody?.cooperative
+
+                    //remavoe some feature
+                    //roles?.remove("ESTIMATION")
+                    var rolesCopy = mutableListOf<String>()
+
+                    roles?.forEachIndexed { index,item ->
+                        if(item.equals("EVALUATION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_EVALUATION")
+                        else if(item.equals("DISTRIBUTION", ignoreCase = true)) rolesCopy?.add(index, "AGRO_DISTRIBUTION")
+                        else rolesCopy.add(item)
+                    }
+
+                    rolesCopy = Commons.invertValue("AGRO_EVALUATION", "AGRO_DISTRIBUTION", rolesCopy)
+
+                    SPUtils.getInstance().put("menu", GsonUtils.toJson(rolesCopy))
+                    agentModel?.isLogged = true
+
+                    SPUtils.getInstance().put(Constants.HAS_USER_LOGGED, "yes")
+                    SPUtils.getInstance().put(Constants.AGENT_COOP_ID, agentModel?.cooperativesId!!)
+                    SPUtils.getInstance().put(Constants.AGENT_ID, agentModel.id!!)
+
+                    val agentModelReal = AgentModel(
+                        id= agentModel.id,
+                        cooperativesId = agentModel.cooperativesId,
+                        createdAt= agentModel.createdAt,
+                        tp= agentModel.tp,
+                        dateNaissance = agentModel.dateNaissance,
+                        login= agentModel.login,
+                        firstname= agentModel.firstname,
+                        lastname= agentModel.lastname,
+                        username= agentModel.username,
+                        userType= agentModel.userType,
+                        typeCompte= agentModel.typeCompte,
+                        email= agentModel.email,
+                        emailVerifiedAt= agentModel.emailVerifiedAt,
+                        name = agentModel.name,
+                        nationalites= agentModel.nationalites,
+                        niveauxEtudes = agentModel.niveauxEtudes,
+                        numeroPiece= agentModel.numeroPiece,
+                        password= agentModel.password,
+                        phoneUn = agentModel.phoneUn,
+                        phoneDeux= agentModel.phoneDeux,
+                        photo= agentModel.photo,
+                        sexe= agentModel.sexe,
+                        typePieces= agentModel.typePieces,
+                        status= agentModel.status,
+                        adresse= agentModel.adresse,
+                        userId= agentModel.userId,
+                        codeApp= agentModel.codeApp,
+                        isLogged = agentModel.isLogged
+                    )
+                    agentDoa?.insert(agentModelReal)
+                    coopDao?.insert(coopModel!!)
+
+                } catch (ex: Exception) {
+                    oneIssue = true
+                    LogUtils.e(ex.message)
+                    FirebaseCrashlytics.getInstance().recordException(ex)
+                }
+            }
+
+            userUpdate.join()
+
+            if (oneIssue) {
+                configCompletedOrError("Une erreur est survenue, veuillez recommencer la mise à jour svp.", hasError = true, hisSynchro = true)
+            } else {
+                configCompletedOrError("permissions utilisateurs")
                 getLocalites()
             }
         }
@@ -3150,7 +3318,7 @@ class ConfigurationActivity : AppCompatActivity() {
                 configCompletedOrError(hasError = true, info = "Impossible de synchroniser les livraisons")
             } else {
                 livraisonDao?.deleteAll()
-                getLocalites()
+                getUserRoles()
             }
 
         }
@@ -3178,6 +3346,7 @@ class ConfigurationActivity : AppCompatActivity() {
         database = CcbRoomDatabase.getDatabase(this)
 
         agentDoa = database?.agentDoa()
+        coopDao = database?.coopDao()
         coursEauxDao = database?.courEauDoa()
         eauUseeDao = database?.eauUseeDoa()
         gardeMachineDao = database?.gardeMachineDoa()

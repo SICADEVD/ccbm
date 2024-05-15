@@ -26,4 +26,8 @@ interface AgentDao {
     @Transaction
     @Query("UPDATE agent SET isLogged = :status WHERE id = :agentId")
     fun logoutAgent(status: Boolean, agentId: Int?)
+
+    @Transaction
+    @Query("DELETE FROM agent")
+    fun deleteAll()
 }

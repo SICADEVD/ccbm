@@ -14,6 +14,9 @@ interface ApiService {
     @POST("connexion")
     fun authAgent(@Body user: AgentModel): Call<AgentAuthResponse>
 
+    @POST("getroleuser")
+    fun getUserRoles(@Body data: CommonData): Call<AgentAuthResponse>
+
     // region SYNCHRONIZATION
     @POST("apiproducteur")
     fun synchronisationProducteur(@Body producteurModel: ProducteurModel): Call<ProducteurModel>
