@@ -938,70 +938,6 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
 
     fun  collectDatas() {
-//        if (producteurId.isEmpty()) {
-//            showMessage("Selectionnez le producteur", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (editMembreNomlSsrt.text.toString().isEmpty()) {
-//            showMessage("Renseignez le nom du membre", this, false, {}, deconnec = false)
-//            return
-//        }
-
-        /*
-        producteurs_id
-        nomMembre
-        prenomMembre
-        sexeMembre
-        datenaissMembre
-        lienParente
-        frequente
-        travauxDangereux
-        lieuTravauxDangereux
-        travauxLegers
-        lieuTravauxLegers
-        dateEnquete
-         */
-
-//        if (editMembrePrenomlSsrt.text.toString().isEmpty()) {
-//            showMessage("Renseignez le prenom du membre", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (editDateNaissancelSsrt.text.toString().isEmpty()) {
-//            showMessage("Renseignez la date de naissance de ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (schoolYesNo.lowercase().contains("svp")) {
-//            showMessage("Selectionnez le statut scolaire ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (travauxDangereuxList.isEmpty()) {
-//            showMessage("Renseignez un travail deja fait par ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (lieuTravauxDangereuxList.isEmpty()) {
-//            showMessage("Renseignez le lieu ou le travail est fait", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (lieuTravauxLegerList.isEmpty()) {
-//            showMessage("Renseignez le lieu ou le travail est fait", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (travauxLegersList.isEmpty()) {
-//            showMessage("Renseignez un travail fait par ${editMembrePrenomlSsrt.text.toString()}", this, false, {}, deconnec = false)
-//            return
-//        }
-//
-//        if (editDateEnqueteSsrt.text.toString().isEmpty()) {
-//            showMessage("Renseignez la date de l'enquete svp", this, false, {}, deconnec = false)
-//            return
-//        }
 
         val itemModel = getEnqueteSsrtObjet()
 
@@ -1138,7 +1074,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
 
     fun draftSsrte(draftModel: DataDraftedModel?) {
-        val ssrteDraft = getEnqueteSsrtObjet()
+        val ssrteDraft = getEnqueteSsrtObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un producteur"
+        ))
 
         showMessage(
             message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),

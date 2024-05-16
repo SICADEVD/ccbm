@@ -898,7 +898,10 @@ class FormationActivity : AppCompatActivity() {
 
 
     fun draftFormation(draftModel: DataDraftedModel?) {
-        val itemModelOb = getFormationObjet(false)
+        val itemModelOb = getFormationObjet(false, necessaryItem = mutableListOf(
+            "Choix de la localité !",
+            "Date de debut de la formation"
+        ))
 
         if (itemModelOb == null) return
 

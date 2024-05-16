@@ -523,7 +523,10 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
 
     fun draftInspection(draftModel: DataDraftedModel?) {
-        val itemModelOb = getInspectObjet(false)
+        val itemModelOb = getInspectObjet(false, necessaryItem = mutableListOf(
+            "Choisir sa parcelle concernée"
+        ))
+
         if(itemModelOb == null) return
         val draftInsoection = itemModelOb.first.apply {
             section = sectionCommon.id.toString()

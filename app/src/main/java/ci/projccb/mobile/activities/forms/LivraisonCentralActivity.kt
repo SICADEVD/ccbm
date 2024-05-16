@@ -835,7 +835,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
     fun draftLivraisonCentral(draftModel: DataDraftedModel?) {
 
-        val itemModelOb = getLivraisonCentralObjet(false)
+        val itemModelOb = getLivraisonCentralObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un magasin central"
+        ))
 
         if(itemModelOb == null) return
 

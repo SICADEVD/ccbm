@@ -98,7 +98,9 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     private fun draftData(dataDraftedModel: DataDraftedModel) {
 
-        val itemModelOb = getEvalBesObjet(false)
+        val itemModelOb = getEvalBesObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un producteur"
+        ))
 
         if(itemModelOb == null) return
 

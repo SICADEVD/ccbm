@@ -527,7 +527,9 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
 
     fun draftParcelle(draftModel: DataDraftedModel?) {
-        val itemModelOb = getParcellObjet(false)
+        val itemModelOb = getParcellObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un producteur"
+        ))
 
         if(itemModelOb == null) return
 

@@ -19,6 +19,7 @@ import ci.projccb.mobile.models.EstimationModel
 import ci.projccb.mobile.models.LocaliteModel
 import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.models.ProducteurModel
+import ci.projccb.mobile.models.SuiviApplicationModel
 import ci.projccb.mobile.models.SuiviParcelleModel
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.repositories.databases.CcbRoomDatabase
@@ -450,7 +451,62 @@ class CalculEstimationActivity : AppCompatActivity() {
         }
     }
 
-    private fun getEstimationObjet(): EstimationModel {
+    fun getSetupEstimationModel(
+        prodModel: EstimationModel,
+        mutableListOf: MutableList<Pair<String, String>>
+    ): Pair<EstimationModel, MutableList<Pair<String, String>>> {
+        //LogUtils.d(prodModel.nom)
+        val mainLayout = findViewById<ViewGroup>(R.id.layout_estimation)
+        Commons.getAllTitleAndValueViews(mainLayout, prodModel, false, mutableListOf)
+        return Pair(prodModel, mutableListOf)
+    }
+
+    private fun getEstimationObjet(isMissingDial:Boolean = true, necessaryItem: MutableList<String> = arrayListOf()): EstimationModel? {
+        var isMissingDial2 = false
+
+        var itemList = getSetupEstimationModel(
+            EstimationModel(
+            uid = 0,
+            isSynced = false,
+            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0),
+            origin = "local",
+        ), mutableListOf<Pair<String,String>>())
+        //LogUtils.d(.toString())
+        var allField = itemList.second
+        var isMissing = false
+        var message = ""
+        var notNecessaire = listOf<String>()
+        for (field in allField){
+            if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
+                isMissing = true
+                break
+            }
+        }
+
+        for (field in allField){
+            if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
+                message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
+                isMissing = true
+                isMissingDial2 = true
+                break
+            }
+        }
+
+        if(isMissing && (isMissingDial || isMissingDial2) ){
+            Commons.showMessage(
+                message,
+                this,
+                finished = false,
+                callback = {},
+                positive = getString(R.string.compris),
+                deconnec = false,
+                showNo = false
+            )
+
+            return null
+        }
+
         return EstimationModel(
             campagnesId = campagneId,
             campagnesNom = campagneNom,
@@ -480,7 +536,11 @@ class CalculEstimationActivity : AppCompatActivity() {
 
 
     fun draftEstimation(draftModel: DataDraftedModel?) {
-        val estimationModelDraft = getEstimationObjet()
+        val estimationModelDraft = getEstimationObjet(false, necessaryItem = mutableListOf(
+            "Parcelle"
+        ))
+
+        if(estimationModelDraft == null) return
 
         Commons.showMessage(
             message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),

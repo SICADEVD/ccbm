@@ -409,25 +409,25 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             val itemModelOb = getUniteAgricoleProducteurObject()
 
-            val vv1 = editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
-            val vv2 = editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
-            val vv3 = editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
-
-            if( (vv1+vv2) != vv3 ){
-
-                Commons.showMessage(
-                    getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),
-                    this,
-                    finished = false,
-                    callback = {},
-                    positive = getString(R.string.compris),
-                    deconnec = false,
-                    showNo = false
-                )
-
-                return
-
-            }
+//            val vv1 = editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
+//            val vv2 = editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
+//            val vv3 = editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
+//
+//            if( (vv1+vv2) != vv3 ){
+//
+//                Commons.showMessage(
+//                    getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),
+//                    this,
+//                    finished = false,
+//                    callback = {},
+//                    positive = getString(R.string.compris),
+//                    deconnec = false,
+//                    showNo = false
+//                )
+//
+//                return
+//
+//            }
 
             if(itemModelOb == null) return
 

@@ -711,7 +711,9 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
     fun draftSuiviApplication(draftModel: DataDraftedModel?) {
         try {
-            val itemModelOb = getSuiviApplicationObjet(false)
+            val itemModelOb = getSuiviApplicationObjet(false, necessaryItem = mutableListOf(
+                "Choisir sa parcelle concernée"
+            ))
 
             if(itemModelOb == null) return
 

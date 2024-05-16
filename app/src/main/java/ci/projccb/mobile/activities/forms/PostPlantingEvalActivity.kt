@@ -254,23 +254,25 @@ class PostPlantingEvalActivity : AppCompatActivity() {
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
-        if(idList.isEmpty()){
+//        if(idList.isEmpty()){
+//
+//            Commons.showMessage(
+//                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
+//                this,
+//                finished = false,
+//                callback = {},
+//                positive = getString(R.string.compris),
+//                deconnec = false,
+//                showNo = false
+//            )
+//
+//            return ;
+//
+//        }
 
-            Commons.showMessage(
-                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
-                this,
-                finished = false,
-                callback = {},
-                positive = getString(R.string.compris),
-                deconnec = false,
-                showNo = false
-            )
-
-            return ;
-
-        }
-
-        val itemModelOb = getEvaluationPostPlantObjet()
+        val itemModelOb = getEvaluationPostPlantObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un producteur"
+        ))
 
         if(itemModelOb == null) return
 

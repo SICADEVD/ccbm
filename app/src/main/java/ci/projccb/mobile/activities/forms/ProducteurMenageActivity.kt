@@ -802,7 +802,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         //LogUtils.d("VAR MENAGE ACT 2 : "+producteurMenageModelDraft.equipements)
 
-        val itemModel = getProducteurMenageObjet(false)
+        val itemModel = getProducteurMenageObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un producteur"
+        ))
 
         if(itemModel == null) return
 

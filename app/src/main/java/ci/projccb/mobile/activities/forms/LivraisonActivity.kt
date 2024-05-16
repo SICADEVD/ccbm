@@ -827,7 +827,9 @@ class LivraisonActivity : AppCompatActivity() {
 
     fun draftLivraison(draftModel: DataDraftedModel?) {
 
-        val itemModelOb = getLivraisonObjet(false)
+        val itemModelOb = getLivraisonObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un magasin de section"
+        ))
 
         if(itemModelOb == null) return
 

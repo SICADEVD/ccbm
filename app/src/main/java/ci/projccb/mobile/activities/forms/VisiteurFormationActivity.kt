@@ -312,7 +312,9 @@ class VisiteurFormationActivity : AppCompatActivity() {
     }
 
     private fun draftData(dataDraftedModel: DataDraftedModel) {
-        val itemModelOb = getVisiteurFormationObjet(false)
+        val itemModelOb = getVisiteurFormationObjet(false, necessaryItem = mutableListOf(
+            "Selectionner la formation"
+        ))
 
         if(itemModelOb == null) return
 

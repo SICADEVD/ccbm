@@ -266,21 +266,21 @@ class DistributionArbreActivity : AppCompatActivity() {
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
 
-        if(qteList.isEmpty()){
-
-            Commons.showMessage(
-                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
-                this,
-                finished = false,
-                callback = {},
-                positive = getString(R.string.compris),
-                deconnec = false,
-                showNo = false
-            )
-
-            return ;
-
-        }
+//        if(qteList.isEmpty()){
+//
+//            Commons.showMessage(
+//                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
+//                this,
+//                finished = false,
+//                callback = {},
+//                positive = getString(R.string.compris),
+//                deconnec = false,
+//                showNo = false
+//            )
+//
+//            return ;
+//
+//        }
         //brouad02@gmail.com
 
         val listApproVi = CcbRoomDatabase.getDatabase(applicationContext)?.approvisionnementDao()?.getApproBySect(sectionCommon.id)
@@ -300,7 +300,9 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
 
-        val itemModelOb = getDistributArbreObjet(false)
+        val itemModelOb = getDistributArbreObjet(false, necessaryItem = mutableListOf(
+            "Selectionner un producteur"
+        ))
 
         if(itemModelOb == null) return
 
