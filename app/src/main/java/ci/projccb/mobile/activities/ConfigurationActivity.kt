@@ -439,11 +439,11 @@ class ConfigurationActivity : AppCompatActivity() {
         withContext(IO) {
             val parcellesUpdate = async {
                 //parcelleDao?.deleteAgentDatas(SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString())
-
+//userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)
                 try {
-                    val clientParcelles = ApiClient.apiService.getParcelles(CommonData(userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID)))
-                    val responseParcelles: Response<MutableList<ParcelleModel>> = clientParcelles.execute()
-                    val parcellesList: MutableList<ParcelleModel>? = responseParcelles.body()
+                    val clientParcelles = ApiClient.apiService.getParcelles(CommonData(cooperativeIde = SPUtils.getInstance().getInt(Constants.AGENT_COOP_ID)))
+                    val responseParcelles: Response<MutableList<ParcelleExtModel>> = clientParcelles.execute()
+                    val parcellesList: MutableList<ParcelleExtModel>? = responseParcelles.body()
 
                     //LogUtils.json(parcellesList)
                     parcellesList?.map {
@@ -471,9 +471,10 @@ class ConfigurationActivity : AppCompatActivity() {
                             existePente = it.existePente,
                             niveauPente = it.niveauPente,
                             erosion = it.erosion,
-                            varieteStr = GsonUtils.toJson(it.varieteO),
-                            protectionStr = GsonUtils.toJson(it.protectionO),
-                            arbreStr = GsonUtils.toJson(it.itemsO),
+                            yesornoarbreombrage = "oui",
+                            varieteStr = GsonUtils.toJson(it.varieteO.map { it.variete }),
+                            protectionStr = GsonUtils.toJson(it.protectionO.map { it.typeProtection }),
+                            arbreStr = GsonUtils.toJson(it.itemsO.map { ArbreData(arbre = "${it.agroespeceabre_id}", nombre = "${it.nombre}") }),
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"
@@ -483,7 +484,7 @@ class ConfigurationActivity : AppCompatActivity() {
                     }
                 } catch (ex: Exception) {
                     oneIssue = true
-                    LogUtils.e(ex.message)
+                    LogUtils.e(ex)
                     FirebaseCrashlytics.getInstance().recordException(ex)
                 }
             }

@@ -109,7 +109,7 @@ interface ApiService {
     fun getDelegues(@Body table: CommonData): Call<MutableList<CommonData>>
 
     @POST("getparcelles")
-    fun getParcelles(@Body table: CommonData): Call<MutableList<ParcelleModel>>
+    fun getParcelles(@Body table: CommonData): Call<MutableList<ParcelleExtModel>>
 
     @POST("getquestionnaire")
     fun getQuestionnaires(): Call<MutableList<InspectionQuestionnairesModel>>

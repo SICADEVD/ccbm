@@ -656,6 +656,8 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         if(parcelleDrafted.protectionStr.isNullOrEmpty() == false){
             setupMoyProtectMultiSelection(GsonUtils.fromJson(parcelleDrafted.protectionStr, object : TypeToken<MutableList<String>>() {}.type))
+        }else{
+            setupMoyProtectMultiSelection()
         }
 
 //        Commons.setListenerForSpinner(this,
