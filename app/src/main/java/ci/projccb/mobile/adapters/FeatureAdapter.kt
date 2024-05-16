@@ -73,12 +73,6 @@ class FeatureAdapter(
 
         holder.itemView.setOnClickListener {
 
-            try {
-                (activity as DashboardAgentActivity).intent.removeExtra("isliveupdate")
-            }catch (e:Exception){
-                println(e.message)
-            }
-
             if(passToModifList.toString().toLowerCase().contains(currentFeature.type.toString(), ignoreCase = true)){
                 redirectMenu(currentFeature.type.toString(), "SYNC_UPDATE", activity)
             }else{

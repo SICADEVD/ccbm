@@ -61,4 +61,8 @@ interface MagasinCentralDao {
     @Transaction
     @Query("DELETE FROM magasin_central")
     fun deleteAll()
+
+    @Transaction
+    @Query("SELECT * FROM magasin_central where id != :idd")
+    fun getMagByID(idd: Int): MagasinCentralModel
 }

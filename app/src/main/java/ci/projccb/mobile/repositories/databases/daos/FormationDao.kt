@@ -46,4 +46,8 @@ interface FormationDao {
     @Transaction
     @Query("SELECT * FROM formation WHERE isSynced = 0 AND agentId = :agentID")
     fun getUnSyncedAllLive(agentID: String?): LiveData<MutableList<FormationModel>>
+
+    @Transaction
+    @Query("SELECT * FROM formation WHERE id = :toIntOrNull")
+    fun getFormByID(toIntOrNull: Int?): FormationModel
 }

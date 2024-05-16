@@ -34,4 +34,8 @@ interface MagasinDao {
     @Transaction
     @Query("DELETE FROM magasin")
     fun deleteAll()
+
+    @Transaction
+    @Query("SELECT * FROM magasin where id = :toIntOrNull")
+    fun getMagByID(toIntOrNull: Int): MagasinModel
 }

@@ -85,6 +85,9 @@
             android:name=".activities.lists.DatasSyncListActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.lists.DatasSendingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.infospresenters.InfosProducteurPreviewActivity"
             android:exported="false" />
         <activity

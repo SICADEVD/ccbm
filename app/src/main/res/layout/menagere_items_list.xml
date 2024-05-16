@@ -25,19 +25,19 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:id="@+id/item_title"
+                android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quartier : "/>
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:textColor="@color/text_color_white"
                 android:id="@+id/labelQuartierMenagere"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="APO-12"
                 android:textSize="@dimen/_11ssp"
-                
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -49,12 +49,13 @@ android:textColor="@color/text_color_white"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-android:textColor="@color/text_color_white"
+                android:id="@+id/item2_title"
+                android:textColor="@color/text_color_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Producteur : "
+                android:maxLines="3"
                 android:textSize="@dimen/_15ssp"
-                
                 android:textStyle="bold"/>
 
             <Space
@@ -68,8 +69,8 @@ android:textColor="@color/text_color_white"
                 android:layout_height="wrap_content"
                 tools:text="JOE JOEJOEJOEJOEJOEJOEJOEJOEJOEJOEJOE"
                 android:ellipsize="end"
-                android:lines="1"
-                android:textSize="@dimen/_15ssp"
+                android:maxLines="3"
+                android:textSize="@dimen/_12ssp"
                 />
 
         </LinearLayout>

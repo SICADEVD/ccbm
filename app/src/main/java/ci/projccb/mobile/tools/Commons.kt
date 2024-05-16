@@ -53,6 +53,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
+import ci.projccb.mobile.activities.DashboardAgentActivity
 import ci.projccb.mobile.activities.forms.CalculEstimationActivity
 import ci.projccb.mobile.activities.forms.DistributionArbreActivity
 import ci.projccb.mobile.activities.forms.EvaluationArbreActivity
@@ -71,6 +72,7 @@ import ci.projccb.mobile.activities.forms.UniteAgricoleProducteurActivity
 import ci.projccb.mobile.activities.forms.VisiteurFormationActivity
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.lists.DatasDraftedListActivity
+import ci.projccb.mobile.activities.lists.DatasSendingListActivity
 import ci.projccb.mobile.activities.lists.DatasSyncListActivity
 import ci.projccb.mobile.activities.lists.FormationsListActivity
 import ci.projccb.mobile.activities.lists.LivraisonsListActivity
@@ -1032,25 +1034,12 @@ class Commons {
         }
 
         fun redirectMenu(fromMenu: String, actionMenu: String, activity: Activity) {
-//            MainScope().launch {
-//                checkNetworkAvailablility()
-//            }
 
-//            CoroutineScope(Dispatchers.IO).launch {
-//                var networkFlag = false
-//                try {
-//                    networkFlag = NetworkUtils.isAvailable()
-//                } catch (ex: UnknownHostException) {
-//                    networkFlag = false
-//                    LogUtils.e("Internet error !")
-//                }
-//
-//                if (networkFlag) {
-//                    MainScope().launch {
-//                        Commons.synchronisation("all",  activity)
-//                    }
-//                }
-//            }
+            try {
+                (activity as DashboardAgentActivity).intent.removeExtra("isliveupdate")
+            }catch (e:Exception){
+                println(e.message)
+            }
 
             when (actionMenu.uppercase()) {
                 "ADD" -> {
@@ -1108,6 +1097,10 @@ class Commons {
                         //"ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
                         //"APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
                         "LIVRAISON" -> ActivityUtils.startActivity(LivraisonsListActivity::class.java)
+
+                        else -> {
+                            ActivityUtils.startActivity(Intent(activity, DatasSendingListActivity::class.java).putExtra("fromContent", fromMenu.uppercase()))
+                        }
                     }
                 }
             }
