@@ -776,9 +776,11 @@
     <string name="culture">Culture</string>
     <string name="superficie">Superficie</string>
     <string name="renseignez_des_donn_es_sur_la_vari_t_svp">Renseignez des données sur la variété, svp !</string>
+    <string name="renseignez_des_donn_es_svp">Renseignez des données, svp !</string>
     <string name="op_rateur">Opérateur</string>
     <string name="num_ro">Numéro</string>
     <string name="cet_op_rateur_est_deja_ajout_e">Cet opérateur est deja ajoutée</string>
+    <string name="cet_donnees_est_deja_ajout_e">Cet donnée est deja ajoutée</string>
     <string name="renseignez_des_donn_es_sur_les_activit_s_svp">Renseignez des données sur les activités, svp !</string>
     <string name="cette_activit_est_d_ja_ajout_e">Cette activité est déja ajoutée</string>
     <string name="la_liste_des_roducteur_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des roducteur semble vide, veuillez procéder à la synchronisation des données svp.</string>

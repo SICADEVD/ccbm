@@ -32,6 +32,7 @@ data class ParcelleModel(
     @Expose var wayPointsString: String? = "",
     @Expose var perimeter: String? = "",
     @Expose var typedeclaration: String? = "",
+    @Expose var yesnoautrearbreombrag: String? = "",
     @Expose var superficie: String? = "",
     @Expose var latitude: String? = "",
     @Expose var longitude: String? = "",
@@ -49,6 +50,7 @@ data class ParcelleModel(
     @Expose var existeMesureProtection: String? = "",
     @Expose var arbreStr: String? = "",
     @Expose var protectionStr: String? = "",
+    @Expose var autreArbreStr: String? = "",
     @Expose var autreProtection: String? = "",
     @Expose var existePente: String? = "",
     @Expose var niveauPente: String? = "",
@@ -64,6 +66,7 @@ data class ParcelleModel(
     var origin: String? = "local"
 ) : Parcelable {
 
+    @Ignore @Expose @SerializedName(value = "autres_arbres") var autreArbre: MutableList<ParcAutreOmbrag> = mutableListOf()
     @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("waypoints") var mappingPoints: MutableList<String> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "variete") var varieteO: MutableList<String> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "protection") var protectionO: MutableList<String> = mutableListOf()
@@ -124,6 +127,7 @@ data class ParcelleExtModel(
     @Ignore @Expose @SerializedName(value = "variete") var varieteO: MutableList<ParcVariete> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "protection") var protectionO: MutableList<ParcProtect> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "items") var itemsO: MutableList<ParcArbre> = mutableListOf()
+    @Ignore @Expose @SerializedName(value = "autres_arbres") var autreArbre: MutableList<ParcAutreOmbrag> = mutableListOf()
 }
 
 data class ParcProtect(
@@ -143,4 +147,10 @@ data class ParcArbre(
     @Expose var parcelle_id: String? = null,
     @Expose var agroespeceabre_id: String? = null,
     @Expose var nombre: String? = null
+)
+
+data class ParcAutreOmbrag(
+    @Expose var id: Int? = null,
+    @Expose var nom: String? = null,
+    @Expose var strate: String? = null
 )

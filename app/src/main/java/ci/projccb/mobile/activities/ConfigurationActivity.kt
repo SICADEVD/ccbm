@@ -475,6 +475,7 @@ class ConfigurationActivity : AppCompatActivity() {
                             varieteStr = GsonUtils.toJson(it.varieteO.map { it.variete }),
                             protectionStr = GsonUtils.toJson(it.protectionO.map { it.typeProtection }),
                             arbreStr = GsonUtils.toJson(it.itemsO.map { ArbreData(arbre = "${it.agroespeceabre_id}", nombre = "${it.nombre}") }),
+                            autreArbreStr = GsonUtils.toJson(it.autreArbre),
                             isSynced = true,
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, agentID).toString(),
                             origin = "remote"

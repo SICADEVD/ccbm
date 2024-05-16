@@ -54,6 +54,12 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_formation.selectSousThemeMultiFormation
 import kotlinx.android.synthetic.main.activity_parcelle.*
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.clickAddMobileNumInfosProducteur
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.containerMobileMoneyInfosProducteur
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.editNumMobileInfosProducteur
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.recyclerNumMobileInfosProducteur
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectMobileOperatInfoProducteur
+import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.selectMoneyInfosProducteur
 
 import java.util.*
 
@@ -360,6 +366,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
+                autreArbreStr = GsonUtils.toJson((recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { ParcAutreOmbrag(null, nom = it.nombre.toString(), strate = it.variete) })
             }
         }
 
@@ -546,6 +553,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
+                autreArbreStr = GsonUtils.toJson((recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { ParcAutreOmbrag(null, nom = it.nombre.toString(), strate = it.variete) })
             }
 
             if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
@@ -641,6 +649,34 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 (recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).setOmbragesList(newArbreLi.toMutableList())
             }
         }
+
+        parcelleDrafted.autreArbreStr?.let {
+            if(it.isNullOrEmpty()){
+                val listIt = GsonUtils.fromJson<MutableList<ParcAutreOmbrag>>(it, object : TypeToken<MutableList<ParcAutreOmbrag>>(){}.type )
+                if(listIt != null){
+                    val newAutreArbreLi = listIt.map { ito->
+                        OmbrageVarieteModel(0, nombre = ito.strate, variete = ito.nom)
+                    }
+                    (recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).setOmbragesList(newAutreArbreLi.toMutableList())
+                }
+            }
+        }
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il d'autre arbre à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectYesNoAutreArbrOmbragParcelle,
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            currentVal = parcelleDrafted.yesnoautrearbreombrag,
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAutreArbrOmbragParcelle.visibility = visibility
+                }
+            })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.type_de_d_claration_superficie),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -1060,27 +1096,68 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         setOmbrageParcelleRV()
 
-//        .setOnClickListener {
-//            datePickerDialog = null
-//            val calendar: Calendar = Calendar.getInstance()
-//            val year = calendar.get(Calendar.YEAR)
-//            val month = calendar.get(Calendar.MONTH)
-//            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
-//
-//
-//            datePickerDialog = DatePickerDialog(this, { p0, year, month, day ->
-//
-//                editAnneeCreationParcelle.setText("$year")
-//                //anneeCertification = editAnneeCreationParcelle.text?.toString()!!
-//            }, year, month, dayOfMonth)
-//
-//            datePickerDialog!!.datePicker.minDate = DateTime.parse("01/01/1960", DateTimeFormat.forPattern("dd/MM/yyyy")).millis
-//            datePickerDialog!!.datePicker.maxDate = DateTime.now().millis
-//            datePickerDialog?.show()
-//        }
+        setAutreArbrOmbragRV()
 
         editNumAnneeRegenParcelle.setOnClickListener { showYearPickerDialog(editNumAnneeRegenParcelle) }
         editAnneeCreationParcelle.setOnClickListener { showYearPickerDialog(editAnneeCreationParcelle) }
+    }
+
+    fun setAutreArbrOmbragRV(libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+        val operatListInfoProd = mutableListOf<OmbrageVarieteModel>()
+        var countN = 0
+        libeleList.forEach {
+            operatListInfoProd.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+            countN++
+        }
+        val operatInfoProdAdapter = OmbrageAdapter(operatListInfoProd,
+            "Strate", "Nom d'Arbre")
+
+
+        try {
+            recyclerAutreArbrOmbrParcelle.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            recyclerAutreArbrOmbrParcelle.adapter = operatInfoProdAdapter
+        } catch (ex: Exception) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
+        }
+
+        clickAddAutreArbrOmbrParcelle.setOnClickListener {
+            try {
+                if (selectStrateAutreArbrOmbrParcelle.selectedItem.toString()
+                        .isEmpty() || editNomAutreArbrOmbrParcelle.text.toString().isEmpty()
+                ) {
+                    Commons.showMessage(getString(R.string.renseignez_des_donn_es_svp), this, callback = {})
+                    return@setOnClickListener
+                }
+
+                val varieteArbre = OmbrageVarieteModel(
+                    0,
+                    selectStrateAutreArbrOmbrParcelle.selectedItem.toString(),
+                    editNomAutreArbrOmbrParcelle.text.toString().trim()
+                )
+
+                if(varieteArbre.variete?.length?:0 > 0){
+                    operatListInfoProd?.forEach {
+                        if (it.variete?.uppercase() == varieteArbre.variete?.uppercase() && it.nombre == varieteArbre.nombre) {
+                            ToastUtils.showShort(getString(R.string.cet_donnees_est_deja_ajout_e))
+                            return@setOnClickListener
+                        }
+                    }
+
+                    operatListInfoProd?.add(varieteArbre)
+                    operatInfoProdAdapter?.notifyDataSetChanged()
+
+                    selectStrateAutreArbrOmbrParcelle.setSelection(0)
+                    editNomAutreArbrOmbrParcelle.text?.clear()
+                }
+                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+
     }
 
 
@@ -1115,6 +1192,21 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             onSelected = { itemId, visibility ->
                 if(itemId == 1){
                     containerArOmbragebrParcelle.visibility = visibility
+                }
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Y'a t'il d'autre arbre à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectYesNoAutreArbrOmbragParcelle,
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if (itemId == 1) {
+                    containerAutreArbrOmbragParcelle.visibility = visibility
                 }
             })
 
