@@ -929,22 +929,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 //
 //        }
 
-        Commons.setNineItremRV(this,
-            recyclerPestListSApplic,
-            clickAddPestListSApplic,
-            selectPestNomSApplic,
-            selectPestToxicoSApplic,
-            selectDoseUniteAppliPhyt,
-            selectQuantUniteAppliPhyt,
-            null,
-            editNomComPestSApplic,
-            editDosePestSApplic,
-            editQuantPestSApplic,
-            editFrequencPestSApplic,
-            editMatiereActiveSuiviApplication,
-            engageItem = 2,
-            libeleList = arrayListOf()
-        )
+        setOtherListen()
 
         clickSaveSuiviApplication.setOnClickListener {
             collectDatas()
@@ -976,6 +961,31 @@ class SuiviApplicationActivity : AppCompatActivity() {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
+    }
+
+    private fun setOtherListen() {
+
+        Commons.addNotZeroAtFirstToET(editFrequencPestSApplic)
+        Commons.addNotZeroAtFirstToET(editDosePestSApplic)
+        Commons.addNotZeroAtFirstToET(editQuantPestSApplic)
+        Commons.addNotZeroAtFirstToET(editDelaiProduitJourSuiviApplication)
+
+        Commons.setNineItremRV(this,
+            recyclerPestListSApplic,
+            clickAddPestListSApplic,
+            selectPestNomSApplic,
+            selectPestToxicoSApplic,
+            selectDoseUniteAppliPhyt,
+            selectQuantUniteAppliPhyt,
+            null,
+            editNomComPestSApplic,
+            editDosePestSApplic,
+            editQuantPestSApplic,
+            editFrequencPestSApplic,
+            editMatiereActiveSuiviApplication,
+            engageItem = 2,
+            libeleList = arrayListOf()
+        )
     }
 
     private fun setAllSelection() {

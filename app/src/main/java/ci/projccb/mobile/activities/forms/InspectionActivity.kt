@@ -36,6 +36,7 @@ import com.google.gson.reflect.TypeToken
 import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_evaluation.*
+import kotlinx.android.synthetic.main.activity_parcelle.editNbrCacaoHecParcelle
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
 import org.joda.time.DateTime
 import java.util.*
@@ -995,6 +996,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         editDateInspection.setOnClickListener {
             configDate(editDateInspection)
         }
+
+        Commons.addNotZeroAtFirstToET(editNbrProductionEvalBesoin)
 
         Commons.setListenerForSpinner(this@InspectionActivity,
             getString(R.string.choix_du_ou_des_certificats),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),

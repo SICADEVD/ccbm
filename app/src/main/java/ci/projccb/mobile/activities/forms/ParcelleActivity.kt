@@ -1034,6 +1034,10 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     private fun setOtherListener() {
         //setupTyprDeclarationSelection()
 
+        Commons.addNotZeroAtFirstToET(editAgeCacaoParcelle)
+        Commons.addNotZeroAtFirstToET(editQtArbrOmbrParcel)
+        Commons.addNotZeroAtFirstToET(editNbrCacaoHecParcelle)
+
         setOmbrageParcelleRV()
 
 //        .setOnClickListener {
