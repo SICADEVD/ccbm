@@ -800,7 +800,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
 
         Commons.setListenerForSpinner(this,
-            getString(R.string.y_a_t_il_des_pr_sences_d_rosion),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            getString(R.string.y_a_t_il_des_pr_sences_d_rosion),getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectSignErosParcelle,
             currentVal = parcelleDrafted.erosion,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
@@ -811,6 +811,22 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             },
             onSelected = { itemId, visibility ->
 
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Avez-vous des arbres à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectPresenceArbreOmbrParcelle,
+            currentVal = parcelleDrafted.yesornoarbreombrage,
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                .toList(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerArOmbragebrParcelle.visibility = visibility
+                }
             })
 
         val listArbres = mutableListOf<ArbreModel>()
@@ -1034,6 +1050,10 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
     private fun setOtherListener() {
         //setupTyprDeclarationSelection()
 
+        Commons.addNotZeroAtFirstToET(editAgeCacaoParcelle)
+        Commons.addNotZeroAtFirstToET(editQtArbrOmbrParcel)
+        Commons.addNotZeroAtFirstToET(editNbrCacaoHecParcelle)
+
         setOmbrageParcelleRV()
 
 //        .setOnClickListener {
@@ -1078,24 +1098,21 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             },
             onSelected = { itemId, visibility ->
             })
-//
-//        Commons.setListenerForSpinner(this,
-//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = spinnerVarieteParcelle,
-//            itemChanged = arrayListOf(Pair(1, "Autre")),
-//            listIem = (AssetFileHelper.getListDataFromAsset(
-//                21,
-//                this
-//            ) as MutableList<CommonData>).map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-////                if (itemId == 1) {
-////                    containerAutreVarieteProducteur.visibility = visibility
-////                }
-//            })
+
+        Commons.setListenerForSpinner(this,
+            "Avez-vous des arbres à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectPresenceArbreOmbrParcelle,
+            itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            listIem = resources.getStringArray(R.array.YesOrNo)
+                .toList(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+                if(itemId == 1){
+                    containerArOmbragebrParcelle.visibility = visibility
+                }
+            })
 
         Commons.setupItemMultiSelection(this, spinnerVarieteParcelle,
             "Quelles sont les variétés de culture ?",

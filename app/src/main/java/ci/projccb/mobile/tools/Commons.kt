@@ -1729,6 +1729,10 @@ class Commons {
             Commons.adjustTextViewSizesInDialog(Context, builder, _title, Dimension, isTitle)
         }
 
+        fun adjustTextViewSizesInDialogExt(Context: Context, builder: androidx.appcompat.app.AlertDialog.Builder, _title: String, Dimension: Float, isTitle: Boolean) {
+            Commons.adjustTextViewSizesInDialog(Context, builder, _title, Dimension, isTitle)
+        }
+
         fun showCircularIndicator(
             libelle: String = "TAUX DE REPONSE:",
             snackProgressBarManager: SnackProgressBarManager?,

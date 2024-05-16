@@ -686,6 +686,7 @@
     <string name="livraisonc_text8">Choix de la remorque</string>
     <string name="type_de_d_claration_superficie">Type de déclaration superficie</string>
     <string name="la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste des sections semble vide, veuillez procéder à la synchronisation des données svp.</string>
+    <string name="la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp">La liste semble vide, veuillez procéder à la synchronisation des données svp.</string>
     <string name="la_parcelle_est_elle_r_g_n_r_e">La parcelle est-elle régénérée ?</string>
     <string name="quel_type_de_document_poss_des_tu">Quel type de document possèdes-tu ?</string>
     <string name="d_finit_le_niveau_de_la_pente">Définit le niveau de la pente</string>

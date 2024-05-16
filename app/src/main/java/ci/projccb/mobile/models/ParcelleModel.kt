@@ -35,6 +35,7 @@ data class ParcelleModel(
     @Expose var superficie: String? = "",
     @Expose var latitude: String? = "",
     @Expose var longitude: String? = "",
+    @Expose var yesornoarbreombrage: String? = "",
     @Expose @SerializedName("nom") var nom: String? = "",
     @Expose @SerializedName("prenoms") var prenoms: String? = "",
     @Expose @SerializedName(value = "section", alternate = ["section_id"]) var section: String? = "",

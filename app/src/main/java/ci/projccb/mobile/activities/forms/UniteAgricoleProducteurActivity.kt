@@ -1254,6 +1254,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         Commons.addNotZeroAtFirstToET(editNbrTravPermanInfosProducteur)
         Commons.addNotZeroAtFirstToET(editNbrTravNotPermanInfosProducteur)
         Commons.addNotZeroAtFirstToET(editNbrTravSocieteInfosProducteur)
+
     }
 
     private fun setAllListener() {

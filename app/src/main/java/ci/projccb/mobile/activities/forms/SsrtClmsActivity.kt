@@ -1270,28 +1270,6 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             draftSsrte(draftedSsrteModel?: DataDraftedModel(uid = 0))
         }
 
-        /*val tempList = resources.getStringArray(R.array.primaireLevel)
-
-        val listArray0: MutableList<KeyPairBoolData> = ArrayList()
-        for (i in 0 until resources.getStringArray(R.array.primaireLevel).size) {
-            val h = KeyPairBoolData()
-            h.id = (i + 1).toLong()
-            h.name = tempList[i]
-            h.isSelected = false
-            listArray0.add(h)
-        }
-
-        multipleItemSelectionSpinner.setItems(listArray0) { items ->
-            for (i in items.indices) {
-                if (items[i].isSelected) {
-                    Log.i(
-                        Commons.TAG,
-                        i.toString() + " : " + items[i].name + " : " + items[i].isSelected
-                    )
-                }
-            }
-        }*/
-
         setOtherListener()
 
         if (intent.getStringExtra("from") != null) {
@@ -1306,6 +1284,8 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     }
 
     private fun setOtherListener() {
+
+        Commons.addNotZeroAtFirstToET(editVillageDistanceSsrt)
 
         editDateNaissancelSsrt.setOnClickListener { configDate(editDateNaissancelSsrt) }
         editDateEnqueteSsrt.setOnClickListener { configDate(editDateEnqueteSsrt) }

@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistr
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
 import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
+import kotlinx.android.synthetic.main.activity_evaluation.editNbrProductionEvalBesoin
 
 import kotlinx.android.synthetic.main.activity_evaluation_arbre.*
 import java.util.ArrayList
@@ -154,6 +155,8 @@ class EvaluationArbreActivity : AppCompatActivity() {
     }
 
     private fun setOtherListenner() {
+
+        Commons.addNotZeroAtFirstToET(editQuantitEvalArbre)
 
 //        editNbrCacaoHecEvaluationArbre.addTextChangedListener {
 //            caculateNbrArbre()

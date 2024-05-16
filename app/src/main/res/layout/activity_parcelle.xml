@@ -953,6 +953,52 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_weight="10"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:layout_weight="6"
+                            android:text="Avez-vous des arbres à ombrage dans la parcelle ?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_weight="4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                style="@style/SpinnerItemStyle"
+                                android:tag="yesornoarbreombrage"
+                                android:id="@+id/selectPresenceArbreOmbrParcelle"
+                                android:entries="@array/YesOrNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
+                    <LinearLayout
+                        android:id="@+id/containerArOmbragebrParcelle"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <LinearLayout

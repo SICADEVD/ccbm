@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
@@ -557,17 +558,20 @@ class EvaluationPostPlantAdapter(private var listItem: MutableList<ListeEspeceAr
     override fun onBindViewHolder(holder: EvaluationPostPlantHolder, position: Int) {
         val multiItModel = listItem!![position]
 
+        Commons.addNotZeroAtFirstToET(holder.item_quant_plante)
+        Commons.addNotZeroAtFirstToET(holder.item_quant_surve)
+
         holder.item_arbre_id.text = multiItModel.arbre_id.toString()
         holder.item_dist_title.text =  multiItModel.nom_arbre
         holder.item_qte_recu.text =  multiItModel.qte_recu
-        holder.item_quant_plante.text =  multiItModel.qte_plant
-        holder.item_quant_surve.text =  multiItModel.qte_survec
+        holder.item_quant_plante.setText("${multiItModel.qte_plant}")
+        holder.item_quant_surve.setText("${multiItModel.qte_survec}")
         holder.item_quant_comment.setText(multiItModel.commentaire)
 
         holder.item_quant_plante.doOnTextChanged() { text, start, before, count ->
             if(text.isNullOrEmpty()) return@doOnTextChanged
             listItem!![position].qte_plant = text.toString()
-            holder.item_quant_surve.text = text.toString()
+            holder.item_quant_surve.setText(text.toString())
         }
         holder.item_quant_surve.doOnTextChanged() { text, start, before, count ->
             if(text.isNullOrEmpty()) return@doOnTextChanged
@@ -597,8 +601,8 @@ class EvaluationPostPlantAdapter(private var listItem: MutableList<ListeEspeceAr
         val item_arbre_id = multiItView.findViewById<TextView>(R.id.item_arbre_id)
         val item_dist_title = multiItView.findViewById<TextView>(R.id.item_dist_title)
         val item_qte_recu = multiItView.findViewById<TextView>(R.id.item_qte_recu)
-        val item_quant_plante = multiItView.findViewById<TextView>(R.id.item_quant_plante)
-        val item_quant_surve = multiItView.findViewById<TextView>(R.id.item_quant_surve)
+        val item_quant_plante = multiItView.findViewById<AppCompatEditText>(R.id.item_quant_plante)
+        val item_quant_surve = multiItView.findViewById<AppCompatEditText>(R.id.item_quant_surve)
         val item_quant_comment = multiItView.findViewById<EditText>(R.id.item_quant_comment)
     }
 }

@@ -1518,6 +1518,15 @@ class SuiviParcelleActivity : AppCompatActivity() {
             draftSuiviParcelle(draftedDataSuiviParcelle ?: DataDraftedModel(uid = 0))
         }
 
+        Commons.addNotZeroAtFirstToET(editSauvageonSParcelle)
+        Commons.addNotZeroAtFirstToET(editNombrAgroSParcelle)
+        Commons.addNotZeroAtFirstToET(editFrequencPestSParcel)
+        Commons.addNotZeroAtFirstToET(editIntantAnDerPestSParcel)
+        Commons.addNotZeroAtFirstToET(editFrequencIntantAnDerSParcel)
+        Commons.addNotZeroAtFirstToET(editDesherbageManuelSuivi)
+        Commons.addNotZeroAtFirstToET(editTraitInsecteParOuRavQtSParcel)
+        Commons.addNotZeroAtFirstToET(editTraitInsecteParOuRavFrequSParcel)
+
         try {
             if (intent.getStringExtra("from") != null) {
                 draftedDataSuiviParcelle = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()

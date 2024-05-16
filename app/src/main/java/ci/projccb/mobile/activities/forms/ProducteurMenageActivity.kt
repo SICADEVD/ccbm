@@ -1298,67 +1298,6 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
         prodMenagereDao = CcbRoomDatabase.getDatabase(this)?.producteurMenageDoa()
 
-//        editSuperficieCacaoMenage.doAfterTextChanged {
-//            try {
-//                setupDonFemmeYesNoSelection()
-//                if (it.toString().isEmpty()) {
-//                    linearDonCacaoFemmeYesNoContainerMenage.visibility = View.GONE
-//                    linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
-//                } else {
-//                    /*if (data.contains(",")) {
-//                        data = data.replace(',', '.')
-//                    }*/
-//                    if (it.toString().trim().toDouble() == 0.0) {
-//                        linearDonCacaoFemmeYesNoContainerMenage.visibility = View.VISIBLE
-//                    } else {
-//                        linearDonCacaoFemmeYesNoContainerMenage.visibility = View.GONE
-//                        linearDonCacaoFemmeSuperficieContainerMenage.visibility = View.GONE
-//                    }
-//                }
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
-//        }
-
-//        editDonSuperficieCacaoMenage.doAfterTextChanged {
-//            try {
-//
-//            } catch (ex: Exception) {
-//                ex.printStackTrace()
-//            }
-//        }
-
-
-
-//        setupEnergiesSelection()
-//
-//        setupOrduresSelection()
-//
-//        setupEauToilettesSelection()
-//
-//        setupEauVaissellesSelection()
-//
-//        setupSourceEauxSelection()
-//
-//        setupTypeMachinesSelection()
-//
-//        setupLocaliteSelection()
-//
-//        setupDechetYesNoSelection()
-//
-//        setupTraitementProtectionYesNoSelection()
-//
-//        setupWCYesNoSelection()
-//
-//        setupSelfTraitementYesNoSelection()
-//
-//        setupFemmeActiviteYesNoSelection()
-//
-//        setupDonFemmeYesNoSelection()
-//
-//        setupAtomisateurSelection()
-//
-//        setupGardeMachinesPulSelection()
 
         clickCloseBtn.setOnClickListener {
             finish()
@@ -1391,6 +1330,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
     }
 
     private fun setOtherListener() {
+
+        Commons.addNotZeroAtFirstToET(editNbreEnfant0a5Menage)
+        Commons.addNotZeroAtFirstToET(editNbreEnfant6a17Menage)
+        Commons.addNotZeroAtFirstToET(editNbreEnfantScolariseMenage)
+        Commons.addNotZeroAtFirstToET(editNbreEnfantSansExtrMenage)
+        Commons.addNotZeroAtFirstToET(editNbre6A17EnfantSansExtrMenage)
+        Commons.addNotZeroAtFirstToET(editNbreDBoisMenage)
+        Commons.addNotZeroAtFirstToET(editTempsDePratiquMenage)
 
         editAnneeFormatFemmeMenage.setOnClickListener { showYearPickerDialog(editAnneeFormatFemmeMenage) }
 

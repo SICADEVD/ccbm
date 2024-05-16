@@ -1,15 +1,30 @@
 package ci.projccb.mobile.activities.forms.views;
 
-import android.app.AlertDialog;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.renderscript.ScriptGroup;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.SearchView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +32,8 @@ import java.util.List;
 import ci.projccb.mobile.R;
 import ci.projccb.mobile.tools.Commons;
 
-public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterface.OnMultiChoiceClickListener {
+public class MultiSelectSpinner extends AppCompatSpinner {
+
     public interface OnMultipleItemsSelectedListener{
         void selectedIndices(List<Integer> indices);
         void selectedStrings(List<String> strings);
@@ -53,34 +69,181 @@ public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterf
         this.listener = listener;
     }
 
-    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-        if (mSelection != null && which < mSelection.length) {
-            if(hasNone) {
-                if (which == 0 && isChecked && mSelection.length > 1) {
-                    for (int i = 1; i < mSelection.length; i++) {
-                        mSelection[i] = false;
-                        ((AlertDialog) dialog).getListView().setItemChecked(i, false);
-                    }
-                } else if (which > 0 && mSelection[0] && isChecked) {
-                    mSelection[0] = false;
-                    ((AlertDialog) dialog).getListView().setItemChecked(0, false);
-                }
-            }
-            mSelection[which] = isChecked;
-            simple_adapter.clear();
-            simple_adapter.add(buildSelectedItemString());
-        } else {
-            throw new IllegalArgumentException(
-                    "Argument 'which' is out of bounds.");
-        }
-    }
-
     @Override
     public boolean performClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.DialogTheme);
-        Commons.Companion.adjustTextViewSizesInDialogExt(getContext(), builder, _title, getContext().getResources().getDimension(R.dimen._8ssp),true);
+
+
+        ArrayList<SearchableItem> listModelNames = new ArrayList<>();
+        ArrayList<Integer> listIndex = new ArrayList<>();
+        for(int j = 0; j < _items.length; j++){
+            listIndex.add(j);
+            SearchableItem model = new SearchableItem(_items[j], String.valueOf(j));
+            if(mSelection!=null) model.setSelected(mSelection[j]);
+            listModelNames.add(model);
+        }
+
+        AlertDialog.Builder alertBd = new AlertDialog.Builder(getContext(), R.style.DialogTheme);
+
+        Commons.Companion.adjustTextViewSizesInDialogExt(getContext(), alertBd, _title, getContext().getResources().getDimension(R.dimen._8ssp),true);
+        SearchableMultiSelectSpinner.Companion.showDialog(getContext(), alertBd, _title, _titlePB, _titleNB, listModelNames, new SelectionCompleteListener() {
+
+            public void onItemClicked(@NonNull SearchableItem selectedItem, int which, boolean checked) {
+                if (mSelection != null && which < mSelection.length) {
+                    if(hasNone) {
+                        if (which == 0 && checked && mSelection.length > 1) {
+                            for (int i = 1; i < mSelection.length; i++) {
+                                mSelection[i] = false;
+//                                ((AlertDialog) dialog).getListView().setItemChecked(i, false);
+                            }
+                        } else if (which > 0 && mSelection[0] && checked) {
+                            mSelection[0] = false;
+//                    ((AlertDialog) dialog).getListView().setItemChecked(0, false);
+                        }
+                    }
+                    mSelection[which] = checked;
+                    simple_adapter.clear();
+                    simple_adapter.add(buildSelectedItemString());
+                } else {
+                    throw new IllegalArgumentException(
+                            "Argument 'which' is out of bounds.");
+                }
+            }
+
+            public void onCancel(@NonNull ArrayList<SearchableItem> selectedItems) {
+                simple_adapter.clear();
+                simple_adapter.add(_itemsAtStart);
+                System.arraycopy(mSelectionAtStart, 0, mSelection, 0, mSelectionAtStart.length);
+            }
+
+            public void onCompleteSelection(@NonNull ArrayList<SearchableItem> selectedItems) {
+                System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
+                listener.selectedIndices(getSelectedIndices());
+                listener.selectedStrings(getSelectedStrings());
+            }
+        });
+
+
+
+        //AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.DialogTheme);
         //builder.setTitle(_title);
-        builder.setMultiChoiceItems(_items, mSelection, this);
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_multichoice, Arrays.asList(_items));
+//
+//        final SearchView searchView = new SearchView(getContext());
+//        searchView.setQueryHint("Rechercher…");
+//        searchView.setIconifiedByDefault(false);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // Filter items based on the search text
+//                adapter.getFilter().filter(newText);
+//                return true;
+//            }
+//        });
+//
+//        searchView.setOnSearchClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Request focus for the SearchView
+//                searchView.requestFocus();
+//                // Show the keyboard
+//                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+//            }
+//        });
+//
+//        builder.setCustomTitle(searchView);
+
+
+//        CustomMultiSearchAdapter adapter = new CustomMultiSearchAdapter(getContext(), Arrays.asList(_items), mSelection, new OnMultiDialClickListener(){
+//
+//            @Override
+//            public void onCheckClick(int which, boolean checked) {
+//                if (mSelection != null && which < mSelection.length) {
+//                    if(hasNone) {
+//                        if (which == 0 && checked && mSelection.length > 1) {
+//                            for (int i = 1; i < mSelection.length; i++) {
+//                                mSelection[i] = false;
+////                                ((AlertDialog) dialog).getListView().setItemChecked(i, false);
+//                            }
+//                        } else if (which > 0 && mSelection[0] && checked) {
+//                            mSelection[0] = false;
+////                    ((AlertDialog) dialog).getListView().setItemChecked(0, false);
+//                        }
+//                    }
+//                    mSelection[which] = checked;
+//                    simple_adapter.clear();
+//                    simple_adapter.add(buildSelectedItemString());
+//                } else {
+//                    throw new IllegalArgumentException(
+//                            "Argument 'which' is out of bounds.");
+//                }
+//            }
+//        });
+//
+//        LayoutInflater inflater = LayoutInflater.from(getContext());
+//        View v = inflater.inflate(R.layout.dialog_multi_searchlayout, null);
+//        final SearchView searchView = (SearchView) v.findViewById(R.id.searchView);
+//        final ListView listView = (ListView) v.findViewById(R.id.listView);
+//
+//        listView.setAdapter(adapter);
+
+//        for(int j = 0; j < _items.length; j++){
+//            for (int i = 0; i < simple_adapter.getCount(); i++) {
+//                String item = simple_adapter.getItem(i);
+//                if (item.contains(_items[j])) {
+//                    adapter.
+//                    break;
+//                }
+//            }
+//        }
+
+//        builder.setView(v);
+
+
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                adapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+
+//        builder.setMultiChoiceItems(Arrays.asList(_items).toArray(new CharSequence[0]), mSelection, new DialogInterface.OnMultiChoiceClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which, boolean checked) {
+//                if (mSelection != null && which < mSelection.length) {
+//                    if(hasNone) {
+//                        if (which == 0 && checked && mSelection.length > 1) {
+//                            for (int i = 1; i < mSelection.length; i++) {
+//                                mSelection[i] = false;
+//                                ((AlertDialog) dialog).getListView().setItemChecked(i, false);
+//                            }
+//                        } else if (which > 0 && mSelection[0] && checked) {
+//                            mSelection[0] = false;
+//                    ((AlertDialog) dialog).getListView().setItemChecked(0, false);
+//                        }
+//                    }
+//                    mSelection[which] = checked;
+//                    simple_adapter.clear();
+//                    simple_adapter.add(buildSelectedItemString());
+//                } else {
+//                    throw new IllegalArgumentException(
+//                            "Argument 'which' is out of bounds.");
+//                }
+//            }
+//        });
+
         _itemsAtStart = getSelectedItemsAsString();
         if(_itemsAtStart == null) return true;
 //        builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
@@ -89,23 +252,24 @@ public class MultiSelectSpinner extends AppCompatSpinner implements DialogInterf
 //                setSelection(0);
 //            }
 //        });
-        builder.setPositiveButton(_titlePB, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
-                listener.selectedIndices(getSelectedIndices());
-                listener.selectedStrings(getSelectedStrings());
-            }
-        });
-        builder.setNegativeButton(_titleNB, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                simple_adapter.clear();
-                simple_adapter.add(_itemsAtStart);
-                System.arraycopy(mSelectionAtStart, 0, mSelection, 0, mSelectionAtStart.length);
-            }
-        });
-        builder.show();
+//        builder.setPositiveButton(_titlePB, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
+//                listener.selectedIndices(getSelectedIndices());
+//                listener.selectedStrings(getSelectedStrings());
+//            }
+//        });
+//        builder.setNegativeButton(_titleNB, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                simple_adapter.clear();
+//                simple_adapter.add(_itemsAtStart);
+//                System.arraycopy(mSelectionAtStart, 0, mSelection, 0, mSelectionAtStart.length);
+//            }
+//        });
+//        builder.show();
+
         return true;
     }
 
