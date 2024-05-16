@@ -165,6 +165,17 @@ class Commons {
         }
 
 
+        fun uriToBitmap(context: Context, uri: Uri): Bitmap? {
+            return try {
+                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+                return BitmapFactory.decodeStream(inputStream)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        }
+
+
         fun applyFilters(component: AppCompatEditText?, withZero: Boolean = false) {
             component?.filters = arrayOf(filterWithZero)
         }

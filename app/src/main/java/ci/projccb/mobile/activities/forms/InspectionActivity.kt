@@ -28,10 +28,7 @@ import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.LoadProgressListener
 import ci.projccb.mobile.tools.MapEntry
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.*
 import com.google.gson.reflect.TypeToken
 import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
@@ -655,6 +652,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 }
             }
         }
+
 
         //Commons.printModelValue(questionnaireDto as Object, (itemModelOb.second as List<MapEntry>?))
 

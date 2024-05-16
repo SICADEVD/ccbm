@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Gallery
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -1345,6 +1346,8 @@ class FormationActivity : AppCompatActivity() {
                                 options
                             )
                         )
+
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(formationPhotoPath, options), Bitmap.CompressFormat.JPEG)
                     }
                     3 -> {
                         endPhotoListePresence = formationPhotoPath
@@ -1356,6 +1359,8 @@ class FormationActivity : AppCompatActivity() {
                                 options
                             )
                         )
+
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(endPhotoListePresence, options), Bitmap.CompressFormat.JPEG)
                     }
                 }
             } else {
@@ -1365,6 +1370,7 @@ class FormationActivity : AppCompatActivity() {
                 when (whichPhoto) {
                     0, 3 -> {
                         Commons.copyFile(bundleData, (formationPhotoPath), this@FormationActivity)
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(formationPhotoPath, options), Bitmap.CompressFormat.JPEG)
                     }
                     1, 2 -> {
                         Commons.copyFile(bundleData, (documentPath), this@FormationActivity)
@@ -1377,6 +1383,7 @@ class FormationActivity : AppCompatActivity() {
                         imagePhotoFormation.setImageURI(bundleData)
 
                         //  createImageFileCompressed()
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(endphoto, options), Bitmap.CompressFormat.JPEG)
                     }
                     1 -> {
                         endRapport = documentPath
@@ -1389,6 +1396,7 @@ class FormationActivity : AppCompatActivity() {
                     3 -> {
                         endPhotoListePresence = formationPhotoPath
                         photoListePresenceFormation.setImageURI(bundleData)
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(endPhotoListePresence, options), Bitmap.CompressFormat.JPEG)
 
                         //  createImageFileCompressed()
                     }

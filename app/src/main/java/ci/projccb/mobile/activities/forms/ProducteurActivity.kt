@@ -699,12 +699,14 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
                     if (bundleData == null) {
                         imagePhotoProfilProducteur.setImageBitmap(BitmapFactory.decodeFile(profilPhotoPath, options))
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(profilPhotoPath, options), Bitmap.CompressFormat.JPEG)
                     } else {
                         options.inJustDecodeBounds = true
                         options.inPurgeable = true
                         profilPhotoPath = UriUtils.uri2File(bundleData).path
                         LogUtils.e(TAG, profilPhotoPath)
                         imagePhotoProfilProducteur.setImageURI(bundleData)
+                        ImageUtils.save2Album(BitmapFactory.decodeFile(profilPhotoPath, options), Bitmap.CompressFormat.JPEG)
                     }
                 }
             }
