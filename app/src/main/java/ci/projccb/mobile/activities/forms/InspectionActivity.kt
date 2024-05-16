@@ -34,6 +34,7 @@ import com.tingyik90.snackprogressbar.SnackProgressBarManager
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_evaluation.*
 import kotlinx.android.synthetic.main.activity_parcelle.editNbrCacaoHecParcelle
+import kotlinx.android.synthetic.main.activity_parcelle.labelTitleMenuAction
 import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
 import org.joda.time.DateTime
 import java.util.*
@@ -43,6 +44,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     RecyclerItemListener<QuestionResponseModel> {
 
 
+    private var commomUpdate: CommonData = CommonData()
     private var dateInspectionParm: String? = null
     private var counterMainView: Int = 0
     private var snackProgressBarManager: SnackProgressBarManager? = null
@@ -546,6 +548,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             total_question_non_conforme = cQuestionnairesReviewList?.filter { it.isTitle == false && it.note == "-1" }?.size.toString()
             total_question_non_applicable = cQuestionnairesReviewList?.filter { it.isTitle == false && it.note == "0" }?.size.toString()
 
+            if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
+                this.id = commomUpdate.listOfValue?.first()?.toInt()
+                this.uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
+                this.sync_update = true
+            }
         }
 
         LogUtils.d(draftInsoection)
@@ -1026,7 +1033,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     clickSaveInspection.setOnClickListener {
                         collectDatasUpdate(inspectUid)
                     }
-                    imageDraftBtn.visibility = View.GONE
+//                    imageDraftBtn.visibility = View.GONE
 
                     inspectionData = CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getByUid(inspectUid)
                     inspectionData?.forEach {
@@ -1181,6 +1188,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         val product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(inspectionDrafted.producteursId?.toInt()?:0)
 
+
+        if(inspectionDrafted.sync_update){
+            intent.putExtra("sync_uid", 1)
+            labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
+        }
 //        Commons.debugModelToJson(inspectionDrafted)
         dateInspectionParm = inspectionDrafted.dateEvaluation
 

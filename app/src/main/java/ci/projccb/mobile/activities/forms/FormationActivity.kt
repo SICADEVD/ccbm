@@ -701,6 +701,18 @@ class FormationActivity : AppCompatActivity() {
             return
         }
 
+        if (endphoto.isNullOrEmpty() || endRapport.isNullOrEmpty()) {
+            Commons.showMessage(
+                message = "LA PHOTO OU LE RAPPORT DE LA FORMATION N'EST PAS RENSEIGNÉ",
+                context = this,
+                finished = false,
+                callback = {},
+                deconnec = false,
+                showNo = false
+            )
+            return
+        }
+
         val itemModelOb = getFormationObjet()
 
         if (itemModelOb == null) return

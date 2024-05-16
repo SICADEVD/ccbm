@@ -22,7 +22,7 @@ import kotlinx.android.parcel.Parcelize
 )
 @Parcelize
 data class InspectionDTO(
-    @Expose val id: Int? = 0,
+    @Expose var id: Int? = 0,
     @PrimaryKey(autoGenerate = true) @SerializedName("uid") @Expose var uid: Int,
     @SerializedName("campagne_id") @Expose var campagnesId: String? = "",
     @SerializedName("campagnes_label") @Expose var campagnesLabel: String? = "",
@@ -53,6 +53,7 @@ data class InspectionDTO(
     @SerializedName("userid") @Expose var userid: Int? = 0,
     var origin: String? = "local",
     var isSynced: Boolean = false,
+    @Expose var sync_update: Boolean = false,
     @Expose @SerializedName("agentId") var agentId: String? = "",
 ): Parcelable {
     @SerializedName("reponse") @Expose(serialize = true, deserialize = false) @Ignore var reponse: MutableMap<String, String> = mutableMapOf()
