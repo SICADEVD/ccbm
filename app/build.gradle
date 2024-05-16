@@ -100,7 +100,7 @@ dependencies {
     // For GPX
     implementation 'com.github.ticofab:android-gpx-parser:2.2.0'
 
-    implementation 'com.github.pratikbutani:MultiSelectSpinner:1.0.1'
+//    implementation 'com.github.pratikbutani:MultiSelectSpinner:1.0.1'
 
     /**
      * For Crashlitycs
