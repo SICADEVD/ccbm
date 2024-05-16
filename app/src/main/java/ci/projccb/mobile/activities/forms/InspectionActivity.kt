@@ -527,7 +527,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     fun draftInspection(draftModel: DataDraftedModel?) {
         val itemModelOb = getInspectObjet(false)
         if(itemModelOb == null) return
-        val draftInsoection = itemModelOb?.first.apply {
+        val draftInsoection = itemModelOb.first.apply {
             section = sectionCommon.id.toString()
             localiteId = localiteCommon.id.toString()
             producteursId = producteurCommon.id.toString()
@@ -608,7 +608,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         val itemModelOb = getInspectObjet()
         if(itemModelOb == null) return
-        val questionnaireDto = itemModelOb?.first.apply {
+        val questionnaireDto = itemModelOb.first.apply {
             section = sectionCommon.id.toString()
             localiteId = localiteCommon.id.toString()
             producteursId = producteurCommon.id.toString()
@@ -629,14 +629,14 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         var allNamed : MutableList<Pair<String, String>> = mutableListOf()
 
-        itemModelOb?.second.forEach {
+        itemModelOb.second.forEach {
             allNamed.add(it)
         }
 
-        itemModelOb?.second.apply {
+        itemModelOb.second.apply {
             cQuestionnairesReviewList?.forEachIndexed { index, questionResponseModel ->
                 if (questionResponseModel.label.isNullOrEmpty() == false) {
-                    this?.add(
+                    this.add(
                         "${questionResponseModel.label}" to
                                 "${questionResponseModel.noteLabel}"
                     )
@@ -757,7 +757,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 //        LogUtils.d(dataList)
 
         if(itemModelOb == null) return
-        val questionnaireDto = itemModelOb?.first.apply {
+        val questionnaireDto = itemModelOb.first.apply {
             section = sectionCommon.id.toString()
             localiteId = localiteCommon.id.toString()
             producteursId = producteurCommon.id.toString()

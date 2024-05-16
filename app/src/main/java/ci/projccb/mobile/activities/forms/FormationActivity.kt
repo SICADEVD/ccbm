@@ -704,15 +704,15 @@ class FormationActivity : AppCompatActivity() {
 
         if (itemModelOb == null) return
 
-        val formationModel = itemModelOb?.first.apply {
-            this?.apply {
+        val formationModel = itemModelOb.first.apply {
+            this.apply {
                 section = sectionCommon.id.toString()
                 localitesId = localiteCommon.id.toString()
                 staffId = staffCommon.id.toString()
                 entreprise_id = entrepriseCommon.id.toString()
 
                 producteursIdStr = GsonUtils.toJson(producteurIdList.map { it.id.toString() }.toMutableList())
-                typeFormationStr = GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }.toMutableList())
+                typeFormationStr = GsonUtils.toJson(typeFormationListCm.map { it.id.toString() }.toMutableList())
                 themeStr = GsonUtils.toJson(themeListCm.map { it.value.toString() }.toMutableList())
                 sousThemeStr = GsonUtils.toJson(sousThemeListCm.map { it.value.toString() }.toMutableList())
 
@@ -722,7 +722,7 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
-        val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
+        val mapEntries: List<MapEntry>? = itemModelOb.second.apply {
             this.add(
                 Pair(
                     "Les participants",
@@ -762,7 +762,7 @@ class FormationActivity : AppCompatActivity() {
                 )
             )
 
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
         //Commons.printModelValue(formationModel as Object, mapEntries)
 
@@ -911,7 +911,7 @@ class FormationActivity : AppCompatActivity() {
                 producteursIdStr =
                     GsonUtils.toJson(producteurIdList.map { it.id.toString() }.toMutableList())
                 typeFormationStr =
-                    GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }.toMutableList())
+                    GsonUtils.toJson(typeFormationListCm?.map { it.id.toString() }?.toMutableList())
                 themeStr = GsonUtils.toJson(themeListCm.map { it.value.toString() }.toMutableList())
                 sousThemeStr =
                     GsonUtils.toJson(sousThemeListCm.map { it.value.toString() }.toMutableList())
@@ -962,7 +962,6 @@ class FormationActivity : AppCompatActivity() {
 
         setupSectionSelection(formationDrafted.section, formationDrafted.localitesId)
 
-<<<<<<< HEAD
         var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteursByLocalite(formationDrafted.localitesId.toString())?.map { if(it.isSynced) CommonData(it.id, "${it.nom} ${it.prenoms}") else CommonData(it.uid, "${it.nom} ${it.prenoms}") }!!
         var selectStr: MutableList<String> = GsonUtils.fromJson(formationDrafted.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type)
         var selectProd = producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
@@ -985,24 +984,6 @@ class FormationActivity : AppCompatActivity() {
             })
 
         Commons.setupItemMultiSelection(this, selectProducteurFormation,
-=======
-        var producteurList = CcbRoomDatabase.getDatabase(this)?.producteurDoa()
-            ?.getProducteursByLocalite(formationDrafted.localitesId.toString())?.map {
-            if (it.isSynced) CommonData(
-                it.id,
-                "${it.nom} ${it.prenoms}"
-            ) else CommonData(it.uid, "${it.nom} ${it.prenoms}")
-        }!!
-        var selectStr: MutableList<String> = GsonUtils.fromJson(
-            formationDrafted.producteursIdStr,
-            object : TypeToken<MutableList<String>>() {}.type
-        )
-        var selectProd =
-            producteurList.filter { selectStr.contains(it.id.toString()) == true }.toMutableList()
-        LogUtils.d(selectStr, selectProd)
-        Commons.setupItemMultiSelection(
-            this, selectProducteurFormation,
->>>>>>> dev/didierboka
             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
             producteurList,
             currentList = selectProd.map { "${it.nom}" }.toMutableList()
