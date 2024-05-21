@@ -873,17 +873,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 })
             }
 
-//        setupNationaliteSelection()
-//
-//        setupTypePieceSelection()
-//
-//        setupEtudesSelection()
-//
-//        setupSexeSelection()
-//
-//        setupConsentementSelection()
-//
-//        setupStatutCertificationSelection()
     }
 
 
