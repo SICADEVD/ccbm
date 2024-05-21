@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.infospresenters.InspectionPreviewActivity
 import ci.projccb.mobile.activities.infospresenters.InspectionPreviewUpdateActivity
@@ -407,6 +408,9 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                         label = dbQuestion.libelle!!,
                         noteLabel = questionFromServ.noteLabel,
                         commentaireLast = questionFromServ.commentaireLast,
+                        statuts = questionFromServ.statuts,
+                        date_verification = questionFromServ.date_verification,
+                        delai = questionFromServ.delai,
                         note = "-1",
                         reponseId = 1,
                         isTitle = false
@@ -443,6 +447,18 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         val recyclerDecoration = RecyclerItemDecoration(this, 40, true, this)
         recyclerQuesionnairesInspection.addItemDecoration(recyclerDecoration)
+
+//        recyclerQuesionnairesInspection.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//
+//
+//                LogUtils.d("SLIDE CHANGE")
+//                (recyclerView.adapter as  QuestionnaireReviewAdapter).getCurrentCommentView()?.let {
+//                    it.clearFocus()
+//                }
+//            }
+//        })
     }
 
 

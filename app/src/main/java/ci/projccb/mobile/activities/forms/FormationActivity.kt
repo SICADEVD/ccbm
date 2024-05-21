@@ -82,6 +82,7 @@ class FormationActivity : AppCompatActivity() {
     }
 
 
+    private var endDocListePresence: String = ""
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var producteurIdList: MutableList<CommonData> = arrayListOf()
     private var typeFormationListCm: MutableList<CommonData> = arrayListOf()
@@ -539,8 +540,9 @@ class FormationActivity : AppCompatActivity() {
 //            })
 
         val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
+        entrepList?.add(EntrepriseModel(0, 0, "AUCUN", 0))
         Commons.setListenerForSpinner(this,
-            "Choix de l'entreprise de formateur",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            "Choix de l'entreprise formatrice",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEntrepriseFormation,
 //            currentVal = entrepList?.filter { it.id.toString() == formationDrafted?.entreprise_id }?.let {
 //                if(it.size > 0) it.first().nom else null
@@ -701,9 +703,23 @@ class FormationActivity : AppCompatActivity() {
             return
         }
 
-        if (endphoto.isNullOrEmpty() || endRapport.isNullOrEmpty()) {
+        if (endphoto.isNullOrEmpty() && endPhotoListePresence.isNullOrEmpty()) {
             Commons.showMessage(
-                message = "LA PHOTO OU LE RAPPORT DE LA FORMATION N'EST PAS RENSEIGNÉ",
+                message = "AUCUNE PHOTO DE LA FORMATION N'A ETE RENSEIGNÉ",
+                context = this,
+                finished = false,
+                callback = {},
+                deconnec = false,
+                showNo = false
+            )
+            return
+        }
+
+
+        //JE MET L'ACCENT SUR LE DOCU DU RAPPORT CAR C EST LE PLUS IMPORTANT
+        if (endRapport.isNullOrEmpty()) {
+            Commons.showMessage(
+                message = "AUCUN RAPPORT DE LA FORMATION N'A ETE RENSEIGNÉ",
                 context = this,
                 finished = false,
                 callback = {},
@@ -732,8 +748,13 @@ class FormationActivity : AppCompatActivity() {
                 photoFormation = endphoto
                 rapportFormation = endRapport
 
+                docListePres = endDocListePresence
+                photoListePresence = endPhotoListePresence
+
             }
         }
+
+        Commons.debugModelToJson(formationModel)
 
         val mapEntries: List<MapEntry>? = itemModelOb.second.apply {
             this.add(
@@ -772,6 +793,19 @@ class FormationActivity : AppCompatActivity() {
                 Pair(
                     getString(R.string.le_rapport),
                     getString(R.string.un_rapport_est_fourni)
+                )
+            )
+
+            if (endDocListePresence.isNullOrEmpty()) this.add(
+                Pair(
+                    "Document de liste de présence",
+                    "Aucun de document n'est chargé"
+                )
+            )
+            else this.add(
+                Pair(
+                    "Document de liste de présence",
+                    "Document chargé"
                 )
             )
 
@@ -934,6 +968,7 @@ class FormationActivity : AppCompatActivity() {
 
                 photoFormation = endphoto
                 rapportFormation = endRapport
+                docListePres = endDocListePresence
                 photoListePresence = endPhotoListePresence
             }
         }
@@ -984,8 +1019,9 @@ class FormationActivity : AppCompatActivity() {
 //        LogUtils.d(selectStr, selectProd)
 
         val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
+        entrepList?.add(EntrepriseModel(0, 0, "AUCUN", 0))
         Commons.setListenerForSpinner(this,
-            "Choix de l'entreprise de formateur",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            "Choix de l'entreprise formatrice",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEntrepriseFormation,
             currentVal = entrepList?.filter { it.id.toString() == formationDrafted?.entreprise_id }?.let {
                 if(it.size > 0) it.first().nom else null
@@ -993,8 +1029,10 @@ class FormationActivity : AppCompatActivity() {
             listIem = entrepList?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
-                entrepriseCommon.nom = entrepList!![it].nom
-                entrepriseCommon.id = entrepList[it].id
+                entrepList?.let { lit ->
+                    entrepriseCommon.nom = lit[it].nom
+                    entrepriseCommon.id = lit[it].id
+                }
             },
             onSelected = { itemId, visibility ->
             })
@@ -1405,7 +1443,7 @@ class FormationActivity : AppCompatActivity() {
                         imageRapportFormation.setImageResource(R.drawable.document_file_download_done)
                     }
                     2 -> {
-                        endPhotoListePresence = formationPhotoPath
+                        endDocListePresence = documentPath
                         listePresenceFormation.setImageResource(R.drawable.document_file_download_done)
                     }
                     3 -> {

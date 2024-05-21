@@ -663,7 +663,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il d'autre arbre à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            "Y'a t'il d'autres arbres à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectYesNoAutreArbrOmbragParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = parcelleDrafted.yesnoautrearbreombrag,
@@ -1196,7 +1196,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             })
 
         Commons.setListenerForSpinner(this,
-            "Y'a t'il d'autre arbre à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            "Y'a t'il d'autres arbres à ombrage dans la parcelle ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectYesNoAutreArbrOmbragParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)

@@ -692,7 +692,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:textSize="@dimen/page_input_title_dim11"
-                            android:text="Choix de l'entreprise de formateur"
+                            android:text="Choix de l'entreprise formatrice"
                             android:textColor="@color/text_color_white"
                             android:textStyle="bold" />
 

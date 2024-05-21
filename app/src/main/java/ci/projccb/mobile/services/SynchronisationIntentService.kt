@@ -881,8 +881,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                         photo_filename = photoFormation
                         rapport_filename = rapportFormation
+
                         photoFormation = Commons.convertPathBase64(photoFormation, 1)
                         rapportFormation = Commons.fileToBase64(rapportFormation)
+
+                        photoListePresence = Commons.convertPathBase64(photoListePresence, 1)
+                        docListePres = Commons.fileToBase64(docListePres)
                     }
 
                     val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)

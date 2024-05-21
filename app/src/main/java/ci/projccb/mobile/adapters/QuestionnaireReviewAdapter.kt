@@ -1,6 +1,7 @@
 package ci.projccb.mobile.adapters
 
 import android.content.Context
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -39,6 +41,7 @@ class QuestionnaireReviewAdapter(
 
     private val LAYOUT_ONE = 0
     private val LAYOUT_TWO = 1
+    private var CURR_CLICK_COMMENT: View? = null
     private var selectionNotation: Int = 0
     lateinit var questionsListener: RecyclerItemListener<QuestionResponseModel>
 
@@ -94,7 +97,7 @@ class QuestionnaireReviewAdapter(
         return super.getItemId(position)
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val questionnaireResponseInfo = pQuestionnaireResponsesList[position]
 
@@ -150,9 +153,31 @@ class QuestionnaireReviewAdapter(
                     }
                 }
 
-            holder.editCommentItemQuestInspect.doOnTextChanged() { text, start, before, count ->
-                holder.editCommentItemQuestInspect.clearFocus()
-            }
+//            holder.editCommentItemQuestInspect.doOnTextChanged() { text, start, before, count ->
+//                holder.editCommentItemQuestInspect.clearFocus()
+//            }
+
+//            holder.editCommentItemQuestInspect.setOnTouchListener(View.OnTouchListener { view, motionEvent ->
+//
+//                holder.editCommentItemQuestInspect.clearFocus()
+//
+//                return@OnTouchListener false
+//            })
+            holder.editCommentItemQuestInspect.requestFocus(View.FOCUS_DOWN)
+//                CURR_CLICK_COMMENT = it
+//            }
+
+//            holder.itemView.setOnClickListener {
+//
+//            }
+
+//            holder.itemView.setOnTouchListener { view, motionEvent ->
+//                LogUtils.d("TOUCH CHANGE")
+//                CURR_CLICK_COMMENT?.let {comment->
+//                    comment.clearFocus()
+//                }
+//                return@setOnTouchListener false
+//            }
 
             holder.editCommentItemQuestInspect.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
@@ -161,6 +186,8 @@ class QuestionnaireReviewAdapter(
                     count: Int,
                     after: Int
                 ) {
+
+//                    holder.editCommentItemQuestInspect.clearFocus()
 
                 }
 
@@ -199,6 +226,12 @@ class QuestionnaireReviewAdapter(
 
                     (pContext as InspectionActivity).updatProgressBar()
                 }
+
+                //RECOVER DATA
+                holder.selectStatutsInspectionItem.setSelection(pContext.resources.getStringArray(R.array.statutsInspect).indexOf("${questionnaireResponseInfo.statuts}"))
+                holder.editDateVerifInspectItem.setText("${questionnaireResponseInfo.date_verification}")
+                holder.editDateDelaiInspectItem.setText("${questionnaireResponseInfo.delai}")
+                //END RECOVER DATA
 
                 holder.editDateVerifInspectItem.setOnClickListener {
                     pContext.configDate(holder.editDateVerifInspectItem)
@@ -275,8 +308,8 @@ class QuestionnaireReviewAdapter(
     }
 
 
-    fun retrieveNotation() {
-
+    fun getCurrentCommentView(): View? {
+        return CURR_CLICK_COMMENT
     }
 
 

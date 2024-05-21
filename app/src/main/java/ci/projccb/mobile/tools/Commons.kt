@@ -284,7 +284,8 @@ class Commons {
                                   message: String = "La liste est vide !", isKill:Boolean = false,
                                   isEmpty:Boolean = false, spinner: Spinner,
                                   listIem: List<String?> = mutableListOf(), itemChanged:List<Pair<Int,String>>? = null,
-                                  currentVal:String? = null, onChanged:((value:Int) -> Unit),
+                                  currentVal:String? = null, firstSelect:String = "",
+                                  onChanged:((value:Int) -> Unit),
                                   onSelected:((itemId:Int,visibility:Int) -> Unit)){
 
             if(spinner == null) return
@@ -295,7 +296,10 @@ class Commons {
             }
 
             var listIemCur = mutableListOf<String>()
-            listIemCur.add("Faites un choix")
+            listIemCur.add("Faite un choix !")
+            firstSelect?.let {
+                if(!it.isNullOrEmpty()) listIemCur.add(firstSelect)
+            }
             listIem?.forEach {
                 listIemCur.add(it.toString())
             }
