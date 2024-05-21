@@ -43,6 +43,7 @@ data class ProducteurModel(
     @SerializedName(value= "niveau_etude", alternate = ["niveaux_id"]) @Expose var etude: String? = null,
     @SerializedName("numPiece") @Expose var numPiece: String? = null,
     @SerializedName("num_ccc") @Expose var num_ccc: String? = null,
+    @SerializedName("carteCMUDispo") @Expose var carteCMUDispo: String? = null,
     @SerializedName("carteCMU") @Expose var carteCMU: String? = null,
     @SerializedName("numCMU") @Expose var numCMU: String? = null,
     @SerializedName("numSecuriteSociale") @Expose var numSecuriteSociale: String? = null,

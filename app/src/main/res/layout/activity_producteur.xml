@@ -1318,29 +1318,82 @@
                         android:visibility="gone"
                         tools:visibility="visible">
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:text="N° de la pièce CMU"
-                            android:textColor="@color/text_color_white"
-                            android:textStyle="bold" />
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/editNumPieceCMUProducteur"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="Est Elle Disponible ?"
+                                android:textColor="@color/text_color_white"
+
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rounded_background">
+
+                                <Space
+                                    android:layout_width="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_10sdp" />
+
+                                <androidx.appcompat.widget.AppCompatSpinner
+                                    android:id="@+id/selectCarteCMUDispoProducteur"
+                                    style="@style/SpinnerItemStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:entries="@array/YesOrNo"
+                                    android:spinnerMode="dialog"
+                                    android:tag="carteCMUDispo" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <Space
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_37sdp"
-                            android:background="@drawable/rounded_background"
-                            android:ellipsize="end"
-                            android:hint="1234567890124"
-                            android:imeOptions="actionDone"
-                            android:inputType="textCapCharacters|textNoSuggestions"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:tag="numCMU"
-                            android:textAllCaps="true"
-                            android:textSize="@dimen/page_input_content_dim13"
-                            tools:text="" />
+                            android:layout_height="@dimen/_10sdp" />
+
+                        <LinearLayout
+                            android:id="@+id/containerNumPieceCMUDispoProducteur"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="@dimen/_12sdp"
+                                android:text="N° de la pièce CMU"
+                                android:textColor="@color/text_color_white"
+                                android:textStyle="bold" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/editNumPieceCMUProducteur"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:background="@drawable/rounded_background"
+                                android:ellipsize="end"
+                                android:hint="1234567890124"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapCharacters|textNoSuggestions"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingEnd="@dimen/_10sdp"
+                                android:tag="numCMU"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/page_input_content_dim13"
+                                tools:text="" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

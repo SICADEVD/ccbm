@@ -850,6 +850,16 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 if(itemId==1) containerNumPieceCMUProducteur.visibility = visibility
             })
 
+        setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectCarteCMUDispoProducteur,
+            listIem = resources.getStringArray(R.array.YesOrNo).toList(),
+            itemChanged = listOf(Pair(1, getString(R.string.oui))),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1) containerNumPieceCMUDispoProducteur.visibility = visibility
+            })
+
         (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom }
             ?.let {
                 setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -1090,7 +1100,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 })
         }
 
-        setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+        setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectCarteCMUProducteur,
             currentVal = producteurDrafted!!.carteCMU,
             listIem = resources.getStringArray(R.array.YesOrNo).toList(),
@@ -1099,6 +1109,17 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
             }, onSelected = { itemId, visibility ->
                 if(itemId==1) containerNumPieceCMUProducteur.visibility = visibility
+            })
+
+        setListenerForSpinner(this, getString(R.string.votre_choix), getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectCarteCMUDispoProducteur,
+            currentVal = producteurDrafted!!.carteCMUDispo,
+            listIem = resources.getStringArray(R.array.YesOrNo).toList(),
+            itemChanged = listOf(Pair(1, getString(R.string.oui))),
+            onChanged = {
+
+            }, onSelected = { itemId, visibility ->
+                if(itemId==1) containerNumPieceCMUDispoProducteur.visibility = visibility
             })
 
         (AssetFileHelper.getListDataFromAsset(27, this) as MutableList<CommonData>)?.map { it.nom }
