@@ -871,9 +871,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 arbreStr = GsonUtils.toJson(arbresList?.filter { (selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
                 arbreItemStr = GsonUtils.toJson((recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     LogUtils.d(it.variete.toString())
-                    val idd = arbresList?.filter { item -> item.nom.toString().trim().contains(it.variete.toString()) }?.first()?.id.toString()
+                    val arbre = CcbRoomDatabase.getDatabase(this@SuiviParcelleActivity)?.arbreDao()?.getByName(it.variete.toString())
                     ArbreData(
-                        arbre = idd,
+                        arbre = arbre?.id.toString()?:null,
                         nombre = it.nombre
                     )
                 })

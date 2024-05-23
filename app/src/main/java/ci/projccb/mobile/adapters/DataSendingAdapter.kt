@@ -57,7 +57,9 @@ class DataSendingAdapter(val context: Context, var draftedList: MutableList<Comm
             holder.labelProducteurNomMenagere.text = draftedData.listOfValue?.get(3).toString()
         }
 
-        if (draftedData.listOfValue?.get(4).isNullOrEmpty() == false) holder.imgSyncedStatus.setImageResource(R.drawable.ic_sync_donz)
+        if (draftedData.listOfValue?.size!! >= 5) {
+            if( draftedData.listOfValue?.get(4).isNullOrEmpty() == false ) holder.imgSyncedStatus.setImageResource(R.drawable.ic_sync_donz)
+        }
         else holder.imgSyncedStatus.setImageResource(R.drawable.ic_sync_error)
 //draftedData.value?.uppercase()
 

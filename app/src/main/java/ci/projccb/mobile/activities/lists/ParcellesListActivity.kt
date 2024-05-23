@@ -30,7 +30,7 @@ class ParcellesListActivity : AppCompatActivity() {
 
         parcellesList = parcelleDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        parcelleAdapter = ParcelleAdapter(parcellesList)
+        parcelleAdapter = ParcelleAdapter(this, parcellesList)
 
         recyclerParcelles.adapter = parcelleAdapter
         recyclerParcelles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

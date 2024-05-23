@@ -196,20 +196,20 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                     }
                     val dataList = ccbBase.visiteurFormationDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))
                     dataList.forEach {
-                        if(it.formationId?.toIntOrNull() != null){
-                            val prod = ccbBase.formationDao().getFormByID(it.formationId?.toIntOrNull())
+                        if(it.suivi_formation_id?.toIntOrNull() != null){
+                            val prod = ccbBase.formationDao().getFormByID(it.suivi_formation_id?.toIntOrNull())
                             var parc = "N/A"
 //                            if(it.parcelle_id?.isNullOrEmpty() == false){
 //                                parc = ccbBase.parcelleDao().getParcelle(it.parcelle_id?.toInt()?:0)?.codeParc?:"N/A"
 //                            }
                             if(prod!=null){
                                 commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
-                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Formation N°: ", "${prod.id} Date: ${Commons.convertDate(prod.dateFormation, false)}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
+                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Formation N°: ", "${prod.id} Date: ${Commons.convertDate(prod.multiStartDate, false)}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
                                 })
                             }
                         }else{
                             commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
-                                listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Formation N°: ", "${it.id}")
+                                listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Formation N°: ", "${it.suivi_formation_id}")
                             })
                         }
                     }
@@ -269,7 +269,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                     commonDataListCloned.addAll(commonDataList)
                 }
 
-                "SSRTE" -> {
+                "SSRTECLMRS" -> {
                     labelTitleMenuAction.apply {
                         setText("SSRTE-CLMRS ${this.text}")
                     }
@@ -339,7 +339,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                     labelTitleMenuAction.apply {
                         setText("EVALUATIONS POSTPLANTING ${this.text}")
                     }
-                    val dataList = ccbBase.distributionArbreDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+                    val dataList = ccbBase.postplantingDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
                     dataList.forEach {
                         if(it.producteurId?.toIntOrNull() != null){
                             val prod = ccbBase.producteurDoa().getProducteurByID(it.producteurId?.toIntOrNull())

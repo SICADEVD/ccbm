@@ -58,8 +58,10 @@ data class EnqueteSsrtModel(
     @Expose var nomEnqueteur: String? = "",
     @Expose var prenomEnqueteur: String? = "",
     @Expose var telephoneEnqueteur: String? = "",
+    @SerializedName(value = "duree_enquete", alternate = ["dureeEnquete"]) @Expose var dureeEnquete: String? = ""
 
 ) : Parcelable {
+
 
     @Ignore @SerializedName("lieuTravauxDangereux") @Expose(serialize = true, deserialize = false) var lieuTravauxDangereux: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("lieuTravauxLegers") @Expose(serialize = true, deserialize = false) var lieuTravauxLegers: MutableList<String>? = mutableListOf()

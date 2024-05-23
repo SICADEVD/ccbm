@@ -30,7 +30,7 @@ class FormationsListActivity : AppCompatActivity() {
 
         formationsList = formationDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
-        formationAdapter = FormationAdapter(formationsList)
+        formationAdapter = FormationAdapter(this, formationsList)
 
         recyclerFormations .adapter = formationAdapter
         recyclerFormations.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

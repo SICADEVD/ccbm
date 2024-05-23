@@ -621,7 +621,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             setupSectionSelection(product?.section.toString(), product?.localitesId.toString(), product?.id.toString())
         }
 
-//        LogUtils.d(draftedData?.datas)
+        LogUtils.d(parcelleDrafted, commomUpdate)
 //        Commons.debugModelToJson(parcelleDrafted)
 
         if(parcelleDrafted.sync_update){

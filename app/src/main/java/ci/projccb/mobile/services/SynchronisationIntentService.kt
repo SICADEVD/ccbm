@@ -138,7 +138,7 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                 if (!producteur.photo.isNullOrEmpty()) {
                     val photoPath = producteur.photo
-                    producteur.photo = Commons.convertPathBase64(photoPath, 1)
+                    producteur.picture = Commons.convertPathBase64(photoPath, 1)
                 }
 
 
@@ -180,9 +180,9 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     }
                 }
 
-                LogUtils.file(GsonUtils.toJson(producteur))
+//                LogUtils.file(GsonUtils.toJson(producteur))
 //
-                LogUtils.d(LogUtils.getCurrentLogFilePath())
+//                LogUtils.d(LogUtils.getCurrentLogFilePath())
 
                 val clientProducteur: Call<ProducteurModel> = ApiClient.apiService.synchronisationProducteur(producteurModel = producteur)
                 val response = clientProducteur.execute()
@@ -306,6 +306,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         }
 
                     }
+                }
+                else{
+                    producteurDao.syncDataOnExist(
+                        synced = 1,
+                        localID = producteur.uid
+                    )
                 }
 
 //                clientProducteur.enqueue(object: Callback<ProducteurModel>{

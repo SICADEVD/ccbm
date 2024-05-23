@@ -1453,7 +1453,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp">
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:tag="dateEnquete"
+                                android:tag="dureeEnquete"
                                 android:id="@+id/editDureeFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
