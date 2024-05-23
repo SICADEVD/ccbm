@@ -675,7 +675,7 @@ class Commons {
             return (this as String).toInt()
         }
         fun String?.toCheckEmptyItem(): String {
-            if(listOf<String>("Choisir la note", "Faites un choix").contains(this)) return ""
+            if(listOf<String>("Choisir la note", "Faites un choix", "Faite un choix !").contains(this)) return ""
             return (this as String)
         }
         fun returnStringList(value: String?): MutableList<String>? {
@@ -929,6 +929,10 @@ class Commons {
             return ""
         }
 
+        fun checkIfItemEmpty(item: String?, isNoneContent: String = "Inconnu") : String {
+            return "${if(item.isNullOrBlank()==false) "${item}" else isNoneContent}"
+        }
+
 
         fun convertBitmap2File(pBitmap: Bitmap?, pPath: String?) : String? {
             val file = File(pPath!!)
@@ -1094,13 +1098,13 @@ class Commons {
                         //"INFOS_PRODUCTEUR" -> ActivityUtils.startActivity(UniteAgricoleProducteurActivity::class.java)
                         "MENAGE" -> ActivityUtils.startActivity(MenageresListActivity::class.java)
                         "PARCELLE" -> ActivityUtils.startActivity(ParcellesListActivity::class.java)
-                        "PARCELLES" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
+//                        "PARCELLES" -> ActivityUtils.startActivity(SuiviPacellesListActivity::class.java)
                         //"INSPECTION" -> ActivityUtils.startActivity(EvaluationActivity::class.java)
                         //"SSRTE" -> ActivityUtils.startActivity(SsrtClmsActivity::class.java)
                         "FORMATION" -> ActivityUtils.startActivity(FormationsListActivity::class.java)
                         //"ESTIMATION" -> ActivityUtils.startActivity(CalculEstimationActivity::class.java)
                         //"APPLICATION" -> ActivityUtils.startActivity(SuiviApplicationActivity::class.java)
-                        "LIVRAISON" -> ActivityUtils.startActivity(LivraisonsListActivity::class.java)
+//                        "LIVRAISON" -> ActivityUtils.startActivity(LivraisonsListActivity::class.java)
 
                         else -> {
                             ActivityUtils.startActivity(Intent(activity, DatasSendingListActivity::class.java).putExtra("fromContent", fromMenu.uppercase()))

@@ -60,6 +60,7 @@ data class EnqueteSsrtModel(
     @Expose var telephoneEnqueteur: String? = "",
 
 ) : Parcelable {
+
     @Ignore @SerializedName("lieuTravauxDangereux") @Expose(serialize = true, deserialize = false) var lieuTravauxDangereux: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("lieuTravauxLegers") @Expose(serialize = true, deserialize = false) var lieuTravauxLegers: MutableList<String>? = mutableListOf()
     @Ignore @SerializedName("travauxLegers") @Expose(serialize = true, deserialize = false) var travauxLegers: MutableList<String>? = mutableListOf()

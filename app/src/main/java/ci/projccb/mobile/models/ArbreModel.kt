@@ -57,4 +57,8 @@ interface ArbreDao {
     @Query("DELETE FROM arbre_list")
     fun deleteAll()
 
+    @Transaction
+    @Query("SELECT * FROM arbre_list WHERE nom = :name")
+    fun getByName(name:String): ArbreModel
+
 }

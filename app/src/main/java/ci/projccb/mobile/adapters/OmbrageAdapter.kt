@@ -529,6 +529,7 @@ class DistribArbreAdapter(private var listItem: MutableList<ArbreModel>?) : Recy
     fun getArbreListAdded(): MutableList<ArbreModel> = listItem!!
 
     fun setDataToRvItem(list: MutableList<ArbreModel>){
+        listItem?.clear()
         listItem?.addAll(list)
         notifyDataSetChanged()
     }
@@ -588,6 +589,7 @@ class EvaluationPostPlantAdapter(private var listItem: MutableList<ListeEspeceAr
     fun getArbreListAdded(): MutableList<ListeEspeceArbrePostPlantModel> = listItem!!
 
     fun setDataToRvItem(list: MutableList<ListeEspeceArbrePostPlantModel>){
+        listItem?.clear()
         listItem?.addAll(list)
         notifyDataSetChanged()
     }

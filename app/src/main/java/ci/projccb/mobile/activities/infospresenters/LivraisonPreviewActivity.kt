@@ -39,11 +39,15 @@ class LivraisonPreviewActivity : AppCompatActivity() {
 
                 infoProdItemListData?.forEach {
                     if(it.key.isNullOrEmpty()==false){
-                        Commons.addItemsToList(
-                            if(it.key=="null") "Autre" else it.key,
-                            it.value.replace(", ", "\n"),
-                            infoProdItemsListPrev
-                        )
+                        val ignoredItemList = listOf<String>("section", "localité", "producteur", "parcelle")
+                        val findItem = ignoredItemList.filter {  fit -> it.key.contains(fit, ignoreCase = true)  }.size
+                        if(findItem == 0){
+                            Commons.addItemsToList(
+                                if(it.key=="null") "Autre" else it.key,
+                                it.value.replace(", ", "\n"),
+                                infoProdItemsListPrev
+                            )
+                        }
                     }
                 }
                 //LogUtils.json(infosProducteur)

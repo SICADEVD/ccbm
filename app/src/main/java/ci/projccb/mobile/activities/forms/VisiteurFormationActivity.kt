@@ -225,6 +225,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
     private fun undraftedDatas(draftedDataVisit: DataDraftedModel) {
         val visiteurFormationDrafted = ApiClient.gson.fromJson(draftedDataVisit.datas, VisiteurFormationModel::class.java)
+
         setupSectionSelection(visiteurFormationDrafted.section, visiteurFormationDrafted.localite, visiteurFormationDrafted.producteurId)
 
         val listTypeFormation = CcbRoomDatabase.getDatabase(this)?.typeFormationDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
@@ -233,11 +234,24 @@ class VisiteurFormationActivity : AppCompatActivity() {
         val typeTok = object : TypeToken<MutableList<String>>(){}.type
         val formationList = formationDao?.getAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         LogUtils.d(formationList)
+
+        val currFormation = (formationList?.find { it.id.toString() == visiteurFormationDrafted.suivi_formation_id } as FormationModel?)
+        val currparticipCount = GsonUtils.fromJson<MutableList<String>>(currFormation?.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
+            if(it.isNullOrEmpty())
+                0
+            else it.size
+        }
+        val currthemeFit = GsonUtils.fromJson<MutableList<String>>(currFormation?.themeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+        val currsousThemeFit = GsonUtils.fromJson<MutableList<String>>(currFormation?.sousThemeStr, typeTok)?.map { it.split("-")?.let { if(it.size > 1) it.get(1) else it.get(0) } }
+        val currtypeF = listTypeFormation?.filter { currFormation?.typeFormationStr?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+        val currthemeF = listThemeFormation?.filter {  currthemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+        val currsousThemeF = listSousThemeFormation?.filter { currsousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
+
         Commons.setListenerForSpinner(this,
             getString(R.string.selectionner_la_formation),
             getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
-            currentVal = getString(R.string.formation)+(formationList?.find { it.id.toString() == visiteurFormationDrafted.suivi_formation_id } as FormationModel?)?.id.toString() ?: "0",
+            currentVal = "Date de formation: ${currFormation?.multiStartDate}\nParticipants: ${currparticipCount}\nModules: \n${currtypeF?.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${currtypeF?.size}"}\nThemes: \n${currthemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${currthemeF?.size}"}\nSous Themes: \n${currsousThemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${currsousThemeF?.size}"}",
             spinner = selectFormationVisitForm,
             listIem = formationList?.map { formM ->
                 val participCount = GsonUtils.fromJson<MutableList<String>>(formM.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
@@ -309,6 +323,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
                 if(itemId == 1) containerAutreLienParentVisitForm.visibility = visibility
             })
+
+        passSetupVisiteurModel(visiteurFormationDrafted)
     }
 
     private fun draftData(dataDraftedModel: DataDraftedModel) {
@@ -505,6 +521,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
         }
 
         for (field in allField){
+            LogUtils.d(field.second, field.second.isNullOrBlank(), necessaryItem.contains(field.first))
             if(field.second.isNullOrBlank() && necessaryItem.contains(field.first)){
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
                 isMissing = true

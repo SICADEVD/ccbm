@@ -236,9 +236,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 //if(!isFirstDelegue){
                 CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasinSec.staffId?.toInt()?:0)?.let { staff ->
                     editNomExpediteur.setText("${staff.firstname} ${staff.lastname}")
-                    editContactExpediteur.setText("${staff.mobile}")
-                    editEmailExpediteur.setText("${staff.email}")
-                    editAdressExpediteur.setText("${staff.adresse?: getString(R.string.inconnu)}")
+                    editContactExpediteur.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                    editEmailExpediteur.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                    editAdressExpediteur.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 }
                 //rstDelegue = false
 
@@ -273,9 +273,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
                 //if(!isFirstDelegue){
                 CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId!!)?.let { staff ->
                     editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
-                    editContactDestinataire.setText("${staff.mobile}")
-                    editEmailDestinataire.setText("${staff.email}")
-                    editAdressDestinataire.setText("${staff.adresse?:getString(R.string.inconnu)}")
+                    editContactDestinataire.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                    editEmailDestinataire.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                    editAdressDestinataire.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 }
                 //rstDelegue = false
 
@@ -609,7 +609,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
     fun setupTransporteurSelection(currVal: String? = null, entrId: String? = "0") {
         val transporteurList = CcbRoomDatabase.getDatabase(applicationContext)?.transporteurDao()
             ?.getListByEntrpriseId(entrId?.toInt() ?: 0)
-
+//        LogUtils.d(currVal, entrId)
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_du_transporteur),
             getString(R.string.la_liste_des_transporteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -778,7 +778,13 @@ class LivraisonCentralActivity : AppCompatActivity() {
         var allField = itemList.second
         var isMissing = false
         var message = ""
-        var notNecessaire = listOf<String>()
+        var notNecessaire = listOf<String>(
+            "Désignez le type de produit !".lowercase(),
+            "Choix du producteur".lowercase(),
+            "Certificat".lowercase(),
+            "Type de produit".lowercase(),
+            "Quantité (Kg)".lowercase()
+        )
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
@@ -897,6 +903,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         setupMagCentralSelection(livraisonCentralDrafted?.magasinCentral)
 
         val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
+
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text6),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEntrepriseLivraisonCentral,
@@ -908,10 +915,19 @@ class LivraisonCentralActivity : AppCompatActivity() {
             onChanged = {
                 entrepriseCommon.nom = entrepList!![it].nom
                 entrepriseCommon.id = entrepList[it].id
-                setupTransporteurSelection(livraisonCentralDrafted?.sender_transporteur, entrId = entrepList!![it].id.toString())
+                setupTransporteurSelection(CcbRoomDatabase.getDatabase(this)?.transporteurDao()?.getById(livraisonCentralDrafted?.sender_transporteur)?.let {
+                    "${it.nom} ${it.prenoms}"
+                },entrId = entrepList!![it].id.toString())
             },
             onSelected = { itemId, visibility ->
             })
+
+//        LogUtils.d(livraisonCentralDrafted?.sender_transporteur)
+        setupTransporteurSelection(
+            CcbRoomDatabase.getDatabase(this)?.transporteurDao()?.getById(livraisonCentralDrafted?.sender_transporteur)?.let {
+                "${it.nom} ${it.prenoms}"
+            }
+            , entrId = livraisonCentralDrafted?.entreprise_id.toString())
 
         val vehiculeList = CcbRoomDatabase.getDatabase(this)?.vehiculeDao()?.getAll()
         Commons.setListenerForSpinner(this,

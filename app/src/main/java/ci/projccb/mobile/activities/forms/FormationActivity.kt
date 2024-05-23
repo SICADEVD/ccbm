@@ -754,6 +754,7 @@ class FormationActivity : AppCompatActivity() {
             }
         }
 
+        Commons.logErrorToFile(formationModel)
         Commons.debugModelToJson(formationModel)
 
         val mapEntries: List<MapEntry>? = itemModelOb.second.apply {
@@ -1019,7 +1020,7 @@ class FormationActivity : AppCompatActivity() {
 //        LogUtils.d(selectStr, selectProd)
 
         val entrepList = CcbRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
-        entrepList?.add(EntrepriseModel(0, 0, "AUCUN", 0))
+        entrepList?.add(EntrepriseModel(0, 0, "AUCUNE", 0))
         Commons.setListenerForSpinner(this,
             "Choix de l'entreprise formatrice",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectEntrepriseFormation,
@@ -1089,6 +1090,7 @@ class FormationActivity : AppCompatActivity() {
             listTypeFormation?.filter { currentZip.contains(it.id.toString()) == true }
         val listThemeFormation = CcbRoomDatabase.getDatabase(this)?.themeFormationDao()
             ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+
         var currentZip2 = GsonUtils.fromJson<MutableList<String>>(
             formationDrafted.themeStr,
             object : TypeToken<MutableList<String>>() {}.type
@@ -1098,6 +1100,7 @@ class FormationActivity : AppCompatActivity() {
         }
         val listSousThemeFormation = CcbRoomDatabase.getDatabase(this)?.sousThemeFormationDao()
             ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
+
         var currentZip3 = GsonUtils.fromJson<MutableList<String>>(
             formationDrafted.sousThemeStr,
             object : TypeToken<MutableList<String>>() {}.type
@@ -1221,6 +1224,18 @@ class FormationActivity : AppCompatActivity() {
                         )
                     )
                 }
+            }
+        }
+
+        listSousThemeFormation?.forEach { sthemeForm ->
+            if(currentSousThemeList?.map { "${it.nom}" }?.contains(sthemeForm.nom) == true){
+                sousThemeListCm.add(
+                    CommonData(
+                        sthemeForm.id,
+                        sthemeForm.nom.toString(),
+                        value = "${sthemeForm.themeFormationsId}-${sthemeForm.id}"
+                    )
+                )
             }
         }
 

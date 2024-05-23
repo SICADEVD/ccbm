@@ -947,7 +947,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             producteurDrafted = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
             val intNullo = producteurDrafted?.section?.toIntOrNull()
             if(intNullo != null){
-                setupSectionSelection(producteurDrafted!!.section, producteurDrafted!!.localite)
+                setupSectionSelection(producteurDrafted!!.section, producteurDrafted!!.localitesId)
             }else setupSectionSelection()
         }
 

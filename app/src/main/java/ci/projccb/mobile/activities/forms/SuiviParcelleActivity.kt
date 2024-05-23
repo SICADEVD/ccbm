@@ -1111,9 +1111,14 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 arbreStr = GsonUtils.toJson(arbresList?.filter { (selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
                 arbreItemStr = GsonUtils.toJson((recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     LogUtils.d(it.variete.toString())
-                    val idd = arbresList?.filter { item -> item.nom.toString().trim().contains(it.variete.toString()) }?.first()?.id.toString()
+//                    val idd = arbresList?.filter { item -> item.nom.toString().trim().contains(it.variete.toString()) }?.let{
+//                        if(it.size > 0){
+//                            it.first()?.id.toString()
+//                        }else "0"
+//                    }
+                    val arbre = CcbRoomDatabase.getDatabase(this@SuiviParcelleActivity)?.arbreDao()?.getByName(it.variete.toString())
                     ArbreData(
-                        arbre = idd,
+                        arbre = arbre?.id.toString()?:null,
                         nombre = it.nombre
                     )
                 })
@@ -1177,6 +1182,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectAgroForesterieSParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            currentVal = suiviParcelleDrafted.arbresAgroForestiersYesNo,
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1198,6 +1204,22 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 )
             }.toMutableList()
         )
+
+        if(!suiviParcelleDrafted.insectesAmisStr.isNullOrBlank()){
+            val insectesAmisList = Commons.returnStringList(suiviParcelleDrafted.insectesAmisStr)
+            val nombreinsectesAmisList = Commons.returnStringList(suiviParcelleDrafted.nombreinsectesAmisStr)
+            insectesAmisList?.mapIndexed { index, s ->
+                OmbrageVarieteModel(
+                    uid = 0,
+                    variete = s.toString(),
+                    nombre = nombreinsectesAmisList?.get(index).toString()
+                )
+            }?.toMutableList()?.let {
+                (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
+                    it
+                )
+            }
+        }
 
         (recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
             (GsonUtils.fromJson<MutableList<InsectesParasitesData>>(suiviParcelleDrafted.insectesParasitesStr, object : TypeToken<MutableList<InsectesParasitesData>>() {}.type)).map {
@@ -1303,41 +1325,53 @@ class SuiviParcelleActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-//        Commons.setListenerForSpinner(this,
-//            "Type de pesticide utilisé ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = selectListTypPestiSuiviParcel,
-//            currentVal = suiviParcelleDrafted.pesticideUtiliseAnne,
-//            listIem = resources.getStringArray(R.array.lowMediumHigh)
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//            })
+        Commons.setListenerForSpinner(this,
+            "Activité d’egourmandage dans la parcelle :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectActDErgoSuiviParcel,
+            currentVal = suiviParcelleDrafted.activiteEgourmandage,
+            listIem = resources.getStringArray(R.array.lowMediumHigh)
+                ?.toList() ?: listOf(),
+            onChanged = {
 
-//        Commons.setListenerForSpinner(this,
-//            "Y'a t'il une présence de pourriture brune ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = selectPourritureBruneOfSuiviParcelle,
-//            currentVal = suiviParcelleDrafted.presencePourritureBrune,
-//            listIem = resources.getStringArray(R.array.fullyPoor)
-//                ?.toList() ?: listOf(),
-//            onChanged = {
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Activité de désherbage manuel dans la parcelle :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectActDéserbSuiviParcel,
+            currentVal = suiviParcelleDrafted.activiteDesherbageManuel,
+            listIem = resources.getStringArray(R.array.lowMediumHigh)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
 //
-//            },
-//            onSelected = { itemId, visibility ->
-//            })
-//
-//        Commons.setListenerForSpinner(this,
-//            "Y'a t'il une présence de SholenShoot ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = selectSwollenSuivi,
-//            currentVal = suiviParcelleDrafted.presenceShooter,
-//            listIem = resources.getStringArray(R.array.fullyPoor)
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-//            })
+        Commons.setListenerForSpinner(this,
+            "Présence de pourriture brune :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectPresencPourriBruneSuiviParcel,
+            currentVal = suiviParcelleDrafted.presencePourritureBrune,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+
+        Commons.setListenerForSpinner(this,
+            "Présence de swollen shoot :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectPresencShollenShotSuiviParcel,
+            currentVal = suiviParcelleDrafted.presenceShooter,
+            listIem = resources.getStringArray(R.array.fullyPoor)
+                ?.toList() ?: listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_une_pr_sence_d_insectes_parasites_ou_ravageurs),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
@@ -1411,6 +1445,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             getString(R.string.pr_sence_d_autres_types_d_insecte),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectPresencInsectSuiviParcel,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
+            currentVal = suiviParcelleDrafted.presenceAutreTypeInsecteAmi,
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1559,7 +1594,17 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         arbresList = CcbRoomDatabase.getDatabase(this)?.arbreDao()?.getAll() ?: mutableListOf()
 
-        selectArbrAgroParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, arbresList?.map { "${ it.nom }" }?.toList()?:listOf())
+        Commons.setListenerForSpinner(this,
+            getString(R.string.choix_de_l_arbre),
+            getString(R.string.la_liste_des_arbres_d_ombrage_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+            spinner = selectArbrAgroParcelle,
+            listIem = arbresList?.map { "${ it.nom }" }?.toList()?:listOf(),
+            onChanged = {
+
+            },
+            onSelected = { itemId, visibility ->
+            })
+//        selectArbrAgroParcelle.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, )
 
         setAnimauSParcelleRV()
 

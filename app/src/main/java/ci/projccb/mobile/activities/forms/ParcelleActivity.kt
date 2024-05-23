@@ -650,12 +650,14 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             }
         }
 
+//        LogUtils.d(parcelleDrafted.autreArbreStr)
         parcelleDrafted.autreArbreStr?.let {
-            if(it.isNullOrEmpty()){
+            if(!it.isNullOrEmpty()){
                 val listIt = GsonUtils.fromJson<MutableList<ParcAutreOmbrag>>(it, object : TypeToken<MutableList<ParcAutreOmbrag>>(){}.type )
+                LogUtils.d(listIt)
                 if(listIt != null){
                     val newAutreArbreLi = listIt.map { ito->
-                        OmbrageVarieteModel(0, nombre = ito.strate, variete = ito.nom)
+                        OmbrageVarieteModel(0, nombre = ito.nom, variete = ito.strate)
                     }
                     (recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).setOmbragesList(newAutreArbreLi.toMutableList())
                 }
@@ -694,29 +696,11 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         if(parcelleDrafted.protectionStr.isNullOrEmpty() == false){
             setupMoyProtectMultiSelection(GsonUtils.fromJson(parcelleDrafted.protectionStr, object : TypeToken<MutableList<String>>() {}.type))
+            if(parcelleDrafted.protectionStr?.contains("Autre", ignoreCase = true) == true) containerAutreProtectParcelle.visibility = View.VISIBLE
         }else{
             setupMoyProtectMultiSelection()
         }
 
-//        Commons.setListenerForSpinner(this,
-//            "Quelle est la variété de culture ?",
-//            getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = spinnerVarieteParcelle,
-//            currentVal = parcelleDrafted.variete,
-//            itemChanged = arrayListOf(Pair(1, "Autre")),
-//            listIem = (AssetFileHelper.getListDataFromAsset(
-//                21,
-//                this
-//            ) as MutableList<CommonData>).map { it.nom }
-//                ?.toList() ?: listOf(),
-//            onChanged = {
-//
-//            },
-//            onSelected = { itemId, visibility ->
-////                if (itemId == 1) {
-////                    containerAutreVarieteProducteur.visibility = visibility
-////                }
-//            })
 
         Commons.setupItemMultiSelection(this, spinnerVarieteParcelle,
             "Quelles sont les variétés de culture ?",

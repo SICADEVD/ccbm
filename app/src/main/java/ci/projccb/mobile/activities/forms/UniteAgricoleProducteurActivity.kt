@@ -409,25 +409,25 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             val itemModelOb = getUniteAgricoleProducteurObject()
 
-//            val vv1 = editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
-//            val vv2 = editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
-//            val vv3 = editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
-//
-//            if( (vv1+vv2) != vv3 ){
-//
-//                Commons.showMessage(
-//                    getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),
-//                    this,
-//                    finished = false,
-//                    callback = {},
-//                    positive = getString(R.string.compris),
-//                    deconnec = false,
-//                    showNo = false
-//                )
-//
-//                return
-//
-//            }
+            val vv1 = editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv2 = editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv3 = editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
+
+            if( (vv1+vv2) > vv3 || (vv1+vv2) < vv3 ){
+
+                Commons.showMessage(
+                    getString(R.string.v_rifiez_le_nombre_de_travailleur_permanent_et_non_permanent),
+                    this,
+                    finished = false,
+                    callback = {},
+                    positive = getString(R.string.compris),
+                    deconnec = false,
+                    showNo = false
+                )
+
+                return
+
+            }
 
             if(itemModelOb == null) return
 
@@ -610,173 +610,6 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             val infosProducteurDrafted =
                 ApiClient.gson.fromJson(draftedData.datas, InfosProducteurDTO::class.java)
 
-            // Localite
-//            val localitesLists = CcbRoomDatabase.getDatabase(this)?.localiteDoa()
-//                ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-//            val localitesDatas: MutableList<CommonData> = mutableListOf()
-//            localitesLists?.map {
-//                CommonData(id = it.id, nom = it.nom)
-//            }?.let {
-//                localitesDatas.addAll(it)
-//            }
-//            selectLocaliteUniteAgricole.adapter =
-//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, localitesDatas)
-//            provideDatasSpinnerSelection(
-//                selectLocaliteUniteAgricole,
-//                infosProducteurDrafted.localiteNom,
-//                localitesDatas
-//            )
-//
-//            // Jachere
-//            provideStringSpinnerSelection(
-//                selectJachereInfosProducteur,
-//                infosProducteurDrafted.foretsjachere,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-//
-//            // other fams
-//            provideStringSpinnerSelection(
-//                selectCulturesInfosProducteur,
-//                infosProducteurDrafted.autresCultures,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-//
-//            // Blesses
-//            val blessesLists = AssetFileHelper.getListDataFromAsset(14, this@UniteAgricoleProducteurActivity) as MutableList<PersonneBlesseeModel>?
-//                CcbRoomDatabase.getDatabase(this)?.persBlesseeDoa()
-//                ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-//            val blessesDatas: MutableList<CommonData> = mutableListOf()
-//            blessesLists?.map {
-//                CommonData(id = it.id, nom = it.nom)
-//            }?.let {
-//                blessesDatas.addAll(it)
-//            }
-//            selectBlesseeInfosProducteur.adapter =
-//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, blessesDatas)
-//            provideDatasSpinnerSelection(
-//                selectBlesseeInfosProducteur,
-//                infosProducteurDrafted.personneBlessee,
-//                blessesDatas
-//            )
-
-            // Documents
-//            val documentsLists = AssetFileHelper.getListDataFromAsset(10, this@UniteAgricoleProducteurActivity) as MutableList<TypeDocumentModel>?
-//                CcbRoomDatabase.getDatabase(this)?.typeDocumentDao()
-//                ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-//            val documentsDatas: MutableList<CommonData> = mutableListOf()
-//            documentsLists?.map {
-//                CommonData(id = it.id, nom = it.nom)
-//            }?.let {
-//                documentsDatas.addAll(it)
-//            }
-//            selectPaperInfosProducteur.adapter =
-//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, documentsDatas)
-//            provideDatasSpinnerSelection(
-//                selectPaperInfosProducteur,
-//                infosProducteurDrafted.typeDocuments,
-//                documentsDatas
-//            )
-
-            // Recus
-//            val recusLists = AssetFileHelper.getListDataFromAsset(3, this@UniteAgricoleProducteurActivity) as MutableList<RecuModel>?
-//                CcbRoomDatabase.getDatabase(this)?.recuDao()
-//                ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
-//            val recusDatas: MutableList<CommonData> = mutableListOf()
-//            recusLists?.map {
-//                CommonData(id = it.id, nom = it.nom)
-//            }?.let {
-//                recusDatas.addAll(it)
-//            }
-//            selectTicketInfosProducteur.adapter =
-//                ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, recusDatas)
-//            provideDatasSpinnerSelection(
-//                selectTicketInfosProducteur,
-//                infosProducteurDrafted.recuAchat,
-//                recusDatas
-//            )
-//
-//            // Mobile operateur
-//            provideStringSpinnerSelection(
-//                selectMobileMoneyYesOperateurInfosProducteur,
-//                infosProducteurDrafted.operateurMM,
-//                resources.getStringArray(R.array.operateur)
-//            )
-
-            // Maladie enfants
-//            if (ListConverters.stringToMutableList(infosProducteurDrafted.maladiesenfantsStringify)
-//                    ?.isNotEmpty()!!
-//            ) {
-//                val maladies =
-//                    ListConverters.stringToMutableList(infosProducteurDrafted.maladiesenfantsStringify)
-//                editMaladieOneInfosProducteur.setText(maladies?.first())
-//                editMaladieTwoInfosProducteur.setText(maladies?.last())
-//            }
-
-            // mobile money yes no
-//            provideStringSpinnerSelection(
-//                selectMoneyInfosProducteur,
-//                infosProducteurDrafted.mobileMoney,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-
-            // mobile money yes no
-//            provideStringSpinnerSelection(
-//                selectMoneyInfosProducteur,
-//                infosProducteurDrafted.mobileMoney,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-
-            // Method paiement
-//            provideStringSpinnerSelection(
-//                selectBuyInfosProducteur,
-//                infosProducteurDrafted.paiementMM,
-//                resources.getStringArray(R.array.bank_paiement)
-//            )
-
-            // Bank paiement yes no
-//            provideStringSpinnerSelection(
-//                selectBanqueInfosProducteur,
-//                infosProducteurDrafted.compteBanque,
-//                resources.getStringArray(R.array.YesOrNo)
-//            )
-
-//            editNbreTravailleursInfosProducteur.setText(infosProducteurDrafted.travailleurs)
-//            editNbreTravailleursPermanentsInfosProducteur.setText(infosProducteurDrafted.travailleurspermanents)
-//            editNbreTravailleursNonPermanentInfosProducteur.setText(infosProducteurDrafted.travailleurstemporaires)
-//
-//            editNbreUnder18InfosProducteur.setText(infosProducteurDrafted.age18)
-//            editNbreScolariseInfosProducteur.setText(infosProducteurDrafted.persEcole)
-//            editNbreExtraitInfosProducteur.setText(infosProducteurDrafted.scolarisesExtrait)
-//            editMobileYesNumberInfosProducteur.setText(infosProducteurDrafted.numeroCompteMM)
-//            editForetYesSuperficieInfosProducteur.setText(infosProducteurDrafted.superficie)
-
-            // Cultures
-//            if (ListConverters.stringToMutableList(infosProducteurDrafted.typecultureStringify)
-//                    ?.isNotEmpty()!!
-//            ) {
-//                cultureProducteurs.clear()
-//
-//                val cultures =
-//                    ListConverters.stringToMutableList(infosProducteurDrafted.typecultureStringify)
-//                val culturesSuperficies =
-//                    ListConverters.stringToMutableList(infosProducteurDrafted.superficiecultureStringify)
-//
-//                cultures?.zip(culturesSuperficies!!)?.let { culturesSuperficieDatas ->
-//                    culturesSuperficieDatas.map { cultureSuperficie ->
-//                        cultureProducteurs.add(
-//                            CultureProducteurModel(
-//                                uid = 0,
-//                                producteurId = infosProducteurDrafted.producteursId.toString()
-//                                    .toInt(),
-//                                label = cultureSuperficie.first,
-//                                superficie = cultureSuperficie.second,
-//                                agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
-//                                    .toString()
-//                            )
-//                        )
-//                    }
-//                }
-//            }
             setAutreCulturInfoProdRV(
                 (GsonUtils.fromJson<MutableList<String>>(infosProducteurDrafted.typecultureStringify, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList()),
                 (GsonUtils.fromJson<MutableList<String>>(infosProducteurDrafted.superficiecultureStringify, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }.toMutableList()),

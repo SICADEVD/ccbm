@@ -102,7 +102,8 @@ class PostPlantingEvalActivity : AppCompatActivity() {
 
     private fun setupRvOtherListenner(
         producteur_id: String,
-        evaluationsList: MutableList<PostPlantingArbrDistribModel>?
+        evaluationsList: MutableList<PostPlantingArbrDistribModel>?,
+        currVal3: String? = null
     ) {
 
         var listOfItemsPostPlantAdapt: MutableList<ListeEspeceArbrePostPlantModel> = mutableListOf()
@@ -148,6 +149,45 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         val height = view.findViewById<RelativeLayout>(R.id.postplant_height).measuredHeight
 
         LogUtils.d(view.findViewById<RelativeLayout>(R.id.postplant_height).height, height)
+
+        currVal3?.let { currval3 ->
+
+            val currList = currval3.split("|")
+            val qteList = GsonUtils.fromJson<Map<String, Map<String, String>>>(currList.get(0), object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+            val qteSurvList = GsonUtils.fromJson<Map<String, Map<String, String>>>(currList.get(1), object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+            val commentList = GsonUtils.fromJson<Map<String, Map<String, String>>>(currList.get(2), object : TypeToken<Map<String, Map<String, String>>>(){}.type)
+            val listArbreAndStatePass = listOfItemsPostPlantAdapt?.map { eval1 ->
+                (qteList).forEach {
+                    (it.value).forEach { item ->
+                        if(item.key.toString() == eval1.arbre_id.toString()){
+                            eval1.qte_plant = item.value.toString()
+                        }
+                    }
+                }
+                eval1
+            }?.map { eval2 ->
+                (qteSurvList).forEach {
+                    (it.value).forEach { item ->
+                        if(item.key.toString() == eval2.arbre_id.toString()){
+                            eval2.qte_survec = item.value.toString()
+                        }
+                    }
+                }
+                eval2
+            }?.map { eval3 ->
+                (commentList).forEach {
+                    (it.value).forEach { item ->
+                        if(item.key.toString() == eval3.arbre_id.toString()){
+                            eval3.commentaire = item.value.toString()
+                        }
+                    }
+                }
+                eval3
+            }
+
+            (recyclerArbreListEvalPostPlant.adapter as EvaluationPostPlantAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
+        }
+
         fixFullSizeAtRv(recyclerArbreListEvalPostPlant, height+200)
 
     }
@@ -219,28 +259,16 @@ class PostPlantingEvalActivity : AppCompatActivity() {
     }
 
     private fun undraftedDatas(draftedDataDistribution: DataDraftedModel) {
-        val distributionArbreDraft = GsonUtils.fromJson<DistributionArbreModel>(draftedDataDistribution.datas, DistributionArbreModel::class.java)
+        val distributionArbreDraft = GsonUtils.fromJson<PostPlantingModel>(draftedDataDistribution.datas, PostPlantingModel::class.java)
 
-        setupSectionSelection(distributionArbreDraft.section, distributionArbreDraft.localite, distributionArbreDraft.producteurId)
+        setupSectionSelection(
+            distributionArbreDraft.section,
+            distributionArbreDraft.localite,
+            distributionArbreDraft.producteurId,
+            "${distributionArbreDraft.quantiteStr}|${distributionArbreDraft.quantitesurvecueeStr}|${distributionArbreDraft.commentaireStr}"
+        )
 
-        val qteList = GsonUtils.fromJson(distributionArbreDraft.quantiteStr, QuantiteDistribuer::class.java)
-
-        LogUtils.d(qteList)
-        //LogUtils.d(qteList.variableKey.get("2"))
-
-        val listArbreAndStatePass = listArbreAndState?.map { arbre ->
-            (qteList.variableKey.get(qteList.variableKey.keys.first().toString()) as Map<String, String>).forEach {
-                if(it.key.toString() == arbre.id.toString()){
-                    arbre.qte_distribue = it.value.toString()
-                    LogUtils.d(arbre.qte_distribue, it.key.toString())
-                }
-            }
-            arbre
-        }
-
-        (recyclerArbreListEvalPostPlant.adapter as DistribArbreAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
-
-        //passSetupDistribArbrModel(distributionArbreDraft)
+        passSetupEvaluationPostPlantModel(distributionArbreDraft)
     }
 
     private fun draftData(dataDraftedModel: DataDraftedModel) {
@@ -251,24 +279,6 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         val qteSurveList = mutableListOf<String>()
         val qteCommentList = mutableListOf<String>()
         getAllRVItemInList(recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
-
-//        LogUtils.d( recyclerArbreListDistrArbre.childCount )
-//        LogUtils.d(idList, nomList, limitList, qteList)
-//        if(idList.isEmpty()){
-//
-//            Commons.showMessage(
-//                getString(R.string.aucun_arbre_n_a_t_enr_gistr_faite_une_mise_jour_des_evaluations),
-//                this,
-//                finished = false,
-//                callback = {},
-//                positive = getString(R.string.compris),
-//                deconnec = false,
-//                showNo = false
-//            )
-//
-//            return ;
-//
-//        }
 
         val itemModelOb = getEvaluationPostPlantObjet(false, necessaryItem = mutableListOf(
             "Selectionner un producteur"
@@ -545,7 +555,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
                     }else producteurCommon.id = producteur.uid
 
                     listArbreAndState = CcbRoomDatabase.getDatabase(applicationContext)?.arbreDao()?.getAll()
-                    setupRvOtherListenner(producteurCommon.id.toString(), postPlantProducteursList)
+                    setupRvOtherListenner(producteurCommon.id.toString(), postPlantProducteursList, currVal3)
                 }
 
 

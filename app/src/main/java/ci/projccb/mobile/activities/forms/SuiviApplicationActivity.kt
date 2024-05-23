@@ -858,6 +858,50 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     }
                 })
 
+            Commons.setListenerForSpinner(this,
+                "A t'il suivi une formation ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectSuiviFormationSApplic,
+                currentVal = applicationDrafted.suiviFormation,
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                },
+                onSelected = { itemId, visibility ->
+                })
+
+            Commons.setListenerForSpinner(this,
+                "A t'il une attestation ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectAttestionSApplic,
+                currentVal = applicationDrafted.attestion,
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                },
+                onSelected = { itemId, visibility ->
+                })
+
+            Commons.setListenerForSpinner(this,
+                "A t'il un bilan de santé ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectBilanSanteSApplic,
+                currentVal = applicationDrafted.bilanSante,
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                },
+                onSelected = { itemId, visibility ->
+                })
+
+            Commons.setListenerForSpinner(this,
+                "Est-il en bon état ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
+                spinner = selectEtatEpiSApplic,
+                currentVal = applicationDrafted.etatEpi,
+                listIem = resources.getStringArray(R.array.YesOrNo)
+                    ?.toList() ?: listOf(),
+                onChanged = {
+                },
+                onSelected = { itemId, visibility ->
+                })
+
 //            LogUtils.d(applicationDrafted.maladiesStr)
 
             if(applicationDrafted.maladiesStr.isNullOrEmpty() == false){
@@ -926,10 +970,6 @@ class SuiviApplicationActivity : AppCompatActivity() {
             editAutreMaladiRavSuiviApplication){
 
         }
-
-//        Commons.setupItemMultiSelection(this, selectMatActivPestSApplic, "Liste des matières actives", arrayListOf() ){
-//
-//        }
 
         setOtherListen()
 

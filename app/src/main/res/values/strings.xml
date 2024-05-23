@@ -260,6 +260,7 @@
     <string-array name="InsectQuantifie">
         <item>Faible</item>
         <item>Moins</item>
+        <item>Elevé</item>
     </string-array>
 
     <string-array name="cible_formation">

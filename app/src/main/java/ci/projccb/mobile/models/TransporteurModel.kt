@@ -70,4 +70,8 @@ interface TransporteurDao {
     @Query("DELETE FROM transporteurs")
     fun deleteAll()
 
+    @Query("SELECT * FROM transporteurs Where id = :senderTransporteur")
+    fun getById(senderTransporteur: String?): TransporteurModel
+
+
 }

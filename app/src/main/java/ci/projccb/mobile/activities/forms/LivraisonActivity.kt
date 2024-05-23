@@ -135,11 +135,11 @@ class LivraisonActivity : AppCompatActivity() {
                 LogUtils.d(magasin.staffId.toString())
                 CcbRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId?.toInt()?:0)?.let { staff ->
                     editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
-                    editContactDestinataire.setText("${staff.mobile}")
-                    editEmailDestinataire.setText("${staff.email}")
-                    editAdressDestinataire.setText("${staff.adresse?:getString(R.string.inconnu)}")
+                    editContactDestinataire.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                    editEmailDestinataire.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                    editAdressDestinataire.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 }
-//
+
 //                editNomDestinataire.setText("${magasin.nomMagasinsections}")
 //                editContactDestinataire.setText("${magasin.phone}")
 //                editEmailDestinataire.setText("${magasin.email}")
@@ -298,9 +298,9 @@ class LivraisonActivity : AppCompatActivity() {
 
                 //if(!isFirstDelegue){
                 editNomExpediteur.setText("${staff.nom}")
-                editContactExpediteur.setText("${staff.mobile}")
-                editEmailExpediteur.setText("${staff.email}")
-                editAdressExpediteur.setText("${staff.adresse?:getString(R.string.inconnu)}")
+                editContactExpediteur.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                editEmailExpediteur.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                editAdressExpediteur.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 //rstDelegue = false
 
                 setupMagasinSelection(staffId, currVal2)
@@ -677,6 +677,12 @@ class LivraisonActivity : AppCompatActivity() {
                 senderStaff = senderStaffCommon.id.toString()
                 magasinSection = magasinSectionCommon.id.toString()
 
+                producteursId = producteurCommon.id.toString()
+                parcelleId = parcelleCommon.id.toString()
+
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+
                 itemsStringify = GsonUtils.toJson(livraisonSousModelList)
             }
         }
@@ -770,7 +776,12 @@ class LivraisonActivity : AppCompatActivity() {
         var allField = itemList.second
         var isMissing = false
         var message = ""
-        var notNecessaire = listOf<String>()
+        var notNecessaire = listOf<String>(
+            "Dans quelle section livrez vous ?".lowercase(),
+            "De quelle localité s'agit-il ?".lowercase(),
+            "Choix du producteur".lowercase(),
+            "Choix de la parcelle".lowercase(),
+        )
         for (field in allField){
             if(field.second.isNullOrBlank() && notNecessaire.contains(field.first.lowercase()) == false){
                 message = getString(R.string.le_champ_intitul_n_est_pas_renseign, field.first)
@@ -839,6 +850,12 @@ class LivraisonActivity : AppCompatActivity() {
                 senderStaff = senderStaffCommon.id.toString()
                 magasinSection = magasinSectionCommon.id.toString()
 
+                producteursId = producteurCommon.id.toString()
+                parcelleId = parcelleCommon.id.toString()
+
+                section = sectionCommon.id.toString()
+                localite = localiteCommon.id.toString()
+
                 itemsStringify = GsonUtils.toJson(livraisonSousModelList)
             }
         }
@@ -880,6 +897,7 @@ class LivraisonActivity : AppCompatActivity() {
     fun undraftedDatas(draftedData: DataDraftedModel) {
         livraisonDrafted = ApiClient.gson.fromJson(draftedData.datas, LivraisonModel::class.java)
 
+
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text5),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             spinner = selectTypeLivraison,
@@ -907,7 +925,11 @@ class LivraisonActivity : AppCompatActivity() {
 
         var countero = 0;
         livraisonDrafted?.let {
-            setupSectionSelection()
+
+            setupSectionSelection(livraisonDrafted?.section,
+                livraisonDrafted?.localite,
+                livraisonDrafted?.producteursId,
+                livraisonDrafted?.parcelleId)
 
             setupStaffSelection(livraisonDrafted?.senderStaff, livraisonDrafted?.magasinSection)
 
@@ -1025,13 +1047,40 @@ class LivraisonActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
+                if(producteurCommon.nom.isNullOrBlank()){
+                    showMessage(
+                        "LA PARCELLE DOIT ETRE RESEIGNÉE",
+                        context = this,
+                        finished = false,
+                        callback = {},
+                        positive = getString(R.string.ok),
+                        deconnec = false,
+                        showNo = false
+                    )
+                    return@setOnClickListener
+                }
+
+                if(selectTypeLivraison.selectedItem.toString().contains("Faite un choix", ignoreCase = true)
+                    ){
+                    showMessage(
+                        "LE TYPE DE PRODUIT DOIT ETRE RESEIGNÉ",
+                        context = this,
+                        finished = false,
+                        callback = {},
+                        positive = getString(R.string.ok),
+                        deconnec = false,
+                        showNo = false
+                    )
+                    return@setOnClickListener
+                }
+
                 val livraisonSousModel = LivraisonSousModel(
                     producteurId= producteurCommon.id.toString(),
                     producteurIdName= producteurCommon.nom.toString(),
                     parcelleId= parcelleCommon.id.toString(),
                     parcelleIdName = parcelleCommon.nom.toString(),
                     typeName = selectTypeLivraison.selectedItem.toString(),
-                    certificat =  if(selectTypeLivraison.selectedItem.toString().equals("Ordinaire", ignoreCase = true) == false) selectTypeCertifLivraison.selectedItem.toString() else "",
+                    certificat =  if(selectTypeCertifLivraison.selectedItem.toString().equals("Ordinaire", ignoreCase = true) == false) selectTypeCertifLivraison.selectedItem.toString() else "",
                     quantityNb = editQuantity.text.toString().toInt(),
                     //numScelle = editNumScelle.text.toString()
                 )

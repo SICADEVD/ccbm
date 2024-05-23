@@ -2052,6 +2052,7 @@
                                         android:layout_weight="6.5">
 
                                         <androidx.appcompat.widget.AppCompatEditText
+                                            android:tag="anneeFormationStruct"
                                             android:id="@+id/editAnneeFormatFemmeMenage"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
@@ -2064,7 +2065,7 @@
                                             android:paddingStart="@dimen/_10sdp"
                                             android:paddingEnd="@dimen/_10sdp"
                                             android:textAllCaps="true"
-                                            android:textSize="@dimen/page_input_content_dim13" />
+                                            android:textSize="@dimen/page_button_text_dim13" />
 
                                         <androidx.appcompat.widget.AppCompatImageView
                                             android:layout_width="@dimen/_35sdp"
@@ -2113,6 +2114,7 @@
                                             android:layout_height="@dimen/_10sdp" />
 
                                         <androidx.appcompat.widget.AppCompatSpinner
+                                            android:tag="activiteRevenueSupplement"
                                             style="@style/SpinnerItemStyle"
                                             android:id="@+id/selectFemmActPermRevenSuppMenage"
                                             android:layout_width="match_parent"

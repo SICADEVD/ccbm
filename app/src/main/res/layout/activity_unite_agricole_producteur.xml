@@ -1130,7 +1130,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_height="@dimen/_10sdp" />
 
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:tag="societeTravail"
+                                android:tag="membreSocieteTravail"
                                 android:id="@+id/selectTravaiSocietInfosProducteur"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_35sdp"

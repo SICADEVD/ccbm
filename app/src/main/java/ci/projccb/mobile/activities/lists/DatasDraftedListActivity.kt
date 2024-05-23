@@ -29,13 +29,19 @@ class DatasDraftedListActivity : AppCompatActivity(R.layout.activity_datas_draft
         intent?.let {
             fromGlobalMenu = it.getStringExtra("fromMenu").toString()
 
-            LogUtils.d(fromGlobalMenu)
+            val replaceID = fromGlobalMenu
+                .replace("parcelles", "suivi_parcelle")
+                .replace("formation_visiteur", "visiteur_formation")
+                .replace("livraison_magcentral", "suivi_livraison_central")
+                .replace("ssrteclmrs", "ssrte")
+                .lowercase()
+            LogUtils.d(fromGlobalMenu, replaceID)
             val draftedDataList = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getAllByType(
                     SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(),
-                    fromGlobalMenu.toLowerCase()
+                    replaceID
                 )
 
-//            LogUtils.d(draftedDataList)
+            LogUtils.d(draftedDataList)
 
             val draftedDatasAdapter = DataDraftedAdapter(
                 this,

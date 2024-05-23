@@ -47,18 +47,23 @@
             android:exported="false" />
         <activity
             android:name=".activities.forms.LivraisonCentralActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.forms.VisiteurFormationActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.forms.EvaluationArbreActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.forms.DistributionArbreActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.forms.PostPlantingEvalActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.cartographies.FarmDelimiterActivity"
@@ -108,18 +113,22 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.UniteAgricoleProducteurActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.InspectionActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.SsrtClmsActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.CalculEstimationActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -128,6 +137,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.SuiviApplicationActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -185,11 +195,13 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.LivraisonActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.FormationActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.lists.SuiviPacellesListActivity"
@@ -197,10 +209,12 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.SuiviParcelleActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.ParcelleActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -213,6 +227,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.ProducteurMenageActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -224,6 +239,7 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.forms.LocaliteActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
@@ -233,6 +249,7 @@
         <activity
             android:name=".activities.forms.ProducteurActivity"
             android:noHistory="false"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".activities.DashboardAgentActivity"

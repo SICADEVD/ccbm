@@ -17,6 +17,7 @@ import ci.projccb.mobile.models.ParcelleModel
 import ci.projccb.mobile.models.ProducteurModel
 import ci.projccb.mobile.repositories.apis.ApiClient
 import ci.projccb.mobile.tools.Commons.Companion.modifyIcColor
+import com.blankj.utilcode.util.LogUtils
 import kotlinx.android.synthetic.main.drafted_items_list.view.*
 
 
@@ -83,7 +84,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", if (draftedData.typeDraft.toString().lowercase() ==  "parcelle") "parcelle" else "content_parcelle")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "PARCELLES" -> {
+            "suivi_parcelle".uppercase() -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ic_suivi_parcel)
                 intentUndraftedData = Intent(context, SuiviParcelleActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_parcelle")
@@ -113,7 +114,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "livraison")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "SSRTECLMRS" -> {
+            "ssrte".uppercase() -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.ssrte_ic)
                 intentUndraftedData = Intent(context, SsrtClmsActivity::class.java)
                 intentUndraftedData.putExtra("from", "ssrte")
@@ -126,7 +127,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 //intentUndraftedData.putExtra("update_type", "sync")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "FORMATION_VISITEUR" -> {
+            "visiteur_formation".uppercase() -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.visitor_form)
                 intentUndraftedData = Intent(context, VisiteurFormationActivity::class.java)
                 intentUndraftedData.putExtra("from", "visiteur_formation")
@@ -150,7 +151,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
                 intentUndraftedData.putExtra("from", "postplanting")
                 intentUndraftedData.putExtra("drafted_uid", draftedData.uid)
             }
-            "LIVRAISON_MAGCENTRAL" -> {
+            "suivi_livraison_central".uppercase() -> {
                 holder.imageTypeDraft.setImageResource(R.drawable.livrais_mag_central)
                 intentUndraftedData = Intent(context, LivraisonCentralActivity::class.java)
                 intentUndraftedData.putExtra("from", "suivi_livraison_central")
@@ -173,6 +174,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
         }
 
         holder.itemView.setOnClickListener {
+            LogUtils.i(intentUndraftedData?.getStringExtra("drafted_uid"))
             if(intentUndraftedData!= null) {
                 context.startActivity(intentUndraftedData)
                 (context as Activity).finish()

@@ -51,6 +51,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
         intent?.let {
             fromGlobalMenu = it.getStringExtra("fromContent").toString()
 
+            LogUtils.d(fromGlobalMenu)
             val ccbBase = CcbRoomDatabase.getDatabase(this)!!
 
             labelLastSynchronisationMenage.text = resources.getString(
@@ -70,6 +71,33 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                             if(prod!=null){
                                 commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
                                     listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Producteur: ", "${prod.nom} ${prod.prenoms}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
+                                })
+                            }
+                        }else{
+                            commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
+                                listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Producteur: ", "${it.producteursId}")
+                            })
+                        }
+                    }
+                    commonDataListCloned.addAll(commonDataList)
+                }
+
+                "PARCELLES" -> {
+                    labelTitleMenuAction.apply {
+                        setText("SUIVIS PARCELLES ${this.text}")
+                    }
+                    val dataList = ccbBase.suiviParcelleDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+                    dataList.forEach {
+                        if(it.producteursId?.toIntOrNull() != null){
+                            val prod = ccbBase.producteurDoa().getProducteurByID(it.producteursId?.toIntOrNull())
+                            var parc = "N/A"
+                            if(it.parcelle_id?.isNullOrEmpty() == false){
+                                parc = ccbBase.parcelleDao().getParcelle(it.parcelle_id?.toInt()?:0)?.codeParc?:"N/A"
+                            }
+
+                            if(prod!=null){
+                                commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
+                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Producteur: \nParcelle: ", "${prod.nom} ${prod.prenoms}\n${parc}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
                                 })
                             }
                         }else{
@@ -202,7 +230,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
 //                            }
                             if(prod!=null){
                                 commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
-                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Magasin: ", "${prod.nomMagasinsections} Date: ${Commons.convertDate(it.dateLivre, false)}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
+                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Magasin: ", "${prod.nomMagasinsections}\nDate: ${Commons.convertDate(it.estimatDate, false)}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
                                 })
                             }
                         }else{
@@ -219,16 +247,17 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                         setText("STOCK DES MAG CENTRAUX ${this.text}")
                     }
                     val dataList = ccbBase.livraisonCentralDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
+                    LogUtils.d(dataList)
                     dataList.forEach {
                         if(it.magasinCentral?.toIntOrNull() != null){
-                            val prod = ccbBase.magasinCentralDao().getMagByID(it.magasinCentral?.toIntOrNull()?:0)
+                            val prod = ccbBase.magasinCentralDao().getMagByID(it.magasinCentral)
                             var parc = "N/A"
 //                            if(it.parcelle_id?.isNullOrEmpty() == false){
 //                                parc = ccbBase.parcelleDao().getParcelle(it.parcelle_id?.toInt()?:0)?.codeParc?:"N/A"
 //                            }
                             if(prod!=null){
                                 commonDataList.add(CommonData(id = it.uid, value = fromGlobalMenu.toUpperCase() ).apply {
-                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Magasin: ", "${prod.nomMagasinsections} Date: ${Commons.convertDate(it.estimatDate, false)}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
+                                    listOfValue = arrayListOf<String>("CODE: ", "${it.uid}", "Magasin: ", "${prod.nomMagasinsections}\nDate: ${Commons.convertDate(it.estimatDate, false)}", "${if(it.isSynced == true) "${it.isSynced}" else ""}")
                                 })
                             }
                         }else{

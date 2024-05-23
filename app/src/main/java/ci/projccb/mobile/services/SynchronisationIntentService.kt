@@ -889,6 +889,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         docListePres = Commons.fileToBase64(docListePres)
                     }
 
+                    Commons.logErrorToFile(formation)
+
                     val clientFormation: Call<FormationModel> = ApiClient.apiService.synchronisationFormation(formationModel = formation)
 
                     val response = clientFormation.execute()

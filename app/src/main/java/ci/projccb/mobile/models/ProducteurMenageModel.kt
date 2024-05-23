@@ -75,6 +75,8 @@ data class ProducteurMenageModel(
     @Expose @SerializedName("userid") val agentId: String? = "",
     var origin: String? = "local"
 ) : Parcelable{
+    @Ignore @Expose var anneeFormationStruct: String? = ""
+    @Ignore @Expose var activiteRevenueSupplement: String? = ""
 
     @SerializedName("sourcesEnergie") @Expose(serialize = true, deserialize = false) @Ignore
     var sourcesEnergieList: MutableList<String>? = arrayListOf()
