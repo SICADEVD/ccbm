@@ -50,7 +50,7 @@ data class ParcelleModel(
     @Expose var existeMesureProtection: String? = "",
     @Expose var arbreStr: String? = "",
     @Expose var protectionStr: String? = "",
-    @Expose var autreArbreStr: String? = "",
+    @Expose var arbreStrateStr: String? = "",
     @Expose var autreProtection: String? = "",
     @Expose var existePente: String? = "",
     @Expose var niveauPente: String? = "",
@@ -61,12 +61,12 @@ data class ParcelleModel(
     @Expose var autreCourDeau: String? = "",
     var status: Boolean = false,
     var isSynced: Boolean = false,
-    @Ignore @Expose var sync_update: Boolean = false,
+    @Expose var sync_update: Boolean = false,
     @Expose @SerializedName("userid") var agentId: String? = "",
     var origin: String? = "local"
 ) : Parcelable {
 
-    @Ignore @Expose @SerializedName(value = "autres_arbres") var autreArbre: MutableList<ParcAutreOmbrag> = mutableListOf()
+    @Ignore @Expose @SerializedName(value = "arbreStrate") var arbreStrate: MutableList<ParcAutreOmbrag> = mutableListOf()
     @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("waypoints") var mappingPoints: MutableList<String> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "variete") var varieteO: MutableList<String> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "protection") var protectionO: MutableList<String> = mutableListOf()
@@ -75,9 +75,9 @@ data class ParcelleModel(
 //    @Ignore @Expose(serialize = true, deserialize = false) @SerializedName("protection") var protectionList: MutableList<String> = mutableListOf()
 
 
-    override fun toString(): String {
-        return "$culture $anneeCreation"
-    }
+//    override fun toString(): String {
+//        return "$culture $anneeCreation"
+//    }
 
 }
 
@@ -127,7 +127,7 @@ data class ParcelleExtModel(
     @Ignore @Expose @SerializedName(value = "variete") var varieteO: MutableList<ParcVariete> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "protection") var protectionO: MutableList<ParcProtect> = mutableListOf()
     @Ignore @Expose @SerializedName(value = "items") var itemsO: MutableList<ParcArbre> = mutableListOf()
-    @Ignore @Expose @SerializedName(value = "autres_arbres") var autreArbre: MutableList<ParcAutreOmbrag> = mutableListOf()
+    @Ignore @Expose @SerializedName(value = "arbreStrate") var arbreStrate: MutableList<ParcAutreOmbrag> = mutableListOf()
 }
 
 data class ParcProtect(
@@ -152,5 +152,6 @@ data class ParcArbre(
 data class ParcAutreOmbrag(
     @Expose var id: Int? = null,
     @Expose var nom: String? = null,
-    @Expose var strate: String? = null
+    @Expose var strate: String? = null,
+    @Expose var qte: String? = null
 )

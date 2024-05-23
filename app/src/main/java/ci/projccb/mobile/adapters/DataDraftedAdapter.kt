@@ -174,7 +174,7 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
         }
 
         holder.itemView.setOnClickListener {
-            LogUtils.i(intentUndraftedData?.getStringExtra("drafted_uid"))
+//            LogUtils.i(intentUndraftedData?.getStringExtra("drafted_uid"))
             if(intentUndraftedData!= null) {
                 context.startActivity(intentUndraftedData)
                 (context as Activity).finish()

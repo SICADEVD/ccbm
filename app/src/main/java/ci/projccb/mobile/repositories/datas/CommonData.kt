@@ -23,9 +23,9 @@ data class CommonData (
     @Ignore @Expose
     var listOfValue: MutableList<String>? = null
 
-    override fun toString(): String {
-        return nom?.toString()?:"N/A"
-    }
+//    override fun toString(): String {
+//        return nom?.toString()?:"N/A"
+//    }
 }
 
 @Parcelize

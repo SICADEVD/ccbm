@@ -168,18 +168,6 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
 
         modifyIcColor(context, holder.imageTypeDraft, R.color.black)
 
-//        when (draftedData.value?.uppercase()) {
-//            "CONTENT_PRODUCTEUR" ->  {
-//                //val producteurContent = ApiClient.gson.fromJson(draftedData.datas, ProducteurModel::class.java)
-//                holder.labelNumberDraft.text = "${producteurContent.nom ?: ""} ${producteurContent.prenoms ?: ""} (${if (producteurContent.codeProdApp.isNullOrBlank()) context.getString(R.string.inconnu) else producteurContent.codeProdApp})"
-//            }
-//            "CONTENT_PARCELLE" ->  {
-//                val parcelleContent = ApiClient.gson.fromJson(draftedData.datas, ParcelleModel::class.java)
-//                holder.labelNumberDraft.text = "${parcelleContent.producteurNom} (${parcelleContent.codeParc})"
-//            }
-//            else ->  holder.labelNumberDraft.text = draftedData.id.toString()
-//        }
-
         holder.itemView.setOnClickListener {
             if(intentUndraftedData!= null) {
                 context.startActivity(intentUndraftedData)

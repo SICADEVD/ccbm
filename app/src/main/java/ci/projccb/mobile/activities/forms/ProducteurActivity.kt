@@ -48,6 +48,7 @@ import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.github.gcacace.signaturepad.views.SignaturePad.OnSignedListener
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
@@ -250,7 +251,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        LogUtils.e(TAG, "OKOKOKOK")
+        LogUtils.d(TAG, "OKOKOKOK")
 
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_IMAGE_CAPTURE)  {
@@ -426,11 +427,13 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             producteur?.apply {
                 id = commomUpdate.listOfValue?.first()?.toInt()
                 uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
+                sync_update = true
                 isSynced = false
                 origin = "local"
             }
         }
 
+        LogUtils.d(producteur)
 //        Commons.logErrorToFile(producteur)
 
         val intentProducteurPreview = Intent(this, ProducteurPreviewActivity::class.java)
@@ -564,12 +567,43 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
     private fun showFileChooser(pView: Int) {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.selectionnez_la_photo)), pView)
-        if (intent.resolveActivity(packageManager) != null) {
 
-        } else {
-            LogUtils.e(TAG, "Error launcher photo")
+
+        var carnetFile: File? = null
+
+        try {
+            carnetFile = createImageFile()
+        } catch (ex: IOException) {
+            LogUtils.e(ex.message)
+            FirebaseCrashlytics.getInstance().recordException(ex)
         }
+
+
+        if (intent.resolveActivity(packageManager) != null) {
+            try {
+                if (carnetFile != null) {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "ci.projccb.mobile.fileprovider",
+                        carnetFile
+                    )
+
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+
+                    startActivityForResult(Intent.createChooser(intent, getString(R.string.selectionnez_la_photo)), pView)
+                }
+
+            } catch (ex: Exception) {
+                LogUtils.e(ex.message)
+                FirebaseCrashlytics.getInstance().recordException(ex)
+            }
+        }
+//
+//        if (intent.resolveActivity(packageManager) != null) {
+//
+//        } else {
+//            LogUtils.e(TAG, "Error launcher photo")
+//        }
     }
 
 
@@ -674,6 +708,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         )
 
         // Save a file: path for use with ACTION_VIEW intents
+        LogUtils.d(image.absolutePath)
         when (whichPhoto) {
             0 -> profilPhotoPath = image.absolutePath
             1 -> rectoPhotoPath = image.absolutePath
@@ -689,7 +724,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         // Get the dimensions of the View
 
         LogUtils.e(whichPhoto)
-        LogUtils.e(profilPhotoPath)
+        LogUtils.d(profilPhotoPath)
+        LogUtils.d(bundleData, profilPhotoPath)
 
         try {
             when (whichPhoto) { // Laiss zemoi yan !
@@ -703,8 +739,12 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                     } else {
                         options.inJustDecodeBounds = true
                         options.inPurgeable = true
-                        profilPhotoPath = UriUtils.uri2File(bundleData).path
-                        LogUtils.e(TAG, profilPhotoPath)
+
+//                        profilPhotoPath = UriUtils.uri2File(bundleData).path
+//                        LogUtils.e(TAG, profilPhotoPath)
+
+                        if(profilPhotoPath != null) Commons.copyFile(bundleData, (profilPhotoPath), this@ProducteurActivity)
+
                         imagePhotoProfilProducteur.setImageURI(bundleData)
                         ImageUtils.save2Album(BitmapFactory.decodeFile(profilPhotoPath, options), Bitmap.CompressFormat.JPEG)
                     }
@@ -735,17 +775,6 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             })
 
         setupCertificatMultiSelection()
-//        setListenerForSpinner(this, getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-//            spinner = selectCertifProducteur,
-//            itemChanged = arrayListOf(Pair(1, "Autre")),
-//            listIem = (AssetFileHelper.getListDataFromAsset(20, this) as MutableList<CommonData>)?.map { it.nom }
-//                ?.toList() ?: listOf(), onChanged = {
-//
-//            }, onSelected = { itemId, visibility ->
-//                if(itemId==1){
-//                    containerAutreCertifProducteur.visibility = visibility
-//                }
-//            })
 
         setupSectionSelection()
         setProgrammeSpinner()
@@ -953,7 +982,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
         data?.let {
             producteurDrafted = data
-            commomUpdate.listOfValue = listOf<String>(data.id.toString(), data.uid.toString()).toMutableList()
+//            commomUpdate.listOfValue = listOf<String>(data.id.toString(), data.uid.toString()).toMutableList()
             //product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(data.id?.toInt()?:0)
 //            val sectionIt =  CcbRoomDatabase.getDatabase(this)?.sectionsDao()?.getById(product?.section)
 //            val localiteIt =  CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getLocalite(product?.localite?.toInt()?:0)
@@ -961,8 +990,9 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             LogUtils.d(draftedData, it?.section.toString(), it?.localitesId.toString())
         }
 
-        if(producteurDrafted?.sync_update == true){
-            intent.putExtra("sync_uid", 1)
+        if(producteurDrafted?.sync_update == true || intent?.getIntExtra("sync_uid", 0) != 0){
+            intent.putExtra("sync_uid", producteurDrafted?.uid?.toInt())
+            commomUpdate.listOfValue = listOf<String>(producteurDrafted?.id.toString(), producteurDrafted?.uid.toString()).toMutableList()
             labelTitleMenuAction.text = "MISE A JOUR FICHE PRODUCTEUR"
         }
 
@@ -1155,13 +1185,15 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 certificatsStr = GsonUtils.toJson(selectCertifProducteur.selectedStrings)
             }
 
+        }
+
+        val newDraft = producteurDraft?.apply {
             if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
                 this.id = commomUpdate.listOfValue?.first()?.toInt()
                 this.uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
                 this.sync_update = true
             }
         }
-
         //LogUtils.json(producteurDraft)
 
         showMessage(
@@ -1172,7 +1204,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
                 CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
                     DataDraftedModel(
                         uid = draftModel?.uid ?: 0,
-                        datas = ApiClient.gson.toJson(producteurDraft),
+                        datas = ApiClient.gson.toJson(newDraft),
                         typeDraft = "producteur",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
@@ -1207,6 +1239,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
             if(currentList.size > 0){ if(currentList.contains(it)) listSelectCertificatPosList.add(indItem) }
             indItem++
         }
+
+        if(currentList.contains("Autre")) containerAutreCertifProducteur.visibility = View.VISIBLE
 
         selectCertifProducteur.setTitle(getString(R.string.quels_sont_les_certificats))
         selectCertifProducteur.setItems(certificatList)

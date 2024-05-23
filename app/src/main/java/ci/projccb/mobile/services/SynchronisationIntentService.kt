@@ -307,12 +307,12 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
 
                     }
                 }
-                else{
-                    producteurDao.syncDataOnExist(
-                        synced = 1,
-                        localID = producteur.uid
-                    )
-                }
+//                else{
+//                    producteurDao.syncDataOnExist(
+//                        synced = 1,
+//                        localID = producteur.uid
+//                    )
+//                }
 
 //                clientProducteur.enqueue(object: Callback<ProducteurModel>{
 //
@@ -454,9 +454,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                         varieteO = returnStringList(varieteStr)?: arrayListOf()
                         protectionO = returnStringList(protectionStr)?: arrayListOf()
                         itemsO = GsonUtils.fromJson<MutableList<ArbreData>>(arbreStr, object : TypeToken<List<ArbreData>>(){}.type)
+                        arbreStrate = GsonUtils.fromJson<MutableList<ParcAutreOmbrag>>(arbreStrateStr, object : TypeToken<List<ParcAutreOmbrag>>(){}.type)
                     }
 
-                    Commons.logErrorToFile(parcelle)
+//                    Commons.logErrorToFile(parcelle)
 
                     //LogUtils.e(TAG, "syncParcelle ID before -> ${parcelle.id}")
                     val clientParcelle: Call<ParcelleModel> = ApiClient.apiService.synchronisationParcelle(parcelle)

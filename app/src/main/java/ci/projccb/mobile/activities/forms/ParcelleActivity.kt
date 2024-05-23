@@ -22,6 +22,7 @@ import ci.projccb.mobile.R
 import ci.projccb.mobile.activities.cartographies.FarmDelimiterActivity
 import ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
 import ci.projccb.mobile.activities.infospresenters.ParcellePreviewActivity
+import ci.projccb.mobile.adapters.MultipleItemAdapter
 import ci.projccb.mobile.adapters.OmbrageAdapter
 import ci.projccb.mobile.models.*
 import ci.projccb.mobile.repositories.apis.ApiClient
@@ -38,6 +39,7 @@ import ci.projccb.mobile.tools.Commons.Companion.formatCorrectlyLatLongPoint
 import ci.projccb.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.projccb.mobile.tools.Commons.Companion.showMessage
 import ci.projccb.mobile.tools.Commons.Companion.showYearPickerDialog
+import ci.projccb.mobile.tools.Commons.Companion.toModifString
 import ci.projccb.mobile.tools.Constants
 import ci.projccb.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
@@ -54,6 +56,13 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_formation.selectSousThemeMultiFormation
 import kotlinx.android.synthetic.main.activity_parcelle.*
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.clickAddPestListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editFrequencPestSParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.editQuantitPestSParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.recyclerPestListSuiviParcel
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestContenantSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestNomSParcell
+import kotlinx.android.synthetic.main.activity_suivi_parcelle.selectPestUniteSParcell
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.clickAddMobileNumInfosProducteur
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.containerMobileMoneyInfosProducteur
 import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.editNumMobileInfosProducteur
@@ -366,22 +375,46 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
-                autreArbreStr = GsonUtils.toJson((recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { ParcAutreOmbrag(null, nom = it.nombre.toString(), strate = it.variete) })
+                arbreStrateStr = GsonUtils.toJson((recyclerAutreArbrOmbrParcelle.adapter as MultipleItemAdapter).getMultiItemAdded().map { ParcAutreOmbrag(it.id, nom = it.value1, strate = it.value.toString(), qte = it.value2) })
             }
         }
 
-        val mapEntries: List<MapEntry>? = itemModelOb.second?.map { MapEntry(it.first, it.second) }
+        val mapEntries: List<MapEntry>? = itemModelOb.second?.apply {
+            this.add(
+                Pair(
+                    "Les mésures de protection",
+                    selectProtectionParcelle.selectedStrings.map { "${it}" }.toModifString(commaReplace = "\n")
+                )
+            )
+            this.add(
+                Pair(
+                    "Les arbres de la parcelle",
+                    (recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete} | ${it.nombre}" }.toModifString(commaReplace = "\n")
+                )
+            )
+            this.add(
+                Pair(
+                    "Les autres arbres de la parcelle",
+                    (recyclerAutreArbrOmbrParcelle.adapter as MultipleItemAdapter).getMultiItemAdded().map { "${it.value} | ${it.value1} | ${it.value2}" }.toModifString(commaReplace = "\n")
+                )
+            )
+        }?.map {
+            MapEntry(it.first, it.second)
+        }
 
-        if(intent.getIntExtra("sync_uid", 0) != 0){
+        if(intent?.getIntExtra("sync_uid", 0) != 0){
             parcelle?.apply {
                 id = commomUpdate.listOfValue?.first()?.toInt()
                 uid = commomUpdate.listOfValue?.get(1)?.toLong()?:0
+                sync_update = true
                 isSynced = false
                 origin = "local"
             }
         }
 
-        debugModelToJson(parcelle)
+//        LogUtils.json(ApiClient.gson.toJson(parcelle))
+//        LogUtils.d(commomUpdate.listOfValue)
+//        debugModelToJson(parcelle)
 
         val intentParcellePreview = Intent(this, ParcellePreviewActivity::class.java)
         intentParcellePreview.putParcelableArrayListExtra("previewitem", ArrayList(mapEntries))
@@ -553,15 +586,21 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 protectionStr = GsonUtils.toJson(selectProtectionParcelle.selectedStrings)
                 arbreStr = GsonUtils.toJson((recyclerArbrOmbrListParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { ArbreData(null, it.uid.toString(), it.nombre) })
                 wayPointsString =  ApiClient.gson.toJson(wayPoints)
-                autreArbreStr = GsonUtils.toJson((recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { ParcAutreOmbrag(null, nom = it.nombre.toString(), strate = it.variete) })
+                arbreStrateStr = GsonUtils.toJson((recyclerAutreArbrOmbrParcelle.adapter as MultipleItemAdapter).getMultiItemAdded().map { ParcAutreOmbrag(it.id, nom = it.value.toString(), strate = it.value1, qte = it.value2) })
             }
 
-            if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
-                this.id = commomUpdate.listOfValue?.first()?.toInt()
-                this.uid = commomUpdate.listOfValue?.get(1)?.toLong()?:0
+        }
+
+        val newDraft = parcelleDraft?.apply {
+            if(intent?.getIntExtra("sync_uid", 0) != 0 || parcelleDraft.sync_update){
+                this.id = commomUpdate.listOfValue?.get(0)?.toInt()
+                this.uid = commomUpdate.listOfValue?.get(1)?.toLong()!!
                 this.sync_update = true
             }
         }
+//        LogUtils.json((parcelleDraft))
+        LogUtils.json(ApiClient.gson.toJson(newDraft))
+        LogUtils.d(commomUpdate.listOfValue)
 
         showMessage(
             message = getString(R.string.voulez_vous_vraiment_mettre_ce_contenu_au_brouillon_afin_de_reprendre_ulterieurement),
@@ -572,7 +611,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
                     DataDraftedModel(
                         uid = draftModel?.uid ?: 0,
-                        datas = ApiClient.gson.toJson(parcelleDraft),
+                        datas = ApiClient.gson.toJson(newDraft),
                         typeDraft = "parcelle",
                         agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )
@@ -614,20 +653,22 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         data?.let {
             parcelleDrafted = data
-            commomUpdate.listOfValue = listOf<String>(data.id.toString(), data.uid.toString()).toMutableList()
             product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(data.producteurId?.toInt()?:0)
 //            val sectionIt =  CcbRoomDatabase.getDatabase(this)?.sectionsDao()?.getById(product?.section)
 //            val localiteIt =  CcbRoomDatabase.getDatabase(this)?.localiteDoa()?.getLocalite(product?.localite?.toInt()?:0)
             setupSectionSelection(product?.section.toString(), product?.localitesId.toString(), product?.id.toString())
         }
 
-        LogUtils.d(parcelleDrafted, commomUpdate)
+//        LogUtils.d(parcelleDrafted, commomUpdate)
 //        Commons.debugModelToJson(parcelleDrafted)
 
-        if(parcelleDrafted.sync_update){
-            intent.putExtra("sync_uid", 1)
+        if(parcelleDrafted.sync_update == true || intent?.getIntExtra("sync_uid", 0) != 0){
+            intent.putExtra("sync_uid", parcelleDrafted.uid.toInt())
+            commomUpdate.listOfValue = listOf<String>(parcelleDrafted.id.toString(), parcelleDrafted.uid.toString()).toMutableList()
             labelTitleMenuAction.text = "MISE A JOUR FICHE PARCELLE"
         }
+
+//        LogUtils.d(parcelleDrafted.sync_update, commomUpdate.listOfValue)
         
         valueOfParcelleCode = parcelleDrafted.codeParc
 
@@ -636,7 +677,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
             if(it.isNotEmpty()) {
                 val listIt = GsonUtils.fromJson<MutableList<ArbreData>>(it, object : TypeToken<MutableList<ArbreData>>(){}.type )
                 val newArbreLi = listIt.map {ito->
-                    LogUtils.d(ito)
+//                    LogUtils.d(ito)
                     listArbresOth?.filter { it.id.toString().equals(ito.arbre) == true }?.let {
                         if(it.size > 0){
                             ito.id = it.first().id
@@ -651,15 +692,15 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
 //        LogUtils.d(parcelleDrafted.autreArbreStr)
-        parcelleDrafted.autreArbreStr?.let {
+        parcelleDrafted.arbreStrateStr?.let {
             if(!it.isNullOrEmpty()){
                 val listIt = GsonUtils.fromJson<MutableList<ParcAutreOmbrag>>(it, object : TypeToken<MutableList<ParcAutreOmbrag>>(){}.type )
-                LogUtils.d(listIt)
+//                LogUtils.d(listIt)
                 if(listIt != null){
                     val newAutreArbreLi = listIt.map { ito->
-                        OmbrageVarieteModel(0, nombre = ito.nom, variete = ito.strate)
+                        AdapterItemModel(0, value = ito.nom, value1 = ito.strate, value2 = ito.qte)
                     }
-                    (recyclerAutreArbrOmbrParcelle.adapter as OmbrageAdapter).setOmbragesList(newAutreArbreLi.toMutableList())
+                    (recyclerAutreArbrOmbrParcelle.adapter as MultipleItemAdapter).setDataToRvItem(newAutreArbreLi.toMutableList())
                 }
             }
         }
@@ -944,7 +985,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
         }
 
         clickCancelParcelle.setOnClickListener {
-            if(intent.getIntExtra("sync_uid", 0) != 0){
+            if(intent?.getLongExtra("sync_uid", 0L) != 0L){
                 ActivityUtils.getActivityByContext(this)?.finish()
             }else {
                 ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
@@ -979,7 +1020,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
                 draftedDataParcelle = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
                 undraftedDatas(draftedDataParcelle!!)
             }else{
-                val dataUid = intent.getIntExtra("sync_uid", 0)
+                val dataUid = intent?.getIntExtra("sync_uid", 0)
                 //LogUtils.d(inspectUid)
                 if(dataUid != 0) {
                     labelTitleMenuAction.text = "MISE A JOUR FICHE PARCELLE"
@@ -988,7 +1029,7 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 //                    }
 //                    imageDraftBtn.visibility = View.GONE
 
-                    val updateData = CcbRoomDatabase.getDatabase(this)?.parcelleDao()?.getByUid(dataUid)
+                    val updateData = CcbRoomDatabase.getDatabase(this)?.parcelleDao()?.getByUid(dataUid?.toInt()?:0)
                     updateData?.forEach {
                         undraftedDatas(null, it)
                     }
@@ -1080,69 +1121,71 @@ class ParcelleActivity : AppCompatActivity(R.layout.activity_parcelle){
 
         setOmbrageParcelleRV()
 
-        setAutreArbrOmbragRV()
+//        setAutreArbrOmbragRV()
+
+        Commons.setFiveItremRV(this, recyclerAutreArbrOmbrParcelle, clickAddAutreArbrOmbrParcelle, selectStrateAutreArbrOmbrParcelle,null,null,editNomAutreArbrOmbrParcelle,editQteAutreArbrOmbrParcelle, defaultItemSize = 3, nbSpinner = 1, nbEdit = 2, libeleList = mutableListOf<String>("Strate", "Arbre", "Quantité", "", ""))
 
         editNumAnneeRegenParcelle.setOnClickListener { showYearPickerDialog(editNumAnneeRegenParcelle) }
         editAnneeCreationParcelle.setOnClickListener { showYearPickerDialog(editAnneeCreationParcelle) }
     }
 
-    fun setAutreArbrOmbragRV(libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
-        val operatListInfoProd = mutableListOf<OmbrageVarieteModel>()
-        var countN = 0
-        libeleList.forEach {
-            operatListInfoProd.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
-            countN++
-        }
-        val operatInfoProdAdapter = OmbrageAdapter(operatListInfoProd,
-            "Strate", "Nom d'Arbre")
-
-
-        try {
-            recyclerAutreArbrOmbrParcelle.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerAutreArbrOmbrParcelle.adapter = operatInfoProdAdapter
-        } catch (ex: Exception) {
-            LogUtils.e(ex.message)
-            FirebaseCrashlytics.getInstance().recordException(ex)
-        }
-
-        clickAddAutreArbrOmbrParcelle.setOnClickListener {
-            try {
-                if (selectStrateAutreArbrOmbrParcelle.selectedItem.toString()
-                        .isEmpty() || editNomAutreArbrOmbrParcelle.text.toString().isEmpty()
-                ) {
-                    Commons.showMessage(getString(R.string.renseignez_des_donn_es_svp), this, callback = {})
-                    return@setOnClickListener
-                }
-
-                val varieteArbre = OmbrageVarieteModel(
-                    0,
-                    selectStrateAutreArbrOmbrParcelle.selectedItem.toString(),
-                    editNomAutreArbrOmbrParcelle.text.toString().trim()
-                )
-
-                if(varieteArbre.variete?.length?:0 > 0){
-                    operatListInfoProd?.forEach {
-                        if (it.variete?.uppercase() == varieteArbre.variete?.uppercase() && it.nombre == varieteArbre.nombre) {
-                            ToastUtils.showShort(getString(R.string.cet_donnees_est_deja_ajout_e))
-                            return@setOnClickListener
-                        }
-                    }
-
-                    operatListInfoProd?.add(varieteArbre)
-                    operatInfoProdAdapter?.notifyDataSetChanged()
-
-                    selectStrateAutreArbrOmbrParcelle.setSelection(0)
-                    editNomAutreArbrOmbrParcelle.text?.clear()
-                }
-                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
-            } catch (ex: Exception) {
-                LogUtils.e(ex.message)
-                FirebaseCrashlytics.getInstance().recordException(ex)
-            }
-        }
-
-    }
+//    fun setAutreArbrOmbragRV(libeleList:MutableList<String> = arrayListOf(), valueList:MutableList<String> = arrayListOf() ) {
+//        val operatListInfoProd = mutableListOf<OmbrageVarieteModel>()
+//        var countN = 0
+//        libeleList.forEach {
+//            operatListInfoProd.add(OmbrageVarieteModel(0, it, valueList.get(countN)))
+//            countN++
+//        }
+//        val operatInfoProdAdapter = OmbrageAdapter(operatListInfoProd,
+//            "Strate", "Nom d'Arbre")
+//
+//
+//        try {
+//            recyclerAutreArbrOmbrParcelle.layoutManager =
+//                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//            recyclerAutreArbrOmbrParcelle.adapter = operatInfoProdAdapter
+//        } catch (ex: Exception) {
+//            LogUtils.e(ex.message)
+//            FirebaseCrashlytics.getInstance().recordException(ex)
+//        }
+//
+//        clickAddAutreArbrOmbrParcelle.setOnClickListener {
+//            try {
+//                if (selectStrateAutreArbrOmbrParcelle.selectedItem.toString()
+//                        .isEmpty() || editNomAutreArbrOmbrParcelle.text.toString().isEmpty()
+//                ) {
+//                    Commons.showMessage(getString(R.string.renseignez_des_donn_es_svp), this, callback = {})
+//                    return@setOnClickListener
+//                }
+//
+//                val varieteArbre = OmbrageVarieteModel(
+//                    0,
+//                    selectStrateAutreArbrOmbrParcelle.selectedItem.toString(),
+//                    editNomAutreArbrOmbrParcelle.text.toString().trim()
+//                )
+//
+//                if(varieteArbre.variete?.length?:0 > 0){
+//                    operatListInfoProd?.forEach {
+//                        if (it.variete?.uppercase() == varieteArbre.variete?.uppercase() && it.nombre == varieteArbre.nombre) {
+//                            ToastUtils.showShort(getString(R.string.cet_donnees_est_deja_ajout_e))
+//                            return@setOnClickListener
+//                        }
+//                    }
+//
+//                    operatListInfoProd?.add(varieteArbre)
+//                    operatInfoProdAdapter?.notifyDataSetChanged()
+//
+//                    selectStrateAutreArbrOmbrParcelle.setSelection(0)
+//                    editNomAutreArbrOmbrParcelle.text?.clear()
+//                }
+//                //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
+//            } catch (ex: Exception) {
+//                LogUtils.e(ex.message)
+//                FirebaseCrashlytics.getInstance().recordException(ex)
+//            }
+//        }
+//
+//    }
 
 
     private fun setAllListener() {

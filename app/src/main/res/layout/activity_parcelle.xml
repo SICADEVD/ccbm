@@ -1201,11 +1201,11 @@
                                         android:layout_height="match_parent"
                                         android:gravity="bottom"
                                         android:orientation="horizontal"
-                                        android:weightSum="5">
+                                        android:weightSum="10">
 
                                         <LinearLayout
                                             android:layout_width="0dp"
-                                            android:layout_weight="2.25"
+                                            android:layout_weight="3"
                                             android:gravity="bottom"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
@@ -1242,7 +1242,7 @@
 
                                         <LinearLayout
                                             android:layout_width="0dp"
-                                            android:layout_weight="2.50"
+                                            android:layout_weight="3"
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical">
 
@@ -1273,6 +1273,44 @@
                                             </LinearLayout>
 
                                         </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="0.25" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_weight="3"
+                                            android:gravity="bottom"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <androidx.appcompat.widget.AppCompatTextView
+                                                android:textColor="@color/text_color_white"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:text="Quantité"
+                                                android:paddingLeft="@dimen/_10sdp"
+                                                android:textStyle="bold" />
+
+                                            <androidx.appcompat.widget.AppCompatEditText
+                                                android:id="@+id/editQteAutreArbrOmbrParcelle"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="@dimen/_37sdp"
+                                                android:background="@drawable/rounded_background"
+                                                android:ellipsize="end"
+                                                android:hint="12"
+                                                android:gravity="center_vertical"
+                                                android:imeOptions="actionDone"
+                                                android:inputType="text"
+                                                android:paddingStart="@dimen/_10sdp"
+                                                android:paddingEnd="@dimen/_10sdp"
+                                                tools:text="" />
+
+                                        </LinearLayout>
+
+
 
 
                                     </LinearLayout>

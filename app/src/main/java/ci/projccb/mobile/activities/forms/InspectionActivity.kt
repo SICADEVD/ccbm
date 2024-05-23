@@ -564,6 +564,9 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             total_question_non_conforme = cQuestionnairesReviewList?.filter { it.isTitle == false && it.note == "-1" }?.size.toString()
             total_question_non_applicable = cQuestionnairesReviewList?.filter { it.isTitle == false && it.note == "0" }?.size.toString()
 
+        }
+
+        val newDraft = draftInsoection?.apply {
             if(intent.getIntExtra("sync_uid", 0) != 0 || this.sync_update){
                 this.id = commomUpdate.listOfValue?.first()?.toInt()
                 this.uid = commomUpdate.listOfValue?.get(1)?.toInt()?:0
@@ -582,7 +585,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.insert(
                         DataDraftedModel(
                             uid = draftModel?.uid ?: 0,
-                            datas = ApiClient.gson.toJson(draftInsoection),
+                            datas = ApiClient.gson.toJson(newDraft),
                             typeDraft = "inspection",
                             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                         )
@@ -798,8 +801,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 //                if(content.equals("Faites un choix", ignoreCase = true) == false) value = listApprob?.filter { it.nom.equals(content, ignoreCase = true) == true }?.first()?.id?.toString()
 //                value
 //            }
+            userid = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0)
             update_content = GsonUtils.toJson(dataInspectionUpdateDTO)
         }
+
+        LogUtils.json(questionnaireDto)
 
         itemModelOb?.second.apply {
 
@@ -877,7 +883,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         var inpectMod = InspectionDTO(
             uid = 0,
-            id = 0,
+            id = id,
             encadreur = encadreurCommon.id.toString(),
             localiteId = localiteCommon.id.toString(),
             section = sectionCommon.id.toString(),
@@ -965,6 +971,26 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         dateInspectionParm = inspectionDrafted.dateEvaluation
 
+//        LogUtils.json(inspectionDrafted)
+        if(inspectionDrafted.sync_update == true || intent?.getIntExtra("sync_uid", 0) != 0){
+//            intent.putExtra("sync_uid", inspectionDrafted.id?.toInt())
+            val inspectUid = inspectionDrafted.uid?.toInt()?:0
+            //LogUtils.d(inspectUid)
+            if(inspectUid != 0) {
+//                labelTitleMenuAction.text = "MISE A JOUR\n FICHE INSPECTION"
+                clickSaveInspection.setOnClickListener {
+                    collectDatasUpdate(inspectUid)
+                }
+                inspectionData = CcbRoomDatabase.getDatabase(this)?.inspectionDao()?.getByUid(inspectUid)
+                inspectionData?.forEach {
+                    lauchForUpdate(it)
+                }
+            }
+
+            commomUpdate.listOfValue = listOf<String>(inspectionDrafted.id.toString(), inspectionDrafted.uid.toString()).toMutableList()
+            labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
+        }
+
         if(inspectionDrafted.parcelle.equals("0")){
             var parcellesList = CcbRoomDatabase.getDatabase(applicationContext)?.parcelleDao()
                 ?.getParcellesProducteur(producteurId = inspectionDrafted.producteursId.toString(), agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -1036,7 +1062,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
 //            LogUtils.d(intent.getStringExtra("from"))
             if(intent.getIntExtra("drafted_uid", 0) != 0){
-                LogUtils.e("From draft")
+//                LogUtils.e("From draft")
                 fromAction = intent.getStringExtra("from") ?: ""
                 draftedDataInspection = CcbRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
                 undraftedDatas(draftedDataInspection!!)
@@ -1204,9 +1230,9 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         val product = CcbRoomDatabase.getDatabase(this)?.producteurDoa()?.getProducteurByID(inspectionDrafted.producteursId?.toInt()?:0)
 
-
-        if(inspectionDrafted.sync_update){
-            intent.putExtra("sync_uid", 1)
+        if(inspectionDrafted.sync_update == true || intent?.getIntExtra("sync_uid", 0) != 0){
+            intent.putExtra("sync_uid", inspectionDrafted.uid.toInt())
+            commomUpdate.listOfValue = listOf<String>(inspectionDrafted.id.toString(), inspectionDrafted.uid.toString()).toMutableList()
             labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
         }
 //        Commons.debugModelToJson(inspectionDrafted)

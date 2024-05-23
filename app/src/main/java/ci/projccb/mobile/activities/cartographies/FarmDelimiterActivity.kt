@@ -57,6 +57,7 @@ import kotlinx.coroutines.launch
 class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener, OnMarkerClickListener {
 
 
+    private var currHistoMapId: String? = null
     private var labelProducteurNomText: String? = null
     private var labelParcelleCodeText: String? = null
     private var dialogMapHito: AlertDialog? = null
@@ -486,7 +487,10 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         parcelleMapping.parcelleSuperficie = Commons.convertDoubleToString(SphericalUtil.computeArea(parcelleMapping.mutableWayPoints) * 0.0001)
         parcelleMapping.parcelleWayPoints = GsonUtils.toJson(parcelleMapping.mutableWayPoints)
-        CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.insert(parcelleMapping)
+
+        if(currHistoMapId != parcelleMapping.parcelleWayPoints.toString()){
+            CcbRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.insert(parcelleMapping)
+        }
 
         val returnIntent = Intent()
         returnIntent.putExtra("data", parcelleMapping)
@@ -945,6 +949,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             }
 
             imagePlaceMarkerGPSFarmDelimiter.setOnClickListener {
+
                     MainScope().launch {
                         focusOnCurrentDevices {
                             launchAddMarker()
@@ -1001,7 +1006,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
 
         var listHisto = itemParcelleMapp?.filter { labelProducteurNomText.equals(it.producteurId, ignoreCase = true) == true }?.map {
-            CommonData(it.id, nom = "Code Parcelle: ${it.parcelleName} - ${it.parcelleSuperficie} HA", value = "PRODUCTEUR: ${it.producteurId}")
+            CommonData(it.id, nom = "Code Parcelle: ${it.parcelleName} - ${it.parcelleSuperficie} HA", value = "MAP N°: ${it.uid.toString()}\nPRODUCTEUR: ${it.producteurId}")
         }
 
         recyclerView.adapter = RvMapHistoAdapt(this@FarmDelimiterActivity, listHisto?.toList()?: arrayListOf())
@@ -1028,6 +1033,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 //        getDeviceLocationWithAccurancy()
 
         val histoMap = itemParcelleMapp?.get(position)
+
+        currHistoMapId = histoMap?.parcelleWayPoints.toString()
 
         val wayppointList = GsonUtils.fromJson<List<LatLng>>(histoMap?.parcelleWayPoints, object : TypeToken<List<LatLng>>(){}.type)
 

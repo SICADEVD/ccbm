@@ -1277,11 +1277,13 @@ class Commons {
             recyclerList: RecyclerView,
             addBtn: AppCompatButton,
             selectNom: Spinner,
-            selectContenant: Spinner,
-            selectUnite: Spinner,
+            selectContenant: Spinner?,
+            selectUnite: Spinner?,
             editQte: AppCompatEditText,
             editFreq: AppCompatEditText,
             defaultItemSize: Int = 5,
+            nbSpinner: Int = 3,
+            nbEdit: Int = 2,
             libeleList:MutableList<String> = arrayListOf(),
             valueList:MutableList<String> = arrayListOf() ) {
             val pesticideListSParcelle = mutableListOf<AdapterItemModel>()
@@ -1309,8 +1311,8 @@ class Commons {
             addBtn.setOnClickListener {
                 try {
                     if (selectNom.isSpinnerEmpty()
-                        || selectContenant.isSpinnerEmpty()
-                        || selectUnite.isSpinnerEmpty()
+                        || selectContenant?.isSpinnerEmpty() == true
+                        || selectUnite?.isSpinnerEmpty() == true
                         || editQte.text.toString().isNullOrBlank()
                         || editFreq.text.toString().isNullOrBlank()
                     ) {
@@ -1321,8 +1323,8 @@ class Commons {
                     var pesticideParRav = AdapterItemModel(
                         0,
                         selectNom.getSpinnerContent(),
-                        selectContenant.getSpinnerContent(),
-                        selectUnite.getSpinnerContent(),
+                        selectContenant?.getSpinnerContent(),
+                        selectUnite?.getSpinnerContent(),
                         editQte.text.toString(),
                         editFreq.text.toString(),
                     )
@@ -1331,7 +1333,7 @@ class Commons {
                         pesticideParRav = AdapterItemModel(
                             0,
                             selectNom.getSpinnerContent(),
-                            selectContenant.getSpinnerContent(),
+                            selectContenant?.getSpinnerContent(),
                             editQte.text.toString(),
                             editFreq.text.toString(),
                             ""
@@ -1342,8 +1344,19 @@ class Commons {
                         pesticideParRav = AdapterItemModel(
                             0,
                             selectNom.getSpinnerContent(),
-                            selectContenant.getSpinnerContent(),
+                            selectContenant?.getSpinnerContent(),
                             editQte.text.toString(),
+                            "",
+                            "",
+                        )
+                    }
+
+                    if(defaultItemSize == 3 && nbSpinner == 1 && nbEdit == 2){
+                        pesticideParRav = AdapterItemModel(
+                            0,
+                            selectNom.getSpinnerContent(),
+                            editQte.text.toString(),
+                            editFreq.text.toString(),
                             "",
                             "",
                         )
@@ -1362,8 +1375,8 @@ class Commons {
                         pesticideSParcelleAdapter?.notifyDataSetChanged()
 
                         selectNom.setSelection(0)
-                        selectContenant.setSelection(0)
-                        selectUnite.setSelection(0)
+                        selectContenant?.setSelection(0)
+                        selectUnite?.setSelection(0)
                         editQte.text?.clear()
                         editFreq.text?.clear()
                     }
