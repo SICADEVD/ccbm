@@ -53,9 +53,6 @@ import com.google.gson.reflect.TypeToken
 import com.skydoves.expandablelayout.ExpandableLayout
 import com.techatmosphere.expandablenavigation.model.ChildModel
 import com.techatmosphere.expandablenavigation.model.HeaderModel
-import eu.dkaratzas.android.inapp.update.Constants.UpdateMode
-import eu.dkaratzas.android.inapp.update.InAppUpdateManager
-import eu.dkaratzas.android.inapp.update.InAppUpdateStatus
 import kotlinx.android.synthetic.main.activity_dashboard_agent.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +70,6 @@ import java.net.UnknownHostException
 class DashboardAgentActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener  {
 
-    private var inAppUpdateManager: InAppUpdateManager? = null
     private val REQ_CODE_VERSION_UPDATE = 530
     private var currentExpandLayout: ExpandableLayout? = null
     private var listOfFeatureCloned: MutableList<FeatureModel> = arrayListOf()
@@ -463,7 +459,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         appUpdater.setDisplay(Display.DIALOG)
         appUpdater.setUpdateFrom(UpdateFrom.JSON)
             .setContentOnUpdateNotAvailable("Vous avez la dernière version disponible de l'application.")
-            .setUpdateJSON("https://raw.githubusercontent.com/javiersantos/AppUpdater/master/app/update-changelog.json")
+            .setUpdateJSON("https://raw.githubusercontent.com/SICADEVD/ccbm/update_onplaystore_b/app/update-changelog.json")
 //        appUpdater.showEvery(5)
         appUpdater.showAppUpdated(true) //TEST MODE
         appUpdater.setIcon(R.mipmap.ic_launcher) // Notification icon
