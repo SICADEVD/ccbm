@@ -6,6 +6,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -460,6 +461,11 @@ class DashboardAgentActivity : AppCompatActivity(),
         appUpdater.setUpdateFrom(UpdateFrom.JSON)
             .setContentOnUpdateNotAvailable("Vous avez la dernière version disponible de l'application.")
             .setUpdateJSON("https://raw.githubusercontent.com/SICADEVD/ccbm/update_onplaystore_b/app/update-changelog.json")
+            .setButtonDoNotShowAgainClickListener(object :DialogInterface.OnClickListener{
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    ToastUtils.showShort("Vous ne pouvez pas désactiver ! Svp faites la mise à jour !")
+                }
+            })
 //        appUpdater.showEvery(5)
         appUpdater.showAppUpdated(true) //TEST MODE
         appUpdater.setIcon(R.mipmap.ic_launcher) // Notification icon
