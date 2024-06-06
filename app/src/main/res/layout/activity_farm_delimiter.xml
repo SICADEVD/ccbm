@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_45sdp"
             android:layout_alignParentTop="true"
-            android:background="@color/ccb_gris"
+            android:background="@color/progband_gris"
             android:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -132,7 +132,7 @@
             android:contentDescription="TODO"
             android:gravity="end|bottom"
             android:src="@drawable/baseline_add_white_24"
-            app:backgroundTint="@color/ccb_gris_sec"
+            app:backgroundTint="@color/progband_gris_sec"
             app:elevation="@dimen/_5sdp"
             app:fabCustomSize="@dimen/_45sdp"
             app:rippleColor="@color/white_color" />
@@ -157,7 +157,7 @@
                 android:layout_height="@dimen/_45sdp"
                 android:gravity="end|bottom"
                 android:src="@drawable/ic_surface"
-                app:backgroundTint="@color/ccb_gris_sec"
+                app:backgroundTint="@color/progband_gris_sec"
                 app:elevation="@dimen/_5sdp"
                 app:fabCustomSize="@dimen/_45sdp" />
 
@@ -168,7 +168,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/ccb_gris"
+                android:background="@color/progband_gris"
                 android:padding="@dimen/_5sdp"
                 android:text="Surface"
                 android:textColor="@color/text_color_white"
@@ -196,7 +196,7 @@
                 android:layout_height="@dimen/_45sdp"
                 android:gravity="end|bottom"
                 android:src="@drawable/ic_distance"
-                app:backgroundTint="@color/ccb_gris_sec"
+                app:backgroundTint="@color/progband_gris_sec"
                 app:elevation="@dimen/_5sdp"
                 app:fabCustomSize="@dimen/_45sdp" />
 
@@ -207,7 +207,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/ccb_gris"
+                android:background="@color/progband_gris"
                 android:padding="@dimen/_5sdp"
                 android:text="Distance"
                 android:textColor="@color/text_color_white"
@@ -223,7 +223,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_50sdp"
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:orientation="vertical"
         android:padding="@dimen/_5sdp"
         android:visibility="gone"
@@ -525,7 +525,7 @@ android:textColor="@color/text_color_white"
             android:id="@+id/linearPopupMenuMapsTypeFarmDelimiter"
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_100sdp"
-            android:background="@color/ccb_gris"
+            android:background="@color/progband_gris"
             android:orientation="vertical"
             android:padding="@dimen/_10sdp"
             android:weightSum="3">

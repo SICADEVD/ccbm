@@ -12,7 +12,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="THE ITEM"
         android:gravity="center"
-        android:textColor="@color/ccb_green"
+        android:textColor="@color/progband_green"
         android:textSize="@dimen/_11ssp"
         android:textStyle="bold" />
 

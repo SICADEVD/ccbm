@@ -2,6 +2,6 @@
 <network-security-config>
     <base-config cleartextTrafficPermitted="true" />
     <!--<domain-config cleartextTrafficPermitted="true">
-        &lt;!&ndash;<domain includeSubdomains="true">projccb.ci</domain>&ndash;&gt; &lt;!&ndash;PROD&ndash;&gt;
+        &lt;!&ndash;<domain includeSubdomains="true">progbandama.ci</domain>&ndash;&gt; &lt;!&ndash;PROD&ndash;&gt;
     </domain-config>-->
 </network-security-config>

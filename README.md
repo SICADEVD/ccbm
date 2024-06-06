@@ -1,2 +1,2 @@
-# PROJET CCB
-Pour le projet CCb
+# PROJET ProgBand
+Pour le projet progband

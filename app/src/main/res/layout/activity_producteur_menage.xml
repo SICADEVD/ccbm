@@ -11,7 +11,7 @@
     tools:context=".activities.forms.ProducteurMenageActivity">
 
     <RelativeLayout
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -575,7 +575,7 @@
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="sources_energies_id"
                                 android:id="@+id/selectEnergieMenage"
                                 android:layout_width="match_parent"
@@ -661,7 +661,7 @@
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="ordures_menageres_id"
                                 android:id="@+id/selectOrdureMenagMenage"
                                 android:layout_width="match_parent"
@@ -867,7 +867,7 @@
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="sources_eaux_id"
                                 android:id="@+id/selectEauPotablMenage"
                                 android:layout_width="match_parent"
@@ -2173,7 +2173,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/ccb_green"
+                    android:backgroundTint="@color/progband_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"

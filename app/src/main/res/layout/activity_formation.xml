@@ -11,7 +11,7 @@
     tools:context=".activities.forms.FormationActivity">
 
     <RelativeLayout
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -309,7 +309,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:id="@+id/selectProducteurFormation"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
@@ -595,7 +595,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background">
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectModuleMultiFormation"
@@ -630,7 +630,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background">
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectThemeMultiFormation"
@@ -665,7 +665,7 @@ android:textColor="@color/text_color_white"
                             android:layout_height="@dimen/_37sdp"
                             android:background="@drawable/rounded_background">
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_37sdp"
                                 android:id="@+id/selectSousThemeMultiFormation"
@@ -741,7 +741,7 @@ android:textColor="@color/text_color_white"
 <!--                                android:layout_width="@dimen/_5sdp"-->
 <!--                                android:layout_height="@dimen/_10sdp" />-->
 
-<!--                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner-->
+<!--                            <progbandamadama.mobile.activities.forms.views.MultiSelectSpinner-->
 <!--                                android:layout_width="match_parent"-->
 <!--                                android:layout_height="@dimen/_37sdp"-->
 <!--                                android:id="@+id/selectListePresenceFormation"-->
@@ -1404,7 +1404,7 @@ android:textColor="@color/text_color_white"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/ccb_green"
+                    android:backgroundTint="@color/progband_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"

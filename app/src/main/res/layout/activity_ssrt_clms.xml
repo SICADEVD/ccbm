@@ -10,7 +10,7 @@
     tools:context=".activities.forms.SsrtClmsActivity">
 
     <RelativeLayout
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -954,7 +954,7 @@ android:textColor="@color/text_color_white"
                                     android:layout_width="@dimen/_5sdp"
                                     android:layout_height="@dimen/_10sdp" />
 
-                                <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                                <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                     android:tag="autreRaisonArretEcole"
                                     android:id="@+id/selectRaisonArretEcoleSSrte"
                                     android:layout_width="match_parent"
@@ -1048,7 +1048,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="travauxDangereuxStringify"
                                 android:id="@+id/selectLequelTravEffectSSrte"
                                 android:layout_width="match_parent"
@@ -1082,7 +1082,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="lieuTravauxDangereuxStringify"
                                 android:id="@+id/selectEndroitTravEffectSSrte"
                                 android:layout_width="match_parent"
@@ -1172,7 +1172,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="travauxLegersStringify"
                                 android:id="@+id/selectLequelTrav2EffectSSrte"
                                 android:layout_width="match_parent"
@@ -1206,7 +1206,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="lieuTravauxLegersStringify"
                                 android:id="@+id/selectEndroitTrav2EffectSSrte"
                                 android:layout_width="match_parent"
@@ -1517,7 +1517,7 @@ android:textColor="@color/text_color_white"
 <!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
 <!--&lt;!&ndash;                        android:layout_height="@dimen/_37sdp"/>&ndash;&gt;-->
 
-<!--                    <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner-->
+<!--                    <progbandamadama.mobile.activities.forms.views.MultiSelectSpinner-->
 <!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="@dimen/_37sdp"-->
 <!--                        android:id="@+id/selectRecentWorkLieuLightSsrt"-->
@@ -1565,7 +1565,7 @@ android:textColor="@color/text_color_white"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/ccb_green"
+                    android:backgroundTint="@color/progband_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"

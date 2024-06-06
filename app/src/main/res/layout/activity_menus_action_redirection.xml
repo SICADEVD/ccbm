@@ -9,7 +9,7 @@
     tools:context=".activities.MenusActionRedirectionActivity">
 
     <RelativeLayout
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -80,7 +80,7 @@ android:textColor="@color/text_color_white"
             android:layout_columnWeight="1"
             android:layout_margin="@dimen/_5sdp"
             android:background="@drawable/border_shape"
-            android:backgroundTint="@color/ccb_green"
+            android:backgroundTint="@color/progband_green"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -246,7 +246,7 @@ android:textColor="@color/text_color_white"
             android:layout_columnWeight="1"
             android:layout_margin="@dimen/_5sdp"
             android:background="@drawable/border_shape"
-            android:backgroundTint="@color/ccb_green"
+            android:backgroundTint="@color/progband_green"
             android:gravity="center"
             android:orientation="vertical">
 

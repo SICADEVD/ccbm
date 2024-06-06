@@ -10,7 +10,7 @@
     tools:context=".activities.forms.SuiviApplicationActivity">
 
     <RelativeLayout
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp">
@@ -1189,7 +1189,7 @@ android:textColor="@color/text_color_white"
                                 android:layout_width="@dimen/_5sdp"
                                 android:layout_height="@dimen/_10sdp" />
 
-                            <ci.projccb.mobile.activities.forms.views.MultiSelectSpinner
+                            <ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
                                 android:tag="maladies"
                                 android:id="@+id/selectListMaladieSuiviApplication"
                                 android:layout_width="match_parent"
@@ -1515,7 +1515,7 @@ android:textColor="@color/text_color_white"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/ccb_green"
+                    android:backgroundTint="@color/progband_green"
                     android:elevation="0dp"
                     app:iconTint="@color/white_color"
                     android:text="@string/v_rifier"

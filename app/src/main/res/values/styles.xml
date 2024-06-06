@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="ButtonStyle.Submit" parent="Theme.CCBMobile">
+    <style name="ButtonStyle.Submit" parent="Theme.ProgBandMobile">
         <item name="android:background">@drawable/submit_button_bg</item>
         <item name="android:textColor">@drawable/submit_button_text</item>
         <item name="android:textStyle">bold</item>

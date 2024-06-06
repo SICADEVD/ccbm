@@ -8,18 +8,37 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+def loadEnvOrProperty(propertyName, defaultValue, fileName) {
+    def properties = new Properties()
+    def propFile = file(fileName)
+    if (propFile.exists()) {
+        properties.load(new FileInputStream(propFile))
+    }
+    return properties[propertyName] ?: System.getenv(propertyName) ?: defaultValue
+}
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
-        applicationId "ci.projccb.mobile"
+        applicationId "ci.progbandama.mobile"
         minSdkVersion 21
-        versionCode 65
-        versionName "CCB-v1.0.1"
+        targetSdkVersion 33
+        versionCode 50
+        versionName "ProgBand-v1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+    }
+
+
+    signingConfigs {
+        debug {
+            storeFile file("C:\\Users\\LENOVO\\AndroidStudioProjects\\ccb_keys_signed.jks")
+            storePassword "Hobolioxio01"
+            keyAlias "key0"
+            keyPassword "Hobolioxio01"
+        }
     }
 
     buildTypes {
@@ -149,6 +168,8 @@ dependencies {
     implementation 'com.github.MackHartley:RoundedProgressBar:3.0.0'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
 
 }
 

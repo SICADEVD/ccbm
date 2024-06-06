@@ -10,7 +10,7 @@
     tools:context=".activities.forms.InspectionActivity">
 
     <RelativeLayout
-        android:background="@color/ccb_gris"
+        android:background="@color/progband_gris"
         android:id="@+id/linealToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -55,11 +55,11 @@
                 android:id="@+id/firstBarprogress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_18sdp"
-                app:rpbBackgroundColor="@color/ccb_gris_sec"
+                app:rpbBackgroundColor="@color/progband_gris_sec"
                 app:rpbBackgroundTextColor="@color/black"
                 app:rpbCornerRadius="@dimen/_4sdp"
                 app:rpbProgressColor="@color/black"
-                app:rpbProgressTextColor="@color/ccb_gris_sec"
+                app:rpbProgressTextColor="@color/progband_gris_sec"
                 app:rpbTextPadding="12dp" />
 
         </LinearLayout>
@@ -516,7 +516,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
-            android:backgroundTint="@color/ccb_green"
+            android:backgroundTint="@color/progband_green"
             android:elevation="0dp"
             android:paddingHorizontal="20dp"
             app:iconTint="@color/white_color"

@@ -12,7 +12,7 @@
         app:indicatorDirectionLinear="startToEnd"
         android:indeterminate="true"
         android:progress="100"
-        app:indicatorColor="@color/ccb_green"
+        app:indicatorColor="@color/progband_green"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_50sdp"
         android:layout_centerInParent="true" />

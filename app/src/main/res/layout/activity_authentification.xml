@@ -30,7 +30,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_logo"
-                    android:background="@color/ccb_gris_transparent"
+                    android:background="@color/progband_gris_transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_150sdp"
                     android:layout_gravity="center_horizontal"
@@ -142,7 +142,7 @@ android:textColor="@color/text_color_white"-->
                 app:iconTint="@color/white_color"
                 app:cornerRadius="@dimen/_37sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:backgroundTint="@color/ccb_green"
+                android:backgroundTint="@color/progband_green"
                 android:layout_gravity="center"
                 android:elevation="8dp"/>
 

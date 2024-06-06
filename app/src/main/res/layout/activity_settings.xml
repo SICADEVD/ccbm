@@ -85,7 +85,7 @@ android:textColor="@color/text_color_white"
             android:textColor="@color/white"
             android:layout_height="@dimen/_45sdp"
             android:background="@android:drawable/btn_default"
-            android:backgroundTint="@color/ccb_green"/>
+            android:backgroundTint="@color/progband_green"/>
 
     </LinearLayout>
 
@@ -174,7 +174,7 @@ android:textColor="@color/text_color_white"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_45sdp"
             android:background="@android:drawable/btn_default"
-            android:backgroundTint="@color/ccb_green"/>
+            android:backgroundTint="@color/progband_green"/>
 
     </LinearLayout>
 

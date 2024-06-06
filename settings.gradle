@@ -1,2 +1,2 @@
-rootProject.name = "PROJET CCB Mobile"
+rootProject.name = "PROJET ProgBand Mobile"
 include ':app', ':searchablespinnerlibrary'

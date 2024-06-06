@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ci.projccb.mobile"
+    package="ci.progbandama.mobile"
     tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -17,7 +17,7 @@
         android:required="false" />
 
     <application
-        android:name=".Application"
+        android:name="ci.progbandama.mobile.Application"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -26,239 +26,239 @@
         android:screenOrientation="portrait"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CCBMobile"
+        android:theme="@style/Theme.ProgBandMobile"
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode"
         tools:targetApi="n">
         <activity
-            android:name=".activities.infospresenters.LivraisonCentralPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.LivraisonCentralPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.DistributionArbrePreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.DistributionArbrePreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.EvaluationPostPlantPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.EvaluationPostPlantPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.VisiteurFormationPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.VisiteurFormationPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.EvaluationBesoinPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.EvaluationBesoinPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.forms.LivraisonCentralActivity"
+            android:name="ci.progbandama.mobile.activities.forms.LivraisonCentralActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".activities.forms.VisiteurFormationActivity"
+            android:name="ci.progbandama.mobile.activities.forms.VisiteurFormationActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".activities.forms.EvaluationArbreActivity"
+            android:name="ci.progbandama.mobile.activities.forms.EvaluationArbreActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".activities.forms.DistributionArbreActivity"
+            android:name="ci.progbandama.mobile.activities.forms.DistributionArbreActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".activities.forms.PostPlantingEvalActivity"
+            android:name="ci.progbandama.mobile.activities.forms.PostPlantingEvalActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".activities.cartographies.FarmDelimiterActivity"
+            android:name="ci.progbandama.mobile.activities.cartographies.FarmDelimiterActivity"
             android:exported="false" />
         <activity
-            android:name=".tests.TestExportKmlActivity"
+            android:name="ci.progbandama.mobile.tests.TestExportKmlActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.contents.UpdateProducteurContentActivity"
+            android:name="ci.progbandama.mobile.activities.contents.UpdateProducteurContentActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.contents.UpdateParcelleContentActivity"
+            android:name="ci.progbandama.mobile.activities.contents.UpdateParcelleContentActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.lists.UpdateContentsListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.UpdateContentsListActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MenusActionRedirectionActivity"
+            android:name="ci.progbandama.mobile.activities.MenusActionRedirectionActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.lists.DatasDraftedListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.DatasDraftedListActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.lists.DatasSyncListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.DatasSyncListActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.lists.DatasSendingListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.DatasSendingListActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.InfosProducteurPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.InfosProducteurPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.InspectionPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.InspectionPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.InspectionPreviewUpdateActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.InspectionPreviewUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".tests.TestLabActivity"
+            android:name="ci.progbandama.mobile.tests.TestLabActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.EnqueteSsrtPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.EnqueteSsrtPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.infospresenters.CalculEstimationPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.CalculEstimationPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.UniteAgricoleProducteurActivity"
-            android:screenOrientation="portrait"
-            android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".activities.forms.InspectionActivity"
+            android:name="ci.progbandama.mobile.activities.forms.UniteAgricoleProducteurActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.SsrtClmsActivity"
+            android:name="ci.progbandama.mobile.activities.forms.InspectionActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.CalculEstimationActivity"
+            android:name="ci.progbandama.mobile.activities.forms.SsrtClmsActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.SuiviApplicationPreviewActivity"
-            android:exported="false"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".activities.forms.SuiviApplicationActivity"
+            android:name="ci.progbandama.mobile.activities.forms.CalculEstimationActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.SuiviParcellePreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.SuiviApplicationPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.LivraisonPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.forms.SuiviApplicationActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.FormationPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.SuiviParcellePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.MenagePreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.LivraisonPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.LocalitePreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.FormationPreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.ParcellePreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.MenagePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.cartographies.ParcelleMappingActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.LocalitePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.infospresenters.ProducteurPreviewActivity"
+            android:name="ci.progbandama.mobile.activities.infospresenters.ParcellePreviewActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".tests.GoogleMapsActivity"
+            android:name="ci.progbandama.mobile.activities.cartographies.ParcelleMappingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="ci.progbandama.mobile.activities.infospresenters.ProducteurPreviewActivity"
+            android:exported="false"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="ci.progbandama.mobile.tests.GoogleMapsActivity"
             android:exported="true"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.ConfigurationBaseUrlActivity"
+            android:name="ci.progbandama.mobile.activities.ConfigurationBaseUrlActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
-            android:name=".activities.POSDashboardActivity"
+            android:name="ci.progbandama.mobile.activities.POSDashboardActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.LivraisonsListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.LivraisonsListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.FormationsListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.FormationsListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.LivraisonActivity"
+            android:name="ci.progbandama.mobile.activities.forms.LivraisonActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.FormationActivity"
+            android:name="ci.progbandama.mobile.activities.forms.FormationActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.SuiviPacellesListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.SuiviPacellesListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.SuiviParcelleActivity"
+            android:name="ci.progbandama.mobile.activities.forms.SuiviParcelleActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.ParcelleActivity"
+            android:name="ci.progbandama.mobile.activities.forms.ParcelleActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.ParcellesListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.ParcellesListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.MenageresListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.MenageresListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.ProducteurMenageActivity"
+            android:name="ci.progbandama.mobile.activities.forms.ProducteurMenageActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.LocalitesListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.LocalitesListActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.lists.ProducteursListActivity"
+            android:name="ci.progbandama.mobile.activities.lists.ProducteursListActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.LocaliteActivity"
+            android:name="ci.progbandama.mobile.activities.forms.LocaliteActivity"
             android:screenOrientation="portrait"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="ci.progbandama.mobile.activities.SettingsActivity"
             android:exported="false"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.forms.ProducteurActivity"
+            android:name="ci.progbandama.mobile.activities.forms.ProducteurActivity"
             android:noHistory="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name=".activities.DashboardAgentActivity"
+            android:name="ci.progbandama.mobile.activities.DashboardAgentActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.ConfigurationActivity"
+            android:name="ci.progbandama.mobile.activities.ConfigurationActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.AuthentificationActivity"
+            android:name="ci.progbandama.mobile.activities.AuthentificationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             tools:ignore="LockedOrientationActivity" />
@@ -268,7 +268,7 @@
             android:required="false" />
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="ci.progbandama.mobile.activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden">
@@ -295,11 +295,11 @@
         </receiver>
         -->
         <service
-            android:name=".services.SynchronisationIntentService"
+            android:name="ci.progbandama.mobile.services.SynchronisationIntentService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
         <service
-            android:name=".services.GpsService"
+            android:name="ci.progbandama.mobile.services.GpsService"
             android:exported="false" />
 
         <meta-data
@@ -308,7 +308,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="ci.projccb.mobile.fileprovider"
+            android:authorities="ci.progbandama.mobile.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

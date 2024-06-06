@@ -5,7 +5,7 @@
     android:layout_height="@dimen/_80sdp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_present"
-    android:backgroundTint="@color/ccb_green"
+    android:backgroundTint="@color/progband_green"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/_2sdp"
@@ -36,7 +36,7 @@
             android:paddingTop="@dimen/_2sdp"
             android:paddingLeft="@dimen/_8sdp"
             android:text="Connectée…"
-            android:textColor="@color/ccb_green"
+            android:textColor="@color/progband_green"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <Space

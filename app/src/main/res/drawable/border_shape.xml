@@ -4,7 +4,7 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/_25sdp" />
-            <solid android:color="@color/ccb_green" /> <!-- Shadow color -->
+            <solid android:color="@color/progband_green" /> <!-- Shadow color -->
         </shape>
     </item>
 
@@ -14,7 +14,7 @@
             <corners android:radius="@dimen/_25sdp" />
             <stroke
                 android:width="@dimen/_2sdp"
-                android:color="@color/ccb_gris" />
+                android:color="@color/progband_gris" />
         </shape>
     </item>
 </layer-list>

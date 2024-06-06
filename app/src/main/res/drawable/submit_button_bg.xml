@@ -18,8 +18,8 @@
     <item >
         <shape android:shape="rectangle">
             <corners android:radius="15dip" />
-            <stroke android:width="1dip" android:color="@color/ccb_gris" />
-            <solid android:color="@color/ccb_green"/>
+            <stroke android:width="1dip" android:color="@color/progband_gris" />
+            <solid android:color="@color/progband_green"/>
         </shape>
     </item>
 

@@ -177,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginVertical="@dimen/_1sdp"
-            android:background="@color/ccb_gris_sec" />
+            android:background="@color/progband_gris_sec" />
 
 
     </LinearLayout>
