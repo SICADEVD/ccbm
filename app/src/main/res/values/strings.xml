@@ -397,6 +397,7 @@
         <item>Contrat</item>
         <item>Société</item>
         <item>A la maison</item>
+        <item>Aucun</item>
     </string-array>
 
     <string-array name="schoolLevel">

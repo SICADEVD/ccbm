@@ -467,7 +467,7 @@ class DashboardAgentActivity : AppCompatActivity(),
                 }
             })
 //        appUpdater.showEvery(5)
-        appUpdater.showAppUpdated(true) //TEST MODE
+//        appUpdater.showAppUpdated(true) //TEST MODE
         appUpdater.setIcon(R.mipmap.ic_launcher) // Notification icon
         appUpdater.setCancelable(false) // Dialog could not be dismissable
         appUpdater.start()

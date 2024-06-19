@@ -13,8 +13,10 @@ class NoLeadingZeroTextWatcher(private val editText: EditText) : android.text.Te
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
     override fun afterTextChanged(s: Editable?) {
-        if (s?.isNotEmpty() == true && s[0] == '0') {
-            s.delete(0, 1)
+        if(s?.isNotEmpty() == true){
+            if (s?.toString().length > 1 && s?.isNotEmpty() == true && s[0] == '0') {
+                s.delete(0, 1)
+            }
         }
     }
 }

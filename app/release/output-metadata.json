@@ -10,7 +10,7 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 50,
+      "versionCode": 69,
       "versionName": "ProgBand-v1.0.1",
       "outputFile": "app-release.apk"
     }
