@@ -354,6 +354,7 @@ android:textColor="@color/text_color_white"
                             android:background="@drawable/rounded_background"
                             android:digits="0123456789."
                             android:ellipsize="end"
+                            android:enabled="false"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
@@ -368,19 +369,57 @@ android:textColor="@color/text_color_white"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_10sdp" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Quel type d'estimation réalisez-vous?"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_background">
+
+                            <Space
+                                android:layout_width="@dimen/_5sdp"
+                                android:layout_height="@dimen/_10sdp" />
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:tag="typeEstimation"
+                                android:id="@+id/selectTypeEstimation"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_37sdp"
+                                android:entries="@array/type_estimation"
+                                android:spinnerMode="dialog" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp" />
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/carreeA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_marginRight="@dimen/_1sdp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
@@ -459,7 +498,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -492,7 +531,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -525,7 +564,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -537,14 +576,14 @@ android:textColor="@color/text_color_white"
 
             </androidx.cardview.widget.CardView>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp" />
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/carreeB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_marginRight="@dimen/_1sdp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
@@ -626,7 +665,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -659,7 +698,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -692,7 +731,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -704,14 +743,14 @@ android:textColor="@color/text_color_white"
 
             </androidx.cardview.widget.CardView>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp" />
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/carreeC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_marginRight="@dimen/_1sdp"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="8dp"
@@ -793,7 +832,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -826,7 +865,7 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"
@@ -846,7 +885,6 @@ android:textColor="@color/text_color_white"
                             android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/_12sdp"
                             android:text="@string/de_0_10_cab"
-
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -859,7 +897,152 @@ android:textColor="@color/text_color_white"
                             android:gravity="center_vertical"
                             android:hint=""
                             android:imeOptions="actionDone"
-                            android:inputType="phone"
+                            android:inputType="number"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:background="@color/dark_gray"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="Resultat !"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_13ssp"
+                        android:textStyle="bold"/>
+
+                    <View
+                        android:background="@color/dark_gray"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Pourcentage d'ajustement(%)"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="ajustement"
+                            android:id="@+id/editajustement"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:hint="Doit etre: sup -19.0 et inf 21.0"
+                            android:imeOptions="actionDone"
+                            android:digits="0123456789-."
+                            android:inputType="text"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_1sdp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_cardview_with_border_brown"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_20sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Rendement Final(Kg/Ha)"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="rendementfinal"
+                            android:id="@+id/editRendementFinal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:enabled="false"
+                            android:hint=""
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:textColor="@color/text_color_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/_12sdp"
+                            android:text="Recolte Estimée(Ha)"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:tag="recolteestimee"
+                            android:id="@+id/editRecolteEstimee"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_37sdp"
+                            android:background="@drawable/rounded_background"
+                            android:ellipsize="end"
+                            android:enabled="false"
+                            android:gravity="center_vertical"
+                            android:hint=""
+                            android:imeOptions="actionDone"
+                            android:inputType="number"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:textAllCaps="true"

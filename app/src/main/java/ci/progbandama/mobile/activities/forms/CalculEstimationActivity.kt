@@ -4,13 +4,16 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.CalculEstimationPreviewActivity
 import ci.progbandama.mobile.models.CampagneModel
@@ -24,8 +27,13 @@ import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.datas.CommonData
 import ci.progbandama.mobile.tools.Commons
 import ci.progbandama.mobile.tools.Commons.Companion.applyFilters
+import ci.progbandama.mobile.tools.Commons.Companion.checkAndReturnZeroFloatIfEmpty
+import ci.progbandama.mobile.tools.Commons.Companion.checkAndReturnZeroIfEmpty
+import ci.progbandama.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.progbandama.mobile.tools.Constants
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
+import kotlinx.android.synthetic.main.activity_calcul_estimation.*
 import kotlinx.android.synthetic.main.activity_calcul_estimation.clickCloseBtn
 import kotlinx.android.synthetic.main.activity_calcul_estimation.clickReviewEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.editA1Estimation
@@ -39,18 +47,22 @@ import kotlinx.android.synthetic.main.activity_calcul_estimation.editC2Estimatio
 import kotlinx.android.synthetic.main.activity_calcul_estimation.editC3Estimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.editDateEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.editSuperficieEstimation
+import kotlinx.android.synthetic.main.activity_calcul_estimation.editajustement
 import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectCampagneEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectLocaliteEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectParcelleEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectProducteurEstimation
 import kotlinx.android.synthetic.main.activity_calcul_estimation.selectSectionEstimation
+import kotlinx.android.synthetic.main.activity_calcul_estimation.selectTypeEstimation
 import org.joda.time.DateTime
 import java.util.Calendar
+import kotlin.math.roundToInt
 
 class CalculEstimationActivity : AppCompatActivity() {
 
 
+    private var valRendTheorique: Int = 0
     var campagnesList: MutableList<CampagneModel>? = null
     var localitesList: MutableList<LocaliteModel>? = null
     var producteursList: MutableList<ProducteurModel>? = null
@@ -502,15 +514,19 @@ class CalculEstimationActivity : AppCompatActivity() {
             campagnesId = campagneId,
             campagnesNom = campagneNom,
             dateEstimation = editDateEstimation.text.toString(),
-            ea1 = editA1Estimation.text.toString(),
-            ea2 = editA2Estimation.text.toString(),
-            ea3 = editA3Estimation.text.toString(),
-            eb1 = editB1Estimation.text.toString(),
-            eb2 = editB2Estimation.text.toString(),
-            eb3 = editB3Estimation.text.toString(),
-            ec1 = editC1Estimation.text.toString(),
-            ec2 = editC2Estimation.text.toString(),
-            ec3 = editC3Estimation.text.toString(),
+            ea1 = editA1Estimation.checkAndReturnZeroIfEmpty(),
+            ea2 = editA2Estimation.checkAndReturnZeroIfEmpty(),
+            ea3 = editA3Estimation.checkAndReturnZeroIfEmpty(),
+            eb1 = editB1Estimation.checkAndReturnZeroIfEmpty(),
+            eb2 = editB2Estimation.checkAndReturnZeroIfEmpty(),
+            eb3 = editB3Estimation.checkAndReturnZeroIfEmpty(),
+            ec1 = editC1Estimation.checkAndReturnZeroIfEmpty(),
+            ec2 = editC2Estimation.checkAndReturnZeroIfEmpty(),
+            ec3 = editC3Estimation.checkAndReturnZeroIfEmpty(),
+            ajustement = editajustement.checkAndReturnZeroFloatIfEmpty(),
+            typeEstimation = selectTypeEstimation.getSpinnerContent(),
+            recolteEstime = editRecolteEstimee.checkAndReturnZeroFloatIfEmpty(),
+            rendFinal = editRendementFinal.checkAndReturnZeroIfEmpty(),
             parcelleId = parcelleCommon.id.toString(),
             section = sectionCommon.id.toString(),
             superficie = parcelleSuperficie,
@@ -620,6 +636,18 @@ class CalculEstimationActivity : AppCompatActivity() {
         editC2Estimation.setText(estimationDrafted.ec2)
         editC3Estimation.setText(estimationDrafted.ec3)
 
+        estimationDrafted.typeEstimation?.let{
+            var curr = 0
+            for (item in resources.getStringArray(R.array.type_estimation)){
+                if (it.equals(item, ignoreCase = true)) selectTypeEstimation.setSelection(curr)
+                curr++
+            }
+        }
+        editajustement.setText(estimationDrafted.ajustement)
+        editRendementFinal.setText(estimationDrafted.rendFinal)
+        editRecolteEstimee.setText(estimationDrafted.recolteEstime)
+        calculLeRendementTheorique()
+
         editDateEstimation.setText(estimationDrafted.dateEstimation)
     }
 
@@ -651,93 +679,201 @@ class CalculEstimationActivity : AppCompatActivity() {
 
         applyFilters(editDateEstimation)
 
-        applyFilters(editA1Estimation)
-        applyFilters(editA2Estimation)
-        applyFilters(editA3Estimation)
+        Commons.addNotZeroAtFirstToET(editA1Estimation)
+        Commons.addNotZeroAtFirstToET(editA2Estimation)
+        Commons.addNotZeroAtFirstToET(editA3Estimation)
 
-        applyFilters(editB1Estimation)
-        applyFilters(editB2Estimation)
-        applyFilters(editB3Estimation)
+        Commons.addNotZeroAtFirstToET(editB1Estimation)
+        Commons.addNotZeroAtFirstToET(editB2Estimation)
+        Commons.addNotZeroAtFirstToET(editB3Estimation)
 
-        applyFilters(editC1Estimation)
-        applyFilters(editC2Estimation)
-        applyFilters(editC3Estimation)
+        Commons.addNotZeroAtFirstToET(editC1Estimation)
+        Commons.addNotZeroAtFirstToET(editC2Estimation)
 
-        editA1Estimation.doAfterTextChanged {
-            try {
 
-            } catch (ex: Exception) {
-                ex.printStackTrace()
+        selectTypeEstimation.onItemSelectedListener = object : OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                if(p2==0){
+//                    LogUtils.d("valRendementTheorique")
+                  //R calculé
+                    carreeA.visibility = View.VISIBLE
+                    carreeB.visibility = View.VISIBLE
+                    carreeC.visibility = View.VISIBLE
+
+                    Commons.addNotZeroAtFirstToET(editC3Estimation, onTextChange = { text ->
+                        if(
+                            editA1Estimation.text.isNullOrEmpty() ||
+                            editA2Estimation.text.isNullOrEmpty() ||
+                            editA3Estimation.text.isNullOrEmpty() ||
+                            editB1Estimation.text.isNullOrEmpty() ||
+                            editB2Estimation.text.isNullOrEmpty() ||
+                            editB3Estimation.text.isNullOrEmpty() ||
+                            editC1Estimation.text.isNullOrEmpty() ||
+                            editC2Estimation.text.isNullOrEmpty() ||
+                            editC3Estimation.text.isNullOrEmpty()
+                        ){
+                            Commons.showMessage("Veuillez renseigner tous les carrés d'estimation", this@CalculEstimationActivity, finished = false, callback = {})
+                        }else{
+                            if (text.isNotEmpty()) {
+
+                                calculLeRendementTheorique()
+                                //val editC3EstimationVal = text.toString().toIntOrNull()
+
+                            }
+                        }
+
+                    })
+
+                    editajustement.doOnTextChanged { text, start, before, count ->
+                        if(
+                            editA1Estimation.text.isNullOrEmpty() ||
+                            editA2Estimation.text.isNullOrEmpty() ||
+                            editA3Estimation.text.isNullOrEmpty() ||
+                            editB1Estimation.text.isNullOrEmpty() ||
+                            editB2Estimation.text.isNullOrEmpty() ||
+                            editB3Estimation.text.isNullOrEmpty() ||
+                            editC1Estimation.text.isNullOrEmpty() ||
+                            editC2Estimation.text.isNullOrEmpty() ||
+                            editC3Estimation.text.isNullOrEmpty()
+                        ){
+                            Commons.showMessage("Veuillez renseigner tous les carrés d'estimation", this@CalculEstimationActivity, finished = false, callback = {})
+                        }
+
+                        if(!text.isNullOrEmpty()){
+                            val textVal = text.toString().toIntOrNull()
+                            textVal?.let {
+                                if(it < -20){
+                                    Commons.showMessage("Pourcentage d'ajustement est inférieur à -20%", this@CalculEstimationActivity, finished = false, callback = {})
+                                }else if(it > 20){
+                                    Commons.showMessage("Pourcentage d'ajustement est supérieur à 20%", this@CalculEstimationActivity, finished = false, callback = {})
+                                }
+                                editRendementFinal.setText("${valRendTheorique+(valRendTheorique*textVal)}")
+                            }
+                        }
+                    }
+
+                    editRendementFinal.addTextChangedListener(object : TextWatcher{
+                        override fun beforeTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+                            //TODO("Not yet implemented")
+                        }
+
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            //TODO("Not yet implemented")
+                        }
+
+                        override fun afterTextChanged(text: Editable?) {
+                            //TODO("Not yet implemented")
+                            if(!text.toString().isNullOrEmpty()){
+                                val RfVal = text.toString().toIntOrNull()
+                                RfVal?.let {
+                                    val superVal = editSuperficieEstimation.text.toString().toFloatOrNull()
+                                    superVal?.let {
+                                        editRecolteEstimee.setText("${(RfVal*superVal).roundToInt()}")
+                                    }
+                                }
+                            }
+                        }
+
+                    })
+
+                    editRendementFinal.isEnabled = false
+                    editRendementFinal.removeTextChangedListener(object : TextWatcher{
+                        override fun beforeTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+                            //TODO("Not yet implemented")
+                        }
+
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            //TODO("Not yet implemented")
+                        }
+
+                        override fun afterTextChanged(p0: Editable?) {
+                            //TODO("Not yet implemented")
+                        }
+
+                    })
+
+//                    editRendementFinal.doAfterTextChanged { text ->
+//
+//                    }
+
+                }else{
+                    LogUtils.d("editRendementFinal")
+                    //R estimé
+                    carreeA.visibility = View.GONE
+                    carreeB.visibility = View.GONE
+                    carreeC.visibility = View.GONE
+
+                    editRendementFinal.isEnabled = true
+                    editRendementFinal.addTextChangedListener(object : TextWatcher{
+                        override fun beforeTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+                            //TODO("Not yet implemented")
+                        }
+
+                        override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                            //TODO("Not yet implemented")
+                            if(!text.isNullOrEmpty()){
+                                val RfVal = text.toString().toIntOrNull()
+                                RfVal?.let {
+                                    val superVal = editSuperficieEstimation.text.toString().toFloatOrNull()
+                                    superVal?.let {
+                                        editRecolteEstimee.setText("${(RfVal*superVal).toFloat()}")
+                                    }
+                                }
+                            }
+                        }
+
+                        override fun afterTextChanged(text: Editable?) {
+                            //TODO("Not yet implemented")
+                        }
+
+                    })
+//                    editRendementFinal.doOnTextChanged { text, start, before, count ->
+//
+//                    }
+                }
+
             }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
         }
 
-        editA2Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editA3Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editB1Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editB2Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editB3Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editC1Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editC2Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
-
-        editC3Estimation.doAfterTextChanged {
-            try {
-
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        }
 
         if (intent.getStringExtra("from") != null) {
-            draftedDataEstimation = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
+                draftedDataEstimation = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)
             undraftedDatas(draftedDataEstimation!!)
         }
+    }
+
+    private fun calculLeRendementTheorique() {
+        var nbrArbreABCc20 = editA1Estimation.text.toString().toInt()+editB1Estimation.text.toString().toInt()+editC1Estimation.text.toString().toInt()
+        var nbrArbreABCc10 = editA2Estimation.text.toString().toInt()+editB2Estimation.text.toString().toInt()+editC2Estimation.text.toString().toInt()
+        var nbrArbreABCc0 = editA3Estimation.text.toString().toInt()+editB3Estimation.text.toString().toInt()+editC3Estimation.text.toString().toInt()
+
+        var volABCc20 = ((nbrArbreABCc20*1)/3)
+        var volABCc10 = ((nbrArbreABCc10*0.6)/3)
+        var volABCc0 = ((nbrArbreABCc0*0.2)/3)
+
+        var valRendementTheorique = ((volABCc20+volABCc10+volABCc0)*100)
+
+        valRendTheorique = valRendementTheorique.roundToInt()
     }
 }

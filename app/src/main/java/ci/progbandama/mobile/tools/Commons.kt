@@ -1008,8 +1008,22 @@ class Commons {
             }
         }
 
-        fun addNotZeroAtFirstToET(editText: EditText){
-            editText.addTextChangedListener(NoLeadingZeroTextWatcher(editText))
+        fun addNotZeroAtFirstToET(editText: EditText, onTextChange: (String) -> Unit? = {}){
+            editText.addTextChangedListener(NoLeadingZeroTextWatcher(editText, onTextChange))
+        }
+
+        fun EditText.checkAndReturnZeroIfEmpty(): String {
+
+            if(!this.text.isNullOrEmpty()){
+                return this.text.toString()
+            }else return "0"
+        }
+
+        fun EditText.checkAndReturnZeroFloatIfEmpty(): String {
+
+            if(!this.text.isNullOrEmpty()){
+                return this.text.toString()
+            }else return "0.0"
         }
 
         fun blockUpdateForFeature(fromMenu: String): Boolean {

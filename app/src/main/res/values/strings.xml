@@ -392,6 +392,11 @@
         <item>Autre</item>
     </string-array>
 
+    <string-array name="type_estimation">
+        <item>Rendement calculé</item>
+        <item>Rendement estimé</item>
+    </string-array>
+
     <string-array name="recentWorkLieu">
         <item>Champs familiale</item>
         <item>Contrat</item>
@@ -776,7 +781,7 @@
     <string name="as_tu_un_compte_dans_une_banque">As-tu un compte dans une banque ?</string>
     <string name="s_lectionner_la_banque">Sélectionner la banque :</string>
     <string name="culture">Culture</string>
-    <string name="superficie">Superficie</string>
+    <string name="superficie">Superficie(Ha)</string>
     <string name="renseignez_des_donn_es_sur_la_vari_t_svp">Renseignez des données sur la variété, svp !</string>
     <string name="renseignez_des_donn_es_svp">Renseignez des données, svp !</string>
     <string name="op_rateur">Opérateur</string>

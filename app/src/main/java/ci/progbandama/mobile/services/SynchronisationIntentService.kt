@@ -1028,6 +1028,8 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
                     val clientEstimation: Call<EstimationModel> =
                         ApiClient.apiService.synchronisationEstimation(estimationPojo)
 
+//                    Commons.debugModelToJson(estimationPojo)
+
                     val response = clientEstimation.execute()
 
                     if (response.isSuccessful) {

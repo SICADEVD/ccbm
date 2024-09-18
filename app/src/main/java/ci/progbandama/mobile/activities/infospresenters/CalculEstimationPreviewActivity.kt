@@ -39,7 +39,11 @@ class CalculEstimationPreviewActivity : AppCompatActivity() {
                     labelCampagneNomEstimationPreview.text = estimation.campagnesNom
                     labelProducteurNomEstimationPreview.text = estimation.producteurNom
                     labelParclelleNomEstimationPreview.text = estimation.parcelleNom
+                    labelTypEstEstimationPreview.text = estimation.typeEstimation
                     labelSuperficieEstimationPreview.text = estimation.superficie
+                    labelPAjustEstimationPreview.text = estimation.ajustement
+                    labelRFinEstimationPreview.text = estimation.rendFinal
+                    labelREstiEstimationPreview.text = estimation.recolteEstime
                     labelPiedA1EstimationPreview.text = estimation.ea1
                     labelPiedA2EstimationPreview.text = estimation.ea2
                     labelPiedA3EstimationPreview.text = estimation.ea3
