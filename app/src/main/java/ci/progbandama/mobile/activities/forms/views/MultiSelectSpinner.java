@@ -71,7 +71,7 @@ public class MultiSelectSpinner extends AppCompatSpinner {
 
         AlertDialog.Builder alertBd = new AlertDialog.Builder(getContext(), R.style.DialogTheme);
 
-        Commons.Companion.adjustTextViewSizesInDialogExt(getContext(), alertBd, _title, getContext().getResources().getDimension(R.dimen._8ssp),true);
+        Commons.Companion.adjustTextViewSizesInDialogExt(getContext(), alertBd, _title, getContext().getResources().getDimension(com.intuit.ssp.R.dimen._8ssp),true);
         SearchableMultiSelectSpinner.Companion.showDialog(getContext(), alertBd, _title, _titlePB, _titleNB, listModelNames, new SelectionCompleteListener() {
 
             public void onItemClicked(@NonNull SearchableItem selectedItem, int which, boolean checked) {

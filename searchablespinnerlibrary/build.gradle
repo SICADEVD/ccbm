@@ -4,7 +4,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    namespace "com.toptoche.searchablespinnerlibrary"
+    compileSdk 30
 
     defaultConfig {
         //applicationId "com.tejob.torrentlinkfinder"

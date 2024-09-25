@@ -50,8 +50,8 @@ class VisiteurFormationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_visiteur_formation)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         visiteurFormationDao = ProgBandRoomDatabase.getDatabase(this)?.visiteurFormationDao()
         formationDao = ProgBandRoomDatabase.getDatabase(this)?.formationDao()

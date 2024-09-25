@@ -946,7 +946,7 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
 
     fun dialogPickerPhoto() {
         val dialogPicker = AlertDialog.Builder(this, R.style.DialogTheme)
-        Commons.adjustTextViewSizesInDialog(this, dialogPicker, "",   this.resources.getDimension(R.dimen._6ssp)
+        Commons.adjustTextViewSizesInDialog(this, dialogPicker, "",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
             ,true)
         dialogPicker.setMessage(getString(R.string.source_de_la_photo))
             .setPositiveButton("Camera") { dialog, _ ->
@@ -1260,8 +1260,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         setContentView(R.layout.activity_producteur)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED) {
@@ -1279,8 +1279,8 @@ class ProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProd
         producteurDao = ProgBandRoomDatabase.getDatabase(this)?.producteurDoa()
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(R.id.layout_producteur),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         setAllClickListener()
 

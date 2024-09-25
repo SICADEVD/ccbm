@@ -1519,8 +1519,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_suivi_parcelle)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         suiviParcelleDao = ProgBandRoomDatabase.getDatabase(this)?.suiviParcelleDao()
 

@@ -106,7 +106,7 @@ public class SearchableListDialog extends DialogFragment implements SearchView.O
         alertDialog.setPositiveButton(strPositiveButton, _onClickListener);
 
         String strTitle = _strTitle == null ? "Select Item" : _strTitle;
-        adjustTextViewSizesInDialog(getActivity(), alertDialog, strTitle, getActivity().getResources().getDimension(R.dimen._8ssp), true, false);
+        adjustTextViewSizesInDialog(getActivity(), alertDialog, strTitle, getActivity().getResources().getDimension(com.intuit.ssp.R.dimen._8ssp), true, false);
         //alertDialog.setTitle(strTitle);
 
         final AlertDialog dialog = alertDialog.create();

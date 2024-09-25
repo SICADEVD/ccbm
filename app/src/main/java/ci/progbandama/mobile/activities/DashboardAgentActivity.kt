@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
@@ -33,17 +34,17 @@ import ci.progbandama.mobile.adapters.FeatureAdapter
 import ci.progbandama.mobile.models.AgentModel
 import ci.progbandama.mobile.models.CoopModel
 import ci.progbandama.mobile.models.FeatureModel
+import ci.progbandama.mobile.models.MissVersion
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.*
 import ci.progbandama.mobile.services.GpsService
 import ci.progbandama.mobile.tools.Commons
+import ci.progbandama.mobile.tools.Commons.Companion.openUrl
 import ci.progbandama.mobile.tools.Commons.Companion.toModifString
 import ci.progbandama.mobile.tools.Constants
 import ci.progbandama.mobile.tools.Data
+import ci.progbandama.mobile.tools.FetchData
 import com.blankj.utilcode.util.*
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -258,8 +259,8 @@ class DashboardAgentActivity : AppCompatActivity(),
         setContentView(R.layout.activity_dashboard_agent)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         bindDatas(agentModel = agentLogged, coopmodel)
 
@@ -269,7 +270,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
         imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(R.dimen._6ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
             //builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
@@ -294,7 +295,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         imgProfileDashboardNDrawer.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(R.dimen._6ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
             //builder.setMessage("Deconnexion ?")
             builder.setCancelable(false)
@@ -320,7 +321,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
         imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, "Voulez-vous quitter ?",   this.resources.getDimension(R.dimen._6ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Voulez-vous quitter ?",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
             //builder.setMessage("Voulez-vous quitter ?")
             builder.setCancelable(false)
@@ -360,7 +361,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             }
 
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
-            Commons.adjustTextViewSizesInDialog(this, builder, message,   this.resources.getDimension(R.dimen._6ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, message,   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
             //builder.setMessage(message)
             builder.setCancelable(false)
@@ -456,21 +457,35 @@ class DashboardAgentActivity : AppCompatActivity(),
         setViewFeatureListing()
 
 //        setupLiveData()
-        val appUpdater = AppUpdater(this)
-        appUpdater.setDisplay(Display.DIALOG)
-        appUpdater.setUpdateFrom(UpdateFrom.JSON)
-            .setContentOnUpdateNotAvailable("Vous avez la dernière version disponible de l'application.")
-            .setUpdateJSON("https://raw.githubusercontent.com/SICADEVD/ccbm/update_onplaystore_b/app/update-changelog.json")
-            .setButtonDoNotShowAgainClickListener(object :DialogInterface.OnClickListener{
-                override fun onClick(p0: DialogInterface?, p1: Int) {
-                    ToastUtils.showShort("Vous ne pouvez pas désactiver ! Svp faites la mise à jour !")
+        try {
+//            LogUtils.d(Constants.decodeUpdate)
+            val appVersIo = FetchData.AppVersion(this@DashboardAgentActivity, Constants.decodeUpdate,
+                object : FetchData.LibraryListener{
+                    override fun onCompleted(vers: MissVersion?, iscomplete: Boolean?) {
+                        LogUtils.d(vers, iscomplete)
+                        iscomplete?.let {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                if(it) Commons.showMessage(
+                                    vers?.releaseNotes.toModifString(commaReplace = "\n"),
+                                    context = this@DashboardAgentActivity,
+                                    callback = {
+                                        this@DashboardAgentActivity.openUrl(vers?.url.toString())
+                                    },
+                                    textSizeDim = com.intuit.ssp.R.dimen._5ssp,
+                                    showNo = true,
+                                    positive = "Continuer !"
+                                )
+                            }
+                        }
+                    }
                 }
-            })
-//        appUpdater.showEvery(5)
-//        appUpdater.showAppUpdated(true) //TEST MODE
-        appUpdater.setIcon(R.mipmap.ic_launcher) // Notification icon
-        appUpdater.setCancelable(false) // Dialog could not be dismissable
-        appUpdater.start()
+            )
+            CoroutineScope(Dispatchers.IO).launch {
+                if (NetworkUtils.isAvailable() && NetworkUtils.isConnected()) appVersIo.execute()
+            }
+        }catch (ex:Exception){
+            LogUtils.e(ex.message)
+        }
 //         Initialize the Update Manager with the Activity and the Update Mode
 
     }

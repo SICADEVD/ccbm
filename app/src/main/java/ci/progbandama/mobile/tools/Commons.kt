@@ -9,6 +9,7 @@ import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
@@ -48,6 +49,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.PackageInfoCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -461,7 +463,7 @@ class Commons {
                 val childViewClassName = childView::class.java.simpleName
                 //LogUtils.d(childViewClassName)
                 if (childViewClassName.contains("AppCompatTextView", ignoreCase = true) && childView.tag == null) {
-                    (childView as TextView).textSize = textSize?:context.resources.getDimension(R.dimen._8ssp)
+                    (childView as TextView).textSize = textSize?:context.resources.getDimension(com.intuit.ssp.R.dimen._8ssp)
                     //LogUtils.d(childViewClassName+ " "+ currTextView)
                 }
 
@@ -469,7 +471,7 @@ class Commons {
 
                 } else if ( childView is AppCompatEditText && childView.tag != null ) {
                     // You've found an EditText with the specified tag, get its value
-                    childView.textSize = editTextSize?:context.resources.getDimension(R.dimen._8ssp)
+                    childView.textSize = editTextSize?:context.resources.getDimension(com.intuit.ssp.R.dimen._8ssp)
                 } else if (childView is ViewGroup) {
                     // If it's a ViewGroup, recursively call this method
                     setSizeOfAllTextViews(
@@ -584,8 +586,19 @@ class Commons {
             }
         }
 
+        fun Context.openUrl(link: String){
+            val url = link
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(url)
+            }
 
-        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false, textSizeDim: Int = R.dimen._8ssp, consent: Boolean = false) {
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            }
+        }
+
+
+        fun showMessage(message: String, context: Context, finished: Boolean = false, callback: () -> Unit?, positive: String? = "Oui", deconnec: Boolean = false, showNo: Boolean = false, textSizeDim: Int = com.intuit.ssp.R.dimen._8ssp, consent: Boolean = false) {
             try {
                 val builder = AlertDialog.Builder(context, R.style.DialogTheme)
                 // Display a message on alert dialog
@@ -701,7 +714,7 @@ class Commons {
 
             builder.setView(dialogView)
             //builder.setTitle("Choix de l'année")
-            Commons.adjustTextViewSizesInDialog(this, builder, "Choix de l'année",   this.resources.getDimension(R.dimen._6ssp)
+            Commons.adjustTextViewSizesInDialog(this, builder, "Choix de l'année",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
             ,true)
             builder.setPositiveButton("Valider !") { _, _ ->
                 val selectedYear = yearPicker.value
@@ -764,6 +777,17 @@ class Commons {
                 true
             )
             timePickerDialog.show()
+        }
+
+        fun getAppCuVesCod(ctx: Context): Long {
+            val versionCode: Long = try {
+                val packageInfo = ctx.packageManager.getPackageInfo(ctx.packageName, 0)
+                PackageInfoCompat.getLongVersionCode(packageInfo)
+            } catch (e: PackageManager.NameNotFoundException) {
+                0L // Valeur par défaut si une erreur survient
+            }
+
+            return versionCode
         }
 
         fun adjustTextViewSizesInDialog(context: Context, dialogBuilder: Any, title: String, textSize: Float, isTitle:Boolean = true, isprogress:Boolean = false) {
@@ -1816,7 +1840,7 @@ class Commons {
                 .setProgressBarColor(R.color.green_3)
                 .setBackgroundColor(R.color.progband_green)
                 // (Optional) Change text size, default = 14sp
-                .setTextSize(ctx.resources.getDimension(R.dimen._8ssp))
+                .setTextSize(ctx.resources.getDimension(com.intuit.ssp.R.dimen._8ssp))
                 // (Optional) Set max lines, default = 2
                 .setProgressTextColor(R.color.white_color)
                 .useRoundedCornerBackground(true)

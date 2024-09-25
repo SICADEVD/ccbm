@@ -105,9 +105,9 @@ internal class ExpandableListAdapter(
             isNew.visibility = View.GONE
         }
         if (isExpanded) {
-            ivGroupIndicator.setImageResource(R.drawable.ic_arrow_up)
+            ivGroupIndicator.setImageResource(com.techatmosphere.R.drawable.ic_arrow_up)
         } else {
-            ivGroupIndicator.setImageResource(R.drawable.ic_arrow_down)
+            ivGroupIndicator.setImageResource(com.techatmosphere.R.drawable.ic_arrow_down)
         }
         return convertView
     }

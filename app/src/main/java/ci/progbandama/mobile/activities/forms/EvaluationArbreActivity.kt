@@ -45,8 +45,8 @@ class EvaluationArbreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_evaluation_arbre)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         evaluationArbreDao = ProgBandRoomDatabase.getDatabase(this)?.evaluationArbreDao()
 

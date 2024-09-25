@@ -18,13 +18,15 @@ def loadEnvOrProperty(propertyName, defaultValue, fileName) {
 }
 
 android {
-    compileSdkVersion 33
+
+    namespace "ci.progbandama.mobile"
+    compileSdk 34
 
     defaultConfig {
         applicationId "ci.progbandama.mobile"
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 72
+        targetSdkVersion 34
+        versionCode 75
         versionName "ProgBand-v1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -169,7 +171,7 @@ dependencies {
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    implementation 'com.github.javiersantos:AppUpdater:2.7'
+//    implementation 'com.github.javiersantos:AppUpdater:2.7'
 
 }
 

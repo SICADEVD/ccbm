@@ -1016,8 +1016,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         //counterMainView = 0
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         clickCloseBtn.setOnClickListener {
             finish()
@@ -1179,7 +1179,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 },
                 positive = "Compris !",
                 deconnec = false,
-                textSizeDim = R.dimen._5ssp
+                textSizeDim = com.intuit.ssp.R.dimen._5ssp
             )
         }
 

@@ -202,7 +202,7 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
             .geodesic(true)
             .strokeWidth(5f)
             .strokeJointType(JointType.ROUND)
-            .fillColor(R.color.cardview_shadow_end_color)
+            .fillColor(androidx.cardview.R.color.cardview_shadow_end_color)
             .addAll(wayPoints)
             .clickable(true)
 

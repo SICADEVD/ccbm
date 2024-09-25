@@ -91,7 +91,7 @@ class ConfigurationBaseUrlActivity : AppCompatActivity() {
         setContentView(R.layout.activity_configuration_base_url)
 
         progressDialog = ProgressDialog(this, R.style.DialogTheme)
-        Commons.adjustTextViewSizesInDialog(this, progressDialog!!, "Connexion en cours...",   this.resources.getDimension(R.dimen._6ssp),
+        Commons.adjustTextViewSizesInDialog(this, progressDialog!!, "Connexion en cours...",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
             false)
         //progressDialog?.setMessage("Connexion en cours...")
 

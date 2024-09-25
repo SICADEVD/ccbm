@@ -1492,7 +1492,7 @@ class FormationActivity : AppCompatActivity() {
                 this,
                 dialogPicker,
                 "",
-                this.resources.getDimension(R.dimen._6ssp),
+                this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
                 true
             )
 
@@ -1636,8 +1636,8 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setSizeOfAllTextViews(
             this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp)
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp)
         )
 
         formationDao = ProgBandRoomDatabase.getDatabase(applicationContext)?.formationDao()

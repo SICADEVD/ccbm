@@ -981,8 +981,8 @@ class LivraisonCentralActivity : AppCompatActivity() {
         setContentView(R.layout.activity_livraison_central)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         livraisonCentralDao = ProgBandRoomDatabase.getDatabase(this)?.livraisonCentralDao()
 

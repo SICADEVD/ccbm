@@ -10,7 +10,6 @@ import ci.progbandama.mobile.repositories.databases.daos.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 import androidx.room.migration.Migration
-import ci.progbandama.mobile.BuildConfig
 import ci.progbandama.mobile.tools.ListConverters
 
 
@@ -20,7 +19,7 @@ import ci.progbandama.mobile.tools.ListConverters
  */
 
 @Database(
-    version = BuildConfig.VERSION_CODE, exportSchema = false,
+    version = 73, exportSchema = false,
     entities = [
         CoopModel::class,
         AgentModel::class,
@@ -192,7 +191,7 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
             }
         }
 
-        val MIGRATION_71_72 = object : Migration(71, 72) {
+        val MIGRATION_71_75 = object : Migration(71, 75) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Ajout des nouvelles colonnes à la table EstimationModel
                 database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
@@ -223,7 +222,7 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
                     "progbandama.db")
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
-                    .addMigrations(MIGRATION_71_72)
+                    .addMigrations(MIGRATION_71_75)
                     //.addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build()
                 INSTANCE = instance

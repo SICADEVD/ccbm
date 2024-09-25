@@ -1178,8 +1178,8 @@ class ProducteurMenageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_producteur_menage)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         prodMenagereDao = ProgBandRoomDatabase.getDatabase(this)?.producteurMenageDoa()
 

@@ -684,8 +684,8 @@ class LocaliteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_localite)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
-            resources.getDimension(R.dimen._6ssp),
-            resources.getDimension(R.dimen._5ssp))
+            resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
+            resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
         localiteDao = ProgBandRoomDatabase.getDatabase(this)?.localiteDoa()
         setupLocalitesTypeSelection()
