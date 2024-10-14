@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.LocaliteActivity
 import ci.progbandama.mobile.adapters.LocaliteAdapter
+import ci.progbandama.mobile.databinding.ActivityLocalitesListBinding
 import ci.progbandama.mobile.models.LocaliteModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.LocaliteDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_localites_list.*
 import org.joda.time.DateTime
 
 class LocalitesListActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class LocalitesListActivity : AppCompatActivity() {
     var localitesList: MutableList<LocaliteModel>? = null
     var localiteAdapter: LocaliteAdapter? = null
 
+    lateinit var binding: ActivityLocalitesListBinding
 
     fun retrieveDatas() {
         localitesList = mutableListOf()
@@ -32,18 +33,18 @@ class LocalitesListActivity : AppCompatActivity() {
 
         localiteAdapter = LocaliteAdapter(localitesList)
 
-        recyclerLocalites.adapter = localiteAdapter
-        recyclerLocalites.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerLocalites.adapter = localiteAdapter
+        binding.recyclerLocalites.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationLocalite.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
+        binding.labelLastSynchronisationLocalite.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
 
         localitesList?.let {
             if (it.isEmpty()) {
-                recyclerLocalites.visibility = View.GONE
-                linearEmptyContainerLocalitesList.visibility = View.VISIBLE
+                binding.recyclerLocalites.visibility = View.GONE
+                binding.linearEmptyContainerLocalitesList.visibility = View.VISIBLE
             } else {
-                recyclerLocalites.visibility = View.VISIBLE
-                linearEmptyContainerLocalitesList.visibility = View.GONE
+                binding.recyclerLocalites.visibility = View.VISIBLE
+                binding.linearEmptyContainerLocalitesList.visibility = View.GONE
             }
         }
     }
@@ -51,13 +52,14 @@ class LocalitesListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_localites_list)
+        binding = ActivityLocalitesListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        imgAddBtn.setOnClickListener {
+        binding.imgAddBtn.setOnClickListener {
             ActivityUtils.startActivity(LocaliteActivity::class.java)
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

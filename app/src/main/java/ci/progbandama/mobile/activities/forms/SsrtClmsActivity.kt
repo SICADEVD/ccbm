@@ -15,6 +15,8 @@ import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
 import ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner.OnMultipleItemsSelectedListener
 import ci.progbandama.mobile.activities.infospresenters.EnqueteSsrtPreviewActivity
+import ci.progbandama.mobile.databinding.ActivityProducteurBinding
+import ci.progbandama.mobile.databinding.ActivitySsrtClmsBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -28,12 +30,11 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_ssrt_clms.*
 import org.joda.time.DateTime
 import java.util.*
 
 
-class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
+class SsrtClmsActivity : AppCompatActivity() {
 
 
     var liensParenteList: MutableList<LienParenteModel>? = mutableListOf()
@@ -92,7 +93,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionSsrte,
+            spinner = binding.selectSectionSsrte,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -128,7 +129,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteSsrte,
+            spinner = binding.selectLocaliteSsrte,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -170,7 +171,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurSsrte,
+            spinner = binding.selectProducteurSsrte,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -246,7 +247,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_lien_de_parent_avec_le_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectLienParentSsrt,
+            spinner = binding.selectLienParentSsrt,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.parentAffiliation)
                 ?.toList() ?: listOf(),
@@ -255,13 +256,13 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearAutreLienParentContainerSsrte.visibility = visibility
+                    binding.linearAutreLienParentContainerSsrte.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_niveau_d_tude_as_tu_atteint),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSchoolLevelSsrt,
+            spinner = binding.selectSchoolLevelSsrt,
             listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -273,7 +274,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.va_t_il_l_cole),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSchoolStatusSsrt,
+            spinner = binding.selectSchoolStatusSsrt,
             itemChanged = arrayListOf(Pair(1, getString(R.string.non)), Pair(2, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -282,17 +283,17 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerAvoirFrequPasseSsrt.visibility = visibility
-                    containerVaDejaALecole.visibility = GONE
+                    binding.containerAvoirFrequPasseSsrt.visibility = visibility
+                    binding.containerVaDejaALecole.visibility = GONE
                 }else if (itemId == 2) {
-                    containerVaDejaALecole.visibility = visibility
-                    containerAvoirFrequPasseSsrt.visibility = GONE
+                    binding.containerVaDejaALecole.visibility = visibility
+                    binding.containerAvoirFrequPasseSsrt.visibility = GONE
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.as_tu_t_l_cole_par_le_pass),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAvoirFrequPasseSsrt,
+            spinner = binding.selectAvoirFrequPasseSsrt,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -301,13 +302,13 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerAvoirFaitEcole.visibility = visibility
+                    binding.containerAvoirFaitEcole.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.ton_cole_est_elle_situ_e_dans_le_village),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSchoolInPlaceYesNoSsrt,
+            spinner = binding.selectSchoolInPlaceYesNoSsrt,
             itemChanged = arrayListOf(Pair(1, getString(R.string.non))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -316,66 +317,66 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearVillageDistanceContainerSsrt.visibility = visibility
+                    binding.linearVillageDistanceContainerSsrt.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_niveau_d_tude_as_tu_atteint),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectNiveauEtudeAtteintSsrt,
+            spinner = binding.selectNiveauEtudeAtteintSsrt,
             listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
             onChanged = {
                 when (it) {
                     0 -> {
                         val classLevels = resources.getStringArray(R.array.maternelleLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, )
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels, )
                     }
                     1 -> {
                         val classLevels = resources.getStringArray(R.array.primaireLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels)
                     }
                     2 -> {
                         val classLevels = resources.getStringArray(R.array.oneCycleLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels)
                     }
                     3 -> {
                         val classLevels = resources.getStringArray(R.array.twoCycleLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels)
                     }
                     4 -> {
                         val classLevels = arrayOf<String>()
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels)
                     }
                 }
             },
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte,
+        Commons.setupItemMultiSelection(this, binding.selectRaisonArretEcoleSSrte,
             getString(R.string.pourquoi_ne_vas_tu_pas_l_cole_ou_arr_t_l_cole), resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) }){
             //if(it.contains("Autre")) containerAutreRaisonArretEcole.visibility = View.VISIBLE
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte,
+        Commons.setupItemMultiSelection(this, binding.selectLequelTravEffectSSrte,
             getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_dangereux_as_tu_effectu), resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) },
             currentList = arrayListOf()){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte,
+        Commons.setupItemMultiSelection(this, binding.selectEndroitTravEffectSSrte,
             getString(R.string.o_as_tu_effectu_ces_travaux_dangereux), resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) },
             currentList = arrayListOf()){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte,
+        Commons.setupItemMultiSelection(this, binding.selectLequelTrav2EffectSSrte,
             getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_l_gers_as_tu_effectu), resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) },
             currentList = arrayListOf()){
 
         }
 
-        Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte,
+        Commons.setupItemMultiSelection(this, binding.selectEndroitTrav2EffectSSrte,
             getString(R.string.o_as_tu_effectu_ces_travaux_l_gers), resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) },
             currentList = arrayListOf()
         ){
@@ -409,9 +410,9 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun scrollableMarquee() {
         // labelInfosScrollerSsrt?.focusable = View.FOCUSABLE
-        labelInfosScrollerSsrt.isFocusableInTouchMode = true
-        labelInfosScrollerSsrt.marqueeRepeatLimit = 3
-        labelInfosScrollerSsrt.ellipsize = TextUtils.TruncateAt.MARQUEE
+        binding.labelInfosScrollerSsrt.isFocusableInTouchMode = true
+        binding.labelInfosScrollerSsrt.marqueeRepeatLimit = 3
+        binding.labelInfosScrollerSsrt.ellipsize = TextUtils.TruncateAt.MARQUEE
     }
 
 
@@ -427,11 +428,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 localiteId = localiteCommon.id.toString()
                 producteursId = producteurCommon.id.toString()
 
-                travauxDangereuxStringify = GsonUtils.toJson(selectLequelTravEffectSSrte.selectedStrings)
-                travauxLegersStringify = GsonUtils.toJson(selectLequelTrav2EffectSSrte.selectedStrings)
+                travauxDangereuxStringify = GsonUtils.toJson(binding.selectLequelTravEffectSSrte.selectedStrings)
+                travauxLegersStringify = GsonUtils.toJson(binding.selectLequelTrav2EffectSSrte.selectedStrings)
 
-                lieuTravauxDangereuxStringify = GsonUtils.toJson(selectEndroitTravEffectSSrte.selectedStrings)
-                lieuTravauxLegersStringify = GsonUtils.toJson(selectEndroitTrav2EffectSSrte.selectedStrings)
+                lieuTravauxDangereuxStringify = GsonUtils.toJson(binding.selectEndroitTravEffectSSrte.selectedStrings)
+                lieuTravauxLegersStringify = GsonUtils.toJson(binding.selectEndroitTrav2EffectSSrte.selectedStrings)
             }
         }
 
@@ -564,11 +565,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 localiteId = localiteCommon.id.toString()
                 producteursId = producteurCommon.id.toString()
 
-                travauxDangereuxStringify = GsonUtils.toJson(selectLequelTravEffectSSrte.selectedStrings)
-                travauxLegersStringify = GsonUtils.toJson(selectLequelTrav2EffectSSrte.selectedStrings)
+                travauxDangereuxStringify = GsonUtils.toJson(binding.selectLequelTravEffectSSrte.selectedStrings)
+                travauxLegersStringify = GsonUtils.toJson(binding.selectLequelTrav2EffectSSrte.selectedStrings)
 
-                lieuTravauxDangereuxStringify = GsonUtils.toJson(selectEndroitTravEffectSSrte.selectedStrings)
-                lieuTravauxLegersStringify = GsonUtils.toJson(selectEndroitTrav2EffectSSrte.selectedStrings)
+                lieuTravauxDangereuxStringify = GsonUtils.toJson(binding.selectEndroitTravEffectSSrte.selectedStrings)
+                lieuTravauxLegersStringify = GsonUtils.toJson(binding.selectEndroitTrav2EffectSSrte.selectedStrings)
             }
         }
         LogUtils.d(enqueteModel)
@@ -594,7 +595,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -617,7 +618,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_lien_de_parent_avec_le_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectLienParentSsrt,
+            spinner = binding.selectLienParentSsrt,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = ssrteDrafted.lienParente,
             listIem = resources.getStringArray(R.array.parentAffiliation)
@@ -627,13 +628,13 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearAutreLienParentContainerSsrte.visibility = visibility
+                    binding.linearAutreLienParentContainerSsrte.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_niveau_d_tude_as_tu_atteint),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSchoolLevelSsrt,
+            spinner = binding.selectSchoolLevelSsrt,
             currentVal = ssrteDrafted.niveauEtudeAtteint,
             listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
@@ -646,7 +647,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.va_t_il_l_cole),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSchoolStatusSsrt,
+            spinner = binding.selectSchoolStatusSsrt,
             itemChanged = arrayListOf(Pair(1, getString(R.string.non)), Pair(2, getString(R.string.oui))),
             currentVal = ssrteDrafted.frequente,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -656,17 +657,17 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerAvoirFrequPasseSsrt.visibility = visibility
-                    containerVaDejaALecole.visibility = GONE
+                    binding.containerAvoirFrequPasseSsrt.visibility = visibility
+                    binding.containerVaDejaALecole.visibility = GONE
                 }else if (itemId == 2) {
-                    containerVaDejaALecole.visibility = visibility
-                    containerAvoirFrequPasseSsrt.visibility = GONE
+                    binding.containerVaDejaALecole.visibility = visibility
+                    binding.containerAvoirFrequPasseSsrt.visibility = GONE
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.as_tu_t_l_cole_par_le_pass),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAvoirFrequPasseSsrt,
+            spinner = binding.selectAvoirFrequPasseSsrt,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = ssrteDrafted.avoirFrequente,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -676,13 +677,13 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerAvoirFaitEcole.visibility = visibility
+                    binding.containerAvoirFaitEcole.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.ton_cole_est_elle_situ_e_dans_le_village),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSchoolInPlaceYesNoSsrt,
+            spinner = binding.selectSchoolInPlaceYesNoSsrt,
             itemChanged = arrayListOf(Pair(1, getString(R.string.non))),
             currentVal = ssrteDrafted.ecoleVillage,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -692,13 +693,13 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearVillageDistanceContainerSsrt.visibility = visibility
+                    binding.linearVillageDistanceContainerSsrt.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_niveau_d_tude_as_tu_atteint),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectNiveauEtudeAtteintSsrt,
+            spinner = binding.selectNiveauEtudeAtteintSsrt,
             currentVal = ssrteDrafted.niveauEtude,
             listIem = resources.getStringArray(R.array.schoolLevelFull)
                 ?.toList() ?: listOf(),
@@ -706,23 +707,23 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
                 when (it) {
                     0 -> {
                         val classLevels = resources.getStringArray(R.array.maternelleLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
                     }
                     1 -> {
                         val classLevels = resources.getStringArray(R.array.primaireLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
                     }
                     2 -> {
                         val classLevels = resources.getStringArray(R.array.oneCycleLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
                     }
                     3 -> {
                         val classLevels = resources.getStringArray(R.array.twoCycleLevel)
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
                     }
                     4 -> {
                         val classLevels = arrayOf<String>()
-                        setupClasseSelectedListen(selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
+                        setupClasseSelectedListen(binding.selectClasseLevelSsrt, classLevels, currentVal = ssrteDrafted.classe)
                     }
                 }
             },
@@ -730,7 +731,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
             })
 
         (if(!ssrteDrafted.autreRaisonArretEcole.isNullOrEmpty()) Commons.returnStringList(ssrteDrafted.autreRaisonArretEcole)?.toMutableList() else mutableListOf<String>())?.let {
-            Commons.setupItemMultiSelection(this, selectRaisonArretEcoleSSrte,
+            Commons.setupItemMultiSelection(this, binding.selectRaisonArretEcoleSSrte,
                 getString(R.string.pourquoi_ne_vas_tu_pas_l_cole_ou_arr_t_l_cole), resources.getStringArray(R.array.noSchoolRaison).map { CommonData(0, it.toString()) },
                 currentList = it
             ){
@@ -740,7 +741,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         (if(!ssrteDrafted.travauxDangereuxStringify.isNullOrEmpty()) Commons.returnStringList(ssrteDrafted.travauxDangereuxStringify)?.toMutableList() else mutableListOf<String>())?.let {
 
-            Commons.setupItemMultiSelection(this, selectLequelTravEffectSSrte,
+            Commons.setupItemMultiSelection(this, binding.selectLequelTravEffectSSrte,
                 getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_dangereux_as_tu_effectu), resources.getStringArray(R.array.recentWorkHard).map { CommonData(0, it.toString()) },
                 currentList = it){
 
@@ -749,7 +750,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         (if(!ssrteDrafted.lieuTravauxDangereuxStringify.isNullOrEmpty()) Commons.returnStringList(ssrteDrafted.lieuTravauxDangereuxStringify)?.toMutableList() else mutableListOf<String>())?.let {
 
-            Commons.setupItemMultiSelection(this, selectEndroitTravEffectSSrte,
+            Commons.setupItemMultiSelection(this, binding.selectEndroitTravEffectSSrte,
                 getString(R.string.o_as_tu_effectu_ces_travaux_dangereux), resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) },
                 currentList = it){
 
@@ -758,7 +759,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         (if(!ssrteDrafted.travauxLegersStringify.isNullOrEmpty()) Commons.returnStringList(ssrteDrafted.travauxLegersStringify)?.toMutableList() else mutableListOf<String>())?.let {
 
-            Commons.setupItemMultiSelection(this, selectLequelTrav2EffectSSrte,
+            Commons.setupItemMultiSelection(this, binding.selectLequelTrav2EffectSSrte,
                 getString(R.string.au_cours_de_ces_2_derni_res_ann_es_lequel_de_ces_travaux_l_gers_as_tu_effectu), resources.getStringArray(R.array.recentWorkLight).map { CommonData(0, it.toString()) },
                 currentList = it){
 
@@ -767,7 +768,7 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
         (if(!ssrteDrafted.lieuTravauxLegersStringify.isNullOrEmpty()) Commons.returnStringList(ssrteDrafted.lieuTravauxLegersStringify)?.toMutableList() else mutableListOf<String>())?.let {
 
-            Commons.setupItemMultiSelection(this, selectEndroitTrav2EffectSSrte,
+            Commons.setupItemMultiSelection(this, binding.selectEndroitTrav2EffectSSrte,
                 getString(R.string.o_as_tu_effectu_ces_travaux_l_gers), resources.getStringArray(R.array.recentWorkLieu).map { CommonData(0, it.toString()) },
                 currentList = it){
 
@@ -777,38 +778,42 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
         passSetupSsteModel(ssrteDrafted)
     }
 
+    private lateinit var binding: ActivitySsrtClmsBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivitySsrtClmsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
             resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
-        labelInfosScrollerSsrt.setOnClickListener {
+        binding.labelInfosScrollerSsrt.setOnClickListener {
             // scrollableMarquee()
         }
 
-        editDateNaissancelSsrt.setOnClickListener {
+        binding.editDateNaissancelSsrt.setOnClickListener {
             flagBirthday = true
-            configDate(editDateNaissancelSsrt)
+            configDate(binding.editDateNaissancelSsrt)
         }
 
-        editDateEnqueteSsrt.setOnClickListener {
+        binding.editDateEnqueteSsrt.setOnClickListener {
             flagBirthday = false
-            configDate(editDateEnqueteSsrt)
+            configDate(binding.editDateEnqueteSsrt)
         }
 
-        clickReviewEnqueteSsrt.setOnClickListener {
+        binding.clickReviewEnqueteSsrt.setOnClickListener {
             collectDatas()
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftSsrte(draftedSsrteModel?: DataDraftedModel(uid = 0))
         }
 
@@ -827,11 +832,11 @@ class SsrtClmsActivity : AppCompatActivity(R.layout.activity_ssrt_clms) {
 
     private fun setOtherListener() {
 
-        Commons.addNotZeroAtFirstToET(editVillageDistanceSsrt)
+        Commons.addNotZeroAtFirstToET(binding.editVillageDistanceSsrt)
 
-        editDateNaissancelSsrt.setOnClickListener { configDate(editDateNaissancelSsrt) }
-        editDateEnqueteSsrt.setOnClickListener { configDate(editDateEnqueteSsrt) }
-        editDureeFormation.setOnClickListener { configHour(editDureeFormation) }
+        binding.editDateNaissancelSsrt.setOnClickListener { configDate(binding.editDateNaissancelSsrt) }
+        binding.editDateEnqueteSsrt.setOnClickListener { configDate(binding.editDateEnqueteSsrt) }
+        binding.editDureeFormation.setOnClickListener { configHour(binding.editDureeFormation) }
 
     }
 }

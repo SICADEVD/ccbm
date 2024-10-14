@@ -16,7 +16,7 @@ class NoLeadingZeroTextWatcher(private val editText: EditText, private val  onTe
 
     override fun afterTextChanged(s: Editable?) {
         if(s?.isNotEmpty() == true){
-            if (s?.toString().length > 1 && s?.isNotEmpty() == true && s[0] == '0') {
+            if (s?.toString()?.length!! > 1 && s?.isNotEmpty() == true && s[0] == '0') {
                 s.delete(0, 1)
             }
         }

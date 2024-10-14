@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.RvMapHistoAdapt
+import ci.progbandama.mobile.databinding.ActivityFarmDelimiterBinding
 import ci.progbandama.mobile.models.ParcelleMappingModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.datas.CommonData
@@ -47,14 +48,12 @@ import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.addPolygon
 import com.google.maps.android.ktx.addPolyline
-import kotlinx.android.synthetic.main.activity_farm_delimiter.*
-import kotlinx.android.synthetic.main.activity_parcelle_mapping.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
-class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener, OnMarkerClickListener {
+class FarmDelimiterActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickListener, OnPolygonClickListener, OnMyLocationChangeListener, OnMarkerClickListener {
 
 
     private var currHistoMapId: String? = null
@@ -105,13 +104,13 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     fun setAnimation(closed: Boolean) {
         try {
             if (!closed) {
-                linearDistanceMappingContainerFarmDelimiter.startAnimation(fromBottom)
-                linearSurfaceMappingContainerFarmDelimiter.startAnimation(fromBottom)
-                fabMenuFarmDelimiter.startAnimation(rotateOpen)
+                binding.linearDistanceMappingContainerFarmDelimiter.startAnimation(fromBottom)
+                binding.linearSurfaceMappingContainerFarmDelimiter.startAnimation(fromBottom)
+                binding.fabMenuFarmDelimiter.startAnimation(rotateOpen)
             } else {
-                linearDistanceMappingContainerFarmDelimiter.startAnimation(toBottom)
-                linearSurfaceMappingContainerFarmDelimiter.startAnimation(toBottom)
-                fabMenuFarmDelimiter.startAnimation(rotateClose)
+                binding.linearDistanceMappingContainerFarmDelimiter.startAnimation(toBottom)
+                binding.linearSurfaceMappingContainerFarmDelimiter.startAnimation(toBottom)
+                binding.fabMenuFarmDelimiter.startAnimation(rotateClose)
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -123,11 +122,11 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     fun setVisibility(closed: Boolean) {
         try {
             if (!closed) {
-                linearDistanceMappingContainerFarmDelimiter.visibility = View.VISIBLE
-                linearSurfaceMappingContainerFarmDelimiter.visibility = View.VISIBLE
+                binding.linearDistanceMappingContainerFarmDelimiter.visibility = View.VISIBLE
+                binding.linearSurfaceMappingContainerFarmDelimiter.visibility = View.VISIBLE
             } else {
-                linearDistanceMappingContainerFarmDelimiter.visibility = View.GONE
-                linearSurfaceMappingContainerFarmDelimiter.visibility = View.GONE
+                binding.linearDistanceMappingContainerFarmDelimiter.visibility = View.GONE
+                binding.linearSurfaceMappingContainerFarmDelimiter.visibility = View.GONE
             }
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
@@ -178,7 +177,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     // Set the map's camera position to the current location of the device.
                     lastKnownLocation = task.result
                     if (lastKnownLocation != null) {
-                        labelPrécisionFarmDelimiter.text = lastKnownLocation?.accuracy.toString()?:"N/A"
+                        binding.labelPrCisionFarmDelimiter.text = lastKnownLocation?.accuracy.toString()?:"N/A"
                     }
                 } else {
                     mapsDelimiter?.uiSettings?.isMyLocationButtonEnabled = false
@@ -200,69 +199,69 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 //        Commons.debugModelToJson(markersMap.map { it.value.position })
 
         if(listPoint.size > 2){
-            labelSuperficiFarmDelimiter.text = Commons.convertDoubleToString(SphericalUtil.computeArea(listPoint) * 0.0001)
+            binding.labelSuperficiFarmDelimiter.text = Commons.convertDoubleToString(SphericalUtil.computeArea(listPoint) * 0.0001)
         }
     }
 
 
     fun startWorkManualMapping() {
-        relativeToolbarFarmDelimiter.startAnimation(outToTop)
-        relativeToolbarFarmDelimiter.visibility = View.GONE
+        binding.relativeToolbarFarmDelimiter.startAnimation(outToTop)
+        binding.relativeToolbarFarmDelimiter.visibility = View.GONE
 
-        fabMenuFarmDelimiter.startAnimation(outToLeft)
-        fabMenuFarmDelimiter.visibility = View.GONE
+        binding.fabMenuFarmDelimiter.startAnimation(outToLeft)
+        binding.fabMenuFarmDelimiter.visibility = View.GONE
 
-        linearActionMarkerBottomFarmDelimiter.visibility = View.VISIBLE
+        binding.linearActionMarkerBottomFarmDelimiter.visibility = View.VISIBLE
 
-        relativeActionMarkerBottomContainerFarmDelimiter.startAnimation(inFromBottom)
-        relativeActionMarkerBottomContainerFarmDelimiter.visibility = View.VISIBLE
+        binding.relativeActionMarkerBottomContainerFarmDelimiter.startAnimation(inFromBottom)
+        binding.relativeActionMarkerBottomContainerFarmDelimiter.visibility = View.VISIBLE
 
-        relativeToolbarFarmDelimiter.startAnimation(inFromTop)
-        relativeToolbarFarmDelimiter.visibility = View.VISIBLE
+        binding.relativeToolbarFarmDelimiter.startAnimation(inFromTop)
+        binding.relativeToolbarFarmDelimiter.visibility = View.VISIBLE
 
-        linearSnippetInfosFarmDelimiter.startAnimation(inFromLeft)
-        linearSnippetInfosFarmDelimiter.visibility = View.VISIBLE
+        binding.linearSnippetInfosFarmDelimiter.startAnimation(inFromLeft)
+        binding.linearSnippetInfosFarmDelimiter.visibility = View.VISIBLE
     }
 
 
     fun startWorkGpsMapping() {
-        relativeToolbarFarmDelimiter.startAnimation(outToTop)
-        relativeToolbarFarmDelimiter.visibility = View.GONE
+        binding.relativeToolbarFarmDelimiter.startAnimation(outToTop)
+        binding.relativeToolbarFarmDelimiter.visibility = View.GONE
 
-        fabMenuFarmDelimiter.startAnimation(outToLeft)
-        fabMenuFarmDelimiter.visibility = View.GONE
+        binding.fabMenuFarmDelimiter.startAnimation(outToLeft)
+        binding.fabMenuFarmDelimiter.visibility = View.GONE
 
-        relativeToolbarActionFarmDelimiter.startAnimation(inFromTop)
-        relativeToolbarActionFarmDelimiter.visibility = View.VISIBLE
+        binding.relativeToolbarActionFarmDelimiter.startAnimation(inFromTop)
+        binding.relativeToolbarActionFarmDelimiter.visibility = View.VISIBLE
 
-        linearSnippetInfosFarmDelimiter.startAnimation(inFromLeft)
-        linearSnippetInfosFarmDelimiter.visibility = View.VISIBLE
+        binding.linearSnippetInfosFarmDelimiter.startAnimation(inFromLeft)
+        binding.linearSnippetInfosFarmDelimiter.visibility = View.VISIBLE
 
-        linearActionGPSMarkerBottomFarmDelimiter.visibility = View.VISIBLE
+        binding.linearActionGPSMarkerBottomFarmDelimiter.visibility = View.VISIBLE
 
-        relativeActionMarkerBottomContainerFarmDelimiter.startAnimation(inFromBottom)
-        relativeActionMarkerBottomContainerFarmDelimiter.visibility = View.VISIBLE
+        binding.relativeActionMarkerBottomContainerFarmDelimiter.startAnimation(inFromBottom)
+        binding.relativeActionMarkerBottomContainerFarmDelimiter.visibility = View.VISIBLE
     }
 
 
     fun cancelWorkMapping() {
-        relativeActionMarkerBottomContainerFarmDelimiter.startAnimation(outToBottom)
-        relativeActionMarkerBottomContainerFarmDelimiter.visibility = View.GONE
+        binding.relativeActionMarkerBottomContainerFarmDelimiter.startAnimation(outToBottom)
+        binding.relativeActionMarkerBottomContainerFarmDelimiter.visibility = View.GONE
 
-        linearActionMarkerBottomFarmDelimiter.visibility = View.GONE
-        linearActionGPSMarkerBottomFarmDelimiter.visibility = View.GONE
+        binding.linearActionMarkerBottomFarmDelimiter.visibility = View.GONE
+        binding.linearActionGPSMarkerBottomFarmDelimiter.visibility = View.GONE
 
-        relativeToolbarActionFarmDelimiter.visibility = View.GONE
-        relativeToolbarActionFarmDelimiter.startAnimation(outToTop)
+        binding.relativeToolbarActionFarmDelimiter.visibility = View.GONE
+        binding.relativeToolbarActionFarmDelimiter.startAnimation(outToTop)
 
-        linearSnippetInfosFarmDelimiter.visibility = View.GONE
-        linearSnippetInfosFarmDelimiter.startAnimation(outToLeft)
+        binding.linearSnippetInfosFarmDelimiter.visibility = View.GONE
+        binding.linearSnippetInfosFarmDelimiter.startAnimation(outToLeft)
 
-        fabMenuFarmDelimiter.startAnimation(inFromLeft)
-        fabMenuFarmDelimiter.visibility = View.VISIBLE
+        binding.fabMenuFarmDelimiter.startAnimation(inFromLeft)
+        binding.fabMenuFarmDelimiter.visibility = View.VISIBLE
 
-        relativeToolbarFarmDelimiter.startAnimation(inFromTop)
-        relativeToolbarFarmDelimiter.visibility = View.VISIBLE
+        binding.relativeToolbarFarmDelimiter.startAnimation(inFromTop)
+        binding.relativeToolbarFarmDelimiter.visibility = View.VISIBLE
 
         markersMap.clear()
 
@@ -291,14 +290,14 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     }
 
 
-    fun clearAllAniviations() {
-        linearActionGPSMarkerBottomFarmDelimiter.clearAnimation()
-        linearSnippetInfosFarmDelimiter.clearAnimation()
-        relativeToolbarFarmDelimiter.clearAnimation()
-        relativeToolbarFarmDelimiter.clearAnimation()
-        linearActionMarkerBottomFarmDelimiter.clearAnimation()
-        fabMenuFarmDelimiter.clearAnimation()
-    }
+//    fun clearAllAniviations() {
+//        linearActionGPSMarkerBottomFarmDelimiter.clearAnimation()
+//        linearSnippetInfosFarmDelimiter.clearAnimation()
+//        relativeToolbarFarmDelimiter.clearAnimation()
+//        relativeToolbarFarmDelimiter.clearAnimation()
+//        linearActionMarkerBottomFarmDelimiter.clearAnimation()
+//        fabMenuFarmDelimiter.clearAnimation()
+//    }
 
 
     private fun getPolygonCenterPoint(polygonPointsList: MutableList<LatLng>): LatLng {
@@ -472,7 +471,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             parcelleMapping.mutableWayPoints?.add(it.value.position)
         }
 
-        parcelleMapping.parcellePerimeter = labelDistanceFarmDelimiter.text.toString().trim()
+        parcelleMapping.parcellePerimeter = binding.labelDistanceFarmDelimiter.text.toString().trim()
         parcelleMapping.parcelleNameTag = manualOrGpsTrack.toString()
         parcelleMapping.parcelleName = labelParcelleCodeText
         parcelleMapping.producteurId = labelProducteurNomText
@@ -593,6 +592,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         }
     }
 
+    @SuppressLint("MissingPermission")
     fun focusOnCurrentDevices(callback: () -> Unit) {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
@@ -680,7 +680,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
            parcelleMapping.parcellePerimeter = Commons.convertDoubleToString(SphericalUtil.computeLength(mapPointsList))
            LogUtils.d(parcelleMapping.parcellePerimeter)
            // Compute perimeter
-           labelDistanceFarmDelimiter.text = parcelleMapping.parcellePerimeter.plus("m")
+           binding.labelDistanceFarmDelimiter.text = parcelleMapping.parcellePerimeter.plus("m")
 
            marker = markersMap.values.last()
            // Compute area
@@ -716,7 +716,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 Commons.convertDoubleToString(SphericalUtil.computeLength(mapPointsList))
             LogUtils.d(parcelleMapping.parcellePerimeter)
             // Compute perimeter
-            labelDistanceFarmDelimiter.text = parcelleMapping.parcellePerimeter.plus("m")
+            binding.labelDistanceFarmDelimiter.text = parcelleMapping.parcellePerimeter.plus("m")
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -760,8 +760,8 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         getDeviceLocationWithAccurancy()
 
         try {
-            if (cardPopupMenuMapsTypeFarmDelimiter.visibility == View.VISIBLE) {
-                cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
+            if (binding.cardPopupMenuMapsTypeFarmDelimiter.visibility == View.VISIBLE) {
+                binding.cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
                 return
             }
 
@@ -821,9 +821,13 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
     val itemParcelleMapp = ProgBandRoomDatabase.getDatabase(this)?.parcelleMappingDao()?.getParcellesMappingList()
     val currentHistoWayppointList: MutableList<LatLng> = mutableListOf()
 
+    private lateinit var binding: ActivityFarmDelimiterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = ActivityFarmDelimiterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val agentDoa = ProgBandRoomDatabase.getDatabase(this)?.agentDoa()
 
@@ -836,12 +840,12 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         try {
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-            labelOwnerFarmDelimiter.text = agentDoa?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID)).let { "${it?.firstname} ${it?.lastname}" }.toString() //"Didier BOKA"
+            binding.labelOwnerFarmDelimiter.text = agentDoa?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID)).let { "${it?.firstname} ${it?.lastname}" }.toString() //"Didier BOKA"
 
             val mapsDelimiterFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.googleMapsFarmDelimiter) as SupportMapFragment
             mapsDelimiterFragment.getMapAsync(this)
 
-            fabMenuFarmDelimiter.setOnClickListener {
+            binding.fabMenuFarmDelimiter.setOnClickListener {
                 onAddButtonClick()
             }
 
@@ -849,26 +853,26 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
         
             getDeviceLocationWithAccurancy()
 
-            fabSurfaceFarmDelimiter.setOnClickListener {
+            binding.fabSurfaceFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 2
                 //linearSurfaceInfosContainerFarmDelimiter.visibility = View.VISIBLE
                 showMappingTypeDialog()
             }
 
-            linearSurfaceMappingContainerFarmDelimiter.setOnClickListener {
+            binding.linearSurfaceMappingContainerFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 2
                 //linearSurfaceInfosContainerFarmDelimiter.visibility = View.VISIBLE
                 showMappingTypeDialog()
             }
 
-            fabDistanceFarmDelimiter.setOnClickListener {
+            binding.fabDistanceFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 1
 
                 //linearSurfaceInfosContainerFarmDelimiter.visibility = View.GONE
                 showMappingTypeDialog()
             }
 
-            linearDistanceMappingContainerFarmDelimiter.setOnClickListener {
+            binding.linearDistanceMappingContainerFarmDelimiter.setOnClickListener {
                 lineOrZoneDelimiter = 1
 
 //                linearSurfaceInfosContainerFarmDelimiter.visibility = View.GONE
@@ -876,34 +880,34 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
             }
 
 
-            imageMapTypeActionFarmDelimiter.setOnClickListener {
-                cardPopupMenuMapsTypeFarmDelimiter.visibility = View.VISIBLE
+            binding.imageMapTypeActionFarmDelimiter.setOnClickListener {
+                binding.cardPopupMenuMapsTypeFarmDelimiter.visibility = View.VISIBLE
             }
 
-            imageMapTypeFarmDelimiter.setOnClickListener {
-                cardPopupMenuMapsTypeFarmDelimiter.visibility = View.VISIBLE
+            binding.imageMapTypeFarmDelimiter.setOnClickListener {
+                binding.cardPopupMenuMapsTypeFarmDelimiter.visibility = View.VISIBLE
             }
 
-            imageBackFarmDelimiter.setOnClickListener {
+            binding.imageBackFarmDelimiter.setOnClickListener {
                 finish()
             }
 
-            linearSatelliteTypeMappingContainerFarmDelimiter.setOnClickListener {
+            binding.linearSatelliteTypeMappingContainerFarmDelimiter.setOnClickListener {
                 mapsDelimiter?.mapType = MAP_TYPE_SATELLITE
-                cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
+                binding.cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
             }
 
-            linearTerrainTypeMappingContainerFarmDelimiter.setOnClickListener {
+            binding.linearTerrainTypeMappingContainerFarmDelimiter.setOnClickListener {
                 mapsDelimiter?.mapType = MAP_TYPE_TERRAIN
-                cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
+                binding.cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
             }
 
-            linearOrdinaireTypeMappingContainerFarmDelimiter.setOnClickListener {
+            binding.linearOrdinaireTypeMappingContainerFarmDelimiter.setOnClickListener {
                 mapsDelimiter?.mapType = MAP_TYPE_NORMAL
-                cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
+                binding.cardPopupMenuMapsTypeFarmDelimiter.visibility = View.GONE
             }
 
-            imageCancelFarmDelimiter.setOnClickListener {
+            binding.imageCancelFarmDelimiter.setOnClickListener {
                 Commons.showMessage(
                     message = "Arreter le mapping ?",
                     context = this,
@@ -914,7 +918,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 )
             }
 
-            imageDeleteMarkerFarmDelimiter.setOnClickListener {
+            binding.imageDeleteMarkerFarmDelimiter.setOnClickListener {
                 markersMap.clear()
                 mapPointsList.clear()
                 polyline?.remove()
@@ -927,28 +931,28 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 mapsDelimiter?.clear()
             }
 
-            imageUndoMarkerFarmDelimiter.setOnClickListener {
+            binding.imageUndoMarkerFarmDelimiter.setOnClickListener {
                 LogUtils.e("TAGGG")
                 MainScope().launch {
                     removeMarker()
                 }
             }
 
-            imageStartTrackGPSFarmDelimiter.setOnClickListener {
+            binding.imageStartTrackGPSFarmDelimiter.setOnClickListener {
                 if (trackingGPSStarted) {
                     mapsDelimiter?.setOnMyLocationChangeListener(null)
-                    imageStartTrackGPSFarmDelimiter.setImageResource(R.drawable.ic_start_gps_mapping)
-                    imageStartTrackGPSFarmDelimiter.clearAnimation()
+                    binding.imageStartTrackGPSFarmDelimiter.setImageResource(R.drawable.ic_start_gps_mapping)
+                    binding.imageStartTrackGPSFarmDelimiter.clearAnimation()
                 } else {
                     mapsDelimiter?.setOnMyLocationChangeListener(this)
-                    imageStartTrackGPSFarmDelimiter.setImageResource(R.drawable.ic_stop_gps_mapping)
-                    imageStartTrackGPSFarmDelimiter.startAnimation(blink)
+                    binding.imageStartTrackGPSFarmDelimiter.setImageResource(R.drawable.ic_stop_gps_mapping)
+                    binding.imageStartTrackGPSFarmDelimiter.startAnimation(blink)
                 }
 
                 trackingGPSStarted = !trackingGPSStarted
             }
 
-            imagePlaceMarkerGPSFarmDelimiter.setOnClickListener {
+            binding.imagePlaceMarkerGPSFarmDelimiter.setOnClickListener {
 
                     MainScope().launch {
                         focusOnCurrentDevices {
@@ -957,7 +961,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     }
             }
 
-            imageSaveMarkerGPSFarmDelimiter.setOnClickListener {
+            binding.imageSaveMarkerGPSFarmDelimiter.setOnClickListener {
                 Commons.showMessage(
                     message = "Enregistrer le tracé ?",
                     context = this,
@@ -966,7 +970,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                     callback = ::saveWorkringParcelle
                 )
             }
-            imageSaveWorkFarmDelimiter.setOnClickListener {
+            binding.imageSaveWorkFarmDelimiter.setOnClickListener {
                 Commons.showMessage(
                     message = "Enregistrer le tracé ?",
                     context = this,
@@ -981,13 +985,13 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
                 FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
-        fabMenuFarmDelimiter.setImageResource(R.drawable.baseline_add_white_24);
+        binding.fabMenuFarmDelimiter.setImageResource(R.drawable.baseline_add_white_24);
         // Set background tint color (adjust this according to your design)
-        fabMenuFarmDelimiter.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+        binding.fabMenuFarmDelimiter.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
         // Set ripple color (optional, adjust according to your design)
-        fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
+        binding.fabMenuFarmDelimiter.setRippleColor(getResources().getColor(R.color.white));
         // Set other attributes as needed (e.g., elevation, translationZ)
-        fabMenuFarmDelimiter.setElevation(0.8f);
+        binding.fabMenuFarmDelimiter.setElevation(0.8f);
     }
 
     private fun launchAddMarker() {
@@ -1021,7 +1025,7 @@ class FarmDelimiterActivity : AppCompatActivity(R.layout.activity_farm_delimiter
 
         dialogMapHito = dialogBuilder.create()
 
-        imageHistoFarmDelimiter.setOnClickListener {
+        binding.imageHistoFarmDelimiter.setOnClickListener {
             dialogMapHito?.show()
         }
 

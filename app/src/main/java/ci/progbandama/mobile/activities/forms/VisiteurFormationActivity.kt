@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.VisiteurFormationPreviewActivity
+import ci.progbandama.mobile.databinding.ActivityVisiteurFormationBinding
 import ci.progbandama.mobile.models.DataDraftedModel
 import ci.progbandama.mobile.models.FormationModel
 import ci.progbandama.mobile.models.VisiteurFormationDao
@@ -25,13 +26,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_visiteur_formation.clickCancelVisitForm
-import kotlinx.android.synthetic.main.activity_visiteur_formation.containerAutreLienParentVisitForm
-import kotlinx.android.synthetic.main.activity_visiteur_formation.containerVisiteurIsProducteur
-import kotlinx.android.synthetic.main.activity_visiteur_formation.selectFormationVisitForm
-import kotlinx.android.synthetic.main.activity_visiteur_formation.selectLienParentVisitForm
-import kotlinx.android.synthetic.main.activity_visiteur_formation.selectReprProducteurVisitForm
-import kotlinx.android.synthetic.main.activity_visiteur_formation.*
 import java.util.ArrayList
 
 class VisiteurFormationActivity : AppCompatActivity() {
@@ -45,9 +39,12 @@ class VisiteurFormationActivity : AppCompatActivity() {
     private var draftedDataVisit: DataDraftedModel? = null
     private var visiteurFormationDao: VisiteurFormationDao? = null
 
+    private lateinit var binding: ActivityVisiteurFormationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_visiteur_formation)
+        binding = ActivityVisiteurFormationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -56,20 +53,20 @@ class VisiteurFormationActivity : AppCompatActivity() {
         visiteurFormationDao = ProgBandRoomDatabase.getDatabase(this)?.visiteurFormationDao()
         formationDao = ProgBandRoomDatabase.getDatabase(this)?.formationDao()
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveVisitForm.setOnClickListener {
+        binding.clickSaveVisitForm.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelVisitForm.setOnClickListener {
+        binding.clickCancelVisitForm.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftData(draftedDataVisit ?: DataDraftedModel(uid = 0))
         }
 
@@ -107,7 +104,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionProducteurVisitForm,
+            spinner = binding.selectSectionProducteurVisitForm,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -142,7 +139,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteProduVisitForm,
+            spinner = binding.selectLocaliteProduVisitForm,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -182,7 +179,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurVisitForm,
+            spinner = binding.selectProducteurVisitForm,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -237,7 +234,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
             currentVal = "Date de formation: ${currFormation?.multiStartDate}\nParticipants: ${currparticipCount}\nModules: \n${currtypeF?.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${currtypeF?.size}"}\nThemes: \n${currthemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${currthemeF?.size}"}\nSous Themes: \n${currsousThemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${currsousThemeF?.size}"}",
-            spinner = selectFormationVisitForm,
+            spinner = binding.selectFormationVisitForm,
             listIem = formationList?.map { formM ->
                 val participCount = GsonUtils.fromJson<MutableList<String>>(formM.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
                     if(it.isNullOrEmpty())
@@ -250,7 +247,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val themeF = listThemeFormation?.filter {  themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${typeF?.size}"}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${themeF?.size}"}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${sousThemeF?.size}"}"
-            }.toList() ?: listOf(),
+            }?.toList() ?: listOf(),
             onChanged = {
 
                 val formation = formationList!![it]
@@ -267,7 +264,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
 
                 formationCommon.nom = "Date de formation: ${formation.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF.toModifString(true, "\n", "-")}\nThemes: \n${themeF.toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.toModifString(true, "\n", "-")}"
-                editCurrentFormVisitForm.setText(formationCommon.nom)
+                binding.editCurrentFormVisitForm.setText(formationCommon.nom)
                 formation.isSynced?.let {
                     if(it){
                         formationCommon.id = formation.id!!
@@ -281,7 +278,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.representez_vous_un_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectReprProducteurVisitForm,
+            spinner = binding.selectReprProducteurVisitForm,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = visiteurFormationDrafted.representer ,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -291,14 +288,14 @@ class VisiteurFormationActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerVisiteurIsProducteur.visibility = visibility
+                    binding.containerVisiteurIsProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_leur_lien),
             getString(R.string.la_liste_des_l_ments_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectLienParentVisitForm,
+            spinner = binding.selectLienParentVisitForm,
             currentVal = visiteurFormationDrafted.lien,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (resources.getStringArray(R.array.parentAffiliation)?.toList() ?: listOf()) ,
@@ -306,7 +303,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
-                if(itemId == 1) containerAutreLienParentVisitForm.visibility = visibility
+                if(itemId == 1) binding.containerAutreLienParentVisitForm.visibility = visibility
             })
 
         passSetupVisiteurModel(visiteurFormationDrafted)
@@ -350,7 +347,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -377,7 +374,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
             getString(R.string.selectionner_la_formation),
             getString(R.string.la_liste_des_formations_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (formationList?.size!! > 0) false else true,
-            spinner = selectFormationVisitForm,
+            spinner = binding.selectFormationVisitForm,
             listIem = formationList?.map { formM ->
                 val participCount = GsonUtils.fromJson<MutableList<String>>(formM.producteursIdStr, object : TypeToken<MutableList<String>>(){}.type).let {
                     if(it.isNullOrEmpty())
@@ -390,7 +387,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val themeF = listThemeFormation?.filter {  themeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
                 "Date de formation: ${formM.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF?.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${typeF?.size}"}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${themeF?.size}"}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")+"\n-Total: ${sousThemeF?.size}"}"
-            }.toList() ?: listOf(),
+            }?.toList() ?: listOf(),
             onChanged = {
 
                 val formation = formationList!![it]
@@ -407,7 +404,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
                 val sousThemeF = listSousThemeFormation?.filter { sousThemeFit?.contains(it.id.toString()) == true }?.map { "${it.nom}" }
 
                 formationCommon.nom = "Date de formation: ${formation.multiStartDate}\nParticipants: ${participCount}\nModules: \n${typeF.limitListByCount(2).toModifString(true, "\n", "-")}\nThemes: \n${themeF.limitListByCount(2).toModifString(true, "\n", "-")}\nSous Themes: \n${sousThemeF.limitListByCount(2).toModifString(true, "\n", "-")}"
-                editCurrentFormVisitForm.setText(formationCommon.nom)
+                binding.editCurrentFormVisitForm.setText(formationCommon.nom)
                 formation.isSynced?.let {
                     if(it){
                         formationCommon.id = formation.id!!
@@ -421,7 +418,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.representez_vous_un_producteur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectReprProducteurVisitForm,
+            spinner = binding.selectReprProducteurVisitForm,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -430,21 +427,21 @@ class VisiteurFormationActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerVisiteurIsProducteur.visibility = visibility
+                    binding.containerVisiteurIsProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_leur_lien),
             getString(R.string.la_liste_des_l_ments_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectLienParentVisitForm,
+            spinner = binding.selectLienParentVisitForm,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (resources.getStringArray(R.array.parentAffiliation)?.toList() ?: listOf()) ,
             onChanged = {
 
             },
             onSelected = { itemId, visibility ->
-                if(itemId == 1) containerAutreLienParentVisitForm.visibility = visibility
+                if(itemId == 1) binding.containerAutreLienParentVisitForm.visibility = visibility
             })
     }
 
@@ -465,7 +462,7 @@ class VisiteurFormationActivity : AppCompatActivity() {
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
 //        Commons.printModelValue(formationModel as Object, mapEntries)
 //        Commons.debugModelToJson(formationModel)

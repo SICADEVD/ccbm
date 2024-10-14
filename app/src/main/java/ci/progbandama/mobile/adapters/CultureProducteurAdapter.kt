@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.CultureProducteurAdapter.CultureProducteurHolder
+import ci.progbandama.mobile.databinding.CultureItemsListBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.models.CultureProducteurModel
-import kotlinx.android.synthetic.main.culture_items_list.view.*
 
 class CultureProducteurAdapter(private var producteurCultures: List<CultureProducteurModel>?) : RecyclerView.Adapter<CultureProducteurHolder>() {
 
@@ -17,7 +17,10 @@ class CultureProducteurAdapter(private var producteurCultures: List<CultureProdu
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CultureProducteurHolder {
-        return CultureProducteurHolder(LayoutInflater.from(parent.context).inflate(R.layout.culture_items_list, parent, false))
+        return CultureProducteurHolder(
+            CultureItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.culture_items_list, parent, false)
+        )
     }
 
 
@@ -32,7 +35,7 @@ class CultureProducteurAdapter(private var producteurCultures: List<CultureProdu
     override fun getItemCount() = producteurCultures?.size ?: 0
 
 
-    class CultureProducteurHolder(var cultureProducteurView: View) : RecyclerView.ViewHolder(cultureProducteurView) {
+    class CultureProducteurHolder(var cultureProducteurView: CultureItemsListBinding) : RecyclerView.ViewHolder(cultureProducteurView.root) {
         val cultureLabel = cultureProducteurView.labelCultureItem
         val cultureSuperficie = cultureProducteurView.superficieCultureItem
     }

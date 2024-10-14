@@ -23,6 +23,7 @@ import androidx.core.content.FileProvider
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.FormationPreviewActivity
 import ci.progbandama.mobile.adapters.ProducteurPresenceAdapter
+import ci.progbandama.mobile.databinding.ActivityFormationBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -47,7 +48,6 @@ import com.google.gson.reflect.TypeToken
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
-import kotlinx.android.synthetic.main.activity_formation.*
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -289,9 +289,9 @@ class FormationActivity : AppCompatActivity() {
 
         val lieuAdapter =
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, lieuxList!!)
-        selectLieuFormation!!.adapter = lieuAdapter
+        binding.selectLieuFormation!!.adapter = lieuAdapter
 
-        selectLieuFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectLieuFormation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 adapterView: AdapterView<*>,
                 view: View,
@@ -416,7 +416,7 @@ class FormationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectSectionFormation,
+            spinner = binding.selectSectionFormation,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -456,7 +456,7 @@ class FormationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteFormation,
+            spinner = binding.selectLocaliteFormation,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -476,7 +476,7 @@ class FormationActivity : AppCompatActivity() {
                         }!!
 
                         Commons.setupItemMultiSelection(
-                            this, selectProducteurFormation,
+                            this, binding.selectProducteurFormation,
                             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
                             producteurList
                         ) { selected ->
@@ -528,7 +528,7 @@ class FormationActivity : AppCompatActivity() {
         entrepList?.add(EntrepriseModel(0, 0, "AUCUN", 0))
         Commons.setListenerForSpinner(this,
             "Choix de l'entreprise formatrice",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEntrepriseFormation,
+            spinner = binding.selectEntrepriseFormation,
 //            currentVal = entrepList?.filter { it.id.toString() == formationDrafted?.entreprise_id }?.let {
 //                if(it.size > 0) it.first().nom else null
 //            },
@@ -543,7 +543,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.lieu_de_la_formation),
-            spinner = selectLieuFormation,
+            spinner = binding.selectLieuFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.lieuDeFormation)?.toList() ?: listOf(),
             onChanged = {
@@ -556,7 +556,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.type_de_formation),
-            spinner = selectTypeFormation,
+            spinner = binding.selectTypeFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.type_formation)?.toList() ?: listOf(),
             onChanged = {
@@ -576,7 +576,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setupItemMultiSelection(
             this,
-            selectModuleMultiFormation,
+            binding.selectModuleMultiFormation,
             getString(R.string.quels_sont_les_modules_de_la_formation),
             (listTypeFormation)?.map { CommonData(0, it.nom.toString()) } ?: arrayListOf()
         ) { typeSelect ->
@@ -593,7 +593,7 @@ class FormationActivity : AppCompatActivity() {
             }
 
             Commons.setupItemMultiSelection(this,
-                selectThemeMultiFormation,
+                binding.selectThemeMultiFormation,
                 getString(R.string.quels_sont_les_themes_de_la_formation),
                 (listThemeFormationCustom).map { CommonData(0, "${it.nom}") }) { themeList ->
 
@@ -614,7 +614,7 @@ class FormationActivity : AppCompatActivity() {
                 }
 
                 Commons.setupItemMultiSelection(this,
-                    selectSousThemeMultiFormation,
+                    binding.selectSousThemeMultiFormation,
                     getString(R.string.quels_sont_les_sous_themes_de_la_formation),
                     (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") }) {
                     listSousThemeFormation?.forEach { sThemeForm ->
@@ -635,7 +635,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setupItemMultiSelection(
             this,
-            selectThemeMultiFormation,
+            binding.selectThemeMultiFormation,
             getString(R.string.quels_sont_les_themes_de_la_formation),
             arrayListOf()
         ) {
@@ -643,7 +643,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setupItemMultiSelection(
             this,
-            selectSousThemeMultiFormation,
+            binding.selectSousThemeMultiFormation,
             getString(R.string.quels_sont_les_sous_themes_de_la_formation),
             arrayListOf()
         ) {
@@ -653,7 +653,7 @@ class FormationActivity : AppCompatActivity() {
             ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_staff_qui_a_dispens_la_formation),
-            spinner = selectStaffFormation,
+            spinner = binding.selectStaffFormation,
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -676,7 +676,7 @@ class FormationActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-        if (editDateDebuFormation.text.isNullOrEmpty() && editDateFinFormation.text.isNullOrEmpty()) {
+        if (binding.editDateDebuFormation.text.isNullOrEmpty() && binding.editDateFinFormation.text.isNullOrEmpty()) {
             Commons.showMessage(
                 message = getString(R.string.la_date_de_formation_n_est_pas_renseign_e),
                 context = this,
@@ -979,7 +979,7 @@ class FormationActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -1008,7 +1008,7 @@ class FormationActivity : AppCompatActivity() {
         entrepList?.add(EntrepriseModel(0, 0, "AUCUNE", 0))
         Commons.setListenerForSpinner(this,
             "Choix de l'entreprise formatrice",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEntrepriseFormation,
+            spinner = binding.selectEntrepriseFormation,
             currentVal = entrepList?.filter { it.id.toString() == formationDrafted?.entreprise_id }?.let {
                 if(it.size > 0) it.first().nom else null
             },
@@ -1023,7 +1023,7 @@ class FormationActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectProducteurFormation,
+        Commons.setupItemMultiSelection(this, binding.selectProducteurFormation,
             getString(R.string.quels_sont_les_producteurs_pr_sents_la_formation),
             producteurList,
             currentList = selectProd.map { "${it.nom}" }.toMutableList()
@@ -1045,7 +1045,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.lieu_de_la_formation),
-            spinner = selectLieuFormation,
+            spinner = binding.selectLieuFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = formationDrafted.lieuFormation,
             listIem = resources.getStringArray(R.array.lieuDeFormation)?.toList() ?: listOf(),
@@ -1056,7 +1056,7 @@ class FormationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.type_de_formation),
-            spinner = selectTypeFormation,
+            spinner = binding.selectTypeFormation,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = formationDrafted.formationType,
             listIem = resources.getStringArray(R.array.type_formation)?.toList() ?: listOf(),
@@ -1094,7 +1094,7 @@ class FormationActivity : AppCompatActivity() {
             currentZip3.map { it.split("-")[1] }.contains(it.id.toString()) == true
         }
         Commons.setupItemMultiSelection(
-            this, selectModuleMultiFormation,
+            this, binding.selectModuleMultiFormation,
             getString(R.string.quels_sont_les_modules_de_la_formation),
             (listTypeFormation)?.map {
                 CommonData(0, it.nom.toString())
@@ -1114,7 +1114,7 @@ class FormationActivity : AppCompatActivity() {
             }
 
             Commons.setupItemMultiSelection(
-                this, selectThemeMultiFormation,
+                this, binding.selectThemeMultiFormation,
                 getString(R.string.quels_sont_les_themes_de_la_formation),
                 (listThemeFormationCustom).map { CommonData(0, "${it.nom}") },
                 currentList = currentThemeList?.map { "${it.nom}" }?.toMutableList()
@@ -1137,7 +1137,7 @@ class FormationActivity : AppCompatActivity() {
                     }
                 }
 
-                Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
+                Commons.setupItemMultiSelection(this, binding.selectSousThemeMultiFormation,
                     getString(R.string.quels_sont_les_sous_themes_de_la_formation),
                     (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") },
                     currentList = currentSousThemeList?.map { "${it.nom}" }?.toMutableList()
@@ -1169,7 +1169,7 @@ class FormationActivity : AppCompatActivity() {
             }
         }
         Commons.setupItemMultiSelection(
-            this, selectThemeMultiFormation,
+            this, binding.selectThemeMultiFormation,
             getString(R.string.quels_sont_les_themes_de_la_formation),
             (listThemeFormationCustom).map { CommonData(0, "${it.nom}") },
             currentList = currentThemeList?.map { "${it.nom}" }?.toMutableList() ?: arrayListOf()
@@ -1193,7 +1193,7 @@ class FormationActivity : AppCompatActivity() {
                 )
             }
         }
-        Commons.setupItemMultiSelection(this, selectSousThemeMultiFormation,
+        Commons.setupItemMultiSelection(this, binding.selectSousThemeMultiFormation,
             getString(R.string.quels_sont_les_sous_themes_de_la_formation),
             (listSousThemeFormationCustom).map { CommonData(0, "${it.nom}") },
             currentList = currentSousThemeList?.map { "${it.nom}" }?.toMutableList()
@@ -1228,7 +1228,7 @@ class FormationActivity : AppCompatActivity() {
             ?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString())
         Commons.setListenerForSpinner(this,
             getString(R.string.quel_est_le_staff_qui_a_dispens_la_formation),
-            spinner = selectStaffFormation,
+            spinner = binding.selectStaffFormation,
             currentVal = listDelegue?.filter { formationDrafted.staffId == it.id.toString() }
                 ?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull() ?: "",
             listIem = listDelegue?.map { "${it.firstname} ${it.lastname}" }
@@ -1393,7 +1393,7 @@ class FormationActivity : AppCompatActivity() {
                         endphoto = formationPhotoPath
                         photoPath = endphoto
 
-                        imagePhotoFormation.setImageBitmap(
+                        binding.imagePhotoFormation.setImageBitmap(
                             BitmapFactory.decodeFile(
                                 formationPhotoPath,
                                 options
@@ -1406,7 +1406,7 @@ class FormationActivity : AppCompatActivity() {
                         endPhotoListePresence = formationPhotoPath
                         photoPath = endPhotoListePresence
 
-                        photoListePresenceFormation.setImageBitmap(
+                        binding.photoListePresenceFormation.setImageBitmap(
                             BitmapFactory.decodeFile(
                                 formationPhotoPath,
                                 options
@@ -1433,22 +1433,22 @@ class FormationActivity : AppCompatActivity() {
                 when (whichPhoto) {
                     0 -> {
                         endphoto = formationPhotoPath
-                        imagePhotoFormation.setImageURI(bundleData)
+                        binding.imagePhotoFormation.setImageURI(bundleData)
 
                         //  createImageFileCompressed()
                         ImageUtils.save2Album(BitmapFactory.decodeFile(endphoto, options), Bitmap.CompressFormat.JPEG)
                     }
                     1 -> {
                         endRapport = documentPath
-                        imageRapportFormation.setImageResource(R.drawable.document_file_download_done)
+                        binding.imageRapportFormation.setImageResource(R.drawable.document_file_download_done)
                     }
                     2 -> {
                         endDocListePresence = documentPath
-                        listePresenceFormation.setImageResource(R.drawable.document_file_download_done)
+                        binding.listePresenceFormation.setImageResource(R.drawable.document_file_download_done)
                     }
                     3 -> {
                         endPhotoListePresence = formationPhotoPath
-                        photoListePresenceFormation.setImageURI(bundleData)
+                        binding.photoListePresenceFormation.setImageURI(bundleData)
                         ImageUtils.save2Album(BitmapFactory.decodeFile(endPhotoListePresence, options), Bitmap.CompressFormat.JPEG)
 
                         //  createImageFileCompressed()
@@ -1574,15 +1574,15 @@ class FormationActivity : AppCompatActivity() {
                         val latitude = location.latitude
                         val longitude = location.longitude
                         // Do something with latitude and longitude
-                        editLatFormation.setText(latitude.toString().formatCorrectlyLatLongPoint())
-                        editLongFormation.setText(longitude.toString().formatCorrectlyLatLongPoint())
+                        binding.editLatFormation.setText(latitude.toString().formatCorrectlyLatLongPoint())
+                        binding.editLongFormation.setText(longitude.toString().formatCorrectlyLatLongPoint())
                     }else{
-                        editLatFormation.setText("0.0")
-                        editLongFormation.setText("-0.0")
+                        binding.editLatFormation.setText("0.0")
+                        binding.editLongFormation.setText("-0.0")
                     }
                 } else {
-                    editLatFormation.setText("0.0")
-                    editLongFormation.setText("-0.0")
+                    binding.editLatFormation.setText("0.0")
+                    binding.editLongFormation.setText("-0.0")
                 }
             }
         } catch (e: SecurityException) {
@@ -1629,10 +1629,12 @@ class FormationActivity : AppCompatActivity() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
+    private lateinit var binding: ActivityFormationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_formation)
+        binding = ActivityFormationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(
             this, findViewById<ViewGroup>(android.R.id.content),
@@ -1643,7 +1645,7 @@ class FormationActivity : AppCompatActivity() {
         formationDao = ProgBandRoomDatabase.getDatabase(applicationContext)?.formationDao()
         producteurDao = ProgBandRoomDatabase.getDatabase(applicationContext)?.producteurDoa()
 
-        clickCancelFormation.setOnClickListener {
+        binding.clickCancelFormation.setOnClickListener {
             ActivityUtils.startActivity(
                 Intent(
                     this,
@@ -1653,21 +1655,21 @@ class FormationActivity : AppCompatActivity() {
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        clickSaveFormation.setOnClickListener {
+        binding.clickSaveFormation.setOnClickListener {
             collectDatas()
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftFormation(draftedDataFormation ?: DataDraftedModel(uid = 0))
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        clickLatLongFormation.setOnClickListener {
+        binding.clickLatLongFormation.setOnClickListener {
             getLocation()
         }
 
@@ -1685,30 +1687,30 @@ class FormationActivity : AppCompatActivity() {
 
 
     private fun setOtherListener() {
-        imagePhotoFormation.setOnClickListener {
+        binding.imagePhotoFormation.setOnClickListener {
             whichPhoto = 0
             dialogPickerPhoto()
         }
 
-        imageRapportFormation.setOnClickListener {
+        binding.imageRapportFormation.setOnClickListener {
             whichPhoto = 1
             dialogPickerPhoto()
         }
 
         // which = 2 (file)
-        listePresenceFormation.setOnClickListener {
+        binding.listePresenceFormation.setOnClickListener {
             whichPhoto = 2
             dialogPickerPhoto()
         }
 
         // which = 3 (photo)
-        photoListePresenceFormation.setOnClickListener {
+        binding.photoListePresenceFormation.setOnClickListener {
             whichPhoto = 3
             dialogPickerPhoto()
         }
 
-        editDateDebuFormation.setOnClickListener { configDate(editDateDebuFormation, false) }
-        editDateFinFormation.setOnClickListener { configDate(editDateFinFormation, false) }
-        editDureeFormation.setOnClickListener { configHour(editDureeFormation) }
+        binding.editDateDebuFormation.setOnClickListener { configDate(binding.editDateDebuFormation, false) }
+        binding.editDateFinFormation.setOnClickListener { configDate(binding.editDateFinFormation, false) }
+        binding.editDureeFormation.setOnClickListener { configHour(binding.editDureeFormation) }
     }
 }

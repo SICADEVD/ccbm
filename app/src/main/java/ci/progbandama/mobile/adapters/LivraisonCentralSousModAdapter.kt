@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.InfosLivraiisonCentralItemsListBinding
 import ci.progbandama.mobile.models.LivraisonCentralSousModel
-import kotlinx.android.synthetic.main.infos_livraiison_central_items_list.view.labelLivraisModCertifItem
-import kotlinx.android.synthetic.main.infos_livraiison_central_items_list.view.labelLivraisModQuantity
-import kotlinx.android.synthetic.main.infos_livraiison_central_items_list.view.labelLivraisModTypeItem
-import kotlinx.android.synthetic.main.infos_livraiison_items_list.view.*
 class LivraisonCentralSousModAdapter(private var livraisonCentralSModList: MutableList<LivraisonCentralSousModel>?) : RecyclerView.Adapter<LivraisonCentralSousModAdapter.LivraisonSModHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LivraisonSModHolder {
-        return LivraisonSModHolder(LayoutInflater.from(parent.context).inflate(R.layout.infos_livraiison_central_items_list, parent, false))
+        return LivraisonSModHolder(
+            InfosLivraiisonCentralItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.infos_livraiison_central_items_list, parent, false)
+        )
     }
 
 
@@ -45,7 +45,7 @@ class LivraisonCentralSousModAdapter(private var livraisonCentralSModList: Mutab
     }
 
 
-    class LivraisonSModHolder(var livraisonSModView: View) : RecyclerView.ViewHolder(livraisonSModView) {
+    class LivraisonSModHolder(var livraisonSModView: InfosLivraiisonCentralItemsListBinding) : RecyclerView.ViewHolder(livraisonSModView.root) {
         val labelLivraisModProducteurItem = livraisonSModView.labelLivraisModProducteurItem
         val labelLivraisModTypeItem = livraisonSModView.labelLivraisModTypeItem
         val labelLivraisModCertifItem = livraisonSModView.labelLivraisModCertifItem

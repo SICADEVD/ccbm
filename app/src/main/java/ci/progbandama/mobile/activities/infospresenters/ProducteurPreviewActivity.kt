@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.ProducteurActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityProducteurPreviewBinding
 import ci.progbandama.mobile.models.ProducteurModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -17,7 +18,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_producteur_preview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -34,10 +34,12 @@ class ProducteurPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityProducteurPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_producteur_preview)
+        binding = ActivityProducteurPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             try {
@@ -60,8 +62,8 @@ class ProducteurPreviewActivity : AppCompatActivity() {
 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(producteurItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
                 producteurInfos?.also { producteur ->
 
@@ -105,7 +107,7 @@ class ProducteurPreviewActivity : AppCompatActivity() {
 //                        loadFileToBitmap3(producteur.esignaturePath)
 //                    }
 //
-                    clickSavePreview.setOnClickListener {
+                    binding.clickSavePreview.setOnClickListener {
                         try {
                             showMessage(
                                 "Etes-vous sur de vouloir faire cet enregistrement ?",
@@ -141,7 +143,7 @@ class ProducteurPreviewActivity : AppCompatActivity() {
 
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }
@@ -159,7 +161,7 @@ class ProducteurPreviewActivity : AppCompatActivity() {
 
 
             MainScope().launch {
-                    imageProfileProdPreview.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 80, 80, false))
+                binding.imageProfileProdPreview.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 80, 80, false))
             }
         }
     }

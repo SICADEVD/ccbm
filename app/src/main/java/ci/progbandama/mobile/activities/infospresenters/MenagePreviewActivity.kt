@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.ProducteurMenageActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityMenagePreviewBinding
 import ci.progbandama.mobile.models.ProducteurMenageModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,7 +14,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_menage_preview.*
 
 class MenagePreviewActivity : AppCompatActivity() {
 
@@ -22,12 +22,14 @@ class MenagePreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityMenagePreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menage_preview)
+        binding = ActivityMenagePreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
@@ -50,13 +52,13 @@ class MenagePreviewActivity : AppCompatActivity() {
                 }
 
                 val rvPrevAdapter = PreviewItemAdapter(producteurItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
                 menageData.let { menage ->
 
-                    clickSavePreview.setOnClickListener {
+                    binding.clickSavePreview.setOnClickListener {
                         Commons.showMessage(
                             "Etes-vous sur de vouloir faire ce enregistrement ?",
                             this,

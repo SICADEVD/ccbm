@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.LivraisonActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityLivraisonBinding
+import ci.progbandama.mobile.databinding.ActivityLivraisonPreviewBinding
 import ci.progbandama.mobile.models.LivraisonModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,7 +15,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_livraison_preview.*
 
 class LivraisonPreviewActivity : AppCompatActivity() {
 
@@ -22,10 +23,12 @@ class LivraisonPreviewActivity : AppCompatActivity() {
     var draftID = 0
     val livraisonItemsListPrev = arrayListOf<Map<String,String>>()
 
+    private lateinit var binding: ActivityLivraisonPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_livraison_preview)
+        binding = ActivityLivraisonPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             try {
@@ -52,11 +55,11 @@ class LivraisonPreviewActivity : AppCompatActivity() {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoProdItemsListPrev)
-                recyclerInfoLivraison.adapter = rvPrevAdapter
-                recyclerInfoLivraison.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoLivraison.adapter = rvPrevAdapter
+                binding.recyclerInfoLivraison.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                 rvPrevAdapter.notifyDataSetChanged()
 
-                    clickSaveLivraisonPreview.setOnClickListener {
+                binding.clickSaveLivraisonPreview.setOnClickListener {
                         Commons.showMessage(
                             "Etes-vous sur de vouloir faire ce enregistrement ?",
                             this,
@@ -78,7 +81,7 @@ class LivraisonPreviewActivity : AppCompatActivity() {
                         ActivityUtils.finishActivity(LivraisonActivity::class.java)
                     }
 
-                    clickCloseBtn.setOnClickListener {
+                binding.clickCloseBtn.setOnClickListener {
                         finish()
                     }
 
@@ -89,7 +92,7 @@ class LivraisonPreviewActivity : AppCompatActivity() {
             }
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

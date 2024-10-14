@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.SuiviParcelleAdapter.SuiviParcelleHolder
+import ci.progbandama.mobile.databinding.SuiviParcelleItemsListBinding
 import ci.progbandama.mobile.models.SuiviParcelleModel
-import kotlinx.android.synthetic.main.suivi_parcelle_items_list.view.*
 
 
 class SuiviParcelleAdapter(private var suivis: List<SuiviParcelleModel>?) : RecyclerView.Adapter<SuiviParcelleHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuiviParcelleHolder {
-        return SuiviParcelleHolder(LayoutInflater.from(parent.context).inflate(R.layout.suivi_parcelle_items_list, parent, false))
+        return SuiviParcelleHolder(
+            SuiviParcelleItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.suivi_parcelle_items_list, parent, false)
+        )
     }
 
 
@@ -35,7 +38,7 @@ class SuiviParcelleAdapter(private var suivis: List<SuiviParcelleModel>?) : Recy
     override fun getItemCount() = suivis?.size ?: 0
 
 
-    class SuiviParcelleHolder(suiviView: View) : RecyclerView.ViewHolder(suiviView) {
+    class SuiviParcelleHolder(suiviView: SuiviParcelleItemsListBinding) : RecyclerView.ViewHolder(suiviView.root) {
         val suiviNomLabel = suiviView.labelSuiviNom
         val suiviProducteur = suiviView.labelProducteurSuivi
         val suiviSuperficie = suiviView.labelSuperficeSuivi

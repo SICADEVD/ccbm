@@ -7,15 +7,15 @@ import android.view.View
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.*
 import ci.progbandama.mobile.activities.lists.*
+import ci.progbandama.mobile.databinding.ActivityMenusActionRedirectionBinding
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.*
 import ci.progbandama.mobile.tools.Commons
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_menus_action_redirection.*
 
-class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus_action_redirection) {
+class MenusActionRedirectionActivity : AppCompatActivity() {
 
 
     var from: String? = ""
@@ -30,7 +30,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
 
 
     fun refreshDatasDraft() {
-        labelSeeDraftsCountenuAction.text =
+        binding.labelSeeDraftsCountenuAction.text =
             ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()?.countByType(
                 SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(),
                 from ?: ""
@@ -41,61 +41,61 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
     fun refreshDatas(fromData: String) {
         when (fromData.uppercase()) {
             "LOCALITE" -> {
-                labelUnsyncDatasCountCountenuAction.text = localiteDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = localiteDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
             "PRODUCTEUR" -> {
-                labelUnsyncDatasCountCountenuAction.text = producteurDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = producteurDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
             "INFOS_PRODUCTEUR" -> {
-                labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.infosProducteurDao()
+                binding.labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.infosProducteurDao()
                     ?.getUnSyncedAll(
                         SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )?.size.toString()
             }
             "MENAGE" -> {
-                labelUnsyncDatasCountCountenuAction.text = producteurMenageDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = producteurMenageDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
             "PARCELLE" -> {
-                labelUnsyncDatasCountCountenuAction.text = parcelleDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = parcelleDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
             "PARCELLES" -> {
-                labelUnsyncDatasCountCountenuAction.text = suiviParcelleDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = suiviParcelleDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
             "INSPECTION" -> {
-                labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.inspectionDao()
+                binding.labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.inspectionDao()
                     ?.getUnSyncedAll(
                         SPUtils.getInstance().getInt(Constants.AGENT_ID).toString()
                     )?.size.toString()
             }
             "SSRTECLMRS" -> {
-                labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.enqueteSsrtDao()
+                binding.labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.enqueteSsrtDao()
                     ?.getUnSyncedAll()?.size.toString()
             }
             "FORMATION" -> {
-                labelUnsyncDatasCountCountenuAction.text = formationDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = formationDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
             "ESTIMATION" -> {
-                labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.estimationDao()
+                binding.labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.estimationDao()
                     ?.getUnSyncedAll()?.size.toString()
             }
             "APPLICATION" -> {
-                labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.suiviApplicationDao()
+                binding.labelUnsyncDatasCountCountenuAction.text = ProgBandRoomDatabase.getDatabase(this)?.suiviApplicationDao()
                     ?.getUnSyncedAll()?.size.toString()
             }
             "LIVRAISON" -> {
-                labelUnsyncDatasCountCountenuAction.text = livraisonDao?.getUnSyncedAll(
+                binding.labelUnsyncDatasCountCountenuAction.text = livraisonDao?.getUnSyncedAll(
                     agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
                 )?.size.toString()
             }
@@ -109,9 +109,13 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
         refreshDatas(from ?: "")
     }
 
+    private lateinit var binding: ActivityMenusActionRedirectionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = ActivityMenusActionRedirectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             progbandRoomDatabase = ProgBandRoomDatabase.getDatabase(this);
@@ -124,11 +128,11 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
             livraisonDao = progbandRoomDatabase?.livraisonDao()
 
             from = it.getStringExtra("from")
-            labelTitleMenuAction.text = labelTitleMenuAction.text.toString().plus(from?.uppercase()?.replace("_", " "))
+            binding.labelTitleMenuAction.text = binding.labelTitleMenuAction.text.toString().plus(from?.uppercase()?.replace("_", " "))
             buildInterfaceAccordingAction(from ?: "")
         }
 
-        clickCloseMenuAction.setOnClickListener {
+        binding.clickCloseMenuAction.setOnClickListener {
             finish()
         }
 
@@ -136,19 +140,19 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
 //            ActivityUtils.startActivity(DashboardAgentActivity::class.java)
 //        }
 
-        linearUpdateContentMenuAction.setOnClickListener {
+        binding.linearUpdateContentMenuAction.setOnClickListener {
             redirectMenu(from ?: "", "UPDATE")
         }
 
-        linearAddContentMenuAction.setOnClickListener {
+        binding.linearAddContentMenuAction.setOnClickListener {
             redirectMenu(from ?: "", "ADD")
         }
 
-        linearSeeDraftsMenuAction.setOnClickListener {
+        binding.linearSeeDraftsMenuAction.setOnClickListener {
             redirectMenu(fromMenu = from ?: "", "DRAFTS")
         }
 
-        linearUnsyncDatasMenuAction.setOnClickListener {
+        binding.linearUnsyncDatasMenuAction.setOnClickListener {
             redirectMenu(from ?: "", "DATAS")
         }
 
@@ -169,7 +173,7 @@ class MenusActionRedirectionActivity : AppCompatActivity(R.layout.activity_menus
             "ESTIMATION",
             "APPLICATION",
             "LIVRAISON" -> {
-                linearUpdateContentMenuAction.visibility = View.GONE
+                binding.linearUpdateContentMenuAction.visibility = View.GONE
             }
 
         }

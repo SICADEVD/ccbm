@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.UniteAgricoleProducteurActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityInfosProducteurPreviewBinding
 import ci.progbandama.mobile.models.InfosProducteurDTO
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,7 +14,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_infos_producteur_preview.*
 import java.lang.Exception
 
 class InfosProducteurPreviewActivity : AppCompatActivity() {
@@ -22,10 +22,12 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityInfosProducteurPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_infos_producteur_preview)
+        binding = ActivityInfosProducteurPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             try {
@@ -120,16 +122,16 @@ class InfosProducteurPreviewActivity : AppCompatActivity() {
     //                LogUtils.d(producteurItemsListPrev)
 
                     val rvPrevAdapter = PreviewItemAdapter(infoProdItemsListPrev)
-                    recyclerInfoPrev.adapter = rvPrevAdapter
-                    recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
 
-                    clickCloseBtn.setOnClickListener {
+                binding.clickCloseBtn.setOnClickListener {
                         finish()
                     }
 
-                    clickSaveInfosProducteurPreview.setOnClickListener {
+                binding.clickSaveInfosProducteurPreview.setOnClickListener {
                         try {
                             Commons.showMessage(
                                 "Etes-vous sûr de vouloir enregistrer ce contenu ?",

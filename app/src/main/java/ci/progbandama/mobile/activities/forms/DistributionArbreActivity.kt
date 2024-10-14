@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.DistributionArbrePreviewActivity
 import ci.progbandama.mobile.adapters.DistribArbreAdapter
+import ci.progbandama.mobile.databinding.ActivityDistributionArbreBinding
 import ci.progbandama.mobile.models.ArbreModel
 import ci.progbandama.mobile.models.DataDraftedModel
 import ci.progbandama.mobile.models.DistributionArbreDao
@@ -32,12 +33,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_distribution_arbre.clickSaveDistributionArbre
-import kotlinx.android.synthetic.main.activity_distribution_arbre.*
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectLocaliteDistributionArbre
-
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectProducteurDistributionArbre
-import kotlinx.android.synthetic.main.activity_distribution_arbre.selectSectionDistributionArbre
 import java.util.ArrayList
 
 class DistributionArbreActivity : AppCompatActivity() {
@@ -49,9 +44,12 @@ class DistributionArbreActivity : AppCompatActivity() {
     private var distributionArbreDao: DistributionArbreDao? = null
     var draftedDataDistribution: DataDraftedModel? = null
 
+    private lateinit var binding: ActivityDistributionArbreBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_distribution_arbre)
+        binding = ActivityDistributionArbreBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -59,20 +57,20 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         distributionArbreDao = ProgBandRoomDatabase.getDatabase(this)?.distributionArbreDao()
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveDistributionArbre.setOnClickListener {
+        binding.clickSaveDistributionArbre.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelDistributionArbre.setOnClickListener {
+        binding.clickCancelDistributionArbre.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftData(draftedDataDistribution ?: DataDraftedModel(uid = 0))
         }
 
@@ -151,9 +149,9 @@ class DistributionArbreActivity : AppCompatActivity() {
 
         }
 
-        recyclerArbreListDistrArbre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerArbreListDistrArbre.adapter = DistribArbreAdapter(listArbreAndState)
-        recyclerArbreListDistrArbre.adapter?.notifyDataSetChanged()
+        binding.recyclerArbreListDistrArbre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerArbreListDistrArbre.adapter = DistribArbreAdapter(listArbreAndState)
+        binding.recyclerArbreListDistrArbre.adapter?.notifyDataSetChanged()
 
         currVal3?.let { currval3 ->
             if(!currval3.isNullOrEmpty()){
@@ -173,11 +171,11 @@ class DistributionArbreActivity : AppCompatActivity() {
                     arbre
                 }
                 LogUtils.d(listArbreAndStatePass)
-                (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
+                (binding.recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
             }
         }
 
-        fixFullSizeAtRv(recyclerArbreListDistrArbre)
+        fixFullSizeAtRv(binding.recyclerArbreListDistrArbre)
 
     }
 
@@ -269,7 +267,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         val nomList = mutableListOf<String>()
         val limitList = mutableListOf<String>()
         val qteList = mutableListOf<String>()
-        getAllRVItemInList(recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
+        getAllRVItemInList(binding.recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
@@ -362,7 +360,7 @@ class DistributionArbreActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(
+                        binding.imageDraftBtn.startAnimation(
                             Commons.loadShakeAnimation(
                                 this
                             )
@@ -386,7 +384,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         val nomList = mutableListOf<String>()
         val limitList = mutableListOf<String>()
         val qteList = mutableListOf<String>()
-        getAllRVItemInList(recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
+        getAllRVItemInList(binding.recyclerArbreListDistrArbre, idList, nomList, limitList, qteList )
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
@@ -456,7 +454,7 @@ class DistributionArbreActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair(getString(R.string.les_arbres_distribu_s), (recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.les_arbres_distribu_s), (binding.recyclerArbreListDistrArbre.adapter as DistribArbreAdapter).getArbreListAdded().map { "Arbre: ${it.nom}/${it.nomScientifique}| Strate: ${it.strate}| Qte distribuée: ${it.qte_distribue}\n" }.toModifString() ))
             this.add(Pair(getString(R.string.quantit_distribuer), qtelivre))
             this.add(Pair(getString(R.string.total_enregistrer), total))
         }?.map { MapEntry(it.first, it.second) }
@@ -493,7 +491,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionDistributionArbre,
+            spinner = binding.selectSectionDistributionArbre,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -529,7 +527,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteDistributionArbre,
+            spinner = binding.selectLocaliteDistributionArbre,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -588,7 +586,7 @@ class DistributionArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurDistributionArbre,
+            spinner = binding.selectProducteurDistributionArbre,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {

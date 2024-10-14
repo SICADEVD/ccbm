@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.SuiviParcelleActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityParcellePreviewBinding
+import ci.progbandama.mobile.databinding.ActivitySuiviParcellePreviewBinding
 import ci.progbandama.mobile.models.SuiviParcelleModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,8 +15,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_producteur_preview.recyclerInfoPrev
-import kotlinx.android.synthetic.main.activity_suivi_parcelle_preview.*
 
 
 class SuiviParcellePreviewActivity : AppCompatActivity() {
@@ -46,10 +46,12 @@ class SuiviParcellePreviewActivity : AppCompatActivity() {
         ActivityUtils.finishActivity(SuiviParcelleActivity::class.java)
     }
 
+    private lateinit var binding: ActivitySuiviParcellePreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suivi_parcelle_preview)
+        binding = ActivitySuiviParcellePreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             try {
@@ -112,15 +114,15 @@ class SuiviParcellePreviewActivity : AppCompatActivity() {
 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(suiviParcelleItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
-                clickSaveSuiviPreview.setOnClickListener {
+                binding.clickSaveSuiviPreview.setOnClickListener {
                     saveParcelle()
                 }
 
-                clickCloseBtn.setOnClickListener {
+                binding.clickCloseBtn.setOnClickListener {
                     finish()
                 }
             } catch (ex: Exception) {

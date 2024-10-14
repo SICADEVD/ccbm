@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.FormationActivity
 import ci.progbandama.mobile.adapters.FormationAdapter
+import ci.progbandama.mobile.databinding.ActivityFormationBinding
+import ci.progbandama.mobile.databinding.ActivityFormationsListBinding
 import ci.progbandama.mobile.models.FormationModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.FormationDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_formations_list.*
 import org.joda.time.DateTime
 
 class FormationsListActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class FormationsListActivity : AppCompatActivity() {
     var formationsList: MutableList<FormationModel>? = null
     var formationAdapter: FormationAdapter? = null
 
+    lateinit var binding: ActivityFormationsListBinding
 
     fun retrieveDatas() {
         formationsList = mutableListOf()
@@ -32,18 +34,18 @@ class FormationsListActivity : AppCompatActivity() {
 
         formationAdapter = FormationAdapter(this, formationsList)
 
-        recyclerFormations .adapter = formationAdapter
-        recyclerFormations.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerFormations .adapter = formationAdapter
+        binding.recyclerFormations.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationFormations.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
+        binding.labelLastSynchronisationFormations.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
 
         formationsList?.let {
             if (it.isEmpty()) {
-                recyclerFormations.visibility = View.GONE
-                linearEmptyContainerFormationsList.visibility = View.VISIBLE
+                binding.recyclerFormations.visibility = View.GONE
+                binding.linearEmptyContainerFormationsList.visibility = View.VISIBLE
             } else {
-                recyclerFormations.visibility = View.VISIBLE
-                linearEmptyContainerFormationsList.visibility = View.GONE
+                binding.recyclerFormations.visibility = View.VISIBLE
+                binding.linearEmptyContainerFormationsList.visibility = View.GONE
             }
         }
     }
@@ -58,13 +60,14 @@ class FormationsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_formations_list)
+        binding = ActivityFormationsListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        imgAddFormations.setOnClickListener {
+        binding.imgAddFormations.setOnClickListener {
             ActivityUtils.startActivity(FormationActivity::class.java)
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

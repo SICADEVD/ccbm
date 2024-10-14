@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.LivraisonCentralPreviewActivity
 import ci.progbandama.mobile.adapters.LivraisonCentralSousModAdapter
+import ci.progbandama.mobile.databinding.ActivityLivraisonCentralBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -28,11 +29,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_livraison.editAdressDestinataire
-import kotlinx.android.synthetic.main.activity_livraison.editContactDestinataire
-import kotlinx.android.synthetic.main.activity_livraison.editEmailDestinataire
-import kotlinx.android.synthetic.main.activity_livraison.editNomDestinataire
-import kotlinx.android.synthetic.main.activity_livraison_central.*
 import java.util.*
 
 class LivraisonCentralActivity : AppCompatActivity() {
@@ -201,7 +197,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMagSecListLivraiCentr,
+            spinner = binding.selectMagSecListLivraiCentr,
             currentVal = magasinSecList?.filter { it.id.toString() == currVal }.let {
                   if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
             },
@@ -215,10 +211,10 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
                 //if(!isFirstDelegue){
                 ProgBandRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasinSec.staffId?.toInt()?:0)?.let { staff ->
-                    editNomExpediteur.setText("${staff.firstname} ${staff.lastname}")
-                    editContactExpediteur.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
-                    editEmailExpediteur.setText("${Commons.checkIfItemEmpty(staff.email)}")
-                    editAdressExpediteur.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
+                    binding.editNomExpediteur.setText("${staff.firstname} ${staff.lastname}")
+                    binding.editContactExpediteur.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                    binding.editEmailExpediteur.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                    binding.editAdressExpediteur.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 }
                 //rstDelegue = false
 
@@ -238,7 +234,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text2),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMagCentralLivraisonCentral,
+            spinner = binding.selectMagCentralLivraisonCentral,
             currentVal = magasinCentralList?.filter { it.id.toString() == currVal }.let {
                 if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
             },
@@ -252,10 +248,10 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
                 //if(!isFirstDelegue){
                 ProgBandRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId!!)?.let { staff ->
-                    editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
-                    editContactDestinataire.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
-                    editEmailDestinataire.setText("${Commons.checkIfItemEmpty(staff.email)}")
-                    editAdressDestinataire.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
+                    binding.editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
+                    binding.editContactDestinataire.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                    binding.editEmailDestinataire.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                    binding.editAdressDestinataire.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 }
                 //rstDelegue = false
 
@@ -476,7 +472,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         val entrepList = ProgBandRoomDatabase.getDatabase(this)?.entrepriseDao()?.getAll()
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text3),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEntrepriseLivraisonCentral,
+            spinner = binding.selectEntrepriseLivraisonCentral,
             listIem = entrepList?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -490,7 +486,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         val vehiculeList = ProgBandRoomDatabase.getDatabase(this)?.vehiculeDao()?.getAll()
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text4),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectVehiculeLivraisonCentral,
+            spinner = binding.selectVehiculeLivraisonCentral,
             listIem = vehiculeList?.map { "${it.marque} (${it.vehicule_immat})" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -503,7 +499,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         val remorqueList = ProgBandRoomDatabase.getDatabase(this)?.remorqueDao()?.getAll()
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text5),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectRemorqueLivraisonCentral,
+            spinner = binding.selectRemorqueLivraisonCentral,
             listIem = remorqueList?.map { getString(R.string.immatriculation)+"${it.remorque_immat}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -513,7 +509,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral,
+        Commons.setupItemMultiSelection(this, binding.selectTypProduitLivraisonCentral,
             getString(R.string.d_signez_le_type_de_produit), resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
             typeCommon.nom = it.toModifString(false)
             livraisonVerMagCentralModelList.clear()
@@ -546,7 +542,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             getString(R.string.choix_du_producteur),
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (livraisonVerMagCentralModelList?.size!! > 0) false else true,
-            spinner = selectProducLivraisonCentral,
+            spinner = binding.selectProducLivraisonCentral,
             listIem = livraisonVerMagCentralModelList?.map { "${it.nom!!} ${it.prenoms!!} - ${it.typeProduit}".plus(if(it.certificat.isNullOrEmpty() == false) " - ${it.certificat}" else "") }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -574,15 +570,15 @@ class LivraisonCentralActivity : AppCompatActivity() {
     private fun setupProducteurView(producteur: LivraisonVerMagCentralModel) {
 
         if(producteur.typeProduit != "Ordinaire") {
-            containerCertificat.visibility = View.VISIBLE
-            editCertificatLivraisonCentral.setText(producteur.certificat ?: "")
+            binding.containerCertificat.visibility = View.VISIBLE
+            binding.editCertificatLivraisonCentral.setText(producteur.certificat ?: "")
         }else{
-            containerCertificat.visibility = View.GONE
+            binding.containerCertificat.visibility = View.GONE
         }
-        editTypProduitLivraisonCentral.setText(producteur.typeProduit?:"")
+        binding.editTypProduitLivraisonCentral.setText(producteur.typeProduit?:"")
         var qteEnStock = if(producteur.quantiteMagasinSection?.toInt()?:0 > 0) producteur.quantiteMagasinSection?.toInt()  else 0
-        editQuantityLivraisonCentral.hint = qteEnStock.toString()
-        editQuantityLivraisonCentral.setText(qteEnStock.toString()?:"")
+        binding.editQuantityLivraisonCentral.hint = qteEnStock.toString()
+        binding.editQuantityLivraisonCentral.setText(qteEnStock.toString()?:"")
 
     }
 
@@ -594,7 +590,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             getString(R.string.choix_du_transporteur),
             getString(R.string.la_liste_des_transporteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             currentVal = currVal,
-            spinner = selectTransporteurLivraisonCentral,
+            spinner = binding.selectTransporteurLivraisonCentral,
             listIem = transporteurList?.map { "${it.nom} ${it.prenoms}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -683,7 +679,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             }
             this.add(Pair(getString(R.string.information_sur_la_livraison), valueMod) as Pair<String, String>)
 
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
        try {
            val intentLivraisonCentralPreview = Intent(this, LivraisonCentralPreviewActivity::class.java)
@@ -862,7 +858,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -886,7 +882,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text6),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEntrepriseLivraisonCentral,
+            spinner = binding.selectEntrepriseLivraisonCentral,
             currentVal = entrepList?.filter { it.id.toString() == livraisonCentralDrafted?.entreprise_id }?.let {
                 if(it.size > 0) it.first().nom else null
             },
@@ -912,7 +908,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         val vehiculeList = ProgBandRoomDatabase.getDatabase(this)?.vehiculeDao()?.getAll()
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text7),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectVehiculeLivraisonCentral,
+            spinner = binding.selectVehiculeLivraisonCentral,
             currentVal = vehiculeList?.filter { it.id.toString() == livraisonCentralDrafted?.sender_vehicule }?.let {
                 if(it.size > 0) "${it.first().marque} (${it.first().vehicule_immat})" else null
             },
@@ -928,7 +924,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
         val remorqueList = ProgBandRoomDatabase.getDatabase(this)?.remorqueDao()?.getAll()
         Commons.setListenerForSpinner(this,
             getString(R.string.livraisonc_text8),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectRemorqueLivraisonCentral,
+            spinner = binding.selectRemorqueLivraisonCentral,
             currentVal = remorqueList?.filter { it.id.toString() == livraisonCentralDrafted?.sender_remorque }?.let {
                 if(it.size > 0) getString(R.string.immatriculation)+"${it.first().remorque_immat}" else null
             },
@@ -941,7 +937,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectTypProduitLivraisonCentral, "Désignez le type de produit !", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, binding.selectTypProduitLivraisonCentral, "Désignez le type de produit !", resources.getStringArray(R.array.type_produit)?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
             typeCommon.nom = it.toModifString(false)
 
             livraisonVerMagCentralModelList.clear()
@@ -975,10 +971,12 @@ class LivraisonCentralActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var binding: ActivityLivraisonCentralBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_livraison_central)
+        binding = ActivityLivraisonCentralBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -987,21 +985,21 @@ class LivraisonCentralActivity : AppCompatActivity() {
         livraisonCentralDao = ProgBandRoomDatabase.getDatabase(this)?.livraisonCentralDao()
 
 
-        clickCancelLivraisonCentral.setOnClickListener {
+        binding.clickCancelLivraisonCentral.setOnClickListener {
             //clearFields()
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        clickSaveLivraisonCentral.setOnClickListener {
+        binding.clickSaveLivraisonCentral.setOnClickListener {
             collectDatas()
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftLivraisonCentral(draftedDataLivraisonCentral ?: DataDraftedModel(uid = 0))
         }
 
@@ -1016,14 +1014,14 @@ class LivraisonCentralActivity : AppCompatActivity() {
     }
 
     private fun setOtherListener() {
-        editDateLivraisonCentral.setOnClickListener { configDate(editDateLivraisonCentral, false) }
+        binding.editDateLivraisonCentral.setOnClickListener { configDate(binding.editDateLivraisonCentral, false) }
         setListener()
 
-        clickAddLivraisonInfo.setOnClickListener {
+        binding.clickAddLivraisonInfo.setOnClickListener {
             try{
                 if (producteurCommon.id.toString().isNullOrEmpty()
-                    || editTypProduitLivraisonCentral.text.toString().isNullOrEmpty()
-                    || editQuantityLivraisonCentral.text.isNullOrEmpty()
+                    || binding.editTypProduitLivraisonCentral.text.toString().isNullOrEmpty()
+                    || binding.editQuantityLivraisonCentral.text.isNullOrEmpty()
                     ) {
                     showMessage(
                         getString(R.string.vous_avez_omis_d_ajout_des_donn_es_svp),
@@ -1043,9 +1041,9 @@ class LivraisonCentralActivity : AppCompatActivity() {
                     producteurIdName= producteurCommon.nom.toString(),
                     producteurs= producteurCommon.id.toString(),
                     parcelle= parcelleCommon.id.toString(),
-                    certificat = if(editTypProduitLivraisonCentral.text.toString().equals("Ordinaire", ignoreCase = true) == false) editCertificatLivraisonCentral.text.toString() else "",
-                    typeproduit = editTypProduitLivraisonCentral.text.toString(),
-                    quantite = editQuantityLivraisonCentral.text.toString(),
+                    certificat = if(binding.editTypProduitLivraisonCentral.text.toString().equals("Ordinaire", ignoreCase = true) == false) binding.editCertificatLivraisonCentral.text.toString() else "",
+                    typeproduit = binding.editTypProduitLivraisonCentral.text.toString(),
+                    quantite = binding.editQuantityLivraisonCentral.text.toString(),
 
                 )
 
@@ -1067,7 +1065,7 @@ class LivraisonCentralActivity : AppCompatActivity() {
 
     fun setupLivraisonCentralSousModRv(){
         livraisonCentralSousModelAdapter = LivraisonCentralSousModAdapter(livraisonCentralSousModelList)
-        recyclerInfoLivraisonCentral.adapter = livraisonCentralSousModelAdapter
+        binding.recyclerInfoLivraisonCentral.adapter = livraisonCentralSousModelAdapter
         livraisonCentralSousModelAdapter!!.notifyDataSetChanged()
     }
 

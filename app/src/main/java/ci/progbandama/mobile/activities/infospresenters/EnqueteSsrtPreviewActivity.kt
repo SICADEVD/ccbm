@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.SsrtClmsActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityEnqueteSsrtPreviewBinding
 import ci.progbandama.mobile.models.EnqueteSsrtModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,8 +14,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_enquete_ssrt_preview.*
-import kotlinx.android.synthetic.main.activity_producteur_preview.recyclerInfoPrev
 
 class EnqueteSsrtPreviewActivity : AppCompatActivity() {
 
@@ -24,11 +23,12 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
-
+    private lateinit var binding: ActivityEnqueteSsrtPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enquete_ssrt_preview)
+        binding = ActivityEnqueteSsrtPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             try {
@@ -146,8 +146,8 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
                         }
 
                         val rvPrevAdapter = PreviewItemAdapter(producteurItemsListPrev)
-                        recyclerInfoPrev.adapter = rvPrevAdapter
-                        recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                        binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                        binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
                     } catch (ex: Exception) {
@@ -156,7 +156,7 @@ class EnqueteSsrtPreviewActivity : AppCompatActivity() {
                     }
                 }
 
-                clickSaveEnquetePreview.setOnClickListener {
+                binding.clickSaveEnquetePreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

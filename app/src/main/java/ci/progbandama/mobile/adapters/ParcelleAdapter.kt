@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.ParcelleAdapter.ParcelleHolder
+import ci.progbandama.mobile.databinding.ParcelleItemsListBinding
 import ci.progbandama.mobile.models.ParcelleModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
-import kotlinx.android.synthetic.main.parcelle_items_list.view.*
 
 
 class ParcelleAdapter(
@@ -19,7 +19,10 @@ class ParcelleAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParcelleHolder {
-        return ParcelleHolder(LayoutInflater.from(parent.context).inflate(R.layout.parcelle_items_list, parent, false))
+        return ParcelleHolder(
+            ParcelleItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.parcelle_items_list, parent, false)
+        )
     }
 
 
@@ -38,7 +41,7 @@ class ParcelleAdapter(
     override fun getItemCount() = parcelles?.size ?: 0
 
 
-    class ParcelleHolder(parcelleView: View) : RecyclerView.ViewHolder(parcelleView) {
+    class ParcelleHolder(parcelleView: ParcelleItemsListBinding) : RecyclerView.ViewHolder(parcelleView.root) {
         val parcelleNomLabel = parcelleView.labelParcelleNom
         val parcelleProducteur = parcelleView.labelProducteurParcelle
         val parcelleSuperficie = parcelleView.labelSuperficeParcelle

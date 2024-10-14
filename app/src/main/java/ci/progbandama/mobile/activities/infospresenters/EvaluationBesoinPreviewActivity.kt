@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.EvaluationArbreActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityEvalBesoinPreviewBinding
 import ci.progbandama.mobile.models.EvaluationArbreModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,7 +14,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_eval_besoin_preview.*
 
 class EvaluationBesoinPreviewActivity : AppCompatActivity() {
 
@@ -22,11 +22,14 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityEvalBesoinPreviewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_eval_besoin_preview)
+        binding = ActivityEvalBesoinPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
@@ -48,8 +51,8 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
                 evaluationArbreDatas = it.getParcelableExtra("preview")
                 draftID = it.getIntExtra("draft_id", 0)
@@ -58,7 +61,7 @@ class EvaluationBesoinPreviewActivity : AppCompatActivity() {
 
 
 
-                clickSaveEvaluatBesoinPreview.setOnClickListener {
+                binding.clickSaveEvaluatBesoinPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

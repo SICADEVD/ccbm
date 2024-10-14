@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.*
+import ci.progbandama.mobile.databinding.MenagereItemsListBinding
 import ci.progbandama.mobile.repositories.datas.CommonData
-import kotlinx.android.synthetic.main.menagere_items_list.view.*
 
 
 /**
@@ -21,17 +21,20 @@ import kotlinx.android.synthetic.main.menagere_items_list.view.*
 class DataSendingAdapter(val context: Context, var draftedList: MutableList<CommonData>?): RecyclerView.Adapter<DataSendingAdapter.DataSyncedHolder>() {
 
 
-    class DataSyncedHolder(viewDataDrafted: View) : RecyclerView.ViewHolder(viewDataDrafted) {
+    class DataSyncedHolder(viewDataDrafted: MenagereItemsListBinding) : RecyclerView.ViewHolder(viewDataDrafted.root) {
 
-        val item_title = viewDataDrafted.item_title
+        val item_title = viewDataDrafted.itemTitle
         val labelQuartierMenagere = viewDataDrafted.labelQuartierMenagere
-        val item2_title = viewDataDrafted.item2_title
+        val item2_title = viewDataDrafted.item2Title
         val labelProducteurNomMenagere = viewDataDrafted.labelProducteurNomMenagere
         val imgSyncedStatus = viewDataDrafted.imgSyncedMenage
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataSyncedHolder {
-        return DataSyncedHolder(LayoutInflater.from(context).inflate(R.layout.menagere_items_list, parent, false))
+        return DataSyncedHolder(
+            MenagereItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(context).inflate(R.layout.menagere_items_list, parent, false)
+        )
     }
 
 

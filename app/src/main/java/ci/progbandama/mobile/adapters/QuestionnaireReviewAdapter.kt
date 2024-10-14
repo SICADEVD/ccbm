@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.InspectionActivity
+import ci.progbandama.mobile.databinding.InspectionHeaderLayoutBinding
+import ci.progbandama.mobile.databinding.QuestionnaireItemsListBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.models.NotationModel
 import ci.progbandama.mobile.models.QuestionResponseModel
@@ -22,8 +24,6 @@ import ci.progbandama.mobile.tools.Commons
 import ci.progbandama.mobile.tools.Commons.Companion.configDate
 import ci.progbandama.mobile.tools.Commons.Companion.getSpinnerContent
 import com.blankj.utilcode.util.LogUtils
-import kotlinx.android.synthetic.main.inspection_header_layout.view.*
-import kotlinx.android.synthetic.main.questionnaire_items_list.view.*
 
 
 /**
@@ -46,7 +46,7 @@ class QuestionnaireReviewAdapter(
     lateinit var questionsListener: RecyclerItemListener<QuestionResponseModel>
 
 
-    class QuesionnaireHolder(questionnaireView: View) : ViewHolder(questionnaireView) {
+    class QuesionnaireHolder(questionnaireView: QuestionnaireItemsListBinding) : ViewHolder(questionnaireView.root) {
         var labelQuestionInspection = questionnaireView.labelQuestionInspectionItem
         var selectionNotationInspection = questionnaireView.selectResponseInspectionItem
         var commentContainer = questionnaireView.commentContainer
@@ -61,23 +61,27 @@ class QuestionnaireReviewAdapter(
     }
 
 
-    class QuesionnaireTitleHolder(questionnaireTitleView: View) :
-        ViewHolder(questionnaireTitleView) {
+    class QuesionnaireTitleHolder(questionnaireTitleView: InspectionHeaderLayoutBinding) :
+        ViewHolder(questionnaireTitleView.root) {
         var labelHeaderInspection = questionnaireTitleView.labelHeaderInspectionItem
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var mQuestionnaireView: View? = null
+        var mQuestionnaireView: Any? = null
         var viewHolder: ViewHolder? = null
 
         if (viewType == LAYOUT_ONE) {
-            mQuestionnaireView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.inspection_header_layout, parent, false)
+            mQuestionnaireView =
+                InspectionHeaderLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//                LayoutInflater.from(parent.context)
+//                .inflate(R.layout.inspection_header_layout, parent, false)
             viewHolder = QuesionnaireTitleHolder(mQuestionnaireView)
         } else {
-            mQuestionnaireView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.questionnaire_items_list, parent, false)
+            mQuestionnaireView =
+                QuestionnaireItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//                LayoutInflater.from(parent.context)
+//                .inflate(R.layout.questionnaire_items_list, parent, false)
             viewHolder = QuesionnaireHolder(mQuestionnaireView)
         }
 
@@ -111,7 +115,7 @@ class QuestionnaireReviewAdapter(
 
             val notationAdapter =
                 ArrayAdapter(pContext, android.R.layout.simple_dropdown_item_1line, pNotationsList)
-            questionnaireInfosHolder.selectionNotationInspection.selectResponseInspectionItem.adapter =
+            questionnaireInfosHolder.selectionNotationInspection.adapter =
                 notationAdapter
 
             //var questionnaireResponseInfoExt: QuestionResponseModel? = null

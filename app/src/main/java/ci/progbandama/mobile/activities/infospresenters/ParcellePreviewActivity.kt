@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.ParcelleActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityParcellePreviewBinding
 import ci.progbandama.mobile.models.ParcelleModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -19,15 +20,13 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_parcelle_preview.*
-import kotlinx.android.synthetic.main.activity_producteur_preview.recyclerInfoPrev
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_preview) {
+class ParcellePreviewActivity : AppCompatActivity() {
 
 
     var parcellePoo = ParcelleModel()
@@ -37,6 +36,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
     var labelSharing: AppCompatTextView? = null
     var whichButton = 0
 
+    private lateinit var binding: ActivityParcellePreviewBinding
 
 //    fun collecteDatas() {
 //        labelProducteurParcellePreview.text = parcellePoo.producteurNom
@@ -77,6 +77,8 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityParcellePreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // on below line we are creating a new bottom sheet dialog.
         val dialog = BottomSheetDialog(this)
@@ -116,8 +118,8 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(parcelleItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
             } catch (ex: Exception) {
@@ -146,7 +148,7 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
             }
         }
 
-        clickSaveParcellePreview.setOnClickListener {
+        binding.clickSaveParcellePreview.setOnClickListener {
             try {
                 showMessage(
                     "Etes-vous sûr de vouloir faire cet enregistrement ?",
@@ -171,29 +173,29 @@ class ParcellePreviewActivity : AppCompatActivity(R.layout.activity_parcelle_pre
             }
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickKmlParcellePreview.setOnClickListener {
+        binding.clickKmlParcellePreview.setOnClickListener {
             whichButton = 1
             dialog.show()
         }
 
-        clickGpxParcellePreview.setOnClickListener {
+        binding.clickGpxParcellePreview.setOnClickListener {
             whichButton = 2
             dialog.show()
         }
 
         if (parcellePoo.wayPointsString.toString().isEmpty()) {
-            clickGpxParcellePreview.visibility = View.GONE
-            clickKmlParcellePreview.visibility = View.GONE
+            binding.clickGpxParcellePreview.visibility = View.GONE
+            binding.clickKmlParcellePreview.visibility = View.GONE
         }
         
         
         if (parcellePoo.typedeclaration.toString().lowercase() == "verbale") {
             try {
-                linearActionExportContainerParcellePreview.visibility = View.GONE
+                binding.linearActionExportContainerParcellePreview.visibility = View.GONE
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)

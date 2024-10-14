@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.LocaliteAdapter.LocaliteHolder
+import ci.progbandama.mobile.databinding.LocaliteItemsListBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.models.LocaliteModel
-import kotlinx.android.synthetic.main.localite_items_list.view.*
-import kotlinx.android.synthetic.main.localite_items_list.view.imgSynced
 
 class LocaliteAdapter(private var localites: List<LocaliteModel>?) : RecyclerView.Adapter<LocaliteHolder>() {
 
@@ -18,7 +17,10 @@ class LocaliteAdapter(private var localites: List<LocaliteModel>?) : RecyclerVie
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocaliteHolder {
-        return LocaliteHolder(LayoutInflater.from(parent.context).inflate(R.layout.localite_items_list, parent, false))
+        return LocaliteHolder(
+            LocaliteItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.localite_items_list, parent, false)
+        )
     }
 
 
@@ -36,7 +38,7 @@ class LocaliteAdapter(private var localites: List<LocaliteModel>?) : RecyclerVie
     override fun getItemCount() = localites?.size ?: 0
 
 
-    class LocaliteHolder(localiteView: View) : RecyclerView.ViewHolder(localiteView) {
+    class LocaliteHolder(localiteView: LocaliteItemsListBinding) : RecyclerView.ViewHolder(localiteView.root) {
         val localiteNomLabel = localiteView.labelLocaliteNom
         val localiteTypeLabel = localiteView.labelLocaliteType
         val imgSyncedStatus = localiteView.imgSynced

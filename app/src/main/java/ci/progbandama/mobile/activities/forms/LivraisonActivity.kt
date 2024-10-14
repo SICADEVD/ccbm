@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.LivraisonPreviewActivity
 import ci.progbandama.mobile.adapters.LivraisonSousModAdapter
+import ci.progbandama.mobile.databinding.ActivityLivraisonBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -29,8 +30,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_livraison.*
-import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
 import java.util.*
 
 class LivraisonActivity : AppCompatActivity() {
@@ -103,7 +102,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMagasinSectionLivraison,
+            spinner = binding.selectMagasinSectionLivraison,
             currentVal = magasinsList?.filter { it.id.toString() == currVal }.let {
                 if(it?.size!! > 0) it.first().let { "${it?.nomMagasinsections}" } else null
             },
@@ -116,10 +115,10 @@ class LivraisonActivity : AppCompatActivity() {
                 magasinSectionCommon.id = magasin.id
                 LogUtils.d(magasin.staffId.toString())
                 ProgBandRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(magasin.staffId?.toInt()?:0)?.let { staff ->
-                    editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
-                    editContactDestinataire.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
-                    editEmailDestinataire.setText("${Commons.checkIfItemEmpty(staff.email)}")
-                    editAdressDestinataire.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
+                    binding.editNomDestinataire.setText("${staff.firstname} ${staff.lastname}")
+                    binding.editContactDestinataire.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                    binding.editEmailDestinataire.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                    binding.editAdressDestinataire.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 }
 
 //                editNomDestinataire.setText("${magasin.nomMagasinsections}")
@@ -183,10 +182,10 @@ class LivraisonActivity : AppCompatActivity() {
         parcellesList = parcelleDao?.getParcellesProducteur(producteurId = producteurId, agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
 
         val parcellesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }!!)
-        selectParcelleLivraison!!.adapter = parcellesAdapter
+        binding.selectParcelleLivraison!!.adapter = parcellesAdapter
 
-        selectParcelleLivraison.setTitle("Choisir la parcelle")
-        selectParcelleLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectParcelleLivraison.setTitle("Choisir la parcelle")
+        binding.selectParcelleLivraison.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val parcelle = parcellesList!![position]
 
@@ -266,7 +265,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text2),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectStaffList,
+            spinner = binding.selectStaffList,
             currentVal = staffList?.filter { it.id.toString() == currVal }.let {
                   if(it?.size!! > 0) it.first().let { "${it?.nom}" } else null
             },
@@ -279,10 +278,10 @@ class LivraisonActivity : AppCompatActivity() {
                 senderStaffCommon.id = staff.id
 
                 //if(!isFirstDelegue){
-                editNomExpediteur.setText("${staff.nom}")
-                editContactExpediteur.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
-                editEmailExpediteur.setText("${Commons.checkIfItemEmpty(staff.email)}")
-                editAdressExpediteur.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
+                binding.editNomExpediteur.setText("${staff.nom}")
+                binding.editContactExpediteur.setText("${Commons.checkIfItemEmpty(staff.mobile)}")
+                binding.editEmailExpediteur.setText("${Commons.checkIfItemEmpty(staff.email)}")
+                binding.editAdressExpediteur.setText("${Commons.checkIfItemEmpty(staff.adresse)}")
                 //rstDelegue = false
 
                 setupMagasinSelection(staffId, currVal2)
@@ -311,7 +310,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         if (livraisonDrafted != null) {
             provideDatasSpinnerSelection(
-                selectStaffList,
+                binding.selectStaffList,
                 livraisonDrafted.producteurNom,
                 producteursDatas
             )
@@ -433,7 +432,7 @@ class LivraisonActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionLivraison,
+            spinner = binding.selectSectionLivraison,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -469,7 +468,7 @@ class LivraisonActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteLivraison,
+            spinner = binding.selectLocaliteLivraison,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -510,7 +509,7 @@ class LivraisonActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducLivraison,
+            spinner = binding.selectProducLivraison,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -550,7 +549,7 @@ class LivraisonActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectParcelleLivraison,
+            spinner = binding.selectParcelleLivraison,
             listIem = parcellesList?.map { "${it.codeParc}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -582,7 +581,7 @@ class LivraisonActivity : AppCompatActivity() {
         //For RecycleView
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text3),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTypeLivraison,
+            spinner = binding.selectTypeLivraison,
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             listIem = resources.getStringArray(R.array.type_produit)
                 ?.toList() ?: listOf(),
@@ -591,14 +590,14 @@ class LivraisonActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerTypeCertifLivraison.visibility = visibility
+                    binding.containerTypeCertifLivraison.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text4),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTypeCertifLivraison,
-            listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }.toList() ?: listOf(),
+            spinner = binding.selectTypeCertifLivraison,
+            listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }?.toList() ?: listOf(),
             onChanged = {
 
             },
@@ -676,7 +675,7 @@ class LivraisonActivity : AppCompatActivity() {
                 valueMod += "${it.producteurIdName} | ${it.parcelleIdName} | ${it.typeName} | ${it.certificat} | ${it.quantityNb}\n"
             }
             this.add(Pair(getString(R.string.les_produits_livr_s), valueMod) as Pair<String, String>)
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
        try {
            val intentLivraisonPreview = Intent(this, LivraisonPreviewActivity::class.java)
@@ -693,7 +692,7 @@ class LivraisonActivity : AppCompatActivity() {
     fun clearFields() {
         setAllListener()
 
-        editDateLivraison.text = null
+        binding.editDateLivraison.text = null
         //clearInfoLivraisonTable()
 
         staffId = ""
@@ -701,8 +700,8 @@ class LivraisonActivity : AppCompatActivity() {
         producteurId = ""
         parcelleId = ""
 
-        selectStaffList.setSelection(0)
-        selectParcelleLivraison.setSelection(0)
+        binding.selectStaffList.setSelection(0)
+        binding.selectParcelleLivraison.setSelection(0)
         //selectLocaliteLivraison.setSelection(0)
     }
 
@@ -862,7 +861,7 @@ class LivraisonActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -882,7 +881,7 @@ class LivraisonActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text5),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTypeLivraison,
+            spinner = binding.selectTypeLivraison,
             itemChanged = arrayListOf(Pair(1, "Certifie")),
             listIem = resources.getStringArray(R.array.type_produit)
                 ?.toList() ?: listOf(),
@@ -891,14 +890,14 @@ class LivraisonActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerTypeCertifLivraison.visibility = visibility
+                    binding.containerTypeCertifLivraison.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.livraison_text6),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTypeCertifLivraison,
-            listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }.toList() ?: listOf(),
+            spinner = binding.selectTypeCertifLivraison,
+            listIem = (AssetFileHelper.getListDataFromAsset(20, this@LivraisonActivity) as MutableList<CommonData>)?.map { it.nom }?.toList() ?: listOf(),
             onChanged = {
 
             },
@@ -944,10 +943,12 @@ class LivraisonActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var binding: ActivityLivraisonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_livraison)
+        binding = ActivityLivraisonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -956,21 +957,21 @@ class LivraisonActivity : AppCompatActivity() {
         livraisonDao = ProgBandRoomDatabase.getDatabase(this)?.livraisonDao()
 
 
-        clickCancelLivraison.setOnClickListener {
+        binding.clickCancelLivraison.setOnClickListener {
             //clearFields()
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        clickSaveLivraison.setOnClickListener {
+        binding.clickSaveLivraison.setOnClickListener {
             collectDatas()
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftLivraison(draftedDataLivraison ?: DataDraftedModel(uid = 0))
         }
 
@@ -985,10 +986,10 @@ class LivraisonActivity : AppCompatActivity() {
     }
 
     private fun setOtherListener() {
-        editDateLivraison.setOnClickListener { configDate(editDateLivraison, false) }
+        binding.editDateLivraison.setOnClickListener { configDate(binding.editDateLivraison, false) }
         setListener()
 
-        clickAddLivraisonInfo.setOnClickListener {
+        binding.clickAddLivraisonInfo.setOnClickListener {
             try{
                 if (producteurCommon.id.toString().isNullOrEmpty()) {
                     showMessage(
@@ -1016,7 +1017,7 @@ class LivraisonActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                if(editQuantity.text.toString().isEmpty()){
+                if(binding.editQuantity.text.toString().isEmpty()){
                     showMessage(
                         getString(R.string.passer_la_quantit_svp),
                         context = this,
@@ -1042,7 +1043,7 @@ class LivraisonActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                if(selectTypeLivraison.selectedItem.toString().contains("Faite un choix", ignoreCase = true)
+                if(binding.selectTypeLivraison.selectedItem.toString().contains("Faite un choix", ignoreCase = true)
                     ){
                     showMessage(
                         "LE TYPE DE PRODUIT DOIT ETRE RESEIGNÉ",
@@ -1061,9 +1062,9 @@ class LivraisonActivity : AppCompatActivity() {
                     producteurIdName= producteurCommon.nom.toString(),
                     parcelleId= parcelleCommon.id.toString(),
                     parcelleIdName = parcelleCommon.nom.toString(),
-                    typeName = selectTypeLivraison.selectedItem.toString(),
-                    certificat =  if(selectTypeCertifLivraison.selectedItem.toString().equals("Ordinaire", ignoreCase = true) == false) selectTypeCertifLivraison.selectedItem.toString() else "",
-                    quantityNb = editQuantity.text.toString().toInt(),
+                    typeName = binding.selectTypeLivraison.selectedItem.toString(),
+                    certificat =  if(binding.selectTypeCertifLivraison.selectedItem.toString().equals("Ordinaire", ignoreCase = true) == false) binding.selectTypeCertifLivraison.selectedItem.toString() else "",
+                    quantityNb = binding.editQuantity.text.toString().toInt(),
                     //numScelle = editNumScelle.text.toString()
                 )
 
@@ -1081,13 +1082,13 @@ class LivraisonActivity : AppCompatActivity() {
 
     fun setupLivraisonSousModRv(){
         livraisonSousModelAdapter = LivraisonSousModAdapter(livraisonSousModelList)
-        recyclerInfoLivraison.adapter = livraisonSousModelAdapter
+        binding.recyclerInfoLivraison.adapter = livraisonSousModelAdapter
         livraisonSousModelAdapter!!.notifyDataSetChanged()
     }
 
     private fun clearInfoLivraisonTable() {
-        editQuantity.setText("")
-        editResultatQuantity.setText("")
+        binding.editQuantity.setText("")
+        binding.editResultatQuantity.setText("")
         //editNumScelle.setText("")
     }
 }

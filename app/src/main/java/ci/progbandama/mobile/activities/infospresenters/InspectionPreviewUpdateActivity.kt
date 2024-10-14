@@ -8,6 +8,7 @@ import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.InspectionActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
 import ci.progbandama.mobile.adapters.QuestionnairePreviewAdapter
+import ci.progbandama.mobile.databinding.ActivityInspectionUpdatePreviewBinding
 import ci.progbandama.mobile.interfaces.SectionCallback
 import ci.progbandama.mobile.models.InspectionDTO
 import ci.progbandama.mobile.models.QuestionResponseModel
@@ -17,7 +18,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_inspection_update_preview.*
 import java.lang.Exception
 
 
@@ -28,6 +28,7 @@ class InspectionPreviewUpdateActivity : AppCompatActivity(), SectionCallback {
     private var cQuestionnaires: MutableList<QuestionResponseModel>? = mutableListOf()
     lateinit var questionnaireAdapter: QuestionnairePreviewAdapter
 
+    private lateinit var binding: ActivityInspectionUpdatePreviewBinding
 
     override fun isSectionHeader(position: Int): Boolean {
         return position == 0 || cQuestionnaires!![position].isTitle!!
@@ -49,9 +50,10 @@ class InspectionPreviewUpdateActivity : AppCompatActivity(), SectionCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_inspection_update_preview)
+        binding = ActivityInspectionUpdatePreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener { finish() }
+        binding.clickCloseBtn.setOnClickListener { finish() }
 
         intent?.let { it ->
             try {
@@ -71,15 +73,15 @@ class InspectionPreviewUpdateActivity : AppCompatActivity(), SectionCallback {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
                 val itemsDatas: InspectionDTO? = it.getParcelableExtra("preview")
 
                 LogUtils.d(itemsDatas)
 
-                clickSaveFormationPreview.setOnClickListener {
+                binding.clickSaveFormationPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire cette mise à jour ?",
                         this,
@@ -105,7 +107,7 @@ class InspectionPreviewUpdateActivity : AppCompatActivity(), SectionCallback {
             }
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

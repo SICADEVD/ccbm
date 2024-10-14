@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.ActivityParcelleMappingBinding
 import ci.progbandama.mobile.models.ParcelleMappingModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -34,7 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ktx.utils.area
-import kotlinx.android.synthetic.main.activity_parcelle_mapping.*
+
 
 
 @SuppressWarnings("ALL")
@@ -145,26 +146,26 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     // A Function used to set the Animation effect
-    fun setAnimation(closed: Boolean) {
-        if (!closed) {
-            linearDistanceMappingContainer.startAnimation(fromBottom)
-            linearSurfaceMappingContainer.startAnimation(fromBottom)
-            fabMenuMapping.startAnimation(rotateOpen)
-        } else {
-            linearDistanceMappingContainer.startAnimation(toBottom)
-            linearSurfaceMappingContainer.startAnimation(toBottom)
-            fabMenuMapping.startAnimation(rotateClose)
-        }
-    }
+//    fun setAnimation(closed: Boolean) {
+//        if (!closed) {
+//            linearDistanceMappingContainer.startAnimation(fromBottom)
+//            linearSurfaceMappingContainer.startAnimation(fromBottom)
+//            fabMenuMapping.startAnimation(rotateOpen)
+//        } else {
+//            linearDistanceMappingContainer.startAnimation(toBottom)
+//            linearSurfaceMappingContainer.startAnimation(toBottom)
+//            fabMenuMapping.startAnimation(rotateClose)
+//        }
+//    }
 
 
     fun setVisibility(closed: Boolean) {
         if (!closed) {
-            linearDistanceMappingContainer.visibility = VISIBLE
-            linearSurfaceMappingContainer.visibility = VISIBLE
+            binding.linearDistanceMappingContainer.visibility = VISIBLE
+            binding.linearSurfaceMappingContainer.visibility = VISIBLE
         } else {
-            linearDistanceMappingContainer.visibility = GONE
-            linearSurfaceMappingContainer.visibility = GONE
+            binding.linearDistanceMappingContainer.visibility = GONE
+            binding.linearSurfaceMappingContainer.visibility = GONE
         }
     }
 
@@ -252,23 +253,23 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     fun cancelWorkMapping() {
-        relativeActionMarkerBottomMappingContainer.startAnimation(outToBottom)
-        relativeActionMarkerBottomMappingContainer.visibility = GONE
+        binding.relativeActionMarkerBottomMappingContainer.startAnimation(outToBottom)
+        binding.relativeActionMarkerBottomMappingContainer.visibility = GONE
 
-        linearActionMarkerBottomMapping.visibility = GONE
-        linearActionGPSMarkerBottomMapping.visibility = GONE
+        binding.linearActionMarkerBottomMapping.visibility = GONE
+        binding.linearActionGPSMarkerBottomMapping.visibility = GONE
 
-        linealToolbarActionMappingParcelle.visibility = GONE
-        linealToolbarActionMappingParcelle.startAnimation(outToTop)
+        binding.linealToolbarActionMappingParcelle.visibility = GONE
+        binding.linealToolbarActionMappingParcelle.startAnimation(outToTop)
 
-        linearSnippetInfosMapping.visibility = GONE
-        linearSnippetInfosMapping.startAnimation(outToLeft)
+        binding.linearSnippetInfosMapping.visibility = GONE
+        binding.linearSnippetInfosMapping.startAnimation(outToLeft)
 
-        fabMenuMapping.startAnimation(inFromLeft)
-        fabMenuMapping.visibility = VISIBLE
+        binding.fabMenuMapping.startAnimation(inFromLeft)
+        binding.fabMenuMapping.visibility = VISIBLE
 
-        linealToolbarMappingParcelle.startAnimation(inFromTop)
-        linealToolbarMappingParcelle.visibility = VISIBLE
+        binding.linealToolbarMappingParcelle.startAnimation(inFromTop)
+        binding.linealToolbarMappingParcelle.visibility = VISIBLE
 
         markersMap.clear()
 
@@ -280,54 +281,54 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     fun startWorkManualMapping() {
-        linealToolbarMappingParcelle.startAnimation(outToTop)
-        linealToolbarMappingParcelle.visibility = GONE
+        binding.linealToolbarMappingParcelle.startAnimation(outToTop)
+        binding.linealToolbarMappingParcelle.visibility = GONE
 
-        fabMenuMapping.startAnimation(outToLeft)
-        fabMenuMapping.visibility = GONE
+        binding.fabMenuMapping.startAnimation(outToLeft)
+        binding.fabMenuMapping.visibility = GONE
 
-        linearActionMarkerBottomMapping.visibility = VISIBLE
+        binding.linearActionMarkerBottomMapping.visibility = VISIBLE
 
-        relativeActionMarkerBottomMappingContainer.startAnimation(inFromBottom)
-        relativeActionMarkerBottomMappingContainer.visibility = VISIBLE
+        binding.relativeActionMarkerBottomMappingContainer.startAnimation(inFromBottom)
+        binding.relativeActionMarkerBottomMappingContainer.visibility = VISIBLE
 
 
-        linealToolbarActionMappingParcelle.startAnimation(inFromTop)
-        linealToolbarActionMappingParcelle.visibility = VISIBLE
+        binding.linealToolbarActionMappingParcelle.startAnimation(inFromTop)
+        binding.linealToolbarActionMappingParcelle.visibility = VISIBLE
 
-        linearSnippetInfosMapping.startAnimation(inFromLeft)
-        linearSnippetInfosMapping.visibility = VISIBLE
+        binding.linearSnippetInfosMapping.startAnimation(inFromLeft)
+        binding.linearSnippetInfosMapping.visibility = VISIBLE
     }
 
 
     fun startWorkGpsMapping() {
-        linealToolbarMappingParcelle.startAnimation(outToTop)
-        linealToolbarMappingParcelle.visibility = GONE
+        binding.linealToolbarMappingParcelle.startAnimation(outToTop)
+        binding.linealToolbarMappingParcelle.visibility = GONE
 
-        fabMenuMapping.startAnimation(outToLeft)
-        fabMenuMapping.visibility = GONE
+        binding.fabMenuMapping.startAnimation(outToLeft)
+        binding.fabMenuMapping.visibility = GONE
 
-        linealToolbarActionMappingParcelle.startAnimation(inFromTop)
-        linealToolbarActionMappingParcelle.visibility = VISIBLE
+        binding.linealToolbarActionMappingParcelle.startAnimation(inFromTop)
+        binding.linealToolbarActionMappingParcelle.visibility = VISIBLE
 
-        linearSnippetInfosMapping.startAnimation(inFromLeft)
-        linearSnippetInfosMapping.visibility = VISIBLE
+        binding.linearSnippetInfosMapping.startAnimation(inFromLeft)
+        binding.linearSnippetInfosMapping.visibility = VISIBLE
 
-        linearActionGPSMarkerBottomMapping.visibility = VISIBLE
+        binding.linearActionGPSMarkerBottomMapping.visibility = VISIBLE
 
-        relativeActionMarkerBottomMappingContainer.startAnimation(inFromBottom)
-        relativeActionMarkerBottomMappingContainer.visibility = VISIBLE
+        binding.relativeActionMarkerBottomMappingContainer.startAnimation(inFromBottom)
+        binding.relativeActionMarkerBottomMappingContainer.visibility = VISIBLE
     }
 
 
-    fun clearAllAniviations() {
-        linearActionGPSMarkerBottomMapping.clearAnimation()
-        linearSnippetInfosMapping.clearAnimation()
-        linealToolbarActionMappingParcelle.clearAnimation()
-        linealToolbarMappingParcelle.clearAnimation()
-        linearActionMarkerBottomMapping.clearAnimation()
-        fabMenuMapping.clearAnimation()
-    }
+//    fun clearAllAniviations() {
+//        linearActionGPSMarkerBottomMapping.clearAnimation()
+//        linearSnippetInfosMapping.clearAnimation()
+//        linealToolbarActionMappingParcelle.clearAnimation()
+//        linealToolbarMappingParcelle.clearAnimation()
+//        linearActionMarkerBottomMapping.clearAnimation()
+//        fabMenuMapping.clearAnimation()
+//    }
 
 
     fun updateLocationUI() {
@@ -350,8 +351,8 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
 
     override fun onMapClick(pLatLng: LatLng) {
-        if (cardPopupMenuMapsTypeMapping.visibility == VISIBLE) {
-            cardPopupMenuMapsTypeMapping.visibility = GONE
+        if (binding.cardPopupMenuMapsTypeMapping.visibility == VISIBLE) {
+            binding.cardPopupMenuMapsTypeMapping.visibility = GONE
             return
         }
 
@@ -391,7 +392,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
         if (markerPoint != null) {
             markerPerimeter += computePerimeter(markerPoint?.position!!, pickedLatLng!!)
             parcelleMapping.parcellePerimeter = Commons.convertDoubleToString(markerPerimeter)
-            labelDistanceMapping.text = parcelleMapping.parcellePerimeter.plus(" m")
+            binding.labelDistanceMapping.text = parcelleMapping.parcellePerimeter.plus(" m")
         }
 
         markerOptions
@@ -450,7 +451,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
             pointsList.add(it.value)
         }
 
-        labelDistanceMapping.text =
+        binding.labelDistanceMapping.text =
             Commons.convertDoubleToString(SphericalUtil.computeLength(pointsList)).plus(" m")
 
         if (mappingType == 2) {
@@ -547,7 +548,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
 
     fun computeSurface() {
         parcelleMapping.parcelleSuperficie = Commons.convertDoubleToString((parcellePolygon?.area!!) * 0.0001)
-        labelSurfaceMapping.text = parcelleMapping.parcelleSuperficie.plus(" Ha")
+        binding.labelSurfaceMapping.text = parcelleMapping.parcelleSuperficie.plus(" Ha")
     }
 
 
@@ -622,7 +623,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
             parcelleMapping.mutableWayPoints?.add(it.value)
         }
 
-        parcelleMapping.parcellePerimeter = labelDistanceMapping.text.toString().trim()
+        parcelleMapping.parcellePerimeter = binding.labelDistanceMapping.text.toString().trim()
         parcelleMapping.parcelleNameTag = mappingType.toString()
 
         parcelleMapping.parcelleLat = gPolygonCenter.latitude.toString()
@@ -637,76 +638,77 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
         finish()
     }
 
+    private lateinit var binding:ActivityParcelleMappingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_parcelle_mapping)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        labelOwnerMapping.text = intent.getStringExtra("producteur_nom")
+        binding.labelOwnerMapping.text = intent.getStringExtra("producteur_nom")
 
         val mapsFragment: SupportMapFragment =
             supportFragmentManager.findFragmentById(R.id.googleMapsParcelle) as SupportMapFragment
         mapsFragment.getMapAsync(this)
 
-        fabMenuMapping.setOnClickListener {
+        binding.fabMenuMapping.setOnClickListener {
             onAddButtonClick()
         }
 
-        fabSurfaceMapping.setOnClickListener {
+        binding.fabSurfaceMapping.setOnClickListener {
             mappingDrawType = 2
-            linearSurfaceInfosContainer.visibility = VISIBLE
+            binding.linearSurfaceInfosContainer.visibility = VISIBLE
             showMappingTypeDialog()
         }
 
-        linearSurfaceMappingContainer.setOnClickListener {
+        binding.linearSurfaceMappingContainer.setOnClickListener {
             mappingDrawType = 2
-            linearSurfaceInfosContainer.visibility = VISIBLE
+            binding.linearSurfaceInfosContainer.visibility = VISIBLE
             showMappingTypeDialog()
         }
 
-        fabDistanceMapping.setOnClickListener {
+        binding.fabDistanceMapping.setOnClickListener {
             mappingDrawType = 1
 
-            linearSurfaceInfosContainer.visibility = GONE
+            binding.linearSurfaceInfosContainer.visibility = GONE
             showMappingTypeDialog()
         }
 
-        linearDistanceMappingContainer.setOnClickListener {
+        binding.linearDistanceMappingContainer.setOnClickListener {
             mappingDrawType = 1
 
-            linearSurfaceInfosContainer.visibility = GONE
+            binding.linearSurfaceInfosContainer.visibility = GONE
             showMappingTypeDialog()
         }
 
-        imageMapTypeActionMapping.setOnClickListener {
-            cardPopupMenuMapsTypeMapping.visibility = VISIBLE
+        binding.imageMapTypeActionMapping.setOnClickListener {
+            binding.cardPopupMenuMapsTypeMapping.visibility = VISIBLE
         }
 
-        imageMapTypeMapping.setOnClickListener {
-            cardPopupMenuMapsTypeMapping.visibility = VISIBLE
+        binding.imageMapTypeMapping.setOnClickListener {
+            binding.cardPopupMenuMapsTypeMapping.visibility = VISIBLE
         }
 
-        imageBackMappingParcelle.setOnClickListener {
+        binding.imageBackMappingParcelle.setOnClickListener {
             finish()
         }
 
-        linearSatelliteTypeMappingContainer.setOnClickListener {
+        binding.linearSatelliteTypeMappingContainer.setOnClickListener {
             googleMaps.mapType = MAP_TYPE_SATELLITE
-            cardPopupMenuMapsTypeMapping.visibility = GONE
+            binding.cardPopupMenuMapsTypeMapping.visibility = GONE
         }
 
-        linearTerrainTypeMappingContainer.setOnClickListener {
+        binding.linearTerrainTypeMappingContainer.setOnClickListener {
             googleMaps.mapType = MAP_TYPE_TERRAIN
-            cardPopupMenuMapsTypeMapping.visibility = GONE
+            binding.cardPopupMenuMapsTypeMapping.visibility = GONE
         }
 
-        linearOrdinaireTypeMappingContainer.setOnClickListener {
+        binding.linearOrdinaireTypeMappingContainer.setOnClickListener {
             googleMaps.mapType = MAP_TYPE_NORMAL
-            cardPopupMenuMapsTypeMapping.visibility = GONE
+            binding.cardPopupMenuMapsTypeMapping.visibility = GONE
         }
 
-        imageCancelMappingParcelle.setOnClickListener {
+        binding.imageCancelMappingParcelle.setOnClickListener {
             Commons.showMessage(
                 message = "Arreter le mapping ?",
                 context = this,
@@ -716,7 +718,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
             )
         }
 
-        imageDeleteMarkerMapping.setOnClickListener {
+        binding.imageDeleteMarkerMapping.setOnClickListener {
             markersMap?.clear()
             parcelleMapping.mutableWayPoints?.clear()
             parcellePolyOptions.points.clear()
@@ -724,33 +726,33 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
             googleMaps.clear()
         }
 
-        imageDeleteMarkerMapping.setOnClickListener {
+        binding.imageDeleteMarkerMapping.setOnClickListener {
             parcellePolygon?.remove()
         }
 
-        imageUndoMarkerMapping.setOnClickListener {
+        binding.imageUndoMarkerMapping.setOnClickListener {
             undoMarker()
         }
 
-        imageStartTrackGPSMapping.setOnClickListener {
+        binding.imageStartTrackGPSMapping.setOnClickListener {
             if (trackingGPSStarted) {
                 googleMaps.setOnMyLocationChangeListener(null)
-                imageStartTrackGPSMapping.setImageResource(R.drawable.ic_start_gps_mapping)
-                imageStartTrackGPSMapping.clearAnimation()
+                binding.imageStartTrackGPSMapping.setImageResource(R.drawable.ic_start_gps_mapping)
+                binding.imageStartTrackGPSMapping.clearAnimation()
             } else {
                 googleMaps.setOnMyLocationChangeListener(this)
-                imageStartTrackGPSMapping.setImageResource(R.drawable.ic_stop_gps_mapping)
-                imageStartTrackGPSMapping.startAnimation(blink)
+                binding.imageStartTrackGPSMapping.setImageResource(R.drawable.ic_stop_gps_mapping)
+                binding.imageStartTrackGPSMapping.startAnimation(blink)
             }
 
             trackingGPSStarted = !trackingGPSStarted
         }
 
-        imagePlaceMarkerGPSMapping.setOnClickListener {
+        binding.imagePlaceMarkerGPSMapping.setOnClickListener {
             placeMarker(googleMaps.cameraPosition.target)
         }
 
-        imageSaveMarkerGPSMapping.setOnClickListener {
+        binding.imageSaveMarkerGPSMapping.setOnClickListener {
             Commons.showMessage(
                 message = "Enregistrer le tracé ?",
                 context = this,
@@ -759,7 +761,7 @@ class ParcelleMappingActivity : AppCompatActivity(), OnMapReadyCallback,
                 callback = ::saveWorkringParcelle
             )
         }
-        imageSaveWorkMapping.setOnClickListener {
+        binding.imageSaveWorkMapping.setOnClickListener {
             Commons.showMessage(
                 message = "Enregistrer le tracé ?",
                 context = this,

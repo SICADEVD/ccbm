@@ -23,6 +23,7 @@ import ci.progbandama.mobile.adapters.InsecteAdapter
 import ci.progbandama.mobile.adapters.MatiereAdapter
 import ci.progbandama.mobile.adapters.NineItemAdapter
 import ci.progbandama.mobile.adapters.OnlyFieldAdapter
+import ci.progbandama.mobile.databinding.ActivitySuiviApplicationBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -40,7 +41,6 @@ import com.google.gson.reflect.TypeToken
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
-import kotlinx.android.synthetic.main.activity_suivi_application.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -249,10 +249,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 parcelle_id = parcelleCommon.id.toString()
                 applicateur = applicateurCommon.id.toString()
 
-                maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
-                autreMaladieStr = GsonUtils.toJson((recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" })
+                maladiesStr = GsonUtils.toJson(binding.selectListMaladieSuiviApplication.selectedStrings)
+                autreMaladieStr = GsonUtils.toJson((binding.recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" })
 
-                pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
+                pesticidesStr = GsonUtils.toJson( (binding.recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
                     PesticidesApplicationModel(
                         nom = it.value,
                         toxicicologie = it.value1,
@@ -269,10 +269,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair(getString(R.string.produits_pythos_enr_gistr_s), (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString(commaReplace = "\n") ))
-            this.add(Pair(getString(R.string.maladies_observ_es_dans_la_parcelle), selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
-            this.add(Pair("Autre maladie/ravageur", (recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" }.toModifString(commaReplace = "\n") ))
-        }.map { MapEntry(it.first, it.second) }
+            this.add(Pair(getString(R.string.produits_pythos_enr_gistr_s), (binding.recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map { "Pesticide: ${it.value}| Toxicicologie: ${it.value1}| Nom commercial: ${it.value2}| Matières actives: ${it.value3}| Dose: ${it.value4}| Fqe: ${it.value5}\n" }.toModifString(commaReplace = "\n") ))
+            this.add(Pair(getString(R.string.maladies_observ_es_dans_la_parcelle), binding.selectListMaladieSuiviApplication.selectedStrings.toModifString(false) ))
+            this.add(Pair("Autre maladie/ravageur", (binding.recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" }.toModifString(commaReplace = "\n") ))
+        }?.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(suiviApplicationDatas as Object, mapEntries)
 
@@ -369,7 +369,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         matieresList?.add(matiere)
         matiereAdapter?.notifyDataSetChanged()
 
-        editMatiereActiveSuiviApplication.text = null
+        binding.editMatiereActiveSuiviApplication.text = null
     }
 
 
@@ -687,10 +687,10 @@ class SuiviApplicationActivity : AppCompatActivity() {
                     parcelle_id = parcelleCommon.id.toString()
                     applicateur = applicateurCommon.id.toString()
 
-                    maladiesStr = GsonUtils.toJson(selectListMaladieSuiviApplication.selectedStrings)
-                    autreMaladieStr = GsonUtils.toJson((recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" })
+                    maladiesStr = GsonUtils.toJson(binding.selectListMaladieSuiviApplication.selectedStrings)
+                    autreMaladieStr = GsonUtils.toJson((binding.recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).getOnlyItemAdded().map { "${it.nom}" })
 
-                    pesticidesStr = GsonUtils.toJson( (recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
+                    pesticidesStr = GsonUtils.toJson( (binding.recyclerPestListSApplic.adapter as NineItemAdapter).getMultiItemAdded().map {
                         PesticidesApplicationModel(
                             nom = it.value,
                             toxicicologie = it.value1,
@@ -726,7 +726,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
                         finished = true,
                         callback = {
                             Commons.playDraftSound(this)
-                            imageDraftBtn.startAnimation(
+                            binding.imageDraftBtn.startAnimation(
                                 Commons.loadShakeAnimation(
                                     this
                                 )
@@ -757,20 +757,20 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.qui_a_r_alis_l_application),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectPersonApplicSApplic,
+                spinner = binding.selectPersonApplicSApplic,
                 currentVal = applicationDrafted.personneApplication,
                 listIem = resources.getStringArray(R.array.personne_applicant)
                     ?.toList() ?: listOf(),
                 onChanged = {
                     if(it == 1){
-                        containerListApplicSApplic.visibility = View.VISIBLE
-                        containerIndepenSApplic.visibility = View.GONE
+                        binding.containerListApplicSApplic.visibility = View.VISIBLE
+                        binding.containerIndepenSApplic.visibility = View.GONE
                     }else if(it == 2){
-                        containerListApplicSApplic.visibility = View.GONE
-                        containerIndepenSApplic.visibility = View.VISIBLE
+                        binding.containerListApplicSApplic.visibility = View.GONE
+                        binding.containerIndepenSApplic.visibility = View.VISIBLE
                     }else{
-                        containerListApplicSApplic.visibility = View.GONE
-                        containerIndepenSApplic.visibility = View.GONE
+                        binding.containerListApplicSApplic.visibility = View.GONE
+                        binding.containerIndepenSApplic.visibility = View.GONE
                     }
                 },
                 onSelected = { itemId, visibility ->
@@ -779,7 +779,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             val listApplicateur = ProgBandRoomDatabase.getDatabase(this)?.concernesDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
             Commons.setListenerForSpinner(this,
                 getString(R.string.qui_est_l_applicateur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectListApplicSApplic,
+                spinner = binding.selectListApplicSApplic,
                 currentVal = listApplicateur?.filter { it.id.toString() == applicationDrafted.applicateur }?.map { "${it.firstname} ${it.lastname}" }?.firstOrNull(),
                 listIem = listApplicateur?.map { "${it.firstname} ${it.lastname}" }
                     ?.toList() ?: listOf(),
@@ -792,7 +792,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.poss_de_t_il_un_epi),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectIndependantEpiSApplic,
+                spinner = binding.selectIndependantEpiSApplic,
                 currentVal = applicationDrafted.independantEpi,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -801,13 +801,13 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 },
                 onSelected = { itemId, visibility ->
                     if(itemId==1){
-                        containerEtatEpiSApplic.visibility = visibility
+                        binding.containerEtatEpiSApplic.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 "Avez-vous d' autres maladies/ravageur ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectAutreMaladRavYesOrNoSuiviAppli,
+                spinner = binding.selectAutreMaladRavYesOrNoSuiviAppli,
                 currentVal = applicationDrafted.reponse,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -816,13 +816,13 @@ class SuiviApplicationActivity : AppCompatActivity() {
                 },
                 onSelected = { itemId, visibility ->
                     if(itemId==1){
-                        containerAutreMaladRavSuiviApplication.visibility = visibility
+                        binding.containerAutreMaladRavSuiviApplication.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 "A t'il suivi une formation ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectSuiviFormationSApplic,
+                spinner = binding.selectSuiviFormationSApplic,
                 currentVal = applicationDrafted.suiviFormation,
                 listIem = resources.getStringArray(R.array.YesOrNo)
                     ?.toList() ?: listOf(),
@@ -833,7 +833,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
             Commons.setListenerForSpinner(this,
                 "A t'il une attestation ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectAttestionSApplic,
+                spinner = binding.selectAttestionSApplic,
                 currentVal = applicationDrafted.attestion,
                 listIem = resources.getStringArray(R.array.YesOrNo)
                     ?.toList() ?: listOf(),
@@ -844,7 +844,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
             Commons.setListenerForSpinner(this,
                 "A t'il un bilan de santé ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectBilanSanteSApplic,
+                spinner = binding.selectBilanSanteSApplic,
                 currentVal = applicationDrafted.bilanSante,
                 listIem = resources.getStringArray(R.array.YesOrNo)
                     ?.toList() ?: listOf(),
@@ -855,7 +855,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
             Commons.setListenerForSpinner(this,
                 "Est-il en bon état ?",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectEtatEpiSApplic,
+                spinner = binding.selectEtatEpiSApplic,
                 currentVal = applicationDrafted.etatEpi,
                 listIem = resources.getStringArray(R.array.YesOrNo)
                     ?.toList() ?: listOf(),
@@ -867,24 +867,29 @@ class SuiviApplicationActivity : AppCompatActivity() {
 //            LogUtils.d(applicationDrafted.maladiesStr)
 
             if(applicationDrafted.maladiesStr.isNullOrEmpty() == false){
-                Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+                Commons.setupItemMultiSelection(this, binding.selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
                     currentList = GsonUtils.fromJson(applicationDrafted.maladiesStr, object : TypeToken<MutableList<String>>(){}.type)
                     ){
 
                 }
             }else{
 //                LogUtils.d(maladieList)
-                Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
+                Commons.setupItemMultiSelection(this, binding.selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées dans la parcelle ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf(),
                 ){
 
                 }
             }
 
-            (recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).setupList(GsonUtils.fromJson<MutableList<String>?>(applicationDrafted.autreMaladieStr, object : TypeToken<MutableList<String>>(){}.type).map { CommonData(id=0, nom = it) }?.toMutableList())
+            GsonUtils.fromJson<MutableList<String>?>(applicationDrafted.autreMaladieStr, object : TypeToken<MutableList<String>>(){}.type).map { CommonData(id=0, nom = it) }?.toMutableList()
+                ?.let {
+                    (binding.recyclerAutreMaladiRavSuiviApplication.adapter as OnlyFieldAdapter).setupList(
+                        it
+                    )
+                }
 
 //            selectListMaladieSuiviApplication.setItems(GsonUtils.fromJson<List<String>>(applicationDrafted.maladiesStr, object : TypeToken<List<String>>() {}.type))
 
-            (recyclerPestListSApplic.adapter as NineItemAdapter).setDataToRvItem(
+            (binding.recyclerPestListSApplic.adapter as NineItemAdapter).setDataToRvItem(
                 (GsonUtils.fromJson<MutableList<PesticidesApplicationModel>>(applicationDrafted.pesticidesStr, object : TypeToken<MutableList<PesticidesApplicationModel>>() {}.type)).map {
                     AdapterItemModel(
                         id=0,
@@ -909,41 +914,43 @@ class SuiviApplicationActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var binding: ActivitySuiviApplicationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suivi_application)
+        binding = ActivitySuiviApplicationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
             resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
-        editHeureDebutSuiviApplication.setOnClickListener {
-            configHour(editHeureDebutSuiviApplication)
+        binding.editHeureDebutSuiviApplication.setOnClickListener {
+            configHour(binding.editHeureDebutSuiviApplication)
         }
 
-        editDateSuiviApplication.setOnClickListener {
-            configDate(editDateSuiviApplication)
+        binding.editDateSuiviApplication.setOnClickListener {
+            configDate(binding.editDateSuiviApplication)
         }
 
         Commons.setOnlyOneITemSApplicRV(this,
-            recyclerAutreMaladiRavSuiviApplication,
-            clickSaveAutreMaladiRavSuiviApplication,
-            editAutreMaladiRavSuiviApplication){
+            binding.recyclerAutreMaladiRavSuiviApplication,
+            binding.clickSaveAutreMaladiRavSuiviApplication,
+            binding.editAutreMaladiRavSuiviApplication){
 
         }
 
         setOtherListen()
 
-        clickSaveSuiviApplication.setOnClickListener {
+        binding.clickSaveSuiviApplication.setOnClickListener {
             collectDatas()
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftSuiviApplication(draftedDataApplicateur ?: DataDraftedModel(uid = 0))
         }
 
@@ -969,24 +976,24 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
     private fun setOtherListen() {
 
-        Commons.addNotZeroAtFirstToET(editFrequencPestSApplic)
-        Commons.addNotZeroAtFirstToET(editDosePestSApplic)
-        Commons.addNotZeroAtFirstToET(editQuantPestSApplic)
-        Commons.addNotZeroAtFirstToET(editDelaiProduitJourSuiviApplication)
+        Commons.addNotZeroAtFirstToET(binding.editFrequencPestSApplic)
+        Commons.addNotZeroAtFirstToET(binding.editDosePestSApplic)
+        Commons.addNotZeroAtFirstToET(binding.editQuantPestSApplic)
+        Commons.addNotZeroAtFirstToET(binding.editDelaiProduitJourSuiviApplication)
 
         Commons.setNineItremRV(this,
-            recyclerPestListSApplic,
-            clickAddPestListSApplic,
-            selectPestNomSApplic,
-            selectPestToxicoSApplic,
-            selectDoseUniteAppliPhyt,
-            selectQuantUniteAppliPhyt,
+            binding.recyclerPestListSApplic,
+            binding.clickAddPestListSApplic,
+            binding.selectPestNomSApplic,
+            binding.selectPestToxicoSApplic,
+            binding.selectDoseUniteAppliPhyt,
+            binding.selectQuantUniteAppliPhyt,
             null,
-            editNomComPestSApplic,
-            editDosePestSApplic,
-            editQuantPestSApplic,
-            editFrequencPestSApplic,
-            editMatiereActiveSuiviApplication,
+            binding.editNomComPestSApplic,
+            binding.editDosePestSApplic,
+            binding.editQuantPestSApplic,
+            binding.editFrequencPestSApplic,
+            binding.editMatiereActiveSuiviApplication,
             engageItem = 2,
             libeleList = arrayListOf()
         )
@@ -998,19 +1005,19 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.qui_a_r_alis_l_application),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPersonApplicSApplic,
+            spinner = binding.selectPersonApplicSApplic,
             listIem = resources.getStringArray(R.array.personne_applicant)
                 ?.toList() ?: listOf(),
             onChanged = {
                 if(it == 1){
-                    containerListApplicSApplic.visibility = View.VISIBLE
-                    containerIndepenSApplic.visibility = View.GONE
+                    binding.containerListApplicSApplic.visibility = View.VISIBLE
+                    binding.containerIndepenSApplic.visibility = View.GONE
                 }else if(it == 2){
-                    containerListApplicSApplic.visibility = View.GONE
-                    containerIndepenSApplic.visibility = View.VISIBLE
+                    binding.containerListApplicSApplic.visibility = View.GONE
+                    binding.containerIndepenSApplic.visibility = View.VISIBLE
                 }else{
-                    containerListApplicSApplic.visibility = View.GONE
-                    containerIndepenSApplic.visibility = View.GONE
+                    binding.containerListApplicSApplic.visibility = View.GONE
+                    binding.containerIndepenSApplic.visibility = View.GONE
                 }
             },
             onSelected = { itemId, visibility ->
@@ -1019,7 +1026,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
         val listApplicateur = ProgBandRoomDatabase.getDatabase(this)?.concernesDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         Commons.setListenerForSpinner(this,
             getString(R.string.qui_est_l_applicateur),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectListApplicSApplic,
+            spinner = binding.selectListApplicSApplic,
             listIem = listApplicateur?.map { "${it.firstname} ${it.lastname}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1031,7 +1038,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             "Avez-vous d' autres maladies/ravageur ?",getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAutreMaladRavYesOrNoSuiviAppli,
+            spinner = binding.selectAutreMaladRavYesOrNoSuiviAppli,
             //currentVal = applicationDrafted.independantEpi,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1040,13 +1047,13 @@ class SuiviApplicationActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if(itemId==1){
-                    containerAutreMaladRavSuiviApplication.visibility = visibility
+                    binding.containerAutreMaladRavSuiviApplication.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.poss_de_t_il_un_epi),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectIndependantEpiSApplic,
+            spinner = binding.selectIndependantEpiSApplic,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1054,11 +1061,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if(itemId==1){
-                    containerEtatEpiSApplic.visibility = visibility
+                    binding.containerEtatEpiSApplic.visibility = visibility
                 }
             })
 
-        Commons.setupItemMultiSelection(this, selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
+        Commons.setupItemMultiSelection(this, binding.selectListMaladieSuiviApplication, "Quelles sont les maladies/ravageurs observées ?", maladieList?.map { CommonData(0, it) }?.toMutableList()?: mutableListOf() ){
 
         }
 
@@ -1083,7 +1090,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionSApplic,
+            spinner = binding.selectSectionSApplic,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1119,7 +1126,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteSApplic,
+            spinner = binding.selectLocaliteSApplic,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1160,7 +1167,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurSApplic,
+            spinner = binding.selectProducteurSApplic,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1204,7 +1211,7 @@ class SuiviApplicationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectParcelleSApplic,
+            spinner = binding.selectParcelleSApplic,
             listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
                 ?.toList() ?: listOf(),
             onChanged = {

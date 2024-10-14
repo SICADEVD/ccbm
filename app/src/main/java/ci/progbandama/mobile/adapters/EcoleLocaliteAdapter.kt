@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.EcoleLocaliteAdapter.*
+import ci.progbandama.mobile.databinding.SchoolItemsListBinding
 import ci.progbandama.mobile.tools.Commons
 import com.blankj.utilcode.util.LogUtils
-import kotlinx.android.synthetic.main.school_items_list.view.*
 
 class EcoleLocaliteAdapter(val ecolesList: MutableList<String>): RecyclerView.Adapter<EcolelocaliteHolder>()  {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EcolelocaliteHolder {
-        return EcolelocaliteHolder(LayoutInflater.from(parent.context).inflate(R.layout.school_items_list, parent, false))
+        return EcolelocaliteHolder(SchoolItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
 
@@ -36,7 +36,7 @@ class EcoleLocaliteAdapter(val ecolesList: MutableList<String>): RecyclerView.Ad
     override fun getItemCount(): Int = ecolesList.size
 
 
-    class EcolelocaliteHolder(var ecoleHolder: View): RecyclerView.ViewHolder(ecoleHolder) {
+    class EcolelocaliteHolder(var ecoleHolder: SchoolItemsListBinding): RecyclerView.ViewHolder(ecoleHolder.root) {
         val ecoleLabel = ecoleHolder.labelEcoleItems
         val ecoleDelete = ecoleHolder.imageDeleteEcoleItems
     }

@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.CalculEstimationActivity
+import ci.progbandama.mobile.databinding.ActivityCalculEstimationPreviewBinding
 import ci.progbandama.mobile.models.EstimationModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_calcul_estimation_preview.*
 
 class CalculEstimationPreviewActivity : AppCompatActivity() {
 
@@ -19,13 +19,15 @@ class CalculEstimationPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityCalculEstimationPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calcul_estimation_preview)
+        binding = ActivityCalculEstimationPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
@@ -35,28 +37,28 @@ class CalculEstimationPreviewActivity : AppCompatActivity() {
                 draftID = it.getIntExtra("draft_id", 0)
 
                 estimationDatas?.let { estimation ->
-                    labelLocaliteNomEstimationPreview.text = estimation.localiteNom
-                    labelCampagneNomEstimationPreview.text = estimation.campagnesNom
-                    labelProducteurNomEstimationPreview.text = estimation.producteurNom
-                    labelParclelleNomEstimationPreview.text = estimation.parcelleNom
-                    labelTypEstEstimationPreview.text = estimation.typeEstimation
-                    labelSuperficieEstimationPreview.text = estimation.superficie
-                    labelPAjustEstimationPreview.text = estimation.ajustement
-                    labelRFinEstimationPreview.text = estimation.rendFinal
-                    labelREstiEstimationPreview.text = estimation.recolteEstime
-                    labelPiedA1EstimationPreview.text = estimation.ea1
-                    labelPiedA2EstimationPreview.text = estimation.ea2
-                    labelPiedA3EstimationPreview.text = estimation.ea3
-                    labelPiedB1EstimationPreview.text = estimation.eb1
-                    labelPiedB2EstimationPreview.text = estimation.eb2
-                    labelPiedB3EstimationPreview.text = estimation.eb3
-                    labelPiedC1EstimationPreview.text = estimation.ec1
-                    labelPiedC2EstimationPreview.text = estimation.ec2
-                    labelPiedC3EstimationPreview.text = estimation.ec3
-                    labelDateEstimationPreview.text = estimation.dateEstimation
+                    binding.labelLocaliteNomEstimationPreview.text = estimation.localiteNom
+                    binding.labelCampagneNomEstimationPreview.text = estimation.campagnesNom
+                    binding.labelProducteurNomEstimationPreview.text = estimation.producteurNom
+                    binding.labelParclelleNomEstimationPreview.text = estimation.parcelleNom
+                    binding.labelTypEstEstimationPreview.text = estimation.typeEstimation
+                    binding.labelSuperficieEstimationPreview.text = estimation.superficie
+                    binding.labelPAjustEstimationPreview.text = estimation.ajustement
+                    binding.labelRFinEstimationPreview.text = estimation.rendFinal
+                    binding.labelREstiEstimationPreview.text = estimation.recolteEstime
+                    binding.labelPiedA1EstimationPreview.text = estimation.ea1
+                    binding.labelPiedA2EstimationPreview.text = estimation.ea2
+                    binding.labelPiedA3EstimationPreview.text = estimation.ea3
+                    binding.labelPiedB1EstimationPreview.text = estimation.eb1
+                    binding.labelPiedB2EstimationPreview.text = estimation.eb2
+                    binding.labelPiedB3EstimationPreview.text = estimation.eb3
+                    binding.labelPiedC1EstimationPreview.text = estimation.ec1
+                    binding.labelPiedC2EstimationPreview.text = estimation.ec2
+                    binding.labelPiedC3EstimationPreview.text = estimation.ec3
+                    binding.labelDateEstimationPreview.text = estimation.dateEstimation
                 }
 
-                clickSaveEstimationPreview.setOnClickListener {
+                binding.clickSaveEstimationPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

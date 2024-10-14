@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.ActivityAuthentificationBinding
+import ci.progbandama.mobile.databinding.ActivityConfigurationBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -21,9 +23,6 @@ import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_configuration.*
-import kotlinx.android.synthetic.main.activity_parcelle.*
-import kotlinx.android.synthetic.main.activity_producteur.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import org.joda.time.DateTime
@@ -115,19 +114,19 @@ class ConfigurationActivity : AppCompatActivity() {
         MainScope().launch {
             if (hisSynchro) {
               if (hasError) {
-                  labelIndicatorConfiguration.text = "$info !"
-                  actionUpdate.visibility = View.VISIBLE
-                  loaderConfiguration.visibility = View.GONE
+                  binding.labelIndicatorConfiguration.text = "$info !"
+                  binding.actionUpdate.visibility = View.VISIBLE
+                  binding.loaderConfiguration.visibility = View.GONE
               }
             } else {
-                loaderConfiguration.visibility = View.VISIBLE
-                actionUpdate.visibility = View.GONE
+                binding.loaderConfiguration.visibility = View.VISIBLE
+                binding.actionUpdate.visibility = View.GONE
 
                 if (hasOtherDatas) {
-                    labelIndicatorConfiguration.text = "Mise à jour $info..."
+                    binding.labelIndicatorConfiguration.text = "Mise à jour $info..."
                 } else {
-                    labelIndicatorConfiguration.text = "Mise à jour terminée !"
-                    loaderConfiguration.visibility = View.INVISIBLE
+                    binding.labelIndicatorConfiguration.text = "Mise à jour terminée !"
+                    binding.loaderConfiguration.visibility = View.INVISIBLE
                     ActivityUtils.startActivity(DashboardAgentActivity::class.java)
 
                     SPUtils.getInstance().put(Constants.AGENT_ID, agentModel?.id!!)
@@ -3337,9 +3336,12 @@ class ConfigurationActivity : AppCompatActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
+    private lateinit var binding: ActivityConfigurationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_configuration)
+        binding = ActivityConfigurationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -3408,7 +3410,7 @@ class ConfigurationActivity : AppCompatActivity() {
             agentModel = agentDoa?.getAgent(agentID)
         }
 
-        actionUpdate.setOnClickListener {
+        binding.actionUpdate.setOnClickListener {
             ActivityUtils.finishAllActivities(true)
             ActivityUtils.startActivity(SplashActivity::class.java)
         }

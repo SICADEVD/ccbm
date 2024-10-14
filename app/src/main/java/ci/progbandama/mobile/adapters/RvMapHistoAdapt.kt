@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.cartographies.FarmDelimiterActivity
+import ci.progbandama.mobile.databinding.ItemMappingBinding
 import ci.progbandama.mobile.repositories.datas.CommonData
-import kotlinx.android.synthetic.main.item_mapping.view.mapp_historie_date
-import kotlinx.android.synthetic.main.item_mapping.view.mapp_historie_lib
 
 class RvMapHistoAdapt(private val context: Context, private val rvItems: List<CommonData>) :
     RecyclerView.Adapter<RvMapHistoAdapt.RVViewHolder>() {
@@ -17,8 +16,10 @@ class RvMapHistoAdapt(private val context: Context, private val rvItems: List<Co
     val activity = context as FarmDelimiterActivity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_mapping, parent, false)
+        val view =
+                ItemMappingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context)
+//            .inflate(R.layout.item_mapping, parent, false)
         return RVViewHolder(view)
     }
 
@@ -38,9 +39,9 @@ class RvMapHistoAdapt(private val context: Context, private val rvItems: List<Co
         return rvItems.size
     }
 
-    inner class RVViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title_histo = itemView.mapp_historie_lib
-        val title_histo_date = itemView.mapp_historie_date
+    inner class RVViewHolder(itemView: ItemMappingBinding) : RecyclerView.ViewHolder(itemView.root) {
+        val title_histo = itemView.mappHistorieLib
+        val title_histo_date = itemView.mappHistorieDate
     }
 
 

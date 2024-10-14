@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.InspectionHeaderLayoutBinding
+import ci.progbandama.mobile.databinding.QuestionnaireItemsListBinding
+import ci.progbandama.mobile.databinding.QuestionnairePreviewItemsListBinding
 import ci.progbandama.mobile.models.QuestionResponseModel
-import kotlinx.android.synthetic.main.inspection_header_layout.view.*
-import kotlinx.android.synthetic.main.questionnaire_items_list.view.*
-import kotlinx.android.synthetic.main.questionnaire_preview_items_list.view.*
 
 
 /**
@@ -28,26 +28,30 @@ class QuestionnairePreviewAdapter(var pContext: Context, var pQuestionnaires: Mu
     private var selectionNotation: Int = 0
 
 
-    class QuesionnaireHolder(questionnaireView: View): ViewHolder(questionnaireView) {
+    class QuesionnaireHolder(questionnaireView: QuestionnairePreviewItemsListBinding): ViewHolder(questionnaireView.root) {
         var labelQuestion = questionnaireView.labelQuestionInspectionPreview
         var labelResponse = questionnaireView.labelResponseInspectionPreview
     }
 
 
-    class QuesionnaireTitleHolder(questionnaireTitleView: View): ViewHolder(questionnaireTitleView) {
+    class QuesionnaireTitleHolder(questionnaireTitleView: InspectionHeaderLayoutBinding): ViewHolder(questionnaireTitleView.root) {
         var labelHeaderInspection = questionnaireTitleView.labelHeaderInspectionItem
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var mQuestionnaireView: View? = null
+        var mQuestionnaireView: Any? = null
         var viewHolder: ViewHolder? = null
 
         if (viewType == LAYOUT_ONE) {
-            mQuestionnaireView = LayoutInflater.from(parent.context).inflate(R.layout.inspection_header_layout, parent, false)
+            mQuestionnaireView =
+                InspectionHeaderLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//                LayoutInflater.from(parent.context).inflate(R.layout.inspection_header_layout, parent, false)
             viewHolder = QuesionnaireTitleHolder(mQuestionnaireView)
         } else {
-            mQuestionnaireView = LayoutInflater.from(parent.context).inflate(R.layout.questionnaire_preview_items_list, parent, false)
+            mQuestionnaireView =
+                QuestionnairePreviewItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//                LayoutInflater.from(parent.context).inflate(R.layout.questionnaire_preview_items_list, parent, false)
             viewHolder = QuesionnaireHolder(mQuestionnaireView)
         }
 

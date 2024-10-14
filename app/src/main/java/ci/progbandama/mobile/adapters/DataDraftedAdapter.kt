@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.*
 import ci.progbandama.mobile.adapters.DataDraftedAdapter.DataDraftedHolder
+import ci.progbandama.mobile.databinding.DraftedItemsListBinding
 import ci.progbandama.mobile.models.DataDraftedModel
 import ci.progbandama.mobile.models.ParcelleModel
 import ci.progbandama.mobile.models.ProducteurModel
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.tools.Commons.Companion.modifyIcColor
-import kotlinx.android.synthetic.main.drafted_items_list.view.*
 
 
 /**
@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.drafted_items_list.view.*
 class DataDraftedAdapter(val context: Context, var draftedList: MutableList<DataDraftedModel>?): RecyclerView.Adapter<DataDraftedHolder>() {
 
 
-    class DataDraftedHolder(viewDataDrafted: View) : RecyclerView.ViewHolder(viewDataDrafted) {
+    class DataDraftedHolder(viewDataDrafted: DraftedItemsListBinding) : RecyclerView.ViewHolder(viewDataDrafted.root) {
 
         val labelNumberDraft = viewDataDrafted.labelDraftedNumberItem
         val labelDateDraft = viewDataDrafted.labelDraftedDateItem
@@ -37,7 +37,10 @@ class DataDraftedAdapter(val context: Context, var draftedList: MutableList<Data
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataDraftedHolder {
-        return DataDraftedHolder(LayoutInflater.from(context).inflate(R.layout.drafted_items_list, parent, false))
+        return DataDraftedHolder(
+            DraftedItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(context).inflate(R.layout.drafted_items_list, parent, false)
+        )
     }
 
 

@@ -8,7 +8,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
-import kotlinx.android.synthetic.main.row_multi_select_item.view.*
+import ci.progbandama.mobile.databinding.RowMultiSelectItemBinding
 import java.util.*
 
 class SearchableAdapter(
@@ -19,9 +19,10 @@ class SearchableAdapter(
     var singleSelection:Boolean=false
 ) : Filterable, RecyclerView.Adapter<SearchableAdapter.ViewHolder>() {
     private var itemClickListener: ItemClickListener = clickListener
+//    private lateinit var binding: RowMultiSelectItemBinding
 
-    inner class ViewHolder(val mView: View) :
-        RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(val mView: RowMultiSelectItemBinding) :
+        RecyclerView.ViewHolder(mView.root) {
 
         internal var titleTextView = mView.titleTextView
         internal var checkBox = mView.checkBox
@@ -31,9 +32,10 @@ class SearchableAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_multi_select_item, parent, false)
-        return ViewHolder(view)
+//        val view = LayoutInflater.from(parent.context)
+//            .inflate(R.layout.row_multi_select_item, parent, false)
+        val binding = RowMultiSelectItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -62,7 +64,7 @@ class SearchableAdapter(
             )
         }
 
-        holder.mView.setOnClickListener { view ->
+        holder.mView.root.setOnClickListener { view ->
             holder.checkBox.isChecked = !holder.checkBox.isChecked
         }
 

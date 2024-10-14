@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.ActivityAuthentificationBinding
 import ci.progbandama.mobile.models.AgentModel
 import ci.progbandama.mobile.models.CoopDao
 import ci.progbandama.mobile.repositories.apis.ApiClient
@@ -28,8 +29,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_authentification.*
-import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.coroutines.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -45,23 +44,22 @@ class AuthentificationActivity : AppCompatActivity() {
         const val TAG = "AuthentificationActivity.kt"
     }
 
-
     private var progressDialog: AlertDialog? = null
     var agentDoa: AgentDao? = null
     var coopDao: CoopDao? = null
 
 
     fun checkField(): Boolean {
-        return inputLogin.text?.length == 0 || inputPassword.text?.length == 0
+        return binding.inputLogin.text?.length == 0 || binding.inputPassword.text?.length == 0
     }
 
 
     fun bindDatas() {
-        inputLogin.text = Editable.Factory.getInstance().newEditable("abole".uppercase())
-        //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
-        //  inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
-        inputPassword.text = Editable.Factory.getInstance().newEditable("1234567")
-        //  inputPassword.text = Editable.Factory.getInstance().newEditable("fccdi@2022")
+        binding.inputLogin.text = Editable.Factory.getInstance().newEditable("abole".uppercase())
+        //  binding.inputLogin.text = Editable.Factory.getInstance().newEditable("cemoiuser@cemoi.com")
+        //  binding.inputLogin.text = Editable.Factory.getInstance().newEditable("cemoi.pauly@durabiliteci.com")
+        binding.inputPassword.text = Editable.Factory.getInstance().newEditable("1234567")
+        //  binding.inputPassword.text = Editable.Factory.getInstance().newEditable("fccdi@2022")
 
     }
 
@@ -76,7 +74,7 @@ class AuthentificationActivity : AppCompatActivity() {
 //    private suspend fun authentificateAgentCoroutine() {
 //        withContext(Dispatchers.IO) {
 //            val postBody = GsonUtils.toJson(
-//                AgentModel(codeApp = SPUtils.getInstance().getString(Constants.AGENT_CODE_APP), email = inputLogin.text?.trim().toString(), password = inputPassword.text?.trim().toString())
+//                AgentModel(codeApp = SPUtils.getInstance().getString(Constants.AGENT_CODE_APP), email = binding.inputLogin.text?.trim().toString(), password = binding.inputPassword.text?.trim().toString())
 //            )
 //
 //            val clientAuth: OkHttpClient = OkHttpClient.Builder()
@@ -132,7 +130,7 @@ class AuthentificationActivity : AppCompatActivity() {
 
     fun authentificateAgent() {
         try {
-            ApiClient.apiService.authAgent(user = AgentModel(codeApp = SPUtils.getInstance().getString(Constants.AGENT_CODE_APP), username = inputLogin.text?.trim().toString(), password = inputPassword.text?.trim().toString()))
+            ApiClient.apiService.authAgent(user = AgentModel(codeApp = SPUtils.getInstance().getString(Constants.AGENT_CODE_APP), username = binding.inputLogin.text?.trim().toString(), password = binding.inputPassword.text?.trim().toString()))
                 .enqueue(object: Callback<AgentAuthResponse> {
                     override fun onResponse(call: Call<AgentAuthResponse>, response: Response<AgentAuthResponse>) {
                         progressDialog?.dismiss()
@@ -308,10 +306,13 @@ class AuthentificationActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var binding: ActivityAuthentificationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authentification)
+        binding = ActivityAuthentificationBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -328,13 +329,13 @@ class AuthentificationActivity : AppCompatActivity() {
         progressDialog = progressDialogBuild.create()
         //progressDialog!!.setMessage(Editable.Factory.getInstance().newEditable("Connexion en cours..."))
 
-        imgBackAuth.setOnClickListener {
+        binding.imgBackAuth.setOnClickListener {
             finish()
             val intentConfiguration = Intent(this@AuthentificationActivity, ConfigurationBaseUrlActivity::class.java)
             startActivity(intentConfiguration)
         }
 
-        actionAuthentification.setOnClickListener {
+        binding.actionAuthentification.setOnClickListener {
             /*showMessage(
                 message = "Enregistrer le tracé ?",
                 context = this,

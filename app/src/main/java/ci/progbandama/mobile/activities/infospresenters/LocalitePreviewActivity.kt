@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.LocaliteActivity
+import ci.progbandama.mobile.databinding.ActivityLocalitePreviewBinding
 import ci.progbandama.mobile.models.LocaliteModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_localite_preview.*
 import java.lang.Exception
 
 
@@ -24,6 +24,7 @@ class LocalitePreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityLocalitePreviewBinding
 
     fun retrieveDatasFromIntent(bdle: Bundle?) {
         bdle?.let {
@@ -34,39 +35,39 @@ class LocalitePreviewActivity : AppCompatActivity() {
                 LogUtils.e(Commons.TAG, "DRAFT ID -> $draftID")
 
                 localiteDatas?.let { localite ->
-                    labelNomLocalitePreview.text = localite.nom
-                    labelTypeLocalitePreview.text = localite.type
-                    labelSousPrefectureLocalitePreview.text = localite.sousPref
-                    labelPopulationLocalitePreview.text = localite.pop
-                    labelCentreSanteYesNoLocalitePreview.text = localite.centreYesNo
-                    labelCentreSanteYesDistanceLocalitePreview.text = localite.centreDistance
-                    labelCentreSanteNomLocalitePreview.text = localite.centreNom
-                    labelEcoleYesNoLocalitePreview.text = localite.ecoleYesNo
+                    binding.labelNomLocalitePreview.text = localite.nom
+                    binding.labelTypeLocalitePreview.text = localite.type
+                    binding.labelSousPrefectureLocalitePreview.text = localite.sousPref
+                    binding.labelPopulationLocalitePreview.text = localite.pop
+                    binding.labelCentreSanteYesNoLocalitePreview.text = localite.centreYesNo
+                    binding.labelCentreSanteYesDistanceLocalitePreview.text = localite.centreDistance
+                    binding.labelCentreSanteNomLocalitePreview.text = localite.centreNom
+                    binding.labelEcoleYesNoLocalitePreview.text = localite.ecoleYesNo
 
                     LogUtils.e(Commons.TAG, localite.ecoleYesNo)
 
-                    labelEcoleYesNomsLocalitePreview.text = "Liste d'ecoles"
+                    binding.labelEcoleYesNomsLocalitePreview.text = "Liste d'ecoles"
 
-                    labelCentreSanteYesNoLocalitePreview.text = localite.centreYesNo
+                    binding.labelCentreSanteYesNoLocalitePreview.text = localite.centreYesNo
 
-                    labelEcoleNoDistanceLocalitePreview.text = localite.ecoleDistance
-                    labelEcoleNoNomLocalitePreview.text = localite.ecoleNom
-                    labelSourceEauLocalitePreview.text = localite.source
-                    labelSourceEauEtatLocalitePreview.text = localite.pompeYesNo
+                    binding.labelEcoleNoDistanceLocalitePreview.text = localite.ecoleDistance
+                    binding.labelEcoleNoNomLocalitePreview.text = localite.ecoleNom
+                    binding.labelSourceEauLocalitePreview.text = localite.source
+                    binding.labelSourceEauEtatLocalitePreview.text = localite.pompeYesNo
 
-                    labelElectriciteYesNoLocalitePreview.text = localite.cieYesNo
-                    labelMarketYesNoLocalitePreview.text = localite.marcheYesNo
+                    binding.labelElectriciteYesNoLocalitePreview.text = localite.cieYesNo
+                    binding.labelMarketYesNoLocalitePreview.text = localite.marcheYesNo
 
-                    labelMarketDayLocalitePreview.text = localite.dayMarche
+                    binding.labelMarketDayLocalitePreview.text = localite.dayMarche
 
-                    labelDechetYesNoLocalitePreview.text = localite.dechetYesNo
-                    labelNbreComiteLocalitePreview.text = localite.comite
+                    binding.labelDechetYesNoLocalitePreview.text = localite.dechetYesNo
+                    binding.labelNbreComiteLocalitePreview.text = localite.comite
 
-                    labelNbreFemmeLocalitePreview.text = localite.femmeAsso
-                    labelNbreJeuneLocalitePreview.text = localite.jeuneAsso
+                    binding.labelNbreFemmeLocalitePreview.text = localite.femmeAsso
+                    binding.labelNbreJeuneLocalitePreview.text = localite.jeuneAsso
 
-                    labelLatitudeLocalitePreview.text = localite.latitude
-                    labelLongitudeLocalitePreview.text = localite.longitude
+                    binding.labelLatitudeLocalitePreview.text = localite.latitude
+                    binding.labelLongitudeLocalitePreview.text = localite.longitude
                 }
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
@@ -78,14 +79,15 @@ class LocalitePreviewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_localite_preview)
+        binding = ActivityLocalitePreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         retrieveDatasFromIntent(intent.extras)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveLocalitePreview.setOnClickListener {
+        binding.clickSaveLocalitePreview.setOnClickListener {
             try {
                 Commons.showMessage(
                     "Etes-vous sur de vouloir faire ce enregistrement ?",

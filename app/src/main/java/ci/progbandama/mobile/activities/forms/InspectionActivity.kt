@@ -11,6 +11,7 @@ import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.InspectionPreviewActivity
 import ci.progbandama.mobile.activities.infospresenters.InspectionPreviewUpdateActivity
 import ci.progbandama.mobile.adapters.QuestionnaireReviewAdapter
+import ci.progbandama.mobile.databinding.ActivityEvaluationBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.interfaces.SectionCallback
 import ci.progbandama.mobile.itemviews.RecyclerItemDecoration
@@ -30,10 +31,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.*
 import com.google.gson.reflect.TypeToken
 import com.tingyik90.snackprogressbar.SnackProgressBarManager
-import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
-import kotlinx.android.synthetic.main.activity_evaluation.*
-import kotlinx.android.synthetic.main.activity_parcelle.labelTitleMenuAction
-import kotlinx.android.synthetic.main.activity_producteur_menage.clickCloseBtn
 import org.joda.time.DateTime
 import java.util.*
 import kotlin.collections.HashMap
@@ -95,7 +92,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     ""
                 }
             } ?: "" ,
-            spinner = selectSectionInspection,
+            spinner = binding.selectSectionInspection,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -130,7 +127,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteInspection,
+            spinner = binding.selectLocaliteInspection,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -171,7 +168,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurInspection,
+            spinner = binding.selectProducteurInspection,
             listIem = producteursList?.map { "${ it.nom } ${ it.prenoms }" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -198,7 +195,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
                             Commons.setListenerForSpinner(this@InspectionActivity,
                                 getString(R.string.inspection_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                                spinner = selectCertifInspection,
+                                spinner = binding.selectCertifInspection,
                                 currentVal = listCertif?.certification?.split(",")?.filter { currVal3 == it }?.let {
                                     if(it.isNotEmpty())
                                         it.first()
@@ -214,7 +211,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
                                             if(certificat.isNullOrEmpty() == false) {
                                                 cQuestionnairesReviewList?.clear()
-                                                recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
+                                                binding.recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
                                                 fetchQuestionnairesReview(false, certificat ?: "")
                                             }
                                         }else{
@@ -225,11 +222,11 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                                                 //LogUtils.d(certif)
                                                 if(certif.isNullOrEmpty() == false) {
                                                     cQuestionnairesReviewList?.clear()
-                                                    recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
+                                                    binding.recyclerQuesionnairesInspection.adapter?.notifyDataSetChanged()
                                                     fetchQuestionnairesReview(true, certif ?: "")
                                                 }
                                                 val cQuestionnairesReviewList: MutableList<QuestionResponseModel> = GsonUtils.fromJson(inpectDraft.reponseStringify, object : TypeToken<MutableList<QuestionResponseModel>>(){}.type)
-                                                (recyclerQuesionnairesInspection.adapter as QuestionnaireReviewAdapter).setListQuestion(cQuestionnairesReviewList?.toMutableList()?: arrayListOf())
+                                                (binding.recyclerQuesionnairesInspection.adapter as QuestionnaireReviewAdapter).setListQuestion(cQuestionnairesReviewList?.toMutableList()?: arrayListOf())
                                             }
 
                                         }
@@ -270,7 +267,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectParcelleInspection,
+            spinner = binding.selectParcelleInspection,
             listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -437,13 +434,13 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         )
 
         cQuestionnaireAdapter = QuestionnaireReviewAdapter(this, cQuestionnairesReviewList!!, notationsList, dateInspectionParm)
-        recyclerQuesionnairesInspection.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerQuesionnairesInspection.adapter = cQuestionnaireAdapter
+        binding.recyclerQuesionnairesInspection.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerQuesionnairesInspection.adapter = cQuestionnaireAdapter
 
         cQuestionnaireAdapter?.questionsListener = this
 
         val recyclerDecoration = RecyclerItemDecoration(this, 40, true, this)
-        recyclerQuesionnairesInspection.addItemDecoration(recyclerDecoration)
+        binding.recyclerQuesionnairesInspection.addItemDecoration(recyclerDecoration)
 
 //        recyclerQuesionnairesInspection.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 //            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -515,7 +512,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                     ""
                 }
             } ?: "",
-            spinner = selectEncadreurList,
+            spinner = binding.selectEncadreurList,
             listIem = encadreurList?.map { "${ it.firstname } ${ it.lastname }" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -594,7 +591,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                         finished = true,
                         callback = {
                             Commons.playDraftSound(this)
-                            imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                            binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                         },
                         positive = getString(R.string.ok),
                         deconnec = false,
@@ -615,7 +612,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
 
         checkCommentField()
 
-        dateInspection = editDateInspection.text.toString().trim()
+        dateInspection = binding.editDateInspection.text.toString().trim()
 
         if (dateInspection.isEmpty()) {
             showMessage(
@@ -732,7 +729,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
     fun collectDatasUpdate(intExtraUid: Int) {
 
         //LogUtils.d(intExtraUid)
-        dateInspection = editDateInspection.text.toString().trim()
+        dateInspection = binding.editDateInspection.text.toString().trim()
 
         if (dateInspection.isEmpty()) {
             showMessage(
@@ -975,7 +972,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             //LogUtils.d(inspectUid)
             if(inspectUid != 0) {
 //                labelTitleMenuAction.text = "MISE A JOUR\n FICHE INSPECTION"
-                clickSaveInspection.setOnClickListener {
+                binding.clickSaveInspection.setOnClickListener {
                     collectDatasUpdate(inspectUid)
                 }
                 inspectionData = ProgBandRoomDatabase.getDatabase(this)?.inspectionDao()?.getByUid(inspectUid)
@@ -985,7 +982,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             }
 
             commomUpdate.listOfValue = listOf<String>(inspectionDrafted.id.toString(), inspectionDrafted.uid.toString()).toMutableList()
-            labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
+            binding.labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
         }
 
         if(inspectionDrafted.parcelle.equals("0")){
@@ -997,7 +994,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         setupSectionSelection(inspectionDrafted.section ?: "",inspectionDrafted.localiteId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.encadreur ?: "")
 
-        editDateInspection.setText(inspectionDrafted.dateEvaluation)
+        binding.editDateInspection.setText(inspectionDrafted.dateEvaluation)
 
         val mQuestionsReviewToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
         cQuestionnairesReviewList = GsonUtils.fromJson(inspectionDrafted.reponseStringify, mQuestionsReviewToken)
@@ -1005,13 +1002,15 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         passSetupInspectModel(inspectionDrafted)
     }
 
+    private lateinit var binding: ActivityEvaluationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_evaluation)
+        binding = ActivityEvaluationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         snackProgressBarManager = SnackProgressBarManager(findViewById(android.R.id.content), lifecycleOwner = this)
-        snackProgressBarManager = Commons.defineSnackBarManager(snackProgressBarManager!!, linearActionContainerInspection, this)
+        snackProgressBarManager = Commons.defineSnackBarManager(snackProgressBarManager!!, binding.linearActionContainerInspection, this)
 
         //counterMainView = 0
 
@@ -1019,19 +1018,19 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
             resources.getDimension(com.intuit.ssp.R.dimen._5ssp))
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftInspection(draftedDataInspection ?: DataDraftedModel(uid = 0))
         }
 
-        clickSaveInspection.setOnClickListener {
+        binding.clickSaveInspection.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelInspection.setOnClickListener {
+        binding.clickCancelInspection.setOnClickListener {
             if(intent.getIntExtra("sync_uid", 0) != 0){
                 ActivityUtils.getActivityByContext(this)?.finish()
             }else {
@@ -1040,15 +1039,15 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             }
         }
 
-        editDateInspection.setOnClickListener {
-            configDate(editDateInspection)
+        binding.editDateInspection.setOnClickListener {
+            configDate(binding.editDateInspection)
         }
 
-        Commons.addNotZeroAtFirstToET(editNbrProductionEvalBesoin)
+        Commons.addNotZeroAtFirstToET(binding.editNbrProductionEvalBesoin)
 
         Commons.setListenerForSpinner(this@InspectionActivity,
             getString(R.string.choix_du_ou_des_certificats),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectCertifInspection,
+            spinner = binding.selectCertifInspection,
             listIem = arrayListOf(),
             onChanged = {
             },
@@ -1068,8 +1067,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                 val inspectUid = intent.getIntExtra("sync_uid", 0)
                 //LogUtils.d(inspectUid)
                 if(inspectUid != 0) {
-                    labelTitleMenuAction.text = "MISE A JOUR\n FICHE INSPECTION"
-                    clickSaveInspection.setOnClickListener {
+                    binding.labelTitleMenuAction.text = "MISE A JOUR\n FICHE INSPECTION"
+                    binding.clickSaveInspection.setOnClickListener {
                         collectDatasUpdate(inspectUid)
                     }
 //                    imageDraftBtn.visibility = View.GONE
@@ -1119,8 +1118,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                             val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
                             var tauxFif = (divide.times(100))
                             var positionBar = tauxFif
-                            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
-                            firstBarprogress.showProgressText(true)
+                            binding.firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+                            binding.firstBarprogress.showProgressText(true)
                         }
                     }else{
 
@@ -1148,8 +1147,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
                             val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
                             var tauxFif = (divide.times(100))
                             var positionBar = tauxFif
-                            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
-                            firstBarprogress.showProgressText(true)
+                            binding.firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+                            binding.firstBarprogress.showProgressText(true)
                         }
                     }
 
@@ -1212,8 +1211,8 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
             val divide = (dataCountVal.toDouble()/dataCountKey.toDouble())
             var tauxFif = (divide.times(100))
             var positionBar = tauxFif
-            firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
-            firstBarprogress.showProgressText(true)
+            binding.firstBarprogress.setProgressPercentage(positionBar.toDouble(), true)
+            binding.firstBarprogress.showProgressText(true)
         }
     }
 
@@ -1230,7 +1229,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         if(inspectionDrafted.sync_update == true || intent?.getIntExtra("sync_uid", 0) != 0){
             intent.putExtra("sync_uid", inspectionDrafted.uid.toInt())
             commomUpdate.listOfValue = listOf<String>(inspectionDrafted.id.toString(), inspectionDrafted.uid.toString()).toMutableList()
-            labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
+            binding.labelTitleMenuAction.text = "MISE A JOUR FICHE INSPECTION"
         }
 //        Commons.debugModelToJson(inspectionDrafted)
         dateInspectionParm = inspectionDrafted.dateEvaluation
@@ -1246,7 +1245,7 @@ class InspectionActivity : AppCompatActivity(), SectionCallback,
         setupSectionSelection(product?.section ?: "",product?.localitesId ?: "", inspectionDrafted.producteursId ?: "", inspectionDrafted.certificatStr ?: "", inspectionDrafted.parcelle ?: "")
         setupEncareurSelection(inspectionDrafted.formateursId ?: "")
 
-        editDateInspection.setText(inspectionDrafted.dateEvaluation)
+        binding.editDateInspection.setText(inspectionDrafted.dateEvaluation)
 
         //val mQuestionsReviewToken = object : TypeToken<MutableList<QuestionResponseModel>>(){}.type
         val questionResponseModelList = mutableListOf<QuestionResponseModel>()

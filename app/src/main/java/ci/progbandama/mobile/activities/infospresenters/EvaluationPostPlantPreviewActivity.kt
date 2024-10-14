@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.PostPlantingEvalActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityPostPlantingPreviewBinding
 import ci.progbandama.mobile.models.PostPlantingModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -13,7 +14,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_distribution_arbre_preview.*
 
 class EvaluationPostPlantPreviewActivity : AppCompatActivity() {
 
@@ -22,11 +22,14 @@ class EvaluationPostPlantPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityPostPlantingPreviewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post_planting_preview)
+        binding = ActivityPostPlantingPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener { finish() }
+        binding.clickCloseBtn.setOnClickListener { finish() }
 
         intent?.let {
             try {
@@ -46,15 +49,15 @@ class EvaluationPostPlantPreviewActivity : AppCompatActivity() {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
                 postPlantingDatas = it.getParcelableExtra("preview")
                 draftID = it.getIntExtra("draft_id", 0)
 
                 //LogUtils.d(Commons.TAG, GsonUtils.toJson(postPlantingDatas))
 
-                clickSaveDistributionArbrePreview.setOnClickListener {
+                binding.clickSaveDistributionArbrePreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

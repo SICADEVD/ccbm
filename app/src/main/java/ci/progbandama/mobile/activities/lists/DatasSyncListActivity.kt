@@ -15,13 +15,13 @@ import ci.progbandama.mobile.activities.forms.InspectionActivity
 import ci.progbandama.mobile.activities.forms.ParcelleActivity
 import ci.progbandama.mobile.activities.forms.ProducteurActivity
 import ci.progbandama.mobile.adapters.DataSyncedAdapter
+import ci.progbandama.mobile.databinding.ActivityDatasSyncListBinding
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.datas.CommonData
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_datas_sync_list.*
 import java.lang.Math.ceil
 
 
@@ -31,7 +31,7 @@ interface InstructionCallback {
 }
 
 @SuppressLint("All")
-class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_list) {
+class DatasSyncListActivity : AppCompatActivity() {
 
 
     private var currIndex: Int = 0
@@ -42,25 +42,28 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
     var fromGlobalMenu = ""
     var instructionCallback: InstructionCallback? = null
 
+    lateinit var binding: ActivityDatasSyncListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDatasSyncListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        imageSearchUpdate.setOnClickListener {
+        binding.imageSearchUpdate.setOnClickListener {
             if(it.visibility == VISIBLE) {
-                linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_button))
-                linearSearchContainerUpdate.visibility = VISIBLE
+                binding.linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_button))
+                binding.linearSearchContainerUpdate.visibility = VISIBLE
                 it.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
                 it.visibility = INVISIBLE
             }
         }
 
-        imageCloseSearchUpdate.setOnClickListener {
+        binding.imageCloseSearchUpdate.setOnClickListener {
             if(it.visibility == VISIBLE) {
-                imageSearchUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_button))
-                imageSearchUpdate.visibility = VISIBLE
-                linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
-                linearSearchContainerUpdate.visibility = GONE
+                binding.imageSearchUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_button))
+                binding.imageSearchUpdate.visibility = VISIBLE
+                binding.linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
+                binding.linearSearchContainerUpdate.visibility = GONE
             }
         }
 
@@ -73,7 +76,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
             var intentGoToModif: Intent? = null
             when(fromGlobalMenu.toUpperCase()){
                 "INSPECTION" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("${this.text} INSPECTION")
                     }
                     val dataList = progbandBase.inspectionDao().getAllNConformeOrNApplicableSync()
@@ -93,7 +96,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                     intentGoToModif = Intent(this@DatasSyncListActivity, InspectionActivity::class.java)
                 }
                 "PARCELLE" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("${this.text} PARCELLE")
                     }
                     val dataListLimit = progbandBase.parcelleDao().getSyncedLimit(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), 100)
@@ -119,7 +122,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                             val searchOt = ProgBandRoomDatabase.escapeSql(search)//search.replace("'", "''")
                             val dataListProd = progbandBase.producteurDoa().findProdByNameWithParc(searchOt)
 //                            LogUtils.d("onInstructionReceived", dataListProd)
-                            recyclerSyncedList.visibility = GONE
+                            binding.recyclerSyncedList.visibility = GONE
                             if(dataListProd.size > 0){
                                 val listOfParcelUniq = dataListProd.toSet().toList()
                                 commonDataList.clear()
@@ -155,7 +158,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                             val dataListProd = progbandBase.parcelleDao()?.getSyncedLimit(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), 35)
                             commonDataList.clear()
                             commonDataListCloned.clear()
-                            dataListProd.forEach {
+                            dataListProd?.forEach {
                                 if(it.producteurId?.toIntOrNull() != null){
 
                                     val prod = progbandBase.producteurDoa().getProducteurByID(it.producteurId?.toIntOrNull())
@@ -175,7 +178,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                     intentGoToModif = Intent(this@DatasSyncListActivity, ParcelleActivity::class.java)
                 }
                 "PRODUCTEUR" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("${this.text} PRODUCTEUR")
                     }
                     val dataListLimit = progbandBase.producteurDoa().getSyncedLimit(SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(), 100)
@@ -200,7 +203,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                             val searchOt = ProgBandRoomDatabase.escapeSql(search)
                             val dataListProd = progbandBase.producteurDoa().findProdByName(searchOt)
                             LogUtils.d("onInstructionReceived", dataListProd.map { it.fullName })
-                            recyclerSyncedList.visibility = GONE
+                            binding.recyclerSyncedList.visibility = GONE
                             if(dataListProd.size > 0){
                                 val listOfParcelUniq = dataListProd
                                 commonDataList.clear()
@@ -251,7 +254,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                 }
             }
 
-            imageSyncBtn.setOnClickListener {
+            binding.imageSyncBtn.setOnClickListener {
                 intentGoToModif?.let {
                     ActivityUtils.startActivity(it)
                     ActivityUtils.finishActivity(this@DatasSyncListActivity)
@@ -269,23 +272,23 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                 this,
                 commonDataList
             )
-            recyclerSyncedList.adapter = syncedDatasAdapter
-            recyclerSyncedList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding.recyclerSyncedList.adapter = syncedDatasAdapter
+            binding.recyclerSyncedList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             syncedDatasAdapter.notifyDataSetChanged()
             //refreshAdapter(commonDataList.subList(0, subSizeEnd))
 
             commonDataList?.let { SyncsList ->
                 if (SyncsList.isEmpty()) {
-                    recyclerSyncedList.visibility = View.GONE
-                    linearEmptyContainerSyncsList.visibility = View.VISIBLE
+                    binding.recyclerSyncedList.visibility = View.GONE
+                    binding.linearEmptyContainerSyncsList.visibility = View.VISIBLE
                 } else {
-                    recyclerSyncedList.visibility = View.VISIBLE
-                    linearEmptyContainerSyncsList.visibility = View.GONE
+                    binding.recyclerSyncedList.visibility = View.VISIBLE
+                    binding.linearEmptyContainerSyncsList.visibility = View.GONE
                 }
             }
         }
 
-        paginationContainerBack.setOnClickListener{
+        binding.paginationContainerBack.setOnClickListener{
             val currentVal = currIndex - 1
             if( ceil(paginSize) > currentVal && currentVal > 0){
                 val beCount = (currentVal - 1)*35
@@ -294,7 +297,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                 LogUtils.d(beCount, endCount, commonDataList.size)
 
                 if(currSize >= endCount && beCount >= 0){
-                    recyclerSyncedList.visibility = GONE
+                    binding.recyclerSyncedList.visibility = GONE
 //                    val subListForPage = commonDataList.subList(beCount, endCount)
                     //commonDataListCloned.addAll(commonDataList)
                     currIndex = currentVal
@@ -306,10 +309,10 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                     updateListRv(list)
                 }
             }
-            recyclerSyncedList.visibility = VISIBLE
+            binding.recyclerSyncedList.visibility = VISIBLE
         }
 
-        paginationContainerNext.setOnClickListener{
+        binding.paginationContainerNext.setOnClickListener{
             val currentVal = currIndex + 1
             if( ceil(paginSize) >= currentVal && currentVal > 0){
                 val beCount = currIndex*35
@@ -320,7 +323,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
                 if(beCount > 0){
                     if(endCount > currSize) endCount = currSize - 1
-                    recyclerSyncedList.visibility = GONE
+                    binding.recyclerSyncedList.visibility = GONE
 //                    commonDataListCloned.clear()
                     //commonDataListCloned.addAll(commonDataList)
                     val list = mutableListOf<CommonData>()
@@ -332,10 +335,10 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                     setPageCurrTitle(currIndex)
                 }
             }
-            recyclerSyncedList.visibility = VISIBLE
+            binding.recyclerSyncedList.visibility = VISIBLE
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
@@ -363,8 +366,8 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
 
 //        })
 
-        imageRunSearchUpdate.setOnClickListener {
-            val searchWord = editSearchUpdate.text?.toString()?.trim()
+        binding.imageRunSearchUpdate.setOnClickListener {
+            val searchWord = binding.editSearchUpdate.text?.toString()?.trim()
 
             //LogUtils.d(searchWord.toString().length, searchWord.toString())
             if (searchWord.toString().length < 3) {
@@ -373,7 +376,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
                 instructionCallback?.let {
                     it.onInstructionReceived(searchWord.toString(), {
                         LogUtils.d("IN VIEW", it.map { "${it.listOfValue?.first()}" })
-                        recyclerSyncedList.visibility = VISIBLE
+                        binding.recyclerSyncedList.visibility = VISIBLE
                         val commonDataListClonedF = it
 //                        LogUtils.d(it.size, it)
                         if(it.size > 0){
@@ -402,14 +405,14 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
         LogUtils.d(list.map { it.id })
         if(list.isEmpty()) return
         try{
-            (recyclerSyncedList.adapter as DataSyncedAdapter).updateItems(list)
+            (binding.recyclerSyncedList.adapter as DataSyncedAdapter).updateItems(list)
             list?.let { SyncsList ->
                 if (SyncsList.isEmpty()) {
-                    recyclerSyncedList.visibility = View.GONE
-                    linearEmptyContainerSyncsList.visibility = View.VISIBLE
+                    binding.recyclerSyncedList.visibility = View.GONE
+                    binding.linearEmptyContainerSyncsList.visibility = View.VISIBLE
                 } else {
-                    recyclerSyncedList.visibility = View.VISIBLE
-                    linearEmptyContainerSyncsList.visibility = View.GONE
+                    binding.recyclerSyncedList.visibility = View.VISIBLE
+                    binding.linearEmptyContainerSyncsList.visibility = View.GONE
                 }
             }
         }catch (ex: ConcurrentModificationException){
@@ -418,7 +421,7 @@ class DatasSyncListActivity : AppCompatActivity(R.layout.activity_datas_sync_lis
     }
 
     private fun setPageCurrTitle(currIndex: Int) {
-        labelTitlePaginate.text = currIndex.toString()
+        binding.labelTitlePaginate.text = currIndex.toString()
     }
 
     fun refreshAdapter(list: MutableList<CommonData>) {

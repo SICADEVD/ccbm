@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.InsecteItemsListBinding
 import ci.progbandama.mobile.models.InsecteRavageurModel
-import kotlinx.android.synthetic.main.insecte_items_list.view.*
 
 class InsecteAdapter(var insectesList: MutableList<InsecteRavageurModel>) : RecyclerView.Adapter<InsecteAdapter.InsecteHolder>() {
 
 
-    class InsecteHolder(insecteView: View) : RecyclerView.ViewHolder(insecteView) {
+    class InsecteHolder(insecteView: InsecteItemsListBinding) : RecyclerView.ViewHolder(insecteView.root) {
         var labelInsecteNom = insecteView.labelInsecteNomItems
         var labelInsecteQuantite = insecteView.labelInsecteQuantiteItems
         var labelInsecteDelete = insecteView.imageDeleteInsecteItems
@@ -19,7 +19,10 @@ class InsecteAdapter(var insectesList: MutableList<InsecteRavageurModel>) : Recy
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InsecteHolder {
-        return InsecteHolder(LayoutInflater.from(parent.context).inflate(R.layout.insecte_items_list, parent, false))
+        return InsecteHolder(
+            InsecteItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.insecte_items_list, parent, false)
+        )
     }
 
 

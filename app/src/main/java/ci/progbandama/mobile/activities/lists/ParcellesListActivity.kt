@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.ParcelleActivity
 import ci.progbandama.mobile.adapters.ParcelleAdapter
+import ci.progbandama.mobile.databinding.ActivityParcellesListBinding
 import ci.progbandama.mobile.models.ParcelleModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.ParcelleDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_parcelles_list.*
 import org.joda.time.DateTime
 
 class ParcellesListActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class ParcellesListActivity : AppCompatActivity() {
     var parcellesList: MutableList<ParcelleModel>? = null
     var parcelleAdapter: ParcelleAdapter? = null
 
+    lateinit var binding: ActivityParcellesListBinding
 
     fun retrieveDatas() {
         parcellesList = mutableListOf()
@@ -32,18 +33,18 @@ class ParcellesListActivity : AppCompatActivity() {
 
         parcelleAdapter = ParcelleAdapter(this, parcellesList)
 
-        recyclerParcelles.adapter = parcelleAdapter
-        recyclerParcelles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerParcelles.adapter = parcelleAdapter
+        binding.recyclerParcelles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationParcelles.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
+        binding.labelLastSynchronisationParcelles.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
 
         parcellesList?.let {
             if (it.isEmpty()) {
-                recyclerParcelles.visibility = View.GONE
-                linearEmptyContainerParcellesList.visibility = View.VISIBLE
+                binding.recyclerParcelles.visibility = View.GONE
+                binding.linearEmptyContainerParcellesList.visibility = View.VISIBLE
             } else {
-                recyclerParcelles.visibility = View.VISIBLE
-                linearEmptyContainerParcellesList.visibility = View.GONE
+                binding.recyclerParcelles.visibility = View.VISIBLE
+                binding.linearEmptyContainerParcellesList.visibility = View.GONE
             }
         }
     }
@@ -51,13 +52,14 @@ class ParcellesListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_parcelles_list)
+        binding = ActivityParcellesListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imgAddBtn.setOnClickListener {
+        binding.imgAddBtn.setOnClickListener {
             ActivityUtils.startActivity(ParcelleActivity::class.java)
         }
     }

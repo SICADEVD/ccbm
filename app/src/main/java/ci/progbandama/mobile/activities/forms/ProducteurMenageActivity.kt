@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.views.MultiSelectSpinner
 import ci.progbandama.mobile.activities.infospresenters.MenagePreviewActivity
+import ci.progbandama.mobile.databinding.ActivityProducteurBinding
+import ci.progbandama.mobile.databinding.ActivityProducteurMenageBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -28,7 +30,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_producteur_menage.*
 import java.util.ArrayList
 
 class ProducteurMenageActivity : AppCompatActivity() {
@@ -105,9 +106,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         val energiesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayEnergies)
-        selectEnergieMenage!!.adapter = energiesAdapter
+        binding.selectEnergieMenage!!.adapter = energiesAdapter
 
-        selectEnergieMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectEnergieMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 sourceEnergie = arrayEnergies[position]
 
@@ -270,7 +271,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun setupAtomisateurSelection() {
-        selectAtomisateurYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectAtomisateurYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 atomisateurYesNo = resources.getStringArray(R.array.YesOrNo)[position]
             }
@@ -294,9 +295,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }
 
         val typeMachinesAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayTypeMachines)
-        selectMachinePulMenage!!.adapter = typeMachinesAdapter
+        binding.selectMachinePulMenage!!.adapter = typeMachinesAdapter
 
-        selectMachinePulMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectMachinePulMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 machinePulverisation = arrayTypeMachines[position]
 
@@ -332,7 +333,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurMenage,
+            spinner = binding.selectProducteurMenage,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -494,28 +495,28 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun setupSelfTraitementYesNoSelection() {
-        selectTraitementYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectTraitementYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 traitementSelfYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (traitementSelfYesNo) {
                     getString(R.string.oui) -> {
-                        linearTypeMachinePulContainerMenage.visibility = View.VISIBLE
-                        linearMachinePulKeeperContainerMenage.visibility = View.VISIBLE
+                        binding.linearTypeMachinePulContainerMenage.visibility = View.VISIBLE
+                        binding.linearMachinePulKeeperContainerMenage.visibility = View.VISIBLE
 //                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.VISIBLE
 //                        linearChampsNoNumberContainerMenage.visibility = View.GONE
                     }
                     getString(R.string.non) -> {
-                        linearTypeMachinePulContainerMenage.visibility = View.GONE
-                        linearMachinePulKeeperContainerMenage.visibility = View.GONE
+                        binding.linearTypeMachinePulContainerMenage.visibility = View.GONE
+                        binding.linearMachinePulKeeperContainerMenage.visibility = View.GONE
 //                        linearAtomisateurContainerMenage.visibility = View.GONE
 //                        linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.GONE
 //                        linearChampsNoNumberContainerMenage.visibility = View.VISIBLE
                     }
                     else -> {
                         //linearTraiteYourselfFarmEquipmentYesNoContainerMenage.visibility = View.GONE
-                        linearTypeMachinePulContainerMenage.visibility = View.GONE
-                        linearMachinePulKeeperContainerMenage.visibility = View.GONE
+                        binding.linearTypeMachinePulContainerMenage.visibility = View.GONE
+                        binding.linearMachinePulKeeperContainerMenage.visibility = View.GONE
 //                        linearAtomisateurContainerMenage.visibility = View.GONE
 //                        linearChampsNoNumberContainerMenage.visibility = View.GONE
                     }
@@ -530,7 +531,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun setupFemmeActiviteYesNoSelection() {
-        selectFemmeActiviteYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectFemmeActiviteYesNoMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
 
                 femmeActiviteYesNo = resources.getStringArray(R.array.YesOrNo)[position]
@@ -598,9 +599,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
         val gardeMachinePulAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, gardeMachinePulList!!)
-        selectMachineKeeperMenage!!.adapter = gardeMachinePulAdapter
+        binding.selectMachineKeeperMenage!!.adapter = gardeMachinePulAdapter
 
-        selectMachineKeeperMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectMachineKeeperMenage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val gardeMachinePulverisateur = gardeMachinePulList!![position]
                 machinePulveKeeper = gardeMachinePulverisateur.nom!!
@@ -614,13 +615,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 
     fun collectDatas() {
-        if ( editNbreEnfant0a5Menage.text.toString().toUtilInt()?:0 < editNbreEnfantSansExtrMenage.text.toString().toUtilInt()?:0 ) {
+        if ( binding.editNbreEnfant0a5Menage.text.toString().toUtilInt()?:0 < binding.editNbreEnfantSansExtrMenage.text.toString().toUtilInt()?:0 ) {
             showMessage(getString(R.string.la_valeur_des_champs_pour_les_enfants_de_0_5_ans_incorrectes), this, callback = {})
             return
         }
 
-        if ( editNbreEnfant6a17Menage.text.toString().toUtilInt()?:0 < editNbre6A17EnfantSansExtrMenage.text.toString().toUtilInt()?:0
-            || editNbreEnfant6a17Menage.text.toString().toUtilInt()?:0 < editNbreEnfantScolariseMenage.text.toString().toUtilInt()?:0
+        if ( binding.editNbreEnfant6a17Menage.text.toString().toUtilInt()?:0 < binding.editNbre6A17EnfantSansExtrMenage.text.toString().toUtilInt()?:0
+            || binding.editNbreEnfant6a17Menage.text.toString().toUtilInt()?:0 < binding.editNbreEnfantScolariseMenage.text.toString().toUtilInt()?:0
             ) {
             showMessage(getString(R.string.la_valeur_des_champs_pour_les_enfants_de_6_17_ans_incorrectes), this, callback = {})
             return
@@ -650,15 +651,15 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 isSynced = false
                 //agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString()
 
-                sources_eaux_id = GsonUtils.toJson(selectEauPotablMenage.selectedStrings)
-                sources_energies_id = GsonUtils.toJson(selectEnergieMenage.selectedStrings)
-                ordures_menageres_id = GsonUtils.toJson(selectOrdureMenagMenage.selectedStrings)
+                sources_eaux_id = GsonUtils.toJson(binding.selectEauPotablMenage.selectedStrings)
+                sources_energies_id = GsonUtils.toJson(binding.selectEnergieMenage.selectedStrings)
+                ordures_menageres_id = GsonUtils.toJson(binding.selectOrdureMenagMenage.selectedStrings)
             }
         }
 
         val mapEntries: List<MapEntry>? = itemModel?.second?.map { MapEntry(it.first, it.second) }
 
-        Commons.debugModelToJson(producteurMenage)
+        //Commons.debugModelToJson(binding.producteurMenage)
 
         try {
             val intentMenagePreview = Intent(this, MenagePreviewActivity::class.java)
@@ -747,7 +748,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         quartierNom = ""
         //editQuartierMenage.text = null
         sourceEnergie = ""
-        selectEnergieMenage.setSelection(0)
+        binding.selectEnergieMenage.setSelection(0)
         ordureMenager = ""
         //selectOrdureMenage.setSelection(0)
         dechetYesNo = ""
@@ -765,11 +766,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
         machineEmpruntYesNo = ""
         machinePulveKeeper = ""
         machinePulverisationYesNo = ""
-        selectMachinePulMenage.setSelection(0)
-        selectMachineKeeperMenage.setSelection(0)
+        binding.selectMachinePulMenage.setSelection(0)
+        binding.selectMachineKeeperMenage.setSelection(0)
         equipementProtectionYesNo = ""
         traitementSelfYesNo = ""
-        selectTraitementYesNoMenage.setSelection(0)
+        binding.selectTraitementYesNoMenage.setSelection(0)
         traitementHolderNom = ""
         femmeActivite = ""
         femmeCacaoSuperficie = ""
@@ -777,7 +778,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         donFemmeCacaoSuperficie = ""
 
         donFemmeCacaoYesNo = ""
-        selectFemmeActiviteYesNoMenage.setSelection(0)
+        binding.selectFemmeActiviteYesNoMenage.setSelection(0)
         //selectDonCacaoYesNoMenage.setSelection(0)
 
         //editQuartierMenage.requestFocus()
@@ -811,9 +812,9 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 producteurs_id = producteurCommon.id.toString()
                 isSynced = false
 
-                sources_eaux_id = GsonUtils.toJson(selectEauPotablMenage.selectedStrings)
-                sources_energies_id = GsonUtils.toJson(selectEnergieMenage.selectedStrings)
-                ordures_menageres_id = GsonUtils.toJson(selectOrdureMenagMenage.selectedStrings)
+                sources_eaux_id = GsonUtils.toJson(binding.selectEauPotablMenage.selectedStrings)
+                sources_energies_id = GsonUtils.toJson(binding.selectEnergieMenage.selectedStrings)
+                ordures_menageres_id = GsonUtils.toJson(binding.selectOrdureMenagMenage.selectedStrings)
             }
         }
 
@@ -837,7 +838,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -869,17 +870,17 @@ class ProducteurMenageActivity : AppCompatActivity() {
         }else{
             selectStr.addAll(menageUndrafted?.sources_eaux_id?.split(",")?.toMutableList()?: arrayListOf())
         }
-        Commons.setupItemMultiSelection(this, selectEauPotablMenage, getString(R.string.o_procurez_vous_l_eau_potable),
+        Commons.setupItemMultiSelection(this, binding.selectEauPotablMenage, getString(R.string.o_procurez_vous_l_eau_potable),
             (AssetFileHelper.getListDataFromAsset(
                 16,
                 this
             ) as MutableList<SourceEauModel>)?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf(),
             currentList = selectStr){
 
-            if(it.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE else containerAutreSourceEauMenage.visibility = View.GONE
+            if(it.contains("Autre")) binding.containerAutreSourceEauMenage.visibility = View.VISIBLE else binding.containerAutreSourceEauMenage.visibility = View.GONE
         }
 
-        if(selectStr.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE
+        if(selectStr.contains("Autre")) binding.containerAutreSourceEauMenage.visibility = View.VISIBLE
 
 
         setupOrdurMenagMultiSelection(
@@ -889,7 +890,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.type_d_eaux_de_toilette),
             getString(R.string.la_liste_des_eaux_de_toilette_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEauToilMenage,
+            spinner = binding.selectEauToilMenage,
             currentVal = menageUndrafted.eauxToillette,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 1,
@@ -905,7 +906,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.type_d_eaux_de_vaisselle),
             getString(R.string.la_liste_des_eaux_de_vaisselle_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEauVaissMenage,
+            spinner = binding.selectEauVaissMenage,
             currentVal = menageUndrafted.eauxVaisselle,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 1,
@@ -922,7 +923,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.traitez_vous_vos_champs),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTraitementYesNoMenage,
+            spinner = binding.selectTraitementYesNoMenage,
             currentVal = menageUndrafted.traitementChamps,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui)), Pair(2, getString(R.string.non))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -932,19 +933,19 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearTypeMachinePulContainerMenage.visibility = visibility
-                    containerAtomisateurContainerMenage.visibility = visibility
-                    linearMachinePulKeeperContainerMenage.visibility = visibility
+                    binding.linearTypeMachinePulContainerMenage.visibility = visibility
+                    binding.containerAtomisateurContainerMenage.visibility = visibility
+                    binding.linearMachinePulKeeperContainerMenage.visibility = visibility
                 }else{
-                    containerNomApplicateurMenage.visibility = View.GONE
-                    containerTelpApplicateurMenage.visibility = View.GONE
+                    binding.containerNomApplicateurMenage.visibility = View.GONE
+                    binding.containerTelpApplicateurMenage.visibility = View.GONE
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quelle_machine_est_utilis_e),
             getString(R.string.la_liste_des_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMachinePulMenage,
+            spinner = binding.selectMachinePulMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = menageUndrafted.type_machines_id,
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -956,13 +957,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
-                if(itemId == 1) containerAutreMachineMenage.visibility = visibility
+                if(itemId == 1) binding.containerAutreMachineMenage.visibility = visibility
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.lieu_de_la_garde_machine),
             getString(R.string.la_liste_des_gardes_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMachineKeeperMenage,
+            spinner = binding.selectMachineKeeperMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = menageUndrafted.garde_machines_id,
             listIem = (AssetFileHelper.getListDataFromAsset(
@@ -974,13 +975,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
-                if(itemId == 1) containerAutreEndroitMenage.visibility = visibility
+                if(itemId == 1) binding.containerAutreEndroitMenage.visibility = visibility
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.votre_femme_fait_des_activit_s),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFemmeActiviteYesNoMenage,
+            spinner = binding.selectFemmeActiviteYesNoMenage,
             currentVal = menageUndrafted.activiteFemme,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -990,14 +991,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerFemmeActivitPrecisMenage.visibility = visibility
+                    binding.containerFemmeActivitPrecisMenage.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quelle_activit),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFemmeActiviteDefMenage,
+            spinner = binding.selectFemmeActiviteDefMenage,
             currentVal = menageUndrafted.typeActivite,
             itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
             listIem = resources.getStringArray(R.array.femmeActivite)
@@ -1008,23 +1009,23 @@ class ProducteurMenageActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
                     //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
-                    containerFemmeAgricoleMenage.visibility = visibility
-                    editSuperfDefFemmActMenage.visibility = View.VISIBLE
+                    binding.containerFemmeAgricoleMenage.visibility = visibility
+                    binding.editSuperfDefFemmActMenage.visibility = View.VISIBLE
                     //containerFemmeNonAgricoleMenage.visibility = View.GONE
-                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr), currentVal = menageUndrafted.nomActiviteAgricole)
+                    setupNomFemActiviteList(binding.selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr), currentVal = menageUndrafted.nomActiviteAgricole)
                 }else if(itemId == 2){
                     //setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
                     //containerFemmeNonAgricoleMenage.visibility = visibility
-                    containerFemmeAgricoleMenage.visibility = visibility
-                    editSuperfDefFemmActMenage.visibility = View.GONE
-                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteNAgr), currentVal = menageUndrafted.nomActiviteAgricole)
+                    binding.containerFemmeAgricoleMenage.visibility = visibility
+                    binding.editSuperfDefFemmActMenage.visibility = View.GONE
+                    setupNomFemActiviteList(binding.selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteNAgr), currentVal = menageUndrafted.nomActiviteAgricole)
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.comment_avez_vous_obtenu_le_capital_de_d_marrage),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectParcelObtenuDefMenage,
+            spinner = binding.selectParcelObtenuDefMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             currentVal = menageUndrafted.capitalDemarrage,
             listIem = resources.getStringArray(R.array.capitalDemarrag)
@@ -1034,7 +1035,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    conatinerFemmeAutrCapiDemaMenage.visibility = visibility
+                    binding.conatinerFemmeAutrCapiDemaMenage.visibility = visibility
                 }
             })
 
@@ -1042,7 +1043,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_des_quipements_de_protection_individuel_epi),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEquiDProtIndivMenage,
+            spinner = binding.selectEquiDProtIndivMenage,
             currentVal = menageUndrafted.equipements,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1052,14 +1053,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerEquiEtatMenage.visibility = visibility
+                    binding.containerEquiEtatMenage.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             "Pratiquez-vous la séparation des déchets ?",
             getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSepaDechMenage,
+            spinner = binding.selectSepaDechMenage,
             currentVal = menageUndrafted.separationMenage,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1074,7 +1075,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Pratiquez-vous la séparation des déchets ?",
             getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectSepaDechMenage,
+            spinner = binding.selectSepaDechMenage,
             currentVal = menageUndrafted.separationMenage,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1089,7 +1090,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Existe-t-il un wc pour le ménage ?",
             getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectYaWCMenage,
+            spinner = binding.selectYaWCMenage,
             currentVal = menageUndrafted.wc,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1104,7 +1105,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "Avez vous bénéficiez d'une formation ?",
             getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFormatFemmBenefMenage,
+            spinner = binding.selectFormatFemmBenefMenage,
             currentVal = menageUndrafted.formation,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1114,14 +1115,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerBenefDFormatMenage.visibility = visibility
+                    binding.containerBenefDFormatMenage.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             "Est-ce que cette activité vous a permis d'obtenir des revenus supplémentaires ?",
             getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFemmActPermRevenSuppMenage,
+            spinner = binding.selectFemmActPermRevenSuppMenage,
             currentVal = menageUndrafted.activiteRevenueSupplement,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1136,7 +1137,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             "L'équipement est-il en bon état?",
             getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEquiEtatMenage,
+            spinner = binding.selectEquiEtatMenage,
             currentVal = menageUndrafted.etatEpi,
             listIem = resources.getStringArray(R.array.etat_epi)
                 ?.toList() ?: listOf(),
@@ -1172,10 +1173,12 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     }
 
+    private lateinit var binding: ActivityProducteurMenageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_producteur_menage)
+        binding = ActivityProducteurMenageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -1184,20 +1187,20 @@ class ProducteurMenageActivity : AppCompatActivity() {
         prodMenagereDao = ProgBandRoomDatabase.getDatabase(this)?.producteurMenageDoa()
 
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveMenage.setOnClickListener {
+        binding.clickSaveMenage.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelMenage.setOnClickListener {
+        binding.clickCancelMenage.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftMenage(draftedDataMenage ?: DataDraftedModel(uid = 0))
         }
 
@@ -1216,15 +1219,15 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
     private fun setOtherListener() {
 
-        Commons.addNotZeroAtFirstToET(editNbreEnfant0a5Menage)
-        Commons.addNotZeroAtFirstToET(editNbreEnfant6a17Menage)
-        Commons.addNotZeroAtFirstToET(editNbreEnfantScolariseMenage)
-        Commons.addNotZeroAtFirstToET(editNbreEnfantSansExtrMenage)
-        Commons.addNotZeroAtFirstToET(editNbre6A17EnfantSansExtrMenage)
-        Commons.addNotZeroAtFirstToET(editNbreDBoisMenage)
-        Commons.addNotZeroAtFirstToET(editTempsDePratiquMenage)
+        Commons.addNotZeroAtFirstToET(binding.editNbreEnfant0a5Menage)
+        Commons.addNotZeroAtFirstToET(binding.editNbreEnfant6a17Menage)
+        Commons.addNotZeroAtFirstToET(binding.editNbreEnfantScolariseMenage)
+        Commons.addNotZeroAtFirstToET(binding.editNbreEnfantSansExtrMenage)
+        Commons.addNotZeroAtFirstToET(binding.editNbre6A17EnfantSansExtrMenage)
+        Commons.addNotZeroAtFirstToET(binding.editNbreDBoisMenage)
+        Commons.addNotZeroAtFirstToET(binding.editTempsDePratiquMenage)
 
-        editAnneeFormatFemmeMenage.setOnClickListener { showYearPickerDialog(editAnneeFormatFemmeMenage) }
+        binding.editAnneeFormatFemmeMenage.setOnClickListener { showYearPickerDialog(binding.editAnneeFormatFemmeMenage) }
 
     }
 
@@ -1288,7 +1291,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.type_d_eaux_de_toilette),
             getString(R.string.la_liste_des_eaux_de_toilette_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEauToilMenage,
+            spinner = binding.selectEauToilMenage,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 1,
                 this
@@ -1300,7 +1303,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             onSelected = { itemId, visibility ->
             })
 
-        Commons.setupItemMultiSelection(this, selectEauPotablMenage, getString(R.string.o_procurez_vous_l_eau_potable),
+        Commons.setupItemMultiSelection(this, binding.selectEauPotablMenage, getString(R.string.o_procurez_vous_l_eau_potable),
             (AssetFileHelper.getListDataFromAsset(
                 16,
                 this
@@ -1308,14 +1311,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
 //                listSelectEauPotableList.clear()
 //                listSelectEauPotableList.addAll(it?.toMutableList() ?: arrayListOf())
-                if(it.contains("Autre")) containerAutreSourceEauMenage.visibility = View.VISIBLE else containerAutreSourceEauMenage.visibility = View.GONE
+                if(it.contains("Autre")) binding.containerAutreSourceEauMenage.visibility = View.VISIBLE else binding.containerAutreSourceEauMenage.visibility = View.GONE
         }
 
 
         Commons.setListenerForSpinner(this,
             getString(R.string.type_d_eaux_de_vaisselle),
             getString(R.string.la_liste_des_eaux_de_vaisselle_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEauVaissMenage,
+            spinner = binding.selectEauVaissMenage,
             listIem = (AssetFileHelper.getListDataFromAsset(
                 1,
                 this
@@ -1349,7 +1352,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.traitez_vous_vos_champs),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTraitementYesNoMenage,
+            spinner = binding.selectTraitementYesNoMenage,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui)), Pair(2, getString(R.string.non))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1358,19 +1361,19 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearTypeMachinePulContainerMenage.visibility = visibility
-                    containerAtomisateurContainerMenage.visibility = visibility
-                    linearMachinePulKeeperContainerMenage.visibility = visibility
+                    binding.linearTypeMachinePulContainerMenage.visibility = visibility
+                    binding.containerAtomisateurContainerMenage.visibility = visibility
+                    binding.linearMachinePulKeeperContainerMenage.visibility = visibility
                 }else{
-                    containerNomApplicateurMenage.visibility = View.GONE
-                    containerTelpApplicateurMenage.visibility = View.GONE
+                    binding.containerNomApplicateurMenage.visibility = View.GONE
+                    binding.containerTelpApplicateurMenage.visibility = View.GONE
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quelle_machine_est_utilis_e),
             getString(R.string.la_liste_des_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMachinePulMenage,
+            spinner = binding.selectMachinePulMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (AssetFileHelper.getListDataFromAsset(
                 18,
@@ -1381,13 +1384,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
-                if(itemId == 1) containerAutreMachineMenage.visibility = visibility
+                if(itemId == 1) binding.containerAutreMachineMenage.visibility = visibility
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.lieu_de_la_garde_machine),
             getString(R.string.la_liste_des_gardes_machines_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMachineKeeperMenage,
+            spinner = binding.selectMachineKeeperMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = (AssetFileHelper.getListDataFromAsset(
                 2,
@@ -1398,13 +1401,13 @@ class ProducteurMenageActivity : AppCompatActivity() {
 
             },
             onSelected = { itemId, visibility ->
-                if(itemId == 1) containerAutreEndroitMenage.visibility = visibility
+                if(itemId == 1) binding.containerAutreEndroitMenage.visibility = visibility
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.est_ce_que_votre_conjoint_exerce_une_activit_g_n_ratrice_de_revenu),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFemmeActiviteYesNoMenage,
+            spinner = binding.selectFemmeActiviteYesNoMenage,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1413,14 +1416,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerFemmeActivitPrecisMenage.visibility = visibility
+                    binding.containerFemmeActivitPrecisMenage.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.quelle_activit),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFemmeActiviteDefMenage,
+            spinner = binding.selectFemmeActiviteDefMenage,
             itemChanged = arrayListOf(Pair(1, "Agricole"), Pair(2, "Non agricole")),
             listIem = resources.getStringArray(R.array.femmeActivite)
                 ?.toList() ?: listOf(),
@@ -1431,23 +1434,23 @@ class ProducteurMenageActivity : AppCompatActivity() {
 //                LogUtils.d(itemId, visibility)
                 if (itemId == 1) {
                     //setupPrecisionActiv(resources.getStringArray(R.array.agricoleActivite))
-                    containerFemmeAgricoleMenage.visibility = visibility
-                    editSuperfDefFemmActMenage.visibility = View.VISIBLE
+                    binding.containerFemmeAgricoleMenage.visibility = visibility
+                    binding.editSuperfDefFemmActMenage.visibility = View.VISIBLE
                     //containerFemmeNonAgricoleMenage.visibility = View.GONE
-                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr))
+                    setupNomFemActiviteList(binding.selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteAgr))
                 }else if(itemId == 2){
                     //setupPrecisionActiv(resources.getStringArray(R.array.noAgricoleActivite))
                     //containerFemmeNonAgricoleMenage.visibility = visibility
-                    containerFemmeAgricoleMenage.visibility = visibility
-                    editSuperfDefFemmActMenage.visibility = View.GONE
-                    setupNomFemActiviteList(selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteNAgr))
+                    binding.containerFemmeAgricoleMenage.visibility = visibility
+                    binding.editSuperfDefFemmActMenage.visibility = View.GONE
+                    setupNomFemActiviteList(binding.selectNomFemmeActiviteDefMenage, resources.getStringArray(R.array.nomActiviteNAgr))
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.comment_avez_vous_obtenu_le_capital_de_d_marrage),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectParcelObtenuDefMenage,
+            spinner = binding.selectParcelObtenuDefMenage,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.capitalDemarrag)
                 ?.toList() ?: listOf(),
@@ -1456,14 +1459,14 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    conatinerFemmeAutrCapiDemaMenage.visibility = visibility
+                    binding.conatinerFemmeAutrCapiDemaMenage.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_b_n_ficiez_d_une_formation),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFormatFemmBenefMenage,
+            spinner = binding.selectFormatFemmBenefMenage,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1472,7 +1475,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerBenefDFormatMenage.visibility = visibility
+                    binding.containerBenefDFormatMenage.visibility = visibility
                 }
             })
 
@@ -1495,7 +1498,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_des_quipements_de_protection_individuel_epi),
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectEquiDProtIndivMenage,
+            spinner = binding.selectEquiDProtIndivMenage,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1504,7 +1507,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerEquiEtatMenage.visibility = visibility
+                    binding.containerEquiEtatMenage.visibility = visibility
                 }
             })
 
@@ -1524,7 +1527,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if(itemId == 1){
-                    conatinerFemmeAutrNomActivitMenage.visibility = visibility
+                    binding.conatinerFemmeAutrNomActivitMenage.visibility = visibility
                 }
             })
 
@@ -1541,11 +1544,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectOrdureMenagMenage.setTitle(getString(R.string.comment_g_rez_vous_les_ordures_m_nag_res))
-        selectOrdureMenagMenage.setItems(ordurMenagList)
+        binding.selectOrdureMenagMenage.setTitle(getString(R.string.comment_g_rez_vous_les_ordures_m_nag_res))
+        binding.selectOrdureMenagMenage.setItems(ordurMenagList)
         //multiSelectSpinner.hasNoneOption(true)
-        selectOrdureMenagMenage.setSelection(listordurMenagPosList.toIntArray())
-        selectOrdureMenagMenage.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+        binding.selectOrdureMenagMenage.setSelection(listordurMenagPosList.toIntArray())
+        binding.selectOrdureMenagMenage.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
             override fun selectedIndices(indices: MutableList<Int>?) {
                 listordurMenagPosList.clear()
                 listordurMenagPosList.addAll(indices?.toMutableList() ?: mutableListOf())
@@ -1572,11 +1575,11 @@ class ProducteurMenageActivity : AppCompatActivity() {
             indItem++
         }
 
-        selectEnergieMenage.setTitle(getString(R.string.choix_des_sources_d_nergies_du_m_nage))
-        selectEnergieMenage.setItems(sourceEnergieList)
+        binding.selectEnergieMenage.setTitle(getString(R.string.choix_des_sources_d_nergies_du_m_nage))
+        binding.selectEnergieMenage.setItems(sourceEnergieList)
         //multiSelectSpinner.hasNoneOption(true)
-        selectEnergieMenage.setSelection(listSourceEnergiePosList.toIntArray())
-        selectEnergieMenage.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
+        binding.selectEnergieMenage.setSelection(listSourceEnergiePosList.toIntArray())
+        binding.selectEnergieMenage.setListener(object : MultiSelectSpinner.OnMultipleItemsSelectedListener {
             override fun selectedIndices(indices: MutableList<Int>?) {
                 listSourceEnergiePosList.clear()
                 listSourceEnergiePosList.addAll(indices?.toMutableList() ?: mutableListOf())
@@ -1586,7 +1589,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
                 listSourceEnergieList.clear()
                 listSourceEnergieList.addAll(strings?.toMutableList() ?: arrayListOf())
 
-                if(listSourceEnergieList.contains("Bois de chauffe")) containerNbreDBoisMenage.visibility = View.VISIBLE else containerNbreDBoisMenage.visibility = View.GONE
+                if(listSourceEnergieList.contains("Bois de chauffe")) binding.containerNbreDBoisMenage.visibility = View.VISIBLE else binding.containerNbreDBoisMenage.visibility = View.GONE
             }
 
         })
@@ -1610,7 +1613,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionProducteurMenage,
+            spinner = binding.selectSectionProducteurMenage,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1645,7 +1648,7 @@ class ProducteurMenageActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteProduMenage,
+            spinner = binding.selectLocaliteProduMenage,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {

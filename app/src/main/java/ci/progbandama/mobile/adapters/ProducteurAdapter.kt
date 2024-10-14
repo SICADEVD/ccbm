@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.ProducteurAdapter.ProducteurHolder
+import ci.progbandama.mobile.databinding.ProducteurItemsListBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.models.ProducteurModel
-import kotlinx.android.synthetic.main.producteur_items_list.view.*
 
 class ProducteurAdapter(private var producteurs: List<ProducteurModel>?) : RecyclerView.Adapter<ProducteurHolder>() {
 
@@ -17,7 +17,10 @@ class ProducteurAdapter(private var producteurs: List<ProducteurModel>?) : Recyc
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProducteurHolder {
-        return ProducteurHolder(LayoutInflater.from(parent.context).inflate(R.layout.producteur_items_list, parent, false))
+        return ProducteurHolder(
+            ProducteurItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.producteur_items_list, parent, false)
+        )
     }
 
 
@@ -39,7 +42,7 @@ class ProducteurAdapter(private var producteurs: List<ProducteurModel>?) : Recyc
     override fun getItemCount() = producteurs?.size ?: 0
 
 
-    class ProducteurHolder(producteurView: View) : RecyclerView.ViewHolder(producteurView) {
+    class ProducteurHolder(producteurView: ProducteurItemsListBinding) : RecyclerView.ViewHolder(producteurView.root) {
         val producteurNomLabel = producteurView.labelProducteurNom
         val labelProducteurPrenoms = producteurView.labelProducteurPrenoms
         val labelProducteurCode = producteurView.labelProducteurCode

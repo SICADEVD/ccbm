@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.EvaluationBesoinPreviewActivity
 import ci.progbandama.mobile.adapters.MultipleItemAdapter
+import ci.progbandama.mobile.databinding.ActivityEvaluationArbreBinding
 import ci.progbandama.mobile.models.AdapterItemModel
 import ci.progbandama.mobile.models.ArbreModel
 import ci.progbandama.mobile.models.DataDraftedModel
@@ -29,7 +30,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 //import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixDeLArbreDistributionArbre
 //import kotlinx.android.synthetic.main.activity_distribution_arbre.selectChoixStateArbrDistributionArbre
 
-import kotlinx.android.synthetic.main.activity_evaluation_arbre.*
 import java.util.ArrayList
 
 class EvaluationArbreActivity : AppCompatActivity() {
@@ -40,9 +40,12 @@ class EvaluationArbreActivity : AppCompatActivity() {
     private var evaluationArbreDao: EvaluationArbreDao? = null
     var draftedDataEval: DataDraftedModel? = null
 
+    private lateinit var binding: ActivityEvaluationArbreBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_evaluation_arbre)
+        binding = ActivityEvaluationArbreBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -50,20 +53,20 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
         evaluationArbreDao = ProgBandRoomDatabase.getDatabase(this)?.evaluationArbreDao()
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveEvaluationArbre.setOnClickListener {
+        binding.clickSaveEvaluationArbre.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelEvaluationArbre.setOnClickListener {
+        binding.clickCancelEvaluationArbre.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftData(draftedDataEval ?: DataDraftedModel(uid = 0))
         }
 
@@ -100,12 +103,12 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 localite = localiteCommon.id.toString()
                 producteurId = producteurCommon.id.toString()
 
-                especesarbreStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { adapterIt ->
+                especesarbreStr = GsonUtils.toJson((binding.recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { adapterIt ->
                     listArbre?.filter { "${it.nom}".trim().equals(adapterIt.value?.split("|")?.get(0)?.trim()) }?.let {
                         if(it.size > 0) it[0].id else -1
                     }
                 })
-                quantiteStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { it.value2 })
+                quantiteStr = GsonUtils.toJson((binding.recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { it.value2 })
             }
         }
 
@@ -130,7 +133,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -146,7 +149,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
     private fun setOtherListenner() {
 
-        Commons.addNotZeroAtFirstToET(editQuantitEvalArbre)
+        Commons.addNotZeroAtFirstToET(binding.editQuantitEvalArbre)
 
 //        editNbrCacaoHecEvaluationArbre.addTextChangedListener {
 //            caculateNbrArbre()
@@ -155,12 +158,12 @@ class EvaluationArbreActivity : AppCompatActivity() {
 //        editSuperficieEvaluationArbre.addTextChangedListener {
 //            caculateNbrArbre()
 //        }
-        Commons.setFiveItremRV(this, recyclerArbreListEvalArbre, clickAddArbreEvalArbre,
-            selectChoixDeLArbreEvalArbre,
-            selectChoixStateArbrEvalArbre,
-            selectChoixDeLArbreEvalArbre,
-            editQuantitEvalArbre,
-            editQuantitEvalArbre,
+        Commons.setFiveItremRV(this, binding.recyclerArbreListEvalArbre, binding.clickAddArbreEvalArbre,
+            binding.selectChoixDeLArbreEvalArbre,
+            binding.selectChoixStateArbrEvalArbre,
+            binding.selectChoixDeLArbreEvalArbre,
+            binding.editQuantitEvalArbre,
+            binding.editQuantitEvalArbre,
             defaultItemSize = 3,
             libeleList = arrayListOf(
                 getString(R.string.arbre_concern),
@@ -185,7 +188,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
     private fun setupSelectionArbreList(listArbreADistri: MutableList<ArbreModel>, currentVal: String? = null) {
         Commons.setListenerForSpinner(this,
             getString(R.string.evalarbre_text),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectChoixDeLArbreEvalArbre,
+            spinner = binding.selectChoixDeLArbreEvalArbre,
             currentVal = currentVal,
             listIem = listArbreADistri?.map { "${it.nom+"|"} ${it.nomScientifique}" }?.toMutableList() ?: listOf(),
             onChanged = {
@@ -202,7 +205,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
     private fun setupSelectionStrate(listStrate: MutableList<String>, currentVal: String? = null) {
         Commons.setListenerForSpinner(this,
             getString(R.string.quelle_est_sa_strate),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectChoixStateArbrEvalArbre,
+            spinner = binding.selectChoixStateArbrEvalArbre,
             currentVal = currentVal,
             listIem = listStrate
                 ?.toList() ?: listOf(),
@@ -247,7 +250,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
 
 //        LogUtils.d(listArbreEval)
 
-        (recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).setDataToRvItem(listArbreEval)
+        (binding.recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).setDataToRvItem(listArbreEval)
 
     }
 
@@ -274,19 +277,19 @@ class EvaluationArbreActivity : AppCompatActivity() {
                 localite = localiteCommon.id.toString()
                 producteurId = producteurCommon.id.toString()
 
-                especesarbreStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { adapterIt ->
+                especesarbreStr = GsonUtils.toJson((binding.recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { adapterIt ->
                     listArbre?.filter { "${it.nom}".trim().equals(adapterIt.value?.split("|")?.get(0)?.trim()) }?.let {
                         if(it.size > 0) it[0].id else -1
                     }
                 })
-                quantiteStr = GsonUtils.toJson((recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { it.value2 })
+                quantiteStr = GsonUtils.toJson((binding.recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().map { it.value2 })
             }
         }
 
         //val listArbre = ProgBandRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            (recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().forEach { adapItem ->
+            (binding.recyclerArbreListEvalArbre?.adapter as MultipleItemAdapter).getMultiItemAdded().forEach { adapItem ->
                 //val arbreId = listArbre?.filter { it.nom+" | "+it.nomScientifique == adapItem.value }?.get(0)?.id ?: -1
                 add(Pair(adapItem.value.toString(), adapItem.value2.toString()))
             }
@@ -394,7 +397,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionEvaluationArbre,
+            spinner = binding.selectSectionEvaluationArbre,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -430,7 +433,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteEvaluationArbre,
+            spinner = binding.selectLocaliteEvaluationArbre,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -471,7 +474,7 @@ class EvaluationArbreActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurEvaluationArbre,
+            spinner = binding.selectProducteurEvaluationArbre,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.FormationActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityFormationPreviewBinding
 import ci.progbandama.mobile.models.FormationModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -15,8 +16,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_formation_preview.*
-import kotlinx.android.synthetic.main.activity_formation_preview.imagePhotoFormationPreview
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -27,6 +26,8 @@ class FormationPreviewActivity : AppCompatActivity() {
     var formationDatas: FormationModel? = null
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
+
+    private lateinit var binding: ActivityFormationPreviewBinding
 
     suspend fun loadFileToBitmap(pPath: String?) {
         if (pPath?.isEmpty()!!) return
@@ -40,16 +41,17 @@ class FormationPreviewActivity : AppCompatActivity() {
 
 
             MainScope().launch {
-                imagePhotoFormationPreview.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 80, 80, false))
+                binding.imagePhotoFormationPreview.setImageBitmap(Bitmap.createScaledBitmap(myBitmap, 80, 80, false))
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_formation_preview)
+        binding = ActivityFormationPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
@@ -71,8 +73,8 @@ class FormationPreviewActivity : AppCompatActivity() {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
                 formationDatas = it.getParcelableExtra("preview")
@@ -85,7 +87,7 @@ class FormationPreviewActivity : AppCompatActivity() {
                         if(!it){
                             val tobi =  BitmapFactory.decodeFile(File(formation.photoFormation).absolutePath)
                             val tobi2 =  Bitmap.createScaledBitmap(tobi, 80, 80, false)
-                            imagePhotoFormationPreview.setImageBitmap(tobi2)
+                            binding.imagePhotoFormationPreview.setImageBitmap(tobi2)
                         }
                     }
 
@@ -93,7 +95,7 @@ class FormationPreviewActivity : AppCompatActivity() {
                 }
 
 
-                clickSaveFormationPreview.setOnClickListener {
+                binding.clickSaveFormationPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

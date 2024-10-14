@@ -7,28 +7,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.DataSendingAdapter
+import ci.progbandama.mobile.databinding.ActivityDatasSendingListBinding
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.datas.CommonData
 import ci.progbandama.mobile.tools.Commons
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_datas_sending_list.*
-import kotlinx.android.synthetic.main.activity_menageres_list.labelLastSynchronisationMenage
 import org.joda.time.DateTime
 
 
 @SuppressLint("All")
-class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sending_list) {
+class DatasSendingListActivity : AppCompatActivity() {
 
 
     val commonDataList = mutableListOf<CommonData>()
     val commonDataListCloned = mutableListOf<CommonData>()
     var fromGlobalMenu = ""
 
+    lateinit var binding: ActivityDatasSendingListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDatasSendingListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             fromGlobalMenu = it.getStringExtra("fromContent").toString()
@@ -36,14 +38,14 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
             LogUtils.d(fromGlobalMenu)
             val progbandBase = ProgBandRoomDatabase.getDatabase(this)!!
 
-            labelLastSynchronisationMenage.text = resources.getString(
+            binding.labelLastSynchronisationMenage.text = resources.getString(
                 R.string.last_synchronisation_date,
                 DateTime.now().toString("HH:mm:ss")
             )
 
             when(fromGlobalMenu.toUpperCase()){
                 "INFOS_PRODUCTEUR" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("INFOS PRODUCTEUR ${this.text}")
                     }
                     val dataList = progbandBase.infosProducteurDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -65,7 +67,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "PARCELLES" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("SUIVIS PARCELLES ${this.text}")
                     }
                     val dataList = progbandBase.suiviParcelleDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -92,7 +94,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "ESTIMATION" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("ESTIMATIONS ${this.text}")
                     }
                     val dataList = progbandBase.estimationDao().getUnSyncedAll()
@@ -119,7 +121,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "INSPECTION" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("INSPECTIONS ${this.text}")
                     }
                     val dataList = progbandBase.inspectionDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -146,7 +148,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "APPLICATION" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("APPLICATIONS PHYTOS ${this.text}")
                     }
                     val dataList = progbandBase.suiviApplicationDao().getUnSyncedAll()
@@ -173,7 +175,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "FORMATION_VISITEUR" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("VISITEURS FORMATION ${this.text}")
                     }
                     val dataList = progbandBase.visiteurFormationDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))
@@ -199,7 +201,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "LIVRAISON" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("STOCK DES SECTIONS ${this.text}")
                     }
                     val dataList = progbandBase.livraisonDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -225,7 +227,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "LIVRAISON_MAGCENTRAL" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("STOCK DES MAG CENTRAUX ${this.text}")
                     }
                     val dataList = progbandBase.livraisonCentralDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -252,7 +254,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "SSRTECLMRS" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("SSRTE-CLMRS ${this.text}")
                     }
                     val dataList = progbandBase.enqueteSsrtDao().getUnSyncedAll()
@@ -274,7 +276,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "AGRO_EVALUATION" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("EVALUATIONS DES ARBRES ${this.text}")
                     }
                     val dataList = progbandBase.evaluationArbreDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0))
@@ -296,7 +298,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "AGRO_DISTRIBUTION" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("DISTRIBUTIONS DES ARBRES ${this.text}")
                     }
                     val dataList = progbandBase.distributionArbreDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -318,7 +320,7 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 }
 
                 "POSTPLANTING" -> {
-                    labelTitleMenuAction.apply {
+                    binding.labelTitleMenuAction.apply {
                         setText("EVALUATIONS POSTPLANTING ${this.text}")
                     }
                     val dataList = progbandBase.postplantingDao().getUnSyncedAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
@@ -344,23 +346,23 @@ class DatasSendingListActivity : AppCompatActivity(R.layout.activity_datas_sendi
                 this,
                 commonDataList
             )
-            recyclerSyncedList.adapter = syncedDatasAdapter
-            recyclerSyncedList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            binding.recyclerSyncedList.adapter = syncedDatasAdapter
+            binding.recyclerSyncedList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             syncedDatasAdapter.notifyDataSetChanged()
             //refreshAdapter(commonDataList.subList(0, subSizeEnd))
 
             commonDataList?.let { SyncsList ->
                 if (SyncsList.isEmpty()) {
-                    recyclerSyncedList.visibility = View.GONE
-                    linearEmptyContainerSyncsList.visibility = View.VISIBLE
+                    binding.recyclerSyncedList.visibility = View.GONE
+                    binding.linearEmptyContainerSyncsList.visibility = View.VISIBLE
                 } else {
-                    recyclerSyncedList.visibility = View.VISIBLE
-                    linearEmptyContainerSyncsList.visibility = View.GONE
+                    binding.recyclerSyncedList.visibility = View.VISIBLE
+                    binding.linearEmptyContainerSyncsList.visibility = View.GONE
                 }
             }
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

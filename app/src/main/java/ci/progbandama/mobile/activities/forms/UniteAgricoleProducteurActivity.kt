@@ -14,6 +14,7 @@ import ci.progbandama.mobile.activities.infospresenters.InfosProducteurPreviewAc
 import ci.progbandama.mobile.adapters.CultureProducteurAdapter
 import ci.progbandama.mobile.adapters.OmbrageAdapter
 import ci.progbandama.mobile.adapters.OnlyFieldAdapter
+import ci.progbandama.mobile.databinding.ActivityUniteAgricoleProducteurBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
@@ -34,8 +35,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-
-import kotlinx.android.synthetic.main.activity_unite_agricole_producteur.*
 import java.util.ArrayList
 
 class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListener<CultureProducteurModel> {
@@ -111,8 +110,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
 
     fun clearCultureProducteurFields() {
-        editCultureInfosProducteur.text = null
-        editSuperficeInfosProducteur.text = null
+        binding.editCultureInfosProducteur.text = null
+        binding.editSuperficeInfosProducteur.text = null
     }
 
 
@@ -120,9 +119,9 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         try {
             cultureProducteurs = mutableListOf()
             cultureProducteurAdapter = CultureProducteurAdapter(cultureProducteurs)
-            recyclerCultureInfosProducteur.layoutManager =
+            binding.recyclerCultureInfosProducteur.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerCultureInfosProducteur.adapter = cultureProducteurAdapter
+            binding.recyclerCultureInfosProducteur.adapter = cultureProducteurAdapter
 
             cultureProducteurAdapter?.cultureProducteurListener = this
         } catch (ex: Exception) {
@@ -134,15 +133,15 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     fun setupJachereYesNoSelection() {
         try {
-            selectJachereInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            binding.selectJachereInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                         jachereYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                         if (jachereYesNo == getString(R.string.oui)) {
-                            linearForetYesSuperficieContainerInfosProducteur.visibility =
+                            binding.linearForetYesSuperficieContainerInfosProducteur.visibility =
                                 View.VISIBLE
                         } else {
-                            linearForetYesSuperficieContainerInfosProducteur.visibility = View.GONE
+                            binding.linearForetYesSuperficieContainerInfosProducteur.visibility = View.GONE
                         }
 
                     }
@@ -160,14 +159,14 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     fun setupCultureYesNoSelection() {
         try {
-            selectCulturesInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            binding.selectCulturesInfosProducteur.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                     othersCulturesYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                     if (othersCulturesYesNo == getString(R.string.oui)) {
-                        linearCultureContainerInfosProducteur.visibility = View.VISIBLE
+                        binding.linearCultureContainerInfosProducteur.visibility = View.VISIBLE
                     } else {
-                        linearCultureContainerInfosProducteur.visibility = View.GONE
+                        binding.linearCultureContainerInfosProducteur.visibility = View.GONE
                     }
 
                 }
@@ -223,7 +222,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurInfosProducteur,
+            spinner = binding.selectProducteurInfosProducteur,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -313,7 +312,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     fun setupMoneyYesNoSelection() {
         try {
-            selectMoneyInfosProducteur.onItemSelectedListener =
+            binding.selectMoneyInfosProducteur.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         adapterView: AdapterView<*>,
@@ -373,7 +372,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     fun setupBankAccountYesNoSelection() {
         try {
-            selectBanqueInfosProducteur.onItemSelectedListener =
+            binding.selectBanqueInfosProducteur.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         adapterView: AdapterView<*>,
@@ -400,9 +399,9 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             val itemModelOb = getUniteAgricoleProducteurObject()
 
-            val vv1 = editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
-            val vv2 = editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
-            val vv3 = editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv1 = binding.editNbrTravPermanInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv2 = binding.editNbrTravNotPermanInfosProducteur.text.toString().toIntOrNull()?:0
+            val vv3 = binding.editNbrTravRemunInfosProducteur.text.toString().toIntOrNull()?:0
 
             if( (vv1+vv2) > vv3 || (vv1+vv2) < vv3 ){
 
@@ -428,20 +427,20 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     localite = localiteCommon.id.toString()
                     producteursId = producteurCommon.id.toString()
 
-                    typecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
-                    superficiecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+                    typecultureStringify = GsonUtils.toJson((binding.recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                    superficiecultureStringify = GsonUtils.toJson((binding.recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
-                    operateurMMStr = GsonUtils.toJson((recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
-                    numerosMMStr = GsonUtils.toJson((recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+                    operateurMMStr = GsonUtils.toJson((binding.recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                    numerosMMStr = GsonUtils.toJson((binding.recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
-                    typeactiviteStr = GsonUtils.toJson((recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
+                    typeactiviteStr = GsonUtils.toJson((binding.recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
                 }
             }
 
             val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-                this.add(Pair(getString(R.string.les_types_de_culture), (recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-                this.add(Pair(getString(R.string.les_op_rateurs_mobile), (recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-                this.add(Pair(getString(R.string.les_types_d_activit_s), (recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
+                this.add(Pair(getString(R.string.les_types_de_culture), (binding.recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+                this.add(Pair(getString(R.string.les_op_rateurs_mobile), (binding.recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+                this.add(Pair(getString(R.string.les_types_d_activit_s), (binding.recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
             }?.map { MapEntry(it.first, it.second) }
 
             val intentInfosProducteurPreview = Intent(this, InfosProducteurPreviewActivity::class.java)
@@ -549,12 +548,12 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     localite = localiteCommon.id.toString()
                     producteursId = producteurCommon.id.toString()
 
-                    typecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
-                    superficiecultureStringify = GsonUtils.toJson((recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+                    typecultureStringify = GsonUtils.toJson((binding.recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                    superficiecultureStringify = GsonUtils.toJson((binding.recyclerCultureInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
-                    operateurMMStr = GsonUtils.toJson((recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
-                    numerosMMStr = GsonUtils.toJson((recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
-                    typeactiviteStr = GsonUtils.toJson((recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
+                    operateurMMStr = GsonUtils.toJson((binding.recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                    numerosMMStr = GsonUtils.toJson((binding.recyclerNumMobileInfosProducteur.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+                    typeactiviteStr = GsonUtils.toJson((binding.recyclerActiviteOrCacaoInfosProducteur.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
                 }
             }
 
@@ -578,7 +577,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                         finished = true,
                         callback = {
                             Commons.playDraftSound(this)
-                            imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                            binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                         },
                         positive = getString(R.string.ok),
                         deconnec = false,
@@ -621,7 +620,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.avez_vous_des_for_ts_ou_jacheres),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectJachereInfosProducteur,
+                spinner = binding.selectJachereInfosProducteur,
                 currentVal = infosProducteurDrafted.foretsjachere,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -631,13 +630,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        linearForetYesSuperficieContainerInfosProducteur.visibility = visibility
+                        binding.linearForetYesSuperficieContainerInfosProducteur.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.y_a_t_il_d_autres_cultures),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectCulturesInfosProducteur,
+                spinner = binding.selectCulturesInfosProducteur,
                 currentVal = infosProducteurDrafted.autresCultures,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -647,13 +646,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        linearCultureContainerInfosProducteur.visibility = visibility
+                        binding.linearCultureContainerInfosProducteur.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.y_a_t_il_d_autres_activit_except_le_cacao),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectActiviteOrCacaoInfosProducteur,
+                spinner = binding.selectActiviteOrCacaoInfosProducteur,
                 currentVal = infosProducteurDrafted.autreActivite,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -663,13 +662,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        containerActiviteOrCacaoInfoProd.visibility = visibility
+                        binding.containerActiviteOrCacaoInfoProd.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.y_a_t_il_des_travailleurs_dans_la_famille),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectTravaiFamilleInfosProducteur,
+                spinner = binding.selectTravaiFamilleInfosProducteur,
                 currentVal = infosProducteurDrafted.mainOeuvreFamilial,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -679,13 +678,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        containerNbrTravFamilleInfoProd.visibility = visibility
+                        binding.containerNbrTravFamilleInfoProd.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.etes_vous_membre_d_une_soci_t_de_travail),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectTravaiSocietInfosProducteur,
+                spinner = binding.selectTravaiSocietInfosProducteur,
                 currentVal = infosProducteurDrafted.membreSocieteTravail,//infosProducteurDrafted.mainOeuvreFamilial,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -695,13 +694,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        containerNbrTravSocieteInfosProducteur.visibility = visibility
+                        binding.containerNbrTravSocieteInfosProducteur.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.as_tu_un_compte_mobile_money),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectMoneyInfosProducteur,
+                spinner = binding.selectMoneyInfosProducteur,
                 currentVal = infosProducteurDrafted.mobileMoney,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -711,13 +710,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        containerMobileMoneyInfosProducteur.visibility = visibility
+                        binding.containerMobileMoneyInfosProducteur.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.as_tu_un_compte_dans_une_banque),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectBanqueInfosProducteur,
+                spinner = binding.selectBanqueInfosProducteur,
                 currentVal = infosProducteurDrafted.compteBanque,
                 itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
                 listIem = resources.getStringArray(R.array.YesOrNo)
@@ -727,13 +726,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        containerBuyInfosProducteur.visibility = visibility
+                        binding.containerBuyInfosProducteur.visibility = visibility
                     }
                 })
 
             Commons.setListenerForSpinner(this,
                 getString(R.string.s_lectionner_la_banque),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-                spinner = selectNomBanqueInfosProducteur,
+                spinner = binding.selectNomBanqueInfosProducteur,
                 currentVal = infosProducteurDrafted.nomBanque,
                 itemChanged = arrayListOf(Pair(1, "Autre")),
                 listIem = resources.getStringArray(R.array.bank_list)
@@ -743,7 +742,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                 },
                 onSelected = { itemId, visibility ->
                     if (itemId == 1) {
-                        containerNomBanqueInfoProd.visibility = visibility
+                        binding.containerNomBanqueInfoProd.visibility = visibility
                     }
                 })
 
@@ -767,18 +766,18 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
 
         try {
-            recyclerCultureInfosProducteur.layoutManager =
+            binding.recyclerCultureInfosProducteur.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerCultureInfosProducteur.adapter = autrCultInfoProdAdapter
+            binding.recyclerCultureInfosProducteur.adapter = autrCultInfoProdAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
-        clickAddFarmInfosProducteur.setOnClickListener {
+        binding.clickAddFarmInfosProducteur.setOnClickListener {
             try {
-                if (editCultureInfosProducteur.text.toString()
-                        .isEmpty() || editSuperficeInfosProducteur.text.toString().isEmpty()
+                if (binding.editCultureInfosProducteur.text.toString()
+                        .isEmpty() || binding.editSuperficeInfosProducteur.text.toString().isEmpty()
                 ) {
                     Commons.showMessage(getString(R.string.renseignez_des_donn_es_sur_la_vari_t_svp), this, callback = {})
                     return@setOnClickListener
@@ -786,8 +785,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
                 val varieteArbre = OmbrageVarieteModel(
                     0,
-                    editCultureInfosProducteur.text.toString(),
-                    editSuperficeInfosProducteur.text.toString().trim()
+                    binding.editCultureInfosProducteur.text.toString(),
+                    binding.editSuperficeInfosProducteur.text.toString().trim()
                 )
 
                 if(varieteArbre.variete?.length?:0 > 0){
@@ -801,8 +800,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     autrCultListInfoProd?.add(varieteArbre)
                     autrCultInfoProdAdapter?.notifyDataSetChanged()
 
-                    editCultureInfosProducteur.text?.clear()
-                    editSuperficeInfosProducteur.text?.clear()
+                    binding.editCultureInfosProducteur.text?.clear()
+                    binding.editSuperficeInfosProducteur.text?.clear()
                 }
                 //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
             } catch (ex: Exception) {
@@ -825,18 +824,18 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
 
         try {
-            recyclerNumMobileInfosProducteur.layoutManager =
+            binding.recyclerNumMobileInfosProducteur.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerNumMobileInfosProducteur.adapter = operatInfoProdAdapter
+            binding.recyclerNumMobileInfosProducteur.adapter = operatInfoProdAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
-        clickAddMobileNumInfosProducteur.setOnClickListener {
+        binding.clickAddMobileNumInfosProducteur.setOnClickListener {
             try {
-                if (selectMobileOperatInfoProducteur.selectedItem.toString()
-                        .isEmpty() || editNumMobileInfosProducteur.text.toString().isEmpty()
+                if (binding.selectMobileOperatInfoProducteur.selectedItem.toString()
+                        .isEmpty() || binding.editNumMobileInfosProducteur.text.toString().isEmpty()
                 ) {
                     Commons.showMessage(getString(R.string.renseignez_des_donn_es_sur_la_vari_t_svp), this, callback = {})
                     return@setOnClickListener
@@ -844,8 +843,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
                 val varieteArbre = OmbrageVarieteModel(
                     0,
-                    selectMobileOperatInfoProducteur.selectedItem.toString(),
-                    editNumMobileInfosProducteur.text.toString().trim()
+                    binding.selectMobileOperatInfoProducteur.selectedItem.toString(),
+                    binding.editNumMobileInfosProducteur.text.toString().trim()
                 )
 
                 if(varieteArbre.variete?.length?:0 > 0){
@@ -859,8 +858,8 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     operatListInfoProd?.add(varieteArbre)
                     operatInfoProdAdapter?.notifyDataSetChanged()
 
-                    selectMobileOperatInfoProducteur.setSelection(0)
-                    editNumMobileInfosProducteur.text?.clear()
+                    binding.selectMobileOperatInfoProducteur.setSelection(0)
+                    binding.editNumMobileInfosProducteur.text?.clear()
                 }
                 //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
             } catch (ex: Exception) {
@@ -881,17 +880,17 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
         val typActivInfoProdAdapter = OnlyFieldAdapter(typActivListInfoProd, "Libellé")
         try {
-            recyclerActiviteOrCacaoInfosProducteur.layoutManager =
+            binding.recyclerActiviteOrCacaoInfosProducteur.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerActiviteOrCacaoInfosProducteur.adapter = typActivInfoProdAdapter
+            binding.recyclerActiviteOrCacaoInfosProducteur.adapter = typActivInfoProdAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
-        clickAddActiviteOrCacaonfosProducteur.setOnClickListener {
+        binding.clickAddActiviteOrCacaonfosProducteur.setOnClickListener {
             try {
-                if (editActiviteOrCacaoInfosProducteur.text.toString()
+                if (binding.editActiviteOrCacaoInfosProducteur.text.toString()
                         .isEmpty()
                 ) {
                     Commons.showMessage(getString(R.string.renseignez_des_donn_es_sur_les_activit_s_svp), this, callback = {})
@@ -900,7 +899,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
                 val item = CommonData(
                     0,
-                    editActiviteOrCacaoInfosProducteur.text.toString().trim(),
+                    binding.editActiviteOrCacaoInfosProducteur.text.toString().trim(),
                 )
 
                 if(item.nom?.length?:0 > 0){
@@ -915,7 +914,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
                     typActivListInfoProd?.add(item)
                     typActivInfoProdAdapter?.notifyDataSetChanged()
 
-                    editActiviteOrCacaoInfosProducteur.text?.clear()
+                    binding.editActiviteOrCacaoInfosProducteur.text?.clear()
                 }
                 //addVarieteArbre(varieteArbre, varieteArbrListSParcelle, varieteArbrSParcelleAdapter)
             } catch (ex: Exception) {
@@ -944,7 +943,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteUniteAgricole,
+            spinner = binding.selectLocaliteUniteAgricole,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -975,7 +974,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
         setListenerForSpinner(this, getString(R.string.choix_du_programme),
             getString(R.string.la_liste_des_roducteur_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if(producteurLis?.size!! > 0) false else true,
-            spinner = selectProducteurInfosProducteur, listIem = producteurLis?.map { it.nom+" "+it.prenoms }
+            spinner = binding.selectProducteurInfosProducteur, listIem = producteurLis?.map { it.nom+" "+it.prenoms }
                 ?.toList() ?: listOf(), onChanged = {
 
                 val producteurLis = producteurLis!![it]
@@ -1006,7 +1005,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionInfProducteur,
+            spinner = binding.selectSectionInfProducteur,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1025,9 +1024,12 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
     }
 
+    private lateinit var binding: ActivityUniteAgricoleProducteurBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_unite_agricole_producteur)
+        binding = ActivityUniteAgricoleProducteurBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -1035,22 +1037,22 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
         try {
 
-            limitEDTMaxLength(editNumMobileInfosProducteur, 10, 10)
+            limitEDTMaxLength(binding.editNumMobileInfosProducteur, 10, 10)
 
-            clickReviewInfosProducteur.setOnClickListener {
+            binding.clickReviewInfosProducteur.setOnClickListener {
                 collectDatas()
             }
 
-            clickCloseBtn.setOnClickListener {
+            binding.clickCloseBtn.setOnClickListener {
                 finish()
             }
 
-            clickCancelInfosProducteur.setOnClickListener {
+            binding.clickCancelInfosProducteur.setOnClickListener {
                 ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 ActivityUtils.getActivityByContext(this)?.finish()
             }
 
-            imageDraftBtn.setOnClickListener {
+            binding.imageDraftBtn.setOnClickListener {
                 draftInfosProducteur(draftedDataInfosProducteur ?: DataDraftedModel(uid = 0))
             }
 
@@ -1073,11 +1075,11 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
     }
 
     private fun setOtherListener() {
-        Commons.addNotZeroAtFirstToET(editNbrTravFamilleInfosProducteur)
-        Commons.addNotZeroAtFirstToET(editNbrTravRemunInfosProducteur)
-        Commons.addNotZeroAtFirstToET(editNbrTravPermanInfosProducteur)
-        Commons.addNotZeroAtFirstToET(editNbrTravNotPermanInfosProducteur)
-        Commons.addNotZeroAtFirstToET(editNbrTravSocieteInfosProducteur)
+        Commons.addNotZeroAtFirstToET(binding.editNbrTravFamilleInfosProducteur)
+        Commons.addNotZeroAtFirstToET(binding.editNbrTravRemunInfosProducteur)
+        Commons.addNotZeroAtFirstToET(binding.editNbrTravPermanInfosProducteur)
+        Commons.addNotZeroAtFirstToET(binding.editNbrTravNotPermanInfosProducteur)
+        Commons.addNotZeroAtFirstToET(binding.editNbrTravSocieteInfosProducteur)
 
     }
 
@@ -1093,7 +1095,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_des_for_ts_ou_jacheres),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectJachereInfosProducteur,
+            spinner = binding.selectJachereInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1102,13 +1104,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearForetYesSuperficieContainerInfosProducteur.visibility = visibility
+                    binding.linearForetYesSuperficieContainerInfosProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_d_autres_cultures),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectCulturesInfosProducteur,
+            spinner = binding.selectCulturesInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1117,13 +1119,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearCultureContainerInfosProducteur.visibility = visibility
+                    binding.linearCultureContainerInfosProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_d_autres_activit_except_le_cacao),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectActiviteOrCacaoInfosProducteur,
+            spinner = binding.selectActiviteOrCacaoInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1132,13 +1134,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerActiviteOrCacaoInfoProd.visibility = visibility
+                    binding.containerActiviteOrCacaoInfoProd.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_des_travailleurs_dans_la_famille),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTravaiFamilleInfosProducteur,
+            spinner = binding.selectTravaiFamilleInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1147,13 +1149,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerNbrTravFamilleInfoProd.visibility = visibility
+                    binding.containerNbrTravFamilleInfoProd.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.etes_vous_membre_d_une_soci_t_de_travail),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTravaiSocietInfosProducteur,
+            spinner = binding.selectTravaiSocietInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1162,13 +1164,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerNbrTravSocieteInfosProducteur.visibility = visibility
+                    binding.containerNbrTravSocieteInfosProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.as_tu_un_compte_mobile_money),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectMoneyInfosProducteur,
+            spinner = binding.selectMoneyInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1177,13 +1179,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerMobileMoneyInfosProducteur.visibility = visibility
+                    binding.containerMobileMoneyInfosProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.as_tu_un_compte_dans_une_banque),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectBanqueInfosProducteur,
+            spinner = binding.selectBanqueInfosProducteur,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1192,13 +1194,13 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerBuyInfosProducteur.visibility = visibility
+                    binding.containerBuyInfosProducteur.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.s_lectionner_la_banque),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectNomBanqueInfosProducteur,
+            spinner = binding.selectNomBanqueInfosProducteur,
             itemChanged = arrayListOf(Pair(1, "Autre")),
             listIem = resources.getStringArray(R.array.bank_list)
                 ?.toList() ?: listOf(),
@@ -1207,7 +1209,7 @@ class UniteAgricoleProducteurActivity : AppCompatActivity(), RecyclerItemListene
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerNomBanqueInfoProd.visibility = visibility
+                    binding.containerNomBanqueInfoProd.visibility = visibility
                 }
             })
 

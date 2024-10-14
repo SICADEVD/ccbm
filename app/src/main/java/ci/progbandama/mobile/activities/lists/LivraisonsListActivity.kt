@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.LivraisonActivity
 import ci.progbandama.mobile.adapters.LivraisonAdapter
+import ci.progbandama.mobile.databinding.ActivityLivraisonsListBinding
 import ci.progbandama.mobile.models.LivraisonModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.LivraisonDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_livraisons_list.*
 import org.joda.time.DateTime
 
 class LivraisonsListActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class LivraisonsListActivity : AppCompatActivity() {
     var livraisonsList: MutableList<LivraisonModel>? = null
     var livraisonAdapter: LivraisonAdapter? = null
 
+    lateinit var binding: ActivityLivraisonsListBinding
 
     fun retrieveDatas() {
         livraisonsList = mutableListOf()
@@ -31,18 +32,18 @@ class LivraisonsListActivity : AppCompatActivity() {
         livraisonsList = livraisonDao?.getUnSyncedAll(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         livraisonAdapter = LivraisonAdapter(livraisonsList)
 
-        recyclerLivraisons .adapter = livraisonAdapter
-        recyclerLivraisons.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerLivraisons .adapter = livraisonAdapter
+        binding.recyclerLivraisons.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationLivraisons.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
+        binding.labelLastSynchronisationLivraisons.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
 
         livraisonsList?.let {
             if (it.isEmpty()) {
-                recyclerLivraisons.visibility = View.GONE
-                linearEmptyContainerLivraisonsList.visibility = View.VISIBLE
+                binding.recyclerLivraisons.visibility = View.GONE
+                binding.linearEmptyContainerLivraisonsList.visibility = View.VISIBLE
             } else {
-                recyclerLivraisons.visibility = View.VISIBLE
-                linearEmptyContainerLivraisonsList.visibility = View.GONE
+                binding.recyclerLivraisons.visibility = View.VISIBLE
+                binding.linearEmptyContainerLivraisonsList.visibility = View.GONE
             }
         }
     }
@@ -56,13 +57,14 @@ class LivraisonsListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_livraisons_list)
+        binding = ActivityLivraisonsListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        imgAddBtn.setOnClickListener {
+        binding.imgAddBtn.setOnClickListener {
             ActivityUtils.startActivity(LivraisonActivity::class.java)
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

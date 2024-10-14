@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.SuiviParcelleActivity
 import ci.progbandama.mobile.adapters.SuiviParcelleAdapter
+import ci.progbandama.mobile.databinding.ActivitySuiviPacellesListBinding
 import ci.progbandama.mobile.models.SuiviParcelleModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.SuiviParcelleDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_suivi_pacelles_list.*
 import org.joda.time.DateTime
 
 class SuiviPacellesListActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class SuiviPacellesListActivity : AppCompatActivity() {
     var suiviParcelleDao: SuiviParcelleDao? = null
     var suiviAdapter: SuiviParcelleAdapter? = null
 
+    lateinit var binding: ActivitySuiviPacellesListBinding
 
     fun retrieveDatas() {
         suivisList = mutableListOf()
@@ -33,18 +34,18 @@ class SuiviPacellesListActivity : AppCompatActivity() {
 
         suiviAdapter = SuiviParcelleAdapter(suivisList)
 
-        recyclerSuiviParcelles.adapter = suiviAdapter
-        recyclerSuiviParcelles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerSuiviParcelles.adapter = suiviAdapter
+        binding.recyclerSuiviParcelles.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationSuiviParcelles.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
+        binding.labelLastSynchronisationSuiviParcelles.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
 
         suivisList?.let {
             if (it.isEmpty()) {
-                recyclerSuiviParcelles.visibility = View.GONE
-                linearEmptyContainerSuiviParcellesList.visibility = View.VISIBLE
+                binding.recyclerSuiviParcelles.visibility = View.GONE
+                binding.linearEmptyContainerSuiviParcellesList.visibility = View.VISIBLE
             } else {
-                recyclerSuiviParcelles.visibility = View.VISIBLE
-                linearEmptyContainerSuiviParcellesList.visibility = View.GONE
+                binding.recyclerSuiviParcelles.visibility = View.VISIBLE
+                binding.linearEmptyContainerSuiviParcellesList.visibility = View.GONE
             }
         }
     }
@@ -52,14 +53,15 @@ class SuiviPacellesListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suivi_pacelles_list)
+        binding = ActivitySuiviPacellesListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        imgAddBtn.setOnClickListener {
+        binding.imgAddBtn.setOnClickListener {
             ActivityUtils.startActivity(SuiviParcelleActivity::class.java)
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 

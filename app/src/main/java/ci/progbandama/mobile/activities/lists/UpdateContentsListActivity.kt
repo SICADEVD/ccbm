@@ -9,21 +9,22 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.DataDraftedAdapter
+import ci.progbandama.mobile.databinding.ActivityUpdateContentsListBinding
 import ci.progbandama.mobile.models.DataDraftedModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_update_contents_list.*
 
 
 @SuppressLint("All")
-class UpdateContentsListActivity : AppCompatActivity(R.layout.activity_update_contents_list) {
+class UpdateContentsListActivity : AppCompatActivity() {
 
 
     var contentsList = mutableListOf<DataDraftedModel>()
     var contentsCloneList = mutableListOf<DataDraftedModel>()
     var fromContent: String? = ""
 
+    lateinit var binding: ActivityUpdateContentsListBinding
 
     fun refreshAdapter(list: MutableList<DataDraftedModel>) {
         val draftedDatasAdapter = DataDraftedAdapter(
@@ -31,19 +32,21 @@ class UpdateContentsListActivity : AppCompatActivity(R.layout.activity_update_co
             list
         )
 
-        recyclerListUpdateContent.adapter = draftedDatasAdapter
-        recyclerListUpdateContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerListUpdateContent.adapter = draftedDatasAdapter
+        binding.recyclerListUpdateContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         draftedDatasAdapter.notifyDataSetChanged()
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityUpdateContentsListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             fromContent =  it.getStringExtra("fromContent")
 
-            labelTitleUpdateContent.text = labelTitleUpdateContent.text.toString().plus(" ").plus(fromContent?.uppercase()).plus("S")
+            binding.labelTitleUpdateContent.text = binding.labelTitleUpdateContent.text.toString().plus(" ").plus(fromContent?.uppercase()).plus("S")
 
             contentsList = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getAllByType(
                 agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID).toString(),
@@ -56,11 +59,11 @@ class UpdateContentsListActivity : AppCompatActivity(R.layout.activity_update_co
 
             contentsList.let { draftsList ->
                 if (draftsList.isEmpty()) {
-                    recyclerListUpdateContent.visibility = View.GONE
-                    linearEmptyContainerUpdate.visibility = View.VISIBLE
+                    binding.recyclerListUpdateContent.visibility = View.GONE
+                    binding.linearEmptyContainerUpdate.visibility = View.VISIBLE
                 } else {
-                    recyclerListUpdateContent.visibility = View.VISIBLE
-                    linearEmptyContainerUpdate.visibility = View.GONE
+                    binding.recyclerListUpdateContent.visibility = View.VISIBLE
+                    binding.linearEmptyContainerUpdate.visibility = View.GONE
 
                     /*draftsList.map { draftModel ->
                         if (fromContent?.uppercase() == "PRODUCTEUR") {
@@ -75,30 +78,30 @@ class UpdateContentsListActivity : AppCompatActivity(R.layout.activity_update_co
             }
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageSearchUpdate.setOnClickListener {
-            if (linearSearchContainerUpdate.visibility == View.VISIBLE) {
-                linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
-                linearSearchContainerUpdate.visibility = View.GONE
+        binding.imageSearchUpdate.setOnClickListener {
+            if (binding.linearSearchContainerUpdate.visibility == View.VISIBLE) {
+                binding.linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
+                binding.linearSearchContainerUpdate.visibility = View.GONE
             } else {
-                linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_button))
-                linearSearchContainerUpdate.visibility = View.VISIBLE
+                binding.linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_button))
+                binding.linearSearchContainerUpdate.visibility = View.VISIBLE
             }
         }
 
-        imageCloseSearchUpdate.setOnClickListener {
-            if (editSearchUpdate.text.toString().isNotEmpty()) {
-                editSearchUpdate.text = null
+        binding.imageCloseSearchUpdate.setOnClickListener {
+            if (binding.editSearchUpdate.text.toString().isNotEmpty()) {
+                binding.editSearchUpdate.text = null
             } else {
-                linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
-                linearSearchContainerUpdate.visibility = View.GONE
+                binding.linearSearchContainerUpdate.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_button))
+                binding.linearSearchContainerUpdate.visibility = View.GONE
             }
         }
 
-        editSearchUpdate.doAfterTextChanged {
+        binding.editSearchUpdate.doAfterTextChanged {
             val searchWord = it?.toString()?.trim()
 
             if (searchWord.toString().length < 3) {

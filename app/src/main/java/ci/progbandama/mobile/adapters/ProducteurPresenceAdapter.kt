@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.ProducteurPresenceAdapter.ProducteurPresenceHolder
+import ci.progbandama.mobile.databinding.ProducteurPresenceItemsListBinding
 import ci.progbandama.mobile.models.ProducteurModel
 import com.blankj.utilcode.util.ToastUtils
-import kotlinx.android.synthetic.main.producteur_presence_items_list.view.*
 
 class ProducteurPresenceAdapter(private var producteursPresence: MutableList<ProducteurModel>?) : RecyclerView.Adapter<ProducteurPresenceHolder>() {
 
@@ -19,7 +19,10 @@ class ProducteurPresenceAdapter(private var producteursPresence: MutableList<Pro
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProducteurPresenceHolder {
-        return ProducteurPresenceHolder(LayoutInflater.from(parent.context).inflate(R.layout.producteur_presence_items_list, parent, false))
+        return ProducteurPresenceHolder(
+            ProducteurPresenceItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.producteur_presence_items_list, parent, false)
+        )
     }
 
 
@@ -50,7 +53,7 @@ class ProducteurPresenceAdapter(private var producteursPresence: MutableList<Pro
     override fun getItemCount() = producteursPresence?.size ?: 0
 
 
-    class ProducteurPresenceHolder(producteurPresenceView: View) : RecyclerView.ViewHolder(producteurPresenceView) {
+    class ProducteurPresenceHolder(producteurPresenceView: ProducteurPresenceItemsListBinding) : RecyclerView.ViewHolder(producteurPresenceView.root) {
         val producteurNomLabel = producteurPresenceView.labelProducteurPresence
         val producteurDelete = producteurPresenceView.deleteProducteurPresence
     }

@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.lists.DatasDraftedListActivity
 import ci.progbandama.mobile.adapters.FeatureAdapter
+import ci.progbandama.mobile.databinding.ActivityDashboardAgentBinding
 import ci.progbandama.mobile.models.AgentModel
 import ci.progbandama.mobile.models.CoopModel
 import ci.progbandama.mobile.models.FeatureModel
@@ -55,7 +56,6 @@ import com.google.gson.reflect.TypeToken
 import com.skydoves.expandablelayout.ExpandableLayout
 import com.techatmosphere.expandablenavigation.model.ChildModel
 import com.techatmosphere.expandablenavigation.model.HeaderModel
-import kotlinx.android.synthetic.main.activity_dashboard_agent.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -96,9 +96,9 @@ class DashboardAgentActivity : AppCompatActivity(),
 
 
     fun bindDatas(agentModel: AgentModel?, coopModel: CoopModel?) {
-        labelUserDashboard.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
-        labelCoopDashboard.text = coopModel?.name.toString().uppercase()
-        titleAccount.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
+        binding.labelUserDashboard.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
+        binding.labelCoopDashboard.text = coopModel?.name.toString().uppercase()
+        binding.titleAccount.text = agentModel?.firstname.toString().plus(" ".plus(agentModel?.lastname.toString())).uppercase()
     }
 
 
@@ -235,6 +235,7 @@ class DashboardAgentActivity : AppCompatActivity(),
         return true
     }
 
+    private lateinit var binding: ActivityDashboardAgentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -256,7 +257,8 @@ class DashboardAgentActivity : AppCompatActivity(),
         agentLogged = agentDao?.getAgent(SPUtils.getInstance().getInt(Constants.AGENT_ID, 3))
         val coopmodel = coopDao?.getAll()?.first()?: CoopModel()
 
-        setContentView(R.layout.activity_dashboard_agent)
+        binding = ActivityDashboardAgentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -267,8 +269,8 @@ class DashboardAgentActivity : AppCompatActivity(),
         //setupBarChartView()
 
         // .setNavigationItemSelectedListener(this)
-        Commons.modifyIcColor(this@DashboardAgentActivity, imgProfileDashboard, R.color.black)
-        imgProfileDashboard.setOnClickListener {
+        Commons.modifyIcColor(this@DashboardAgentActivity, binding.imgProfileDashboard, R.color.black)
+        binding.imgProfileDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
@@ -293,7 +295,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             dialog.show()
         }
 
-        imgProfileDashboardNDrawer.setOnClickListener {
+        binding.imgProfileDashboardNDrawer.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             Commons.adjustTextViewSizesInDialog(this, builder, "Deconnexion ?",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
@@ -318,8 +320,8 @@ class DashboardAgentActivity : AppCompatActivity(),
             dialog.show()
         }
 
-        Commons.modifyIcColor(this@DashboardAgentActivity, imgBackDashboard, R.color.black)
-        imgBackDashboard.setOnClickListener {
+        Commons.modifyIcColor(this@DashboardAgentActivity, binding.imgBackDashboard, R.color.black)
+        binding.imgBackDashboard.setOnClickListener {
             val builder = AlertDialog.Builder(this, R.style.DialogTheme)
             Commons.adjustTextViewSizesInDialog(this, builder, "Voulez-vous quitter ?",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp)
                 ,false)
@@ -348,12 +350,12 @@ class DashboardAgentActivity : AppCompatActivity(),
             //  ActivityUtils.startActivity(intentLocalite)
         }*/
 
-        imgMenuDashboard.setOnClickListener {
-            drawer_layout.openDrawer(GravityCompat.START);
+        binding.imgMenuDashboard.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START);
         }
 
-        Commons.modifyIcColor(this@DashboardAgentActivity, linearSync, R.color.black)
-        linearSync.setOnClickListener {
+        Commons.modifyIcColor(this@DashboardAgentActivity, binding.linearSync, R.color.black)
+        binding.linearSync.setOnClickListener {
             var message = "Mettre à jour la base de données... ?"
 
             if (!networkFlag) {
@@ -418,11 +420,11 @@ class DashboardAgentActivity : AppCompatActivity(),
         val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), object : TypeToken<MutableList<String>>(){}.type)
 
         expandableList = mutableListOf<ExpandableLayout>(
-            expandIdentif,
-            expandIdentif2,
-            expandIdentif3,
-            expandIdentif4,
-            expandIdentif5,
+            binding.expandIdentif,
+            binding.expandIdentif2,
+            binding.expandIdentif3,
+            binding.expandIdentif4,
+            binding.expandIdentif5,
             //expandIdentif6,
             //expandIdentif7,
         )
@@ -431,11 +433,11 @@ class DashboardAgentActivity : AppCompatActivity(),
             it.apply {
                 setOnExpandListener {
                     if (it) {
-                        containerFeatureDash.visibility = View.GONE
+                        binding.containerFeatureDash.visibility = View.GONE
                         currentExpandLayout = this
                         showAllExpandable(this, expandableList)
                     } else {
-                        containerFeatureDash.visibility = View.VISIBLE
+                        binding.containerFeatureDash.visibility = View.VISIBLE
                         currentExpandLayout = this
                         hideOtherExpandable(this, expandableList)
                     }
@@ -492,7 +494,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
     private fun setupLiveData() {
 
-        val lisFeat = (recyclerViewFeature.adapter as FeatureAdapter).getListFeatures()
+        val lisFeat = (binding.recyclerViewFeature.adapter as FeatureAdapter).getListFeatures()
 
         producteurDao?.getUnSyncedAllLive(agentID = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())?.observe(this, Observer { items ->
             val length = items.size
@@ -633,7 +635,7 @@ class DashboardAgentActivity : AppCompatActivity(),
     fun hideExpandFromAdapter(){
         val roles: MutableList<String> = GsonUtils.fromJson(SPUtils.getInstance().getString("menu"), object : TypeToken<MutableList<String>>(){}.type)
         currentExpandLayout?.let {
-            containerFeatureDash.visibility = View.GONE
+            binding.containerFeatureDash.visibility = View.GONE
             showAllExpandable(it, expandableList)
 
             hideNotExistFeature(roles, it)
@@ -740,11 +742,11 @@ class DashboardAgentActivity : AppCompatActivity(),
         roles: MutableList<String>,
         expandableLayout: ExpandableLayout
     ) {
-        if( (roles.containsAll(listOf("PRODUCTEUR")) == false && roles.containsAll(listOf("PARCELLE")) == false && roles.containsAll(listOf("ESTIMATION")) == false) && expandableLayout.tag.toString().equals("expand0") ) lexpand0.visibility = View.GONE
-        if( (roles.containsAll(listOf("PARCELLES")) == false && roles.containsAll(listOf("PARCELLES")) == false && roles.containsAll(listOf("FORMATION")) == false && roles.containsAll(listOf("FORMATION_VISITEUR")) == false && roles.containsAll(listOf("APPLICATION")) == false && roles.containsAll(listOf("INSPECTION")) == false) && expandableLayout.tag.toString().equals("expand1") ) lexpand1.visibility = View.GONE
-        if( (roles.containsAll(listOf("LIVRAISON")) == false && roles.containsAll(listOf("LIVRAISON_MAGCENTRAL")) == false) && expandableLayout.tag.toString().equals("expand2") ) lexpand2.visibility = View.GONE
-        if( (roles.containsAll(listOf("MENAGE")) == false && roles.containsAll(listOf("SSRTECLMRS")) == false) && expandableLayout.tag.toString().equals("expand3") ) lexpand3.visibility = View.GONE
-        if( (roles.containsAll(listOf("AGRO_EVALUATION")) == false && roles.containsAll(listOf("AGRO_DISTRIBUTION")) == false && roles.containsAll(listOf("POSTPLANTING")) == false) && expandableLayout.tag.toString().equals("expand4") ) lexpand4.visibility = View.GONE
+        if( (roles.containsAll(listOf("PRODUCTEUR")) == false && roles.containsAll(listOf("PARCELLE")) == false && roles.containsAll(listOf("ESTIMATION")) == false) && expandableLayout.tag.toString().equals("expand0") ) binding.lexpand0.visibility = View.GONE
+        if( (roles.containsAll(listOf("PARCELLES")) == false && roles.containsAll(listOf("PARCELLES")) == false && roles.containsAll(listOf("FORMATION")) == false && roles.containsAll(listOf("FORMATION_VISITEUR")) == false && roles.containsAll(listOf("APPLICATION")) == false && roles.containsAll(listOf("INSPECTION")) == false) && expandableLayout.tag.toString().equals("expand1") ) binding.lexpand1.visibility = View.GONE
+        if( (roles.containsAll(listOf("LIVRAISON")) == false && roles.containsAll(listOf("LIVRAISON_MAGCENTRAL")) == false) && expandableLayout.tag.toString().equals("expand2") ) binding.lexpand2.visibility = View.GONE
+        if( (roles.containsAll(listOf("MENAGE")) == false && roles.containsAll(listOf("SSRTECLMRS")) == false) && expandableLayout.tag.toString().equals("expand3") ) binding.lexpand3.visibility = View.GONE
+        if( (roles.containsAll(listOf("AGRO_EVALUATION")) == false && roles.containsAll(listOf("AGRO_DISTRIBUTION")) == false && roles.containsAll(listOf("POSTPLANTING")) == false) && expandableLayout.tag.toString().equals("expand4") ) binding.lexpand4.visibility = View.GONE
         //if( () && expandableLayout.tag.toString().equals("expand5") ) lexpand5.visibility = View.GONE
         //if(roles.containsAll(listOf("APPLICATION", "INSPECTION")) == false && expandableLayout.tag.toString().equals("expand6") ) lexpand6.visibility = View.GONE
     }
@@ -771,10 +773,10 @@ class DashboardAgentActivity : AppCompatActivity(),
                     }
                 }
                 if(isThereItem) {
-                    containerFeatureDash.visibility = VISIBLE
+                    binding.containerFeatureDash.visibility = VISIBLE
                     //carouselRecyclerview.scrollToPosition(0)
-                }else containerFeatureDash.visibility = GONE
-                (recyclerViewFeature.adapter as FeatureAdapter) ?.notifyDataSetChanged()
+                }else binding.containerFeatureDash.visibility = GONE
+                (binding.recyclerViewFeature.adapter as FeatureAdapter) ?.notifyDataSetChanged()
 
 //                if(carouselRecyclerview?.adapter?.itemCount!! > 0){
 //                    val pagerSnapHelper = PagerSnapHelper()
@@ -1078,7 +1080,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
         //LogUtils.d(listOfFeatures.map { it.type })
 
-        recyclerViewFeature?.adapter?.let {
+        binding.recyclerViewFeature?.adapter?.let {
             it.notifyDataSetChanged()
         }
 
@@ -1086,7 +1088,7 @@ class DashboardAgentActivity : AppCompatActivity(),
 
     private fun setNavViewItems(roles: MutableList<String>) {
 
-        var expandableLV = expandable_navigation1.init(this@DashboardAgentActivity)
+        var expandableLV = binding.expandableNavigation1.init(this@DashboardAgentActivity)
         val listHeaders = mutableListOf<HeaderModel>()
         //LogUtils.d(roles)
         listOfFeatureCloned.forEach {
@@ -1124,15 +1126,15 @@ class DashboardAgentActivity : AppCompatActivity(),
         expandableLV.build()
         //expandableLV.setAdapter(ExpandableListAdapter(this, listHeaders))
         expandableLV.addOnGroupClickListener(OnGroupClickListener { parent, v, groupPosition, id ->
-                expandable_navigation1.setSelected(groupPosition)
+            binding.expandableNavigation1.setSelected(groupPosition)
                 //drawer_layout.closeDrawer(GravityCompat.START)
                 //LogUtils.d(listOfFeatureCloned.get(groupPosition).title)
 
                 false
             })
             .addOnChildClickListener(OnChildClickListener { parent, v, groupPosition, childPosition, id ->
-                expandable_navigation1.setSelected(groupPosition, childPosition)
-                drawer_layout.closeDrawer(GravityCompat.START)
+                binding.expandableNavigation1.setSelected(groupPosition, childPosition)
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
                 val currentGroup = listOfFeatureClonedNav.get(groupPosition)
                 val btnList = mutableListOf<String>("ADD")
 
@@ -1147,15 +1149,15 @@ class DashboardAgentActivity : AppCompatActivity(),
                 false
             })
 
-        if(listOfFeatureClonedNav.size > 0 && expandable_navigation1.size > 0) expandable_navigation1.setSelected(0)
+        if(listOfFeatureClonedNav.size > 0 && binding.expandableNavigation1.size > 0) binding.expandableNavigation1.setSelected(0)
 
     }
 
     private fun setViewFeatureListing() {
 
         val manager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-        recyclerViewFeature!!.setLayoutManager(manager)
-        recyclerViewFeature?.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
+        binding.recyclerViewFeature!!.setLayoutManager(manager)
+        binding.recyclerViewFeature?.adapter = FeatureAdapter(this@DashboardAgentActivity, listOfFeatures)
 
     }
 

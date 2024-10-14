@@ -12,9 +12,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.*
+import ci.progbandama.mobile.databinding.SyncedItemsListBinding
 import ci.progbandama.mobile.repositories.datas.CommonData
 import ci.progbandama.mobile.tools.Commons.Companion.modifyIcColor
-import kotlinx.android.synthetic.main.synced_items_list.view.*
 
 
 /**
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.synced_items_list.view.*
 class DataSyncedAdapter(val context: Context, var draftedList: MutableList<CommonData>?): RecyclerView.Adapter<DataSyncedAdapter.DataSyncedHolder>() {
 
 
-    class DataSyncedHolder(viewDataDrafted: View) : RecyclerView.ViewHolder(viewDataDrafted) {
+    class DataSyncedHolder(viewDataDrafted: SyncedItemsListBinding) : RecyclerView.ViewHolder(viewDataDrafted.root) {
 
         val labelNumberDraft = viewDataDrafted.labelDraftedNumberItem
         val labelDateDraft = viewDataDrafted.labelDraftedDateItem
@@ -35,7 +35,10 @@ class DataSyncedAdapter(val context: Context, var draftedList: MutableList<Commo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataSyncedHolder {
-        return DataSyncedHolder(LayoutInflater.from(context).inflate(R.layout.synced_items_list, parent, false))
+        return DataSyncedHolder(
+            SyncedItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(context).inflate(R.layout.synced_items_list, parent, false)
+        )
     }
 
 

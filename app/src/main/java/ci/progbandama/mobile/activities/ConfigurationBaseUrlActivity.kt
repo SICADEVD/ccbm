@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.ActivityConfigurationBaseUrlBinding
 import ci.progbandama.mobile.models.CommonResponse
 import ci.progbandama.mobile.repositories.datas.CommonData
 import ci.progbandama.mobile.tools.Commons
@@ -12,7 +13,6 @@ import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_configuration_base_url.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -36,7 +36,7 @@ class ConfigurationBaseUrlActivity : AppCompatActivity() {
 
 
     fun checkField(): Boolean {
-        return inputCode.text?.length == 0
+        return binding.inputCode.text?.length == 0
     }
 
 
@@ -85,23 +85,25 @@ class ConfigurationBaseUrlActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var binding: ActivityConfigurationBaseUrlBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_configuration_base_url)
+        binding = ActivityConfigurationBaseUrlBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         progressDialog = ProgressDialog(this, R.style.DialogTheme)
         Commons.adjustTextViewSizesInDialog(this, progressDialog!!, "Connexion en cours...",   this.resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
             false)
         //progressDialog?.setMessage("Connexion en cours...")
 
-        btnCodeCheck.setOnClickListener {
+        binding.btnCodeCheck.setOnClickListener {
             if (checkField()) {
                 Commons.showMessage("Saisir votre code svp", this, callback = {})
             } else {
                 MainScope().launch {
                     progressDialog?.show()
-                    checkCode(inputCode.text?.toString())
+                    checkCode(binding.inputCode.text?.toString())
                 }
             }
         }

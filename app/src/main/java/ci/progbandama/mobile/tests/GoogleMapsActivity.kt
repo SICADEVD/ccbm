@@ -11,6 +11,7 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.ActivityGoogleMapsBinding
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
@@ -21,7 +22,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.model.*
-import kotlinx.android.synthetic.main.activity_google_maps.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -74,14 +74,16 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
         }
     }
 
+    lateinit var binding: ActivityGoogleMapsBinding
 
     @SuppressLint("ResourceAsColor")
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_google_maps)
+        binding = ActivityGoogleMapsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        labelDelimiterOwner.text = intent.getStringExtra("producteur_nom")
+        binding.labelDelimiterOwner.text = intent.getStringExtra("producteur_nom")
 
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -89,22 +91,22 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
         val mapsFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.mapsFragment) as SupportMapFragment
         mapsFragment.getMapAsync(this)
 
-        imageMarkAction.setOnClickListener {
-            imageMarkAction.setBackgroundColor(R.color.gray)
-            imageWalkingAction.setBackgroundColor(0)
+        binding.imageMarkAction.setOnClickListener {
+            binding.imageMarkAction.setBackgroundColor(R.color.gray)
+            binding.imageWalkingAction.setBackgroundColor(0)
 
             actionDefined = true
         }
 
-        imageWalkingAction.setOnClickListener {
-            imageWalkingAction.setBackgroundColor(R.color.gray)
-            imageMarkAction.setBackgroundColor(0)
+        binding.imageWalkingAction.setOnClickListener {
+            binding.imageWalkingAction.setBackgroundColor(R.color.gray)
+            binding.imageMarkAction.setBackgroundColor(0)
 
             actionDefined = true
 
         }
 
-        imageMapsTypeAction.setOnClickListener {
+        binding.imageMapsTypeAction.setOnClickListener {
             when (googleMap.mapType) {
                 MAP_TYPE_TERRAIN     -> googleMap.mapType = MAP_TYPE_SATELLITE
                 MAP_TYPE_SATELLITE  -> googleMap.mapType = MAP_TYPE_TERRAIN
@@ -112,18 +114,18 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
             }
         }
 
-        imageMarkClearAll.setOnClickListener {
+        binding.imageMarkClearAll.setOnClickListener {
             wayPoints.map {
                 gPoligon?.remove()
             }
             wayPoints.clear()
             googleMap.clear()
 
-            labelDelimiterDistance.text = "0m"
-            labelDelimiterSurface.text = "0m\u00B2"
+            binding.labelDelimiterDistance.text = "0m"
+            binding.labelDelimiterSurface.text = "0m\u00B2"
         }
 
-        imagePolygonMaker.setOnClickListener {
+        binding.imagePolygonMaker.setOnClickListener {
             LogUtils.e("TAG", GsonUtils.toJson(wayPoints))
 
             SPUtils.getInstance().put("waypoints", GsonUtils.toJson(wayPoints))
@@ -131,14 +133,14 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
         }
 
 
-        clickCloseMakerParcelle.setOnClickListener {
+        binding.clickCloseMakerParcelle.setOnClickListener {
             SPUtils.getInstance().put("center_lat", gLatLngCenter?.latitude.toString())
             SPUtils.getInstance().put("center_lng", gLatLngCenter?.longitude.toString())
             finish()
         }
 
 
-        linearMapsRegisterParcelle.setOnClickListener {
+        binding.linearMapsRegisterParcelle.setOnClickListener {
             SPUtils.getInstance().put("center_lat", gLatLngCenter?.latitude.toString())
             SPUtils.getInstance().put("center_lng", gLatLngCenter?.longitude.toString())
             finish()
@@ -182,15 +184,15 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
         wayPoints.add(pickedLatLng)
 
         if (wayPoints.size == 1) {
-            imageMarkClearAllCard.visibility = View.VISIBLE
-            imageMarkClearMarkerCard.visibility = View.VISIBLE
+            binding.imageMarkClearAllCard.visibility = View.VISIBLE
+            binding.imageMarkClearMarkerCard.visibility = View.VISIBLE
         }
 
         if (wayPoints.size > 2) drawDelimiter()
 
 
         if (wayPoints.size > 1) {
-            labelDelimiterDistance.text = SphericalUtil.computeLength(wayPoints).roundToInt().toString().plus(" m")
+            binding.labelDelimiterDistance.text = SphericalUtil.computeLength(wayPoints).roundToInt().toString().plus(" m")
         }
     }
 
@@ -202,15 +204,15 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
             .geodesic(true)
             .strokeWidth(5f)
             .strokeJointType(JointType.ROUND)
-            .fillColor(androidx.cardview.R.color.cardview_shadow_end_color)
+            .fillColor(R.color.cardview_shadow_end_color)
             .addAll(wayPoints)
             .clickable(true)
 
         googleMap.addPolygon(pickedPolygonOptions)
 
-        labelDelimiterSurface.text = SphericalUtil.computeArea(wayPoints).roundToInt().toString().plus(" m²")
-        SPUtils.getInstance().put(Constants.PREFS_SUPERFICIE, StringUtils.remove(labelDelimiterSurface.text.toString(),  " m²"))
-        imageMarkAction.setBackgroundColor(0)
+        binding.labelDelimiterSurface.text = SphericalUtil.computeArea(wayPoints).roundToInt().toString().plus(" m²")
+        SPUtils.getInstance().put(Constants.PREFS_SUPERFICIE, StringUtils.remove(binding.labelDelimiterSurface.text.toString(),  " m²"))
+        binding.imageMarkAction.setBackgroundColor(0)
 
         gLatLngCenter = getPolygonCenterPoint(wayPoints)
         drawMarker(gLatLngCenter)
@@ -272,8 +274,8 @@ class GoogleMapsActivity : AppCompatActivity(), OnMapReadyCallback, OnMapClickLi
 
         updateLocationUI()
 
-        imageMarkClearAllCard.visibility = View.INVISIBLE
-        imageMarkClearMarkerCard.visibility = View.INVISIBLE
+        binding.imageMarkClearAllCard.visibility = View.INVISIBLE
+        binding.imageMarkClearMarkerCard.visibility = View.INVISIBLE
 
         AwesomeDialog.build(this)
             .title(title = "INFO")

@@ -16,6 +16,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.CalculEstimationPreviewActivity
+import ci.progbandama.mobile.databinding.ActivityCalculEstimationBinding
 import ci.progbandama.mobile.models.CampagneModel
 import ci.progbandama.mobile.models.DataDraftedModel
 import ci.progbandama.mobile.models.EstimationModel
@@ -33,28 +34,6 @@ import ci.progbandama.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_calcul_estimation.*
-import kotlinx.android.synthetic.main.activity_calcul_estimation.clickCloseBtn
-import kotlinx.android.synthetic.main.activity_calcul_estimation.clickReviewEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editA1Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editA2Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editA3Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editB1Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editB2Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editB3Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editC1Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editC2Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editC3Estimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editDateEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editSuperficieEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.editajustement
-import kotlinx.android.synthetic.main.activity_calcul_estimation.imageDraftBtn
-import kotlinx.android.synthetic.main.activity_calcul_estimation.selectCampagneEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.selectLocaliteEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.selectParcelleEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.selectProducteurEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.selectSectionEstimation
-import kotlinx.android.synthetic.main.activity_calcul_estimation.selectTypeEstimation
 import org.joda.time.DateTime
 import java.util.Calendar
 import kotlin.math.roundToInt
@@ -106,10 +85,10 @@ class CalculEstimationActivity : AppCompatActivity() {
         campagnesList = ProgBandRoomDatabase.getDatabase(applicationContext)?.campagneDao()?.getAll()
 
         val campagneAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, campagnesList!!)
-        selectCampagneEstimation!!.adapter = campagneAdapter
+        binding.selectCampagneEstimation!!.adapter = campagneAdapter
 
-        selectCampagneEstimation.setTitle(getString(R.string.choisir_la_campagne))
-        selectCampagneEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectCampagneEstimation.setTitle(getString(R.string.choisir_la_campagne))
+        binding.selectCampagneEstimation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 val campagne = campagnesList!![position]
                 campagneNom = campagne.campagnesNom!!
@@ -172,7 +151,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionEstimation,
+            spinner = binding.selectSectionEstimation,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -208,7 +187,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = localitesListi?.size!! <= 0,
             currentVal = libItem,
-            spinner = selectLocaliteEstimation,
+            spinner = binding.selectLocaliteEstimation,
             listIem = localitesListi.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -250,7 +229,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = producteursList?.size!! <= 0,
             currentVal = libItem,
-            spinner = selectProducteurEstimation,
+            spinner = binding.selectProducteurEstimation,
             listIem = producteursList?.map { "${ it.nom } ${ it.prenoms }" }?.toList() ?: listOf(),
             onChanged = {
                 producteursList?.let { list ->
@@ -292,7 +271,7 @@ class CalculEstimationActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectParcelleEstimation,
+            spinner = binding.selectParcelleEstimation,
             listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -302,7 +281,7 @@ class CalculEstimationActivity : AppCompatActivity() {
                     parcelleCommon.nom = Commons.getParcelleNotSyncLibel(parcelle)
 
                     parcelleSuperficie = parcelle.superficie ?: "0.0"
-                    editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
+                    binding.editSuperficieEstimation.text = Editable.Factory.getInstance().newEditable(parcelleSuperficie)
 
                     if(parcelle.isSynced){
                         parcelleCommon.id = parcelle.id!!
@@ -513,20 +492,20 @@ class CalculEstimationActivity : AppCompatActivity() {
         return EstimationModel(
             campagnesId = campagneId,
             campagnesNom = campagneNom,
-            dateEstimation = editDateEstimation.text.toString(),
-            ea1 = editA1Estimation.checkAndReturnZeroIfEmpty(),
-            ea2 = editA2Estimation.checkAndReturnZeroIfEmpty(),
-            ea3 = editA3Estimation.checkAndReturnZeroIfEmpty(),
-            eb1 = editB1Estimation.checkAndReturnZeroIfEmpty(),
-            eb2 = editB2Estimation.checkAndReturnZeroIfEmpty(),
-            eb3 = editB3Estimation.checkAndReturnZeroIfEmpty(),
-            ec1 = editC1Estimation.checkAndReturnZeroIfEmpty(),
-            ec2 = editC2Estimation.checkAndReturnZeroIfEmpty(),
-            ec3 = editC3Estimation.checkAndReturnZeroIfEmpty(),
-            ajustement = editajustement.checkAndReturnZeroFloatIfEmpty(),
-            typeEstimation = selectTypeEstimation.getSpinnerContent(),
-            recolteEstime = editRecolteEstimee.checkAndReturnZeroFloatIfEmpty(),
-            rendFinal = editRendementFinal.checkAndReturnZeroIfEmpty(),
+            dateEstimation = binding.editDateEstimation.text.toString(),
+            ea1 = binding.editA1Estimation.checkAndReturnZeroIfEmpty(),
+            ea2 = binding.editA2Estimation.checkAndReturnZeroIfEmpty(),
+            ea3 = binding.editA3Estimation.checkAndReturnZeroIfEmpty(),
+            eb1 = binding.editB1Estimation.checkAndReturnZeroIfEmpty(),
+            eb2 = binding.editB2Estimation.checkAndReturnZeroIfEmpty(),
+            eb3 = binding.editB3Estimation.checkAndReturnZeroIfEmpty(),
+            ec1 = binding.editC1Estimation.checkAndReturnZeroIfEmpty(),
+            ec2 = binding.editC2Estimation.checkAndReturnZeroIfEmpty(),
+            ec3 = binding.editC3Estimation.checkAndReturnZeroIfEmpty(),
+            ajustement = binding.editajustement.checkAndReturnZeroFloatIfEmpty(),
+            typeEstimation = binding.selectTypeEstimation.getSpinnerContent(),
+            recolteEstime = binding.editRecolteEstimee.checkAndReturnZeroFloatIfEmpty(),
+            rendFinal = binding.editRendementFinal.checkAndReturnZeroIfEmpty(),
             parcelleId = parcelleCommon.id.toString(),
             section = sectionCommon.id.toString(),
             superficie = parcelleSuperficie,
@@ -569,7 +548,7 @@ class CalculEstimationActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -624,36 +603,39 @@ class CalculEstimationActivity : AppCompatActivity() {
 //        editSuperficieEstimation.setText(estimationDrafted.superficie)
 //        //applyFiltersDec(editSuperficieEstimation, withZero = false)
 //
-        editA1Estimation.setText(estimationDrafted.ea1)
-        editA2Estimation.setText(estimationDrafted.ea2)
-        editA3Estimation.setText(estimationDrafted.ea3)
+        binding.editA1Estimation.setText(estimationDrafted.ea1)
+        binding.editA2Estimation.setText(estimationDrafted.ea2)
+        binding.editA3Estimation.setText(estimationDrafted.ea3)
 
-        editB1Estimation.setText(estimationDrafted.eb1)
-        editB2Estimation.setText(estimationDrafted.eb2)
-        editB3Estimation.setText(estimationDrafted.eb3)
+        binding.editB1Estimation.setText(estimationDrafted.eb1)
+        binding.editB2Estimation.setText(estimationDrafted.eb2)
+        binding.editB3Estimation.setText(estimationDrafted.eb3)
 
-        editC1Estimation.setText(estimationDrafted.ec1)
-        editC2Estimation.setText(estimationDrafted.ec2)
-        editC3Estimation.setText(estimationDrafted.ec3)
+        binding.editC1Estimation.setText(estimationDrafted.ec1)
+        binding.editC2Estimation.setText(estimationDrafted.ec2)
+        binding.editC3Estimation.setText(estimationDrafted.ec3)
 
         estimationDrafted.typeEstimation?.let{
             var curr = 0
             for (item in resources.getStringArray(R.array.type_estimation)){
-                if (it.equals(item, ignoreCase = true)) selectTypeEstimation.setSelection(curr)
+                if (it.equals(item, ignoreCase = true)) binding.selectTypeEstimation.setSelection(curr)
                 curr++
             }
         }
-        editajustement.setText(estimationDrafted.ajustement)
-        editRendementFinal.setText(estimationDrafted.rendFinal)
-        editRecolteEstimee.setText(estimationDrafted.recolteEstime)
+        binding.editajustement.setText(estimationDrafted.ajustement)
+        binding.editRendementFinal.setText(estimationDrafted.rendFinal)
+        binding.editRecolteEstimee.setText(estimationDrafted.recolteEstime)
         calculLeRendementTheorique()
 
-        editDateEstimation.setText(estimationDrafted.dateEstimation)
+        binding.editDateEstimation.setText(estimationDrafted.dateEstimation)
     }
+
+    private lateinit var binding: ActivityCalculEstimationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calcul_estimation)
+        binding = ActivityCalculEstimationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -661,57 +643,57 @@ class CalculEstimationActivity : AppCompatActivity() {
 
         setAll()
 
-        clickReviewEstimation.setOnClickListener {
+        binding.clickReviewEstimation.setOnClickListener {
             collectDatasReview()
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        editDateEstimation.setOnClickListener {
-            configDate(editDateEstimation)
+        binding.editDateEstimation.setOnClickListener {
+            configDate(binding.editDateEstimation)
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftEstimation(draftedDataEstimation ?: DataDraftedModel(uid = 0))
         }
 
-        applyFilters(editDateEstimation)
+        applyFilters(binding.editDateEstimation)
 
-        Commons.addNotZeroAtFirstToET(editA1Estimation)
-        Commons.addNotZeroAtFirstToET(editA2Estimation)
-        Commons.addNotZeroAtFirstToET(editA3Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editA1Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editA2Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editA3Estimation)
 
-        Commons.addNotZeroAtFirstToET(editB1Estimation)
-        Commons.addNotZeroAtFirstToET(editB2Estimation)
-        Commons.addNotZeroAtFirstToET(editB3Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editB1Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editB2Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editB3Estimation)
 
-        Commons.addNotZeroAtFirstToET(editC1Estimation)
-        Commons.addNotZeroAtFirstToET(editC2Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editC1Estimation)
+        Commons.addNotZeroAtFirstToET(binding.editC2Estimation)
 
 
-        selectTypeEstimation.onItemSelectedListener = object : OnItemSelectedListener{
+        binding.selectTypeEstimation.onItemSelectedListener = object : OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 if(p2==0){
 //                    LogUtils.d("valRendementTheorique")
                   //R calculé
-                    carreeA.visibility = View.VISIBLE
-                    carreeB.visibility = View.VISIBLE
-                    carreeC.visibility = View.VISIBLE
+                    binding.carreeA.visibility = View.VISIBLE
+                    binding.carreeB.visibility = View.VISIBLE
+                    binding.carreeC.visibility = View.VISIBLE
 
-                    Commons.addNotZeroAtFirstToET(editC3Estimation, onTextChange = { text ->
+                    Commons.addNotZeroAtFirstToET(binding.editC3Estimation, onTextChange = { text ->
                         if(
-                            editA1Estimation.text.isNullOrEmpty() ||
-                            editA2Estimation.text.isNullOrEmpty() ||
-                            editA3Estimation.text.isNullOrEmpty() ||
-                            editB1Estimation.text.isNullOrEmpty() ||
-                            editB2Estimation.text.isNullOrEmpty() ||
-                            editB3Estimation.text.isNullOrEmpty() ||
-                            editC1Estimation.text.isNullOrEmpty() ||
-                            editC2Estimation.text.isNullOrEmpty() ||
-                            editC3Estimation.text.isNullOrEmpty()
+                            binding.editA1Estimation.text.isNullOrEmpty() ||
+                            binding.editA2Estimation.text.isNullOrEmpty() ||
+                            binding.editA3Estimation.text.isNullOrEmpty() ||
+                            binding.editB1Estimation.text.isNullOrEmpty() ||
+                            binding.editB2Estimation.text.isNullOrEmpty() ||
+                            binding.editB3Estimation.text.isNullOrEmpty() ||
+                            binding.editC1Estimation.text.isNullOrEmpty() ||
+                            binding.editC2Estimation.text.isNullOrEmpty() ||
+                            binding.editC3Estimation.text.isNullOrEmpty()
                         ){
                             Commons.showMessage("Veuillez renseigner tous les carrés d'estimation", this@CalculEstimationActivity, finished = false, callback = {})
                         }else{
@@ -725,17 +707,17 @@ class CalculEstimationActivity : AppCompatActivity() {
 
                     })
 
-                    editajustement.doOnTextChanged { text, start, before, count ->
+                    binding.editajustement.doOnTextChanged { text, start, before, count ->
                         if(
-                            editA1Estimation.text.isNullOrEmpty() ||
-                            editA2Estimation.text.isNullOrEmpty() ||
-                            editA3Estimation.text.isNullOrEmpty() ||
-                            editB1Estimation.text.isNullOrEmpty() ||
-                            editB2Estimation.text.isNullOrEmpty() ||
-                            editB3Estimation.text.isNullOrEmpty() ||
-                            editC1Estimation.text.isNullOrEmpty() ||
-                            editC2Estimation.text.isNullOrEmpty() ||
-                            editC3Estimation.text.isNullOrEmpty()
+                            binding.editA1Estimation.text.isNullOrEmpty() ||
+                            binding.editA2Estimation.text.isNullOrEmpty() ||
+                            binding.editA3Estimation.text.isNullOrEmpty() ||
+                            binding.editB1Estimation.text.isNullOrEmpty() ||
+                            binding.editB2Estimation.text.isNullOrEmpty() ||
+                            binding.editB3Estimation.text.isNullOrEmpty() ||
+                            binding.editC1Estimation.text.isNullOrEmpty() ||
+                            binding.editC2Estimation.text.isNullOrEmpty() ||
+                            binding.editC3Estimation.text.isNullOrEmpty()
                         ){
                             Commons.showMessage("Veuillez renseigner tous les carrés d'estimation", this@CalculEstimationActivity, finished = false, callback = {})
                         }
@@ -748,12 +730,12 @@ class CalculEstimationActivity : AppCompatActivity() {
                                 }else if(it > 20){
                                     Commons.showMessage("Pourcentage d'ajustement est supérieur à 20%", this@CalculEstimationActivity, finished = false, callback = {})
                                 }
-                                editRendementFinal.setText("${valRendTheorique+(valRendTheorique*textVal)}")
+                                binding.editRendementFinal.setText("${valRendTheorique+(valRendTheorique*textVal)}")
                             }
                         }
                     }
 
-                    editRendementFinal.addTextChangedListener(object : TextWatcher{
+                    binding.editRendementFinal.addTextChangedListener(object : TextWatcher{
                         override fun beforeTextChanged(
                             p0: CharSequence?,
                             p1: Int,
@@ -772,9 +754,9 @@ class CalculEstimationActivity : AppCompatActivity() {
                             if(!text.toString().isNullOrEmpty()){
                                 val RfVal = text.toString().toIntOrNull()
                                 RfVal?.let {
-                                    val superVal = editSuperficieEstimation.text.toString().toFloatOrNull()
+                                    val superVal = binding.editSuperficieEstimation.text.toString().toFloatOrNull()
                                     superVal?.let {
-                                        editRecolteEstimee.setText("${(RfVal*superVal).roundToInt()}")
+                                        binding.editRecolteEstimee.setText("${(RfVal*superVal).roundToInt()}")
                                     }
                                 }
                             }
@@ -782,8 +764,8 @@ class CalculEstimationActivity : AppCompatActivity() {
 
                     })
 
-                    editRendementFinal.isEnabled = false
-                    editRendementFinal.removeTextChangedListener(object : TextWatcher{
+                    binding.editRendementFinal.isEnabled = false
+                    binding.editRendementFinal.removeTextChangedListener(object : TextWatcher{
                         override fun beforeTextChanged(
                             p0: CharSequence?,
                             p1: Int,
@@ -810,12 +792,12 @@ class CalculEstimationActivity : AppCompatActivity() {
                 }else{
                     LogUtils.d("editRendementFinal")
                     //R estimé
-                    carreeA.visibility = View.GONE
-                    carreeB.visibility = View.GONE
-                    carreeC.visibility = View.GONE
+                    binding.carreeA.visibility = View.GONE
+                    binding.carreeB.visibility = View.GONE
+                    binding.carreeC.visibility = View.GONE
 
-                    editRendementFinal.isEnabled = true
-                    editRendementFinal.addTextChangedListener(object : TextWatcher{
+                    binding.editRendementFinal.isEnabled = true
+                    binding.editRendementFinal.addTextChangedListener(object : TextWatcher{
                         override fun beforeTextChanged(
                             p0: CharSequence?,
                             p1: Int,
@@ -830,9 +812,9 @@ class CalculEstimationActivity : AppCompatActivity() {
                             if(!text.isNullOrEmpty()){
                                 val RfVal = text.toString().toIntOrNull()
                                 RfVal?.let {
-                                    val superVal = editSuperficieEstimation.text.toString().toFloatOrNull()
+                                    val superVal = binding.editSuperficieEstimation.text.toString().toFloatOrNull()
                                     superVal?.let {
-                                        editRecolteEstimee.setText("${(RfVal*superVal).toFloat()}")
+                                        binding.editRecolteEstimee.setText("${(RfVal*superVal).toFloat()}")
                                     }
                                 }
                             }
@@ -864,9 +846,9 @@ class CalculEstimationActivity : AppCompatActivity() {
     }
 
     private fun calculLeRendementTheorique() {
-        var nbrArbreABCc20 = editA1Estimation.text.toString().toInt()+editB1Estimation.text.toString().toInt()+editC1Estimation.text.toString().toInt()
-        var nbrArbreABCc10 = editA2Estimation.text.toString().toInt()+editB2Estimation.text.toString().toInt()+editC2Estimation.text.toString().toInt()
-        var nbrArbreABCc0 = editA3Estimation.text.toString().toInt()+editB3Estimation.text.toString().toInt()+editC3Estimation.text.toString().toInt()
+        var nbrArbreABCc20 = binding.editA1Estimation.text.toString().toInt()+binding.editB1Estimation.text.toString().toInt()+binding.editC1Estimation.text.toString().toInt()
+        var nbrArbreABCc10 = binding.editA2Estimation.text.toString().toInt()+binding.editB2Estimation.text.toString().toInt()+binding.editC2Estimation.text.toString().toInt()
+        var nbrArbreABCc0 = binding.editA3Estimation.text.toString().toInt()+binding.editB3Estimation.text.toString().toInt()+binding.editC3Estimation.text.toString().toInt()
 
         var volABCc20 = ((nbrArbreABCc20*1)/3)
         var volABCc10 = ((nbrArbreABCc10*0.6)/3)

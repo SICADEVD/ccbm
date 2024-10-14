@@ -5,15 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.MenagereItemsListBinding
 import ci.progbandama.mobile.models.ProducteurMenageModel
-import kotlinx.android.synthetic.main.menagere_items_list.view.*
 
 
 class MenageAdapter(private var menages: List<ProducteurMenageModel>?) : RecyclerView.Adapter<MenageAdapter.MenageHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenageHolder {
-        return MenageHolder(LayoutInflater.from(parent.context).inflate(R.layout.menagere_items_list, parent, false))
+        return MenageHolder(
+            MenagereItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.menagere_items_list, parent, false)
+        )
     }
 
 
@@ -32,7 +35,7 @@ class MenageAdapter(private var menages: List<ProducteurMenageModel>?) : Recycle
     override fun getItemCount() = menages?.size ?: 0
 
 
-    class MenageHolder(menageView: View) : RecyclerView.ViewHolder(menageView) {
+    class MenageHolder(menageView: MenagereItemsListBinding) : RecyclerView.ViewHolder(menageView.root) {
         val menageQuartierLabel = menageView.labelQuartierMenagere
         val menageProductLabel = menageView.labelProducteurNomMenagere
         val imgSyncedStatus = menageView.imgSyncedMenage

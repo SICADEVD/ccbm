@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.VisiteurFormationActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivityVisiteurFormationPreviewBinding
 import ci.progbandama.mobile.models.VisiteurFormationModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -14,8 +15,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
-import kotlinx.android.synthetic.main.activity_visiteur_formation_preview.*
-
 class VisiteurFormationPreviewActivity : AppCompatActivity() {
 
 
@@ -23,11 +22,14 @@ class VisiteurFormationPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivityVisiteurFormationPreviewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_visiteur_formation_preview)
+        binding = ActivityVisiteurFormationPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
@@ -49,8 +51,8 @@ class VisiteurFormationPreviewActivity : AppCompatActivity() {
                 //                LogUtils.d(producteurItemsListPrev)
 
                 val rvPrevAdapter = PreviewItemAdapter(infoItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
                 visiteurFormationDatas = it.getParcelableExtra("preview")
                 draftID = it.getIntExtra("draft_id", 0)
@@ -59,7 +61,7 @@ class VisiteurFormationPreviewActivity : AppCompatActivity() {
 
 
 
-                clickSaveVisitFormationPreview.setOnClickListener {
+                binding.clickSaveVisitFormationPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

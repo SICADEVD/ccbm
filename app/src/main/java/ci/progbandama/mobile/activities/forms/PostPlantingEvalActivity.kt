@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.EvaluationPostPlantPreviewActivity
 import ci.progbandama.mobile.adapters.EvaluationPostPlantAdapter
+import ci.progbandama.mobile.databinding.ActivityParcelleBinding
+import ci.progbandama.mobile.databinding.ActivityPostplantingBinding
 import ci.progbandama.mobile.models.ArbreModel
 import ci.progbandama.mobile.models.DataDraftedModel
 import ci.progbandama.mobile.models.DistributionArbreDao
@@ -36,8 +38,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_postplanting.*
-import kotlinx.android.synthetic.main.activity_postplanting.clickSaveEvalPostPlanting
 import java.util.ArrayList
 
 class PostPlantingEvalActivity : AppCompatActivity() {
@@ -49,9 +49,12 @@ class PostPlantingEvalActivity : AppCompatActivity() {
     private var distributionArbreDao: DistributionArbreDao? = null
     var draftedDataDistribution: DataDraftedModel? = null
 
+    private lateinit var binding: ActivityPostplantingBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_postplanting)
+        binding = ActivityPostplantingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -59,24 +62,24 @@ class PostPlantingEvalActivity : AppCompatActivity() {
 
         distributionArbreDao = ProgBandRoomDatabase.getDatabase(this)?.distributionArbreDao()
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveEvalPostPlanting.setOnClickListener {
+        binding.clickSaveEvalPostPlanting.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelEvalPostPlant.setOnClickListener {
+        binding.clickCancelEvalPostPlant.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftData(draftedDataDistribution ?: DataDraftedModel(uid = 0))
         }
 
-        editDateEvalPostPlant.setOnClickListener { configDate(editDateEvalPostPlant) }
+        binding.editDateEvalPostPlant.setOnClickListener { configDate(binding.editDateEvalPostPlant) }
         ///setOtherListenner()
 
         try {
@@ -134,9 +137,9 @@ class PostPlantingEvalActivity : AppCompatActivity() {
 
         }
 
-        recyclerArbreListEvalPostPlant.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerArbreListEvalPostPlant.adapter = EvaluationPostPlantAdapter(listOfItemsPostPlantAdapt)
-        recyclerArbreListEvalPostPlant.adapter?.notifyDataSetChanged()
+        binding.recyclerArbreListEvalPostPlant.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerArbreListEvalPostPlant.adapter = EvaluationPostPlantAdapter(listOfItemsPostPlantAdapt)
+        binding.recyclerArbreListEvalPostPlant.adapter?.notifyDataSetChanged()
 
         var view = LayoutInflater.from(this@PostPlantingEvalActivity).inflate(R.layout.evaluat_postplant_item_list, null, false)
         val widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
@@ -181,10 +184,10 @@ class PostPlantingEvalActivity : AppCompatActivity() {
                 eval3
             }
 
-            (recyclerArbreListEvalPostPlant.adapter as EvaluationPostPlantAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
+            (binding.recyclerArbreListEvalPostPlant.adapter as EvaluationPostPlantAdapter).setDataToRvItem(listArbreAndStatePass?.toMutableList()?: arrayListOf())
         }
 
-        fixFullSizeAtRv(recyclerArbreListEvalPostPlant, height+200)
+        fixFullSizeAtRv(binding.recyclerArbreListEvalPostPlant, height+200)
 
     }
 
@@ -274,7 +277,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         val qtePlanteList = mutableListOf<String>()
         val qteSurveList = mutableListOf<String>()
         val qteCommentList = mutableListOf<String>()
-        getAllRVItemInList(recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
+        getAllRVItemInList(binding.recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
 
         val itemModelOb = getEvaluationPostPlantObjet(false, necessaryItem = mutableListOf(
             "Selectionner un producteur"
@@ -293,9 +296,9 @@ class PostPlantingEvalActivity : AppCompatActivity() {
             qteSurvecuListObj.put(it, qteSurveList[idList.indexOf(it)].toString())
             commentListObj.put(it, qteCommentList[idList.indexOf(it)].toString())
         }
-        var totalQt = qteRecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
-        var qtPlante = qtePlanteListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
-        var qtSurvec = qteSurvecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        var totalQt = qteRecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt()?:0 }
+        var qtPlante = qtePlanteListObj.map { it.value?:"0" }?.sumOf { it?.toInt()?:0 }
+        var qtSurvec = qteSurvecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt()?:0 }
         //LogUtils.d( GsonUtils.toJson(quantiteDistribuer.variableKey) )
 
         val itemsDatasDraft = itemModelOb?.first.apply {
@@ -334,7 +337,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(
+                        binding.imageDraftBtn.startAnimation(
                             Commons.loadShakeAnimation(
                                 this
                             )
@@ -359,7 +362,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         val qtePlanteList = mutableListOf<String>()
         val qteSurveList = mutableListOf<String>()
         val qteCommentList = mutableListOf<String>()
-        getAllRVItemInList(recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
+        getAllRVItemInList(binding.recyclerArbreListEvalPostPlant, idList, qteRecuList, qtePlanteList, qteSurveList, qteCommentList )
 
 //        LogUtils.d( recyclerArbreListDistrArbre.childCount )
 //        LogUtils.d(idList, nomList, limitList, qteList)
@@ -394,9 +397,9 @@ class PostPlantingEvalActivity : AppCompatActivity() {
             qteSurvecuListObj.put(it, qteSurveList[idList.indexOf(it)].toString())
             commentListObj.put(it, qteCommentList[idList.indexOf(it)].toString())
         }
-        var totalQt = qteRecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
-        var qtPlante = qtePlanteListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
-        var qtSurvec = qteSurvecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt() }
+        var totalQt = qteRecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt()?:0 }
+        var qtPlante = qtePlanteListObj.map { it.value?:"0" }?.sumOf { it?.toInt()?:0 }
+        var qtSurvec = qteSurvecuListObj.map { it.value?:"0" }?.sumOf { it?.toInt()?:0 }
         //LogUtils.d( GsonUtils.toJson(quantiteDistribuer.variableKey) )
 
         val suiviDistrArbrDatas = itemModelOb?.first.apply {
@@ -416,11 +419,11 @@ class PostPlantingEvalActivity : AppCompatActivity() {
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
-            this.add(Pair(getString(R.string.liste_des_arbres_valu_s), (recyclerArbreListEvalPostPlant.adapter as EvaluationPostPlantAdapter).getArbreListAdded().map { "Arbre: ${it.nom_arbre}| Qte reçu: ${it.qte_recu}| Qte plantée: ${it.qte_plant}| Qte survécue: ${it.qte_survec}| Commentaire: ${it.commentaire}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.liste_des_arbres_valu_s), (binding.recyclerArbreListEvalPostPlant.adapter as EvaluationPostPlantAdapter).getArbreListAdded().map { "Arbre: ${it.nom_arbre}| Qte reçu: ${it.qte_recu}| Qte plantée: ${it.qte_plant}| Qte survécue: ${it.qte_survec}| Commentaire: ${it.commentaire}\n" }.toModifString() ))
             this.add(Pair(getString(R.string.quantit_plant_e), qtPlante.toString()))
             this.add(Pair(getString(R.string.quantit_surv_cue), qtSurvec.toString()))
             this.add(Pair(getString(R.string.total_enregistrer), totalQt.toString()))
-        }.map { MapEntry(it.first, it.second) }
+        }?.map { MapEntry(it.first, it.second) }
 
         //Commons.printModelValue(suiviDistrArbrDatas as Object, (mapEntries) )
 
@@ -454,7 +457,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionEvalPostPlant,
+            spinner = binding.selectSectionEvalPostPlant,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -490,7 +493,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteEvalPostPlant,
+            spinner = binding.selectLocaliteEvalPostPlant,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -538,7 +541,7 @@ class PostPlantingEvalActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurEvalPostPlant,
+            spinner = binding.selectProducteurEvalPostPlant,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {

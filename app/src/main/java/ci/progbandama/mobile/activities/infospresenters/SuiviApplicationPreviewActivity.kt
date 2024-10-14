@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.SuiviApplicationActivity
 import ci.progbandama.mobile.adapters.PreviewItemAdapter
+import ci.progbandama.mobile.databinding.ActivitySuiviApplicationPreviewBinding
+import ci.progbandama.mobile.databinding.ActivitySuiviParcellePreviewBinding
 import ci.progbandama.mobile.models.SuiviApplicationModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons
@@ -16,7 +18,6 @@ import ci.progbandama.mobile.tools.MapEntry
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.activity_suivi_application_preview.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -27,6 +28,7 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
     val draftDao = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()
     var draftID = 0
 
+    private lateinit var binding: ActivitySuiviApplicationPreviewBinding
 
     suspend fun loadFileToBitmap(pPath: String?, viewTarget: AppCompatImageView) {
         try {
@@ -52,7 +54,8 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suivi_application_preview)
+        binding = ActivitySuiviApplicationPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent?.let {
             try {
@@ -74,15 +77,15 @@ class SuiviApplicationPreviewActivity : AppCompatActivity() {
                 }
 
                 val rvPrevAdapter = PreviewItemAdapter(suiviParcelleItemsListPrev)
-                recyclerInfoPrev.adapter = rvPrevAdapter
-                recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                binding.recyclerInfoPrev.adapter = rvPrevAdapter
+                binding.recyclerInfoPrev.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
-                clickCloseBtn.setOnClickListener {
+                binding.clickCloseBtn.setOnClickListener {
                     finish()
                 }
 
-                clickSaveSApplicPreview.setOnClickListener {
+                binding.clickSaveSApplicPreview.setOnClickListener {
                     Commons.showMessage(
                         "Etes-vous sur de vouloir faire ce enregistrement ?",
                         this,

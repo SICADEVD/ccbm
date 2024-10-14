@@ -17,6 +17,8 @@ import ci.progbandama.mobile.adapters.InsecteAdapter
 import ci.progbandama.mobile.adapters.MultipleItemAdapter
 import ci.progbandama.mobile.adapters.OmbrageAdapter
 import ci.progbandama.mobile.adapters.OnlyFieldAdapter
+import ci.progbandama.mobile.databinding.ActivitySuiviApplicationBinding
+import ci.progbandama.mobile.databinding.ActivitySuiviParcelleBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -36,7 +38,6 @@ import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_suivi_parcelle.*
 import java.util.*
 
 
@@ -230,7 +231,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
 
     fun clearAnimauxFields() {
-        editAnimalSuiviParcelle.text = null
+        binding.editAnimalSuiviParcelle.text = null
     }
 
 
@@ -271,9 +272,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
         try {
             animauxList = mutableListOf()
             animalAdapter = AnimalAdapter(animauxList!!)
-            recyclerAnimauxSuiviParcelle.layoutManager =
+            binding.recyclerAnimauxSuiviParcelle.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerAnimauxSuiviParcelle.adapter = animalAdapter
+            binding.recyclerAnimauxSuiviParcelle.adapter = animalAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -745,7 +746,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     fun setupAraigneeSelection() {
         try {
-            selectAraigneeSuivi.onItemSelectedListener =
+            binding.selectAraigneeSuivi.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
                         adapterView: AdapterView<*>,
@@ -767,7 +768,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
 
     fun setupVerSelection() {
-        selectVerDeTerreSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectVerDeTerreSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 presenceVer = resources.getStringArray(R.array.fullyPoor)[position]
             }
@@ -779,7 +780,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
 
     fun setupManteSelection() {
-        selectManteReligieuseSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectManteReligieuseSuivi.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 presenceMante = resources.getStringArray(R.array.fullyPoor)[position]
                 LogUtils.d("Mante Real : "+presenceMante)
@@ -815,7 +816,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 producteursId = producteurCommon.id.toString()
                 parcelle_id = parcelleCommon.id.toString()
 
-                pesticidesAnneDerniereStr = GsonUtils.toJson((recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
+                pesticidesAnneDerniereStr = GsonUtils.toJson((binding.recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
                     PesticidesAnneDerniereModel(
                         nom = it.value,
                         contenant = it.value1,
@@ -824,7 +825,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                         frequence = it.value4
                     )
                 })
-                intrantsAnneDerniereStr = GsonUtils.toJson((recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
+                intrantsAnneDerniereStr = GsonUtils.toJson((binding.recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
                     PesticidesAnneDerniereModel(
                         nom = it.value,
                         contenant = it.value1,
@@ -834,20 +835,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     )
                 })
 
-                insectesParasitesStr = GsonUtils.toJson((recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
+                insectesParasitesStr = GsonUtils.toJson((binding.recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     InsectesParasitesData(
                         nom = it.variete,
                         nombreinsectesParasites = it.nombre
                     )
                 })
-                presenceAutreInsecteStr = GsonUtils.toJson((recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
+                presenceAutreInsecteStr = GsonUtils.toJson((binding.recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     PresenceAutreInsecteData(
                         autreInsecteNom = it.variete,
                         nombreAutreInsectesParasites = it.nombre
                     )
                 })
 
-                traitementStr = GsonUtils.toJson((recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
+                traitementStr = GsonUtils.toJson((binding.recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
                     PesticidesAnneDerniereModel(
                         nom = it.value,
                         contenant = it.value1,
@@ -856,8 +857,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
                         frequence = it.value4
                     )
                 })
-                arbreStr = GsonUtils.toJson(arbresList?.filter { (selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
-                arbreItemStr = GsonUtils.toJson((recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
+                arbreStr = GsonUtils.toJson(arbresList?.filter { (binding.selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
+                arbreItemStr = GsonUtils.toJson((binding.recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     LogUtils.d(it.variete.toString())
                     val arbre = ProgBandRoomDatabase.getDatabase(this@SuiviParcelleActivity)?.arbreDao()?.getByName(it.variete.toString())
                     ArbreData(
@@ -865,25 +866,25 @@ class SuiviParcelleActivity : AppCompatActivity() {
                         nombre = it.nombre
                     )
                 })
-                insectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
-                nombreinsectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+                insectesAmisStr = GsonUtils.toJson((binding.recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                nombreinsectesAmisStr = GsonUtils.toJson((binding.recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
-                animauxRencontresStringify = GsonUtils.toJson((recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
+                animauxRencontresStringify = GsonUtils.toJson((binding.recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
             }
         }
 
         val mapEntries: List<MapEntry>? = itemModelOb?.second?.apply {
 //            this.add(Pair("Arbre d'ombrage", (recyclerVarieteArbrListSuiviParcel.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
 //            this.add(Pair("Insecte parasite", (recyclerInsecteOfSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.pesticides_utilis_s_l_an_dernier), (recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.intrants_utilis_s_l_an_dernier), (recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.pesticides_utilis_s_l_an_dernier), (binding.recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.intrants_utilis_s_l_an_dernier), (binding.recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
 
-            this.add(Pair(getString(R.string.insecte_parasites_ou_ravageurs), (recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.autre_insecte_parasites_ou_ravageurs), (recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.traitements), (recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers), (recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.insecte_amis), (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
-            this.add(Pair(getString(R.string.animaux_rencontr_s), (recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.insecte_parasites_ou_ravageurs), (binding.recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.autre_insecte_parasites_ou_ravageurs), (binding.recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "${it.variete}: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.traitements), (binding.recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map { "Nom: ${it.value}| Contenant: ${it.value1}| Unité: ${it.value2}| Qté: ${it.value3}| Fqe: ${it.value4}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers), (binding.recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.insecte_amis), (binding.recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { "Nom: ${it.variete}| Qte: ${it.nombre}\n" }.toModifString() ))
+            this.add(Pair(getString(R.string.animaux_rencontr_s), (binding.recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { "${it.nom}\n" }.toModifString() ))
         }?.map { MapEntry(it.first, it.second) }
 
         Commons.printModelValue(SParcelle as Object, mapEntries)
@@ -973,7 +974,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        editFongicideNomSuivi.text  = null
 //        editHerbicideNomSuivi.text  = null
 //        editHerbicideNombreSuivi.text   = null
-        editDesherbageManuelSuivi.text  = null
+        binding.editDesherbageManuelSuivi.text  = null
         //editVarieteArbreSuivi.text  = null
 //        editNbreSauvageonsSuivi.text    = null
 //        editDateSuivi.text    = null
@@ -984,7 +985,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        editFongicideNombreSuivi.text    = null
 //        editHerbicideNomSuivi.text    = null
 //        editHerbicideNombreSuivi.text    = null
-        editDesherbageManuelSuivi.text    = null
+        binding.editDesherbageManuelSuivi.text    = null
 //        editDateSuivi.text    = null
 
 //        selectProducteurSuivi.setSelection(0)
@@ -998,9 +999,9 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //        selectAgresseurSuivi.setSelection(0)
 //        selectInsecteSuivi.setSelection(0)
         //selectFourmisSuivi.setSelection(0)
-        selectAraigneeSuivi.setSelection(0)
-        selectVerDeTerreSuivi.setSelection(0)
-        selectManteReligieuseSuivi.setSelection(0)
+        binding.selectAraigneeSuivi.setSelection(0)
+        binding.selectVerDeTerreSuivi.setSelection(0)
+        binding.selectManteReligieuseSuivi.setSelection(0)
 
         ombragesList?.clear()
         ombrageAdapter?.notifyDataSetChanged()
@@ -1055,7 +1056,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 producteursId = producteurCommon.id.toString()
                 parcelle_id = parcelleCommon.id.toString()
 
-                pesticidesAnneDerniereStr = GsonUtils.toJson((recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
+                pesticidesAnneDerniereStr = GsonUtils.toJson((binding.recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
                     PesticidesAnneDerniereModel(
                         nom = it.value,
                         contenant = it.value1,
@@ -1064,7 +1065,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                         frequence = it.value4
                     )
                 })
-                intrantsAnneDerniereStr = GsonUtils.toJson((recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
+                intrantsAnneDerniereStr = GsonUtils.toJson((binding.recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
                     PesticidesAnneDerniereModel(
                         nom = it.value,
                         contenant = it.value1,
@@ -1074,20 +1075,20 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     )
                 })
 
-                insectesParasitesStr = GsonUtils.toJson((recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
+                insectesParasitesStr = GsonUtils.toJson((binding.recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     InsectesParasitesData(
                         nom = it.variete,
                         nombreinsectesParasites = it.nombre
                     )
                 })
-                presenceAutreInsecteStr = GsonUtils.toJson((recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
+                presenceAutreInsecteStr = GsonUtils.toJson((binding.recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     PresenceAutreInsecteData(
                         autreInsecteNom = it.variete,
                         nombreAutreInsectesParasites = it.nombre
                     )
                 })
 
-                traitementStr = GsonUtils.toJson((recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
+                traitementStr = GsonUtils.toJson((binding.recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).getMultiItemAdded().map {
                     PesticidesAnneDerniereModel(
                         nom = it.value,
                         contenant = it.value1,
@@ -1096,8 +1097,8 @@ class SuiviParcelleActivity : AppCompatActivity() {
                         frequence = it.value4
                     )
                 })
-                arbreStr = GsonUtils.toJson(arbresList?.filter { (selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
-                arbreItemStr = GsonUtils.toJson((recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
+                arbreStr = GsonUtils.toJson(arbresList?.filter { (binding.selectArbreSParcelle.selectedStrings).contains(it.nom) }?.map { it.id.toString() })
+                arbreItemStr = GsonUtils.toJson((binding.recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map {
                     LogUtils.d(it.variete.toString())
 //                    val idd = arbresList?.filter { item -> item.nom.toString().trim().contains(it.variete.toString()) }?.let{
 //                        if(it.size > 0){
@@ -1110,10 +1111,10 @@ class SuiviParcelleActivity : AppCompatActivity() {
                         nombre = it.nombre
                     )
                 })
-                insectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
-                nombreinsectesAmisStr = GsonUtils.toJson((recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
+                insectesAmisStr = GsonUtils.toJson((binding.recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.variete })
+                nombreinsectesAmisStr = GsonUtils.toJson((binding.recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).getOmbragesAdded().map { it.nombre })
 
-                animauxRencontresStringify = GsonUtils.toJson((recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
+                animauxRencontresStringify = GsonUtils.toJson((binding.recyclerAnimauxSuiviParcelle.adapter as OnlyFieldAdapter).getCurrenntList()?.map { it.nom })
             }
         }
 
@@ -1139,7 +1140,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         Commons.playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -1160,7 +1161,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         var arbreSelected = (GsonUtils.fromJson<MutableList<String>>(suiviParcelleDrafted.arbreStr, object : TypeToken<MutableList<String>>() {}.type).map { "${it}" }).toMutableList()
         var currentStr: MutableList<String?>? = (arbresList?.filter { arbreSelected.contains(it.id.toString()) })?.map { it.nom }?.toMutableList()
-        Commons.setupItemMultiSelection(this, selectArbreSParcelle, "Quelle variété d’arbre ombrage souhaiterais-tu avoir ?", arbresList?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf() ,
+        Commons.setupItemMultiSelection(this, binding.selectArbreSParcelle, "Quelle variété d’arbre ombrage souhaiterais-tu avoir ?", arbresList?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf() ,
             currentList = currentStr?.map { it?:"" }?.toMutableList()?: mutableListOf()
         ){
 
@@ -1168,7 +1169,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAgroForesterieSParcelle,
+            spinner = binding.selectAgroForesterieSParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = suiviParcelleDrafted.arbresAgroForestiersYesNo,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1178,11 +1179,11 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerArbreAgroSParcelle.visibility = visibility
+                    binding.containerArbreAgroSParcelle.visibility = visibility
                 }
             })
 
-        (recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
+        (binding.recyclerArbrAgroSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
             (GsonUtils.fromJson<MutableList<ArbreData>>(suiviParcelleDrafted.arbreItemStr, object : TypeToken<MutableList<ArbreData>>() {}.type)).map {
                 val nomm = arbresList?.filter { item -> item.id.toString().equals(it.arbre) }?.first()?.nom.toString()
                 OmbrageVarieteModel(
@@ -1203,13 +1204,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     nombre = nombreinsectesAmisList?.get(index).toString()
                 )
             }?.toMutableList()?.let {
-                (recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
+                (binding.recyclerInsecteAmisSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
                     it
                 )
             }
         }
 
-        (recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
+        (binding.recyclerInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
             (GsonUtils.fromJson<MutableList<InsectesParasitesData>>(suiviParcelleDrafted.insectesParasitesStr, object : TypeToken<MutableList<InsectesParasitesData>>() {}.type)).map {
                 OmbrageVarieteModel(
                     uid = 0,
@@ -1219,7 +1220,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             }.toMutableList()
         )
 
-        (recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
+        (binding.recyclerAutreInsecteParOuRavSuiviParcelle.adapter as OmbrageAdapter).setOmbragesList(
             (GsonUtils.fromJson<MutableList<PresenceAutreInsecteData>>(suiviParcelleDrafted.presenceAutreInsecteStr, object : TypeToken<MutableList<PresenceAutreInsecteData>>() {}.type)).map {
                 OmbrageVarieteModel(
                     uid = 0,
@@ -1229,7 +1230,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             }.toMutableList()
         )
 
-        (recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).setDataToRvItem(
+        (binding.recyclerPestListSuiviParcel.adapter as MultipleItemAdapter).setDataToRvItem(
             (GsonUtils.fromJson<MutableList<PesticidesAnneDerniereModel>>(suiviParcelleDrafted.pesticidesAnneDerniereStr, object : TypeToken<MutableList<PesticidesAnneDerniereModel>>() {}.type)).map {
                 AdapterItemModel(
                     id = 0,
@@ -1242,7 +1243,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             }.toMutableList()
         )
 
-        (recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).setDataToRvItem(
+        (binding.recyclerIntantAnDerListSuiviParcel.adapter as MultipleItemAdapter).setDataToRvItem(
             (GsonUtils.fromJson<MutableList<PesticidesAnneDerniereModel>>(suiviParcelleDrafted.intrantsAnneDerniereStr, object : TypeToken<MutableList<PesticidesAnneDerniereModel>>() {}.type)).map {
                 AdapterItemModel(
                     id = 0,
@@ -1255,7 +1256,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             }.toMutableList()
         )
 
-        (recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).setDataToRvItem(
+        (binding.recyclerTraitInsecteParOuRavListSuiviParcel.adapter as MultipleItemAdapter).setDataToRvItem(
             (GsonUtils.fromJson<MutableList<PesticidesAnneDerniereModel>>(suiviParcelleDrafted.traitementStr, object : TypeToken<MutableList<PesticidesAnneDerniereModel>>() {}.type)).map {
                 AdapterItemModel(
                     id = 0,
@@ -1279,7 +1280,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.fr_quence_activit_de_taille),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectActDTailleSuiviParcel,
+            spinner = binding.selectActDTailleSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteTaille,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
                 ?.toList() ?: listOf(),
@@ -1291,7 +1292,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.fr_quence_activit_d_egourmandage),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectActDTailleSuiviParcel,
+            spinner = binding.selectActDTailleSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteEgourmandage,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
                 ?.toList() ?: listOf(),
@@ -1303,7 +1304,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.fr_quence_activit_de_r_colte_sanitaire),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectActDRecolSanitSuiviParcel,
+            spinner = binding.selectActDRecolSanitSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteRecolteSanitaire,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
                 ?.toList() ?: listOf(),
@@ -1315,7 +1316,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             "Activité d’egourmandage dans la parcelle :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectActDErgoSuiviParcel,
+            spinner = binding.selectActDErgoSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteEgourmandage,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
                 ?.toList() ?: listOf(),
@@ -1327,7 +1328,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             "Activité de désherbage manuel dans la parcelle :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectActDéserbSuiviParcel,
+            spinner = binding.selectActDSerbSuiviParcel,
             currentVal = suiviParcelleDrafted.activiteDesherbageManuel,
             listIem = resources.getStringArray(R.array.lowMediumHigh)
                 ?.toList() ?: listOf(),
@@ -1339,7 +1340,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 //
         Commons.setListenerForSpinner(this,
             "Présence de pourriture brune :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPresencPourriBruneSuiviParcel,
+            spinner = binding.selectPresencPourriBruneSuiviParcel,
             currentVal = suiviParcelleDrafted.presencePourritureBrune,
             listIem = resources.getStringArray(R.array.fullyPoor)
                 ?.toList() ?: listOf(),
@@ -1351,7 +1352,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             "Présence de swollen shoot :",getString(R.string.la_liste_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPresencShollenShotSuiviParcel,
+            spinner = binding.selectPresencShollenShotSuiviParcel,
             currentVal = suiviParcelleDrafted.presenceShooter,
             listIem = resources.getStringArray(R.array.fullyPoor)
                 ?.toList() ?: listOf(),
@@ -1363,7 +1364,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_une_pr_sence_d_insectes_parasites_ou_ravageurs),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectInsecteParOuRavSuivi,
+            spinner = binding.selectInsecteParOuRavSuivi,
             currentVal = suiviParcelleDrafted.presenceInsectesParasites,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1375,13 +1376,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 if (itemId == 1) {
 //                    qdf qf
 //                    containerListInsectSuivParce.visibility = visibility
-                    linearInsecteParOuRavSuiviParcelle.visibility = visibility
+                    binding.linearInsecteParOuRavSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_observ_d_autres_insectes_ou_ravageur_qui_n_apparaissent_pas_dans_la_liste_pr_c_dente),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAutrInsecteParOuRavSuivi,
+            spinner = binding.selectAutrInsecteParOuRavSuivi,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = suiviParcelleDrafted.autreInsecte,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1391,13 +1392,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearAutrInsecteParOuRavSuiviParcelle.visibility = visibility
+                    binding.linearAutrInsecteParOuRavSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_traiter_votre_parcelle),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTraitInsecteParOuRavSuivi,
+            spinner = binding.selectTraitInsecteParOuRavSuivi,
             currentVal = suiviParcelleDrafted.traiterParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1409,13 +1410,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 if (itemId == 1) {
 //                    qdf qf
 //                    containerListInsectSuivParce.visibility = visibility
-                    containerTraitInsecteParOuRavListSParcel.visibility = visibility
+                    binding.containerTraitInsecteParOuRavListSParcel.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_rencontrer_des_animaux),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAnimauRencontSParcell,
+            spinner = binding.selectAnimauRencontSParcell,
             currentVal = suiviParcelleDrafted.animauxRencontrer,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1425,13 +1426,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearAnimauxContainerSuiviParcelle.visibility = visibility
+                    binding.linearAnimauxContainerSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.pr_sence_d_autres_types_d_insecte),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPresencInsectSuiviParcel,
+            spinner = binding.selectPresencInsectSuiviParcel,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             currentVal = suiviParcelleDrafted.presenceAutreTypeInsecteAmi,
             listIem = resources.getStringArray(R.array.YesOrNo)
@@ -1441,7 +1442,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerInsectAmisSuiviParcelle.visibility = visibility
+                    binding.containerInsectAmisSuiviParcelle.visibility = visibility
                 }
             })
 
@@ -1463,7 +1464,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_une_pr_sence_de_fourmis_rouges),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectFourmisSuiviParcel,
+            spinner = binding.selectFourmisSuiviParcel,
             currentVal = suiviParcelleDrafted.presenceFourmisRouge,
             listIem = resources.getStringArray(R.array.fullyPoor)
                 ?.toList() ?: listOf(),
@@ -1475,7 +1476,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_une_pr_sence_d_araign_es),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAraigneeSuivi,
+            spinner = binding.selectAraigneeSuivi,
             currentVal = suiviParcelleDrafted.presenceAraignee,
             listIem = resources.getStringArray(R.array.fullyPoor)
                 ?.toList() ?: listOf(),
@@ -1487,7 +1488,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_une_pr_sence_de_verre_de_terres),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectVerDeTerreSuivi,
+            spinner = binding.selectVerDeTerreSuivi,
             currentVal = suiviParcelleDrafted.presenceVerTerre,
             listIem = resources.getStringArray(R.array.fullyPoor)
                 ?.toList() ?: listOf(),
@@ -1499,7 +1500,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_une_pr_sence_de_mentes_religieuses),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectManteReligieuseSuivi,
+            spinner = binding.selectManteReligieuseSuivi,
             currentVal = suiviParcelleDrafted.presenceMenteReligieuse,
             listIem = resources.getStringArray(R.array.fullyPoor)
                 ?.toList() ?: listOf(),
@@ -1513,10 +1514,12 @@ class SuiviParcelleActivity : AppCompatActivity() {
         passSetupSuiviParcelleModel(suiviParcelleDrafted)
     }
 
+    private lateinit var binding: ActivitySuiviParcelleBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_suivi_parcelle)
+        binding = ActivitySuiviParcelleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -1524,31 +1527,31 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         suiviParcelleDao = ProgBandRoomDatabase.getDatabase(this)?.suiviParcelleDao()
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        clickSaveSuivi.setOnClickListener {
+        binding.clickSaveSuivi.setOnClickListener {
             collectDatas()
         }
 
-        clickCancelSuivi.setOnClickListener {
+        binding.clickCancelSuivi.setOnClickListener {
             ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             ActivityUtils.getActivityByContext(this)?.finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftSuiviParcelle(draftedDataSuiviParcelle ?: DataDraftedModel(uid = 0))
         }
 
-        Commons.addNotZeroAtFirstToET(editSauvageonSParcelle)
-        Commons.addNotZeroAtFirstToET(editNombrAgroSParcelle)
-        Commons.addNotZeroAtFirstToET(editFrequencPestSParcel)
-        Commons.addNotZeroAtFirstToET(editIntantAnDerPestSParcel)
-        Commons.addNotZeroAtFirstToET(editFrequencIntantAnDerSParcel)
-        Commons.addNotZeroAtFirstToET(editDesherbageManuelSuivi)
-        Commons.addNotZeroAtFirstToET(editTraitInsecteParOuRavQtSParcel)
-        Commons.addNotZeroAtFirstToET(editTraitInsecteParOuRavFrequSParcel)
+        Commons.addNotZeroAtFirstToET(binding.editSauvageonSParcelle)
+        Commons.addNotZeroAtFirstToET(binding.editNombrAgroSParcelle)
+        Commons.addNotZeroAtFirstToET(binding.editFrequencPestSParcel)
+        Commons.addNotZeroAtFirstToET(binding.editIntantAnDerPestSParcel)
+        Commons.addNotZeroAtFirstToET(binding.editFrequencIntantAnDerSParcel)
+        Commons.addNotZeroAtFirstToET(binding.editDesherbageManuelSuivi)
+        Commons.addNotZeroAtFirstToET(binding.editTraitInsecteParOuRavQtSParcel)
+        Commons.addNotZeroAtFirstToET(binding.editTraitInsecteParOuRavFrequSParcel)
 
         try {
             if (intent.getStringExtra("from") != null) {
@@ -1568,24 +1571,24 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
     private fun setOtherListener() {
 
-        editdateVisiteSuiviParcel.setOnClickListener { configDate(editdateVisiteSuiviParcel) }
+        binding.editdateVisiteSuiviParcel.setOnClickListener { configDate(binding.editdateVisiteSuiviParcel) }
 
-        Commons.setEditAndSpinnerRV(this, recyclerInsecteAmisSuiviParcelle, clickAddInsectAmisSuiviParcelle, editInsecteNomAmisParcelle, selectInsecteAmisQuantiteSuiviParcelle,"Nom d'insecte", "Quantité")
-        Commons.setEditAndSpinnerRV(this, recyclerAutreInsecteParOuRavSuiviParcelle, clickAddAutreInsecteParOuRavSuiviParcelle, editAutreInsecteParOuRavNomSParcelle, selectAutrInsecteParOuRavQtSuiviParcelle, "Nom d'insecte", "Quantité")
-        Commons.setSpinnerAndSpinnerRV(this, recyclerInsecteParOuRavSuiviParcelle, clickAddInsecteParOuRavSuiviParcelle, selectInsecteParOuRavNomSuiviParcelle, selectInsecteParOuRavQtSuiviParcelle, "Nom d'insecte", "Quantité")
+        Commons.setEditAndSpinnerRV(this, binding.recyclerInsecteAmisSuiviParcelle, binding.clickAddInsectAmisSuiviParcelle, binding.editInsecteNomAmisParcelle, binding.selectInsecteAmisQuantiteSuiviParcelle,"Nom d'insecte", "Quantité")
+        Commons.setEditAndSpinnerRV(this, binding.recyclerAutreInsecteParOuRavSuiviParcelle, binding.clickAddAutreInsecteParOuRavSuiviParcelle, binding.editAutreInsecteParOuRavNomSParcelle, binding.selectAutrInsecteParOuRavQtSuiviParcelle, "Nom d'insecte", "Quantité")
+        Commons.setSpinnerAndSpinnerRV(this, binding.recyclerInsecteParOuRavSuiviParcelle, binding.clickAddInsecteParOuRavSuiviParcelle, binding.selectInsecteParOuRavNomSuiviParcelle, binding.selectInsecteParOuRavQtSuiviParcelle, "Nom d'insecte", "Quantité")
 
-        Commons.setEditAndSpinnerRV(this, recyclerArbrAgroSuiviParcelle, clickAddArbrAgroSuiviParcelle, editNombrAgroSParcelle, selectArbrAgroParcelle, "Nom d'arbre", "Quantité", isInverted = true)
+        Commons.setEditAndSpinnerRV(this, binding.recyclerArbrAgroSuiviParcelle, binding.clickAddArbrAgroSuiviParcelle, binding.editNombrAgroSParcelle, binding.selectArbrAgroParcelle, "Nom d'arbre", "Quantité", isInverted = true)
 
-        Commons.setFiveItremRV(this, recyclerPestListSuiviParcel, clickAddPestListSuiviParcel, selectPestNomSParcell,selectPestContenantSParcell,selectPestUniteSParcell,editQuantitPestSParcel,editFrequencPestSParcel, libeleList = mutableListOf<String>("Nom", "Contenant", "Unité", "Quantité", "Fréquence"))
-        Commons.setFiveItremRV(this, recyclerIntantAnDerListSuiviParcel, clickAddIntantAnDerListSuiviParcel, selectIntantAnDerSParcell,selectIntantAnDerContenantSParcell,selectIntantAnDerUniteSParcell,editIntantAnDerPestSParcel,editFrequencIntantAnDerSParcel, libeleList = mutableListOf<String>("Nom", "Contenant", "Unité", "Quantité", "Fréquence"))
-        Commons.setFiveItremRV(this, recyclerTraitInsecteParOuRavListSuiviParcel, clickAddTraitInsecteParOuRavListSuiviParcel, selectTraitInsecteParOuRavNomSParcell,selectTraitInsecteParOuRavContenantSParcell,selectTraitInsecteParOuRavUniteSParcell,editTraitInsecteParOuRavQtSParcel,editTraitInsecteParOuRavFrequSParcel, libeleList = mutableListOf<String>("Nom", "Contenant", "Unité", "Quantité", "Fréquence"))
+        Commons.setFiveItremRV(this, binding.recyclerPestListSuiviParcel, binding.clickAddPestListSuiviParcel, binding.selectPestNomSParcell,binding.selectPestContenantSParcell,binding.selectPestUniteSParcell,binding.editQuantitPestSParcel,binding.editFrequencPestSParcel, libeleList = mutableListOf<String>("Nom", "Contenant", "Unité", "Quantité", "Fréquence"))
+        Commons.setFiveItremRV(this, binding.recyclerIntantAnDerListSuiviParcel, binding.clickAddIntantAnDerListSuiviParcel, binding.selectIntantAnDerSParcell,binding.selectIntantAnDerContenantSParcell,binding.selectIntantAnDerUniteSParcell,binding.editIntantAnDerPestSParcel,binding.editFrequencIntantAnDerSParcel, libeleList = mutableListOf<String>("Nom", "Contenant", "Unité", "Quantité", "Fréquence"))
+        Commons.setFiveItremRV(this, binding.recyclerTraitInsecteParOuRavListSuiviParcel, binding.clickAddTraitInsecteParOuRavListSuiviParcel, binding.selectTraitInsecteParOuRavNomSParcell,binding.selectTraitInsecteParOuRavContenantSParcell,binding.selectTraitInsecteParOuRavUniteSParcell,binding.editTraitInsecteParOuRavQtSParcel,binding.editTraitInsecteParOuRavFrequSParcel, libeleList = mutableListOf<String>("Nom", "Contenant", "Unité", "Quantité", "Fréquence"))
 
         arbresList = ProgBandRoomDatabase.getDatabase(this)?.arbreDao()?.getAll() ?: mutableListOf()
 
         Commons.setListenerForSpinner(this,
             getString(R.string.choix_de_l_arbre),
             getString(R.string.la_liste_des_arbres_d_ombrage_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectArbrAgroParcelle,
+            spinner = binding.selectArbrAgroParcelle,
             listIem = arbresList?.map { "${ it.nom }" }?.toList()?:listOf(),
             onChanged = {
 
@@ -1604,14 +1607,14 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         setupSectionSelection()
 
-        Commons.setupItemMultiSelection(this, selectArbreSParcelle,
+        Commons.setupItemMultiSelection(this, binding.selectArbreSParcelle,
             getString(R.string.quelle_vari_t_d_arbre_ombrage_souhaiterais_tu_avoir), arbresList?.map { CommonData(0, it.nom) }?.toMutableList()?: mutableListOf() ){
 
         }
 
         Commons.setListenerForSpinner(this,
             getString(R.string.as_tu_b_n_fici_d_arbres_agro_forestiers),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAgroForesterieSParcelle,
+            spinner = binding.selectAgroForesterieSParcelle,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1620,13 +1623,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerArbreAgroSParcelle.visibility = visibility
+                    binding.containerArbreAgroSParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_rencontrer_des_animaux),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAnimauRencontSParcell,
+            spinner = binding.selectAnimauRencontSParcell,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1635,13 +1638,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearAnimauxContainerSuiviParcelle.visibility = visibility
+                    binding.linearAnimauxContainerSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.y_a_t_il_des_insectes_parasites),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectInsecteParOuRavSuivi,
+            spinner = binding.selectInsecteParOuRavSuivi,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1650,13 +1653,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearInsecteParOuRavSuiviParcelle.visibility = visibility
+                    binding.linearInsecteParOuRavSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_observ_d_autres_insectes_ou_ravageur_qui_n_apparaissent_pas_dans_la_liste_pr_c_dente),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectAutrInsecteParOuRavSuivi,
+            spinner = binding.selectAutrInsecteParOuRavSuivi,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1665,13 +1668,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    linearAutrInsecteParOuRavSuiviParcelle.visibility = visibility
+                    binding.linearAutrInsecteParOuRavSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.pr_sence_d_autres_types_d_insecte),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectPresencInsectSuiviParcel,
+            spinner = binding.selectPresencInsectSuiviParcel,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1680,13 +1683,13 @@ class SuiviParcelleActivity : AppCompatActivity() {
             },
             onSelected = { itemId, visibility ->
                 if (itemId == 1) {
-                    containerInsectAmisSuiviParcelle.visibility = visibility
+                    binding.containerInsectAmisSuiviParcelle.visibility = visibility
                 }
             })
 
         Commons.setListenerForSpinner(this,
             getString(R.string.avez_vous_traiter_votre_parcelle),getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
-            spinner = selectTraitInsecteParOuRavSuivi,
+            spinner = binding.selectTraitInsecteParOuRavSuivi,
             itemChanged = arrayListOf(Pair(1, getString(R.string.oui))),
             listIem = resources.getStringArray(R.array.YesOrNo)
                 ?.toList() ?: listOf(),
@@ -1697,7 +1700,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                 if (itemId == 1) {
 //                    qdf qf
 //                    containerListInsectSuivParce.visibility = visibility
-                    containerTraitInsecteParOuRavListSParcel.visibility = visibility
+                    binding.containerTraitInsecteParOuRavListSParcel.visibility = visibility
                 }
             })
 
@@ -1713,17 +1716,17 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
         val animauSParcelleAdapter = OnlyFieldAdapter(animauListSParcelle)
         try {
-            recyclerAnimauxSuiviParcelle.layoutManager =
+            binding.recyclerAnimauxSuiviParcelle.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            recyclerAnimauxSuiviParcelle.adapter = animauSParcelleAdapter
+            binding.recyclerAnimauxSuiviParcelle.adapter = animauSParcelleAdapter
         } catch (ex: Exception) {
             LogUtils.e(ex.message)
             FirebaseCrashlytics.getInstance().recordException(ex)
         }
 
-        clickSaveAnimauxSuiviParcelle.setOnClickListener {
+        binding.clickSaveAnimauxSuiviParcelle.setOnClickListener {
             try {
-                if (editAnimalSuiviParcelle.text.toString()
+                if (binding.editAnimalSuiviParcelle.text.toString()
                         .isEmpty()
                 ) {
                     Commons.showMessage(getString(R.string.renseignez_des_donn_es_sur_l_animal_svp), this, callback = {})
@@ -1732,7 +1735,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
 
                 val animaux = CommonData(
                     0,
-                    editAnimalSuiviParcelle.text.toString().trim(),
+                    binding.editAnimalSuiviParcelle.text.toString().trim(),
                 )
 
                 if(animaux.nom?.length?:0 > 0){
@@ -1747,7 +1750,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
                     animauListSParcelle?.add(animaux)
                     animauSParcelleAdapter?.notifyDataSetChanged()
 
-                    editAnimalSuiviParcelle.text?.clear()
+                    binding.editAnimalSuiviParcelle.text?.clear()
                 }
 
             } catch (ex: Exception) {
@@ -1776,7 +1779,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_sections_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (sectionList?.size!! > 0) false else true,
             currentVal = libItem ,
-            spinner = selectSectionSParcelle,
+            spinner = binding.selectSectionSParcelle,
             listIem = sectionList?.map { it.libelle }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1812,7 +1815,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_localit_s_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (localitesListi?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectLocaliteSParcelle,
+            spinner = binding.selectLocaliteSParcelle,
             listIem = localitesListi?.map { it.nom }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1853,7 +1856,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_producteurs_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (producteursList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectProducteurSParcelle,
+            spinner = binding.selectProducteurSParcelle,
             listIem = producteursList?.map { "${it.nom!!} ${it.prenoms!!}" }
                 ?.toList() ?: listOf(),
             onChanged = {
@@ -1896,7 +1899,7 @@ class SuiviParcelleActivity : AppCompatActivity() {
             getString(R.string.la_liste_des_parcelles_semble_vide_veuillez_proc_der_la_synchronisation_des_donn_es_svp),
             isEmpty = if (parcellesList?.size!! > 0) false else true,
             currentVal = libItem,
-            spinner = selectParcelleSParcelle,
+            spinner = binding.selectParcelleSParcelle,
             listIem = parcellesList?.map { Commons.getParcelleNotSyncLibel(it) }
                 ?.toList() ?: listOf(),
             onChanged = {

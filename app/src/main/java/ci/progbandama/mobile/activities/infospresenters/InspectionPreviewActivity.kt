@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.InspectionActivity
 import ci.progbandama.mobile.adapters.QuestionnairePreviewAdapter
+import ci.progbandama.mobile.databinding.ActivityInspectionPreviewBinding
 import ci.progbandama.mobile.interfaces.SectionCallback
 import ci.progbandama.mobile.itemviews.RecyclerItemDecoration
 import ci.progbandama.mobile.models.InspectionDTO
@@ -18,7 +19,6 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_inspection_preview.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -46,12 +46,12 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
 
                 questionnaireAdapter =
                     QuestionnairePreviewAdapter(this@InspectionPreviewActivity, cQuestionnaires!!)
-                recyclerQuestionnairesInspectionPreview.layoutManager = LinearLayoutManager(
+                binding.recyclerQuestionnairesInspectionPreview.layoutManager = LinearLayoutManager(
                     this@InspectionPreviewActivity,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-                recyclerQuestionnairesInspectionPreview.adapter = questionnaireAdapter
+                binding.recyclerQuestionnairesInspectionPreview.adapter = questionnaireAdapter
 
                 val recyclerDecoration = RecyclerItemDecoration(
                     this@InspectionPreviewActivity,
@@ -59,7 +59,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                     true,
                     this@InspectionPreviewActivity
                 )
-                recyclerQuestionnairesInspectionPreview.addItemDecoration(recyclerDecoration)
+                binding.recyclerQuestionnairesInspectionPreview.addItemDecoration(recyclerDecoration)
             } catch (ex: Exception) {
                 LogUtils.e(ex.message)
                 FirebaseCrashlytics.getInstance().recordException(ex)
@@ -85,10 +85,12 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
         return ""
     }
 
+    private lateinit var binding: ActivityInspectionPreviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_inspection_preview)
+        binding = ActivityInspectionPreviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 //        clickCancelInspectionPreview.setOnClickListener { finish() }
 
@@ -98,38 +100,38 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
                 draftID = intent.getIntExtra("draft_id", 0)
 
                 inspectionDTO?.let { inspection ->
-                    labelCampagneInspectionPreview.text = ProgBandRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()?.first().let { it?.campagnesNom?.split(" ")?.let {
+                    binding.labelCampagneInspectionPreview.text = ProgBandRoomDatabase.getDatabase(this)?.campagneDao()?.getAll()?.first().let { it?.campagnesNom?.split(" ")?.let {
                         var value = ""
                         if(it.size > 1) value = "${it.get(1)}"
                         else value = "N/A"
                         value
                     } }
-                    labelEncadrInspectionPreview.text = ProgBandRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(inspection.encadreur?.toInt())?.let { "${it.firstname} ${it.lastname}" }
-                    labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
+                    binding.labelEncadrInspectionPreview.text = ProgBandRoomDatabase.getDatabase(this)?.staffFormation()?.getStaffFormationById(inspection.encadreur?.toInt())?.let { "${it.firstname} ${it.lastname}" }
+                    binding.labelProducteurNomInspectionPreview.text = inspection.producteurNomPrenoms
 
-                    labelParcelleInspectionPreview.text = inspection.parcelleLib
+                    binding.labelParcelleInspectionPreview.text = inspection.parcelleLib
                     val total_question = inspection.total_question?.toInt()
                     val total_question_non_applicable = inspection.total_question_non_applicable?.toInt()
                     val total_question_conforme = inspection.total_question_conforme?.toInt()
                     val total_question_non_conforme = inspection.total_question_non_conforme?.toInt()
                     val substrain = (total_question?:1).minus(total_question_non_applicable?:1)
                     //LogUtils.d(total_question, total_question_conforme, total_question_non_conforme, total_question_non_applicable, substrain)
-                    labelTauConformInspectionPreview.text = (total_question_conforme?.times(100))?.div(substrain).toString().plus("%")
+                    binding.labelTauConformInspectionPreview.text = (total_question_conforme?.times(100))?.div(substrain).toString().plus("%")
                     inspection.noteInspection = (total_question_conforme?.times(100))?.div(substrain)?.toDouble().toString()
-                    labelNbConformInspectionPreview.text = inspection.total_question_conforme
-                    labelNbNonConformInspectionPreview.text = inspection.total_question_non_conforme
-                    labelNonApplicableInspectionPreview.text = inspection.total_question_non_applicable
-                    labelTotalInspectionPreview.text = inspection.total_question
-                    labelNrbProdInspectionPreview.text = inspection.production
+                    binding.labelNbConformInspectionPreview.text = inspection.total_question_conforme
+                    binding.labelNbNonConformInspectionPreview.text = inspection.total_question_non_conforme
+                    binding.labelNonApplicableInspectionPreview.text = inspection.total_question_non_applicable
+                    binding.labelTotalInspectionPreview.text = inspection.total_question
+                    binding.labelNrbProdInspectionPreview.text = inspection.production
 
                     CoroutineScope(Dispatchers.Main).launch {
                         fetchQuestionnaires(inspection)
                     }
 
 
-                    labelDateInspectionPreview.text = inspection.dateEvaluation
+                    binding.labelDateInspectionPreview.text = inspection.dateEvaluation
 
-                    clickSaveInspectionPreview.setOnClickListener {
+                    binding.clickSaveInspectionPreview.setOnClickListener {
                         try {
                             Commons.showMessage(
                                 "Etes-vous sûr de vouloir enregistrer ce contenu ?",
@@ -161,7 +163,7 @@ class InspectionPreviewActivity : AppCompatActivity(), SectionCallback {
             }
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }

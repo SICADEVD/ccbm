@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.ProducteurMenageActivity
 import ci.progbandama.mobile.adapters.MenageAdapter
+import ci.progbandama.mobile.databinding.ActivityMenageresListBinding
 import ci.progbandama.mobile.models.ProducteurMenageModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.ProducteurMenageDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_menageres_list.*
 import org.joda.time.DateTime
 
 class MenageresListActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class MenageresListActivity : AppCompatActivity() {
     var menagesList: MutableList<ProducteurMenageModel>? = null
     var menagesAdapter: MenageAdapter? = null
 
+    lateinit var binding: ActivityMenageresListBinding
 
     fun retrieveDatas() {
         menagesList = mutableListOf()
@@ -33,21 +34,21 @@ class MenageresListActivity : AppCompatActivity() {
 
         menagesAdapter = MenageAdapter(menagesList)
 
-        recyclerMenages.adapter = menagesAdapter
-        recyclerMenages.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerMenages.adapter = menagesAdapter
+        binding.recyclerMenages.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationMenage.text = resources.getString(
+        binding.labelLastSynchronisationMenage.text = resources.getString(
             R.string.last_synchronisation_date,
             DateTime.now().toString("HH:mm:ss")
         )
 
         menagesList?.let {
             if (it.isEmpty()) {
-                recyclerMenages.visibility = View.GONE
-                linearEmptyContainerMenagesList.visibility = View.VISIBLE
+                binding.recyclerMenages.visibility = View.GONE
+                binding.linearEmptyContainerMenagesList.visibility = View.VISIBLE
             } else {
-                recyclerMenages.visibility = View.VISIBLE
-                linearEmptyContainerMenagesList.visibility = View.GONE
+                binding.recyclerMenages.visibility = View.VISIBLE
+                binding.linearEmptyContainerMenagesList.visibility = View.GONE
             }
         }
     }
@@ -55,13 +56,14 @@ class MenageresListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menageres_list)
+        binding = ActivityMenageresListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imgAddBtn.setOnClickListener {
+        binding.imgAddBtn.setOnClickListener {
             ActivityUtils.startActivity(ProducteurMenageActivity::class.java)
         }
     }

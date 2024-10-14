@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.FormationAdapter.FormationHolder
+import ci.progbandama.mobile.databinding.FormationItemsListBinding
 import ci.progbandama.mobile.models.FormationModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.tools.Commons.Companion.limitListByCount
@@ -15,14 +16,16 @@ import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.formation_items_list.view.*
 
 
 class FormationAdapter(private var acti: Activity ,private var formations: List<FormationModel>?) : RecyclerView.Adapter<FormationHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormationHolder {
-        return FormationHolder(LayoutInflater.from(parent.context).inflate(R.layout.formation_items_list, parent, false))
+        return FormationHolder(
+            FormationItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.formation_items_list, parent, false)
+        )
     }
 
 
@@ -58,7 +61,7 @@ class FormationAdapter(private var acti: Activity ,private var formations: List<
     override fun getItemCount() = formations?.size ?: 0
 
 
-    class FormationHolder(formationView: View) : RecyclerView.ViewHolder(formationView) {
+    class FormationHolder(formationView: FormationItemsListBinding) : RecyclerView.ViewHolder(formationView.root) {
         val formationThemeLabel = formationView.labelThemeFormations
         val formationDate = formationView.labelDateFormations
         val formationLieu = formationView.labelLieuFormations

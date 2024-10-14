@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.infospresenters.LocalitePreviewActivity
 import ci.progbandama.mobile.adapters.EcoleLocaliteAdapter
+import ci.progbandama.mobile.databinding.ActivityLocaliteBinding
 import ci.progbandama.mobile.models.*
 import ci.progbandama.mobile.repositories.apis.ApiClient
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
@@ -32,8 +33,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_localite.*
-import kotlinx.android.synthetic.main.activity_producteur.*
 
 
 class LocaliteActivity : AppCompatActivity() {
@@ -97,16 +96,16 @@ class LocaliteActivity : AppCompatActivity() {
             }
 
             val sourceEauAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arraySourceEau)
-            selectSourceEauLocalite!!.adapter = sourceEauAdapter
+            binding.selectSourceEauLocalite!!.adapter = sourceEauAdapter
 
-            selectSourceEauLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            binding.selectSourceEauLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                     sourecEau = arraySourceEau[position]
 
                     if (sourecEau.uppercase().contains("POMPE")) {
-                        linearEtatPompeContainerLocalite.visibility = View.VISIBLE
+                        binding.linearEtatPompeContainerLocalite.visibility = View.VISIBLE
                     } else {
-                        linearEtatPompeContainerLocalite.visibility = View.GONE
+                        binding.linearEtatPompeContainerLocalite.visibility = View.GONE
                     }
                 }
 
@@ -142,9 +141,9 @@ class LocaliteActivity : AppCompatActivity() {
             }
 
             val typeLocaliteAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, arrayTypeLocalite)
-            selectTypeLocalite!!.adapter = typeLocaliteAdapter
+            binding.selectTypeLocalite!!.adapter = typeLocaliteAdapter
 
-            selectTypeLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            binding.selectTypeLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                     typeLocalite = arrayTypeLocalite[position]
                 }
@@ -158,7 +157,7 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupCieYesNoSelection() {
-        selectCieYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectCieYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 cieYesNo = resources.getStringArray(R.array.YesOrNo)[position]
             }
@@ -170,7 +169,7 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupDayMarketSelection() {
-        selectMarketDayLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectMarketDayLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 dayMarket = resources.getStringArray(R.array.dayMarket)[position]
             }
@@ -182,7 +181,7 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupPompeEtatYesNoSelection() {
-        selectEtatPompeYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectEtatPompeYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 pompeEtatYesNo = resources.getStringArray(R.array.YesOrNo)[position]
             }
@@ -194,7 +193,7 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupCentreStatutSelection() {
-        selectCentreSanteNoTypeLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectCentreSanteNoTypeLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 centreStatut = resources.getStringArray(R.array.YesOrNo)[position]
             }
@@ -206,22 +205,22 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupMarketYesNoSelection() {
-        selectMarketYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectMarketYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 marketYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (marketYesNo) {
                     getString(R.string.oui) -> {
-                        linearMarketDayContainerLocalite.visibility = View.VISIBLE
-                        linearMarketDistanceContainerLocalite.visibility = View.GONE
+                        binding.linearMarketDayContainerLocalite.visibility = View.VISIBLE
+                        binding.linearMarketDistanceContainerLocalite.visibility = View.GONE
                     }
                     getString(R.string.non) -> {
-                        linearMarketDistanceContainerLocalite.visibility = View.VISIBLE
-                        linearMarketDayContainerLocalite.visibility = View.GONE
+                        binding.linearMarketDistanceContainerLocalite.visibility = View.VISIBLE
+                        binding.linearMarketDayContainerLocalite.visibility = View.GONE
                     }
                     else -> {
-                        linearMarketDistanceContainerLocalite.visibility = View.GONE
-                        linearMarketDayContainerLocalite.visibility = View.GONE
+                        binding.linearMarketDistanceContainerLocalite.visibility = View.GONE
+                        binding.linearMarketDayContainerLocalite.visibility = View.GONE
                     }
                 }
             }
@@ -233,7 +232,7 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupDechetsYesNoSelection() {
-        selectDechetYesyNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectDechetYesyNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 lieuDechetYesNo = resources.getStringArray(R.array.YesOrNo)[position]
             }
@@ -245,25 +244,25 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupCentreYesNoSelection() {
-        selectCentreYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectCentreYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 centreYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (centreYesNo) {
                     getString(R.string.oui) -> {
-                        linearCentreKmContainerLocalite.visibility = View.GONE
-                        linearCentreSanteNoTypeContainerLocalite.visibility = View.VISIBLE
-                        linearCentreSanteYesNomContainerLocalite.visibility = View.VISIBLE
+                        binding.linearCentreKmContainerLocalite.visibility = View.GONE
+                        binding.linearCentreSanteNoTypeContainerLocalite.visibility = View.VISIBLE
+                        binding.linearCentreSanteYesNomContainerLocalite.visibility = View.VISIBLE
                     }
                     getString(R.string.non) -> {
-                        linearCentreKmContainerLocalite.visibility = View.VISIBLE
-                        linearCentreSanteYesNomContainerLocalite.visibility = View.VISIBLE
-                        linearCentreSanteNoTypeContainerLocalite.visibility = View.VISIBLE
+                        binding.linearCentreKmContainerLocalite.visibility = View.VISIBLE
+                        binding.linearCentreSanteYesNomContainerLocalite.visibility = View.VISIBLE
+                        binding.linearCentreSanteNoTypeContainerLocalite.visibility = View.VISIBLE
                     }
                     else -> {
-                        linearCentreKmContainerLocalite.visibility = View.GONE
-                        linearCentreSanteYesNomContainerLocalite.visibility = View.GONE
-                        linearCentreSanteNoTypeContainerLocalite.visibility = View.GONE
+                        binding.linearCentreKmContainerLocalite.visibility = View.GONE
+                        binding.linearCentreSanteYesNomContainerLocalite.visibility = View.GONE
+                        binding.linearCentreSanteNoTypeContainerLocalite.visibility = View.GONE
                     }
                 }
             }
@@ -275,26 +274,26 @@ class LocaliteActivity : AppCompatActivity() {
 
 
     fun setupEcoleYesNoSelection() {
-        selectEcoleYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.selectEcoleYesNoLocalite.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, l: Long) {
                 ecoleYesNo = resources.getStringArray(R.array.YesOrNo)[position]
 
                 when (ecoleYesNo) {
                     getString(R.string.oui) -> {
-                        linearNbreEcoleContainerLocalite.visibility = View.VISIBLE
-                        linearEcoleDistanceContainerLocalite.visibility = View.GONE
+                        binding.linearNbreEcoleContainerLocalite.visibility = View.VISIBLE
+                        binding.linearEcoleDistanceContainerLocalite.visibility = View.GONE
 
                         nbreEcole = ""
                     }
                     getString(R.string.non) -> {
-                        linearNbreEcoleContainerLocalite.visibility = View.GONE
-                        linearEcoleDistanceContainerLocalite.visibility = View.VISIBLE
+                        binding.linearNbreEcoleContainerLocalite.visibility = View.GONE
+                        binding.linearEcoleDistanceContainerLocalite.visibility = View.VISIBLE
 
                         ecoleKm = ""
                     }
                     else -> {
-                        linearNbreEcoleContainerLocalite.visibility = View.GONE
-                        linearEcoleDistanceContainerLocalite.visibility = View.GONE
+                        binding.linearNbreEcoleContainerLocalite.visibility = View.GONE
+                        binding.linearEcoleDistanceContainerLocalite.visibility = View.GONE
                     }
                 }
             }
@@ -305,59 +304,59 @@ class LocaliteActivity : AppCompatActivity() {
     }
 
 
-    fun clearFields() {
-        nomLocalite  = ""
-        sousPrefecture   = ""
-        nbrePopulation   = ""
-        centreKm     = ""
-        nomCentre    = ""
-        ecoleKm  = ""
-        nbreEcole    = ""
-        nomEcole     = ""
-        nbreComite   = ""
-        nbreAssoFemmes = ""
-        nbreAssoJeunes = ""
-        dayMarket = ""
-        marketYesNo = ""
-
-        editNomLocalite.text    = null
-        editSousPrefectureLocalite.text = null
-        editPopulationLocalite.text = null
-        editCentreKmLocalite.text   = null
-        editNomCentreSanteLocalite.text = null
-        editEcoleDistanceLocalite.text  = null
-        editNbreEcolesLocalite.text = null
-        editNomEcoleLocalite.text   = null
-        editNbreComiteLocalite.text = null
-        editNbreAssoFemmeLocalite.text  = null
-        editNbreAssoJeuneLocalite.text  = null
-
-        selectSourceEauLocalite.setSelection(0)
-        selectMarketYesNoLocalite.setSelection(0)
-        selectMarketDayLocalite.setSelection(0)
-        selectTypeLocalite.setSelection(0)
-        selectCieYesNoLocalite.setSelection(0)
-        selectEtatPompeYesNoLocalite.setSelection(0)
-        selectDechetYesyNoLocalite.setSelection(0)
-        selectCentreYesNoLocalite.setSelection(0)
-        selectEcoleYesNoLocalite.setSelection(0)
-
-        editNomLocalite.requestFocus()
-    }
+//    fun clearFields() {
+//        nomLocalite  = ""
+//        sousPrefecture   = ""
+//        nbrePopulation   = ""
+//        centreKm     = ""
+//        nomCentre    = ""
+//        ecoleKm  = ""
+//        nbreEcole    = ""
+//        nomEcole     = ""
+//        nbreComite   = ""
+//        nbreAssoFemmes = ""
+//        nbreAssoJeunes = ""
+//        dayMarket = ""
+//        marketYesNo = ""
+//
+//        editNomLocalite.text    = null
+//        editSousPrefectureLocalite.text = null
+//        editPopulationLocalite.text = null
+//        editCentreKmLocalite.text   = null
+//        editNomCentreSanteLocalite.text = null
+//        editEcoleDistanceLocalite.text  = null
+//        editNbreEcolesLocalite.text = null
+//        editNomEcoleLocalite.text   = null
+//        editNbreComiteLocalite.text = null
+//        editNbreAssoFemmeLocalite.text  = null
+//        editNbreAssoJeuneLocalite.text  = null
+//
+//        selectSourceEauLocalite.setSelection(0)
+//        selectMarketYesNoLocalite.setSelection(0)
+//        selectMarketDayLocalite.setSelection(0)
+//        selectTypeLocalite.setSelection(0)
+//        selectCieYesNoLocalite.setSelection(0)
+//        selectEtatPompeYesNoLocalite.setSelection(0)
+//        selectDechetYesyNoLocalite.setSelection(0)
+//        selectCentreYesNoLocalite.setSelection(0)
+//        selectEcoleYesNoLocalite.setSelection(0)
+//
+//        editNomLocalite.requestFocus()
+//    }
 
 
     fun collectDatas() {
-        nomLocalite = editNomLocalite.text?.trim().toString()
-        sousPrefecture = editSousPrefectureLocalite.text?.trim().toString()
-        nbrePopulation = editPopulationLocalite.text?.trim().toString()
-        centreKm = editCentreKmLocalite.text?.trim().toString()
-        nomCentre = editNomCentreSanteLocalite.text?.trim().toString()
-        ecoleKm = editEcoleDistanceLocalite.text?.trim().toString()
-        nbreEcole = editNbreEcolesLocalite.text?.trim().toString()
-        nomEcole = editNomEcoleLocalite.text?.trim().toString()
-        nbreComite = editNbreComiteLocalite.text?.trim().toString()
-        nbreAssoFemmes = editNbreAssoFemmeLocalite.text?.trim().toString()
-        nbreAssoJeunes = editNbreAssoJeuneLocalite.text?.trim().toString()
+        nomLocalite = binding.editNomLocalite.text?.trim().toString()
+        sousPrefecture = binding.editSousPrefectureLocalite.text?.trim().toString()
+        nbrePopulation = binding.editPopulationLocalite.text?.trim().toString()
+        centreKm = binding.editCentreKmLocalite.text?.trim().toString()
+        nomCentre = binding.editNomCentreSanteLocalite.text?.trim().toString()
+        ecoleKm = binding.editEcoleDistanceLocalite.text?.trim().toString()
+        nbreEcole = binding.editNbreEcolesLocalite.text?.trim().toString()
+        nomEcole = binding.editNomEcoleLocalite.text?.trim().toString()
+        nbreComite = binding.editNbreComiteLocalite.text?.trim().toString()
+        nbreAssoFemmes = binding.editNbreAssoFemmeLocalite.text?.trim().toString()
+        nbreAssoJeunes = binding.editNbreAssoJeuneLocalite.text?.trim().toString()
 
         if (nomLocalite.isEmpty()) {
             showMessage(
@@ -518,9 +517,9 @@ class LocaliteActivity : AppCompatActivity() {
             cieYesNo = cieYesNo,
             agentId = SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString(),
             origin = "local",
-            latitude = editLatLocalite.text.toString(),
-            longitude = editLongLocalite.text.toString(),
-            distanceMarche = editMarketDistanceLocalite.text.toString().trim(),
+            latitude = binding.editLatLocalite.text.toString(),
+            longitude = binding.editLongLocalite.text.toString(),
+            distanceMarche = binding.editMarketDistanceLocalite.text.toString().trim(),
         )
 
     }
@@ -530,7 +529,7 @@ class LocaliteActivity : AppCompatActivity() {
     fun addEcole(ecole: String) {
         if (ecole.isEmpty()) return
 
-        if (ecolesList.size < editNbreEcolesLocalite.text.toString().toInt()) {
+        if (ecolesList.size < binding.editNbreEcolesLocalite.text.toString().toInt()) {
             ecolesList.forEach {
                 if (it.trim().uppercase() == ecole.trim().uppercase()) {
                     ToastUtils.showShort(getString(R.string.cette_ecole_est_deja_ajout_e))
@@ -541,7 +540,7 @@ class LocaliteActivity : AppCompatActivity() {
             ecolesList.add(ecole)
             ecoleAdapter?.notifyDataSetChanged()
 
-            editNomCustomEcoleLocalite.text = null
+            binding.editNomCustomEcoleLocalite.text = null
         } else {
 
             showMessage(
@@ -579,7 +578,7 @@ class LocaliteActivity : AppCompatActivity() {
                     finished = true,
                     callback = {
                         playDraftSound(this)
-                        imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
+                        binding.imageDraftBtn.startAnimation(Commons.loadShakeAnimation(this))
                     },
                     positive = getString(R.string.ok),
                     deconnec = false,
@@ -598,39 +597,39 @@ class LocaliteActivity : AppCompatActivity() {
         //  val localiteToken = object : TypeToken<>() {}.type
         val localiteDrafted = ApiClient.gson.fromJson(drafftedData?.datas, LocaliteModel::class.java)
 
-        editNomLocalite.setText(localiteDrafted.nom.toString())
-        editSousPrefectureLocalite.setText(localiteDrafted.sousPref.toString())
-        editPopulationLocalite.setText(localiteDrafted.pop.toString())
+        binding.editNomLocalite.setText(localiteDrafted.nom.toString())
+        binding.editSousPrefectureLocalite.setText(localiteDrafted.sousPref.toString())
+        binding.editPopulationLocalite.setText(localiteDrafted.pop.toString())
 
-        editNbreComiteLocalite.setText(localiteDrafted.comite.toString().trim())
-        editNbreEcolesLocalite.setText(localiteDrafted.ecoleNbre.toString().trim())
-        editNbreAssoFemmeLocalite.setText(localiteDrafted.femmeAsso.toString().trim())
+        binding.editNbreComiteLocalite.setText(localiteDrafted.comite.toString().trim())
+        binding.editNbreEcolesLocalite.setText(localiteDrafted.ecoleNbre.toString().trim())
+        binding.editNbreAssoFemmeLocalite.setText(localiteDrafted.femmeAsso.toString().trim())
 
-        editNbreAssoJeuneLocalite.setText(localiteDrafted.jeuneAsso.toString().trim())
-        editLatLocalite.setText(localiteDrafted.latitude.toString())
-        editLongLocalite.setText(localiteDrafted.longitude.toString())
+        binding.editNbreAssoJeuneLocalite.setText(localiteDrafted.jeuneAsso.toString().trim())
+        binding.editLatLocalite.setText(localiteDrafted.latitude.toString())
+        binding.editLongLocalite.setText(localiteDrafted.longitude.toString())
 
         // Spinner
-        provideStringSpinnerSelection(spinner = selectCentreYesNoLocalite, value = localiteDrafted.centreYesNo, resources.getStringArray(R.array.YesOrNo))
+        provideStringSpinnerSelection(spinner = binding.selectCentreYesNoLocalite, value = localiteDrafted.centreYesNo, resources.getStringArray(R.array.YesOrNo))
 
         // Localite type
         val typeLists = ProgBandRoomDatabase.getDatabase(this)?.typeLocaliteDao()?.getAll(SPUtils.getInstance().getInt(Constants.AGENT_ID, 0).toString())
         val typeLocalitesDatas: MutableList<CommonData> = mutableListOf()
         typeLocalitesDatas.add(CommonData(id = 0, nom = getString(R.string.choisir_le_type)))
         typeLists?.map {CommonData(id = 0, nom = it.nom)}?.let { typeLocalitesDatas.addAll(it) }
-        provideDatasSpinnerSelection(selectTypeLocalite, localiteDrafted.type, typeLocalitesDatas)
+        provideDatasSpinnerSelection(binding.selectTypeLocalite, localiteDrafted.type, typeLocalitesDatas)
 
 
         // Centre type
         provideStringSpinnerSelection(
-            spinner = selectCentreSanteNoTypeLocalite,
+            spinner = binding.selectCentreSanteNoTypeLocalite,
             value = localiteDrafted.typeCentre,
             list = resources.getStringArray(R.array.typeCentre)
         )
 
         // Ecole primaire Yes no
         provideStringSpinnerSelection(
-            spinner = selectEcoleYesNoLocalite,
+            spinner = binding.selectEcoleYesNoLocalite,
             value = localiteDrafted.ecoleYesNo,
             list = resources.getStringArray(R.array.YesOrNo)
         )
@@ -640,32 +639,32 @@ class LocaliteActivity : AppCompatActivity() {
         val eauxDatas: MutableList<CommonData> = mutableListOf()
         eauxDatas.add(CommonData(id = 0, nom = getString(R.string.choisir_la_source)))
         eauLists?.map {CommonData(id = 0, nom = it.nom)}?.let { eauxDatas.addAll(it) }
-        provideDatasSpinnerSelection(selectSourceEauLocalite, localiteDrafted.source, eauxDatas)
+        provideDatasSpinnerSelection(binding.selectSourceEauLocalite, localiteDrafted.source, eauxDatas)
 
         // Eclairage
         provideStringSpinnerSelection(
-            spinner = selectCieYesNoLocalite,
+            spinner = binding.selectCieYesNoLocalite,
             value = localiteDrafted.cieYesNo,
             list = resources.getStringArray(R.array.YesOrNo)
         )
 
         // Marche
         provideStringSpinnerSelection(
-            spinner = selectMarketYesNoLocalite,
+            spinner = binding.selectMarketYesNoLocalite,
             value = localiteDrafted.marcheYesNo,
             list = resources.getStringArray(R.array.YesOrNo)
         )
 
         // Market Day
         provideStringSpinnerSelection(
-            spinner = selectMarketDayLocalite,
+            spinner = binding.selectMarketDayLocalite,
             value = localiteDrafted.dayMarche,
             list = resources.getStringArray(R.array.dayMarket)
         )
 
         // Endroit dechets
         provideStringSpinnerSelection(
-            spinner = selectDechetYesyNoLocalite,
+            spinner = binding.selectDechetYesyNoLocalite,
             value = localiteDrafted.dechetYesNo,
             list = resources.getStringArray(R.array.YesOrNo)
         )
@@ -678,10 +677,12 @@ class LocaliteActivity : AppCompatActivity() {
         releaseDraftSound()
     }
 
+    private lateinit var binding: ActivityLocaliteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_localite)
+        binding = ActivityLocaliteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         Commons.setSizeOfAllTextViews(this, findViewById<ViewGroup>(android.R.id.content),
             resources.getDimension(com.intuit.ssp.R.dimen._6ssp),
@@ -711,41 +712,41 @@ class LocaliteActivity : AppCompatActivity() {
         setupCentreStatutSelection()
 
         ecoleAdapter = EcoleLocaliteAdapter(ecolesList)
-        recyclerEcolesListLocalite.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerEcolesListLocalite.adapter = ecoleAdapter
+        binding.recyclerEcolesListLocalite.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerEcolesListLocalite.adapter = ecoleAdapter
 
-        imageLocationLocalite.setOnClickListener {
-            editLatLocalite.setText(SPUtils.getInstance().getString(Constants.PREFS_COMMON_LAT, "0.0"))
-            editLongLocalite.setText(SPUtils.getInstance().getString(Constants.PREFS_COMMON_LNG, "0.0"))
+        binding.imageLocationLocalite.setOnClickListener {
+            binding.editLatLocalite.setText(SPUtils.getInstance().getString(Constants.PREFS_COMMON_LAT, "0.0"))
+            binding.editLongLocalite.setText(SPUtils.getInstance().getString(Constants.PREFS_COMMON_LNG, "0.0"))
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
 
-        imageDraftBtn.setOnClickListener {
+        binding.imageDraftBtn.setOnClickListener {
             draftLocalite(draftModel ?: DataDraftedModel(uid = 0))
         }
 
-        clickSaveLocalite.setOnClickListener {
+        binding.clickSaveLocalite.setOnClickListener {
             collectDatas()
         }
 
-        clickAddEcoleLocalite.setOnClickListener {
-            if (editNomCustomEcoleLocalite.text.toString().isEmpty()) {
+        binding.clickAddEcoleLocalite.setOnClickListener {
+            if (binding.editNomCustomEcoleLocalite.text.toString().isEmpty()) {
                 return@setOnClickListener
             }
 
-            addEcole(editNomCustomEcoleLocalite.text.toString())
+            addEcole(binding.editNomCustomEcoleLocalite.text.toString())
         }
 
-        applyFilters(editPopulationLocalite, withZero = true)
-        applyFilters(editCentreKmLocalite, withZero = true)
-        applyFilters(editEcoleDistanceLocalite, withZero = true)
-        applyFilters(editMarketDistanceLocalite, withZero = true)
-        applyFilters(editNbreAssoJeuneLocalite, withZero = true)
-        applyFilters(editNbreEcolesLocalite, withZero = true)
-        applyFilters(editNbreComiteLocalite, withZero = true)
+        applyFilters(binding.editPopulationLocalite, withZero = true)
+        applyFilters(binding.editCentreKmLocalite, withZero = true)
+        applyFilters(binding.editEcoleDistanceLocalite, withZero = true)
+        applyFilters(binding.editMarketDistanceLocalite, withZero = true)
+        applyFilters(binding.editNbreAssoJeuneLocalite, withZero = true)
+        applyFilters(binding.editNbreEcolesLocalite, withZero = true)
+        applyFilters(binding.editNbreComiteLocalite, withZero = true)
 
         if (intent.getStringExtra("from") != null) {
             draftModel = ProgBandRoomDatabase.getDatabase(this)?.draftedDatasDao()?.getDraftedDataByID(intent.getIntExtra("drafted_uid", 0)) ?: DataDraftedModel(uid = 0)

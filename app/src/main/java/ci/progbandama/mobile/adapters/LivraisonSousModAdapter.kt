@@ -5,9 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
+import ci.progbandama.mobile.databinding.InfosLivraiisonCentralItemsListBinding
+import ci.progbandama.mobile.databinding.InfosLivraiisonItemsListBinding
 import ci.progbandama.mobile.interfaces.RecyclerItemListener
 import ci.progbandama.mobile.models.LivraisonSousModel
-import kotlinx.android.synthetic.main.infos_livraiison_items_list.view.*
+
 class LivraisonSousModAdapter(private var livraisonSModList: MutableList<LivraisonSousModel>?) : RecyclerView.Adapter<LivraisonSousModAdapter.LivraisonSModHolder>() {
 
 
@@ -15,7 +17,10 @@ class LivraisonSousModAdapter(private var livraisonSModList: MutableList<Livrais
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LivraisonSModHolder {
-        return LivraisonSModHolder(LayoutInflater.from(parent.context).inflate(R.layout.infos_livraiison_items_list, parent, false))
+        return LivraisonSModHolder(
+            InfosLivraiisonItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.infos_livraiison_items_list, parent, false)
+        )
     }
 
 
@@ -41,7 +46,7 @@ class LivraisonSousModAdapter(private var livraisonSModList: MutableList<Livrais
     override fun getItemCount() = livraisonSModList?.size ?: 0
 
 
-    class LivraisonSModHolder(var livraisonSModView: View) : RecyclerView.ViewHolder(livraisonSModView) {
+    class LivraisonSModHolder(var livraisonSModView: InfosLivraiisonItemsListBinding) : RecyclerView.ViewHolder(livraisonSModView.root) {
         val labelLivraisModProducteurItem = livraisonSModView.labelLivraisModProducteurItem
         val labelLivraisModParcelleItem = livraisonSModView.labelLivraisModParcelleItem
         val labelLivraisModQuantity = livraisonSModView.labelLivraisModQuantity

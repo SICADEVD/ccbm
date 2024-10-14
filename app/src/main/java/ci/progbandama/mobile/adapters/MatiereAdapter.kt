@@ -6,16 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.adapters.MatiereAdapter.MatiereHolder
+import ci.progbandama.mobile.databinding.MatiereItemsListBinding
 import ci.progbandama.mobile.tools.Commons
 import com.blankj.utilcode.util.LogUtils
-import kotlinx.android.synthetic.main.matiere_items_list.view.*
 
 class MatiereAdapter(var matieresList: MutableList<String>): RecyclerView.Adapter<MatiereHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatiereHolder {
         return MatiereHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.matiere_items_list, parent, false)
+            MatiereItemsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//            LayoutInflater.from(parent.context).inflate(R.layout.matiere_items_list, parent, false)
         )
     }
 
@@ -56,7 +57,7 @@ class MatiereAdapter(var matieresList: MutableList<String>): RecyclerView.Adapte
     override fun getItemCount(): Int = matieresList.size
 
 
-    class MatiereHolder(matiereHolder: View) : RecyclerView.ViewHolder(matiereHolder) {
+    class MatiereHolder(matiereHolder: MatiereItemsListBinding) : RecyclerView.ViewHolder(matiereHolder.root) {
         val matiereLabel = matiereHolder.labelMatiereNomItems
         val matiereDelete = matiereHolder.imageDeleteMatiereItems
     }

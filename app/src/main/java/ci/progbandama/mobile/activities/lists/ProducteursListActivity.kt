@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ci.progbandama.mobile.R
 import ci.progbandama.mobile.activities.forms.ProducteurActivity
 import ci.progbandama.mobile.adapters.ProducteurAdapter
+import ci.progbandama.mobile.databinding.ActivityProducteursListBinding
 import ci.progbandama.mobile.models.ProducteurModel
 import ci.progbandama.mobile.repositories.databases.ProgBandRoomDatabase
 import ci.progbandama.mobile.repositories.databases.daos.ProducteurDao
 import ci.progbandama.mobile.tools.Constants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
-import kotlinx.android.synthetic.main.activity_producteurs_list.*
 import org.joda.time.DateTime
 
 class ProducteursListActivity : AppCompatActivity() {
@@ -23,6 +23,7 @@ class ProducteursListActivity : AppCompatActivity() {
     var producteursList: MutableList<ProducteurModel>? = null
     var producteurAdapter: ProducteurAdapter? = null
 
+    lateinit var binding: ActivityProducteursListBinding
 
     fun retrieveDatas() {
         producteursList = mutableListOf()
@@ -33,18 +34,18 @@ class ProducteursListActivity : AppCompatActivity() {
 
         producteurAdapter = ProducteurAdapter(producteursList)
 
-        recyclerProducteurs.adapter = producteurAdapter
-        recyclerProducteurs.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerProducteurs.adapter = producteurAdapter
+        binding.recyclerProducteurs.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        labelLastSynchronisationProducteur.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
+        binding.labelLastSynchronisationProducteur.text = resources.getString(R.string.last_synchronisation_date, DateTime.now().toString("HH:mm:ss"))
 
         producteursList?.let {
             if (it.isEmpty()) {
-                recyclerProducteurs.visibility = View.GONE
-                linearEmptyContainerProducteursList.visibility = View.VISIBLE
+                binding.recyclerProducteurs.visibility = View.GONE
+                binding.linearEmptyContainerProducteursList.visibility = View.VISIBLE
             } else {
-                recyclerProducteurs.visibility = View.VISIBLE
-                linearEmptyContainerProducteursList.visibility = View.GONE
+                binding.recyclerProducteurs.visibility = View.VISIBLE
+                binding.linearEmptyContainerProducteursList.visibility = View.GONE
             }
         }
     }
@@ -52,13 +53,14 @@ class ProducteursListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_producteurs_list)
+        binding = ActivityProducteursListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        imgAddBtn.setOnClickListener {
+        binding.imgAddBtn.setOnClickListener {
             ActivityUtils.startActivity(ProducteurActivity::class.java)
         }
 
-        clickCloseBtn.setOnClickListener {
+        binding.clickCloseBtn.setOnClickListener {
             finish()
         }
     }
