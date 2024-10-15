@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- <uses-permission android:name="android.permission." /> -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -30,6 +32,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode"
         tools:targetApi="n">
+
         <activity
             android:name="ci.progbandama.mobile.activities.infospresenters.LivraisonCentralPreviewActivity"
             android:exported="false" />
@@ -297,10 +300,14 @@
         <service
             android:name="ci.progbandama.mobile.services.SynchronisationIntentService"
             android:exported="false"
-            android:foregroundServiceType="dataSync" />
+            android:foregroundServiceType="dataSync"
+            tools:ignore="ForegroundServicePermission" />
+
         <service
             android:name="ci.progbandama.mobile.services.GpsService"
-            android:exported="false" />
+            android:foregroundServiceType="location"
+            android:exported="false"
+            tools:ignore="ForegroundServicePermission" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -315,6 +322,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+<!--        <meta-data-->
+<!--            android:name="firebase_crashlytics_collection_enabled"-->
+<!--            android:value="true" />-->
+
+<!--        <provider-->
+<!--            android:name="com.google.firebase.provider.FirebaseInitProvider"-->
+<!--            android:authorities="${applicationId}.firebaseinitprovider"-->
+<!--            tools:node="remove"/>-->
     </application>
 
 </manifest>

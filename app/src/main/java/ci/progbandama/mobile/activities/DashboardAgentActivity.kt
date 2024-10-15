@@ -464,7 +464,7 @@ class DashboardAgentActivity : AppCompatActivity(),
             val appVersIo = FetchData.AppVersion(this@DashboardAgentActivity, Constants.decodeUpdate,
                 object : FetchData.LibraryListener{
                     override fun onCompleted(vers: MissVersion?, iscomplete: Boolean?) {
-                        LogUtils.d(vers, iscomplete)
+//                        LogUtils.d(vers, iscomplete)
                         iscomplete?.let {
                             CoroutineScope(Dispatchers.Main).launch {
                                 if(it) Commons.showMessage(

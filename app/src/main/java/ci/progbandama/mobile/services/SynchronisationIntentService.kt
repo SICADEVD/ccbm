@@ -24,6 +24,7 @@ import ci.progbandama.mobile.tools.ListConverters
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
+import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.reflect.TypeToken
 import retrofit2.Call
@@ -1661,6 +1662,10 @@ class SynchronisationIntentService : IntentService("SynchronisationIntentService
             }
 
             contextAct = this.applicationContext
+
+            if (FirebaseApp.getApps(this).isEmpty()) {
+                FirebaseApp.initializeApp(this)
+            }
 
             campagneDao = ProgBandRoomDatabase.getDatabase(this)?.campagneDao()
             localiteDao = ProgBandRoomDatabase.getDatabase(this)?.localiteDoa()

@@ -657,7 +657,10 @@ class ParcelleActivity : AppCompatActivity(){
         valueOfParcelleCode = parcelleDrafted.codeParc
 
         parcelleDrafted.wayPointsString?.let {
-            wayPoints.addAll(GsonUtils.fromJson<MutableList<String>>(it, object : TypeToken<MutableList<String>>(){}.type))
+//            LogUtils.d(it, parcelleDrafted.wayPointsString)
+            if(!it.isNullOrEmpty()){
+                wayPoints.addAll(GsonUtils.fromJson<MutableList<String>>(it, object : TypeToken<MutableList<String>>(){}.type))
+            }
         }
 
         val listArbresOth = ProgBandRoomDatabase.getDatabase(this)?.arbreDao()?.getAll()
