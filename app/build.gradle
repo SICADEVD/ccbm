@@ -31,6 +31,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+//        buildConfigField "int", "VERSION_CODE", "${versionCode}"
     }
 
 

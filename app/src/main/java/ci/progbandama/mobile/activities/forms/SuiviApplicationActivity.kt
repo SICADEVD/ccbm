@@ -950,6 +950,11 @@ class SuiviApplicationActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.clickCancelSuiviApplication.setOnClickListener {
+            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
+        }
+
         binding.imageDraftBtn.setOnClickListener {
             draftSuiviApplication(draftedDataApplicateur ?: DataDraftedModel(uid = 0))
         }

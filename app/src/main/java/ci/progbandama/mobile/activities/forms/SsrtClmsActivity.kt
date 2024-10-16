@@ -26,6 +26,7 @@ import ci.progbandama.mobile.tools.Commons.Companion.configHour
 import ci.progbandama.mobile.tools.Commons.Companion.showMessage
 import ci.progbandama.mobile.tools.Constants
 import ci.progbandama.mobile.tools.MapEntry
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
@@ -811,6 +812,11 @@ class SsrtClmsActivity : AppCompatActivity() {
 
         binding.clickCloseBtn.setOnClickListener {
             finish()
+        }
+
+        binding.clickCancelSsrt.setOnClickListener {
+            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
         }
 
         binding.imageDraftBtn.setOnClickListener {

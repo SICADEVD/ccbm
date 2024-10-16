@@ -32,6 +32,7 @@ import ci.progbandama.mobile.tools.Commons.Companion.checkAndReturnZeroFloatIfEm
 import ci.progbandama.mobile.tools.Commons.Companion.checkAndReturnZeroIfEmpty
 import ci.progbandama.mobile.tools.Commons.Companion.getSpinnerContent
 import ci.progbandama.mobile.tools.Constants
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import org.joda.time.DateTime
@@ -649,6 +650,11 @@ class CalculEstimationActivity : AppCompatActivity() {
 
         binding.clickCloseBtn.setOnClickListener {
             finish()
+        }
+
+        binding.clickCancelEstimation.setOnClickListener {
+            ActivityUtils.startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            ActivityUtils.getActivityByContext(this)?.finish()
         }
 
         binding.editDateEstimation.setOnClickListener {

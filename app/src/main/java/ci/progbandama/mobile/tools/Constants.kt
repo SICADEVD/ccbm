@@ -6,6 +6,8 @@ import android.annotation.SuppressLint
 object Constants {
 
     val GIT_APP_UPURL_ENC: String = "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1NJQ0FERVZEL2NjYm0vdXBkYXRlX29ucGxheXN0b3JlX2IvYXBwL3VwZGF0ZS1jaGFuZ2Vsb2cuanNvbg=="
+    const val BUILD_VERSION: Int = 76
+    const val LAST_BUILD_VERSION: Int = 71
 //    val GIT_APP_UPURL: String = "https://raw.githubusercontent.com/SICADEVD/ccbm/update_onplaystore_b/app/update-changelog.json"
     @SuppressLint("NewApi")
     var decodeUpdate = String(java.util.Base64.getDecoder().decode(Constants.GIT_APP_UPURL_ENC.toByteArray()))

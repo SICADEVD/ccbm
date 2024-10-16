@@ -1,6 +1,7 @@
 package ci.progbandama.mobile.repositories.databases
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,6 +11,7 @@ import ci.progbandama.mobile.repositories.databases.daos.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 import androidx.room.migration.Migration
+import ci.progbandama.mobile.tools.Constants
 import ci.progbandama.mobile.tools.ListConverters
 
 
@@ -19,7 +21,7 @@ import ci.progbandama.mobile.tools.ListConverters
  */
 
 @Database(
-    version = 76, exportSchema = false,
+    version = Constants.BUILD_VERSION, exportSchema = false,
     entities = [
         CoopModel::class,
         AgentModel::class,
@@ -87,6 +89,9 @@ import ci.progbandama.mobile.tools.ListConverters
         PostPlantingModel::class,
         PostPlantingArbrDistribModel::class,
     ],
+//    autoMigrations = [
+//        AutoMigration(from = Constants.LAST_BUILD_VERSION, to = Constants.BUILD_VERSION)
+//    ]
 )
 @TypeConverters(ListConverters::class)
 abstract class ProgBandRoomDatabase : RoomDatabase() {
@@ -191,7 +196,7 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
             }
         }
 
-        val MIGRATION_71_76 = object : Migration(71, 76) {
+        val MIGRATION_71_72 = object : Migration(71, 72) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Ajout des nouvelles colonnes à la table EstimationModel
                 database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
@@ -201,6 +206,52 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_72_73 = object : Migration(72, 73) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Ajout des nouvelles colonnes à la table EstimationModel
+                database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN typeEstimation TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN recolteEstime TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN rendFinal TEXT")
+            }
+        }
+
+        val MIGRATION_73_74 = object : Migration(73, 74) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Ajout des nouvelles colonnes à la table EstimationModel
+                database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN typeEstimation TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN recolteEstime TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN rendFinal TEXT")
+            }
+        }
+
+        val MIGRATION_74_75 = object : Migration(74, 75) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Ajout des nouvelles colonnes à la table EstimationModel
+                database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN typeEstimation TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN recolteEstime TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN rendFinal TEXT")
+            }
+        }
+
+        val MIGRATION_75_76 = object : Migration(75, 76) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Ajout des nouvelles colonnes à la table EstimationModel
+                database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN typeEstimation TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN recolteEstime TEXT")
+                database.execSQL("ALTER TABLE estimation ADD COLUMN rendFinal TEXT")
+            }
+        }
+
+        val MIGRATION_76_77 = object : Migration(75, 76) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Ajout des nouvelles colonnes à la table EstimationModel
+                database.execSQL("ALTER TABLE parcelle ADD COLUMN otherTestVar TEXT")
+            }
+        }
 
         fun escapeSql(value: String): String {
             val builder = StringBuilder()
@@ -222,8 +273,15 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
                     "progbandama.db")
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
-                    .addMigrations(MIGRATION_71_76)
-                    //.addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+//                    .addMigrations(MIGRATION_71_76)
+                    .addMigrations(
+//                        MIGRATION_71_72,
+//                        MIGRATION_72_73,
+//                        MIGRATION_73_74,
+//                        MIGRATION_74_75,
+                        MIGRATION_75_76,
+//                        MIGRATION_76_77,
+                        )
                     .build()
                 INSTANCE = instance
 
