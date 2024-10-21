@@ -246,12 +246,22 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
             }
         }
 
-        val MIGRATION_76_77 = object : Migration(75, 76) {
+        val MIGRATION_76_77 = object : Migration(76, 77) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Ajout des nouvelles colonnes à la table EstimationModel
-                database.execSQL("ALTER TABLE parcelle ADD COLUMN otherTestVar TEXT")
+//                database.execSQL("ALTER TABLE estimation ADD COLUMN ajustement TEXT")
+//                database.execSQL("ALTER TABLE estimation ADD COLUMN typeEstimation TEXT")
+//                database.execSQL("ALTER TABLE estimation ADD COLUMN recolteEstime TEXT")
+//                database.execSQL("ALTER TABLE estimation ADD COLUMN rendFinal TEXT")
             }
         }
+
+//        val MIGRATION_76_77 = object : Migration(75, 76) {
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                // Ajout des nouvelles colonnes à la table EstimationModel
+//                database.execSQL("ALTER TABLE parcelle ADD COLUMN otherTestVar TEXT")
+//            }
+//        }
 
         fun escapeSql(value: String): String {
             val builder = StringBuilder()
@@ -279,8 +289,8 @@ abstract class ProgBandRoomDatabase : RoomDatabase() {
 //                        MIGRATION_72_73,
 //                        MIGRATION_73_74,
 //                        MIGRATION_74_75,
-                        MIGRATION_75_76,
-//                        MIGRATION_76_77,
+//                        MIGRATION_75_76,
+                        MIGRATION_76_77,
                         )
                     .build()
                 INSTANCE = instance

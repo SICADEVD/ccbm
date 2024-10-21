@@ -732,9 +732,17 @@ class CalculEstimationActivity : AppCompatActivity() {
                             val textVal = text.toString().toIntOrNull()
                             textVal?.let {
                                 if(it < -20){
-                                    Commons.showMessage("Pourcentage d'ajustement est inférieur à -20%", this@CalculEstimationActivity, finished = false, callback = {})
+                                    binding.editajustement.setBackgroundDrawable(resources.getDrawable(R.drawable.error_rounded_background))
+                                    Commons.showMessage("Pourcentage d'ajustement est inférieur à -20%", this@CalculEstimationActivity, finished = false, callback = {
+//                                        binding.editajustement.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_background))
+                                    })
                                 }else if(it > 20){
-                                    Commons.showMessage("Pourcentage d'ajustement est supérieur à 20%", this@CalculEstimationActivity, finished = false, callback = {})
+                                    Commons.showMessage("Pourcentage d'ajustement est supérieur à 20%", this@CalculEstimationActivity, finished = false, callback = {
+//                                        binding.editajustement.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_background))
+                                    })
+                                    binding.editajustement.setBackgroundDrawable(resources.getDrawable(R.drawable.error_rounded_background))
+                                }else{
+                                    binding.editajustement.setBackgroundDrawable(resources.getDrawable(R.drawable.rounded_background))
                                 }
                                 binding.editRendementFinal.setText("${valRendTheorique+(valRendTheorique*textVal)}")
                             }

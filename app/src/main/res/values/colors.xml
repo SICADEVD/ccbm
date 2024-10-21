@@ -73,6 +73,7 @@
     <color name="progband_belge">#ECEFF1</color>
     <color name="contour_gray">#546E7A</color>
     <color name="field_content_color">#F5F5F5</color>
+    <color name="red_field_content_color">#F0C7C7</color>
     <color name="contour_edit_field">#BCAAA4</color>
     <color name="progband_gris_sec">#CFD8DC</color>
     <color name="tranpar_dark">#56000000</color>

@@ -26,7 +26,7 @@ android {
         applicationId "ci.progbandama.mobile"
         minSdkVersion 21
         targetSdkVersion 34
-        versionCode 76
+        versionCode 77
         versionName "ProgBand-v1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

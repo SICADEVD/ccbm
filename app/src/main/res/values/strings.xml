@@ -969,5 +969,6 @@
     <string name="quantit_plant_e">Quantité plantée</string>
     <string name="vous_avez_la_derni_re_version_disponible_de_l_application">Vous avez la dernière version disponible de l\'application.</string>
     <string name="vous_ne_pouvez_pas_d_sactiver_svp_faites_la_mise_jour">Vous ne pouvez pas désactiver ! Svp faites la mise à jour !</string>
+    <string name="doit_tre_20_et_20"><![CDATA[Doit être, >= -20% et <= 20%]]></string>
 
 </resources>
