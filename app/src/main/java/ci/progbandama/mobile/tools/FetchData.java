@@ -55,11 +55,17 @@ public class FetchData {
                 if (context != null) {
                     mVers = getAppVers(context, link);
                     boolean verdict = false;
+                    Long localVersion = Commons.Companion.getAppCuVesCod(context);
 //                    LogUtils.d(link, mVers);
                     if(Commons.Companion.getAppCuVesCod(context) == Long.valueOf(mVers.getLatestVersionCode())) verdict = false;
                     else verdict = true;
 
-                    if(mVers.getIgnoreVersionCode().contains(Commons.Companion.getAppCuVesCod(context))) verdict = false;
+                    LogUtils.d(mVers.getIgnoreVersionCode(), Commons.Companion.getAppCuVesCod(context));
+
+                    for(int vers : mVers.getIgnoreVersionCode()){
+                        if(localVersion == vers) verdict = false;
+                    }
+                    //if(.contains(Commons.Companion.getAppCuVesCod(context))) verdict = false;
 
                     return verdict;
                 } else {
