@@ -54,9 +54,14 @@ public class FetchData {
                 Context context = contextRef.get();
                 if (context != null) {
                     mVers = getAppVers(context, link);
+                    boolean verdict = false;
 //                    LogUtils.d(link, mVers);
-                    if(Commons.Companion.getAppCuVesCod(context) == Long.valueOf(mVers.getLatestVersionCode())) return false;
-                    else return true;
+                    if(Commons.Companion.getAppCuVesCod(context) == Long.valueOf(mVers.getLatestVersionCode())) verdict = false;
+                    else verdict = true;
+
+                    if(mVers.getIgnoreVersionCode().contains(Commons.Companion.getAppCuVesCod(context))) verdict = false;
+
+                    return verdict;
                 } else {
                     cancel(true);
                     return null;
